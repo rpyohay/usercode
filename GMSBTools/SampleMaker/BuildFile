@@ -3,6 +3,7 @@
 <use name=FWCore/ParameterSet>
 <use name=DataFormats/EgammaCandidates>
 <use name=Geometry/CaloGeometry>
+<use name=GMSBTools/EventSelection>
 <flags EDM_PLUGIN=1>
 <export>
    <lib name=GMSBToolsSampleMaker>
@@ -11,4 +12,5 @@
    <use name=FWCore/ParameterSet>
    <use name=DataFormats/EgammaCandidates>
    <use name=Geometry/CaloGeometry>
+   <use name=GMSBTools/EventSelection>
 </export>
