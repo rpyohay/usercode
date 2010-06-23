@@ -13,7 +13,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Thu May  6 15:10:56 CEST 2010
-// $Id$
+// $Id: SampleMaker.cc,v 1.3 2010/06/23 11:10:39 yohay Exp $
 //
 //
 
@@ -137,7 +137,6 @@ SampleMaker::SampleMaker(const edm::ParameterSet& iConfig) :
 			      trackIsoMaxConstant_, trackPTMin_, eTrackRMin_, minDRPhotons_, maxSeedTime_, numReqdCands_, 0, 0, 0, debugFileName_, 
 			      debugFlag_);
   evtProperties_ = evtProperties;
-  produces<EcalRecHitCollection>("mergedECALRecHitCollection");
 }
 
 
