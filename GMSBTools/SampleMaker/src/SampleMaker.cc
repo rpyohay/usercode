@@ -66,12 +66,16 @@ class SampleMaker : public edm::EDFilter {
   double trackPTMin_;
   double eTrackRMin_;
   double minDRPhotons_;
+  double maxSeedTime_;
   InputTag photonTag_;
   InputTag trackTag_;
   InputTag HBHERecHitTag_;
   InputTag cosmicTrackTag_;
+  InputTag EBRecHitTag_;
+  InputTag EERecHitTag_;
   string debugFileName_;
   bool debugFlag_;
+  bool checkHaloCoincidenceWithPassingEBCandsOnly_;
   unsigned int numReqdCands_;
   unsigned int numTot_;
   unsigned int numPassing_;
@@ -113,12 +117,16 @@ SampleMaker::SampleMaker(const edm::ParameterSet& iConfig) :
   trackPTMin_(iConfig.getParameter<double>("trackPTMin")),
   eTrackRMin_(iConfig.getParameter<double>("eTrackRMin")),
   minDRPhotons_(iConfig.getParameter<double>("minDRPhotons")),
+  maxSeedTime_(iConfig.getParameter<double>("maxSeedTime")),
   photonTag_(iConfig.getParameter<InputTag>("photonTag")),
   trackTag_(iConfig.getParameter<InputTag>("trackTag")),
   HBHERecHitTag_(iConfig.getParameter<InputTag>("HBHERecHitTag")),
   cosmicTrackTag_(iConfig.getParameter<InputTag>("cosmicTrackTag")),
+  EBRecHitTag_(iConfig.getParameter<InputTag>("EBRecHitTag")),
+  EERecHitTag_(iConfig.getParameter<InputTag>("EERecHitTag")),
   debugFileName_(iConfig.getUntrackedParameter<string>("debugFileName", "debug.txt")),
-  debugFlag_(iConfig.getUntrackedParameter<bool>("debugFlag", false))
+  debugFlag_(iConfig.getUntrackedParameter<bool>("debugFlag", false)),
+  checkHaloCoincidenceWithPassingEBCandsOnly_(iConfig.getUntrackedParameter<bool>("checkHaloCoincidenceWithPassingEBCandsOnly", true))
 {
    //now do what ever initialization is needed
   numReqdCands_ = 2;
@@ -126,8 +134,10 @@ SampleMaker::SampleMaker(const edm::ParameterSet& iConfig) :
   EventSelector evtProperties(sampleType_, ECALIsoMaxPTMultiplierEB_, ECALIsoMaxConstantEB_, ECALIsoMaxPTMultiplierEE_, ECALIsoMaxConstantEE_, 
 			      HCALIsoMaxPTMultiplierEB_, HCALIsoMaxConstantEB_, HCALIsoMaxPTMultiplierEE_, HCALIsoMaxConstantEE_, HOverEMaxPresel_, 
 			      ETMin_, fiducialRegion_, useHOverE_, HOverEMax_, useSigmaEtaEta_, sigmaEtaEtaMax_, useTrackIso_, trackIsoMaxPTMultiplier_, 
-			      trackIsoMaxConstant_, trackPTMin_, eTrackRMin_, minDRPhotons_, numReqdCands_, 0, 0, 0, debugFileName_, debugFlag_);
+			      trackIsoMaxConstant_, trackPTMin_, eTrackRMin_, minDRPhotons_, maxSeedTime_, numReqdCands_, 0, 0, 0, debugFileName_, 
+			      debugFlag_);
   evtProperties_ = evtProperties;
+  produces<EcalRecHitCollection>("mergedECALRecHitCollection");
 }
 
 
@@ -163,11 +173,47 @@ SampleMaker::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
   //pass flag
   bool pass = false;
 
+  //get the ECAL RecHit collections
+  vector<EcalRecHit*> ECALRecHits;
+  Handle<EBRecHitCollection> pEBRecHits;
+  bool foundEBRecHits = false;
+  if ((fiducialRegion_ == EB) || (fiducialRegion_ == ECAL)) {
+    try { foundEBRecHits = (iEvent.getByLabel(EBRecHitTag_, pEBRecHits)) && (pEBRecHits->size() > 0); }
+    catch (cms::Exception& ex) {}
+    if (!foundEBRecHits) {
+      stringstream infoStream;
+      infoStream << "No EB RecHit collection found in run" << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n";
+      evtProperties_.printDebug(infoStream.str());
+    }
+    else {
+      for (EBRecHitCollection::const_iterator iEBRecHit = pEBRecHits->begin(); iEBRecHit != pEBRecHits->end(); ++iEBRecHit) {
+	ECALRecHits.push_back(const_cast<EcalRecHit*>(&*iEBRecHit));
+      }
+    }
+  }
+  if ((fiducialRegion_ == EEND) || (fiducialRegion_ == ECAL)) {
+    Handle<EERecHitCollection> pEERecHits;
+    bool foundEERecHits = false;
+    try { foundEERecHits = (iEvent.getByLabel(EERecHitTag_, pEERecHits)) && (pEERecHits->size() > 0); }
+    catch (cms::Exception& ex) {}
+    if (!foundEERecHits) {
+      stringstream infoStream;
+      infoStream << "No EE RecHit collection found in run" << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n";
+      evtProperties_.printDebug(infoStream.str());
+    }
+    else {
+      for (EERecHitCollection::const_iterator iEERecHit = pEERecHits->begin(); iEERecHit != pEERecHits->end(); ++iEERecHit) {
+	ECALRecHits.push_back(const_cast<EcalRecHit*>(&*iEERecHit));
+      }
+    }
+  }
+
   //get the reco::Photon collection
   Handle<PhotonCollection> pPhotons;
   bool foundPhotons = false;
   bool allCandsFound = false;
-  vector<Photon*> passingCands;
+  map<unsigned int, Photon*> passingWithoutPixelSeed;
+  map<unsigned int, Photon*> passingWithPixelSeed;
   try { foundPhotons = (iEvent.getByLabel(photonTag_, pPhotons)) && (pPhotons->size() > 0); }
   catch (cms::Exception& ex) {}
   if (!foundPhotons) {
@@ -178,7 +224,7 @@ SampleMaker::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
   else {
 
     //decide if the required number of passing objects were found
-    if (evtProperties_.foundPhotonCandidates(pPhotons, passingCands)) {
+    if (evtProperties_.foundPhotonCandidates(pPhotons, ECALRecHits, passingWithoutPixelSeed, passingWithPixelSeed)) {
 
       //decide if a track was found
       if (sampleType_ == ETRACK) {
@@ -192,19 +238,14 @@ SampleMaker::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  evtProperties_.printDebug(infoStream.str());
 	}
 	else {
-	  try { if (evtProperties_.foundTrack(pTracks, passingCands)) allCandsFound = true; }
-	  catch (const unsigned int badSize) {
-	    stringstream infoStream;
-	    infoStream << "Number of electron candidates for the ETRACK sample is " << badSize << ", not one.  This event will fail.  Check your code.\n";
-	    evtProperties_.printDebug(infoStream.str());
-	  }
-	}//else
-      }//if (sampleType_ == ETRACK)
+	  if (evtProperties_.foundTrack(pTracks, passingWithPixelSeed)) allCandsFound = true;
+	}
+      }
 
       //all sample besides ETRACK have all candidates found
-      allCandsFound = true;
-    }//if (evtProperties_.foundPhotonCandidates(pPhotons, passingCands))
-  }//else
+      else allCandsFound = true;
+    }
+  }
 
   //only check data quality on events with two passing candidates
   bool halo = false; //if required collections aren't available in the event, the halo tag stays false
@@ -225,6 +266,38 @@ SampleMaker::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
       //get the HCAL geometry for calculating the rho and phi of the HB/HE RecHit (there's got to be a better way to do this!)
       iSetup.get<CaloGeometryRecord>().get(caloGeometryHandle_);
       const CaloGeometry* pGeometry = caloGeometryHandle_.product();
+
+      //create the collection of candidates to check for halo coincidence
+      map<unsigned int, Photon*> passingCands;
+
+      //only check coincidence with EB candidates that pass the selection
+      if (checkHaloCoincidenceWithPassingEBCandsOnly_) {
+	for (map<unsigned int, Photon*>::const_iterator iPhoton = passingWithoutPixelSeed.begin(); iPhoton != passingWithoutPixelSeed.end(); ++iPhoton) {
+	  if (passingCands.find((*iPhoton).first) == passingCands.end()) passingCands[(*iPhoton).first] = (*iPhoton).second;
+	  else {
+	    stringstream infoStream;
+	    infoStream << "Already found an element with index " << (*iPhoton).first << " in passingCands.  >1 element in passingWithoutPixelSeed has the ";
+	    infoStream << "same index!\n";
+	    evtProperties_.printDebug(infoStream.str());
+	  }
+	}
+	for (map<unsigned int, Photon*>::const_iterator iElectron = passingWithPixelSeed.begin(); iElectron != passingWithPixelSeed.end(); ++iElectron) {
+	  if (passingCands.find((*iElectron).first) == passingCands.end()) passingCands[(*iElectron).first] = (*iElectron).second;
+	  else {
+	    stringstream infoStream;
+	    infoStream << "Already found an element with index " << (*iElectron).first << " in passingCands.  An element in passingWithPixelSeed has the ";
+	    infoStream << "same index as an element in passingWithoutPixelSeed!\n";
+	    evtProperties_.printDebug(infoStream.str());
+	  }
+	}
+      }
+
+      //check halo coincidence with all EB candidates
+      else {
+	for (PhotonCollection::const_iterator iPhoton = pPhotons->begin(); iPhoton != pPhotons->end(); ++iPhoton) {
+	  passingCands[iPhoton - pPhotons->begin()] = const_cast<Photon*>(&*iPhoton);
+	}
+      }
 
       //only calculate the muon tag if the HE tag fails
       if (!evtProperties_.passesHEBeamHaloTag(pHBHERecHits, passingCands, pGeometry)) {
@@ -250,12 +323,9 @@ SampleMaker::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
   }//if (allCandsFound)
 
   stringstream infoStream;
-  bool passesDRCut = false;
-  try { passesDRCut = evtProperties_.passDRCut(passingCands); }
-  catch (const unsigned int badSize) {}
-  if (allCandsFound && (!halo) && passesDRCut) {
+  if (allCandsFound && (!halo)) {
     pass = true;
-    infoStream << "Event passes.\n---------------------------\n\n";
+    infoStream << "Event passes -- run " << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n---------------------------\n\n";
   }
   else infoStream << "Event fails.\n---------------------------\n\n";
   evtProperties_.printDebug(infoStream.str());

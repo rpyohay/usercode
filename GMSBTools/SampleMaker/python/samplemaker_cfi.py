@@ -46,6 +46,7 @@ SampleMaker = cms.EDFilter("SampleMaker",
                            trackPTMin = cms.double(15.0), #GeV
                            eTrackRMin = cms.double(0.8),
                            minDRPhotons = cms.double(0.8),
+                           maxSeedTime = cms.double(3.0), #ns
 
                            #reco::Photon tag
                            photonTag = cms.InputTag("photons", "", "RECOCleaned"),
@@ -59,9 +60,19 @@ SampleMaker = cms.EDFilter("SampleMaker",
                            #reco::Track tag for cosmic tracks
                            cosmicTrackTag = cms.InputTag("cosmicMuons"),
 
+                           #EB RecHit tag
+                           EBRecHitTag = cms.InputTag("ecalRecHit", "EcalRecHitsEB", "RECO"),
+
+                           #EE RecHit tag
+                           EERecHitTag = cms.InputTag("ecalRecHit", "EcalRecHitsEE", "RECO"),
+
                            #optional debug file name (file name is debug.txt by default)
-                           debugFileName = cms.untracked.string("SampleMaker_debug_gg_newCode_sameDRBug_sameMuonEndcapReq.txt"),
+                           debugFileName = cms.untracked.string("SampleMaker_debug_gg_newCode_timingCut_sameMuonEndcapReq.txt"),
 
                            #optional debug flag (debugging off by default)
-                           debugFlag = cms.untracked.bool(True)
+                           debugFlag = cms.untracked.bool(True)#,
+
+                           #optional flag to tell the code how to check halo coincidence
+                           #checks against passing EB objects only by default; setting this flag false causes it to check against all EB reco::Photon objects
+                           #checkHaloCoincidenceWithPassingEBCandsOnly = cms.untracked.bool(False)
                            )
