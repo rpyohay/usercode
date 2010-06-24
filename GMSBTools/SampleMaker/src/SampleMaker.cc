@@ -76,6 +76,7 @@ class SampleMaker : public edm::EDFilter {
   string debugFileName_;
   bool debugFlag_;
   bool checkHaloCoincidenceWithPassingEBCandsOnly_;
+  bool rejectHalo_;
   unsigned int numReqdCands_;
   unsigned int numTot_;
   unsigned int numPassing_;
@@ -126,7 +127,8 @@ SampleMaker::SampleMaker(const edm::ParameterSet& iConfig) :
   EERecHitTag_(iConfig.getParameter<InputTag>("EERecHitTag")),
   debugFileName_(iConfig.getUntrackedParameter<string>("debugFileName", "debug.txt")),
   debugFlag_(iConfig.getUntrackedParameter<bool>("debugFlag", false)),
-  checkHaloCoincidenceWithPassingEBCandsOnly_(iConfig.getUntrackedParameter<bool>("checkHaloCoincidenceWithPassingEBCandsOnly", true))
+  checkHaloCoincidenceWithPassingEBCandsOnly_(iConfig.getUntrackedParameter<bool>("checkHaloCoincidenceWithPassingEBCandsOnly", true)),
+  rejectHalo_(iConfig.getUntrackedParameter<bool>("rejectHalo", true))
 {
    //now do what ever initialization is needed
   numReqdCands_ = 2;
@@ -241,14 +243,14 @@ SampleMaker::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
 	}
       }
 
-      //all sample besides ETRACK have all candidates found
+      //all samples besides ETRACK have all candidates found
       else allCandsFound = true;
     }
   }
 
   //only check data quality on events with two passing candidates
   bool halo = false; //if required collections aren't available in the event, the halo tag stays false
-  if (allCandsFound) {
+  if (allCandsFound && rejectHalo_) {
 
     //get the HB/HE RecHits for calculating beam halo tags
     Handle<HBHERecHitCollection> pHBHERecHits;

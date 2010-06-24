@@ -7,7 +7,7 @@ SampleMaker = cms.EDFilter("SampleMaker",
                            #3: ee sample
                            #4: ff sample
                            #5: e + track sample
-                           sampleType = cms.uint32(1),
+                           sampleType = cms.uint32(4),
 
                            #object (gamma, e, f) selection cut values
 
@@ -67,12 +67,15 @@ SampleMaker = cms.EDFilter("SampleMaker",
                            EERecHitTag = cms.InputTag("ecalRecHit", "EcalRecHitsEE", "RECO"),
 
                            #optional debug file name (file name is debug.txt by default)
-                           debugFileName = cms.untracked.string("SampleMaker_debug_gg_newCode_timingCut_sameMuonEndcapReq.txt"),
+                           debugFileName = cms.untracked.string("SampleMaker_debug_ff_newCode_keepHalo_sameMuonEndcapReq.txt"),
 
                            #optional debug flag (debugging off by default)
-                           debugFlag = cms.untracked.bool(True)#,
+                           debugFlag = cms.untracked.bool(True),
 
                            #optional flag to tell the code how to check halo coincidence
                            #checks against passing EB objects only by default; setting this flag false causes it to check against all EB reco::Photon objects
                            #checkHaloCoincidenceWithPassingEBCandsOnly = cms.untracked.bool(False)
+
+                           #option flag to turn off halo rejection (on by default)
+                           rejectHalo = cms.untracked.bool(False)
                            )

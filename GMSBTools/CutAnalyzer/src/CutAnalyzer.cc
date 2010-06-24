@@ -18,7 +18,7 @@
 //
 
 //all the relevant header files
-#include "GMSBTools/SampleMaker/interface/SampleMaker.h"
+#include "GMSBTools/EventSelection/interface/EventSelector.h"
 #include "FWCore/Framework/interface/EDAnalyzer.h"
 
 //ROOT include files
@@ -46,14 +46,15 @@ class CutAnalyzer : public edm::EDAnalyzer {
       virtual void beginJob() ;
       virtual void analyze(const edm::Event&, const edm::EventSetup&);
       virtual void endJob() ;
-  const unsigned int ECALFiducialRegion(const Photon*) const;
-  const string sampleTypeString() const;
 
       // ----------member data ---------------------------
 
   //output
   string outFileName_;
   TFile* out_;
+  string debugFileName_;
+  ofstream debug_;
+  bool debugFlag_;
 
   //cut values
   unsigned int sampleType_;
@@ -61,21 +62,36 @@ class CutAnalyzer : public edm::EDAnalyzer {
   double ECALIsoMaxConstantEB_;
   double ECALIsoMaxPTMultiplierEE_;
   double ECALIsoMaxConstantEE_;
-  double HCALIsoMaxEB_;
-  double HCALIsoMaxEE_;
+  double HCALIsoMaxPTMultiplierEB_;
+  double HCALIsoMaxConstantEB_;
+  double HCALIsoMaxPTMultiplierEE_;
+  double HCALIsoMaxConstantEE_;
   double HOverEMaxPresel_;
   double ETMin_;
   unsigned int fiducialRegion_;
+  bool useHOverE_;
   double HOverEMax_;
+  bool useSigmaEtaEta_;
   double sigmaEtaEtaMax_;
-  double trackIsoMax_;
+  bool useTrackIso_;
+  double trackIsoMaxPTMultiplier_;
+  double trackIsoMaxConstant_;
   double trackPTMin_;
   double eTrackRMin_;
+  double minDRPhotons_;
+  double maxSeedTime_;
+  bool rejectHalo_;
+  unsigned int numReqdCands_;
+  EventSelector evtProperties_;
+
+  //input
   InputTag photonTag_;
   InputTag trackTag_;
-  string debugFileName_;
-  ofstream debug_;
-  bool debugFlag_;
+  InputTag HBHERecHitTag_;
+  InputTag cosmicTrackTag_;
+  InputTag EBRecHitTag_;
+  InputTag EERecHitTag_;
+  ESHandle<CaloGeometry> caloGeometryHandle_;
 
   //histograms
   TH1F* ECALIso_;
@@ -87,10 +103,10 @@ class CutAnalyzer : public edm::EDAnalyzer {
   TH1F* trackIso_;
   TH1D* trackPT_;
   TH1D* dRTrackPhoton_;
-  TH1F* numPhotonsPerEvt_;
-  TH1F* numElectronsPerEvt_;
-  TH1F* numFakesPerEvt_;
+  TH1F* numCandsPerEvt_;
   TH1F* numTracksPerEvt_;
+  TH1D* eta_;
+  TH1D* phi_;
 };
 
 //
@@ -106,72 +122,49 @@ class CutAnalyzer : public edm::EDAnalyzer {
 //
 CutAnalyzer::CutAnalyzer(const edm::ParameterSet& iConfig) :
   outFileName_(iConfig.getUntrackedParameter<string>("outFileName", "out.root")),
+  debugFileName_(iConfig.getUntrackedParameter<string>("debugFileName", "debug.txt")),
+  debugFlag_(iConfig.getUntrackedParameter<bool>("debugFlag", false)),
   sampleType_(iConfig.getParameter<unsigned int>("sampleType")),
   ECALIsoMaxPTMultiplierEB_(iConfig.getParameter<double>("ECALIsoMaxPTMultiplierEB")),
   ECALIsoMaxConstantEB_(iConfig.getParameter<double>("ECALIsoMaxConstantEB")),
   ECALIsoMaxPTMultiplierEE_(iConfig.getParameter<double>("ECALIsoMaxPTMultiplierEE")),
   ECALIsoMaxConstantEE_(iConfig.getParameter<double>("ECALIsoMaxConstantEE")),
-  HCALIsoMaxEB_(iConfig.getParameter<double>("HCALIsoMaxEB")),
-  HCALIsoMaxEE_(iConfig.getParameter<double>("HCALIsoMaxEE")),
+  HCALIsoMaxPTMultiplierEB_(iConfig.getParameter<double>("HCALIsoMaxPTMultiplierEB")),
+  HCALIsoMaxConstantEB_(iConfig.getParameter<double>("HCALIsoMaxConstantEB")),
+  HCALIsoMaxPTMultiplierEE_(iConfig.getParameter<double>("HCALIsoMaxPTMultiplierEE")),
+  HCALIsoMaxConstantEE_(iConfig.getParameter<double>("HCALIsoMaxConstantEE")),
   HOverEMaxPresel_(iConfig.getParameter<double>("HOverEMaxPresel")),
   ETMin_(iConfig.getParameter<double>("ETMin")),
   fiducialRegion_(iConfig.getParameter<unsigned int>("fiducialRegion")),
+  useHOverE_(iConfig.getUntrackedParameter<bool>("useHOverE", false)),
   HOverEMax_(iConfig.getParameter<double>("HOverEMax")),
+  useSigmaEtaEta_(iConfig.getUntrackedParameter<bool>("useSigmaEtaEta", false)),
   sigmaEtaEtaMax_(iConfig.getParameter<double>("sigmaEtaEtaMax")),
-  trackIsoMax_(iConfig.getParameter<double>("trackIsoMax")),
+  useTrackIso_(iConfig.getUntrackedParameter<bool>("useTrackIso", false)),
+  trackIsoMaxPTMultiplier_(iConfig.getParameter<double>("trackIsoMaxPTMultiplier")),
+  trackIsoMaxConstant_(iConfig.getParameter<double>("trackIsoMaxConstant")),
   trackPTMin_(iConfig.getUntrackedParameter<double>("trackPTMin", -1.0)),
   eTrackRMin_(iConfig.getUntrackedParameter<double>("eTrackRMin", -1.0)),
+  minDRPhotons_(iConfig.getParameter<double>("minDRPhotons")),
+  maxSeedTime_(iConfig.getParameter<double>("maxSeedTime")),
+  rejectHalo_(iConfig.getUntrackedParameter<bool>("rejectHalo", true)),
   photonTag_(iConfig.getParameter<InputTag>("photonTag")),
   trackTag_(iConfig.getParameter<InputTag>("trackTag")),
-  debugFileName_(iConfig.getUntrackedParameter<string>("debugFileName", "debug.txt")),
-  debugFlag_(iConfig.getUntrackedParameter<bool>("debugFlag", false))
+  HBHERecHitTag_(iConfig.getParameter<InputTag>("HBHERecHitTag")),
+  cosmicTrackTag_(iConfig.getParameter<InputTag>("cosmicTrackTag")),
+  EBRecHitTag_(iConfig.getParameter<InputTag>("EBRecHitTag")),
+  EERecHitTag_(iConfig.getParameter<InputTag>("EERecHitTag"))
 
 {
    //now do what ever initialization is needed
-  if (debugFlag_) {
-    debug_.open(debugFileName_.c_str());
-    if (!debug_.is_open()) {
-      cerr << "Error opening file " << debugFileName_ << ".  Debugging will be turned off for this job.\n";
-      debugFlag_ = false;
-    }
-  }
-  if (debugFlag_) {
-    debug_ << "Sample type: " << sampleType_ << "(" << sampleTypeString() << ")\n";
-    debug_ << "Maximum ECAL isolation in EB: " << ECALIsoMaxPTMultiplierEB_ << "*pT + " << ECALIsoMaxConstantEB_ << " GeV\n";
-    debug_ << "Maximum ECAL isolation in EE: " << ECALIsoMaxPTMultiplierEE_ << "*pT + " << ECALIsoMaxConstantEE_ << " GeV\n";
-    debug_ << "Maximum HCAL isolation in EB: " << HCALIsoMaxEB_ << " GeV\n";
-    debug_ << "Maximum HCAL isolation in EE: " << HCALIsoMaxEE_ << " GeV\n";
-    debug_ << "Minimum photon ET: " << ETMin_ << " GeV\n";
-    debug_ << "Fiducial region: " << fiducialRegion_ << "(";
-    switch (fiducialRegion_) {
-    case EB:
-      debug_ << "EB";
-      break;
-    case EEND:
-      debug_ << "EE";
-      break;
-    case ECAL:
-      debug_ << "ECAL";
-      break;
-    default:
-      debug_ << "invalid fiducial region";
-      break;
-    }
-    debug_ << ")\n";
-    debug_ << "Maximum H/E: " << HOverEMax_ << endl;
-    debug_ << "Maximum photon supercluster eta width: " << sigmaEtaEtaMax_ << endl;
-    debug_ << "Maximum photon track isolation: " << trackIsoMax_ << endl;
-    debug_ << "Minimum track pT: " << trackPTMin_ << endl;
-    debug_ << "Minimum dR(photon, track): " << eTrackRMin_ << endl << endl;
-  }
-  if ((sampleType_ != GAMMAGAMMA) && (sampleType_ != EGAMMA) && (sampleType_ != EE) && (sampleType_ != FF) && (sampleType_ != ETRACK)) {
-    if (debugFlag_) debug_ << "Invalid sample type chosen.  Defaulting to \"FF\".\n\n";
-    sampleType_ = FF;
-  }
-  if ((fiducialRegion_ != EB) && (fiducialRegion_ != EEND) && (fiducialRegion_ != ECAL)) {
-    if (debugFlag_) debug_ << "Invalid fiducial region chosen.  Defaulting to \"EB\"\n\n";
-    fiducialRegion_ = EB;
-  }
+  numReqdCands_ = 2;
+  if (sampleType_ == ETRACK) numReqdCands_ = 1;
+  EventSelector evtProperties(sampleType_, ECALIsoMaxPTMultiplierEB_, ECALIsoMaxConstantEB_, ECALIsoMaxPTMultiplierEE_, ECALIsoMaxConstantEE_, 
+			      HCALIsoMaxPTMultiplierEB_, HCALIsoMaxConstantEB_, HCALIsoMaxPTMultiplierEE_, HCALIsoMaxConstantEE_, HOverEMaxPresel_, 
+			      ETMin_, fiducialRegion_, useHOverE_, HOverEMax_, useSigmaEtaEta_, sigmaEtaEtaMax_, useTrackIso_, trackIsoMaxPTMultiplier_, 
+			      trackIsoMaxConstant_, trackPTMin_, eTrackRMin_, minDRPhotons_, maxSeedTime_, numReqdCands_, 0, 0, 0, debugFileName_, 
+			      debugFlag_);
+  evtProperties_ = evtProperties;
 }
 
 
@@ -180,7 +173,7 @@ CutAnalyzer::~CutAnalyzer()
  
    // do anything here that needs to be done at desctruction time
    // (e.g. close files, deallocate resources etc.)
-  delete out_;
+
 }
 
 
@@ -196,189 +189,160 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   const unsigned int runNum = iEvent.run();
   const unsigned int evtNum = iEvent.id().event();
   const unsigned int lumiNum = iEvent.getLuminosityBlock().luminosityBlock();
+  evtProperties_.setRun(runNum);
+  evtProperties_.setEvt(evtNum);
+  evtProperties_.setLumiSec(lumiNum);
+  evtProperties_.printEvtInfo();
+
+  //get the ECAL RecHit collections
+  vector<EcalRecHit*> ECALRecHits;
+  Handle<EBRecHitCollection> pEBRecHits;
+  bool foundEBRecHits = false;
+  if ((fiducialRegion_ == EB) || (fiducialRegion_ == ECAL)) {
+    try { foundEBRecHits = (iEvent.getByLabel(EBRecHitTag_, pEBRecHits)) && (pEBRecHits->size() > 0); }
+    catch (cms::Exception& ex) {}
+    if (!foundEBRecHits) {
+      stringstream infoStream;
+      infoStream << "No EB RecHit collection found in run" << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n";
+      evtProperties_.printDebug(infoStream.str());
+    }
+    else {
+      for (EBRecHitCollection::const_iterator iEBRecHit = pEBRecHits->begin(); iEBRecHit != pEBRecHits->end(); ++iEBRecHit) {
+	ECALRecHits.push_back(const_cast<EcalRecHit*>(&*iEBRecHit));
+      }
+    }
+  }
+  if ((fiducialRegion_ == EEND) || (fiducialRegion_ == ECAL)) {
+    Handle<EERecHitCollection> pEERecHits;
+    bool foundEERecHits = false;
+    try { foundEERecHits = (iEvent.getByLabel(EERecHitTag_, pEERecHits)) && (pEERecHits->size() > 0); }
+    catch (cms::Exception& ex) {}
+    if (!foundEERecHits) {
+      stringstream infoStream;
+      infoStream << "No EE RecHit collection found in run" << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n";
+      evtProperties_.printDebug(infoStream.str());
+    }
+    else {
+      for (EERecHitCollection::const_iterator iEERecHit = pEERecHits->begin(); iEERecHit != pEERecHits->end(); ++iEERecHit) {
+	ECALRecHits.push_back(const_cast<EcalRecHit*>(&*iEERecHit));
+      }
+    }
+  }
 
   //get the reco::Photon collection
+  map<unsigned int, Photon*> passingWithoutPixelSeed;
+  map<unsigned int, Photon*> passingWithPixelSeed;
+  unsigned int numCands = 0;
   Handle<PhotonCollection> pPhotons;
   bool foundPhotons = false;
   try { foundPhotons = (iEvent.getByLabel(photonTag_, pPhotons)) && (pPhotons->size() > 0); }
   catch (cms::Exception& ex) {}
   if (!foundPhotons) {
-    if (debugFlag_) {
-      debug_ << "No reco::Photon collection found in run " << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n\n";
-    }
+    stringstream infoStream;
+    infoStream << "No reco::Photon collection found in run " << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n";
+    evtProperties_.printDebug(infoStream.str());
   }
   else {
 
-    //loop over the photons looking for objects passing specified criteria
-    unsigned int numPhotons = 0;
-    unsigned int numElectrons = 0;
-    unsigned int numFakes = 0;
-    vector<Photon*> electrons;
-    unsigned int numPhotonsProcessed = 0;
-    for (PhotonCollection::const_iterator iPhoton = pPhotons->begin(); iPhoton != pPhotons->end(); ++iPhoton) {
-      bool foundPassingCand = false;
+    //find candidates passing preselection, photon ID, and dR(photon, photon)
+    if (evtProperties_.foundPhotonCandidates(pPhotons, ECALRecHits, passingWithoutPixelSeed, passingWithPixelSeed)) {
 
-      /*all samples require at least one object satisfying:
-	ECAL isolation < ECALIsoMaxPTMultiplierEB_*pT + ECALIsoMaxConstantEB_ GeV (EB), 
-	ECALIsoMaxPTMultiplierEE_*pT + ECALIsoMaxConstantEE_ GeV (EE)
-	HCAL isolation < HCALIsoMaxEB_ GeV (EB), HCALIsoMaxEE_ GeV (EE)
-	H/E < HOverEMaxPresel_
-	ET > ETMin_
-	supercluster in fiducial region
-      */
-      const double pT = iPhoton->pt();
-      const double ECALIso = (double)iPhoton->ecalRecHitSumEtConeDR04();
-      double ECALIsoMax = ECALIsoMaxPTMultiplierEB_*pT + ECALIsoMaxConstantEB_;
-      const double HCALIso = (double)iPhoton->hcalTowerSumEtConeDR04();
-      double HCALIsoMax = HCALIsoMaxEB_;
-      const unsigned int fiducialRegion = ECALFiducialRegion(const_cast<const Photon*>(&*iPhoton));
-      if (fiducialRegion == EEND) {
-	ECALIsoMax = ECALIsoMaxPTMultiplierEE_*pT + ECALIsoMaxConstantEE_;
-	HCALIsoMax = HCALIsoMaxEE_;
-      }
-      const double HOverE = (double)iPhoton->hadronicOverEm();
-      const double ET = iPhoton->et();
-      const double sigmaEtaEta = (double)iPhoton->sigmaEtaEta();
-      const double trackIso = (double)iPhoton->trkSumPtHollowConeDR04();
-      const unsigned int index = iPhoton - pPhotons->begin();
-      if ((ECALIso < ECALIsoMax) && (HCALIso < HCALIsoMax) && (HOverE < HOverEMaxPresel_) && (ET > ETMin_) && 
-	  ((fiducialRegion_ == ECAL) || (fiducialRegion_ == fiducialRegion))) {
-	if (debugFlag_) {
-	  debug_ << "Run: " << runNum << endl;
-	  debug_ << "Event: " << evtNum << endl;
-	  debug_ << "Lumi section: " << lumiNum << endl;
-	  debug_ << "Photon index: " << index << endl;
-	  debug_ << "Photon pT: " << pT << " GeV\n";
-	  debug_ << "Photon ECAL isolation: " << ECALIso << " GeV\n";
-	  debug_ << "Photon HCAL isolation: " << HCALIso << " GeV\n";
-	  debug_ << "Photon H/E: " << HOverE << " GeV\n";
-	  debug_ << "Photon ET: " << ET << " GeV\n";
-	  debug_ << "Photon fiducial region: " << fiducialRegion << " (";
-	  if (fiducialRegion == EB) debug_ << "EB";
-	  else debug_ << "EE";
-	  debug_ << ")\n\n";
-	}
-
-	/*gammagamma, egamma, ee, and etrack samples require:
-	 sigmaEtaEta < sigmaEtaEtaMax_
-	 H/E < HOverEMax_
-	 track isolation < trackIsoMax_
-	*/
-	if (((sampleType_ == GAMMAGAMMA) || (sampleType_ == EGAMMA) || (sampleType_ == EE) || (sampleType_ == ETRACK)) && 
-	    ((sigmaEtaEta < sigmaEtaEtaMax_) && (HOverE < HOverEMax_) && (trackIso < trackIsoMax_))) {
-	  if (debugFlag_) {
-	    debug_ << "Photon supercluster eta width: " << sigmaEtaEta << endl;
-	    debug_ << "Photon track isolation: " << trackIso << endl;
-	  }
-
-	  //egamma, ee, and etrack samples require the candidate to have at least one pixel seed
-	  if (iPhoton->hasPixelSeed()) {
-
-	    /*ee and etrack samples require only electrons
-	      for the etrack sample, we also need to save the candidate*/
-	    if ((sampleType_ == EE) || (sampleType_ == ETRACK) || (sampleType_ == EGAMMA)) {
-	      ++numElectrons;
-	      if (debugFlag_) debug_ << "Number of found electrons: " << numElectrons << endl;
-	      electrons.push_back(const_cast<Photon*>(&*iPhoton));
-	      foundPassingCand = true;
-	    }
-	  }
-
-	  //gammagamma and egamma samples require no pixel seed
-	  else {
-
-	    //gammagamma sample requires only photons
-	    if ((sampleType_ == GAMMAGAMMA) || (sampleType_ == EGAMMA)) {
-	      ++numPhotons;
-	      if (debugFlag_) debug_ << "Number of found photons: " << numPhotons << endl;
-	      foundPassingCand = true;
-	    }
-	  }
-	}
-
-	/*ff sample requires:
-	 sigmaEtaEta > sigmaEtaEtaMax_ or
-	 H/E > HOverEMax_ or
-	 track isolation > trackIsoMax_
-
-	 NB. No requirement on number of pixel seeds in the fake definition!
-	*/
-	else if ((sampleType_ == FF) && ((sigmaEtaEta >= sigmaEtaEtaMax_) || (HOverE >=  HOverEMax_) || (trackIso >= trackIsoMax_))) {
-	  ++numFakes;
-	  foundPassingCand = true;
-	  if (debugFlag_) {
-	    debug_ << "Number of found fakes: " << numFakes << endl;
-	    debug_ << "Photon supercluster eta width: " << sigmaEtaEta << endl;
-	    debug_ << "Photon track isolation: " << trackIso << endl;
-	  }
-	}
-      }
-
-      //fill histograms
-      if (foundPassingCand) {
-	ECALIso_->Fill(ECALIso);
-	HCALIso_->Fill(HCALIso);
-	ET_->Fill(ET);
-	HOverE_->Fill(HOverE);
-	fiducialRegionDist_->Fill(fiducialRegion);
-	etaWidth_->Fill(sigmaEtaEta);
-	trackIso_->Fill(trackIso);
-      }
-
-      //advance to the next photon in the collection
-      ++numPhotonsProcessed;
-      if (debugFlag_) debug_ << endl;
-    }
-    if (debugFlag_) debug_ << "Number of photons processed: " << numPhotonsProcessed << "/" << pPhotons->size() << endl << endl;
-
-    //fill histograms
-    if ((sampleType_ == GAMMAGAMMA) || (sampleType_ == EGAMMA)) numPhotonsPerEvt_->Fill(numPhotons);
-    if ((sampleType_ == EGAMMA) || (sampleType_ == EE) || (sampleType_ == ETRACK)) numElectronsPerEvt_->Fill(numElectrons);
-    if (sampleType_ == FF) numFakesPerEvt_->Fill(numFakes);
-
-    //etrack sample requires a track
-    if (sampleType_ == ETRACK) {
-
-      //get the GeneralTrack collection
-      Handle<TrackCollection> pTracks;
-      bool tracksFound = false;
-      try { tracksFound = (iEvent.getByLabel(trackTag_, pTracks)) && (pTracks->size() > 0); }
+      //get the HB/HE RecHits for calculating beam halo tags
+      Handle<HBHERecHitCollection> pHBHERecHits;
+      bool foundHBHERecHits = false;
+      try { foundHBHERecHits = (iEvent.getByLabel(HBHERecHitTag_, pHBHERecHits)) && (pHBHERecHits->size() > 0); }
       catch (cms::Exception& ex) {}
-      if (!tracksFound) {
-	if (debugFlag_) debug_ << "No track collection found in run " << iEvent.run() << ", event " << iEvent.id().event() << ".\n";
+      if (!foundHBHERecHits) {
+	stringstream infoStream;
+	infoStream << "No reco::HBHERecHit collection found in run " << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n";
+	evtProperties_.printDebug(infoStream.str());
       }
-      else {
 
-	/*etrack sample requires:
-	  track pT > trackPTMin_
-	  dR(track, electron) > eTrackRMin_
-	*/
-	unsigned int numTracks = 0;
-	for (TrackCollection::const_iterator iTrack = pTracks->begin(); iTrack != pTracks->end(); ++iTrack) {
-	  double pT = iTrack->pt();
-	  if (pT > trackPTMin_) {
-	    for (vector<Photon*>::const_iterator iElectron = electrons.begin(); iElectron != electrons.end(); ++iElectron) {
-	      double dEtaETrack = (*iElectron)->eta() - iTrack->eta();
-	      double dPhiETrack = (*iElectron)->phi() - iTrack->phi();
-	      double dRETrack = sqrt((dEtaETrack)*(dEtaETrack) + (dPhiETrack)*(dPhiETrack));
-	      if (dRETrack > eTrackRMin_) {
-		++numTracks;
-		if (debugFlag_) {
-		  debug_ << "Track pT: " << pT << " GeV\n";
-		  debug_ << "dR(track, photon): " << dRETrack << endl;
-		}
+      //get the HCAL geometry for calculating the rho and phi of the HB/HE RecHit (there's got to be a better way to do this!)
+      iSetup.get<CaloGeometryRecord>().get(caloGeometryHandle_);
+      const CaloGeometry* pGeometry = caloGeometryHandle_.product();
+
+      //get the cosmic tracks for calculating beam halo tags
+      Handle<TrackCollection> pCosmicTracks;
+      bool foundCosmicTracks = false;
+      try { foundCosmicTracks = (iEvent.getByLabel(cosmicTrackTag_, pCosmicTracks)) && (pCosmicTracks->size() > 0); }
+      catch (cms::Exception& ex) {}
+      if (!foundCosmicTracks) {
+	stringstream infoStream;
+	infoStream << "No reco::Track collection for cosmic tracks found in run " << runNum << ", event " << evtNum << ", lumi section " << lumiNum;
+	evtProperties_.printDebug(infoStream.str());
+      }
+
+      //loop over candidate list
+      for (map<unsigned int, Photon*>::const_iterator iPassingWithoutPixelSeed = passingWithoutPixelSeed.begin(); 
+	   iPassingWithoutPixelSeed != passingWithoutPixelSeed.end(); ++iPassingWithoutPixelSeed) {
+
+	//find candidates failing halo tags
+	bool passHalo = false;
+	const Photon* photon = const_cast<const Photon*>((*iPassingWithoutPixelSeed).second);
+	if (foundHBHERecHits) {
+	  if (!evtProperties_.photonIsHEHalo(pHBHERecHits, photon, pGeometry)) {
+	    if (foundCosmicTracks) {
+	      if (!evtProperties_.photonIsMuonHalo(pCosmicTracks, photon)) passHalo = true;
+	    }
+	    else passHalo = true;
+	  }
+	}
+	else if (foundCosmicTracks) {
+	  if (!evtProperties_.photonIsMuonHalo(pCosmicTracks, photon)) passHalo = true;
+	}
+	else passHalo = true;
+
+	//find candidates passing all requirements
+	bool passAll = false;
+	if (passHalo || (!rejectHalo_)) {
+
+	  //find ETRACK candidates passing dR(photon, track)
+	  if (sampleType_ == ETRACK) {
+	    Handle<TrackCollection> pTracks;
+	    bool foundTracks = false;
+	    try { foundTracks = (iEvent.getByLabel(trackTag_, pTracks)) && (pTracks->size() > 0); }
+	    catch (cms::Exception& ex) {}
+	    if (!foundTracks) {
+	      stringstream infoStream;
+	      infoStream << "No reco::Track collection found in run " << runNum << ", event " << evtNum << ", lumi section " << lumiNum << ".\n";
+	      evtProperties_.printDebug(infoStream.str());
+	    }
+	    else {
+	      if (evtProperties_.electronHasPassingTrack(pTracks, photon, (*iPassingWithoutPixelSeed).first)) {
+		passAll = true;
+		//TODO: plot pT of non-overlapping tracks that pass the pT requirement
+		//TODO: plot dR(photon, track) of non-overlapping tracks that pass the pT requirement
 	      }
-	      else if (debugFlag_) debug_ << "This track/electron pair doesn't meet the criteria; advancing to the next electron.\n";
 	    }
 	  }
-	  else if (debugFlag_) debug_ << "This track doesn't meet the pT criteria; advancing to the next track.\n";
+
+	  //other samples pass
+	  else {
+	    passAll = true;
+	    ++numCands;
+	  }
 	}
 
-	//fill histogram
-	numTracksPerEvt_->Fill(numTracks);
-      }
-    }
-  }
+	//fill histograms
+	if (passAll) {
+	  ECALIso_->Fill(photon->ecalRecHitSumEtConeDR04());
+	  HCALIso_->Fill(photon->hcalTowerSumEtConeDR04());
+	  ET_->Fill(photon->et());
+	  HOverE_->Fill(photon->hadronicOverEm());
+	  fiducialRegionDist_->Fill(evtProperties_.ECALFiducialRegion(photon));
+	  etaWidth_->Fill(photon->sigmaEtaEta());
+	  trackIso_->Fill(photon->trkSumPtHollowConeDR04());
+	  eta_->Fill(photon->eta());
+	  phi_->Fill(photon->phi());
+	}
+      }//end loop over candidates
+    }//end if found photon candidates
+  }//end else
+
+  //fill histograms
+  numCandsPerEvt_->Fill(numCands);
+  //TODO: fill numTracksPerEvt_
 }
 
 // ------------ method called once each job just before starting event loop  ------------
@@ -401,25 +365,14 @@ CutAnalyzer::beginJob()
 		       100, 0.0, 0.1);
   trackIso_ = new TH1F("trackIso_", "Track isolation of passing e/#gamma candidates;Track isolation (GeV);e/#gamma candidates per GeV", 
 		       50, 0.0, 50.0);
+  numCandsPerEvt_ = new TH1F("numCandsPerEvt_", "Number of passing candidates per event;Number per event;Events per 1", 5, -0.5, 4.5);
   if (sampleType_ == ETRACK) {
     trackPT_ = new TH1D("trackPT_", "p_{T} of passing tracks;p_{T} (GeV);Tracks per GeV", 100, 0.0, 100.0);
-    dRTrackPhoton_ = new TH1D("dRTrackPhoton_", "#DeltaR(track, e/#gamma candidate) of passing tracks-e/#gamma candidate pairs;#DeltaR;", 
-			      100, 0.0, 1.0);
+    dRTrackPhoton_ = new TH1D("dRTrackPhoton_", "#DeltaR(track, e/#gamma candidate) of passing tracks-e/#gamma candidate pairs;#DeltaR;", 100, 0.0, 1.0);
     dRTrackPhoton_->GetYaxis()->SetTitle("track-e/#gamma candidate pairs per 0.01");
-    numTracksPerEvt_ = new TH1F("numTracksPerEvt_", "Number of passing tracks per event;Number per event;Events per 1", 5, -0.5, 4.5);
   }
-  if ((sampleType_ == GAMMAGAMMA) || (sampleType_ == EGAMMA)) {
-    numPhotonsPerEvt_ = new TH1F("numPhotonsPerEvt_", 
-				 "Number of passing #gamma candidates per event;Number per event;Events per 1", 5, -0.5, 4.5);
-  }
-  if ((sampleType_ == EE) || (sampleType_ == ETRACK) || (sampleType_ == EGAMMA)) {
-    numElectronsPerEvt_ = new TH1F("numElectronsPerEvt_", "Number of passing e candidates per event;Number per event;Events per 1", 5, 
-				   -0.5, 4.5);
-  }
-  if (sampleType_ == FF) {
-    numFakesPerEvt_ = new TH1F("numFakesPerEvt_", "Number of passing fake candidates per event;Number per event;Events per 1", 5, -0.5, 
-			       4.5);
-  }
+  eta_ = new TH1D("eta_", "#eta of passing e/#gamma candidates;#eta;e/#gamma candidates per 0.2", 15, -1.5, 1.5);
+  phi_ = new TH1D("phi_", "#phi of passing e/#gamma candidates;#phi;e/#gamma candidates per 0.4", 16, -3.2, 3.2);
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
@@ -437,54 +390,20 @@ CutAnalyzer::endJob() {
     fiducialRegionDist_->Write();
     etaWidth_->Write();
     trackIso_->Write();
+    eta_->Write();
+    phi_->Write();
     if (sampleType_ == ETRACK) {
       trackPT_->Write();
       dRTrackPhoton_->Write();
-      numTracksPerEvt_->Write();
     }
-    if ((sampleType_ == GAMMAGAMMA) || (sampleType_ == EGAMMA)) numPhotonsPerEvt_->Write();
-    if ((sampleType_ == EE) || (sampleType_ == ETRACK) || (sampleType_ == EGAMMA)) numElectronsPerEvt_->Write();
-    if (sampleType_ == FF) numFakesPerEvt_->Write();
+    numCandsPerEvt_->Write();
+    out_->Close();
   }
   else if (debugFlag_) {
     debug_ << "Error opening file " << outFileName_ << ".\n";
     debug_.close();
   }
-}
-
-//get the ECAL fiducial region in units this code understands
-const unsigned int CutAnalyzer::ECALFiducialRegion(const Photon* photon) const
-{
-  unsigned int reg = EB;
-  if (photon->isEE()) reg = EEND;
-  return reg;
-}
-
-//get the sample type as a string
-const string CutAnalyzer::sampleTypeString() const
-{
-  string sampleType = "";
-  switch (sampleType_) {
-  case GAMMAGAMMA:
-    sampleType = "GAMMAGAMMA";
-    break;
-  case EGAMMA:
-    sampleType = "EGAMMA";
-    break;
-  case EE:
-    sampleType = "EE";
-    break;
-  case FF:
-    sampleType = "FF";
-    break;
-  case ETRACK:
-    sampleType = "ETRACK";
-    break;
-  default:
-    sampleType = "invalid sample type";
-    break;
-  }
-  return sampleType;
+  delete out_;
 }
 
 //define this as a plug-in
