@@ -1,0 +1,52 @@
+#1: gammagamma (candidate) sample
+#2: egamma sample
+#3: ee sample
+#4: ff sample
+#5: e + track sample
+sampleType 4
+#----------------------------------------------------------------------
+#object (gamma, e, f) selection cut values
+ECALIsoMaxPTMultiplierEB 0.004
+ECALIsoMaxConstantEB 4.2
+ECALIsoMaxPTMultiplierEE 0.0
+ECALIsoMaxConstantEE 999999999.0
+HCALIsoMaxPTMultiplierEB 0.001
+HCALIsoMaxConstantEB 2.2
+HCALIsoMaxPTMultiplierEE 0.0
+HCALIsoMaxConstantEE 999999999.0
+HOverEMaxPresel 0.05
+ETMin 15.0
+#----------------------------------------------------------------------
+#1: EB
+#2: EE
+#3: all ECAL
+fiducialRegion 1
+#----------------------------------------------------------------------
+#photon ID cuts
+useHOverE 0
+HOverEMax 0.0
+useSigmaEtaEta 0
+sigmaEtaEtaMax 0.0
+useTrackIso 1
+trackIsoMaxPTMultiplier 0.001
+trackIsoMaxConstant 2.0
+#----------------------------------------------------------------------
+trackPTMin 15.0
+eTrackRMin 0.8
+minDRPhotons 0.8
+#----------------------------------------------------------------------
+#flag to use the timing cut
+useTimingCut 0
+maxSeedTime 3.0
+#----------------------------------------------------------------------
+#debug file name
+debugFileName "debug_ff_EG_PD_prompt_reco_Jul11Skim_badNtuple_file107Missing.txt"
+#----------------------------------------------------------------------
+#debug flag
+debugFlag 1
+#----------------------------------------------------------------------
+#flag to tell the code how to check halo coincidence
+checkHaloCoincidenceWithPassingEBCandsOnly 1
+#----------------------------------------------------------------------
+#flag to turn off halo rejection
+rejectHalo 1

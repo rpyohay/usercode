@@ -1,0 +1,59 @@
+#output file name
+outFileName "out_gg_MC.root"
+#----------------------------------------------------------------------
+#1: gammagamma (candidate) sample
+#2: egamma sample
+#3: ee sample
+#4: ff sample
+#5: e + track sample
+sampleType 1
+#----------------------------------------------------------------------
+#object (gamma, e, f) selection cut values
+ECALIsoMaxPTMultiplierEB 0.004
+ECALIsoMaxConstantEB 4.2
+ECALIsoMaxPTMultiplierEE 0.0
+ECALIsoMaxConstantEE 999999999.0
+HCALIsoMaxPTMultiplierEB 0.001
+HCALIsoMaxConstantEB 2.2
+HCALIsoMaxPTMultiplierEE 0.0
+HCALIsoMaxConstantEE 999999999.0
+HOverEMaxPresel 0.05
+ETMin 10.0
+#----------------------------------------------------------------------
+#1: EB
+#2: EE
+#3: all ECAL
+fiducialRegion 1
+#----------------------------------------------------------------------
+#photon ID cuts
+useHOverE 0
+HOverEMax 0.0
+useSigmaEtaEta 0
+sigmaEtaEtaMax 0.0
+useTrackIso 1
+trackIsoMaxPTMultiplier 0.001
+trackIsoMaxConstant 2.0
+minDRPhotons 0.8
+#----------------------------------------------------------------------
+#flag to use the timing cut
+useTimingCut 1
+maxSeedTime 3.0
+#----------------------------------------------------------------------
+#flag to turn off halo rejection
+rejectHalo 1
+#----------------------------------------------------------------------
+#track selection cuts
+trackPTMin 15.0
+eTrackRMin 0.8
+#----------------------------------------------------------------------
+#jet pT cut
+minJetPT 10.0
+#----------------------------------------------------------------------
+#jet eta cut
+maxJetAbsEta 1.3
+#----------------------------------------------------------------------
+#debug file name
+debugFileName "CutAnalyzer_debug_alphaTTest.txt"
+#----------------------------------------------------------------------
+#debug flag
+debugFlag 0
