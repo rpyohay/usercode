@@ -2,21 +2,12 @@
 #include "EventSelector.h"
 #include <vector>
 #include <string>
+#include <sstream>
 
 //chain the input trees together
 void makeChain(vector<string>& fileList, TChain* chain)
 {
-  for (vector<string>::const_iterator iFile = fileList.begin(), iFile != fileList.end(); ++iFile) {
-    TFile* in = new TFile((*iFile).c_str());
-    if (!in->IsOpen()) {
-      cerr << "Error opening input file " << *iFile << ".\n";
-      delete in;
-      return;
-    }
-    TTree* tree;
-    in->GetObject("gmsbAna/root", tree);
-    chain->Add((*iFile).c_str());
-  }
+  for (vector<string>::const_iterator iFile = fileList.begin(); iFile != fileList.end(); ++iFile) { chain->Add((*iFile).c_str()); }
 }
 
 //parse the cfg file
@@ -38,7 +29,7 @@ int parseCfgFile(EventSelector& evtProperties, map<string, unsigned int>& haloPa
   string line = "";
   while (!in.eof()) {
     getline(in, line);
-    if (line == "#") continue; //comment
+    if (line[0] == '#') continue; //comment
 
     //extract parameter name, type, and value
     size_t spacePos = line.find(' ');
@@ -49,6 +40,7 @@ int parseCfgFile(EventSelector& evtProperties, map<string, unsigned int>& haloPa
     }
     stringstream paramName;
     paramName << line.substr(0, spacePos); //parameter name is the first word in the line
+    string paramNameString = paramName.str();
     size_t spacePos2 = line.find(' ', spacePos + 1);
     if (spacePos2 == string::npos) {
       cerr << "Error in configuration file " << cfgFileName << ": improper formatting in line \"" << line << "\".\n";
@@ -57,12 +49,14 @@ int parseCfgFile(EventSelector& evtProperties, map<string, unsigned int>& haloPa
     }
     stringstream paramType;
     paramType << line.substr(spacePos + 1, spacePos2 - spacePos - 1); //parameter type is the second word in the line
+    string paramTypeString = paramType.str();
     stringstream paramVal;
-    if (paramType == "string") {
+    if (paramTypeString == "string") {
       if ((line.find('"') == (spacePos2 + 1)) && (line.find('"', spacePos2 + 2) == (line.length() - 1))) {
 	paramVal << line.substr(spacePos2 + 2, line.length() - spacePos2 - 3); //to handle properly formatted strings
-	if (stringParams.find(paramName) == stringParams.end()) stringParams[paramName] = paramVal;
-	else cerr << "Ignoring duplicate value " << paramVal << " of parameter " << paramName << ".\n";
+	string paramValString = paramVal.str();
+	if (stringParams.find(paramNameString) == stringParams.end()) stringParams[paramNameString] = paramValString;
+	else cerr << "Ignoring duplicate value " << paramValString << " of parameter " << paramNameString << ".\n";
       }
       else {
 	cerr << "Error in configuration file " << cfgFileName << ": improper formatting in line \"" << line << "\".\n";
@@ -71,13 +65,17 @@ int parseCfgFile(EventSelector& evtProperties, map<string, unsigned int>& haloPa
       }
     }
     else paramVal << line.substr(spacePos2 + 1, line.length() - spacePos2 - 1); //parameter value is the third word in the line
-    if (paramType == "unsigned_int") {
-      if (uintParams.find(paramName) == uintParams.end()) uintParams[paramName] = paramVal;
-      else cerr << "Ignoring duplicate value " << paramVal << " of parameter " << paramName << ".\n";
+    if (paramTypeString == "unsigned_int") {
+      unsigned int paramValUint;
+      paramVal >> paramValUint;
+      if (uintParams.find(paramNameString) == uintParams.end()) uintParams[paramNameString] = paramValUint;
+      else cerr << "Ignoring duplicate value " << paramValUint << " of parameter " << paramNameString << ".\n";
     }
-    if (paramType == "double") {
-      if (doubleParams.find(paramName) == doubleParams.end()) doubleParams[paramName] = paramVal;
-      else cerr << "Ignoring duplicate value " << paramVal << " of parameter " << paramName << ".\n";
+    if (paramType.str() == "double") {
+      double paramValDouble;
+      paramVal >> paramValDouble;
+      if (doubleParams.find(paramNameString) == doubleParams.end()) doubleParams[paramNameString] = paramValDouble;
+      else cerr << "Ignoring duplicate value " << paramValDouble << " of parameter " << paramNameString << ".\n";
     }
   }
   in.close();
@@ -177,13 +175,13 @@ bool passedFullSelection(EventSelector& evtProperties, const map<string, unsigne
 
   //only check data quality on events with two passing candidates
   bool halo = false;
-  if (allCandsFound && (haloParams["rejectHalo"] == 1)) {
+  if (allCandsFound && (haloParams.find("rejectHalo")->second == 1)) {
 
     //create the collection of candidates to check for halo coincidence
     vector<int> passingCands;
 
     //only check coincidence with EB candidates that pass the selection...
-    if (haloParams["checkHaloCoincidenceWithPassingEBCandsOnly"] == 1) {
+    if (haloParams.find("checkHaloCoincidenceWithPassingEBCandsOnly")->second == 1) {
       for (vector<int>::const_iterator iPhoton = passingWithoutPixelSeed.begin(); iPhoton != passingWithoutPixelSeed.end(); ++iPhoton) {
 
 	//******************REMOVE THIS CHECK ONCE YOU VERIFY THAT IT'S UNNECCESSARY******************//
@@ -213,7 +211,7 @@ bool passedFullSelection(EventSelector& evtProperties, const map<string, unsigne
     }
 
     //...or, check halo coincidence with all EB candidates
-    else for (unsigned int iPhoton = 0; iPhoton < photonInfo.Size; ++iPhoton) { passingCands.push_back(iPhoton); }
+    else for (int iPhoton = 0; iPhoton < photonInfo.Size; ++iPhoton) { passingCands.push_back(iPhoton); }
 
     //calculate the halo tag
     halo = !evtProperties.passesDataQualityCuts(HEInfo, photonInfo, cosmicTrackInfo, passingCands);
@@ -232,13 +230,14 @@ bool passedFullSelection(EventSelector& evtProperties, const map<string, unsigne
 }
 
 //run the sample maker
-void runSampleMaker(string& outputFileName, vector<string>& fileList, string& cfgFileName, vector<int>& HLTBits)
+void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgFileName, vector<int>& HLTBits)
 {
   //
 
   //chain the input trees together
   TChain* chain = new TChain("gmsbAna/root");
-  makeChain(fileList, chain);
+  //makeChain(fileList, chain);
+  for (vector<string>::const_iterator iFile = fileList.begin(); iFile != fileList.end(); ++iFile) { chain->Add((*iFile).c_str()); }
 
   //open output file
   TFile* out = new TFile(outputFileName.c_str(), "RECREATE");
@@ -280,11 +279,18 @@ void runSampleMaker(string& outputFileName, vector<string>& fileList, string& cf
   //loop over the events
   unsigned int numPassingHLT = 0;
   unsigned int numPassingAll = 0;
-  unsigned int numTot = chain->GetEntriesFast();
+  Long64_t bigNum = chain->GetEntriesFast();
+  unsigned int numTot = 0;
   vector<unsigned int> passingRun;
   vector<unsigned int> passingEvt;
   vector<unsigned int> passingLumiSection;
-  for (unsigned int iEvt = 0; iEvt < numTot; ++iEvt) {
+  for (Long64_t iEvt = 0; iEvt < bigNum; ++iEvt) {
+    if (chain->LoadTree(iEvt) < 0) {
+      cout << "Event #" << (iEvt + 1) << " has no corresponding tree.  There must have been only " << iEvt << " events in the chain.\n";
+      numTot = iEvt;
+      break;
+    }
+    chain->GetEntry(iEvt);
     cout << "Processing event #" << (iEvt + 1) << "...\n";
 
     //did it pass the HLT selection?
@@ -306,6 +312,8 @@ void runSampleMaker(string& outputFileName, vector<string>& fileList, string& cf
   }
 
   //write the output file and exit
+  cout << numPassingHLT << "/" << numTot << " events passed the HLT selection.\n";
+  cout << numPassingAll << "/" << numTot << " events passed the full selection.\n";
   out->cd();
   outputTree->Write();
   out->Write();
