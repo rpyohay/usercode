@@ -40,7 +40,7 @@ useTimingCut unsigned_int 0
 maxSeedTime double 3.0
 #----------------------------------------------------------------------
 #debug file name
-debugFileName string "/data/yohay/debug_ff_EG_PD_prompt_reco_Jul11Skim_newCodeTest1.txt"
+debugFileName string "/data/yohay/debug_ff_EG_PD_prompt_reco_Jul11Skim_newCodeTest2.txt"
 #----------------------------------------------------------------------
 #debug flag
 debugFlag unsigned_int 1

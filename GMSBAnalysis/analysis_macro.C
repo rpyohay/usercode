@@ -1,7 +1,7 @@
 {
   gROOT->Reset();
-  gROOT->LoadMacro("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_3_6_1_patch4/src/GMSB-DIPHOTON-2010/GMSBTuple/test/EventSelector.cc++");
-  gROOT->LoadMacro("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_3_6_1_patch4/src/GMSB-DIPHOTON-2010/GMSBTuple/test/analysis.C++");
+  gROOT->LoadMacro("/afs/cern.ch/user/y/yohay/UserCode/yohay/GMSBAnalysis/EventSelector.cc++");
+  gROOT->LoadMacro("/afs/cern.ch/user/y/yohay/UserCode/yohay/GMSBAnalysis/analysis.C++");
 
   //input files holding trees
   vector<string> fileList;
@@ -202,12 +202,12 @@
   fileList.push_back("rfio:/castor/cern.ch/user/h/heyburn/files_gmsbNtuple_EGpromptv4_Jul11_JSON_v2/PhoIDHists_data_9_1.root");
 
   //desired HLT selection
-  vector<unsigned int> HLTBits;
+  vector<int> HLTBits;
   /*HLTBits.push_back(6); //HLT_Photon20_L1R
     HLTBits.push_back(7); //HLT_Photon20_Cleaned_L1R*/
   HLTBits.push_back(2); //HLT_Photon15_L1R
   HLTBits.push_back(3); //HLT_Photon15_Cleaned_L1R
 
   //run!
-  runSampleMaker("/data/yohay/ff_EG_PD_prompt_reco_Jul11Skim_newCodeTest1.root", fileList, "sample_cfg.txt", HLTBits);
+  runSampleMaker("/data/yohay/ff_EG_PD_prompt_reco_Jul11Skim_newCodeTest2.root", fileList, "sample_cfg.txt", HLTBits);
 }
