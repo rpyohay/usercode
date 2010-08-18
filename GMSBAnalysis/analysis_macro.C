@@ -205,9 +205,12 @@
   vector<int> HLTBits;
   /*HLTBits.push_back(6); //HLT_Photon20_L1R
     HLTBits.push_back(7); //HLT_Photon20_Cleaned_L1R*/
-  HLTBits.push_back(2); //HLT_Photon15_L1R
-  HLTBits.push_back(3); //HLT_Photon15_Cleaned_L1R
+  /*HLTBits.push_back(2); //HLT_Photon15_L1R
+    HLTBits.push_back(3); //HLT_Photon15_Cleaned_L1R*/
+  //HLTBits.push_back(12);
+  HLTBits.push_back(0);
+  HLTBits.push_back(1);
 
   //run!
-  runSampleMaker("/data/yohay/ff_EG_PD_prompt_reco_Jul11Skim_newCodeTest2.root", fileList, "sample_cfg.txt", HLTBits);
+  runSampleMaker("/data/yohay/ff_EG_PD_prompt_reco_Jul11Skim_newCodeTestHLT10.root", fileList, "sample_cfg.txt", HLTBits);
 }
