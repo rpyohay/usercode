@@ -70,8 +70,8 @@ class EventSelector {
   //constructor from a list of cut values
   EventSelector(const unsigned int, const double, const double, const double, const double, const double, const double, const double, const double, 
 		const double, const double, const unsigned int, const bool, const double, const bool, const double, const bool, const double, const double, 
-		const double, const double, const double, const double, const unsigned int, const unsigned int, const unsigned int, const unsigned int, 
-		const string, const bool);
+		const double, const double, const double, const bool, const double, const unsigned int, const unsigned int, const unsigned int, 
+		const unsigned int, const string, const bool);
 
   //copy constructor
   EventSelector(/*const */EventSelector&);
@@ -105,6 +105,7 @@ class EventSelector {
   const double getTrackPTMin() const;
   const double getETrackRMin() const;
   const double getMinDRPhotons() const;
+  const bool getUseTimingCut() const;
   const double getMaxSeedTime() const;
   const unsigned int getNumReqdCands() const;
   const unsigned int getRun() const;
@@ -148,15 +149,18 @@ class EventSelector {
   const bool passesDataQualityCuts(const Handle<HBHERecHitCollection>&, const map<unsigned int, Photon*>&, const CaloGeometry*, 
 				   const Handle<TrackCollection>&);
   const bool passesHEBeamHaloTag(const Handle<HBHERecHitCollection>&, const map<unsigned int, Photon*>&, const CaloGeometry*);
+  const bool photonIsHEHalo(const Handle<HBHERecHitCollection>&, const Photon*, const CaloGeometry*);
   const bool passesMuonBeamHaloTag(const Handle<TrackCollection>&, const map<unsigned int, Photon*>&);
+  const bool photonIsMuonHalo(const Handle<TrackCollection>&, const Photon*);
   const bool passesPreselection(const Photon*, const vector<EcalRecHit*>&, const unsigned int);
   const bool passesCandidateID(const Photon*, unsigned int&);
-  const bool foundPhotonCandidates(const Handle<PhotonCollection>&, const vector<EcalRecHit*>&, map<unsigned int, Photon*>&, map<unsigned int, 
-				   Photon*>&);
+  const bool foundPhotonCandidates(const Handle<PhotonCollection>&, const vector<EcalRecHit*>&, map<unsigned int, Photon*>&, map<unsigned int, Photon*>&);
   const bool foundTrack(const Handle<TrackCollection>&, const map<unsigned int, Photon*>&);
+  const bool electronHasPassingTrack(const Handle<TrackCollection>&, const Photon*, const unsigned int);
   const bool passDRCut(const map<unsigned int, Photon*>&, const map<unsigned int, Photon*>&);
-  const bool foundAllCandidates(const Handle<PhotonCollection>&, const vector<EcalRecHit*>&, const Handle<TrackCollection>&, 
-				map<unsigned int, Photon*>&, map<unsigned int, Photon*>&);
+  const bool photonIsNonoverlapping(const Photon*, const unsigned int, const map<unsigned int, Photon*>&);
+  const bool foundAllCandidates(const Handle<PhotonCollection>&, const vector<EcalRecHit*>&, const Handle<TrackCollection>&, map<unsigned int, Photon*>&, 
+				map<unsigned int, Photon*>&);
 
  private:
 
@@ -183,6 +187,7 @@ class EventSelector {
   double trackPTMin_;
   double eTrackRMin_;
   double minDRPhotons_;
+  bool useTimingCut_;
   double maxSeedTime_;
   unsigned int numReqdCands_;
 

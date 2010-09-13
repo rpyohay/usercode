@@ -30,6 +30,7 @@ EventSelector::EventSelector() :
   trackPTMin_(15.0),
   eTrackRMin_(0.8),
   minDRPhotons_(0.8),
+  useTimingCut_(true),
   maxSeedTime_(3.0),
   numReqdCands_(2),
   run_(0),
@@ -45,8 +46,8 @@ EventSelector::EventSelector(const unsigned int sampleType, const double ECALIso
 			     const double HOverEMaxPresel, const double ETMin, const unsigned int fiducialRegion, const bool useHOverE, 
 			     const double HOverEMax, const bool useSigmaEtaEta, const double sigmaEtaEtaMax, const bool useTrackIso, 
 			     const double trackIsoMaxPTMultiplier, const double trackIsoMaxConstant, const double trackPTMin, const double eTrackRMin, 
-			     const double minDRPhotons, const double maxSeedTime, const unsigned int numReqdCands, const unsigned int run, 
-			     const unsigned int evt, const unsigned int lumiSec, const string debugFileName, const bool debugFlag) :
+			     const double minDRPhotons, const bool useTimingCut, const double maxSeedTime, const unsigned int numReqdCands, 
+			     const unsigned int run, const unsigned int evt, const unsigned int lumiSec, const string debugFileName, const bool debugFlag) :
   sampleType_(sampleType),
   ECALIsoMaxPTMultiplierEB_(ECALIsoMaxPTMultiplierEB),
   ECALIsoMaxConstantEB_(ECALIsoMaxConstantEB),
@@ -69,6 +70,7 @@ EventSelector::EventSelector(const unsigned int sampleType, const double ECALIso
   trackPTMin_(trackPTMin),
   eTrackRMin_(eTrackRMin),
   minDRPhotons_(minDRPhotons),
+  useTimingCut_(useTimingCut),
   maxSeedTime_(maxSeedTime),
   numReqdCands_(numReqdCands),
   run_(run),
@@ -101,6 +103,7 @@ EventSelector::EventSelector(/*const */EventSelector& other) :
   trackPTMin_(other.getTrackPTMin()),
   eTrackRMin_(other.getETrackRMin()),
   minDRPhotons_(other.getMinDRPhotons()),
+  useTimingCut_(other.getUseTimingCut()),
   maxSeedTime_(other.getMaxSeedTime()),
   numReqdCands_(other.getNumReqdCands()),
   run_(other.getRun()),
@@ -142,6 +145,7 @@ EventSelector& EventSelector::operator=(/*const */EventSelector& other)
     trackPTMin_ = other.getTrackPTMin();
     eTrackRMin_ = other.getETrackRMin();
     minDRPhotons_ = other.getMinDRPhotons();
+    useTimingCut_ = other.getUseTimingCut();
     maxSeedTime_ = other.getMaxSeedTime();
     numReqdCands_ = other.getNumReqdCands();
     run_ = other.getRun();
@@ -178,6 +182,7 @@ const double EventSelector::getTrackIsoMaxConstant() const { return trackIsoMaxC
 const double EventSelector::getTrackPTMin() const { return trackPTMin_; }
 const double EventSelector::getETrackRMin() const { return eTrackRMin_; }
 const double EventSelector::getMinDRPhotons() const { return minDRPhotons_; }
+const bool EventSelector::getUseTimingCut() const { return useTimingCut_; }
 const double EventSelector::getMaxSeedTime() const { return maxSeedTime_; }
 const unsigned int EventSelector::getNumReqdCands() const { return numReqdCands_; }
 const unsigned int EventSelector::getRun() const { return run_; }
@@ -229,6 +234,7 @@ void EventSelector::initializeDebugging()
     if (useTrackIso_) {
       debug_ << "Maximum photon track isolation: " << trackIsoMaxPTMultiplier_ << "*pT + " << trackIsoMaxConstant_ << " GeV\n";
     }
+    if (useTimingCut_) debug_ << "Maximum seed time: " << maxSeedTime_ << " ns\n";
     debug_ << "Minimum track pT: " << trackPTMin_ << endl;
     debug_ << "Minimum dR(photon, track): " << eTrackRMin_ << endl;
     debug_ << "Minimum dR(photon, photon): " << minDRPhotons_ << endl;
@@ -306,28 +312,36 @@ const bool EventSelector::passesHEBeamHaloTag(const Handle<HBHERecHitCollection>
   bool HEHalo = false;
   map<unsigned int, Photon*>::const_iterator iPassingCand = passingCands.begin();
   while ((iPassingCand != passingCands.end()) && (!HEHalo)) {
-    HBHERecHitCollection::const_iterator iHBHERecHit = pHBHERecHits->begin();
-    while ((iHBHERecHit != pHBHERecHits->end()) && (!HEHalo)) {
-      const DetId HBHERecHitID = iHBHERecHit->detid();
-      const float rho = pGeometry->getPosition(HBHERecHitID).perp();
-      const double phi = (double)pGeometry->getPosition(HBHERecHitID).phi();
-      const double E = iHBHERecHit->energy();
-      const double dPhiPhotonHBHERecHit = dPhi(((*iPassingCand).second)->phi(), phi);
-      if ((iHBHERecHit->id().subdet() == HcalEndcap) && (E > 1/*GeV*/) && (rho < 130/*cm*/) && (rho > 115/*cm*/) && (dPhiPhotonHBHERecHit <= 0.2)) {
-	if (debugFlag_) {
-	  debug_ << "Found HE halo candidate:\n";
-	  debug_ << "DetID: " << HBHERecHitID.rawId() << endl;
-	  debug_ << "Rho: " << rho << " cm\n";
-	  debug_ << "Energy: " << E << " GeV\n";
-	  debug_ << "dPhi: " << dPhiPhotonHBHERecHit << endl << endl;
-	}
-	HEHalo = true;
-      }
-      ++iHBHERecHit;
-    }
+    if (photonIsHEHalo(pHBHERecHits, const_cast<const Photon*>((*iPassingCand).second), pGeometry)) HEHalo = true;
     ++iPassingCand;
   }
   return HEHalo;
+}
+
+//determine if a particular photon is due to HE-tagged halo bremsstrahlung
+const bool EventSelector::photonIsHEHalo(const Handle<HBHERecHitCollection>& pHBHERecHits, const Photon* photon, const CaloGeometry* pGeometry)
+{
+  bool isHEHalo = false;
+  HBHERecHitCollection::const_iterator iHBHERecHit = pHBHERecHits->begin();
+  while ((iHBHERecHit != pHBHERecHits->end()) && (!isHEHalo)) {
+    const DetId HBHERecHitID = iHBHERecHit->detid();
+    const float rho = pGeometry->getPosition(HBHERecHitID).perp();
+    const double phi = (double)pGeometry->getPosition(HBHERecHitID).phi();
+    const double E = iHBHERecHit->energy();
+    const double dPhiPhotonHBHERecHit = dPhi(photon->phi(), phi);
+    if ((iHBHERecHit->id().subdet() == HcalEndcap) && (E > 1/*GeV*/) && (rho < 130/*cm*/) && (rho > 115/*cm*/) && (dPhiPhotonHBHERecHit <= 0.2)) {
+      if (debugFlag_) {
+	debug_ << "Found HE halo candidate:\n";
+	debug_ << "DetID: " << HBHERecHitID.rawId() << endl;
+	debug_ << "Rho: " << rho << " cm\n";
+	debug_ << "Energy: " << E << " GeV\n";
+	debug_ << "dPhi: " << dPhiPhotonHBHERecHit << endl << endl;
+      }
+      isHEHalo = true;
+    }
+    ++iHBHERecHit;
+  }
+  return isHEHalo;
 }
 
 //calculate the muon tag for the event, using only the innermost hit position of the track as per Andrew's e-mail on 6-Jun-10
@@ -336,36 +350,44 @@ const bool EventSelector::passesMuonBeamHaloTag(const Handle<TrackCollection>& p
   bool muonHalo = false;
   map<unsigned int, Photon*>::const_iterator iPassingCand = passingCands.begin();
   while ((iPassingCand != passingCands.end()) && (!muonHalo)) {
-    TrackCollection::const_iterator iCosmicTrack = pCosmicTracks->begin();
-    while ((iCosmicTrack != pCosmicTracks->end()) && (!muonHalo)) {
-      const double rhoInner = sqrt(iCosmicTrack->innerPosition().perp2());
-      const double dPhiInner = dPhi(((*iPassingCand).second)->phi(), iCosmicTrack->innerPosition().phi());
-      bool isCSC = true;
-      CSCDetId CSCID;
-      try { CSCID = CSCDetId(iCosmicTrack->innerDetId()); }
-      catch (cms::Exception& ex) { isCSC = false; }
-      bool isRPCEndcap = true;
-      if (!isCSC) {
-	RPCDetId RPCID;
-	try { RPCID = RPCDetId(iCosmicTrack->innerDetId()); }
-	catch (cms::Exception& ex) { isRPCEndcap = false; }
-	if ((isRPCEndcap) && (RPCID.region() == 0)) isRPCEndcap = false; //region 0 is the barrel
-      }
-      else isRPCEndcap = false;
-      if ((isCSC || isRPCEndcap) && (rhoInner < 170/*cm*/) && (rhoInner > 115/*cm*/) && (dPhiInner <= 0.2)) {
-	if (debugFlag_) {
-	  debug_ << "Found muon halo candidate:\n";
-	  debug_ << "DetID: " << iCosmicTrack->innerDetId() << endl;
-	  debug_ << "Rho: " << rhoInner << " cm\n";
-	  debug_ << "dPhi: " << dPhiInner << endl << endl;
-	}
-	muonHalo = true;
-      }
-      ++iCosmicTrack;
-    }
+    if (photonIsMuonHalo(pCosmicTracks, const_cast<const Photon*>((*iPassingCand).second))) muonHalo = true;
     ++iPassingCand;
   }
   return muonHalo;
+}
+
+//determine if a particular photon is due to muon-tagged halo bremsstrahlung
+const bool EventSelector::photonIsMuonHalo(const Handle<TrackCollection>& pCosmicTracks, const Photon* photon)
+{
+  bool isMuonHalo = false;
+  TrackCollection::const_iterator iCosmicTrack = pCosmicTracks->begin();
+  while ((iCosmicTrack != pCosmicTracks->end()) && (!isMuonHalo)) {
+    const double rhoInner = sqrt(iCosmicTrack->innerPosition().perp2());
+    const double dPhiInner = dPhi(photon->phi(), iCosmicTrack->innerPosition().phi());
+    bool isCSC = true;
+    CSCDetId CSCID;
+    try { CSCID = CSCDetId(iCosmicTrack->innerDetId()); }
+    catch (cms::Exception& ex) { isCSC = false; }
+    bool isRPCEndcap = true;
+    if (!isCSC) {
+      RPCDetId RPCID;
+      try { RPCID = RPCDetId(iCosmicTrack->innerDetId()); }
+      catch (cms::Exception& ex) { isRPCEndcap = false; }
+      if ((isRPCEndcap) && (RPCID.region() == 0)) isRPCEndcap = false; //region 0 is the barrel
+    }
+    else isRPCEndcap = false;
+    if ((isCSC || isRPCEndcap) && (rhoInner < 170/*cm*/) && (rhoInner > 115/*cm*/) && (dPhiInner <= 0.2)) {
+      if (debugFlag_) {
+	debug_ << "Found muon halo candidate:\n";
+	debug_ << "DetID: " << iCosmicTrack->innerDetId() << endl;
+	debug_ << "Rho: " << rhoInner << " cm\n";
+	debug_ << "dPhi: " << dPhiInner << endl << endl;
+      }
+      isMuonHalo = true;
+    }
+    ++iCosmicTrack;
+  }
+  return isMuonHalo;
 }
 
 //calculate the preselection flag for an individual reco::Photon
@@ -388,7 +410,7 @@ const bool EventSelector::passesPreselection(const Photon* photon, const vector<
   vector<EcalRecHit*>::const_iterator iECALRecHit = ECALRecHits.begin();
   bool foundSeed = false;
   float seedTime = 0.0;
-  if ((fiducialRegion_ == ECAL) || (fiducialRegion_ == fiducialRegion)) {
+  if (((fiducialRegion_ == ECAL) || (fiducialRegion_ == fiducialRegion)) && (useTimingCut_)) {
     while ((iECALRecHit != ECALRecHits.end()) && (!foundSeed)) {
       if ((*iECALRecHit)->detid() == seedCrystalID) {
 	foundSeed = true;
@@ -413,9 +435,10 @@ const bool EventSelector::passesPreselection(const Photon* photon, const vector<
     debug_ << ")\n";
     debug_ << "Photon eta: " << photon->eta() << endl;
     debug_ << "Photon phi: " << photon->phi() << endl;
+    if (foundSeed && useTimingCut_) debug_ << "Photon seed crystal time: " << seedTime << " ns\n";
   }
   if ((ECALIso < ECALIsoMax) && (HCALIso < HCALIsoMax) && (HOverE < HOverEMaxPresel_) && (ET > ETMin_) && 
-      ((fiducialRegion_ == ECAL) || (fiducialRegion_ == fiducialRegion)) && (seedTime < maxSeedTime_)) {
+      ((fiducialRegion_ == ECAL) || (fiducialRegion_ == fiducialRegion)) && ((seedTime < maxSeedTime_) || (!useTimingCut_))) {
     if (debugFlag_) debug_ << "Photon object passes preselection.\n\n";
     pass = true;
   }
@@ -500,8 +523,8 @@ const bool EventSelector::passesCandidateID(const Photon* photon, unsigned int& 
 }
 
 //determine whether the event has the right number of candidate reco::Photon objects or not
-const bool EventSelector::foundPhotonCandidates(const Handle<PhotonCollection>& pPhotons, const vector<EcalRecHit*>& ECALRecHits, map<unsigned int, Photon*>& passingWithoutPixelSeed, 
-						map<unsigned int, Photon*>& passingWithPixelSeed)
+const bool EventSelector::foundPhotonCandidates(const Handle<PhotonCollection>& pPhotons, const vector<EcalRecHit*>& ECALRecHits, 
+						map<unsigned int, Photon*>& passingWithoutPixelSeed, map<unsigned int, Photon*>& passingWithPixelSeed)
 {
   //pass flag
   bool pass = false;
@@ -551,33 +574,40 @@ const bool EventSelector::foundTrack(const Handle<TrackCollection>& pTracks, con
     track pT > trackPTMin_
     dR(track, electron) > eTrackRMin_
   */
-  TrackCollection::const_iterator iTrack = pTracks->begin();
   map<unsigned int, Photon*>::const_iterator iElectron = passingWithPixelSeed.begin();
   while ((iElectron != passingWithPixelSeed.end()) && (!trackFound)) {
-    while ((iTrack != pTracks->end()) && (!trackFound)) {
-      Photon* e = (*iElectron).second;
-      double dRETrack = dR(e->eta(), iTrack->eta(), e->phi(), iTrack->phi());
-      double pT = iTrack->pt();
-      if (debugFlag_) {
-	debug_ << "Track pT: " << pT << " GeV\n";
-	debug_ << "dR(track " << (iTrack - pTracks->begin()) << ", photon " << (*iElectron).first << "): " << dRETrack << endl;
-      }
-      if ((pT > trackPTMin_) && (dRETrack > eTrackRMin_)) {
-	trackFound = true;
-	if (debugFlag_) debug_ << "Found a candidate track.\n\n";
-      }
-      else {
-	++iTrack;
-	if (debugFlag_) debug_ << "This track doesn't meet the criteria; advancing to the next track.\n\n";
-      }
+    if (electronHasPassingTrack(pTracks, const_cast<const Photon*>((*iElectron).second), (*iElectron).first)) trackFound = true;
+    if ((!trackFound) && (debugFlag_)) {
+      debug_ << "This electron doesn't meet the criteria when paired with any tracks; advancing to the next electron.\n\n";
     }
-    if (!trackFound) {
-      ++iElectron;
-      if (debugFlag_) debug_ << "This electron doesn't meet the criteria when paired with any tracks; advancing to the next electron.\n\n";
-    }
+    ++iElectron;
   }
 
   //exit
+  return trackFound;
+}
+
+//determine if there is an energetic track separated by a minimum dR value from a particular electron
+const bool EventSelector::electronHasPassingTrack(const Handle<TrackCollection>& pTracks, const Photon* electron, const unsigned int index)
+{
+  bool trackFound = false;
+  TrackCollection::const_iterator iTrack = pTracks->begin();
+  while ((iTrack != pTracks->end()) && (!trackFound)) {
+    double dRETrack = dR(electron->eta(), iTrack->eta(), electron->phi(), iTrack->phi());
+    double pT = iTrack->pt();
+    if (debugFlag_) {
+      debug_ << "Track pT: " << pT << " GeV\n";
+      debug_ << "dR(track " << (iTrack - pTracks->begin()) << ", photon " << index << "): " << dRETrack << endl;
+    }
+    if ((pT > trackPTMin_) && (dRETrack > eTrackRMin_)) {
+      trackFound = true;
+      if (debugFlag_) debug_ << "Found a candidate track.\n\n";
+    }
+    else {
+      ++iTrack;
+      if (debugFlag_) debug_ << "This track doesn't meet the criteria; advancing to the next track.\n\n";
+    }
+  }
   return trackFound;
 }
 
@@ -585,7 +615,7 @@ const bool EventSelector::foundTrack(const Handle<TrackCollection>& pTracks, con
 const bool EventSelector::passDRCut(const map<unsigned int, Photon*>& passingWithoutPixelSeed, const map<unsigned int, Photon*>& passingWithPixelSeed)
 {
   //pass flag
-  bool pass = false;
+  unsigned int numNonoverlapping = 0;
 
   //copy the correct input map for the calculation of dR between two objects in a single vector
   map<unsigned int, Photon*> passingCandsMap;
@@ -599,51 +629,31 @@ const bool EventSelector::passDRCut(const map<unsigned int, Photon*>& passingWit
     map<unsigned int, Photon*>::const_iterator iCand = passingCandsMap.begin();
     map<unsigned int, Photon*> passingCandsMapReduced = passingCandsMap;
     passingCandsMapReduced.erase(passingCandsMapReduced.begin());
-    map<unsigned int, Photon*>::const_iterator iPassingCandsMapReduced = passingCandsMapReduced.begin();
-    while ((iCand != passingCandsMap.end()) && (!pass)) {
-      while ((iPassingCandsMapReduced != passingCandsMapReduced.end()) && (!pass)) {
-	Photon* cand1 = (*iCand).second;
-	Photon* cand2 = (*iPassingCandsMapReduced).second;
-	const double dRPhotons = dR(cand1->eta(), cand2->eta(), cand1->phi(), cand2->phi());
-	if (debugFlag_) {
-	  debug_ << "Photons " << (*iCand).first << " and " << (*iPassingCandsMapReduced).first << " are separated by dR = " << dRPhotons << ".\n";
-	}
-	if (dRPhotons > minDRPhotons_) {
-	  pass = true;
-	  if (debugFlag_) debug_ << "Required number of candidates found.\n\n";
-	}
-	else ++iPassingCandsMapReduced;
+    while ((iCand != passingCandsMap.end()) && (numNonoverlapping < 2)) {
+      const unsigned int index = (*iCand).first;
+      if (photonIsNonoverlapping(const_cast<const Photon*>((*iCand).second), index, passingCandsMapReduced)) {
+	++numNonoverlapping;
+	if (debugFlag_) debug_ << "Photon " << index << " is nonoverlapping.\n";
       }
       ++iCand;
-      if (passingCandsMapReduced.size() > 0) {
-	passingCandsMapReduced.erase(passingCandsMapReduced.begin());
-	iPassingCandsMapReduced = passingCandsMapReduced.begin();
-      }
+      if (passingCandsMapReduced.size() > 0) passingCandsMapReduced.erase(passingCandsMapReduced.begin());
     }
-    if ((!pass) && debugFlag_) debug_ << passingCandsMap.size() << " candidates were found, but none pass the dR cut.\n\n";
+    if ((numNonoverlapping < 2) && debugFlag_) debug_ << passingCandsMap.size() << " candidates were found, but none pass the dR cut.\n\n";
   }
 
   //calculate dR between objects in two vectors (i.e. separate the photons and electrons so we don't calculate dR between two photons or two electrons)
   else if (sampleType_ == EGAMMA) {
     map<unsigned int, Photon*>::const_iterator iPhoton = passingWithoutPixelSeed.begin();
     map<unsigned int, Photon*>::const_iterator iElectron = passingWithPixelSeed.begin();
-    while ((iPhoton != passingWithoutPixelSeed.end()) && (!pass)) {
-      while ((iElectron != passingWithPixelSeed.end()) && (!pass)) {
-	Photon* photon = (*iPhoton).second;
-	Photon* electron = (*iElectron).second;
-	const double dRPhotonElectron = dR(photon->eta(), electron->eta(), photon->phi(), electron->phi());
-	if (debugFlag_) {
-	  debug_ << "Photons " << (*iPhoton).first << " and " << (*iElectron).first << " are separated by dR = " << dRPhotonElectron << ".\n";
-	}
-	if (dRPhotonElectron > minDRPhotons_) {
-	  pass = true;
-	  if (debugFlag_) debug_ << "Required number of candidates found.\n\n";
-	}
-	else ++iElectron;
+    while ((iPhoton != passingWithoutPixelSeed.end()) && (numNonoverlapping < 2)) {
+      const unsigned int index = (*iPhoton).first;
+      if (photonIsNonoverlapping(const_cast<const Photon*>((*iPhoton).second), index, passingWithPixelSeed)) {
+	++numNonoverlapping;
+	if (debugFlag_) debug_ << "Photon " << index << " is nonoverlapping.\n";
       }
       ++iPhoton;
     }
-    if ((!pass) && debugFlag_) {
+    if ((numNonoverlapping < 2) && debugFlag_) {
       const unsigned int numPhotons = passingWithoutPixelSeed.size();
       const unsigned int numElectrons = passingWithPixelSeed.size();
       debug_ << numPhotons << " photon and " << numElectrons << " electron candidate";
@@ -653,15 +663,34 @@ const bool EventSelector::passDRCut(const map<unsigned int, Photon*>& passingWit
   }
 
   //no dR requirement on ETRACK sample
-  else pass = true;
+  else numNonoverlapping = 2;
 
   //exit
-  return pass;
+  if (numNonoverlapping >= 2) return true;
+  else return false;
+}
+
+//determine if there are any other candidates within a minimum dR value of a particular candidate
+const bool EventSelector::photonIsNonoverlapping(const Photon* photon, const unsigned int index, const map<unsigned int, Photon*>& otherPassingCands)
+{
+  bool isOverlapping = false;
+  map<unsigned int, Photon*>::const_iterator iOtherPassingCand = otherPassingCands.begin();
+  while ((iOtherPassingCand != otherPassingCands.end()) && (!isOverlapping)) {
+    Photon* cand = (*iOtherPassingCand).second;
+    const double dRPhotons = dR(photon->eta(), cand->eta(), photon->phi(), cand->phi());
+    if (debugFlag_) {
+      debug_ << "Photons " << index << " and " << (*iOtherPassingCand).first << " are separated by dR = " << dRPhotons << ".\n";
+    }
+    if (dRPhotons <= minDRPhotons_) isOverlapping = true;
+    ++iOtherPassingCand;
+  }
+  return (!isOverlapping);
 }
 
 //determine if all required candidates were found
-const bool EventSelector::foundAllCandidates(const Handle<PhotonCollection>& pPhotons, const vector<EcalRecHit*>& ECALRecHits, const Handle<TrackCollection>& pTracks, 
-					     map<unsigned int, Photon*>& passingWithoutPixelSeed, map<unsigned int, Photon*>& passingWithPixelSeed)
+const bool EventSelector::foundAllCandidates(const Handle<PhotonCollection>& pPhotons, const vector<EcalRecHit*>& ECALRecHits, 
+					     const Handle<TrackCollection>& pTracks, map<unsigned int, Photon*>& passingWithoutPixelSeed, 
+					     map<unsigned int, Photon*>& passingWithPixelSeed)
 {
   bool pass = true;
   if (foundPhotonCandidates(pPhotons, ECALRecHits, passingWithoutPixelSeed, passingWithPixelSeed)) {
