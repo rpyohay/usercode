@@ -29,6 +29,8 @@
 #include "DataFormats/Math/interface/LorentzVector.h"
 #include <numeric>
 #include "DataFormats/JetReco/interface/CaloJet.h"
+#include "FWCore/Common/interface/TriggerNames.h"
+#include "DataFormats/Common/interface/TriggerResults.h"
 
 //ROOT include files
 #include "TFile.h"
@@ -62,8 +64,8 @@ class CutAnalyzer : public edm::EDAnalyzer {
       virtual void endJob() ;
 
   //for alphaT calculation
-  /*std::vector<double> deltaSumPt_permutations(const std::vector<LorentzV>& p4s);
-    double alphaT(const std::vector<LorentzV>& p4s);*/
+  double HT(const vector<LorentzV>&, vector<const Photon*>&, const unsigned int, const unsigned int) const;
+  double MHT(const vector<LorentzV>&, vector<const Photon*>&, const unsigned int, const unsigned int) const;
   double alphaT(const vector<LorentzV>&, vector<const Photon*>&, const unsigned int, const unsigned int) const;
   void minDHTRecursive(double&, vector<double>&, const vector<double>&, const unsigned int) const;
 
@@ -158,6 +160,7 @@ class CutAnalyzer : public edm::EDAnalyzer {
   TH1F* numJets_;
   TH1F* numJets30_;
   TH1D* jetPTJetIDApplied_;
+  TH1D* corrJetPTUncorrJetPassingPTCut_;
   TH1D* jetPTJetIDNotApplied_;
   TH1D* jetEtaJetIDApplied_;
   TH1D* jetEtaPlus20JetIDApplied_;
@@ -166,12 +169,25 @@ class CutAnalyzer : public edm::EDAnalyzer {
   TH1D* jetEtaPlus20JetIDNotApplied_;
   TH1D* jetEtaPlus40JetIDNotApplied_;
   TH1D* alphaT2Photons0Jets_;
+  TH1D* alphaT2Photons0Jets30_;
   TH1D* alphaT2Photons1Jets_;
+  TH1D* alphaT2Photons1Jets30_;
   TH1D* alphaT2Photons2Jets_;
   TH1D* alphaT2Photons3Jets_;
   TH1D* alphaT3Photons0Jets_;
   TH1D* alphaT3Photons1Jets_;
   TH1D* alphaT3Photons2Jets_;
+  TH2D* alphaTVsHT2Photons0Jets_;
+  TH2D* alphaTVsHT2Photons1Jets_;
+  TH1D* alphaT2Photons0UncorrectedJets_;
+  TH1D* alphaT2Photons0UncorrectedJets30_;
+  TH1D* alphaT2Photons1UncorrectedJets_;
+  TH1D* alphaT2Photons1UncorrectedJets30_;
+  TH1D* alphaT2Photons2UncorrectedJets_;
+  TH1D* alphaT2Photons3UncorrectedJets_;
+  TH1D* alphaT3Photons0UncorrectedJets_;
+  TH1D* alphaT3Photons1UncorrectedJets_;
+  TH1D* alphaT3Photons2UncorrectedJets_;
   TH1D* alphaTPhotons_;
   TH2D* alphaTVsNJetsSelected_;
   TH1D* evtAlphaT_;
@@ -192,6 +208,22 @@ class CutAnalyzer : public edm::EDAnalyzer {
   TH1D* jetPTRawJetIDNotApplied_;
   TH1D* jetPTRECOJetIDApplied_;
   TH1D* jetPTRECOJetIDNotApplied_;
+  TH1D* HT2Photons0Jets_;
+  TH1D* HT2Photons1Jets_;
+  TH1D* HT2Photons0Jets30_;
+  TH1D* HT2Photons1Jets30_;
+  TH1D* HT2Photons0UncorrJets_;
+  TH1D* HT2Photons1UncorrJets_;
+  TH1D* HT2Photons0UncorrJets30_;
+  TH1D* HT2Photons1UncorrJets30_;
+  TH1D* MHT2Photons0Jets_;
+  TH1D* MHT2Photons1Jets_;
+  TH1D* MHT2Photons0Jets30_;
+  TH1D* MHT2Photons1Jets30_;
+  TH1D* MHT2Photons0UncorrJets_;
+  TH1D* MHT2Photons1UncorrJets_;
+  TH1D* MHT2Photons0UncorrJets30_;
+  TH1D* MHT2Photons1UncorrJets30_;
 
   //graphs
   TGraphErrors* alphaTFraction_;
@@ -204,6 +236,15 @@ class CutAnalyzer : public edm::EDAnalyzer {
   Double_t diEMPTVal_;
   Double_t tcMET_;
   TTree* evtTree_;
+
+  //counters
+  unsigned int numPATJetsPassingJetID_;
+  unsigned int numNonoverlappingCorrPATJets_;
+  unsigned int numNonoverlappingUncorrPATJets_;
+  unsigned int numRECOJetsPassingJetID_;
+  unsigned int numNonoverlappingRECOJets_;
+  unsigned int numPATJets_;
+  unsigned int numRECOJets_;
 };
 
 //
@@ -287,6 +328,13 @@ CutAnalyzer::~CutAnalyzer()
 void
 CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
+  //temp: get the trigger names
+  /*edm::Handle<TriggerResults> TrgResultsHandle;
+  edm::InputTag trigTag("TriggerResults", "", "HLT");
+  iEvent.getByLabel(trigTag, TrgResultsHandle);
+  const edm::TriggerNames &TrgNames = iEvent.triggerNames(*TrgResultsHandle);
+  for (unsigned int i = 0; i < 200; ++i) { cout << TrgNames.triggerName(i) << endl; }*/
+
   //get the run, event, and lumi section numbers
   const unsigned int runNum = iEvent.run();
   const unsigned int evtNum = iEvent.id().event();
@@ -459,18 +507,42 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   Handle<vector<pat::Jet> > pPATAK5Jets;
   unsigned int numJets = 0;
   unsigned int numJets30 = 0;
-  std::vector<LorentzV> jetLorentzVectors;
-  std::vector<LorentzV> jetLorentzVectors30;
+  vector<LorentzV> corrJetLorentzVectors;
+  vector<LorentzV> uncorrJetLorentzVectors;
+  vector<LorentzV> corrJetLorentzVectors30;
+  vector<LorentzV> uncorrJetLorentzVectors30;
   if (getCollection_(pPATAK5Jets, PATAK5CaloJetTag_, iEvent)) {
+
+    //loop over PAT jets
     for (vector<pat::Jet>::const_iterator iJet = pPATAK5Jets->begin(); iJet != pPATAK5Jets->end(); ++iJet) {
+      ++numPATJets_;
+      pat::Jet uncorrJet = iJet->correctedJet("raw");
+
+      //jet ID and photon overlap selection
       ret.set(false);
       bool passJetID = jetIDMinimal(*iJet, ret);
-      bool noPhotonOverlap = pat::Flags::test(*iJet, pat::Flags::Overlap::Photons);
+      bool noPhotonOverlapCorr = pat::Flags::test(*iJet, pat::Flags::Overlap::Photons);
+      bool noPhotonOverlapUncorr = pat::Flags::test(uncorrJet, pat::Flags::Overlap::Photons);
 
-      //select jets with no photon overlap for analysis (https://twiki.cern.ch/twiki/bin/view/CMS/JetID)
-      if (noPhotonOverlap) {
+      //are the jet ID and overlap requirements identical for PAT and RECO jets?
+      if (passJetID) ++numPATJetsPassingJetID_;
+      /*if (noPhotonOverlapCorr) ++numNonoverlappingCorrPATJets_;
+	if (noPhotonOverlapUncorr) ++numNonoverlappingUncorrPATJets_;*/
 
-	//determine if jet passes pT cuts
+      //the noPhotonOverlapCorr and noPhotonOverlapUncorr variables are unreliable; investigating
+      //use modified version of Robin's jet cleaning procedure instead
+      //use uncorrected jets
+      //only check overlaps with the good, isolated photons (the ones used in the alphaT calculation)
+      bool noPhotonOverlapRobin = true;
+      vector<const Photon*>::const_iterator iPhoton = passingPhotons.begin();
+      while ((iPhoton != passingPhotons.end()) && (noPhotonOverlapRobin)) {
+	if (evtProperties_.dR(uncorrJet.eta(), (*iPhoton)->eta(), uncorrJet.phi(), (*iPhoton)->phi()) < 0.5) noPhotonOverlapRobin = false;
+	++iPhoton;
+      }
+      if (noPhotonOverlapRobin) {
+	++numNonoverlappingUncorrPATJets_;
+
+	//determine if uncorrected jet passes pT cuts
 	bool passPTCut = false;
 	if (iJet->pt() > minJetPT_) passPTCut = true;
 	bool passPTPlus20Cut = false;
@@ -478,11 +550,12 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	bool passPTPlus40Cut = false;
 	if (iJet->pt() > (minJetPT_ + 40/*GeV*/)) passPTPlus40Cut = true;
 
-	//determine if jet passes eta cut
-	//only consider jets entirely contained within HB or HE
+	//determine if uncorrected jet passes eta cut
+	//only consider uncorrected jets entirely contained within HB or HE
 	bool passEtaCut = false;
 	bool HB = (fabs(iJet->eta()) >= 0.0) && (fabs(iJet->eta()) <= 1.3) && (iJet->hadEnergyInHE() == 0.0);
-	bool HE = (fabs(iJet->eta()) > 1.3) && (fabs(iJet->eta()) <= 3.0) && (iJet->hadEnergyInHB() == 0.0) && (iJet->hadEnergyInHO() == 0.0);
+	bool HE = (fabs(iJet->eta()) > 1.3) && (fabs(iJet->eta()) <= 3.0) && (iJet->hadEnergyInHB() == 0.0);
+	HE = HE && (iJet->hadEnergyInHO() == 0.0);
 	if ((fabs(iJet->eta()) <= maxJetAbsEta_) && (fabs(iJet->eta()) >= minJetAbsEta_) && (HB || HE)) passEtaCut = true;
 
 	//jets passing LOOSE PURE09 ID
@@ -493,10 +566,13 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	    out_->cd();
 	    if (passEtaCut) {
 	      jetPTJetIDApplied_->Fill(iJet->pt());
-	      jetCorrVsPTJetIDApplied_->Fill(iJet->pt(), iJet->corrFactor("raw"));
-	      jetCorrJetIDApplied_->Fill(iJet->corrFactor("raw"));
-	      jetPTRawJetIDApplied_->Fill(iJet->correctedJet("raw").pt());
+	      if (passPTCut) corrJetPTUncorrJetPassingPTCut_->Fill(iJet->pt());
+	      jetPTRawJetIDApplied_->Fill(uncorrJet.pt());
+	      float corr = 1.0/iJet->corrFactor("raw");
+	      jetCorrVsPTJetIDApplied_->Fill(iJet->pt(), corr);
+	      jetCorrJetIDApplied_->Fill(corr);
 	    }
+	    //*********to do: add raw jet eta distributions*********//
 	    if (passPTCut) jetEtaJetIDApplied_->Fill(fabs(iJet->eta()));
 	    if (passPTPlus20Cut) jetEtaPlus20JetIDApplied_->Fill(fabs(iJet->eta()));
 	    if (passPTPlus40Cut) jetEtaPlus40JetIDApplied_->Fill(fabs(iJet->eta()));
@@ -505,13 +581,14 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  //count jets
 	  if (passPTCut && passEtaCut) {
 	    ++numJets;
-	    jetLorentzVectors.push_back(iJet->p4());
+	    corrJetLorentzVectors.push_back(iJet->p4());
+	    uncorrJetLorentzVectors.push_back(uncorrJet.p4());
 	  }
-	  if (iJet->pt() > 30.0/*GeV*/)	{
+	  if ((iJet->pt() > 30.0/*GeV*/) && passEtaCut) {
 	    ++numJets30;
-	    jetLorentzVectors30.push_back(iJet->p4());
+	    corrJetLorentzVectors30.push_back(iJet->p4());
+	    uncorrJetLorentzVectors30.push_back(uncorrJet.p4());
 	  }
-
 	}
 
 	//jets failing LOOSE PURE09 ID
@@ -543,6 +620,8 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   }
 
   //get the jet ID variables
+  std::vector<LorentzV> jetLorentzVectorsRECO;
+  std::vector<LorentzV> jetLorentzVectors30RECO;
   JetIDSelectionFunctor jetIDFunctor(JetIDSelectionFunctor::PURE09, JetIDSelectionFunctor::LOOSE);
   pat::strbitset retRECO = jetIDFunctor.getBitTemplate();
   Handle<JetIDValueMap> pJetIDMap;
@@ -551,7 +630,10 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     //get RECO AK5 calo jets
     Handle<View<CaloJet> > pRECOAK5Jets;
     if (getCollection_(pRECOAK5Jets, RECOAK5CaloJetTag_, iEvent)) {
+
+      //loop over the RECO jets
       for (View<CaloJet>::const_iterator iJet = pRECOAK5Jets->begin(); iJet != pRECOAK5Jets->end(); ++iJet) {
+	++numRECOJets_;
 
 	//determine if the jet passes LOOSE PURE09 jet ID
 	RefToBase<CaloJet> jetRef = pRECOAK5Jets->refAt(iJet - pRECOAK5Jets->begin());
@@ -559,6 +641,9 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	retRECO.set(false);
 	bool passed = jetIDFunctor(*iJet, jetID, retRECO);
 	CaloJet const& jet = *jetRef;
+
+	//no selection, to compare with PAT uncorrected
+	jetPTRECOJetIDApplied_->Fill(jet.pt());
 
 	//determine if jet passes pT cuts
 	bool passPTCut = false;
@@ -582,24 +667,34 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  if (evtProperties_.dR(jet.eta(), iPhoton->eta(), jet.phi(), iPhoton->phi()) < 0.5) noPhotonOverlap = false;
 	  ++iPhoton;
 	}
+
+	//are the jet ID and overlap requirements identical for PAT and RECO jets?
+	if (passed) ++numRECOJetsPassingJetID_;
+	if (noPhotonOverlap) ++numNonoverlappingRECOJets_;
+
 	if (noPhotonOverlap) {
 
 	  //jets passing LOOSE PURE09 jet ID
 	  if (passed) {
 
 	    //fill N - 1 plots of jet pT and eta
-	    if (out_->IsOpen()) {
-	      out_->cd();
-	      if (passEtaCut) {
+	    //if (out_->IsOpen()) {
+	    //out_->cd();
+	    //if (passEtaCut) {
 		//jetPTJetIDApplied_->Fill(iJet->pt());
 		//jetCorrVsPTJetIDApplied_->Fill(iJet->pt(), iJet->corrFactor("raw"));
 		//jetCorrJetIDApplied_->Fill(iJet->corrFactor("raw"));
-		jetPTRECOJetIDApplied_->Fill(jet.pt());
-	      }
+		//jetPTRECOJetIDApplied_->Fill(jet.pt());
+	    //}
 	      //if (passPTCut) jetEtaJetIDApplied_->Fill(fabs(iJet->eta()));
 	      //if (passPTPlus20Cut) jetEtaPlus20JetIDApplied_->Fill(fabs(iJet->eta()));
 	      //if (passPTPlus40Cut) jetEtaPlus40JetIDApplied_->Fill(fabs(iJet->eta()));
-	    }
+	    //}
+
+	    //for alphaT w/ RECO jets
+	    //NB different selection than PAT!
+	    if (passPTCut && passEtaCut) jetLorentzVectorsRECO.push_back(jet.p4());
+	    if ((jet.pt() > 30/*GeV*/) && passEtaCut) jetLorentzVectors30RECO.push_back(jet.p4());
 	  }
 
 	  //jets failing LOOSE PURE09 jet ID
@@ -714,43 +809,82 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       }
       else tcMET_ = pTCMET->begin()->et();
 
-      //alphaT bins:
-      //2 photons 0 jets
-      //2 photons 1 jet
-      //2 photons 2 jets
-      //2 photons 3 jets
-      //3 photons 0 jets
-      //3 photons 1 jet
-      //3 photons 2 jets
+      //corrected jet HT (recall that selection is made on the uncorrected jet)
+      HT2Photons0Jets_->Fill(HT(corrJetLorentzVectors, passingPhotons, 0, 2));
+      HT2Photons1Jets_->Fill(HT(corrJetLorentzVectors, passingPhotons, 1, 2));
+      if (corrJetLorentzVectors.size() == 0) HT2Photons0Jets30_->Fill(HT(corrJetLorentzVectors30, passingPhotons, corrJetLorentzVectors30.size(), 2));
+      if (corrJetLorentzVectors.size() == 1) HT2Photons1Jets30_->Fill(HT(corrJetLorentzVectors30, passingPhotons, corrJetLorentzVectors30.size(), 2));
 
-      //then, add MHT ratio requirement
+      //uncorrected jet HT (recall that selection is made on the uncorrected jet)
+      HT2Photons0UncorrJets_->Fill(HT(uncorrJetLorentzVectors, passingPhotons, 0, 2));
+      HT2Photons1UncorrJets_->Fill(HT(uncorrJetLorentzVectors, passingPhotons, 1, 2));
+      if (uncorrJetLorentzVectors.size() == 0) HT2Photons0UncorrJets30_->Fill(HT(uncorrJetLorentzVectors30, passingPhotons, uncorrJetLorentzVectors30.size(), 2));
+      if (uncorrJetLorentzVectors.size() == 1) HT2Photons1UncorrJets30_->Fill(HT(uncorrJetLorentzVectors30, passingPhotons, uncorrJetLorentzVectors30.size(), 2));
 
-      //alphaT
+      //corrected jet MHT (recall that the selection is made on the uncorrected jet)
+      MHT2Photons0Jets_->Fill(MHT(corrJetLorentzVectors, passingPhotons, 0, 2));
+      MHT2Photons1Jets_->Fill(MHT(corrJetLorentzVectors, passingPhotons, 1, 2));
+      if (corrJetLorentzVectors.size() == 0) MHT2Photons0Jets30_->Fill(MHT(corrJetLorentzVectors30, passingPhotons, corrJetLorentzVectors30.size(), 2));
+      if (corrJetLorentzVectors.size() == 1) MHT2Photons1Jets30_->Fill(MHT(corrJetLorentzVectors30, passingPhotons, corrJetLorentzVectors30.size(), 2));
+
+      //uncorrected jet MHT (recall that the selection is made on the uncorrected jet)
+      MHT2Photons0UncorrJets_->Fill(MHT(uncorrJetLorentzVectors, passingPhotons, 0, 2));
+      MHT2Photons1UncorrJets_->Fill(MHT(uncorrJetLorentzVectors, passingPhotons, 1, 2));
+      if (uncorrJetLorentzVectors.size() == 0) MHT2Photons0UncorrJets30_->Fill(MHT(uncorrJetLorentzVectors30, passingPhotons, uncorrJetLorentzVectors30.size(), 2));
+      if (uncorrJetLorentzVectors.size() == 1) MHT2Photons1UncorrJets30_->Fill(MHT(uncorrJetLorentzVectors30, passingPhotons, uncorrJetLorentzVectors30.size(), 2));
+
+      //corrected jet alphaT (recall that the selection is made on the uncorrected jet)
       map<string, double> alphaTMap;
-      alphaTMap["2 photons 0 jets"] = alphaT(jetLorentzVectors, passingPhotons, 0, 2);
-      alphaTMap["2 photons 1 jets"] = alphaT(jetLorentzVectors, passingPhotons, 1, 2);
-      alphaTMap["2 photons 2 jets"] = alphaT(jetLorentzVectors, passingPhotons, 2, 2);
-      alphaTMap["2 photons 3 jets"] = alphaT(jetLorentzVectors, passingPhotons, 3, 2);
-      alphaTMap["3 photons 0 jets"] = alphaT(jetLorentzVectors, passingPhotons, 0, 3);
-      alphaTMap["3 photons 1 jets"] = alphaT(jetLorentzVectors, passingPhotons, 1, 3);
-      alphaTMap["3 photons 2 jets"] = alphaT(jetLorentzVectors, passingPhotons, 2, 3);
+      alphaTMap["2 photons 0 corrected jets"] = alphaT(corrJetLorentzVectors, passingPhotons, 0, 2);
+      alphaTMap["2 photons 0 corrected jets 30"] = alphaT(corrJetLorentzVectors30, passingPhotons, corrJetLorentzVectors30.size(), 2);
+      alphaTMap["2 photons 1 corrected jets"] = alphaT(corrJetLorentzVectors, passingPhotons, 1, 2);
+      alphaTMap["2 photons 1 corrected jets 30"] = alphaT(corrJetLorentzVectors30, passingPhotons, corrJetLorentzVectors30.size(), 2);
+      alphaTMap["2 photons 2 corrected jets"] = alphaT(corrJetLorentzVectors, passingPhotons, 2, 2);
+      alphaTMap["2 photons 3 corrected jets"] = alphaT(corrJetLorentzVectors, passingPhotons, 3, 2);
+      alphaTMap["3 photons 0 corrected jets"] = alphaT(corrJetLorentzVectors, passingPhotons, 0, 3);
+      alphaTMap["3 photons 1 corrected jets"] = alphaT(corrJetLorentzVectors, passingPhotons, 1, 3);
+      alphaTMap["3 photons 2 corrected jets"] = alphaT(corrJetLorentzVectors, passingPhotons, 2, 3);
+      alphaTVsHT2Photons0Jets_->Fill(HT(corrJetLorentzVectors, passingPhotons, 0, 2), alphaTMap["2 photons 0 corrected jets"]);
+      alphaTVsHT2Photons1Jets_->Fill(HT(corrJetLorentzVectors, passingPhotons, 1, 2), alphaTMap["2 photons 1 corrected jets"]);
+
+      //uncorrected jet alphaT (recall that the selection is made on the uncorrected jet)
+      alphaTMap["2 photons 0 uncorrected jets"] = alphaT(uncorrJetLorentzVectors, passingPhotons, 0, 2);
+      alphaTMap["2 photons 0 uncorrected jets 30"] = alphaT(uncorrJetLorentzVectors30, passingPhotons, uncorrJetLorentzVectors30.size(), 2);
+      alphaTMap["2 photons 1 uncorrected jets"] = alphaT(uncorrJetLorentzVectors, passingPhotons, 1, 2);
+      alphaTMap["2 photons 1 uncorrected jets 30"] = alphaT(uncorrJetLorentzVectors30, passingPhotons, uncorrJetLorentzVectors30.size(), 2);
+      alphaTMap["2 photons 2 uncorrected jets"] = alphaT(uncorrJetLorentzVectors, passingPhotons, 2, 2);
+      alphaTMap["2 photons 3 uncorrected jets"] = alphaT(uncorrJetLorentzVectors, passingPhotons, 3, 2);
+      alphaTMap["3 photons 0 uncorrected jets"] = alphaT(uncorrJetLorentzVectors, passingPhotons, 0, 3);
+      alphaTMap["3 photons 1 uncorrected jets"] = alphaT(uncorrJetLorentzVectors, passingPhotons, 1, 3);
+      alphaTMap["3 photons 2 uncorrected jets"] = alphaT(uncorrJetLorentzVectors, passingPhotons, 2, 3);
+
+      //write histograms
       if (out_->IsOpen()) {
 	out_->cd();
-	out_->cd("alphaT");
-	alphaT2Photons0Jets_->Fill(alphaTMap["2 photons 0 jets"]);
-	alphaT2Photons1Jets_->Fill(alphaTMap["2 photons 1 jets"]);
-	alphaT2Photons2Jets_->Fill(alphaTMap["2 photons 2 jets"]);
-	alphaT2Photons3Jets_->Fill(alphaTMap["2 photons 3 jets"]);
-	alphaT3Photons0Jets_->Fill(alphaTMap["3 photons 0 jets"]);
-	alphaT3Photons1Jets_->Fill(alphaTMap["3 photons 1 jets"]);
-	alphaT3Photons2Jets_->Fill(alphaTMap["3 photons 2 jets"]);
+	alphaT2Photons0Jets_->Fill(alphaTMap["2 photons 0 corrected jets"]);
+	if (corrJetLorentzVectors.size() == 0) alphaT2Photons0Jets30_->Fill(alphaTMap["2 photons 0 corrected jets 30"]);
+	alphaT2Photons1Jets_->Fill(alphaTMap["2 photons 1 corrected jets"]);
+	if (corrJetLorentzVectors.size() == 1) alphaT2Photons1Jets30_->Fill(alphaTMap["2 photons 1 corrected jets 30"]);
+	alphaT2Photons2Jets_->Fill(alphaTMap["2 photons 2 corrected jets"]);
+	alphaT2Photons3Jets_->Fill(alphaTMap["2 photons 3 corrected jets"]);
+	alphaT3Photons0Jets_->Fill(alphaTMap["3 photons 0 corrected jets"]);
+	alphaT3Photons1Jets_->Fill(alphaTMap["3 photons 1 corrected jets"]);
+	alphaT3Photons2Jets_->Fill(alphaTMap["3 photons 2 corrected jets"]);
+	alphaT2Photons0UncorrectedJets_->Fill(alphaTMap["2 photons 0 uncorrected jets"]);
+	if (uncorrJetLorentzVectors.size() == 0) alphaT2Photons0UncorrectedJets30_->Fill(alphaTMap["2 photons 0 uncorrected jets 30"]);
+	alphaT2Photons1UncorrectedJets_->Fill(alphaTMap["2 photons 1 uncorrected jets"]);
+	if (uncorrJetLorentzVectors.size() == 0) alphaT2Photons1UncorrectedJets30_->Fill(alphaTMap["2 photons 1 uncorrected jets 30"]);
+	alphaT2Photons2UncorrectedJets_->Fill(alphaTMap["2 photons 2 uncorrected jets"]);
+	alphaT2Photons3UncorrectedJets_->Fill(alphaTMap["2 photons 3 uncorrected jets"]);
+	alphaT3Photons0UncorrectedJets_->Fill(alphaTMap["3 photons 0 uncorrected jets"]);
+	alphaT3Photons1UncorrectedJets_->Fill(alphaTMap["3 photons 1 uncorrected jets"]);
+	alphaT3Photons2UncorrectedJets_->Fill(alphaTMap["3 photons 2 uncorrected jets"]);
 	std::vector<LorentzV> dummy;
 	vector<const Photon*> photons;
 	photons.push_back(passingPhotons[0]);
 	photons.push_back(passingPhotons[1]);
 	const double alphaTPhotons = alphaT(dummy, photons, 0, 2);
 	alphaTPhotons_->Fill(alphaTPhotons);
-	out_->cd("..");
 	alphaTVsNJetsSelected_->Fill(numJets, alphaTPhotons);
       }
     }
@@ -776,6 +910,15 @@ CutAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 void 
 CutAnalyzer::beginJob()
 {
+  //initialize counters
+  numPATJetsPassingJetID_ = 0;
+  numNonoverlappingCorrPATJets_ = 0;
+  numNonoverlappingUncorrPATJets_ = 0;
+  numRECOJetsPassingJetID_ = 0;
+  numNonoverlappingRECOJets_ = 0;
+  numPATJets_ = 0;
+  numRECOJets_ = 0;
+
   //open output file
   out_ = new TFile(outFileName_.c_str(), "RECREATE");
   if (!out_->IsOpen() && debugFlag_) debug_ << "Error opening file " << outFileName_ << ".\n";
@@ -819,6 +962,7 @@ CutAnalyzer::beginJob()
   numJets_ = new TH1F("numJets_", "numJets_", MAX_NUM_JETS, -0.5, -0.5 + MAX_NUM_JETS);
   numJets30_ = new TH1F("numJets30_", "numJets30_", MAX_NUM_JETS, -0.5, -0.5 + MAX_NUM_JETS);
   jetPTJetIDApplied_ = new TH1D("jetPTJetIDApplied_", "jetPTJetIDApplied_;p_{T} (GeV);Jets/5 GeV", 40, 0.0, 200.0);
+  corrJetPTUncorrJetPassingPTCut_ = new TH1D("corrJetPTUncorrJetPassingPTCut_", "corrJetPTUncorrJetPassingPTCut_;p_{T} (GeV);", 40, 0.0, 200.0);
   jetPTJetIDNotApplied_ = new TH1D("jetPTJetIDNotApplied_", "jetPTJetIDNotApplied_;p_{T} (GeV);Jets/5 GeV", 40, 0.0, 200.0);
   jetEtaJetIDApplied_ = new TH1D("jetEtaJetIDApplied_", "jetEtaJetIDApplied_;#eta;Jets/0.1", 30, 0.0, 3.0);
   jetEtaPlus20JetIDApplied_ = new TH1D("jetEtaPlus20JetIDApplied_", "jetEtaPlus20JetIDApplied_;#eta;Jets/0.1", 30, 0.0, 3.0);
@@ -827,12 +971,25 @@ CutAnalyzer::beginJob()
   jetEtaPlus20JetIDNotApplied_ = new TH1D("jetEtaPlus20JetIDNotApplied_", "jetEtaPlus20JetIDNotApplied_;#eta;Jets/0.1", 30, 0.0, 3.0);
   jetEtaPlus40JetIDNotApplied_ = new TH1D("jetEtaPlus40JetIDNotApplied_", "jetEtaPlus40JetIDNotApplied_;#eta;Jets/0.1", 30, 0.0, 3.0);
   alphaT2Photons0Jets_ = new TH1D("alphaT2Photons0Jets_", "alphaT2Photons0Jets_", 20, 0.0, 1.0);
+  alphaT2Photons0Jets30_ = new TH1D("alphaT2Photons0Jets30_", "alphaT2Photons0Jets30_", 20, 0.0, 1.0);
   alphaT2Photons1Jets_ = new TH1D("alphaT2Photons1Jets_", "alphaT2Photons1Jets_", 20, 0.0, 1.0);
+  alphaT2Photons1Jets30_ = new TH1D("alphaT2Photons1Jets30_", "alphaT2Photons1Jets30_", 20, 0.0, 1.0);
   alphaT2Photons2Jets_ = new TH1D("alphaT2Photons2Jets_", "alphaT2Photons2Jets_", 20, 0.0, 1.0);
   alphaT2Photons3Jets_ = new TH1D("alphaT2Photons3Jets_", "alphaT2Photons3Jets_", 20, 0.0, 1.0);
   alphaT3Photons0Jets_ = new TH1D("alphaT3Photons0Jets_", "alphaT3Photons0Jets_", 20, 0.0, 1.0);
   alphaT3Photons1Jets_ = new TH1D("alphaT3Photons1Jets_", "alphaT3Photons1Jets_", 20, 0.0, 1.0);
   alphaT3Photons2Jets_ = new TH1D("alphaT3Photons2Jets_", "alphaT3Photons2Jets_", 20, 0.0, 1.0);
+  alphaTVsHT2Photons0Jets_ = new TH2D("alphaTVsHT2Photons0Jets_", "alphaTVsHT2Photons0Jets_", 50, 0.0, 500.0, 20, 0.0, 1.0);
+  alphaTVsHT2Photons1Jets_ = new TH2D("alphaTVsHT2Photons1Jets_", "alphaTVsHT2Photons1Jets_", 50, 0.0, 500.0, 20, 0.0, 1.0);
+  alphaT2Photons0UncorrectedJets_ = new TH1D("alphaT2Photons0UncorrectedJets_", "alphaT2Photons0UncorrectedJets_", 20, 0.0, 1.0);
+  alphaT2Photons0UncorrectedJets30_ = new TH1D("alphaT2Photons0UncorrectedJets30_", "alphaT2Photons0UncorrectedJets30_", 20, 0.0, 1.0);
+  alphaT2Photons1UncorrectedJets_ = new TH1D("alphaT2Photons1UncorrectedJets_", "alphaT2Photons1UncorrectedJets_", 20, 0.0, 1.0);
+  alphaT2Photons1UncorrectedJets30_ = new TH1D("alphaT2Photons1UncorrectedJets30_", "alphaT2Photons1UncorrectedJets30_", 20, 0.0, 1.0);
+  alphaT2Photons2UncorrectedJets_ = new TH1D("alphaT2Photons2UncorrectedJets_", "alphaT2Photons2UncorrectedJets_", 20, 0.0, 1.0);
+  alphaT2Photons3UncorrectedJets_ = new TH1D("alphaT2Photons3UncorrectedJets_", "alphaT2Photons3UncorrectedJets_", 20, 0.0, 1.0);
+  alphaT3Photons0UncorrectedJets_ = new TH1D("alphaT3Photons0UncorrectedJets_", "alphaT3Photons0UncorrectedJets_", 20, 0.0, 1.0);
+  alphaT3Photons1UncorrectedJets_ = new TH1D("alphaT3Photons1UncorrectedJets_", "alphaT3Photons1UncorrectedJets_", 20, 0.0, 1.0);
+  alphaT3Photons2UncorrectedJets_ = new TH1D("alphaT3Photons2UncorrectedJets_", "alphaT3Photons2UncorrectedJets_", 20, 0.0, 1.0);
   alphaTPhotons_ = new TH1D("alphaTPhotons_", "#alpha_{T} between the 2 photons;#alpha_{T};Events/0.05", 20, 0.0, 1.0);
   stringstream histTitle;
   histTitle.str("");
@@ -864,6 +1021,22 @@ CutAnalyzer::beginJob()
   jetPTRawJetIDNotApplied_ = new TH1D("jetPTRawJetIDNotApplied_", "jetPTRawJetIDNotApplied_", 40, 0.0, 200.0);
   jetPTRECOJetIDApplied_ = new TH1D("jetPTRECOJetIDApplied_", "jetPTRECOJetIDApplied_;p_{T} (GeV);", 40, 0.0, 200.0);
   jetPTRECOJetIDNotApplied_ = new TH1D("jetPTRECOJetIDNotApplied_", "jetPTRECOJetIDNotApplied_;p_{T} (GeV);", 40, 0.0, 200.0);
+  HT2Photons0Jets_ = new TH1D("HT2Photons0Jets_", "HT2Photons0Jets_;HT (GeV);", 50, 0.0, 500.0);
+  HT2Photons1Jets_ = new TH1D("HT2Photons1Jets_", "HT2Photons1Jets_;HT (GeV);", 50, 0.0, 500.0);
+  HT2Photons0Jets30_ = new TH1D("HT2Photons0Jets30_", "HT2Photons0Jets30_;HT (GeV);", 50, 0.0, 500.0);
+  HT2Photons1Jets30_ = new TH1D("HT2Photons1Jets30_", "HT2Photons1Jets30_;HT (GeV);", 50, 0.0, 500.0);
+  HT2Photons0UncorrJets_ = new TH1D("HT2Photons0UncorrJets_", "HT2Photons0UncorrJets_;HT (GeV);", 50, 0.0, 500.0);
+  HT2Photons1UncorrJets_ = new TH1D("HT2Photons1UncorrJets_", "HT2Photons1UncorrJets_;HT (GeV);", 50, 0.0, 500.0);
+  HT2Photons0UncorrJets30_ = new TH1D("HT2Photons0UncorrJets30_", "HT2Photons0UncorrJets30_;HT (GeV);", 50, 0.0, 500.0);
+  HT2Photons1UncorrJets30_ = new TH1D("HT2Photons1UncorrJets30_", "HT2Photons1UncorrJets30_;HT (GeV);", 50, 0.0, 500.0);
+  MHT2Photons0Jets_ = new TH1D("MHT2Photons0Jets_", "MHT2Photons0Jets_;MHT (GeV);", 50, 0.0, 500.0);
+  MHT2Photons1Jets_ = new TH1D("MHT2Photons1Jets_", "MHT2Photons1Jets_;MHT (GeV);", 50, 0.0, 500.0);
+  MHT2Photons0Jets30_ = new TH1D("MHT2Photons0Jets30_", "MHT2Photons0Jets30_;MHT (GeV);", 50, 0.0, 500.0);
+  MHT2Photons1Jets30_ = new TH1D("MHT2Photons1Jets30_", "MHT2Photons1Jets30_;MHT (GeV);", 50, 0.0, 500.0);
+  MHT2Photons0UncorrJets_ = new TH1D("MHT2Photons0UncorrJets_", "MHT2Photons0UncorrJets_;MHT (GeV);", 50, 0.0, 500.0);
+  MHT2Photons1UncorrJets_ = new TH1D("MHT2Photons1UncorrJets_", "MHT2Photons1UncorrJets_;MHT (GeV);", 50, 0.0, 500.0);
+  MHT2Photons0UncorrJets30_ = new TH1D("MHT2Photons0UncorrJets30_", "MHT2Photons0UncorrJets30_;MHT (GeV);", 50, 0.0, 500.0);
+  MHT2Photons1UncorrJets30_ = new TH1D("MHT2Photons1UncorrJets30_", "MHT2Photons1UncorrJets30_;MHT (GeV);", 50, 0.0, 500.0);
   
   //instantiate tree
   run_ = 0;
@@ -884,6 +1057,15 @@ CutAnalyzer::beginJob()
 // ------------ method called once each job just after ending the event loop  ------------
 void 
 CutAnalyzer::endJob() {
+
+  //print statistics
+  cout << "Number of PAT jets: " << numPATJets_ << endl;
+  cout << "Number of RECO jets: " << numRECOJets_ << endl;
+  cout << "Number of PAT jets passing jet ID: " << numPATJetsPassingJetID_ << endl;
+  cout << "Number of RECO jets passing jet ID: " << numRECOJetsPassingJetID_ << endl;
+  cout << "Number of nonoverlapping corrected PAT jets: " << numNonoverlappingCorrPATJets_ << endl;
+  cout << "Number of nonoverlapping uncorrected PAT jets: " << numNonoverlappingUncorrPATJets_ << endl;
+  cout << "Number of nonoverlapping RECO jets: " << numNonoverlappingRECOJets_ << endl;
 
   //create alphaT fractions graph
   //implementation depends on alphaTVsNJetsSelected having no bins that straddle alphaT = 0.55
@@ -954,6 +1136,7 @@ CutAnalyzer::endJob() {
     numJets_->Write();
     numJets30_->Write();
     jetPTJetIDApplied_->Write();
+    corrJetPTUncorrJetPassingPTCut_->Write();
     jetPTJetIDNotApplied_->Write();
     jetEtaJetIDApplied_->Write();
     jetEtaPlus20JetIDApplied_->Write();
@@ -961,15 +1144,30 @@ CutAnalyzer::endJob() {
     jetEtaJetIDNotApplied_->Write();
     jetEtaPlus20JetIDNotApplied_->Write();
     jetEtaPlus40JetIDNotApplied_->Write();
+    out_->cd("alphaT");
     alphaT2Photons0Jets_->Write();
+    alphaT2Photons0Jets30_->Write();
     alphaT2Photons1Jets_->Write();
+    alphaT2Photons1Jets30_->Write();
     alphaT2Photons2Jets_->Write();
     alphaT2Photons3Jets_->Write();
     alphaT3Photons0Jets_->Write();
     alphaT3Photons1Jets_->Write();
     alphaT3Photons2Jets_->Write();
+    alphaTVsHT2Photons0Jets_->Write();
+    alphaTVsHT2Photons1Jets_->Write();
+    alphaT2Photons0UncorrectedJets_->Write();
+    alphaT2Photons0UncorrectedJets30_->Write();
+    alphaT2Photons1UncorrectedJets_->Write();
+    alphaT2Photons1UncorrectedJets30_->Write();
+    alphaT2Photons2UncorrectedJets_->Write();
+    alphaT2Photons3UncorrectedJets_->Write();
+    alphaT3Photons0UncorrectedJets_->Write();
+    alphaT3Photons1UncorrectedJets_->Write();
+    alphaT3Photons2UncorrectedJets_->Write();
     alphaTPhotons_->Write();
     alphaTVsNJetsSelected_->Write();
+    out_->cd("..");
     evtAlphaT_->Write();
     evtAlphaT50_->Write();
     alphaTFractionCanvas_->Write();
@@ -990,11 +1188,66 @@ CutAnalyzer::endJob() {
     jetPTRawJetIDNotApplied_->Write();
     jetPTRECOJetIDApplied_->Write();
     jetPTRECOJetIDNotApplied_->Write();
+    HT2Photons0Jets_->Write();
+    HT2Photons1Jets_->Write();
+    HT2Photons0Jets30_->Write();
+    HT2Photons1Jets30_->Write();
+    HT2Photons0UncorrJets_->Write();
+    HT2Photons1UncorrJets_->Write();
+    HT2Photons0UncorrJets30_->Write();
+    HT2Photons1UncorrJets30_->Write();
+    MHT2Photons0Jets_->Write();
+    MHT2Photons1Jets_->Write();
+    MHT2Photons0Jets30_->Write();
+    MHT2Photons1Jets30_->Write();
+    MHT2Photons0UncorrJets_->Write();
+    MHT2Photons1UncorrJets_->Write();
+    MHT2Photons0UncorrJets30_->Write();
+    MHT2Photons1UncorrJets30_->Write();
     evtTree_->Write();
     out_->Write();
     out_->Close();
   }
   delete out_;
+}
+
+double CutAnalyzer::HT(const vector<LorentzV>& jetLorentzVectors, vector<const Photon*>& passingPhotons, const unsigned int numJets, 
+		       const unsigned int numPhotons) const
+{
+  //return if wrong number of objects
+  if ((jetLorentzVectors.size() != numJets) || (passingPhotons.size() != numPhotons)) return -1.0;
+
+  //make vector of object pT
+  vector<double> pT;
+  for (vector<LorentzV>::const_iterator iJet = jetLorentzVectors.begin(); iJet != jetLorentzVectors.end(); ++iJet) { pT.push_back((*iJet).pt()); }
+  for (vector<const Photon*>::const_iterator iPhoton = passingPhotons.begin(); iPhoton != passingPhotons.end(); ++iPhoton) {
+    pT.push_back((*iPhoton)->pt());
+  }
+
+  //calculate HT
+  return accumulate(pT.begin(), pT.end(), 0.0);
+}
+
+double CutAnalyzer::MHT(const vector<LorentzV>& jetLorentzVectors, vector<const Photon*>& passingPhotons, const unsigned int numJets, 
+		       const unsigned int numPhotons) const
+{
+  //return if wrong number of objects
+  if ((jetLorentzVectors.size() != numJets) || (passingPhotons.size() != numPhotons)) return -1.0;
+
+  //calculate x and y components of the multi-object system
+  double sumPX = 0.0;
+  double sumPY = 0.0;
+  for (vector<LorentzV>::const_iterator iJet = jetLorentzVectors.begin(); iJet != jetLorentzVectors.end(); ++iJet) {
+    sumPX+=(*iJet).px();
+    sumPY+=(*iJet).py();
+  }
+  for (vector<const Photon*>::const_iterator iPhoton = passingPhotons.begin(); iPhoton != passingPhotons.end(); ++iPhoton) {
+    sumPX+=(*iPhoton)->px();
+    sumPY+=(*iPhoton)->py();
+  }
+
+  //calculate MHT
+  return sqrt(sumPX*sumPX + sumPY*sumPY);
 }
 
 double CutAnalyzer::alphaT(const vector<LorentzV>& jetLorentzVectors, vector<const Photon*>& passingPhotons, const unsigned int numJets, 
@@ -1009,19 +1262,13 @@ double CutAnalyzer::alphaT(const vector<LorentzV>& jetLorentzVectors, vector<con
   double sumPY = 0.0;
   for (vector<LorentzV>::const_iterator iJet = jetLorentzVectors.begin(); iJet != jetLorentzVectors.end(); ++iJet) {
     pT.push_back((*iJet).pt());
-    cout << "pT jet " << (iJet - jetLorentzVectors.begin()) << ": " << (*iJet).pt() << endl;
     sumPX+=(*iJet).px();
-    cout << "px jet " << (iJet - jetLorentzVectors.begin()) << ": " << (*iJet).px() << endl;
     sumPY+=(*iJet).py();
-    cout << "py jet " << (iJet - jetLorentzVectors.begin()) << ": " << (*iJet).py() << endl;
   }
   for (vector<const Photon*>::const_iterator iPhoton = passingPhotons.begin(); iPhoton != passingPhotons.end(); ++iPhoton) {
     pT.push_back((*iPhoton)->pt());
-    cout << "pT photon " << (iPhoton - passingPhotons.begin()) << ": " << (*iPhoton)->pt() << endl;
     sumPX+=(*iPhoton)->px();
-    cout << "px photon " << (iPhoton - passingPhotons.begin()) << ": " << (*iPhoton)->px() << endl;
     sumPY+=(*iPhoton)->py();
-    cout << "py photon " << (iPhoton - passingPhotons.begin()) << ": " << (*iPhoton)->py() << endl;
   }
 
   //calculate minimum dHT
@@ -1030,18 +1277,14 @@ double CutAnalyzer::alphaT(const vector<LorentzV>& jetLorentzVectors, vector<con
   for (unsigned int i = 0; i < pT.size(); ++i) { pseudojet1.push_back(-1.0); }
   minDHTRecursive(minDHT, pseudojet1, pT, 0);
   if (minDHT == 999.0) return -1.0;
-  cout << "minDHT: " << minDHT << endl;
 
   //calculate HT
   const double HT = accumulate(pT.begin(), pT.end(), 0.0);
-  cout << "HT: " << HT << endl;
 
   //calculate MHT squared
   const double MHT2 = sumPX*sumPX + sumPY*sumPY;
-  cout << "MHT2: " << MHT2 << endl;
 
   //return alphaT
-  cout << "alphaT: " << 0.5*((HT - minDHT)/sqrt(HT*HT - MHT2)) << endl;
   return 0.5*((HT - minDHT)/sqrt(HT*HT - MHT2));
 }
 
@@ -1071,39 +1314,6 @@ void CutAnalyzer::minDHTRecursive(double& minDHT, vector<double>& pseudojet1, co
     pseudojet1[i] = -1.0;
   }
 }
-
-//for alphaT calculation
-/*std::vector<double> CutAnalyzer::deltaSumPt_permutations(const std::vector<LorentzV>& p4s) {
-   std::vector<std::vector<double> > ht(1 << (p4s.size() - 1), std::vector<double>(2, 0.));
-   for (unsigned i = 0; i < ht.size(); i++) {
-      for (unsigned j = 0; j < p4s.size(); j++) {
-         ht[i][(i / (1 << j)) % 2] += p4s[j].pt();
-      }
-   }
-   std::vector<double> deltaHT;
-   for (unsigned i = 0; i < ht.size(); i++)
-      deltaHT.push_back(fabs(ht[i][0] - ht[i][1]));
-   return deltaHT;
-}
-
-//for alphaT calculation
-double CutAnalyzer::alphaT(const std::vector<LorentzV>& p4s) {
-   if (p4s.size() < 2)
-      return 0;
-
-   std::vector<double> pTs;
-   for (unsigned i = 0; i < p4s.size(); i++)
-      pTs.push_back(p4s[i].pt());
-   for (unsigned i = 0; i < p4s.size(); i++)
-      pTs.push_back(p4s[i].pt());
-   const std::vector<double> DHTper(deltaSumPt_permutations(p4s));
-
-   const double mDHT = *(std::min_element(DHTper.begin(), DHTper.end()));
-   const double sumPT = accumulate(pTs.begin(), pTs.end(), double(0));
-   const LorentzV sumP4 = accumulate(p4s.begin(), p4s.end(), LorentzV());
-
-   return 0.5 * (sumPT - mDHT) / sqrt(sumPT * sumPT - sumP4.perp2());
-   }*/
 
 //define this as a plug-in
 DEFINE_FWK_MODULE(CutAnalyzer);
