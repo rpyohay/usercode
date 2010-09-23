@@ -106,8 +106,9 @@ for call in `seq $number_of_calls`
   call_minus_1=`expr $call - 1`
   let min_evt=$(($evts_per_call*$call_minus_1))
   max_evt=`expr $min_evt + $evts_per_call - 1`
+  output_file=`echo $output_name | sed "s%\(.*\)\(\.root\)%\1_$call\2%"`
   cat >> $macro_name <<EOF
-  runSampleMaker("$output_name", fileList, "$macro_cfg", HLTBits, $min_evt, $max_evt);
+  runSampleMaker("$output_file", fileList, "$macro_cfg", HLTBits, $min_evt, $max_evt);
 EOF
 done
 cat >> $macro_name <<EOF
