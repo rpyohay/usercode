@@ -1,45 +1,10 @@
-/*#ifndef SampleMaker_EventSelector_h
-  #define SampleMaker_EventSelector_h*/
 #ifndef EventSelector_h
 #define EventSelector_h
 
 // system include files
-/*#include <memory>
-  #include <sstream>*/
 #include <fstream>
 #include <iostream>
 #include "format.h"
-
-// user include files
-/*#include "FWCore/Framework/interface/Frameworkfwd.h"
-
-#include "FWCore/Framework/interface/Event.h"
-#include "FWCore/Framework/interface/MakerMacros.h"
-
-#include "FWCore/ParameterSet/interface/ParameterSet.h"
-#include "FWCore/Framework/interface/ESHandle.h"
-
-//reco::Photon classes
-#include "DataFormats/EgammaCandidates/interface/PhotonFwd.h"
-#include "DataFormats/EgammaCandidates/interface/Photon.h"
-
-//ECAL RecHits
-#include "DataFormats/EcalRecHit/interface/EcalRecHitCollections.h"
-
-//for the general track collection
-#include "DataFormats/TrackReco/interface/TrackFwd.h"
-#include "DataFormats/TrackReco/interface/Track.h"
-
-//for the HB/HE RecHit collection
-#include "DataFormats/HcalRecHit/interface/HcalRecHitCollections.h"
-
-//HCAL geometry
-#include "Geometry/Records/interface/CaloGeometryRecord.h"
-#include "Geometry/CaloGeometry/interface/CaloGeometry.h"
-
-//muon geometry
-#include "DataFormats/MuonDetId/interface/CSCDetId.h"
-#include "DataFormats/MuonDetId/interface/RPCDetId.h"*/
 
 //ROOT
 #include "TMath.h"
@@ -60,19 +25,7 @@
 #define EEND 2
 #define ECAL 3
 
-//muon endcap coverage
-/*#define MUON_1_MIN_Z 5.7
-#define MUON_1_MAX_Z 6.7
-#define MUON_1_MAX_R 2.864
-#define MUON_1_MAX_ETA 2.4
-#define MUON_2_MIN_Z 6.7
-#define MUON_2_MAX_Z 10.88
-#define MUON_2_MIN_ETA 0.9
-#define MUON_2_MAX_ETA 2.4*/
-
 using namespace std;
-/*using namespace reco;
-  using namespace edm;*/
 
 class EventSelector {
 
@@ -160,34 +113,19 @@ class EventSelector {
   T dR(T eta1, T eta2, T phi1, T phi2) const { return sqrt(dEta(eta1, eta2)*dEta(eta1, eta2) + dPhi(phi1, phi2)*dPhi(phi1, phi2)); }
 
   //pass flags
-  /*const bool passesDataQualityCuts(const Handle<HBHERecHitCollection>&, const map<unsigned int, Photon*>&, const CaloGeometry*, 
-    const Handle<TrackCollection>&);*/
   bool passesDataQualityCuts(const HEHitInfoBranches&, const PhoInfoBranches&, const CosInfoBranches&, const vector<int>&);
-  //const bool passesHEBeamHaloTag(const Handle<HBHERecHitCollection>&, const map<unsigned int, Photon*>&, const CaloGeometry*);
   bool passesHEBeamHaloTag(const HEHitInfoBranches&, const PhoInfoBranches&, const vector<int>&);
-  //const bool photonIsHEHalo(const Handle<HBHERecHitCollection>&, const Photon*, const CaloGeometry*);
   bool photonIsHEHalo(const HEHitInfoBranches&, const PhoInfoBranches&, const int);
-  //const bool passesMuonBeamHaloTag(const Handle<TrackCollection>&, const map<unsigned int, Photon*>&);
   bool passesMuonBeamHaloTag(const CosInfoBranches&, const PhoInfoBranches&, const vector<int>&);
-  //const bool photonIsMuonHalo(const Handle<TrackCollection>&, const Photon*);
   bool photonIsMuonHalo(const CosInfoBranches&, const PhoInfoBranches&, const int);
-  //const bool passesPreselection(const Photon*, const vector<EcalRecHit*>&, const unsigned int);
   bool passesPreselection(const PhoInfoBranches&, const int);
-  //const bool passesCandidateID(const Photon*, unsigned int&);
   bool passesCandidateID(const PhoInfoBranches&, const int, unsigned int&);
-  //const bool foundPhotonCandidates(const Handle<PhotonCollection>&, const vector<EcalRecHit*>&, map<unsigned int, Photon*>&, map<unsigned int, Photon*>&);
   bool foundPhotonCandidates(const PhoInfoBranches&, vector<int>&, vector<int>&);
-  //const bool foundTrack(const Handle<TrackCollection>&, const map<unsigned int, Photon*>&);
-  bool foundTrack(const TrkInfoBranches&, const PhoInfoBranches&, const vector<int>&);
-  //const bool electronHasPassingTrack(const Handle<TrackCollection>&, const Photon*, const unsigned int);
-  bool electronHasPassingTrack(const TrkInfoBranches&, const PhoInfoBranches&, const int);
-  //const bool passDRCut(const map<unsigned int, Photon*>&, const map<unsigned int, Photon*>&);
+  bool foundTrack(const TrkInfoBranches&, const PhoInfoBranches&, const vector<int>&, vector<int>&);
+  bool electronHasPassingTrack(const TrkInfoBranches&, const PhoInfoBranches&, const int, vector<int>&);
   bool passDRCut(const vector<int>&, const vector<int>&, const PhoInfoBranches&);
-  //const bool photonIsNonoverlapping(const Photon*, const unsigned int, const map<unsigned int, Photon*>&);
   bool photonIsNonoverlapping(const PhoInfoBranches&, const int, const vector<int>&);
-  /*const bool foundAllCandidates(const Handle<PhotonCollection>&, const vector<EcalRecHit*>&, const Handle<TrackCollection>&, map<unsigned int, Photon*>&, 
-    map<unsigned int, Photon*>&);*/
-  bool foundAllCandidates(const PhoInfoBranches&, const TrkInfoBranches&, vector<int>&, vector<int>&);
+  bool foundAllCandidates(const PhoInfoBranches&, const TrkInfoBranches&, vector<int>&, vector<int>&, vector<int>&);
 
  private:
 

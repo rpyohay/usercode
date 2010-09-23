@@ -621,7 +621,8 @@ bool EventSelector::foundPhotonCandidates(const PhoInfoBranches& photonInfo, vec
 
 //determine if a passing track was found for the ETRACK sample
 //const bool EventSelector::foundTrack(const Handle<TrackCollection>& pTracks, const map<unsigned int, Photon*>& passingWithPixelSeed)
-bool EventSelector::foundTrack(const TrkInfoBranches& tracks, const PhoInfoBranches& photonInfo, const vector<int>& passingWithPixelSeed)
+bool EventSelector::foundTrack(const TrkInfoBranches& tracks, const PhoInfoBranches& photonInfo, const vector<int>& passingWithPixelSeed, 
+			       vector<int>& passingTracks)
 {
   //pass flag
   bool trackFound = false;
@@ -634,7 +635,7 @@ bool EventSelector::foundTrack(const TrkInfoBranches& tracks, const PhoInfoBranc
   vector<int>::const_iterator iElectron = passingWithPixelSeed.begin();
   while ((iElectron != passingWithPixelSeed.end()) && (!trackFound)) {
     //if (electronHasPassingTrack(pTracks, const_cast<const Photon*>((*iElectron).second), (*iElectron).first)) trackFound = true;
-    if (electronHasPassingTrack(tracks, photonInfo, *iElectron)) trackFound = true;
+    if (electronHasPassingTrack(tracks, photonInfo, *iElectron, passingTracks)) trackFound = true;
     if ((!trackFound) && (debugFlag_)) {
       debug_ << "This electron doesn't meet the criteria when paired with any tracks; advancing to the next electron.\n\n";
     }
@@ -647,13 +648,11 @@ bool EventSelector::foundTrack(const TrkInfoBranches& tracks, const PhoInfoBranc
 
 //determine if there is an energetic track separated by a minimum dR value from a particular electron
 //const bool EventSelector::electronHasPassingTrack(const Handle<TrackCollection>& pTracks, const Photon* electron, const unsigned int index)
-bool EventSelector::electronHasPassingTrack(const TrkInfoBranches& tracks, const PhoInfoBranches& photonInfo, const int index)
+bool EventSelector::electronHasPassingTrack(const TrkInfoBranches& tracks, const PhoInfoBranches& photonInfo, const int index, vector<int>& passingTracks)
 {
-  bool trackFound = false;
   //TrackCollection::const_iterator iTrack = pTracks->begin();
-  int iTrack = 0;
   //while ((iTrack != pTracks->end()) && (!trackFound)) {
-  while ((iTrack < tracks.Size) && (!trackFound)) {
+  for (int iTrack = 0; iTrack < tracks.Size; ++iTrack) {
     //double dRETrack = dR(electron->eta(), iTrack->eta(), electron->phi(), iTrack->phi());
     double dRETrack = dR(photonInfo.Eta[index], tracks.Eta[iTrack], photonInfo.Phi[index], tracks.Phi[iTrack]);
     //double pT = iTrack->pt();
@@ -664,15 +663,13 @@ bool EventSelector::electronHasPassingTrack(const TrkInfoBranches& tracks, const
       debug_ << "dR(track " << iTrack << ", photon " << index << "): " << dRETrack << endl;
     }
     if ((pT > trackPTMin_) && (dRETrack > eTrackRMin_)) {
-      trackFound = true;
+      passingTracks.push_back(iTrack);
       if (debugFlag_) debug_ << "Found a candidate track.\n\n";
     }
-    else {
-      ++iTrack;
-      if (debugFlag_) debug_ << "This track doesn't meet the criteria; advancing to the next track.\n\n";
-    }
+    else if (debugFlag_) debug_ << "This track doesn't meet the criteria; advancing to the next track.\n\n";
   }
-  return trackFound;
+  if (passingTracks.size() > 0) return true;
+  else return false;
 }
 
 //determine if the candidates are separated by the dR cut value
@@ -769,14 +766,14 @@ bool EventSelector::photonIsNonoverlapping(const PhoInfoBranches& photonInfo, co
 					     const Handle<TrackCollection>& pTracks, map<unsigned int, Photon*>& passingWithoutPixelSeed, 
 					     map<unsigned int, Photon*>& passingWithPixelSeed)*/
 bool EventSelector::foundAllCandidates(const PhoInfoBranches& photonInfo, const TrkInfoBranches& trackInfo, vector<int>& passingWithoutPixelSeed, 
-					     vector<int>& passingWithPixelSeed)
+				       vector<int>& passingWithPixelSeed, vector<int>& passingTracks)
 {
   bool pass = true;
   //if (foundPhotonCandidates(pPhotons, ECALRecHits, passingWithoutPixelSeed, passingWithPixelSeed)) {
   if (foundPhotonCandidates(photonInfo, passingWithoutPixelSeed, passingWithPixelSeed)) {
     if (sampleType_ == ETRACK) {
       //try { if (foundTrack(pTracks, passingWithPixelSeed)) pass = true; }
-      try { if (foundTrack(trackInfo, photonInfo, passingWithPixelSeed)) pass = true; }
+      try { if (foundTrack(trackInfo, photonInfo, passingWithPixelSeed, passingTracks)) pass = true; }
       catch (const unsigned int badSize) {
 	if (debugFlag_) {
 	  debug_ << "Number of electron candidates for the ETRACK sample is " << badSize << ", not one.  This event will fail.  Check your code.\n";
