@@ -3,10 +3,26 @@
 #get cfg file name
 if [ -z $1 ]
     then
-    echo "Usage: ./makeAnalysisMacro.sh <cfg_file_name>"
+    echo "Usage: ./makeAnalysisMacro.sh <cfg_file_name> <events_per_call> <number_of_calls>"
     exit 0
 fi
 cfg=$1
+
+#get events per call
+if [ -z $2 ]
+    then
+    echo "Usage: ./makeAnalysisMacro.sh <cfg_file_name> <events_per_call> <number_of_calls>"
+    exit 0
+fi
+evts_per_call=$2
+
+#get number of calls
+if [ -z $3 ]
+    then
+    echo "Usage: ./makeAnalysisMacro.sh <cfg_file_name> <events_per_call> <number_of_calls>"
+    exit 0
+fi
+number_of_calls=$3
 
 #parse cfg file
 parse_cfg_file () {
@@ -42,9 +58,27 @@ EOF
 #write file names to macro file
 for ntuple_name in $ntuples
   do
-  for file in `rfdir $ntuple_name | awk '{ print $NF }'`
+  if [ -z `echo $ntuple_name | grep castor` ]
+      then
+      stored_on_CASTOR=0
+      file_list=$ntuple_name
+  else
+      stored_on_CASTOR=1
+      file_list=`rfdir $ntuple_name | awk '{ print $NF }'`
+  fi
+  for file in $file_list
     do
-    formatted_file_name_with_path="rfio:$ntuple_name/$file"
+    if [ $stored_on_CASTOR -eq 1 ]
+	then
+	if [ -z `echo $ntuple_name | grep root` ]
+	    then
+	    formatted_file_name_with_path="rfio:$ntuple_name/$file"
+	else
+	    formatted_file_name_with_path="rfio:$file"
+	fi
+    else
+	formatted_file_name_with_path=$file
+    fi
     cat >> $macro_name <<EOF
   fileList.push_back("$formatted_file_name_with_path");
 EOF
@@ -66,7 +100,17 @@ done
 cat >> $macro_name <<EOF
 
   //run!
-  runSampleMaker("$output_name", fileList, "$macro_cfg", HLTBits);
+EOF
+for call in `seq $number_of_calls`
+  do
+  call_minus_1=`expr $call - 1`
+  let min_evt=$(($evts_per_call*$call_minus_1))
+  max_evt=`expr $min_evt + $evts_per_call - 1`
+  cat >> $macro_name <<EOF
+  runSampleMaker("$output_name", fileList, "$macro_cfg", HLTBits, $min_evt, $max_evt);
+EOF
+done
+cat >> $macro_name <<EOF
 }
 EOF
 
