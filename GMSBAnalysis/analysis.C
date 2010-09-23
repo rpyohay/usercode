@@ -151,7 +151,8 @@ bool foundElemInVec(const vector<int>& vec, const int elem)
 //determine if an event passed the full selection
 bool passedFullSelection(EventSelector& evtProperties, const map<string, unsigned int>& haloParams, const EvtInfoBranches& evtInfo, 
 			 const PhoInfoBranches& photonInfo, const TrkInfoBranches& trackInfo, const HEHitInfoBranches& HEInfo, 
-			 const CosInfoBranches& cosmicTrackInfo, vector<int>& passingWithoutPixelSeed, vector<int>& passingWithPixelSeed)
+			 const CosInfoBranches& cosmicTrackInfo, vector<int>& passingWithoutPixelSeed, vector<int>& passingWithPixelSeed,
+			 vector<int>& passingTracks)
 {
   //get/set the run, event, and lumi section numbers
   evtProperties.setRun(evtInfo.Run);
@@ -167,7 +168,7 @@ bool passedFullSelection(EventSelector& evtProperties, const map<string, unsigne
   if (evtProperties.foundPhotonCandidates(photonInfo, passingWithoutPixelSeed, passingWithPixelSeed)) {
 
     //decide if a track was found
-    if (evtProperties.getSampleType() == ETRACK) { if (evtProperties.foundTrack(trackInfo, photonInfo, passingWithPixelSeed)) allCandsFound = true; }
+    if (evtProperties.getSampleType() == ETRACK) { if (evtProperties.foundTrack(trackInfo, photonInfo, passingWithPixelSeed, passingTracks)) allCandsFound = true; }
 
     //all samples besides ETRACK have all candidates found
     else allCandsFound = true;
@@ -230,14 +231,12 @@ bool passedFullSelection(EventSelector& evtProperties, const map<string, unsigne
 }
 
 //run the sample maker
-void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgFileName, vector<int>& HLTBits)
+void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgFileName, vector<int>& HLTBits, unsigned int minEvt, unsigned int maxEvt)
 {
-  //
-
   //chain the input trees together
   TChain* chain = new TChain("gmsbAna/root");
-  //makeChain(fileList, chain);
-  for (vector<string>::const_iterator iFile = fileList.begin(); iFile != fileList.end(); ++iFile) { chain->Add((*iFile).c_str()); }
+  makeChain(fileList, chain);
+  //for (vector<string>::const_iterator iFile = fileList.begin(); iFile != fileList.end(); ++iFile) { chain->Add((*iFile).c_str()); }
 
   //open output file
   TFile* out = new TFile(outputFileName.c_str(), "RECREATE");
@@ -276,9 +275,9 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
     return;
   }
 
-  //book photon histograms
+  //book e/gamma histograms
   out->cd();
-  out->mkdir("photon_histograms");
+  out->mkdir("egamma_histograms");
   out->cd("photon_histograms");
   TH1F* ECALIso = new TH1F("ECALIso", "ECAL isolation of passing e/#gamma candidates;ECAL isolation (GeV);e/#gamma candidates per GeV", 50, 0.0, 50.0);
   TH1F* HCALIso = new TH1F("HCALIso", "HCAL isolation of passing e/#gamma candidates;HCAL isolation (GeV);e/#gamma candidates per GeV", 50, 0.0, 50.0);
@@ -301,24 +300,27 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
   TH1F* dPhiMETCand = new TH1F("dPhiMETCand", "#Delta#phi between the ME_{T} and the e/#gamma candidate;#Delta#phi (rad);e/#gamma candidates/0.4", 8, 0.0, 
 			       3.2);
   TH1F* dPhiMETDiEMPT = new TH1F("dPhiMETDiEMPT", "#Delta#phi between the ME_{T} and the di-EM p_{T} vector;#Delta#phi (rad);Events/0.4", 8, 0.0, 3.2);
+  TH1F* hasPixelSeed = new TH1F("hasPixelSeed", "e/#gamma candidate has pixel seed?;;e/#gamma candidates/category", 2, -0.5, 1.5);
+  hasPixelSeed->GetXaxis()->SetBinLabel(0, "no");
+  hasPixelSeed->GetYaxis()->SetBinLabel(1, "yes");
 
   //book track histograms
-  /*out->cd("..");
+  out->cd("..");
   out->mkdir("track_histograms");
   out->cd("track_histograms");
   TH1F* trackPT = new TH1F("trackPT", "p_{T} of passing tracks;p_{T} (GeV);Tracks per GeV", 100, 0.0, 100.0);
   TH1F* dRTrackPhoton = new TH1F("dRTrackPhoton", "#DeltaR(track, e/#gamma candidate) of passing tracks-e/#gamma candidate pairs;#DeltaR;", 100, 0.0, 1.0);
-  dRTrackPhoton->GetYaxis()->SetTitle("track-e/#gamma candidate pairs per 0.01");*/
+  dRTrackPhoton->GetYaxis()->SetTitle("track-e/#gamma candidate pairs per 0.01");
+  TH1F* numPassingTracksPerEvt = new TH1F("numPassingTracksPerEvt", "Number of passing tracks per e+track event;Number of passing tracks;Events/1", 20, 0.0, 20.0);
 
   //loop over the events
   unsigned int numPassingHLT = 0;
   unsigned int numPassingAll = 0;
-  Long64_t bigNum = chain->GetEntriesFast();
   unsigned int numTot = 0;
   vector<unsigned int> passingRun;
   vector<unsigned int> passingEvt;
   vector<unsigned int> passingLumiSection;
-  for (Long64_t iEvt = 0; iEvt < bigNum/*20000*/; ++iEvt) {
+  for (Long64_t iEvt = minEvt; iEvt < maxEvt; ++iEvt) {
     if (chain->LoadTree(iEvt) < 0) {
       cout << "Event #" << (iEvt + 1) << " has no corresponding tree.  There must have been only " << iEvt << " events in the chain.\n";
       numTot = iEvt;
@@ -334,28 +336,46 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
       //did it pass the full selection?
       vector<int> passingWithoutPixelSeed;
       vector<int> passingWithPixelSeed;
+      vector<int> passingTracks;
       if (passedFullSelection(evtProperties, haloParams, evtInfo, photonInfo, trackInfo, HEInfo, cosmicTrackInfo, passingWithoutPixelSeed, 
-			      passingWithPixelSeed)) {
+			      passingWithPixelSeed, passingTracks)) {
 	++numPassingAll;
 	passingRun.push_back(evtInfo.Run);
 	passingEvt.push_back(evtInfo.Event);
 	passingLumiSection.push_back(evtInfo.LumiBlk);
 
-	//fill plots of photon quantities by photon
+	//fill plots of e/gamma candidate quantities by e/gamma candidate
+	vector<int> egammaCands;
 	for (vector<int>::const_iterator iPhoton = passingWithoutPixelSeed.begin(); iPhoton != passingWithoutPixelSeed.end(); ++iPhoton) {
-	  ECALIso->Fill(photonInfo.EcalIso[*iPhoton]);
-	  HCALIso->Fill(photonInfo.HcalIso[*iPhoton]);
-	  ET->Fill(photonInfo.Pt[*iPhoton]);
-	  HOverE->Fill(photonInfo.HadOverEM[*iPhoton]);
-	  fiducialRegionDist->Fill(evtProperties.ECALFiducialRegion(photonInfo, *iPhoton));
-	  etaWidth->Fill(photonInfo.sigmaIetaIeta[*iPhoton]);
-	  trackIso->Fill(photonInfo.TrackIsoPtHol[*iPhoton]);
-	  eta->Fill(photonInfo.Eta[*iPhoton]);
-	  phi->Fill(photonInfo.Phi[*iPhoton]);
+	  egammaCands.push_back(*iPhoton);
+	}
+	for (vector<int>::const_iterator iElectron = passingWithPixelSeed.begin(); iElectron != passingWithPixelSeed.end(); ++iElectron) {
+	  egammaCands.push_back(*iElectron);
+	}
+	for (vector<int>::const_iterator iEGammaCand = egammaCands.begin(); iEGammaCand != egammaCands.end(); ++iEGammaCand) {
+	  ECALIso->Fill(photonInfo.EcalIso[*iEGammaCand]);
+	  HCALIso->Fill(photonInfo.HcalIso[*iEGammaCand]);
+	  ET->Fill(photonInfo.Pt[*iEGammaCand]);
+	  HOverE->Fill(photonInfo.HadOverEM[*iEGammaCand]);
+	  fiducialRegionDist->Fill(evtProperties.ECALFiducialRegion(photonInfo, *iEGammaCand));
+	  etaWidth->Fill(photonInfo.sigmaIetaIeta[*iEGammaCand]);
+	  trackIso->Fill(photonInfo.TrackIsoPtHol[*iEGammaCand]);
+	  eta->Fill(photonInfo.Eta[*iEGammaCand]);
+	  phi->Fill(photonInfo.Phi[*iEGammaCand]);
+	  hasPixelSeed->Fill(photonInfo.hasPixelSeed[*iEGammaCand]);
 	}
 
-	//fill plot of number of passing candidates per event
-	numCandsPerEvt->Fill(passingWithoutPixelSeed.size() + passingWithPixelSeed.size());
+	//fill plots of track quantities by track
+	for (vector<int>::const_iterator iTrack = passingTracks.begin(); iTrack != passingTracks.end(); ++iTrack) {
+	  trackPT->Fill(trackInfo.Pt[*iTrack]);
+	  for (vector<int>::const_iterator iElectron = passingWithPixelSeed.begin(); iElectron != passingWithPixelSeed.end(); ++iElectron) {
+	    dRTrackPhoton->Fill(evtProperties.dR(photonInfo.Eta[*iElectron], trackInfo.Eta[*iTrack], photonInfo.Phi[*iElectron], trackInfo.Phi[*iTrack]));
+	  }
+	}
+
+	//fill plots of number of passing candidates per event
+	numCandsPerEvt->Fill(egammaCands.size());
+	numPassingTracksPerEvt->Fill(passingTracks.size());
 
 	//plots specific to gg and ff samples
 	if ((evtProperties.getSampleType() == GAMMAGAMMA) || (evtProperties.getSampleType() == FF)) {
@@ -413,7 +433,7 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
   }
   out->cd();
   outputTree->Write();
-  out->cd("photon_histograms");
+  out->cd("egamma_histograms");
   ECALIso->Write();
   HCALIso->Write();
   ET->Write();
@@ -430,6 +450,11 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
   dPhiMETCand2->Write();
   dPhiMETCand->Write();
   dPhiMETDiEMPT->Write();
+  out->cd("..");
+  out->cd("track_histograms");
+  trackPT->Write();
+  dRTrackPhoton->Write();
+  numPassingTracksPerEvt->Write();
   out->Write();
   out->Close();
   delete out;
