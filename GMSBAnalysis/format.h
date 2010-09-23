@@ -14,44 +14,83 @@
 #define MAX_GENPARTICLES   10000
 #define MAX_GENDAUGHTERS   10
 
-#define N_TRIGGER_BOOKINGS 32  
-char TriggerBooking[N_TRIGGER_BOOKINGS][38] = {
-//single photon triggers
-"HLT_Photon10_L1R",                           // bit 0
-"HLT_Photon10_Cleaned_L1R",                   // bit 1
-"HLT_Photon15_L1R",                           // bit 2
-"HLT_Photon15_Cleaned_L1R",                   // bit 3
-"HLT_Photon15_LooseEcalIso_Cleaned_L1R",      // bit 4
-"HLT_Photon15_TrackIso_Cleaned_L1R",          // bit 5
-"HLT_Photon20_L1R",                           // bit 6
-"HLT_Photon20_Cleaned_L1R",                   // bit 7
-"HLT_Photon30_L1R",                           // bit 8
-//double photon triggers
-"HLT_DoublePhoton4_eeRes_L1R",                // bit 9
-"HLT_DoublePhoton5_L1R",                      // bit 10
-"HLT_DoublePhoton5_CEP_L1R",                  // bit 11
-"HLT_DoublePhoton10_L1R",                     // bit 12
+#define N_TRIGGER_BOOKINGS 70  
+char TriggerBooking[N_TRIGGER_BOOKINGS][50] = {
+//photon triggers
+"HLT_DoublePhoton5_L1R",                       //bit 0
+"HLT_Photon10_L1R",                           // bit 1
+"HLT_Photon10_Cleaned_L1R",                   // bit 2
+"HLT_DoublePhoton10_L1R",                     // bit 3
+"HLT_Photon15_L1R",                           // bit 
+"HLT_Photon15_Cleaned_L1R",                   // bit 5
+"HLT_Photon15_LooseEcalIso_Cleaned_L1R",      // bit 6
+"HLT_Photon15_TrackIso_Cleaned_L1R",          // bit 7
+"HLT_DoublePhoton15_L1R",                     // bit 8
+"HLT_Photon20_L1R",                           // bit 9
+"HLT_DoublePhoton20_L1R ",                    // bit 10
+"HLT_Photon20_Cleaned_L1R",                   // bit 11
+"HLT_Photon30_L1R",                           // bit 12
+"HLT_Photon30_Cleaned_L1R",                   // bit 13
+"HLT_Photon50_L1R",                           // bit 14
+"HLT_Photon50_Cleaned_L1R",                   // bit 15
+"lots",                                       // bit 16
+"more",                                       // bit 17
+"triggers",                                   // bit 18
+"lots",                                       // bit 19
+"more",                                       // bit 20
+"triggers",                                   // bit 21
+"lots",                                       // bit 22
+"more",                                       // bit 23
+"triggers",                                   // bit 24
+"lots",                                       // bit 25
+"more",                                       // bit 26
+"triggers",                                   // bit 27
+"lots",                                       // bit 28
+"more",                                       // bit 29
+"triggers",                                   // bit 30
+"lots",                                       // bit 31
+"more",                                       // bit 32
+"triggers",                                   // bit 33
+"lots",                                       // bit 34
+"more",                                       // bit 35
+"triggers",                                   // bit 36
+"lots",                                       // bit 37
+"more",                                       // bit 38
+"triggers",                                   // bit 39
+"lots",                                       // bit 40
+"more",                                       // bit 41
+"triggers",                                   // bit 42
+"lots",                                       // bit 43
+//other
+"HLT_DoublePhoton4_eeRes_L1R",                // bit 44
+"HLT_DoublePhoton5_CEP_L1R",                  // bit 45
 //beam halo trigger
-"HLT_CSCBeamHalo",                            // bit 13
+"HLT_CSCBeamHalo",                            // bit 46
 //muon triggers
-"HLT_L1Mu",                                   // bit 14
-"HLT_L1MuOpen",                               // bit 15
-"HLT_L2Mu0",                                  // bit 16
-"HLT_L2Mu3",                                  // bit 17
-"HLT_L2Mu5",                                  // bit 18
-"HLT_L1MuOpen_DT",                            // bit 19
-"HLT_L1Mu14_L1ETM30",                         // bit 20
-"HLT_L1Mu14_L1SingleJet6U",                   // bit 21
-"HLT_L1Mu14_L1SingleEG10",                    // bit 22
-"HLT_L1Mu20",                                 // bit 23
-"HLT_DoubleMu3",                              // bit 24
-"HLT_Mu3",                                    // bit 25
-"HLT_Mu5",                                    // bit 26
-"HLT_Mu9",                                    // bit 27
-"HLT_IsoMu3",                                 // bit 28
-"HLT_L2Mu9",                                  // bit 29
-"HLT_L2Mu11",                                 // bit 30
-"HLT_Mu7"                                     // bit 31
+"HLT_L1Mu",                                   // bit 47
+"HLT_L1MuOpen",                               // bit 48
+"HLT_L2Mu0",                                  // bit 49
+"HLT_L2Mu3",                                  // bit 50
+"HLT_L2Mu5",                                  // bit 51
+"HLT_L1MuOpen_DT",                            // bit 52
+"HLT_L1Mu14_L1ETM30",                         // bit 53
+"HLT_L1Mu14_L1SingleJet6U",                   // bit 54
+"HLT_L1Mu14_L1SingleEG10",                    // bit 55
+"HLT_L1Mu20",                                 // bit 56
+"HLT_DoubleMu3",                              // bit 57
+"HLT_Mu3",                                    // bit 58
+"HLT_Mu5",                                    // bit 59
+"HLT_Mu9",                                    // bit 60
+"HLT_IsoMu3",                                 // bit 61
+"HLT_L2Mu9",                                  // bit 62
+"HLT_L2Mu11",                                 // bit 63
+"HLT_Mu7",                                    // bit 64
+//some speciall HLT for Summer10 and Spring10 MC
+"HLT_Photon25_L1R",			      // bit 65
+"HLT_Photon30_L1R_8E29",		      // bit 66
+"HLT_Photon30_L1R_1E31",		      // bit 67
+"HLT_Photon70_L1R",			      // bit 68
+"HLT_DoublePhoton15_L1R"		      // bit 69
 };
 
 class EvtInfoBranches {
@@ -81,8 +120,7 @@ public:
   int   TrgCount;	// No. of fired booking bits
   int   TrgBook[N_TRIGGER_BOOKINGS];	// Trigger bits
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
 	root->SetBranchAddress("EvtInfo_Run"	    , &Run);
 	root->SetBranchAddress("EvtInfo_Event"	    , &Event);
         root->SetBranchAddress("EvtInfo_LumiBlk"      , &LumiBlk);
@@ -156,8 +194,7 @@ public:
   float seedE[MAX_PHOTONS];
   float seedTime[MAX_PHOTONS];
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
 	root->SetBranchAddress("PhoInfo_Size"               , &Size);
 	root->SetBranchAddress("PhoInfo_Index"              , &Index[0]);
 	root->SetBranchAddress("PhoInfo_Px"                 , &Px[0]);
@@ -216,9 +253,11 @@ public:
   float EMEnergyFraction[MAX_JETS];
   int   N90[MAX_JETS];
   int   N60[MAX_JETS];
-  
-  template<typename T>
-  void Register(T *root) {
+  float fHPD[MAX_JETS];
+  float fRBX[MAX_JETS];
+  float rHF[MAX_JETS];
+ 
+  void Register(TTree *root) {
 	root->SetBranchAddress("JetInfo_Size"		   , &Size);
 	root->SetBranchAddress("JetInfo_Index"		   , &Index[0]);
 	root->SetBranchAddress("JetInfo_Et"		   , &Et[0]);
@@ -229,7 +268,175 @@ public:
         root->SetBranchAddress("JetInfo_EMEnergyFraction"    , &EMEnergyFraction[0]);
         root->SetBranchAddress("JetInfo_N90"                 , &N90[0]);
         root->SetBranchAddress("JetInfo_N60"                 , &N60[0]);
+	root->SetBranchAddress("JetInfo_fHPD"                , &fHPD[0]);
+	root->SetBranchAddress("JetInfo_fRBX"                , &fRBX[0]);
+	root->SetBranchAddress("JetInfo_rHF"                 , &rHF[0]);
   }  
+};
+
+class PATJetInfoBranches {
+public:
+  int   Size;
+  int   Index[MAX_JETS];
+
+  //uncorrected jet 4-vector
+  float  uncorrJetET[MAX_JETS];
+  float  uncorrJetPX[MAX_JETS];
+  float  uncorrJetPY[MAX_JETS];
+  float  uncorrJetPZ[MAX_JETS];
+  float  uncorrJetEta[MAX_JETS];
+  float  uncorrJetPhi[MAX_JETS];
+
+  //L1 (L1 corrects for pileup, noise, etc.) corrected jet 4-vector
+  float  L1CorrJetET[MAX_JETS];
+  float  L1CorrJetPX[MAX_JETS];
+  float  L1CorrJetPY[MAX_JETS];
+  float  L1CorrJetPZ[MAX_JETS];
+  float  L1CorrJetEta[MAX_JETS];
+  float  L1CorrJetPhi[MAX_JETS];
+
+  //L1 + L2 (L2 corrects for nonuniform jet response as a function of eta) corrected jet 4-vector
+  float  L1L2CorrJetET[MAX_JETS];
+  float  L1L2CorrJetPX[MAX_JETS];
+  float  L1L2CorrJetPY[MAX_JETS];
+  float  L1L2CorrJetPZ[MAX_JETS];
+  float  L1L2CorrJetEta[MAX_JETS];
+  float  L1L2CorrJetPhi[MAX_JETS];
+
+  //L1 + L2 + L3 (L3 corrects for nonuniform jet response as a function of pT) corrected jet 4-vector
+  //L1+L2+L3 is the default full correction
+  float  L1L2L3CorrJetET[MAX_JETS];
+  float  L1L2L3CorrJetPX[MAX_JETS];
+  float  L1L2L3CorrJetPY[MAX_JETS];
+  float  L1L2L3CorrJetPZ[MAX_JETS];
+  float  L1L2L3CorrJetEta[MAX_JETS];
+  float  L1L2L3CorrJetPhi[MAX_JETS];
+
+  //L1+L2+L3 corrected jet information
+  int    L1L2L3CorrJetN90[MAX_JETS]; //# calo towers carrying 90% of the jet's total energy
+  int    L1L2L3CorrJetN60[MAX_JETS]; //# calo towers carrying 60% of the jet's total energy
+  float  L1L2L3CorrJetEMF[MAX_JETS]; //EM energy fraction
+  float  L1L2L3CorrJetHadEnergyInHB[MAX_JETS];
+  float  L1L2L3CorrJetHadEnergyInHE[MAX_JETS];
+  float  L1L2L3CorrJetHadEnergyInHO[MAX_JETS];
+  float  L1L2L3CorrJetHadEnergyInHF[MAX_JETS];
+  float  L1L2L3CorrJetEMEnergyInEB[MAX_JETS];
+  float  L1L2L3CorrJetEMEnergyInEE[MAX_JETS];
+
+  //MC matching
+  float  L1L2L3CorrJetMatchedGenJetET[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetPX[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetPY[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetPZ[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetEta[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetPhi[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetEMEnergy[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetHadEnergy[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetInvisibleEnergy[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenJetOtherEnergy[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenPartonET[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenPartonPX[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenPartonPY[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenPartonPZ[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenPartonEta[MAX_JETS];
+  float  L1L2L3CorrJetMatchedGenPartonPhi[MAX_JETS];
+  int    L1L2L3CorrJetMatchedGenPartonPDGID[MAX_JETS];
+
+  //jet energy corrections (JEC)
+  float  JECUncorrToL1L2L3[MAX_JETS]; //factor applied to correct an uncorrected jet to an L1+L2+L3 corrected jet
+  float  JECL1ToL1L2L3[MAX_JETS]; //factor applied to correct an L1 corrected jet to an L1+L2+L3 corrected jet
+  float  JECL1L2ToL1L2L3[MAX_JETS]; //factor applied to correct an L1+L2 corrected jet to an L1+L2+L3 corrected jet
+
+  //jet ID (computed for the UNCORRECTED jet)
+  float  uncorrJetFHPD[MAX_JETS]; //fraction of jet energy carried by the hottest HPD
+  float  uncorrJetFRBX[MAX_JETS]; //fraction of jet energy carried by the hottest RBX
+  int    uncorrJetN90Hits[MAX_JETS]; //min # RecHits containing 90% of the jet energy
+  int    uncorrJetNHCALTowers[MAX_JETS]; //# HCAL towers in the jet
+  int    uncorrJetNECALTowers[MAX_JETS]; //# ECAL towers in the jet
+  float  uncorrJetRHF[MAX_JETS]; //calculated in GMSBTuple.cc; something to do with HF noise rejection
+  int    passesLOOSEPURE09JetID[MAX_JETS]; //1 if jet passed LOOSE PURE09 jet ID, 0 otherwise (https://twiki.cern.ch/twiki/bin/view/CMS/JetID)
+  int    passesTIGHTPURE09JetID[MAX_JETS]; //1 if jet passed TIGHT PURE09 jet ID, 0 otherwise (https://twiki.cern.ch/twiki/bin/view/CMS/JetID)
+
+  //cross-cleaning
+  int    noPhotonOverlap09[MAX_JETS]; //true if the jet does not overlap with a photon within dR = 0.9 (M. Balazs's prescription)
+  int    noPhotonOverlap05[MAX_JETS]; //true if the jet does not overlap with a photon within dR = 0.5 (R. Nandi's prescription)
+
+  void Register(TTree *root, bool includeDetailedUncorrJetInfo, bool includeDetailedJetIDInfo, bool MC) {
+	root->SetBranchAddress("PATJetInfo_Size"		      , &Size);
+	root->SetBranchAddress("PATJetInfo_Index"		      , &Index[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetET"           , &L1L2L3CorrJetET[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetPX"           , &L1L2L3CorrJetPX[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetPY"           , &L1L2L3CorrJetPY[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetPZ"           , &L1L2L3CorrJetPZ[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetEta"          , &L1L2L3CorrJetEta[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetPhi"          , &L1L2L3CorrJetPhi[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetN90"          , &L1L2L3CorrJetN90[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetN60"          , &L1L2L3CorrJetN60[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetEMF"          , &L1L2L3CorrJetEMF[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetHadEnergyInHB", &L1L2L3CorrJetHadEnergyInHB[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetHadEnergyInHE", &L1L2L3CorrJetHadEnergyInHE[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetHadEnergyInHO", &L1L2L3CorrJetHadEnergyInHO[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetHadEnergyInHF", &L1L2L3CorrJetHadEnergyInHF[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetEMEnergyInEB" , &L1L2L3CorrJetEMEnergyInEB[0]);
+	root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetEMEnergyInEE" , &L1L2L3CorrJetEMEnergyInEE[0]);
+	root->SetBranchAddress("PATJetInfo_passesLOOSEPURE09JetID"    , &passesLOOSEPURE09JetID[0]);
+	root->SetBranchAddress("PATJetInfo_passesTIGHTPURE09JetID"    , &passesTIGHTPURE09JetID[0]);
+	root->SetBranchAddress("PATJetInfo_noPhotonOverlap09"         , &noPhotonOverlap09[0]);
+	root->SetBranchAddress("PATJetInfo_noPhotonOverlap05"         , &noPhotonOverlap05[0]);
+
+	if (includeDetailedUncorrJetInfo) {
+	  root->SetBranchAddress("PATJetInfo_uncorrJetET"      , &uncorrJetET[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetPX"      , &uncorrJetPX[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetPY"      , &uncorrJetPY[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetPZ"      , &uncorrJetPZ[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetEta"     , &uncorrJetEta[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetPhi"     , &uncorrJetPhi[0]);
+	  root->SetBranchAddress("PATJetInfo_L1CorrJetET"      , &L1CorrJetET[0]);
+	  root->SetBranchAddress("PATJetInfo_L1CorrJetPX"      , &L1CorrJetPX[0]);
+	  root->SetBranchAddress("PATJetInfo_L1CorrJetPY"      , &L1CorrJetPY[0]);
+	  root->SetBranchAddress("PATJetInfo_L1CorrJetPZ"      , &L1CorrJetPZ[0]);
+	  root->SetBranchAddress("PATJetInfo_L1CorrJetEta"     , &L1CorrJetEta[0]);
+	  root->SetBranchAddress("PATJetInfo_L1CorrJetPhi"     , &L1CorrJetPhi[0]);
+	  root->SetBranchAddress("PATJetInfo_L1L2CorrJetET"    , &L1L2CorrJetET[0]);
+	  root->SetBranchAddress("PATJetInfo_L1L2CorrJetPX"    , &L1L2CorrJetPX[0]);
+	  root->SetBranchAddress("PATJetInfo_L1L2CorrJetPY"    , &L1L2CorrJetPY[0]);
+	  root->SetBranchAddress("PATJetInfo_L1L2CorrJetPZ"    , &L1L2CorrJetPZ[0]);
+	  root->SetBranchAddress("PATJetInfo_L1L2CorrJetEta"   , &L1L2CorrJetEta[0]);
+	  root->SetBranchAddress("PATJetInfo_L1L2CorrJetPhi"   , &L1L2CorrJetPhi[0]);
+	  root->SetBranchAddress("PATJetInfo_JECUncorrToL1L2L3", &JECUncorrToL1L2L3[0]);
+	  root->SetBranchAddress("PATJetInfo_JECL1ToL1L2L3"    , &JECL1ToL1L2L3[0]);
+	  root->SetBranchAddress("PATJetInfo_JECL1L2ToL1L2L3"  , &JECL1L2ToL1L2L3[0]);
+	}
+
+	if (includeDetailedJetIDInfo) {
+	  root->SetBranchAddress("PATJetInfo_uncorrJetFHPD"       , &uncorrJetFHPD[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetFRBX"       , &uncorrJetFRBX[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetN90Hits"    , &uncorrJetN90Hits[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetNHCALTowers", &uncorrJetNHCALTowers[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetNECALTowers", &uncorrJetNECALTowers[0]);
+	  root->SetBranchAddress("PATJetInfo_uncorrJetRHF"        , &uncorrJetRHF[0]);
+	}
+
+	if (MC) {
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetET"             , &L1L2L3CorrJetMatchedGenJetET[0]);
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetPX"             , &L1L2L3CorrJetMatchedGenJetPX[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetPY"             , &L1L2L3CorrJetMatchedGenJetPY[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetPZ"             , &L1L2L3CorrJetMatchedGenJetPZ[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetEta"            , &L1L2L3CorrJetMatchedGenJetEta[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetPhi"            , &L1L2L3CorrJetMatchedGenJetPhi[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetEMEnergy"       , &L1L2L3CorrJetMatchedGenJetEMEnergy[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetHadEnergy"      , &L1L2L3CorrJetMatchedGenJetHadEnergy[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetInvisibleEnergy", &L1L2L3CorrJetMatchedGenJetInvisibleEnergy[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenJetOtherEnergy"    , &L1L2L3CorrJetMatchedGenJetOtherEnergy[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenPartonET"          , &L1L2L3CorrJetMatchedGenPartonET[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenPartonPX"          , &L1L2L3CorrJetMatchedGenPartonPX[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenPartonPY"          , &L1L2L3CorrJetMatchedGenPartonPY[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenPartonPZ"          , &L1L2L3CorrJetMatchedGenPartonPZ[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenPartonEta"         , &L1L2L3CorrJetMatchedGenPartonEta[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenPartonPhi"         , &L1L2L3CorrJetMatchedGenPartonPhi[0]); 
+	  root->SetBranchAddress("PATJetInfo_L1L2L3CorrJetMatchedGenPartonPDGID"       , &L1L2L3CorrJetMatchedGenPartonPDGID[0]); 
+	}
+  }
 };
 
 class TrkInfoBranches {
@@ -252,8 +459,7 @@ public:
   float outerY[MAX_TRACKS];
   float outerZ[MAX_TRACKS];
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
         root->SetBranchAddress("TrkInfo_Size"           	, &Size);
         root->SetBranchAddress("TrkInfo_Index"          	, &Index[0]);
         root->SetBranchAddress("TrkInfo_Charge"         	, &Charge[0]);
@@ -286,8 +492,7 @@ public:
   int   isGlobal[MAX_MUONS];
   int   Stations[MAX_MUONS];
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
         root->SetBranchAddress("MuonInfo_Size"          	, &Size);
         root->SetBranchAddress("MuonInfo_Index"         	, &Index[0]);
         root->SetBranchAddress("MuonInfo_Charge"         	, &Charge[0]);
@@ -329,8 +534,7 @@ public:
   float PyF[MAX_COSMICS];
   float PxF[MAX_COSMICS];
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
         root->SetBranchAddress("CosInfo_Size"            	, &Size);
         root->SetBranchAddress("CosInfo_Index"           	, &Index[0]);
         root->SetBranchAddress("CosInfo_Pt"            		, &Pt[0]);
@@ -375,8 +579,7 @@ public:
   int   Flag[MAX_RECHITS];
   float Time[MAX_RECHITS];
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
         root->SetBranchAddress("HitInfo_Size"            	, &Size);
         root->SetBranchAddress("HitInfo_Index"           	, &Index[0]);
         root->SetBranchAddress("HitInfo_Eta"            	, &Eta[0]);
@@ -408,8 +611,7 @@ public:
   float Y[MAX_HEHITS];
   float Z[MAX_HEHITS];
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
         root->SetBranchAddress("HEHitInfo_Size"          	, &Size);
         root->SetBranchAddress("HEHitInfo_Index"         	, &Index[0]);
         root->SetBranchAddress("HEHitInfo_Energy"       	, &Energy[0]);
@@ -437,8 +639,7 @@ public:
   int   nTrack[MAX_VERTEXS];
   float TrkPtSum[MAX_VERTEXS];
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
         root->SetBranchAddress("VtxInfo_Size"        		, &Size);
         root->SetBranchAddress("VtxInfo_Index"            	, &Index[0]);
         root->SetBranchAddress("VtxInfo_X"              	, &X[0]);
@@ -470,8 +671,7 @@ public:
   int   momIndex[MAX_GENPARTICLES];
   int   dauIndex[MAX_GENPARTICLES][MAX_GENDAUGHTERS];
 
-  template<typename T>
-  void Register(T *root) {
+  void Register(TTree *root) {
         root->SetBranchAddress("GenInfo_Size"             , &Size);
         root->SetBranchAddress("GenInfo_Index"            , &Index[0]);
         root->SetBranchAddress("GenInfo_Charge"           , &Charge[0]);
@@ -491,3 +691,4 @@ public:
         root->SetBranchAddress("GenInfo_dauIndex"         , &dauIndex[0][0]);
   }
 };
+
