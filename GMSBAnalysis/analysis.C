@@ -168,7 +168,9 @@ bool passedFullSelection(EventSelector& evtProperties, const map<string, unsigne
   if (evtProperties.foundPhotonCandidates(photonInfo, passingWithoutPixelSeed, passingWithPixelSeed)) {
 
     //decide if a track was found
-    if (evtProperties.getSampleType() == ETRACK) { if (evtProperties.foundTrack(trackInfo, photonInfo, passingWithPixelSeed, passingTracks)) allCandsFound = true; }
+    if (evtProperties.getSampleType() == ETRACK) {
+      if (evtProperties.foundTrack(trackInfo, photonInfo, passingWithPixelSeed, passingTracks)) allCandsFound = true;
+    }
 
     //all samples besides ETRACK have all candidates found
     else allCandsFound = true;
@@ -236,7 +238,6 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
   //chain the input trees together
   TChain* chain = new TChain("gmsbAna/root");
   makeChain(fileList, chain);
-  //for (vector<string>::const_iterator iFile = fileList.begin(); iFile != fileList.end(); ++iFile) { chain->Add((*iFile).c_str()); }
 
   //open output file
   TFile* out = new TFile(outputFileName.c_str(), "RECREATE");
@@ -278,7 +279,7 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
   //book e/gamma histograms
   out->cd();
   out->mkdir("egamma_histograms");
-  out->cd("photon_histograms");
+  out->cd("egamma_histograms");
   TH1F* ECALIso = new TH1F("ECALIso", "ECAL isolation of passing e/#gamma candidates;ECAL isolation (GeV);e/#gamma candidates per GeV", 50, 0.0, 50.0);
   TH1F* HCALIso = new TH1F("HCALIso", "HCAL isolation of passing e/#gamma candidates;HCAL isolation (GeV);e/#gamma candidates per GeV", 50, 0.0, 50.0);
   TH1F* ET = new TH1F("ET", "E_{T} of passing e/#gamma candidates;E_{T} (GeV);e/#gamma candidates per GeV", 100, 0.0, 100.0);
@@ -301,8 +302,8 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
 			       3.2);
   TH1F* dPhiMETDiEMPT = new TH1F("dPhiMETDiEMPT", "#Delta#phi between the ME_{T} and the di-EM p_{T} vector;#Delta#phi (rad);Events/0.4", 8, 0.0, 3.2);
   TH1F* hasPixelSeed = new TH1F("hasPixelSeed", "e/#gamma candidate has pixel seed?;;e/#gamma candidates/category", 2, -0.5, 1.5);
-  hasPixelSeed->GetXaxis()->SetBinLabel(0, "no");
-  hasPixelSeed->GetYaxis()->SetBinLabel(1, "yes");
+  hasPixelSeed->GetXaxis()->SetBinLabel(1, "no");
+  hasPixelSeed->GetXaxis()->SetBinLabel(2, "yes");
 
   //book track histograms
   out->cd("..");
@@ -337,6 +338,7 @@ void runSampleMaker(string outputFileName, vector<string>& fileList, string cfgF
       vector<int> passingWithoutPixelSeed;
       vector<int> passingWithPixelSeed;
       vector<int> passingTracks;
+
       if (passedFullSelection(evtProperties, haloParams, evtInfo, photonInfo, trackInfo, HEInfo, cosmicTrackInfo, passingWithoutPixelSeed, 
 			      passingWithPixelSeed, passingTracks)) {
 	++numPassingAll;
