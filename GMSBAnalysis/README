@@ -1,0 +1,28 @@
+This package contains scripts and macros necessary for making the gamma-gamma, fake-fake, e-gamma, e-e, and e-track samples.  To get the code, do:
+
+cvs co UserCode/yohay/GMSBAnalysis
+
+which will check out the HEAD.  The source code is in:
+
+EventSelector.h
+EventSelector.cc
+analysis.C
+format.h
+
+An example macro is:
+
+analysis_macro.C
+
+In the function call to runSampleMaker in analysis_macro.C, you will see that the third argument is the name of a configuration file.  This file specifies all the cuts for the sample you would like to create.  An example configuration file is:
+
+sample_cfg.txt
+
+See format.h for definitions of HLT bits.  Once a macro and configuration file have been specified, run the analysis with
+
+root -l -q analysis_macro.C
+
+The output file will contain histograms of e/gamma quantities (isolation, H/E, sigmaIetaIeta, etc.) and track quantities (for the e-track sample), as well as the full event tree for all events passing the selection.
+
+To automate the creation of analysis macros, use makeAnalysisMacro.sh, configured with analysis_macro_cfg.txt.  To run it, call
+
+./makeAnalysisMacro.sh analysis_macro_cfg.txt
