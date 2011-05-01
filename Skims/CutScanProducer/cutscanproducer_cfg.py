@@ -2,20 +2,39 @@ import FWCore.ParameterSet.Config as cms
 
 process = cms.Process("OWNPARTICLES")
 
-#append CutScanProducer to get info messages
+#append 'Error' and 'Statistics' to get CutScanProducer skim stats and errors
 process.load("FWCore.MessageService.MessageLogger_cfi")
-#process.MessageLogger.categories.append('CutScanProducer')
+process.MessageLogger.categories.append('Error')
+process.MessageLogger.categories.append('Statistics')
+#process.MessageLogger.categories.append('EDMCategoryProducer')
+process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(100)
 
-process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(1) )
+process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 
 process.source = cms.Source("PoolSource",
                             fileNames = cms.untracked.vstring(
-    'file:/data2/yohay/diPhoton_skim_Run2011A_30GeV-30GeV_9_1_WNE.root'
+    'file:/data2/yohay/diPhoton_skim_Run2011A_30GeV-30GeV_62_1_te5.root'
     )
                             )
 
+#global tag
+process.load('Geometry.CaloEventSetup.CaloTopology_cfi')
+process.load('Geometry.CaloEventSetup.CaloGeometry_cff')
+process.load('Configuration/StandardSequences/GeometryExtended_cff')
+process.load('Configuration/StandardSequences/MagneticField_AutoFromDBCurrent_cff')
+process.load('Configuration/StandardSequences/Services_cff')
+process.load('Configuration/StandardSequences/FrontierConditions_GlobalTag_cff')
+process.GlobalTag.globaltag = cms.string('GR_P_V14::All')
+
+#cut scan producer
 process.load('Skims/CutScanProducer/cutscanproducer_cfi')
 process.CutScanProducer.photonTag = cms.untracked.InputTag("photons", "", "RECO")
+
+#category producer
+process.load('GMSBTools/Producers/edmcategoryproducer_cfi')
+process.EDMCategoryProducer.photonTag = cms.untracked.InputTag("photons", "", "RECO")
+process.EDMCategoryProducer.recHitTagEB = cms.untracked.InputTag("reducedEcalRecHitsEB", "", "RECO")
+process.EDMCategoryProducer.recHitTagEE = cms.untracked.InputTag("reducedEcalRecHitsEE", "", "RECO")
 
 #event content to save
 process.eventContent = cms.PSet(
@@ -80,7 +99,10 @@ process.eventContent = cms.PSet(
     'keep *_pfMet_*_*',
 
     #cut scan value maps
-    'keep *_CutScanProducer_*_*'
+    'keep *_CutScanProducer_*_*',
+
+    #category information
+    'keep *_EDMCategoryProducer_*_*'
     ),
 
     splitLevel = cms.untracked.int32(0)
@@ -88,11 +110,11 @@ process.eventContent = cms.PSet(
 
 process.out = cms.OutputModule("PoolOutputModule",
                                fileName = cms.untracked.string(
-    '/data2/yohay/diPhoton_skim_Run2011A_30GeV-30GeV_cutScan.root'
+    '/data2/yohay/diPhoton_skim_Run2011A_30GeV-30GeV_prelimAnalysis.root'
     ),
                                outputCommands = process.eventContent.outputCommands
                                )
 
-process.p = cms.Path(process.CutScanProducer)
+process.p = cms.Path(process.CutScanProducer*process.EDMCategoryProducer)
 
 process.e = cms.EndPath(process.out)

@@ -72,9 +72,11 @@ class Categorizer {
   VBOOL getPhotonPassSigmaIetaIetaMax() const;
   VBOOL getPhotonPassAbsSeedTimeMax() const;
   VBOOL getPhotonPassE2OverE9Max() const;
+  VBOOL getPhotonPassPreselection() const;
   bool getEvtPassDPhiMin() const;
+  double getEvtDiEMET() const;
   VINT getPassingPhotons() const;
-  VINT getPassingPhotonType() const;
+  VINT getPhotonType() const;
   int getCategory() const;
 
   //setters
@@ -107,12 +109,15 @@ class Categorizer {
     fails the cut*/
   void decideAll();
 
-  /*find the 2 highest ET photons passing preselection
-    if <2 photons passing preselection, fill in -1 for the spot(s) that can't be filled*/
+  //set photonPassPreselection() (true if it passes, false otherwise)
   void findPassingPhotons();
 
-  //classify event as belonging to candidate, control, or no sample
+  /*find 2 highest ET photons passing preselection and classify event as belonging to candidate, 
+    control, or no sample*/
   void classify();
+
+  //true if all event processing is finished
+  bool done() const;
 
  private:
 
@@ -154,15 +159,20 @@ class Categorizer {
   VBOOL photonPassSigmaIetaIetaMax_;
   VBOOL photonPassAbsSeedTimeMax_;
   VBOOL photonPassE2OverE9Max_;
+  VBOOL photonPassPreselection_;
 
   //event pass flags
   bool evtPassDPhiMin_;
 
-  //photons on which the categorization decision was based
+  //di-EM ET
+  double evtDiEMET_;
+
+  /*photons on which the categorization decision was based (2 highest ET photons passing 
+    preselection)*/
   VINT passingPhotons_;
 
-  //passing photon type (G, F, or E)
-  VINT passingPhotonType_;
+  //photon type (G, F, E, or FAIL)
+  VINT photonType_;
 
   //category
   int category_;
@@ -176,7 +186,7 @@ class Categorizer {
   //true if event has been categorized
   bool categorized_;
 
-  //true if passing photons have been found
+  //true if photons passing preselection have been found
   bool foundPassingPhotons_;
 
   //true if intialized_ is true

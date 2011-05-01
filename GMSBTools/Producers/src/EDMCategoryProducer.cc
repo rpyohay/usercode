@@ -68,7 +68,7 @@ class EDMCategoryProducer : public edm::EDProducer {
       err << "No collection of type " << tag << " found in run " << iEvent.run() << ", event ";
       err << iEvent.id().event() << ", lumi section ";
       err << iEvent.getLuminosityBlock().luminosityBlock() << ".\n";
-      edm::LogInfo("CutScanProducer") << err.str();
+      edm::LogInfo("Error") << err.str();
     }
     return collectionFound;
   }
@@ -93,8 +93,9 @@ class EDMCategoryProducer : public edm::EDProducer {
 		 const edm::Handle<EERecHitCollection>&) const;
 
   //return E2/E9 of the given photon
-  float e2OverE9(const reco::Photon*, edm::ESHandle<CaloTopology>&, const edm::Handle<EBRecHitCollection>&, 
-  const edm::Handle<EERecHitCollection>&) const;
+  float e2OverE9(const reco::Photon*, edm::ESHandle<CaloTopology>&, 
+		 const edm::Handle<EBRecHitCollection>&, 
+		 const edm::Handle<EERecHitCollection>&) const;
 
   //put the edm::ValueMap<bool> product into the event
   void putProductIntoEvent(const edm::Handle<reco::PhotonCollection>&, const VBOOL&, edm::Event&, 
@@ -105,13 +106,16 @@ class EDMCategoryProducer : public edm::EDProducer {
 			   const STRING&) const;
 
   //put int product into the event
-  void putProductIntoEvent(const edm::Handle<reco::PhotonCollection>&, const int, edm::Event&, 
-			   const STRING&) const;
+  void putProductIntoEvent(const int, edm::Event&, const STRING&) const;
 
   //put bool product into the event
-  void putProductIntoEvent(const edm::Handle<reco::PhotonCollection>&, const bool, edm::Event&, 
-			   const STRING&) const;
-      
+  void putProductIntoEvent(const bool, edm::Event&, const STRING&) const;
+
+  //put double product into the event
+  void putProductIntoEvent(const double, edm::Event&, const STRING&) const;
+
+  //print debug info
+  void debugPrint(const Categorizer&) const;
       // ----------member data ---------------------------
 
   //input
@@ -181,12 +185,11 @@ EDMCategoryProducer::EDMCategoryProducer(const edm::ParameterSet& iConfig) :
   photonAbsSeedTimeMax_(iConfig.getUntrackedParameter<double>("photonAbsSeedTimeMax", 3.0/*ns*/)),
   photonE2OverE9Max_(iConfig.getUntrackedParameter<double>("photonE2OverE9Max", 0.95)),
   photonDPhiMin_(iConfig.getUntrackedParameter<double>("photonDPhiMin", 0.05)),
-  channelStatuses_(iConfig.getUntrackedParameter<VUINT>("channelStatuses", VUINT(EcalRecHit::kGood, 1)))
+  channelStatuses_(iConfig.getUntrackedParameter<VUINT>("channelStatuses", 
+							VUINT(EcalRecHit::kGood, 1)))
 {
    //register your products
-  produces<edm::ValueMap<unsigned int> >("photonType");
-  produces<unsigned int>("eventCategory");
-  produces<bool>("passDPhiMin");
+  produces<edm::ValueMap<int> >("photonType");
   produces<edm::ValueMap<bool> >("passETMin");
   produces<edm::ValueMap<bool> >("passAbsEtaMax");
   produces<edm::ValueMap<bool> >("passECALIsoMax");
@@ -197,6 +200,10 @@ EDMCategoryProducer::EDMCategoryProducer(const edm::ParameterSet& iConfig) :
   produces<edm::ValueMap<bool> >("passAbsSeedTimeMax");
   produces<edm::ValueMap<bool> >("passE2OverE9Max");
   produces<edm::ValueMap<bool> >("hasPixelSeed");
+  produces<edm::ValueMap<bool> >("passingPhotons");
+  produces<int>("eventCategory");
+  produces<bool>("passDPhiMin");
+  produces<double>("evtDiEMET");
 
    //now do what ever other initialization is needed
   
@@ -232,6 +239,7 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
   VDOUBLE photonE2OverE9;
   VDOUBLE photonPhi;
   VBOOL photonHasPixelSeed;
+  VBOOL photonPasses;
   Categorizer categorizer(photonET, photonEta, photonECALIso, photonHCALIso, photonHOverE, 
 			  photonTrackIso, photonSigmaIetaIeta, photonSeedTime, photonE2OverE9, 
 			  photonPhi, photonHasPixelSeed, photonETMin_, photonAbsEtaMax_, 
@@ -240,6 +248,7 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 			  photonHOverEMax_, photonTrackIsoMaxPTMultiplier_,
 			  photonTrackIsoMaxPTConstant_, photonSigmaIetaIetaMax_, 
 			  photonAbsSeedTimeMax_, photonE2OverE9Max_, photonDPhiMin_);
+
   //loop over photons
   edm::Handle<reco::PhotonCollection> pPhotons;
   edm::Handle<EBRecHitCollection> pRecHitsEB;
@@ -262,7 +271,8 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
       photonSigmaIetaIeta.push_back(iPhoton->sigmaIetaIeta());
       photonSeedTime.push_back(seedTime(const_cast<const reco::Photon*>(&*iPhoton), pRecHitsEB, 
 					pRecHitsEE));
-      photonE2OverE9.push_back(e2OverE9(const_cast<const reco::Photon*>(&*iPhoton), caloTopology, pRecHitsEB, pRecHitsEE));
+      photonE2OverE9.push_back(e2OverE9(const_cast<const reco::Photon*>(&*iPhoton), caloTopology, 
+					pRecHitsEB, pRecHitsEE));
       photonPhi.push_back(iPhoton->phi());
       photonHasPixelSeed.push_back(iPhoton->hasPixelSeed());
     }
@@ -275,21 +285,30 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
     categorizer.setPhotonHOverE(photonHOverE);
     categorizer.setPhotonTrackIso(photonTrackIso);
     categorizer.setPhotonSigmaIetaIeta(photonSigmaIetaIeta);
-    /*categorizer.setPhotonSeedTime(photonSeedTime);
-      categorizer.setPhotonE2OverE9(photonE2OverE9);*/
+    categorizer.setPhotonSeedTime(photonSeedTime);
+    categorizer.setPhotonE2OverE9(photonE2OverE9);
     categorizer.setPhotonPhi(photonPhi);
     categorizer.setPhotonHasPixelSeed(photonHasPixelSeed);
     try {
       categorizer.decideAll();
       categorizer.findPassingPhotons();
       categorizer.classify();
+
+      //find the 2 photons that decided the event
+      VINT passingPhotons = categorizer.getPassingPhotons();
+      for (reco::PhotonCollection::const_iterator iPhoton = pPhotons->begin(); 
+	   iPhoton != pPhotons->end(); ++iPhoton) {
+	if (((iPhoton - pPhotons->begin()) == passingPhotons[0]) || 
+	    ((iPhoton - pPhotons->begin()) == passingPhotons[1])) photonPasses.push_back(true);
+	else photonPasses.push_back(false);
+      }
     }
     catch (STRING& badInput) { throw cms::Exception("EDMCategoryProducer") << badInput; }
   }
 
   //write the category information to the event
   try {
-    putProductIntoEvent(pPhotons, categorizer.getPassingPhotonType(), iEvent, "photonType");
+    putProductIntoEvent(pPhotons, categorizer.getPhotonType(), iEvent, "photonType");
     putProductIntoEvent(pPhotons, categorizer.getPhotonPassETMin(), iEvent, "passETMin");
     putProductIntoEvent(pPhotons, categorizer.getPhotonPassAbsEtaMax(), iEvent, "passAbsEtaMax");
     putProductIntoEvent(pPhotons, categorizer.getPhotonPassECALIsoMax(), iEvent, 
@@ -306,10 +325,16 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
     putProductIntoEvent(pPhotons, categorizer.getPhotonPassE2OverE9Max(), iEvent, 
 			"passE2OverE9Max");
     putProductIntoEvent(pPhotons, categorizer.getPhotonHasPixelSeed(), iEvent, "hasPixelSeed");
-    putProductIntoEvent(pPhotons, categorizer.getCategory(), iEvent, "eventCategory");
-    putProductIntoEvent(pPhotons, categorizer.getEvtPassDPhiMin(), iEvent, "passDPhiMin");
+    putProductIntoEvent(pPhotons, photonPasses, iEvent, "passingPhotons");
+    putProductIntoEvent(categorizer.getCategory(), iEvent, "eventCategory");
+    putProductIntoEvent(categorizer.getEvtPassDPhiMin(), iEvent, "passDPhiMin");
+    putProductIntoEvent(categorizer.getEvtDiEMET(), iEvent, "evtDiEMET");
   }
   catch (STRING& badInput) { throw cms::Exception("EDMCategoryProducer") << badInput; }
+  catch (cms::Exception& badInput) { throw cms::Exception("EDMCategoryProducer") << badInput; }
+
+  //print debug info
+  debugPrint(categorizer);
 }
 
 // ------------ method called once each job just before starting event loop  ------------
@@ -431,7 +456,12 @@ EDMCategoryProducer::putProductIntoEvent(const edm::Handle<reco::PhotonCollectio
 {
   std::auto_ptr<edm::ValueMap<bool> > out(new edm::ValueMap<bool>());
   edm::ValueMap<bool>::Filler filler(*out);
-  filler.insert(pPhotons, vals.begin(), vals.end());
+  try { filler.insert(pPhotons, vals.begin(), vals.end()); }
+  catch (cms::Exception& ex) {
+    STRINGSTREAM err;
+    err << "putProductIntoEvent/" << label << ": " << ex.what();
+    throw cms::Exception("EDMCategoryProducer") << err.str();
+  }
   filler.fill();
   iEvent.put(out, label);
 }
@@ -443,29 +473,226 @@ EDMCategoryProducer::putProductIntoEvent(const edm::Handle<reco::PhotonCollectio
 {
   std::auto_ptr<edm::ValueMap<int> > out(new edm::ValueMap<int>());
   edm::ValueMap<int>::Filler filler(*out);
-  filler.insert(pPhotons, vals.begin(), vals.end());
+  try { filler.insert(pPhotons, vals.begin(), vals.end()); }
+  catch (cms::Exception& ex) {
+    STRINGSTREAM err;
+    err << "putProductIntoEvent/" << label << ": " << ex.what();
+    throw cms::Exception("EDMCategoryProducer") << err.str();
+  }
   filler.fill();
   iEvent.put(out, label);
 }
 
-void 
-EDMCategoryProducer::putProductIntoEvent(const edm::Handle<reco::PhotonCollection>& pPhotons, 
-					 const int vals, edm::Event& iEvent, 
-					 const STRING& label) const
+void EDMCategoryProducer::putProductIntoEvent(const int vals, edm::Event& iEvent, 
+					      const STRING& label) const
 {
   std::auto_ptr<int> out(new int());
   *out = vals;
   iEvent.put(out, label);
 }
 
-void 
-EDMCategoryProducer::putProductIntoEvent(const edm::Handle<reco::PhotonCollection>& pPhotons, 
-					 const bool vals, edm::Event& iEvent, 
-					 const STRING& label) const
+void EDMCategoryProducer::putProductIntoEvent(const bool vals, edm::Event& iEvent, 
+					      const STRING& label) const
 {
   std::auto_ptr<bool> out(new bool());
   *out = vals;
   iEvent.put(out, label);
+}
+
+void EDMCategoryProducer::putProductIntoEvent(const double vals, edm::Event& iEvent, 
+					      const STRING& label) const
+{
+  std::auto_ptr<double> out(new double());
+  *out = vals;
+  iEvent.put(out, label);
+}
+
+void EDMCategoryProducer::debugPrint(const Categorizer& categorizer) const
+{
+  //don't print unless event processing is completely finished
+  if (!categorizer.done()) {
+    edm::LogInfo("EDMCategoryProducer") << "Error: finish event processing.\n";
+    return;
+  }
+
+  //get all event information
+  VDOUBLE photonET = categorizer.getPhotonET();
+  VDOUBLE photonEta = categorizer.getPhotonEta();
+  VDOUBLE photonECALIso = categorizer.getPhotonECALIso();
+  VDOUBLE photonHCALIso = categorizer.getPhotonHCALIso();
+  VDOUBLE photonHOverE = categorizer.getPhotonHOverE();
+  VDOUBLE photonTrackIso = categorizer.getPhotonTrackIso();
+  VDOUBLE photonSigmaIetaIeta = categorizer.getPhotonSigmaIetaIeta();
+  VDOUBLE photonSeedTime = categorizer.getPhotonSeedTime();
+  VDOUBLE photonE2OverE9 = categorizer.getPhotonE2OverE9();
+  VDOUBLE photonPhi = categorizer.getPhotonPhi();
+  VBOOL photonHasPixelSeed = categorizer.getPhotonHasPixelSeed();
+  double photonETMin = categorizer.getPhotonETMin();
+  double photonAbsEtaMax = categorizer.getPhotonAbsEtaMax();
+  double photonECALIsoMaxPTMultiplier = categorizer.getPhotonECALIsoMaxPTMultiplier();
+  double photonECALIsoMaxConstant = categorizer.getPhotonECALIsoMaxConstant();
+  double photonHCALIsoMaxPTMultiplier = categorizer.getPhotonHCALIsoMaxPTMultiplier();
+  double photonHCALIsoMaxConstant = categorizer.getPhotonHCALIsoMaxConstant();
+  double photonHOverEMax = categorizer.getPhotonHOverEMax();
+  double photonTrackIsoMaxPTMultiplier = categorizer.getPhotonTrackIsoMaxPTMultiplier();
+  double photonTrackIsoMaxConstant = categorizer.getPhotonTrackIsoMaxConstant();
+  double photonSigmaIetaIetaMax = categorizer.getPhotonSigmaIetaIetaMax();
+  double photonAbsSeedTimeMax = categorizer.getPhotonAbsSeedTimeMax();
+  double photonE2OverE9Max = categorizer.getPhotonE2OverE9Max();
+  double photonDPhiMin = categorizer.getPhotonDPhiMin();
+  VBOOL photonPassETMin = categorizer.getPhotonPassETMin();
+  VBOOL photonPassAbsEtaMax = categorizer.getPhotonPassAbsEtaMax();
+  VBOOL photonPassECALIsoMax = categorizer.getPhotonPassECALIsoMax();
+  VBOOL photonPassHCALIsoMax = categorizer.getPhotonPassHCALIsoMax();
+  VBOOL photonPassHOverEMax = categorizer.getPhotonPassHOverEMax();
+  VBOOL photonPassTrackIsoMax = categorizer.getPhotonPassTrackIsoMax();
+  VBOOL photonPassSigmaIetaIetaMax = categorizer.getPhotonPassSigmaIetaIetaMax();
+  VBOOL photonPassAbsSeedTimeMax = categorizer.getPhotonPassAbsSeedTimeMax();
+  VBOOL photonPassE2OverE9Max = categorizer.getPhotonPassE2OverE9Max();
+  VBOOL photonPassPreselection = categorizer.getPhotonPassPreselection();
+  bool evtPassDPhiMin = categorizer.getEvtPassDPhiMin();
+  VINT passingPhotons = categorizer.getPassingPhotons();
+  VINT photonType = categorizer.getPhotonType();
+  int category = categorizer.getCategory();
+
+  //loop over photons
+  STRINGSTREAM debug;
+  debug << "*****************\n";
+  for (VDOUBLE_IT iET = photonET.begin(); iET != photonET.end(); ++iET) {
+
+    //print photon quantity, cut value, and pass flag
+    debug << "%%%%%%%%%%%%%%%%%\n";
+    const unsigned int i = iET - photonET.begin();
+    debug << "Photon index: " << i << std::endl;
+    debug << "-----------------\n";
+    debug << "Photon ET: " << *iET << " GeV\n";
+    debug << "Cut: photon ET > " << photonETMin << " GeV\n";
+    debug << "Result: ";
+    if (photonPassETMin[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon eta: " << photonEta[i] << std::endl;
+    debug << "Cut: photon |eta| < " << photonAbsEtaMax << std::endl;
+    debug << "Result: ";
+    if (photonPassAbsEtaMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon ECAL isolation: " << photonECALIso[i] << " GeV\n";
+    debug << "Cut: photon ECAL isolation < (" << photonECALIsoMaxPTMultiplier << "ET + ";
+    debug << photonECALIsoMaxConstant << ") GeV = ";
+    debug << (photonECALIsoMaxPTMultiplier*(*iET) + photonECALIsoMaxConstant) << " GeV\n";
+    debug << "Result: ";
+    if (photonPassECALIsoMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon HCAL isolation: " << photonHCALIso[i] << " GeV\n";
+    debug << "Cut: photon HCAL isolation < (" << photonHCALIsoMaxPTMultiplier << "ET + ";
+    debug << photonHCALIsoMaxConstant << ") GeV = ";
+    debug << (photonHCALIsoMaxPTMultiplier*(*iET) + photonHCALIsoMaxConstant) << " GeV\n";
+    debug << "Result: ";
+    if (photonPassHCALIsoMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon H/E: " << photonHOverE[i] << std::endl;
+    debug << "Cut: photon H/E < " << photonHOverEMax << std::endl;
+    debug << "Result: ";
+    if (photonPassHOverEMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon track isolation: " << photonTrackIso[i] << " GeV\n";
+    debug << "Cut: photon track isolation < (" << photonTrackIsoMaxPTMultiplier << "ET + ";
+    debug << photonTrackIsoMaxConstant << ") GeV = ";
+    debug << (photonTrackIsoMaxPTMultiplier*(*iET) + photonTrackIsoMaxConstant) << " GeV\n";
+    debug << "Result: ";
+    if (photonPassTrackIsoMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon sigmaIetaIeta: " << photonSigmaIetaIeta[i] << std::endl;
+    debug << "Cut: photon sigmaIetaIeta < " << photonSigmaIetaIetaMax << std::endl;
+    debug << "Result: ";
+    if (photonPassSigmaIetaIetaMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon seed time: " << photonSeedTime[i] << " ns\n";
+    debug << "Cut: photon |seed time| < " << photonAbsSeedTimeMax << " ns\n";
+    debug << "Result: ";
+    if (photonPassAbsSeedTimeMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon E2/E9: " << photonE2OverE9[i] << std::endl;
+    debug << "Cut: photon E2/E9 < " << photonE2OverE9Max << std::endl;
+    debug << "Result: ";
+    if (photonPassE2OverE9Max[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Result: ";
+    if (photonPassPreselection[i]) debug << "photon passed preselection\n";
+    else debug << "photon failed preselection\n";
+    debug << "-----------------\n";
+    debug << "Photon has pixel seed: ";
+    if (photonHasPixelSeed[i]) debug << "yes\n";
+    else debug << "no\n";
+    debug << "-----------------\n";
+    debug << "Photon type: ";
+    switch (photonType[i]) {
+    case FAIL:
+      debug << "fail\n";
+      break;
+    case G:
+      debug << "photon\n";
+      break;
+    case E:
+      debug << "electron\n";
+      break;
+    case F:
+      debug << "fake\n";
+      break;
+    default:
+      debug << "unknown\n";
+      break;
+    }
+    debug << "%%%%%%%%%%%%%%%%%\n";
+  }
+
+  //print event quantities
+  debug << "Passing photon indices: " << passingPhotons[0] << ", " << passingPhotons[1];
+  debug << std::endl;
+  debug << "#################\n";
+  debug << "Passing photon phi: ";
+  if (passingPhotons[0] >= 0) debug << photonPhi[passingPhotons[0]] << ", ";
+  else debug << "N/A" << ", ";
+  if (passingPhotons[1] >= 0) debug << photonPhi[passingPhotons[1]] << std::endl;
+  else debug << "N/A" << std::endl;
+  debug << "Cut: dPhi(photon, photon) > " << photonDPhiMin << std::endl;
+  debug << "Result: ";
+  if (evtPassDPhiMin) debug << "pass\n";
+  else debug << "fail\n";
+  debug << "#################\n";
+  debug << "Event category: ";
+  switch (category) {
+  case FAIL:
+    debug << "fail\n";
+    break;
+  case GG:
+    debug << "candidate\n";
+    break;
+  case EE:
+    debug << "ee\n";
+    break;
+  case FF:
+    debug << "ff\n";
+    break;
+  case EG:
+    debug << "eg\n";
+    break;
+  default:
+    debug << "unknown\n";
+    break;
+  }
+  debug << "*****************\n";
+
+  //log
+  edm::LogInfo("EDMCategoryProducer") << debug.str();
 }
 
 //define this as a plug-in

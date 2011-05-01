@@ -62,7 +62,7 @@ class CutScanProducer : public edm::EDProducer {
       err << "No collection of type " << tag << " found in run " << iEvent.run() << ", event ";
       err << iEvent.id().event() << ", lumi section ";
       err << iEvent.getLuminosityBlock().luminosityBlock() << ".\n";
-      edm::LogInfo("CutScanProducer") << err.str();
+      edm::LogInfo("Error") << err.str();
     }
     return collectionFound;
   }
@@ -87,7 +87,7 @@ class CutScanProducer : public edm::EDProducer {
   //implementation for a standard less/greater than cut
   template <typename T, typename U>
   unsigned int decisionWord(const T var, const U& scanCuts, const bool lessThan, 
-			    const bool equalTo) const
+			    const bool equalTo, const double ET) const
   {
     unsigned int theDecisionWord = 0x0;
     for (typename U::const_iterator iScanCut = scanCuts.begin(); iScanCut != scanCuts.end(); 
@@ -98,11 +98,11 @@ class CutScanProducer : public edm::EDProducer {
       mess << "lessThan = " << lessThan << std::endl;
       mess << "equalTo = " << equalTo << std::endl;
       mess << "theDecisionWord = " << theDecisionWord << std::endl;
-      edm::LogInfo("CutScanProducer") << mess.str();
-      if ((lessThan && equalTo && (var <= *iScanCut)) || 
-	  (lessThan && !equalTo && (var < *iScanCut)) || 
-	  (!lessThan && equalTo && (var >= *iScanCut)) || 
-	  (!lessThan && !equalTo && (var > *iScanCut))) {
+      edm::LogInfo("Debug") << mess.str();
+      if (((lessThan && equalTo && (var <= *iScanCut)) || 
+	   (lessThan && !equalTo && (var < *iScanCut)) || 
+	   (!lessThan && equalTo && (var >= *iScanCut)) || 
+	   (!lessThan && !equalTo && (var > *iScanCut))) && (ET > extETMin_)) {
 	theDecisionWord = theDecisionWord | (0x1 << (iScanCut - scanCuts.begin()));
       }
     }
@@ -124,8 +124,9 @@ class CutScanProducer : public edm::EDProducer {
 	mess << "scanCuts2[iScanCut - scanCuts1.begin()] = ";
 	mess << scanCuts2[iScanCut - scanCuts1.begin()] << std::endl;
 	mess << "theDecisionWord = " << theDecisionWord << std::endl;
-	edm::LogInfo("CutScanProducer") << mess.str();
-	if (var < ((*iScanCut)*ET + scanCuts2[iScanCut - scanCuts1.begin()])) {
+	edm::LogInfo("Debug") << mess.str();
+	if ((var < ((*iScanCut)*ET + scanCuts2[iScanCut - scanCuts1.begin()])) && 
+	    (ET > extETMin_)) {
 	  theDecisionWord = theDecisionWord | (0x1 << (iScanCut - scanCuts1.begin()));
 	}
       }
@@ -133,6 +134,15 @@ class CutScanProducer : public edm::EDProducer {
     else throw cms::Exception("BadInput") << "Error: vector size mismatch.\n";
     return theDecisionWord;
   }
+
+  //initialize counters
+  void initializeCounters(const bool, const std::vector<double>&, std::vector<unsigned int>&);
+
+  //increment counters
+  void incrementCounters(const std::vector<unsigned int>&, std::vector<unsigned int>&, const bool);
+
+  //print info on percentage of events passing the scan points
+  void printStats(std::vector<unsigned int>&, const bool, const std::string&) const;
 
   //put the product into the event
   void putProductIntoEvent(const edm::Handle<reco::PhotonCollection>&, 
@@ -143,6 +153,7 @@ class CutScanProducer : public edm::EDProducer {
 
   //input
   edm::InputTag photonTag_;
+  double extETMin_;
   std::vector<double> ETMinScan_;
   std::vector<double> ECALIsoMaxPTMultiplierScan_;
   std::vector<double> ECALIsoMaxConstantScan_;
@@ -158,6 +169,26 @@ class CutScanProducer : public edm::EDProducer {
   bool doHOverEMaxScan_;
   bool doTrackIsoMaxScan_;
   bool doSigmaIetaIetaMaxScan_;
+
+  //counters
+  unsigned int numTot_;
+  std::vector<unsigned int> numPassingETMinScan_;
+  std::vector<unsigned int> numPassingECALIsoMaxScan_;
+  std::vector<unsigned int> numPassingHCALIsoMaxScan_;
+  std::vector<unsigned int> numPassingHOverEMaxScan_;
+  std::vector<unsigned int> numPassingTrackIsoMaxScan_;
+  std::vector<unsigned int> numPassingSigmaIetaIetaMaxScan_;
+
+  //cross-counters
+  std::vector<unsigned int> numPassingECALHCALIsoMaxScan_;
+  std::vector<unsigned int> numPassingECALHCALIsoHOverEMaxScan_;
+  std::vector<unsigned int> numPassingECALTrackIsoMaxScan_;
+  std::vector<unsigned int> numPassingECALIsoSigmaIetaIetaMaxScan_;
+  std::vector<unsigned int> numPassingHCALTrackIsoMaxScan_;
+  std::vector<unsigned int> numPassingHCALIsoSigmaIetaIetaMaxScan_;
+  std::vector<unsigned int> numPassingHOverETrackIsoMaxScan_;
+  std::vector<unsigned int> numPassingHOverESigmaIetaIetaMaxScan_;
+
 };
 
 //
@@ -178,13 +209,17 @@ CutScanProducer::CutScanProducer(const edm::ParameterSet& iConfig) :
   photonTag_(iConfig.getUntrackedParameter<edm::InputTag>("photonTag", 
 							  edm::InputTag("photons", "", 
 									"RECOCleaned"))),
+  extETMin_(iConfig.getUntrackedParameter<double>("extETMin", 30.0/*GeV*/)),
   ETMinScan_(iConfig.getParameter<std::vector<double> >("ETMinScan")),
-  ECALIsoMaxPTMultiplierScan_(iConfig.getParameter<std::vector<double> >("ECALIsoMaxPTMultiplierScan")),
+  ECALIsoMaxPTMultiplierScan_(iConfig.getParameter<std::vector<double> >
+			      ("ECALIsoMaxPTMultiplierScan")),
   ECALIsoMaxConstantScan_(iConfig.getParameter<std::vector<double> >("ECALIsoMaxConstantScan")),
-  HCALIsoMaxPTMultiplierScan_(iConfig.getParameter<std::vector<double> >("HCALIsoMaxPTMultiplierScan")),
+  HCALIsoMaxPTMultiplierScan_(iConfig.getParameter<std::vector<double> >
+			      ("HCALIsoMaxPTMultiplierScan")),
   HCALIsoMaxConstantScan_(iConfig.getParameter<std::vector<double> >("HCALIsoMaxConstantScan")),
   HOverEMaxScan_(iConfig.getParameter<std::vector<double> >("HOverEMaxScan")),
-  trackIsoMaxPTMultiplierScan_(iConfig.getParameter<std::vector<double> >("trackIsoMaxPTMultiplierScan")),
+  trackIsoMaxPTMultiplierScan_(iConfig.getParameter<std::vector<double> >
+			       ("trackIsoMaxPTMultiplierScan")),
   trackIsoMaxConstantScan_(iConfig.getParameter<std::vector<double> >("trackIsoMaxConstantScan")),
   sigmaIetaIetaMaxScan_(iConfig.getParameter<std::vector<double> >("sigmaIetaIetaMaxScan")),
   doETMinScan_(iConfig.getUntrackedParameter<bool>("doETMinScan", true)),
@@ -287,44 +322,45 @@ CutScanProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 	 iPhoton != pPhotons->end(); ++iPhoton) {
       std::stringstream mess;
       mess << "Photon index: " << iPhoton - pPhotons->begin() << std::endl;
-      edm::LogInfo("CutScanProducer") << mess.str();
+      edm::LogInfo("Debug") << mess.str();
 
       //plot time per photon, time per event?
 
       //chars to hold the decision words for each cut variable
-      unsigned int ETMinDecisionWord = decisionWord(iPhoton->et(), ETMinScan_, false, false);
+      unsigned int ETMinDecisionWord = decisionWord(iPhoton->et(), ETMinScan_, false, false, 
+						    iPhoton->et());
       mess.str("");
       mess << "ETMinDecisionWord = " << ETMinDecisionWord << std::endl;
-      edm::LogInfo("CutScanProducer") << mess.str();
+      edm::LogInfo("Debug") << mess.str();
       unsigned int ECALIsoMaxDecisionWord = 
 	decisionWord((double)iPhoton->ecalRecHitSumEtConeDR04(), iPhoton->et(), 
 		     ECALIsoMaxPTMultiplierScan_, ECALIsoMaxConstantScan_);
       mess.str("");
       mess << "ECALIsoMaxDecisionWord = " << ECALIsoMaxDecisionWord << std::endl;
-      edm::LogInfo("CutScanProducer") << mess.str();
+      edm::LogInfo("Debug") << mess.str();
       unsigned int HCALIsoMaxDecisionWord = 
 	decisionWord((double)iPhoton->hcalTowerSumEtConeDR04(), iPhoton->et(), 
 		     HCALIsoMaxPTMultiplierScan_, HCALIsoMaxConstantScan_);
       mess.str("");
       mess << "HCALIsoMaxDecisionWord = " << HCALIsoMaxDecisionWord << std::endl;
-      edm::LogInfo("CutScanProducer") << mess.str();
+      edm::LogInfo("Debug") << mess.str();
       unsigned int HOverEMaxDecisionWord = 
-	decisionWord(iPhoton->hadronicOverEm(), HOverEMaxScan_, true, false);
+	decisionWord(iPhoton->hadronicOverEm(), HOverEMaxScan_, true, false, iPhoton->et());
       mess.str("");
       mess << "HOverEMaxDecisionWord = " << HOverEMaxDecisionWord << std::endl;
-      edm::LogInfo("CutScanProducer") << mess.str();
+      edm::LogInfo("Debug") << mess.str();
       unsigned int trackIsoMaxDecisionWord = 
 	decisionWord((double)iPhoton->trkSumPtHollowConeDR04(), iPhoton->et(), 
 		     trackIsoMaxPTMultiplierScan_, trackIsoMaxConstantScan_);
       mess.str("");
       mess << "trackIsoMaxDecisionWord = " << trackIsoMaxDecisionWord << std::endl;
-      edm::LogInfo("CutScanProducer") << mess.str();
+      edm::LogInfo("Debug") << mess.str();
       unsigned int sigmaIetaIetaMaxDecisionWord = 
-	decisionWord(iPhoton->sigmaIetaIeta(), sigmaIetaIetaMaxScan_, true, false);
+	decisionWord(iPhoton->sigmaIetaIeta(), sigmaIetaIetaMaxScan_, true, false, iPhoton->et());
       mess.str("");
       mess << "sigmaIetaIetaMaxDecisionWord = " << sigmaIetaIetaMaxDecisionWord;
       mess << std::endl;
-      edm::LogInfo("CutScanProducer") << mess.str();
+      edm::LogInfo("Debug") << mess.str();
 
       //save the decision words
       ETMinScanDecision.push_back(ETMinDecisionWord);
@@ -337,6 +373,90 @@ CutScanProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
     }/*for (reco::PhotonCollection::const_iterator iPhoton = pPhotons->begin(); 
        iPhoton != pPhotons->end(); ++iPhoton)*/
   }//if (getCollection_(pPhotons, photonTag_, iEvent))
+
+  //increment the pass counters
+  ++numTot_;
+  incrementCounters(ETMinScanDecision, numPassingETMinScan_, doETMinScan_);
+  incrementCounters(ECALIsoMaxScanDecision, numPassingECALIsoMaxScan_, doECALIsoMaxScan_);
+  incrementCounters(HCALIsoMaxScanDecision, numPassingHCALIsoMaxScan_, doHCALIsoMaxScan_);
+  incrementCounters(HOverEMaxScanDecision, numPassingHOverEMaxScan_, doHOverEMaxScan_);
+  incrementCounters(trackIsoMaxScanDecision, numPassingTrackIsoMaxScan_, doTrackIsoMaxScan_);
+  incrementCounters(sigmaIetaIetaMaxScanDecision, numPassingSigmaIetaIetaMaxScan_, 
+		    doSigmaIetaIetaMaxScan_);
+  std::vector<unsigned int> ECALHCALIsoMaxScanDecision;
+  for (std::vector<unsigned int>::const_iterator i = ECALIsoMaxScanDecision.begin(); 
+       i != ECALIsoMaxScanDecision.end(); ++i) {
+    ECALHCALIsoMaxScanDecision.push_back(*i & 
+					 HCALIsoMaxScanDecision[i - 
+								ECALIsoMaxScanDecision.begin()]);
+  }
+  incrementCounters(ECALHCALIsoMaxScanDecision, numPassingECALHCALIsoMaxScan_, 
+		    doECALIsoMaxScan_ && doHCALIsoMaxScan_);
+  std::vector<unsigned int> ECALHCALIsoHOverEMaxScanDecision;
+  for (std::vector<unsigned int>::const_iterator i = ECALIsoMaxScanDecision.begin(); 
+       i != ECALIsoMaxScanDecision.end(); ++i) {
+    ECALHCALIsoHOverEMaxScanDecision.push_back(*i & 
+					       HCALIsoMaxScanDecision
+					       [i - ECALIsoMaxScanDecision.begin()] && 
+					       HOverEMaxScanDecision
+					       [i - ECALIsoMaxScanDecision.begin()]);
+  }
+  incrementCounters(ECALHCALIsoHOverEMaxScanDecision, numPassingECALHCALIsoHOverEMaxScan_, 
+		     doECALIsoMaxScan_ && doHCALIsoMaxScan_ && doHOverEMaxScan_);
+  std::vector<unsigned int> ECALTrackIsoMaxScanDecision;
+  for (std::vector<unsigned int>::const_iterator i = ECALIsoMaxScanDecision.begin(); 
+       i != ECALIsoMaxScanDecision.end(); ++i) {
+    ECALTrackIsoMaxScanDecision.push_back(*i & 
+					  trackIsoMaxScanDecision
+					  [i - ECALIsoMaxScanDecision.begin()]);
+  }
+  incrementCounters(ECALTrackIsoMaxScanDecision, numPassingECALTrackIsoMaxScan_, 
+		     doECALIsoMaxScan_ && doTrackIsoMaxScan_);
+  std::vector<unsigned int> ECALIsoSigmaIetaIetaMaxScanDecision;
+  for (std::vector<unsigned int>::const_iterator i = ECALIsoMaxScanDecision.begin(); 
+       i != ECALIsoMaxScanDecision.end(); ++i) {
+    ECALIsoSigmaIetaIetaMaxScanDecision.push_back(*i & 
+						  sigmaIetaIetaMaxScanDecision
+						  [i - ECALIsoMaxScanDecision.begin()]);
+  }
+  incrementCounters(ECALIsoSigmaIetaIetaMaxScanDecision, numPassingECALIsoSigmaIetaIetaMaxScan_, 
+		     doECALIsoMaxScan_ && doSigmaIetaIetaMaxScan_);
+  std::vector<unsigned int> HCALTrackIsoMaxScanDecision;
+  for (std::vector<unsigned int>::const_iterator i = HCALIsoMaxScanDecision.begin(); 
+       i != HCALIsoMaxScanDecision.end(); ++i) {
+    HCALTrackIsoMaxScanDecision.push_back(*i & 
+					  trackIsoMaxScanDecision
+					  [i - HCALIsoMaxScanDecision.begin()]);
+  }
+  incrementCounters(HCALTrackIsoMaxScanDecision, numPassingHCALTrackIsoMaxScan_, 
+		     doHCALIsoMaxScan_ && doTrackIsoMaxScan_);
+  std::vector<unsigned int> HCALIsoSigmaIetaIetaMaxScanDecision;
+  for (std::vector<unsigned int>::const_iterator i = HCALIsoMaxScanDecision.begin(); 
+       i != HCALIsoMaxScanDecision.end(); ++i) {
+    HCALIsoSigmaIetaIetaMaxScanDecision.push_back(*i & 
+						  sigmaIetaIetaMaxScanDecision
+						  [i - HCALIsoMaxScanDecision.begin()]);
+  }
+  incrementCounters(HCALIsoSigmaIetaIetaMaxScanDecision, numPassingHCALIsoSigmaIetaIetaMaxScan_, 
+		     doHCALIsoMaxScan_ && doSigmaIetaIetaMaxScan_);
+  std::vector<unsigned int> HOverETrackIsoMaxScanDecision;
+  for (std::vector<unsigned int>::const_iterator i = HOverEMaxScanDecision.begin(); 
+       i != HOverEMaxScanDecision.end(); ++i) {
+    HOverETrackIsoMaxScanDecision.push_back(*i & 
+					    trackIsoMaxScanDecision
+					    [i - HOverEMaxScanDecision.begin()]);
+  }
+  incrementCounters(HOverETrackIsoMaxScanDecision, numPassingHOverETrackIsoMaxScan_, 
+		     doHOverEMaxScan_ && doTrackIsoMaxScan_);
+  std::vector<unsigned int> HOverESigmaIetaIetaMaxScanDecision;
+  for (std::vector<unsigned int>::const_iterator i = HOverEMaxScanDecision.begin(); 
+       i != HOverEMaxScanDecision.end(); ++i) {
+    HOverESigmaIetaIetaMaxScanDecision.push_back(*i & 
+						 sigmaIetaIetaMaxScanDecision
+						 [i - HOverEMaxScanDecision.begin()]);
+  }
+  incrementCounters(HOverESigmaIetaIetaMaxScanDecision, numPassingHOverESigmaIetaIetaMaxScan_, 
+		     doHOverEMaxScan_ && doSigmaIetaIetaMaxScan_);
 
   //put the collections into the event
   putProductIntoEvent(pPhotons, ETMinScanDecision, iEvent, "passETMin", doETMinScan_);
@@ -355,11 +475,106 @@ CutScanProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 void 
 CutScanProducer::beginJob()
 {
+  //initialize counters
+  numTot_ = 0;
+  initializeCounters(doETMinScan_, ETMinScan_, numPassingETMinScan_);
+  initializeCounters(doECALIsoMaxScan_, ECALIsoMaxPTMultiplierScan_, numPassingECALIsoMaxScan_);
+  initializeCounters(doHCALIsoMaxScan_, HCALIsoMaxPTMultiplierScan_, numPassingHCALIsoMaxScan_);
+  initializeCounters(doHOverEMaxScan_, HOverEMaxScan_, numPassingHOverEMaxScan_);
+  initializeCounters(doTrackIsoMaxScan_, trackIsoMaxPTMultiplierScan_, 
+		     numPassingTrackIsoMaxScan_);
+  initializeCounters(doSigmaIetaIetaMaxScan_, sigmaIetaIetaMaxScan_, 
+		     numPassingSigmaIetaIetaMaxScan_);
+  initializeCounters(doECALIsoMaxScan_ && doHCALIsoMaxScan_, ECALIsoMaxPTMultiplierScan_, 
+		     numPassingECALHCALIsoMaxScan_);
+  initializeCounters(doECALIsoMaxScan_ && doHCALIsoMaxScan_ && doHOverEMaxScan_, 
+		     ECALIsoMaxPTMultiplierScan_, numPassingECALHCALIsoHOverEMaxScan_);
+  initializeCounters(doECALIsoMaxScan_ && doTrackIsoMaxScan_, ECALIsoMaxPTMultiplierScan_, 
+		     numPassingECALTrackIsoMaxScan_);
+  initializeCounters(doECALIsoMaxScan_ && doSigmaIetaIetaMaxScan_, ECALIsoMaxPTMultiplierScan_, 
+		     numPassingECALIsoSigmaIetaIetaMaxScan_);
+  initializeCounters(doHCALIsoMaxScan_ && doTrackIsoMaxScan_, HCALIsoMaxPTMultiplierScan_, 
+		     numPassingHCALTrackIsoMaxScan_);
+  initializeCounters(doHCALIsoMaxScan_ && doSigmaIetaIetaMaxScan_, HCALIsoMaxPTMultiplierScan_, 
+		     numPassingHCALIsoSigmaIetaIetaMaxScan_);
+  initializeCounters(doHOverEMaxScan_ && doTrackIsoMaxScan_, HOverEMaxScan_, 
+		     numPassingHOverETrackIsoMaxScan_);
+  initializeCounters(doHOverEMaxScan_ && doSigmaIetaIetaMaxScan_, HOverEMaxScan_, 
+		     numPassingHOverESigmaIetaIetaMaxScan_);
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
 void 
 CutScanProducer::endJob() {
+
+  //print statistics (i.e. data volume reduction for each scan point)
+  printStats(numPassingETMinScan_, doETMinScan_, "ETMin");
+  printStats(numPassingECALIsoMaxScan_, doECALIsoMaxScan_, "ECALIsoMax");
+  printStats(numPassingHCALIsoMaxScan_, doHCALIsoMaxScan_, "HCALIsoMax");
+  printStats(numPassingHOverEMaxScan_, doHOverEMaxScan_, "HOverEMax");
+  printStats(numPassingTrackIsoMaxScan_, doTrackIsoMaxScan_, "trackIsoMax");
+  printStats(numPassingSigmaIetaIetaMaxScan_, doSigmaIetaIetaMaxScan_, "sigmaIetaIetaMax");
+  printStats(numPassingECALHCALIsoMaxScan_, doECALIsoMaxScan_ && doHCALIsoMaxScan_, 
+	     "ECALHCALIsoMax");
+  printStats(numPassingECALHCALIsoHOverEMaxScan_, 
+	     doECALIsoMaxScan_ && doHCALIsoMaxScan_ && doHOverEMaxScan_, "ECALHCALIsoHOverEMax");
+  printStats(numPassingECALTrackIsoMaxScan_, doECALIsoMaxScan_ && doTrackIsoMaxScan_, 
+	     "ECALTrackIsoMax");
+  printStats(numPassingECALIsoSigmaIetaIetaMaxScan_, 
+	     doECALIsoMaxScan_ && doSigmaIetaIetaMaxScan_, "ECALIsoSigmaIetaIetaMax");
+  printStats(numPassingHCALTrackIsoMaxScan_, doHCALIsoMaxScan_ && doTrackIsoMaxScan_, 
+	     "HCALTrackIsoMax");
+  printStats(numPassingHCALIsoSigmaIetaIetaMaxScan_, 
+	     doHCALIsoMaxScan_ && doSigmaIetaIetaMaxScan_, "HCALIsoSigmaIetaIetaMax");
+  printStats(numPassingHOverETrackIsoMaxScan_, doHOverEMaxScan_ && doTrackIsoMaxScan_, 
+	     "HOverETrackIsoMax");
+  printStats(numPassingHOverESigmaIetaIetaMaxScan_, doHOverEMaxScan_ && doSigmaIetaIetaMaxScan_, 
+	     "HOverESigmaIetaIetaMax");
+}
+
+void CutScanProducer::initializeCounters(const bool doScan, const std::vector<double>& scanVec, 
+					 std::vector<unsigned int>& counterVec)
+{
+  if (doScan) {
+    for (std::vector<double>::const_iterator i = scanVec.begin(); i != scanVec.end(); ++i) {
+      counterVec.push_back(0);
+    }
+  }
+}
+
+void CutScanProducer::incrementCounters(const std::vector<unsigned int>& decisionVec, 
+					std::vector<unsigned int>& counterVec, const bool doScan)
+{
+  if (doScan) {
+    std::vector<unsigned int> numPhotonsPassing(counterVec.size(), 0);
+    for (std::vector<unsigned int>::const_iterator i = decisionVec.begin(); 
+	 i != decisionVec.end(); ++i) {
+      for (unsigned int j = 0; j < counterVec.size(); ++j) {
+	if (((*i >> j) & 0x1) == 1) ++numPhotonsPassing[j];
+      }
+    }
+    for (std::vector<unsigned int>::const_iterator iPass = numPhotonsPassing.begin(); 
+	 iPass != numPhotonsPassing.end(); ++iPass) {
+      if (*iPass >= 2) ++counterVec[iPass - numPhotonsPassing.begin()];
+    }
+  }
+}
+
+void CutScanProducer::printStats(std::vector<unsigned int>& counterVec, const bool doScan, 
+				 const std::string& label) const
+{
+  if (doScan) {
+    std::stringstream stats;
+    for (std::vector<unsigned int>::const_iterator i = counterVec.begin(); i != counterVec.end(); 
+	 ++i) {
+      stats << "Number passing " << label << " working point " << (i - counterVec.begin());
+      stats << ": " << *i << " (";
+      if (numTot_ > 0) stats << ((float)(*i)*100.0/(float)numTot_) << "%)\n";
+      else stats << "N/A)\n";
+    }
+    stats << "-------------------\n";
+    edm::LogInfo("Statistics") << stats.str();
+  }
 }
 
 void CutScanProducer::putProductIntoEvent(const edm::Handle<reco::PhotonCollection>& pPhotons, 

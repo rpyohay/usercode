@@ -1,5 +1,6 @@
 #include "GMSBTools/Filters/interface/Categorizer.h"
 #include "DataFormats/Math/interface/deltaPhi.h"
+#include <iostream>
 
 Categorizer::Categorizer() :
   photonET_(VDOUBLE()),
@@ -35,9 +36,11 @@ Categorizer::Categorizer() :
   photonPassSigmaIetaIetaMax_(VBOOL()),
   photonPassAbsSeedTimeMax_(VBOOL()),
   photonPassE2OverE9Max_(VBOOL()),
+  photonPassPreselection_(VBOOL()),
   evtPassDPhiMin_(false),
+  evtDiEMET_(-1.0),
   passingPhotons_(VINT(2, -1)),
-  passingPhotonType_(VINT(2, FAIL)),
+  photonType_(VINT()),
   category_(FAIL),
   initialized_(false),
   decided_(false),
@@ -91,9 +94,11 @@ Categorizer::Categorizer(const VDOUBLE& photonET, const VDOUBLE& photonEta,
   photonPassSigmaIetaIetaMax_(VBOOL()),
   photonPassAbsSeedTimeMax_(VBOOL()),
   photonPassE2OverE9Max_(VBOOL()),
+  photonPassPreselection_(VBOOL()),
   evtPassDPhiMin_(false),
+  evtDiEMET_(-1.0),
   passingPhotons_(VINT(2, -1)),
-  passingPhotonType_(VINT(2, FAIL)),
+  photonType_(VINT()),
   category_(FAIL),
   initialized_(false),
   decided_(false),
@@ -134,9 +139,11 @@ Categorizer::Categorizer(const Categorizer& copy) :
   photonPassSigmaIetaIetaMax_(copy.getPhotonPassSigmaIetaIetaMax()),
   photonPassAbsSeedTimeMax_(copy.getPhotonPassAbsSeedTimeMax()),
   photonPassE2OverE9Max_(copy.getPhotonPassE2OverE9Max()),
+  photonPassPreselection_(copy.getPhotonPassPreselection()),
   evtPassDPhiMin_(copy.getEvtPassDPhiMin()),
+  evtDiEMET_(copy.getEvtDiEMET()),
   passingPhotons_(copy.getPassingPhotons()),
-  passingPhotonType_(copy.getPassingPhotonType()),
+  photonType_(copy.getPhotonType()),
   category_(copy.getCategory()),
   initialized_(copy.initialized()),
   decided_(copy.decided()),
@@ -181,9 +188,11 @@ Categorizer& Categorizer::operator=(const Categorizer& copy)
     photonPassSigmaIetaIetaMax_ = copy.getPhotonPassSigmaIetaIetaMax();
     photonPassAbsSeedTimeMax_ = copy.getPhotonPassAbsSeedTimeMax();
     photonPassE2OverE9Max_ = copy.getPhotonPassE2OverE9Max();
+    photonPassPreselection_ = copy.getPhotonPassPreselection();
     evtPassDPhiMin_ = copy.getEvtPassDPhiMin();
+    evtDiEMET_ = copy.getEvtDiEMET();
     passingPhotons_ = copy.getPassingPhotons();
-    passingPhotonType_ = copy.getPassingPhotonType();
+    photonType_ = copy.getPhotonType();
     category_ = copy.getCategory();
     initialized_ = copy.initialized();
     decided_ = copy.decided();
@@ -229,67 +238,83 @@ double Categorizer::getPhotonE2OverE9Max() const { return photonE2OverE9Max_; }
 double Categorizer::getPhotonDPhiMin() const { return photonDPhiMin_; }
 VBOOL Categorizer::getPhotonPassETMin() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) throw STRING("Error in getPhotonPassETMin(): call decideAll() first.\n");
   return photonPassETMin_;
 }
 VBOOL Categorizer::getPhotonPassAbsEtaMax() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) throw STRING("Error in getPhotonPassAbsEtaMax(): call decideAll() first.\n");
   return photonPassAbsEtaMax_;
 }
 VBOOL Categorizer::getPhotonPassECALIsoMax() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) throw STRING("Error in getPhotonPassECALIsoMax(): call decideAll() first.\n");
   return photonPassECALIsoMax_;
 }
 VBOOL Categorizer::getPhotonPassHCALIsoMax() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) throw STRING("Error in getPhotonPassHCALIsoMax(): call decideAll() first.\n");
   return photonPassHCALIsoMax_;
 }
 VBOOL Categorizer::getPhotonPassHOverEMax() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) throw STRING("Error in getPhotonPassHOverEMax(): call decideAll() first.\n");
   return photonPassHOverEMax_;
 }
 VBOOL Categorizer::getPhotonPassTrackIsoMax() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) throw STRING("Error in getPhotonPassTrackIsoMax(): call decideAll() first.\n");
   return photonPassTrackIsoMax_;
 }
 VBOOL Categorizer::getPhotonPassSigmaIetaIetaMax() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) {
+    throw STRING("Error in getPhotonPassSigmaIetaIetaMax(): call decideAll() first.\n");
+  }
   return photonPassSigmaIetaIetaMax_;
 }
 VBOOL Categorizer::getPhotonPassAbsSeedTimeMax() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) {
+    throw STRING("Error in getPhotonPassAbsSeedTimeMax(): call decideAll() first.\n");
+  }
   return photonPassAbsSeedTimeMax_;
 }
 VBOOL Categorizer::getPhotonPassE2OverE9Max() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!decided_) throw STRING("Error in getPhotonPassE2OverE9Max(): call decideAll() first.\n");
   return photonPassE2OverE9Max_;
+}
+VBOOL Categorizer::getPhotonPassPreselection() const
+{
+  if (!foundPassingPhotons_) {
+    throw STRING("Error in getPhotonPassPreselection(): call findPassingPhotons() first.\n");
+  }
+  return photonPassPreselection_;
 }
 bool Categorizer::getEvtPassDPhiMin() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!categorized_) throw STRING("Error in getEvtPassDPhiMin(): call classify() first.\n");
   return evtPassDPhiMin_;
+}
+double Categorizer::getEvtDiEMET() const
+{
+  if (!categorized_) throw STRING("Error in getEvtDiEMET(): call classify() first.\n");
+  return evtDiEMET_;
 }
 VINT Categorizer::getPassingPhotons() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!categorized_) throw STRING("Error in getPassingPhotons(): call classify() first.\n");
   return passingPhotons_;
 }
-VINT Categorizer::getPassingPhotonType() const
+VINT Categorizer::getPhotonType() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
-  return passingPhotonType_;
+  if (!categorized_) throw STRING("Error in getPhotonType(): call classify() first.\n");
+  return photonType_;
 }
 int Categorizer::getCategory() const
 {
-  if (!categorized_) throw "Error: call clasify() first.\n";
+  if (!categorized_) throw STRING("Error in getCategory(): call classify() first.\n");
   return category_;
 }
 
@@ -414,15 +439,31 @@ void Categorizer::decideAll()
 
 void Categorizer::findPassingPhotons()
 {
-  if (!decided_) throw "Error: call decideAll() first.\n";
-  double photon1ET = -1.0;
-  double photon2ET = -1.0;
+  if (!decided_) throw STRING("Error in findPassingPhotons(): call decideAll() first.\n");
+  photonPassPreselection_.clear();
   for (VBOOL_IT iPassETMin = photonPassETMin_.begin(); iPassETMin != photonPassETMin_.end(); 
        ++iPassETMin) {
     const unsigned int i = iPassETMin - photonPassETMin_.begin();
-    if (*iPassETMin && photonPassAbsEtaMax_[i] && photonPassECALIsoMax_[i] && 
-	photonPassHCALIsoMax_[i] && photonPassHOverEMax_[i] && photonPassAbsSeedTimeMax_[i] && 
-	photonPassE2OverE9Max_[i]) {
+    photonPassPreselection_.push_back(*iPassETMin && photonPassAbsEtaMax_[i] && 
+				      photonPassECALIsoMax_[i] && photonPassHCALIsoMax_[i] && 
+				      photonPassHOverEMax_[i] && photonPassAbsSeedTimeMax_[i] && 
+				      photonPassE2OverE9Max_[i]);
+  }
+  foundPassingPhotons_ = true;
+}
+
+void Categorizer::classify()
+{
+  if (!foundPassingPhotons_) {
+    throw STRING("Error in classify(): call findPassingPhotons() first.\n");
+  }
+  double photon1ET = -1.0;
+  double photon2ET = -1.0;
+  photonType_.clear();
+  for (VBOOL_IT iPassETMin = photonPassETMin_.begin(); iPassETMin != photonPassETMin_.end(); 
+       ++iPassETMin) {
+    const unsigned int i = iPassETMin - photonPassETMin_.begin();
+    if (photonPassPreselection_[i]) {
       if (photonET_[i] > photon1ET) {
 	photon2ET = photon1ET;
 	photon1ET = photonET_[i];
@@ -433,33 +474,43 @@ void Categorizer::findPassingPhotons()
 	passingPhotons_[1] = i;
 	photon2ET = photonET_[i];
       }
+      if (photonPassSigmaIetaIetaMax_[i] && 
+	  photonPassTrackIsoMax_[i]) {
+	if (photonHasPixelSeed_[i]) photonType_.push_back(E);
+	else photonType_.push_back(G);
+      }
+      else photonType_.push_back(F);
     }
+    else photonType_.push_back(FAIL);
   }
-  foundPassingPhotons_ = true;
+  if ((passingPhotons_[0] >= 0) && (passingPhotons_[1] >= 0)) {
+    if ((photonType_[passingPhotons_[0]] == G) && 
+	(photonType_[passingPhotons_[1]] == G)) category_ = GG;
+    if (((photonType_[passingPhotons_[0]] == G) && (photonType_[passingPhotons_[1]] == E)) || 
+	((photonType_[passingPhotons_[0]] == E) && 
+	 (photonType_[passingPhotons_[1]] == G))) category_ = EG;
+    if ((photonType_[passingPhotons_[0]] == E) && 
+	(photonType_[passingPhotons_[1]] == E)) category_ = EE;
+    if ((photonType_[passingPhotons_[0]] == F) && 
+	(photonType_[passingPhotons_[1]] == F)) category_ = FF;
+    if (deltaPhi(photonPhi_[passingPhotons_[0]], photonPhi_[passingPhotons_[1]]) < 
+	photonDPhiMin_) {
+      category_ = FAIL;
+    }
+    else evtPassDPhiMin_ = true;
+    evtDiEMET_ = sqrt(photonET_[passingPhotons_[0]]*photonET_[passingPhotons_[0]] + 
+		      photonET_[passingPhotons_[1]]*photonET_[passingPhotons_[1]] + 
+		      2*photonET_[passingPhotons_[0]]*photonET_[passingPhotons_[1]]*
+		      cos(deltaPhi(photonPhi_[passingPhotons_[0]], 
+				   photonPhi_[passingPhotons_[1]])));
+  }
+  else category_ = FAIL;
+  categorized_ = true;
 }
 
-void Categorizer::classify()
+bool Categorizer::done() const
 {
-  if (!foundPassingPhotons_) throw "Error: call findPassingPhotons() first.\n";
-  for (VINT_IT iPassingPhoton = passingPhotons_.begin(); iPassingPhoton != passingPhotons_.end(); 
-       ++iPassingPhoton) {
-    const unsigned int i = iPassingPhoton - passingPhotons_.begin();
-    if (*iPassingPhoton >= 0) {
-      if (photonPassSigmaIetaIetaMax_[*iPassingPhoton] && 
-	  photonPassTrackIsoMax_[*iPassingPhoton]) {
-	if (photonHasPixelSeed_[*iPassingPhoton]) passingPhotonType_[i] = G;
-	else passingPhotonType_[i] = E;
-      }
-      else passingPhotonType_[i] = F;
-    }
-  }
-  if ((passingPhotonType_[0] == G) && (passingPhotonType_[1] == G)) category_ = GG;
-  if (((passingPhotonType_[0] == G) && (passingPhotonType_[1] == E)) || 
-      ((passingPhotonType_[0] == E) && (passingPhotonType_[1] == G))) category_ = EG;
-  if ((passingPhotonType_[0] == E) && (passingPhotonType_[1] == E)) category_ = EE;
-  if ((passingPhotonType_[0] == F) && (passingPhotonType_[1] == F)) category_ = FF;
-  if (deltaPhi(photonPhi_[passingPhotons_[0]], photonPhi_[passingPhotons_[1]]) < photonDPhiMin_) category_ = FAIL;
-  else evtPassDPhiMin_ = true;
+  return initialized_ && decided_ && foundPassingPhotons_ && categorized_;
 }
 
 bool Categorizer::initialized() const { return initialized_; }
@@ -487,7 +538,12 @@ void Categorizer::checkInput()
 void Categorizer::decide(VBOOL& pass, const VDOUBLE& quantity, const double cut0, 
 			 const double cut1, const bool min, const bool abs)
 {
-  if (!initialized_) throw "Error: input vector size mismatch.\n";
+  if (!initialized_) {
+    STRINGSTREAM err;
+    err << "Error in decide(VBOOL& pass, const VDOUBLE& quantity, const double cut0, ";
+    err << "const double cut1, const bool min, const bool abs): input vector size mismatch.\n";
+    throw STRING(err.str());
+  }
   pass.clear();
   for (VDOUBLE_IT i = quantity.begin(); i != quantity.end(); ++i) {
     double val = *i;
