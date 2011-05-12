@@ -1,6 +1,6 @@
 import FWCore.ParameterSet.Config as cms
 
-EDMCategoryProducer = cms.EDAnalyzer('EDMCategoryProducer'#,
+EDMCategoryProducer = cms.EDProducer('EDMCategoryProducer'#,
 
                                      #input
                                      #photonTag = cms.untracked.InputTag("photons", "", "RECOCleaned"),

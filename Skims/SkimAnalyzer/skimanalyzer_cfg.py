@@ -1,13 +1,13 @@
 import FWCore.ParameterSet.Config as cms
 
-process = cms.Process("SKIM")
+process = cms.Process("ANALYSIS")
 
 #desired INFO messages
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.categories.append('Error')
 process.MessageLogger.categories.append('Statistics')
 process.MessageLogger.categories.append('SkimAnalyzer')
-#process.MessageLogger.categories.append('SkimAnalyzerNullPointer')
+#process.MessageLogger.categories.append('EDMCategoryProducer')
 process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(1000)
 
 #events to process
@@ -17,7 +17,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 process.source = cms.Source("PoolSource",
     # replace 'myfile.root' with the source file you want to use
     fileNames = cms.untracked.vstring(
-        'file:/data2/yohay/diPhoton_skim_Run2011A_30GeV-30GeV_prelimAnalysis.root'
+    'rfio:/castor/cern.ch/user/y/yohay/421/skim_studies/asymDoublePhotonSkim.root'
     ),
                             skipEvents = cms.untracked.uint32(0)
 )
@@ -42,7 +42,7 @@ process.diPhotonFilter.photonSecondEtCut = cms.double(30.0) #GeV
 #trigger analyzer
 process.load('TriggerAnalysis/TriggerAnalyzer/triggeranalyzer_cfi')
 process.TriggerAnalyzer.outputFile = cms.untracked.string(
-    "diPhoton_trigger_analysis_30GeV-30GeV.root"
+    "/data2/yohay/skim_studies/CS_test_trigger_analysis_35GeV-30GeV.root"
     )
 process.TriggerAnalyzer.unprescaledHLTPaths = cms.untracked.vstring(
     'HLT_DoublePhoton33', 'HLT_DoublePhoton5_IsoVL_CEP', 'HLT_Photon125_NoSpikeFilter',
@@ -59,6 +59,10 @@ process.TriggerAnalyzer.unprescaledHLTPaths = cms.untracked.vstring(
 #cut scan producer
 process.load('Skims/CutScanProducer/cutscanproducer_cfi')
 process.CutScanProducer.photonTag = cms.untracked.InputTag("photons", "", "RECO")
+process.CutScanProducer.extETMin = cms.untracked.double(35.0) #GeV
+process.CutScanProducer.HOverEMaxScan = cms.vdouble(0.1, 0.07, 0.05, 0.03)
+process.CutScanProducer.trackIsoMaxPTMultiplierScan = cms.vdouble(0.005, 0.002, 0.002, 0.001)
+process.CutScanProducer.trackIsoMaxConstantScan = cms.vdouble(17.5, 3.5, 3.0, 2.0) #GeV
 
 #category producer
 process.load('GMSBTools/Producers/edmcategoryproducer_cfi')
@@ -73,54 +77,63 @@ process.EDMCategoryProducer.recHitTagEE = cms.untracked.InputTag(
 #skim analyzer module
 process.load('Skims/SkimAnalyzer/skimanalyzer_cfi')
 process.SkimAnalyzer.outputFile = cms.untracked.string(
-    'diPhoton_skim_Run2011A_30GeV-30GeV_analysis.root'
+    '/data2/yohay/skim_studies/CS_test_analysis_35GeV-30GeV.root'
     )
 process.SkimAnalyzer.photonTag = cms.untracked.InputTag("photons", "", "RECO")
 process.SkimAnalyzer.categoryTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "eventCategory", "SKIM"
+    "EDMCategoryProducer", "eventCategory", "ANALYSIS"
     )
 process.SkimAnalyzer.diEMETTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "evtDiEMET", "SKIM"
+    "EDMCategoryProducer", "evtDiEMET", "ANALYSIS"
+    )
+process.SkimAnalyzer.photonSeedTimeTag = cms.untracked.InputTag(
+    "EDMCategoryProducer", "photonSeedTime", "ANALYSIS"
+    )
+process.SkimAnalyzer.photonE2OverE9Tag = cms.untracked.InputTag(
+    "EDMCategoryProducer", "photonE2OverE9", "ANALYSIS"
     )
 process.SkimAnalyzer.ETMinScanDecisionTag = cms.untracked.InputTag(
-    "CutScanProducer", "passETMin", "SKIM"
+    "CutScanProducer", "passETMin", "ANALYSIS"
     )
 process.SkimAnalyzer.ECALIsoMaxScanDecisionTag = cms.untracked.InputTag(
-    "CutScanProducer", "passECALIsoMax", "SKIM"
+    "CutScanProducer", "passECALIsoMax", "ANALYSIS"
     )
 process.SkimAnalyzer.HCALIsoMaxScanDecisionTag = cms.untracked.InputTag(
-    "CutScanProducer", "passHCALIsoMax", "SKIM"
+    "CutScanProducer", "passHCALIsoMax", "ANALYSIS"
     )
 process.SkimAnalyzer.HOverEMaxScanDecisionTag = cms.untracked.InputTag(
-    "CutScanProducer", "passHOverEMax", "SKIM"
+    "CutScanProducer", "passHOverEMax", "ANALYSIS"
     )
 process.SkimAnalyzer.trackIsoMaxScanDecisionTag = cms.untracked.InputTag(
-    "CutScanProducer", "passTrackIsoMax", "SKIM"
+    "CutScanProducer", "passTrackIsoMax", "ANALYSIS"
     )
 process.SkimAnalyzer.sigmaIetaIetaMaxScanDecisionTag = cms.untracked.InputTag(
-    "CutScanProducer", "passSigmaIetaIetaMax", "SKIM"
+    "CutScanProducer", "passSigmaIetaIetaMax", "ANALYSIS"
     )
 process.SkimAnalyzer.passETMinTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "passETMin", "SKIM"
+    "EDMCategoryProducer", "passETMin", "ANALYSIS"
     )
 process.SkimAnalyzer.passAbsEtaMaxTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "passAbsEtaMax", "SKIM"
+    "EDMCategoryProducer", "passAbsEtaMax", "ANALYSIS"
     )
 process.SkimAnalyzer.passECALIsoMaxTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "passECALIsoMax", "SKIM"
+    "EDMCategoryProducer", "passECALIsoMax", "ANALYSIS"
     )
 process.SkimAnalyzer.passHCALIsoMaxTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "passHCALIsoMax", "SKIM"
+    "EDMCategoryProducer", "passHCALIsoMax", "ANALYSIS"
     )
 process.SkimAnalyzer.passHOverEMaxTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "passHOverEMax", "SKIM"
+    "EDMCategoryProducer", "passHOverEMax", "ANALYSIS"
     )
 process.SkimAnalyzer.passTrackIsoMaxTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "passTrackIsoMax", "SKIM"
+    "EDMCategoryProducer", "passTrackIsoMax", "ANALYSIS"
     )
 process.SkimAnalyzer.passSigmaIetaIetaMaxTag = cms.untracked.InputTag(
-    "EDMCategoryProducer", "passSigmaIetaIetaMax", "SKIM"
+    "EDMCategoryProducer", "passSigmaIetaIetaMax", "ANALYSIS"
     )
+process.SkimAnalyzer.HOverEMaxScan = cms.vdouble(0.1, 0.07, 0.05, 0.03)
+process.SkimAnalyzer.trackIsoMaxPTMultiplierScan = cms.vdouble(0.005, 0.002, 0.002, 0.001)
+process.SkimAnalyzer.trackIsoMaxConstantScan = cms.vdouble(17.5, 3.5, 3.0, 2.0) #GeV
 process.SkimAnalyzer.HLTPathGG = cms.untracked.vstring(
     "HLT_Photon32_CaloIdL_Photon26_CaloIdL"
     )
@@ -191,7 +204,7 @@ process.eventContent = cms.PSet(
     'keep *_pfMet_*_*',
 
     #cut scan value maps
-    'keep *_CutScanProducer_*_*',
+    #'keep *_CutScanProducer_*_*',
 
     #category information
     'keep *_EDMCategoryProducer_*_*'
@@ -203,7 +216,7 @@ process.eventContent = cms.PSet(
 #output
 process.output = cms.OutputModule("PoolOutputModule",
                                   fileName = cms.untracked.string(
-    'diPhoton_skim_Run2011A_30GeV-30GeV_processed.root'
+    '/data2/yohay/skim_studies/CS_test_events_35GeV-30GeV.root'
     ),
                                   SelectEvents = cms.untracked.PSet(
     SelectEvents = cms.vstring('skim')
@@ -215,8 +228,8 @@ process.options = cms.untracked.PSet(wantSummary  = cms.untracked.bool(True))
 
 #execution path
 process.skim = cms.Path(
-    process.diPhotonFilterSequence*process.CutScanProducer*process.EDMCategoryProducer*
-    process.SkimAnalyzer*process.TriggerAnalyzer
+    process.CutScanProducer*process.EDMCategoryProducer*process.SkimAnalyzer*
+    process.TriggerAnalyzer
     )
 
 #output path

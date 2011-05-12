@@ -75,10 +75,15 @@ class SkimAnalyzer : public edm::EDAnalyzer {
   STRING name(const STRING&, const STRING&, const STRING&, const unsigned int, 
 	      const STRING&) const;
 
-  //book any scan point histogram
+  //book any 1D scan point histogram
   void bookScanPointHistograms(VTH1F&, const VDOUBLE&, const STRING&, const STRING&, 
 			       const STRING&, const STRING&, const unsigned int, const float, 
 			       const float);
+
+  //book any 2D scan point histogram
+  void bookScanPointHistograms(VTH2F&, const VDOUBLE&, const STRING&, const STRING&, 
+			       const STRING&, const STRING&, const unsigned int, const float, 
+			       const float, const unsigned int, const float, const float);
 
   //book all the gg MET histograms
   void bookGGMETHistograms(const STRING&);
@@ -128,6 +133,15 @@ class SkimAnalyzer : public edm::EDAnalyzer {
   //book all sigmaIetaIeta N-1 histograms
   void bookSigmaIetaIetaNMinus1Histograms(const STRING&);
 
+  //book all seedTime N-1 histograms
+  void bookSeedTimeNMinus1Histograms(const STRING&);
+
+  //book all E2/E9 N-1 histograms
+  void bookE2OverE9NMinus1Histograms(const STRING&);
+
+  //book all seed time vs. ieta N-2 histograms
+  void bookSeedTimeVsIetaNMinus2Histograms(const STRING&);
+
   /*increment a vector of counters representing the number of photons passing a particular scan 
     point, 1 vector for each scan cut type (i.e. 1 for ECAL isolation, 1 for H/E, etc.)*/
   void incrementCounters(const VDOUBLE&, VUINT&, const unsigned int) const;
@@ -135,28 +149,40 @@ class SkimAnalyzer : public edm::EDAnalyzer {
   //extract the scan point as an int from the histogram name
   int scanPoint(const STRING&, const STRING&) const;
 
-  /*loop over the vector of histograms of a single physical quantity corresponding to the 
+  /*loop over the vector of 1D histograms of a single physical quantity corresponding to the 
     given scan cut type -- each histogram corresponds to a particular scan point and trigger 
     combination -- and fill the histograms properly*/
   void fillIndHistogram(VTH1F*, const float, const bool, const STRING&, 
 			const STRING&, const unsigned int);
 
-  //fill histograms of event and photon quantities properly
+  /*loop over the vector of 2D histograms of a single physical quantity corresponding to the 
+    given scan cut type -- each histogram corresponds to a particular scan point and trigger 
+    combination -- and fill the histograms properly*/
+  void fillIndHistogram(VTH2F*, const float, const float, const bool, const STRING&, 
+			const STRING&, const unsigned int);
+
+  //fill 1D histograms of event and photon quantities properly
   void fillHistograms(const VUINT&, std::vector<VTH1F*>&, const VFLOAT&, 
+		      const VBOOL&, const STRING&, const STRING&);
+
+  //fill 2D histograms of event and photon quantities properly
+  void fillHistograms(const VUINT&, std::vector<VTH2F*>&, const VFLOAT&, const VFLOAT&, 
 		      const VBOOL&, const STRING&, const STRING&);
 
   //return true if the photon should go into the N-1 plot, false otherwise
   bool passNMinus1(std::vector<edm::Handle<edm::ValueMap<bool> >*>&, 
 		   edm::Ref<reco::PhotonCollection>&, edm::Handle<edm::ValueMap<bool> >*) const;
 
+  //return true if the photon should go into the N-2 plot, false otherwise
+  bool passNMinus2(std::vector<edm::Handle<edm::ValueMap<bool> >*>&, 
+		   edm::Ref<reco::PhotonCollection>&, edm::Handle<edm::ValueMap<bool> >*, 
+		   edm::Handle<edm::ValueMap<bool> >*) const;
+
   //extract just the file name from the full path name
   STRING extractFileFromFullPath(const STRING&) const;
 
   //make ROOT directories in the output file corresponding to the different scan cut types
   void makeOutputDirectories(const unsigned int, const STRING&);
-
-  //fill ROOT directories in the output file with corresponding histograms
-  void fillOutputDirectories(VTH1F&, const STRING&);
 
   //retrieve collection from the event
   template<typename T>
@@ -174,6 +200,23 @@ class SkimAnalyzer : public edm::EDAnalyzer {
     }
     return collectionFound;
   }
+
+  //fill ROOT directories in the output file with corresponding histograms
+  template<typename T>
+  void fillOutputDirectories(T& histVec, const STRING& scanLabel)
+  {
+    for (typename T::iterator iHist = histVec.begin(); iHist != histVec.end(); ++iHist) {
+      STRING histName((*iHist)->GetName());
+      int theScanPoint = scanPoint(histName, scanLabel);
+      STRINGSTREAM targetDir1;
+      targetDir1 << "/" << scanLabel;
+      out_->cd(targetDir1.str().c_str());
+      STRINGSTREAM targetDir2;
+      targetDir2 << scanLabel << theScanPoint;
+      out_->cd(targetDir2.str().c_str());
+      (*iHist)->Write();
+    }
+  }
       
       // ----------member data ---------------------------
 
@@ -184,6 +227,9 @@ class SkimAnalyzer : public edm::EDAnalyzer {
   edm::InputTag diEMETTag_;
   edm::InputTag trgResultsTag_;
   edm::InputTag tcMETTag_;
+  edm::InputTag photonSeedTimeTag_;
+  edm::InputTag photonE2OverE9Tag_;
+  edm::InputTag photonSeedIetaTag_;
   edm::InputTag ETMinScanDecisionTag_;
   edm::InputTag ECALIsoMaxScanDecisionTag_;
   edm::InputTag HCALIsoMaxScanDecisionTag_;
@@ -197,8 +243,8 @@ class SkimAnalyzer : public edm::EDAnalyzer {
   edm::InputTag passHOverEMaxTag_;
   edm::InputTag passTrackIsoMaxTag_;
   edm::InputTag passSigmaIetaIetaMaxTag_;
-  /*edm::InputTag passAbsSeedTimeMaxTag_;
-    edm::InputTag passE2OverE9MaxTag_;*/
+  edm::InputTag passAbsSeedTimeMaxTag_;
+  edm::InputTag passE2OverE9MaxTag_;
 
   //scan points
   VDOUBLE ETMinScan_;
@@ -336,7 +382,7 @@ class SkimAnalyzer : public edm::EDAnalyzer {
   VTH1F sigmaIetaIetaNMinus1TrackIsoMax_;
   VTH1F sigmaIetaIetaNMinus1SigmaIetaIetaMax_;
 
-  /*//seedTime N-1 plots
+  //seedTime N-1 plots
   VTH1F seedTimeNMinus1ETMin_;
   VTH1F seedTimeNMinus1ECALIsoMax_;
   VTH1F seedTimeNMinus1HCALIsoMax_;
@@ -344,16 +390,35 @@ class SkimAnalyzer : public edm::EDAnalyzer {
   VTH1F seedTimeNMinus1TrackIsoMax_;
   VTH1F seedTimeNMinus1SigmaIetaIetaMax_;
 
-  //sigmaIetaIeta N-1 plots
+  //E2/E9 N-1 plots
   VTH1F e2OverE9NMinus1ETMin_;
   VTH1F e2OverE9NMinus1ECALIsoMax_;
   VTH1F e2OverE9NMinus1HCALIsoMax_;
   VTH1F e2OverE9NMinus1HOverEMax_;
   VTH1F e2OverE9NMinus1TrackIsoMax_;
-  VTH1F e2OverE9NMinus1SigmaIetaIetaMax_;*/
+  VTH1F e2OverE9NMinus1SigmaIetaIetaMax_;
+
+  //beam halo N-2 plots
+  VTH2F seedTimeVsIetaNMinus2ETMin_;
+  VTH2F seedTimeVsIetaNMinus2ECALIsoMax_;
+  VTH2F seedTimeVsIetaNMinus2HCALIsoMax_;
+  VTH2F seedTimeVsIetaNMinus2HOverEMax_;
+  VTH2F seedTimeVsIetaNMinus2TrackIsoMax_;
+  VTH2F seedTimeVsIetaNMinus2SigmaIetaIetaMax_;
 
   //hack
   TH2F* HOverEVsAbsEta_;
+  TH1F* HOverE_;
+  TH1F* HOverEFiringTrigger_;
+  unsigned int numEvts_;
+  unsigned int numGG_;
+  unsigned int numEG_;
+  unsigned int numFF_;
+  unsigned int numEE_;
+  TH1F* photon1ET_;
+  TH1F* photon2ET_;
+  TH1F* photon1HOverE_;
+  TH1F* photon2HOverE_;
 
   //output
   TFile* out_;
@@ -385,6 +450,15 @@ SkimAnalyzer::SkimAnalyzer(const edm::ParameterSet& iConfig) :
 		 ("trgResultsTag", edm::InputTag("TriggerResults", "", "HLT"))),
   tcMETTag_(iConfig.getUntrackedParameter<edm::InputTag>
 	    ("tcMETTag", edm::InputTag("tcMet", "", "RECO"))),
+  photonSeedTimeTag_(iConfig.getUntrackedParameter<edm::InputTag>
+		     ("photonSeedTimeTag", 
+		      edm::InputTag("EDMCategoryProducer", "photonSeedTime", "OWNPARTICLES"))),
+  photonE2OverE9Tag_(iConfig.getUntrackedParameter<edm::InputTag>
+		     ("photonE2OverE9Tag", 
+		      edm::InputTag("EDMCategoryProducer", "photonE2OverE9", "OWNPARTICLES"))),
+  photonSeedIetaTag_(iConfig.getUntrackedParameter<edm::InputTag>
+		     ("photonSeedIetaTag", 
+		      edm::InputTag("EDMCategoryProducer", "photonSeedIeta", "OWNPARTICLES"))),
   ETMinScanDecisionTag_(iConfig.getUntrackedParameter<edm::InputTag>
 			("ETMinScanDecisionTag", 
 			 edm::InputTag("CutScanProducer", "passETMin", "OWNPARTICLES"))),
@@ -427,14 +501,14 @@ SkimAnalyzer::SkimAnalyzer(const edm::ParameterSet& iConfig) :
 			   ("passSigmaIetaIetaMaxTag", edm::InputTag("EDMCategoryProducer", 
 								     "passSigmaIetaIetaMax", 
 								     "OWNPARTICLES"))),
-  /*passAbsSeedTimeMaxTag_(iConfig.getUntrackedParameter<edm::InputTag>
+  passAbsSeedTimeMaxTag_(iConfig.getUntrackedParameter<edm::InputTag>
 			 ("passAbsSeedTimeMaxTag", edm::InputTag("EDMCategoryProducer", 
 								 "passAbsSeedTimeMax", 
 								 "OWNPARTICLES"))),
   passE2OverE9MaxTag_(iConfig.getUntrackedParameter<edm::InputTag>
 		      ("passE2OverE9MaxTag", edm::InputTag("EDMCategoryProducer", 
-		      "passE2OverE9Max", "OWNPARTICLES"))),*/
-
+							   "passE2OverE9Max", "OWNPARTICLES"))),
+  
   //scan points
   ETMinScan_(iConfig.getParameter<VDOUBLE>("ETMinScan")),
   ECALIsoMaxPTMultiplierScan_(iConfig.getParameter<VDOUBLE>("ECALIsoMaxPTMultiplierScan")),
@@ -467,10 +541,16 @@ SkimAnalyzer::~SkimAnalyzer()
 void
 SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-  //get the event category, trigger information, tcMET, cut scan results, and photon collection
+  //hack
+  ++numEvts_;
+
+  //get a bunch of needed products
   edm::Handle<reco::PhotonCollection> pPhotons;
   edm::Handle<int> pCategory;
   edm::Handle<double> pDiEMET;
+  edm::Handle<edm::ValueMap<double> > pPhotonSeedTime;
+  edm::Handle<edm::ValueMap<double> > pPhotonE2OverE9;
+  edm::Handle<edm::ValueMap<unsigned int> > pPhotonSeedIeta;
   edm::Handle<edm::TriggerResults> pTrgResults;
   edm::Handle<reco::METCollection> pTCMET;
   edm::Handle<edm::ValueMap<bool> > pPassETMin;
@@ -480,11 +560,14 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
   edm::Handle<edm::ValueMap<bool> > pPassHOverEMax;
   edm::Handle<edm::ValueMap<bool> > pPassTrackIsoMax;
   edm::Handle<edm::ValueMap<bool> > pPassSigmaIetaIetaMax;
-  /*edm::Handle<edm::ValueMap<bool> > pPassAbsSeedTimeMax;
-    edm::Handle<edm::ValueMap<bool> > pPassE2OverE9Max;*/
+  edm::Handle<edm::ValueMap<bool> > pPassAbsSeedTimeMax;
+  edm::Handle<edm::ValueMap<bool> > pPassE2OverE9Max;
   if (getCollection_(pPhotons, photonTag_, iEvent) && 
       getCollection_(pCategory, categoryTag_, iEvent) && 
       getCollection_(pDiEMET, diEMETTag_, iEvent) && 
+      getCollection_(pPhotonSeedTime, photonSeedTimeTag_, iEvent) && 
+      getCollection_(pPhotonE2OverE9, photonE2OverE9Tag_, iEvent) && 
+      getCollection_(pPhotonSeedIeta, photonSeedIetaTag_, iEvent) && 
       getCollection_(pTrgResults, trgResultsTag_, iEvent) && 
       getCollection_(pTCMET, tcMETTag_, iEvent) &&  
       getCollection_(pPassETMin, passETMinTag_, iEvent) && 
@@ -493,9 +576,9 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       getCollection_(pPassHCALIsoMax, passHCALIsoMaxTag_, iEvent) && 
       getCollection_(pPassHOverEMax, passHOverEMaxTag_, iEvent) && 
       getCollection_(pPassTrackIsoMax, passTrackIsoMaxTag_, iEvent) && 
-      getCollection_(pPassSigmaIetaIetaMax, passSigmaIetaIetaMaxTag_, iEvent)/* && 
+      getCollection_(pPassSigmaIetaIetaMax, passSigmaIetaIetaMaxTag_, iEvent) && 
       getCollection_(pPassAbsSeedTimeMax, passAbsSeedTimeMaxTag_, iEvent) && 
-      getCollection_(pPassE2OverE9Max, passE2OverE9MaxTag_, iEvent)*/) {
+      getCollection_(pPassE2OverE9Max, passE2OverE9MaxTag_, iEvent)) {
 
     /*for each scan point, loop over value maps to determine how many photons passed the scan 
       point criteria*/
@@ -586,6 +669,12 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     std::vector<VTH1F*> photonHistPtrVecHOverEMax;
     std::vector<VTH1F*> photonHistPtrVecTrackIsoMax;
     std::vector<VTH1F*> photonHistPtrVecSigmaIetaIetaMax;
+    std::vector<VTH2F*> photon2DHistPtrVecETMin;
+    std::vector<VTH2F*> photon2DHistPtrVecECALIsoMax;
+    std::vector<VTH2F*> photon2DHistPtrVecHCALIsoMax;
+    std::vector<VTH2F*> photon2DHistPtrVecHOverEMax;
+    std::vector<VTH2F*> photon2DHistPtrVecTrackIsoMax;
+    std::vector<VTH2F*> photon2DHistPtrVecSigmaIetaIetaMax;
 
     //need a vector of pointers to the value maps for the N-1 plot decision
     std::vector<edm::Handle<edm::ValueMap<bool> >*> passMapVec;
@@ -596,8 +685,8 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     passMapVec.push_back(&pPassHOverEMax);
     passMapVec.push_back(&pPassTrackIsoMax);
     passMapVec.push_back(&pPassSigmaIetaIetaMax);
-    /*passMapVec.push_back(&pPassAbsSeedTimeMax);
-    passMapVec.push_back(&pPassE2OverE9Max);*/
+    passMapVec.push_back(&pPassAbsSeedTimeMax);
+    passMapVec.push_back(&pPassE2OverE9Max);
 
     //get the correct plots and triggers for event category
     switch (*(pCategory.product())) {
@@ -710,7 +799,7 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     evtQuantityVec.push_back((float)(pTCMET->begin()->et()));
     evtQuantityVec.push_back((float)(*(pDiEMET.product())));
 
-    //fill the vectors of pointers to vectors of histograms of photon quantities
+    //fill the vectors of pointers to vectors of 1D histograms of photon quantities
     photonHistPtrVecETMin.push_back(&ETNMinus1ETMin_);
     photonHistPtrVecETMin.push_back(&etaNMinus1ETMin_);
     photonHistPtrVecETMin.push_back(&phiNMinus1ETMin_);
@@ -719,8 +808,8 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     photonHistPtrVecETMin.push_back(&HOverENMinus1ETMin_);
     photonHistPtrVecETMin.push_back(&trackIsoNMinus1ETMin_);
     photonHistPtrVecETMin.push_back(&sigmaIetaIetaNMinus1ETMin_);
-    /*photonHistPtrVecETMin.push_back(&seedTimeNMinus1ETMin_);
-      photonHistPtrVecETMin.push_back(&e2OverE9NMinus1ETMin_);*/
+    photonHistPtrVecETMin.push_back(&seedTimeNMinus1ETMin_);
+    photonHistPtrVecETMin.push_back(&e2OverE9NMinus1ETMin_);
     photonHistPtrVecECALIsoMax.push_back(&ETNMinus1ECALIsoMax_);
     photonHistPtrVecECALIsoMax.push_back(&etaNMinus1ECALIsoMax_);
     photonHistPtrVecECALIsoMax.push_back(&phiNMinus1ECALIsoMax_);
@@ -729,8 +818,8 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     photonHistPtrVecECALIsoMax.push_back(&HOverENMinus1ECALIsoMax_);
     photonHistPtrVecECALIsoMax.push_back(&trackIsoNMinus1ECALIsoMax_);
     photonHistPtrVecECALIsoMax.push_back(&sigmaIetaIetaNMinus1ECALIsoMax_);
-    /*photonHistPtrVecETMin.push_back(&seedTimeNMinus1ECALIsoMax_);
-      photonHistPtrVecETMin.push_back(&e2OverE9NMinus1ECALIsoMax_);*/
+    photonHistPtrVecECALIsoMax.push_back(&seedTimeNMinus1ECALIsoMax_);
+    photonHistPtrVecECALIsoMax.push_back(&e2OverE9NMinus1ECALIsoMax_);
     photonHistPtrVecHCALIsoMax.push_back(&ETNMinus1HCALIsoMax_);
     photonHistPtrVecHCALIsoMax.push_back(&etaNMinus1HCALIsoMax_);
     photonHistPtrVecHCALIsoMax.push_back(&phiNMinus1HCALIsoMax_);
@@ -739,8 +828,8 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     photonHistPtrVecHCALIsoMax.push_back(&HOverENMinus1HCALIsoMax_);
     photonHistPtrVecHCALIsoMax.push_back(&trackIsoNMinus1HCALIsoMax_);
     photonHistPtrVecHCALIsoMax.push_back(&sigmaIetaIetaNMinus1HCALIsoMax_);
-    /*photonHistPtrVecETMin.push_back(&seedTimeNMinus1HCALIsoMax_);
-      photonHistPtrVecETMin.push_back(&e2OverE9NMinus1HCALIsoMax_);*/
+    photonHistPtrVecHCALIsoMax.push_back(&seedTimeNMinus1HCALIsoMax_);
+    photonHistPtrVecHCALIsoMax.push_back(&e2OverE9NMinus1HCALIsoMax_);
     photonHistPtrVecHOverEMax.push_back(&ETNMinus1HOverEMax_);
     photonHistPtrVecHOverEMax.push_back(&etaNMinus1HOverEMax_);
     photonHistPtrVecHOverEMax.push_back(&phiNMinus1HOverEMax_);
@@ -749,8 +838,8 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     photonHistPtrVecHOverEMax.push_back(&HOverENMinus1HOverEMax_);
     photonHistPtrVecHOverEMax.push_back(&trackIsoNMinus1HOverEMax_);
     photonHistPtrVecHOverEMax.push_back(&sigmaIetaIetaNMinus1HOverEMax_);
-    /*photonHistPtrVecETMin.push_back(&seedTimeNMinus1HOverEMax_);
-      photonHistPtrVecETMin.push_back(&e2OverE9NMinus1HOverEMax_);*/
+    photonHistPtrVecHOverEMax.push_back(&seedTimeNMinus1HOverEMax_);
+    photonHistPtrVecHOverEMax.push_back(&e2OverE9NMinus1HOverEMax_);
     photonHistPtrVecTrackIsoMax.push_back(&ETNMinus1TrackIsoMax_);
     photonHistPtrVecTrackIsoMax.push_back(&etaNMinus1TrackIsoMax_);
     photonHistPtrVecTrackIsoMax.push_back(&phiNMinus1TrackIsoMax_);
@@ -759,8 +848,8 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     photonHistPtrVecTrackIsoMax.push_back(&HOverENMinus1TrackIsoMax_);
     photonHistPtrVecTrackIsoMax.push_back(&trackIsoNMinus1TrackIsoMax_);
     photonHistPtrVecTrackIsoMax.push_back(&sigmaIetaIetaNMinus1TrackIsoMax_);
-    /*photonHistPtrVecETMin.push_back(&seedTimeNMinus1TrackIsoMax_);
-      photonHistPtrVecETMin.push_back(&e2OverE9NMinus1TrackIsoMax_);*/
+    photonHistPtrVecTrackIsoMax.push_back(&seedTimeNMinus1TrackIsoMax_);
+    photonHistPtrVecTrackIsoMax.push_back(&e2OverE9NMinus1TrackIsoMax_);
     photonHistPtrVecSigmaIetaIetaMax.push_back(&ETNMinus1SigmaIetaIetaMax_);
     photonHistPtrVecSigmaIetaIetaMax.push_back(&etaNMinus1SigmaIetaIetaMax_);
     photonHistPtrVecSigmaIetaIetaMax.push_back(&phiNMinus1SigmaIetaIetaMax_);
@@ -769,8 +858,40 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     photonHistPtrVecSigmaIetaIetaMax.push_back(&HOverENMinus1SigmaIetaIetaMax_);
     photonHistPtrVecSigmaIetaIetaMax.push_back(&trackIsoNMinus1SigmaIetaIetaMax_);
     photonHistPtrVecSigmaIetaIetaMax.push_back(&sigmaIetaIetaNMinus1SigmaIetaIetaMax_);
-    /*photonHistPtrVecETMin.push_back(&seedTimeNMinus1sigmaIetaIetaMax_);
-      photonHistPtrVecETMin.push_back(&e2OverE9NMinus1sigmaIetaIetaMax_);*/
+    photonHistPtrVecSigmaIetaIetaMax.push_back(&seedTimeNMinus1SigmaIetaIetaMax_);
+    photonHistPtrVecSigmaIetaIetaMax.push_back(&e2OverE9NMinus1SigmaIetaIetaMax_);
+
+    //fill the vectors of pointers to vectors of 2D histograms of photon quantities
+    photon2DHistPtrVecETMin.push_back(&seedTimeVsIetaNMinus2ETMin_);
+    photon2DHistPtrVecECALIsoMax.push_back(&seedTimeVsIetaNMinus2ECALIsoMax_);
+    photon2DHistPtrVecHCALIsoMax.push_back(&seedTimeVsIetaNMinus2HCALIsoMax_);
+    photon2DHistPtrVecHOverEMax.push_back(&seedTimeVsIetaNMinus2HOverEMax_);
+    photon2DHistPtrVecTrackIsoMax.push_back(&seedTimeVsIetaNMinus2TrackIsoMax_);
+    photon2DHistPtrVecSigmaIetaIetaMax.push_back(&seedTimeVsIetaNMinus2SigmaIetaIetaMax_);
+
+    //hack
+    double photon1ET = -1.0;
+    double photon2ET = -1.0;
+    float photon1HOverE = -1.0;
+    float photon2HOverE = -1.0;
+    for (reco::PhotonCollection::const_iterator iPhoton = pPhotons->begin(); 
+	 iPhoton != pPhotons->end(); ++iPhoton) {
+      if (iPhoton->et() > photon1ET) {
+	photon2ET = photon1ET;
+	photon1ET = iPhoton->et();
+	photon2HOverE = photon1HOverE;
+	photon1HOverE = iPhoton->hadronicOverEm();
+      }
+      else if (iPhoton->et() > photon2ET) {
+	photon2ET = iPhoton->et();
+	photon2HOverE = iPhoton->hadronicOverEm();
+      }
+      HOverE_->Fill(iPhoton->hadronicOverEm());
+    }
+    photon1ET_->Fill(photon1ET);
+    photon2ET_->Fill(photon2ET);
+    photon1HOverE_->Fill(photon1HOverE);
+    photon2HOverE_->Fill(photon2HOverE);
 
     /*proceed if the event passed the trigger (no matching of offline reco object to online 
       trigger object)*/
@@ -795,6 +916,12 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  fillHistograms(numPassingSigmaIetaIetaMax, evtHistPtrVecSigmaIetaIetaMax, 
 			 evtQuantityVec, VBOOL(2, true), "sigmaIetaIetaMaxScan", 
 			 HLTPaths->at(iHLT - realHLT.begin()));
+
+	  //hack
+	  if (*(pCategory.product()) == GG) ++numGG_;
+	  if (*(pCategory.product()) == EG) ++numEG_;
+	  if (*(pCategory.product()) == FF) ++numFF_;
+	  if (*(pCategory.product()) == EE) ++numEE_;
 	}
 
 	//loop over photons
@@ -803,6 +930,7 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 	  //plot H/E vs. |eta| of photons in events passing the trigger
 	  HOverEVsAbsEta_->Fill(fabs(iPhoton->eta()), iPhoton->hadronicOverEm());
+	  HOverEFiringTrigger_->Fill(iPhoton->hadronicOverEm());
 
 	  //fill the vector of photon quantities
 	  VFLOAT photonQuantityVec;
@@ -814,25 +942,27 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  photonQuantityVec.push_back((float)(iPhoton->hadronicOverEm()));
 	  photonQuantityVec.push_back((float)(iPhoton->trkSumPtHollowConeDR04()));
 	  photonQuantityVec.push_back((float)(iPhoton->sigmaIetaIeta()));
-	  /*photonQuantityVec.push_back(absSeedTimeMax);
-	    photonQuantityVec.push_back(e2OverE9Max);*/
+	  edm::Ref<reco::PhotonCollection> ref(pPhotons, iPhoton - pPhotons->begin());
+	  photonQuantityVec.push_back((*(pPhotonSeedTime.product()))[ref]);
+	  photonQuantityVec.push_back((*(pPhotonE2OverE9.product()))[ref]);
 
 	  /*fill the vector of photon pass flags
 	    photon passes if it passes all selection cuts except the one being plotted*/
 	  VBOOL passVec;
-	  /*edm::Ref<reco::PhotonCollection> ref(pPhotons, iPhoton - pPhotons->begin());
-	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassETMin));
+	  /*passVec.push_back(passNMinus1(passMapVec, ref, &pPassETMin));
 	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassAbsEtaMax));
-	  passVec.push_back(passNMinus1(passMapVec, ref, NULL));
+	  passVec.push_back(true);
 	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassECALIsoMax));
 	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassHCALIsoMax));
 	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassHOverEMax));
 	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassTrackIsoMax));
-	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassSigmaIetaIetaMax));*/
-	  /*passVec.push_back(passNMinus1(passMapVec, ref, &pPassAbsSeedTimeMax));
-	    passVec.push_back(passNMinus1(passMapVec, ref, &pPassE2OverE9Max));*/
+	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassSigmaIetaIetaMax));
+	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassAbsSeedTimeMax));
+	  passVec.push_back(passNMinus1(passMapVec, ref, &pPassE2OverE9Max));*/
 
 	  //hack to plot distributions with no cuts at all
+	  passVec.push_back(true);
+	  passVec.push_back(true);
 	  passVec.push_back(true);
 	  passVec.push_back(true);
 	  passVec.push_back(true);
@@ -855,6 +985,41 @@ SkimAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 			 passVec, "trackIsoMaxScan", HLTPaths->at(iHLT - realHLT.begin()));
 	  fillHistograms(numPassingSigmaIetaIetaMax, photonHistPtrVecSigmaIetaIetaMax, 
 			 photonQuantityVec, passVec, "sigmaIetaIetaMaxScan", 
+			 HLTPaths->at(iHLT - realHLT.begin()));
+
+	  //fill the 2 vectors of photon quantities for N-2 plots
+	  VFLOAT photonQuantity1Vec;
+	  photonQuantity1Vec.push_back((*(pPhotonSeedIeta.product()))[ref]);
+	  VFLOAT photonQuantity2Vec;
+	  photonQuantity2Vec.push_back((*(pPhotonSeedTime.product()))[ref]);
+
+	  /*fill the vector of photon pass flags for N-2 plots
+	    photon passes if it passes all selection cuts except the 2 being plotted*/
+	  VBOOL passVec2D;
+	  /*passVec2D.push_back(passNMinus2(passMapVec, ref, &pPassAbsEtaMax, 
+	    &pPassAbsSeedTimeMax));*/
+
+	  //hack to plot distributions with no cuts at all
+	  passVec2D.push_back(true);
+
+	  //fill 2D histograms of photon quantities corresponding to the various scan points
+	  fillHistograms(numPassingETMin, photon2DHistPtrVecETMin, photonQuantity1Vec, 
+			 photonQuantity2Vec, passVec, "ETMinScan", 
+			 HLTPaths->at(iHLT - realHLT.begin()));
+	  fillHistograms(numPassingECALIsoMax, photon2DHistPtrVecECALIsoMax, photonQuantity1Vec, 
+			 photonQuantity2Vec, passVec, "ECALIsoMaxScan", 
+			 HLTPaths->at(iHLT - realHLT.begin()));
+	  fillHistograms(numPassingHCALIsoMax, photon2DHistPtrVecHCALIsoMax, photonQuantity1Vec, 
+			 photonQuantity2Vec, passVec, "HCALIsoMaxScan", 
+			 HLTPaths->at(iHLT - realHLT.begin()));
+	  fillHistograms(numPassingHOverEMax, photon2DHistPtrVecHOverEMax, photonQuantity1Vec, 
+			 photonQuantity2Vec, passVec, "HOverEMaxScan", 
+			 HLTPaths->at(iHLT - realHLT.begin()));
+	  fillHistograms(numPassingTrackIsoMax, photon2DHistPtrVecTrackIsoMax, photonQuantity1Vec, 
+			 photonQuantity2Vec, passVec, "trackIsoMaxScan", 
+			 HLTPaths->at(iHLT - realHLT.begin()));
+	  fillHistograms(numPassingSigmaIetaIetaMax, photon2DHistPtrVecSigmaIetaIetaMax, 
+			 photonQuantity1Vec, photonQuantity2Vec, passVec, "sigmaIetaIetaMaxScan", 
 			 HLTPaths->at(iHLT - realHLT.begin()));
 	}
       }
@@ -893,6 +1058,7 @@ SkimAnalyzer::beginJob()
     bookHOverENMinus1Histograms(*iGGHLT);
     bookTrackIsoNMinus1Histograms(*iGGHLT);
     bookSigmaIetaIetaNMinus1Histograms(*iGGHLT);
+    bookSeedTimeVsIetaNMinus2Histograms(*iGGHLT);
   }
   for (VSTRING_IT iFFHLT = HLTPathFF_.begin(); iFFHLT != HLTPathFF_.end(); ++iFFHLT) {
     bookFFMETHistograms(*iFFHLT);
@@ -905,10 +1071,22 @@ SkimAnalyzer::beginJob()
     bookHOverENMinus1Histograms(*iFFHLT);
     bookTrackIsoNMinus1Histograms(*iFFHLT);
     bookSigmaIetaIetaNMinus1Histograms(*iFFHLT);
+    bookSeedTimeVsIetaNMinus2Histograms(*iFFHLT);
   }
 
   //hack
-  HOverEVsAbsEta_ = new TH2F("", "", 30, 0.0, 3.0, 20, 0.0, 0.2);
+  HOverEVsAbsEta_ = new TH2F("HOverEVsAbsEta_", "", 30, 0.0, 3.0, 20, 0.0, 0.2);
+  HOverE_ = new TH1F("HOverE_", "", 20, 0.0, 0.2);
+  HOverEFiringTrigger_ = new TH1F("HOverEFiringTrigger_", "", 20, 0.0, 0.2);
+  numEvts_ = 0;
+  numGG_ = 0;
+  numEG_ = 0;
+  numFF_ = 0;
+  numEE_ = 0;
+  photon1ET_ = new TH1F("photon1ET_", "", 20, 0.0, 200.0);
+  photon2ET_ = new TH1F("photon2ET_", "", 20, 0.0, 200.0);
+  photon1HOverE_ = new TH1F("photon1HOverE_", "", 20, 0.0, 0.2);
+  photon2HOverE_ = new TH1F("photon2HOverE_", "", 20, 0.0, 0.2);
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
@@ -938,8 +1116,9 @@ SkimAnalyzer::endJob() {
     fillOutputDirectories(HOverENMinus1ETMin_, "ETMinScan");
     fillOutputDirectories(trackIsoNMinus1ETMin_, "ETMinScan");
     fillOutputDirectories(sigmaIetaIetaNMinus1ETMin_, "ETMinScan");
-    /*fillOutputDirectories(seedTimeNMinus1ETMin_, "ETMinScan");
-      fillOutputDirectories(e2OverE9NMinus1ETMin_, "ETMinScan");*/
+    fillOutputDirectories(seedTimeNMinus1ETMin_, "ETMinScan");
+    fillOutputDirectories(e2OverE9NMinus1ETMin_, "ETMinScan");
+    fillOutputDirectories(seedTimeVsIetaNMinus2ETMin_, "ETMinScan");
 
     //write ECALIsoMax scan plots
     makeOutputDirectories(ECALIsoMaxPTMultiplierScan_.size(), "ECALIsoMaxScan");
@@ -959,8 +1138,9 @@ SkimAnalyzer::endJob() {
     fillOutputDirectories(HOverENMinus1ECALIsoMax_, "ECALIsoMaxScan");
     fillOutputDirectories(trackIsoNMinus1ECALIsoMax_, "ECALIsoMaxScan");
     fillOutputDirectories(sigmaIetaIetaNMinus1ECALIsoMax_, "ECALIsoMaxScan");
-    /*fillOutputDirectories(seedTimeNMinus1ECALIsoMax_, "ECALIsoMaxScan");
-      fillOutputDirectories(e2OverE9NMinus1ECALIsoMax_, "ECALIsoMaxScan");*/
+    fillOutputDirectories(seedTimeNMinus1ECALIsoMax_, "ECALIsoMaxScan");
+    fillOutputDirectories(e2OverE9NMinus1ECALIsoMax_, "ECALIsoMaxScan");
+    fillOutputDirectories(seedTimeVsIetaNMinus2ECALIsoMax_, "ECALIsoMaxScan");
 
     //write HCALIsoMax scan plots
     makeOutputDirectories(HCALIsoMaxPTMultiplierScan_.size(), "HCALIsoMaxScan");
@@ -980,8 +1160,9 @@ SkimAnalyzer::endJob() {
     fillOutputDirectories(HOverENMinus1HCALIsoMax_, "HCALIsoMaxScan");
     fillOutputDirectories(trackIsoNMinus1HCALIsoMax_, "HCALIsoMaxScan");
     fillOutputDirectories(sigmaIetaIetaNMinus1HCALIsoMax_, "HCALIsoMaxScan");
-    /*fillOutputDirectories(seedTimeNMinus1HCALIsoMax_, "HCALIsoMaxScan");
-      fillOutputDirectories(e2OverE9NMinus1HCALIsoMax_, "HCALIsoMaxScan");*/
+    fillOutputDirectories(seedTimeNMinus1HCALIsoMax_, "HCALIsoMaxScan");
+    fillOutputDirectories(e2OverE9NMinus1HCALIsoMax_, "HCALIsoMaxScan");
+    fillOutputDirectories(seedTimeVsIetaNMinus2HCALIsoMax_, "HCALIsoMaxScan");
 
     //write HOverEMax scan plots
     makeOutputDirectories(HOverEMaxScan_.size(), "HOverEMaxScan");
@@ -1001,8 +1182,9 @@ SkimAnalyzer::endJob() {
     fillOutputDirectories(HOverENMinus1HOverEMax_, "HOverEMaxScan");
     fillOutputDirectories(trackIsoNMinus1HOverEMax_, "HOverEMaxScan");
     fillOutputDirectories(sigmaIetaIetaNMinus1HOverEMax_, "HOverEMaxScan");
-    /*fillOutputDirectories(seedTimeNMinus1HOverEMax_, "HOverEMaxScan");
-      fillOutputDirectories(e2OverE9NMinus1HOverEMax_, "HOverEMaxScan");*/
+    fillOutputDirectories(seedTimeNMinus1HOverEMax_, "HOverEMaxScan");
+    fillOutputDirectories(e2OverE9NMinus1HOverEMax_, "HOverEMaxScan");
+    fillOutputDirectories(seedTimeVsIetaNMinus2HOverEMax_, "HOverEMaxScan");
 
     //write trackIsoMax scan plots
     makeOutputDirectories(trackIsoMaxPTMultiplierScan_.size(), "trackIsoMaxScan");
@@ -1022,8 +1204,9 @@ SkimAnalyzer::endJob() {
     fillOutputDirectories(HOverENMinus1TrackIsoMax_, "trackIsoMaxScan");
     fillOutputDirectories(trackIsoNMinus1TrackIsoMax_, "trackIsoMaxScan");
     fillOutputDirectories(sigmaIetaIetaNMinus1TrackIsoMax_, "trackIsoMaxScan");
-    /*fillOutputDirectories(seedTimeNMinus1TrackIsoMax_, "trackIsoMaxScan");
-      fillOutputDirectories(e2OverE9NMinus1TrackIsoMax_, "trackIsoMaxScan");*/
+    fillOutputDirectories(seedTimeNMinus1TrackIsoMax_, "trackIsoMaxScan");
+    fillOutputDirectories(e2OverE9NMinus1TrackIsoMax_, "trackIsoMaxScan");
+    fillOutputDirectories(seedTimeVsIetaNMinus2TrackIsoMax_, "TrackIsoMaxScan");
 
     //write sigmaIetaIeta scan plots
     makeOutputDirectories(sigmaIetaIetaMaxScan_.size(), "sigmaIetaIetaMaxScan");
@@ -1043,12 +1226,24 @@ SkimAnalyzer::endJob() {
     fillOutputDirectories(HOverENMinus1SigmaIetaIetaMax_, "sigmaIetaIetaMaxScan");
     fillOutputDirectories(trackIsoNMinus1SigmaIetaIetaMax_, "sigmaIetaIetaMaxScan");
     fillOutputDirectories(sigmaIetaIetaNMinus1SigmaIetaIetaMax_, "sigmaIetaIetaMaxScan");
-    /*fillOutputDirectories(seedTimeNMinus1SigmaIetaIetaMax_, "sigmaIetaIetaMaxScan");
-      fillOutputDirectories(e2OverE9NMinus1SigmaIetaIetaMax_, "sigmaIetaIetaMaxScan");*/
+    fillOutputDirectories(seedTimeNMinus1SigmaIetaIetaMax_, "sigmaIetaIetaMaxScan");
+    fillOutputDirectories(e2OverE9NMinus1SigmaIetaIetaMax_, "sigmaIetaIetaMaxScan");
+    fillOutputDirectories(seedTimeVsIetaNMinus2SigmaIetaIetaMax_, "SigmaIetaIetaMaxScan");
 
     //hack
     out_->cd("/");
     HOverEVsAbsEta_->Write();
+    HOverE_->Write();
+    HOverEFiringTrigger_->Write();
+    std::cout << "Total number of events: " << numEvts_ << std::endl;
+    std::cout << "Number of GG events: " << numGG_ << std::endl;
+    std::cout << "Number of EG events: " << numEG_ << std::endl;
+    std::cout << "Number of FF events: " << numFF_ << std::endl;
+    std::cout << "Number of EE events: " << numEE_ << std::endl;
+    photon1ET_->Write();
+    photon2ET_->Write();
+    photon1HOverE_->Write();
+    photon2HOverE_->Write();
 
     //write output file
     out_->cd("/"/*extractFileFromFullPath(outputFile_).c_str()*/);
@@ -1076,6 +1271,20 @@ void SkimAnalyzer::bookScanPointHistograms(VTH1F& histVec, const VDOUBLE& scanVe
   for (VDOUBLE_IT i = scanVec.begin(); i != scanVec.end(); ++i) {
     histVec.push_back(new TH1F(name(category, plot, scanName, i - scanVec.begin(), HLT).c_str(), 
 			       "", numBins, binLowEdge, binHighEdge));
+  }
+}
+
+void SkimAnalyzer::bookScanPointHistograms(VTH2F& histVec, const VDOUBLE& scanVec, 
+					   const STRING& category, const STRING& plot, 
+					   const STRING& scanName, const STRING& HLT, 
+					   const unsigned int numBinsX, const float binLowEdgeX, 
+					   const float binHighEdgeX, const unsigned int numBinsY, 
+					   const float binLowEdgeY, const float binHighEdgeY)
+{
+  for (VDOUBLE_IT i = scanVec.begin(); i != scanVec.end(); ++i) {
+    histVec.push_back(new TH2F(name(category, plot, scanName, i - scanVec.begin(), HLT).c_str(), 
+			       "", numBinsX, binLowEdgeX, binHighEdgeX, numBinsY, binLowEdgeY, 
+			       binHighEdgeY));
   }
 }
 
@@ -1331,6 +1540,56 @@ void SkimAnalyzer::bookSigmaIetaIetaNMinus1Histograms(const STRING& HLT)
 			  "sigmaIetaIeta", "sigmaIetaIetaMaxScan", HLT, 20, 0.0, 0.02);
 }
 
+void SkimAnalyzer::bookSeedTimeNMinus1Histograms(const STRING& HLT)
+{
+  bookScanPointHistograms(seedTimeNMinus1ETMin_, ETMinScan_, "", "seedTime", 
+			  "ETMinScan", HLT, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeNMinus1ECALIsoMax_, ECALIsoMaxPTMultiplierScan_, "", 
+			  "seedTime", "ECALIsoMaxScan", HLT, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeNMinus1HCALIsoMax_, HCALIsoMaxPTMultiplierScan_, "", 
+			  "seedTime", "HCALIsoMaxScan", HLT, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeNMinus1HOverEMax_, HOverEMaxScan_, "", "seedTime", 
+			  "HOverEMaxScan", HLT, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeNMinus1TrackIsoMax_, trackIsoMaxPTMultiplierScan_, "", 
+			  "seedTime", "trackIsoMaxScan", HLT, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeNMinus1SigmaIetaIetaMax_, sigmaIetaIetaMaxScan_, "", 
+			  "seedTime", "sigmaIetaIetaMaxScan", HLT, 35, -3.5, 3.5);
+}
+
+void SkimAnalyzer::bookE2OverE9NMinus1Histograms(const STRING& HLT)
+{
+  bookScanPointHistograms(e2OverE9NMinus1ETMin_, ETMinScan_, "", "e2OverE9", 
+			  "ETMinScan", HLT, 40, 0.0, 1.0);
+  bookScanPointHistograms(e2OverE9NMinus1ECALIsoMax_, ECALIsoMaxPTMultiplierScan_, "", 
+			  "e2OverE9", "ECALIsoMaxScan", HLT, 40, 0.0, 1.0);
+  bookScanPointHistograms(e2OverE9NMinus1HCALIsoMax_, HCALIsoMaxPTMultiplierScan_, "", 
+			  "e2OverE9", "HCALIsoMaxScan", HLT, 40, 0.0, 1.0);
+  bookScanPointHistograms(e2OverE9NMinus1HOverEMax_, HOverEMaxScan_, "", "e2OverE9", 
+			  "HOverEMaxScan", HLT, 40, 0.0, 1.0);
+  bookScanPointHistograms(e2OverE9NMinus1TrackIsoMax_, trackIsoMaxPTMultiplierScan_, "", 
+			  "e2OverE9", "trackIsoMaxScan", HLT, 40, 0.0, 1.0);
+  bookScanPointHistograms(e2OverE9NMinus1SigmaIetaIetaMax_, sigmaIetaIetaMaxScan_, "", 
+			  "e2OverE9", "sigmaIetaIetaMaxScan", HLT, 40, 0.0, 1.0);
+}
+
+void SkimAnalyzer::bookSeedTimeVsIetaNMinus2Histograms(const STRING& HLT)
+{
+  bookScanPointHistograms(seedTimeVsIetaNMinus2ETMin_, ETMinScan_, "", "seedTimeVsIeta", 
+			  "ETMinScan", HLT, 19, -85.5, 85.5, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeVsIetaNMinus2ECALIsoMax_, ECALIsoMaxPTMultiplierScan_, "", 
+			  "seedTimeVsIeta", "ECALIsoMaxScan", HLT, 19, -85.5, 85.5, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeVsIetaNMinus2HCALIsoMax_, HCALIsoMaxPTMultiplierScan_, "", 
+			  "seedTimeVsIeta", "HCALIsoMaxScan", HLT, 19, -85.5, 85.5, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeVsIetaNMinus2HOverEMax_, HOverEMaxScan_, "", "seedTimeVsIeta", 
+			  "HOverEMaxScan", HLT, 19, -85.5, 85.5, 35, -3.5, 3.5);
+  bookScanPointHistograms(seedTimeVsIetaNMinus2TrackIsoMax_, trackIsoMaxPTMultiplierScan_, "", 
+			  "seedTimeVsIeta", "trackIsoMaxScan", HLT, 19, -85.5, 85.5, 35, -3.5, 
+			  3.5);
+  bookScanPointHistograms(seedTimeVsIetaNMinus2SigmaIetaIetaMax_, sigmaIetaIetaMaxScan_, "", 
+			  "seedTimeVsIeta", "sigmaIetaIetaMaxScan", HLT, 19, -85.5, 85.5, 35, 
+			  -3.5, 3.5);
+}
+
 void SkimAnalyzer::incrementCounters(const VDOUBLE& scanVec, VUINT& counterVec, 
 					const unsigned int decisionWord) const
 {
@@ -1382,6 +1641,32 @@ void SkimAnalyzer::fillIndHistogram(VTH1F* histVec, const float quantity,
   else edm::LogInfo("SkimAnalyzerNullPointer") << "In fillIndHistogram, histVec is null.\n";
 }
 
+void SkimAnalyzer::fillIndHistogram(VTH2F* histVec, const float quantity1, const float quantity2, 
+				    const bool pass, const STRING& scanLabel, const STRING& HLT, 
+				    const unsigned int currentScanPoint)
+{
+  if (histVec != NULL) {
+    for (VTH2F_IT iHist = histVec->begin(); iHist != histVec->end(); ++iHist) {
+      STRING histName((*iHist)->GetName());
+      int theScanPoint = scanPoint(histName, scanLabel);
+      if (theScanPoint >= 0) {
+
+	//if the current histogram corresponds to this trigger and scan point, fill it
+	if ((histName.find(HLT) != STRING::npos) && (theScanPoint == (int)currentScanPoint) && 
+	    pass) {
+	  (*iHist)->Fill(quantity1, quantity2);
+	}
+      }
+      else {
+	STRINGSTREAM err;
+	err << "Error: unable to parse histogram name " << histName << ".\n";
+	edm::LogError("SkimAnalzyer") << err.str();
+      }
+    }
+  }
+  else edm::LogInfo("SkimAnalyzerNullPointer") << "In fillIndHistogram, histVec is null.\n";
+}
+
 void SkimAnalyzer::fillHistograms(const VUINT& counterVec, 
 				  std::vector<VTH1F*>& histPtrVec, 
 				  const VFLOAT& quantityVec, 
@@ -1407,6 +1692,32 @@ void SkimAnalyzer::fillHistograms(const VUINT& counterVec,
   }
 }
 
+void SkimAnalyzer::fillHistograms(const VUINT& counterVec, 
+				  std::vector<VTH2F*>& histPtrVec, 
+				  const VFLOAT& quantity1Vec, const VFLOAT& quantity2Vec, 
+				  const VBOOL& passVec, const STRING& scanLabel, const STRING& HLT)
+{
+  /*loop over the vector of scan point counters -- each element holds the number of photons 
+    passing the scan point given by the element's index*/
+  for (VUINT_IT iCount = counterVec.begin(); iCount != counterVec.end(); ++iCount) {
+
+    //proceed if >=2 photons passed the scan point
+    if (*iCount >= 2) {
+
+      //loop over the vector of pointers to histograms of physical quantities
+      for (std::vector<VTH2F*>::iterator iHistPtrVec = histPtrVec.begin(); 
+	   iHistPtrVec != histPtrVec.end(); ++iHistPtrVec) {
+
+	//fill histograms
+	fillIndHistogram(*iHistPtrVec, quantity1Vec[iHistPtrVec - histPtrVec.begin()], 
+			 quantity2Vec[iHistPtrVec - histPtrVec.begin()], 
+			 passVec[iHistPtrVec - histPtrVec.begin()], scanLabel, HLT, 
+			 iCount - counterVec.begin());
+      }
+    }
+  }
+}
+
 bool SkimAnalyzer::passNMinus1(std::vector<edm::Handle<edm::ValueMap<bool> >*>& passMaps, 
 			       edm::Ref<reco::PhotonCollection>& ref, 
 			       edm::Handle<edm::ValueMap<bool> >* passMapToIgnore) const
@@ -1415,6 +1726,20 @@ bool SkimAnalyzer::passNMinus1(std::vector<edm::Handle<edm::ValueMap<bool> >*>& 
   for (std::vector<edm::Handle<edm::ValueMap<bool> >*>::const_iterator iPassMap = 
 	 passMaps.begin(); iPassMap != passMaps.end(); ++iPassMap) {
     passFlag = passFlag && ((*iPassMap == passMapToIgnore) || (*(*iPassMap)->product())[ref]);
+  }
+  return passFlag;
+}
+
+bool SkimAnalyzer::passNMinus2(std::vector<edm::Handle<edm::ValueMap<bool> >*>& passMaps, 
+			       edm::Ref<reco::PhotonCollection>& ref, 
+			       edm::Handle<edm::ValueMap<bool> >* passMapToIgnore1, 
+			       edm::Handle<edm::ValueMap<bool> >* passMapToIgnore2) const
+{
+  bool passFlag = true;
+  for (std::vector<edm::Handle<edm::ValueMap<bool> >*>::const_iterator iPassMap = 
+	 passMaps.begin(); iPassMap != passMaps.end(); ++iPassMap) {
+    passFlag = passFlag && ((*iPassMap == passMapToIgnore1) || (*iPassMap == passMapToIgnore2) || 
+			    (*(*iPassMap)->product())[ref]);
   }
   return passFlag;
 }
@@ -1437,21 +1762,6 @@ void SkimAnalyzer::makeOutputDirectories(const unsigned int numScanPoints, const
     out_->cd(scanLabel.c_str());
     out_->mkdir(dirName.str().c_str());
     out_->cd(dirName.str().c_str());
-  }
-}
-
-void SkimAnalyzer::fillOutputDirectories(VTH1F& histVec, const STRING& scanLabel)
-{
-  for (VTH1F_IT iHist = histVec.begin(); iHist != histVec.end(); ++iHist) {
-    STRING histName((*iHist)->GetName());
-    int theScanPoint = scanPoint(histName, scanLabel);
-    STRINGSTREAM targetDir1;
-    targetDir1 << "/" << scanLabel;
-    out_->cd(targetDir1.str().c_str());
-    STRINGSTREAM targetDir2;
-    targetDir2 << scanLabel << theScanPoint;
-    out_->cd(targetDir2.str().c_str());
-    (*iHist)->Write();
   }
 }
 

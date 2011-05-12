@@ -13,6 +13,12 @@ SkimAnalyzer = cms.EDAnalyzer('SkimAnalyzer',
 #                              diEMETTag = cms.untracked.InputTag(
 #    "EDMCategoryProducer", "evtDiEMET", "CATEGORY"
 #    ),
+##                               photonSeedTimeTag = cms.untracked.InputTag(
+##     "EDMCategoryProducer", "photonSeedTime", "OWNPARTICLES"
+##     ),
+##                               photonE2OverE9Tag = cms.untracked.InputTag(
+##     "EDMCategoryProducer", "photonE2OverE9", "OWNPARTICLES"
+##     ),
 #                              trgResultsTag = cms.untracked.InputTag(
 #    "TriggerResults", "", "HLT"
 #    ),

@@ -40,6 +40,7 @@
 #include "Geometry/CaloTopology/interface/CaloTopology.h"
 #include "RecoCaloTools/Navigation/interface/CaloNavigator.h"
 #include "DataFormats/EcalDetId/interface/EcalSubdetector.h"
+#include "DataFormats/EcalDetId/interface/EBDetId.h"
 
 
 //
@@ -92,6 +93,9 @@ class EDMCategoryProducer : public edm::EDProducer {
   float seedTime(const reco::Photon*, const edm::Handle<EBRecHitCollection>&, 
 		 const edm::Handle<EERecHitCollection>&) const;
 
+  //return the seed ieta of the given photon if it is in EB
+  int seedIeta(const reco::Photon*) const;
+
   //return E2/E9 of the given photon
   float e2OverE9(const reco::Photon*, edm::ESHandle<CaloTopology>&, 
 		 const edm::Handle<EBRecHitCollection>&, 
@@ -105,6 +109,10 @@ class EDMCategoryProducer : public edm::EDProducer {
   void putProductIntoEvent(const edm::Handle<reco::PhotonCollection>&, const VINT&, edm::Event&, 
 			   const STRING&) const;
 
+  //put the edm::ValueMap<double> product into the event
+  void putProductIntoEvent(const edm::Handle<reco::PhotonCollection>&, const VDOUBLE&, 
+			   edm::Event&, const STRING&) const;
+
   //put int product into the event
   void putProductIntoEvent(const int, edm::Event&, const STRING&) const;
 
@@ -115,7 +123,7 @@ class EDMCategoryProducer : public edm::EDProducer {
   void putProductIntoEvent(const double, edm::Event&, const STRING&) const;
 
   //print debug info
-  void debugPrint(const Categorizer&) const;
+  void debugPrint(const Categorizer&, edm::Event&) const;
       // ----------member data ---------------------------
 
   //input
@@ -204,6 +212,10 @@ EDMCategoryProducer::EDMCategoryProducer(const edm::ParameterSet& iConfig) :
   produces<int>("eventCategory");
   produces<bool>("passDPhiMin");
   produces<double>("evtDiEMET");
+  produces<double>("evtInvMass");
+  produces<edm::ValueMap<double> >("photonSeedTime");
+  produces<edm::ValueMap<double> >("photonE2OverE9");
+  produces<edm::ValueMap<int> >("photonSeedIeta");
 
    //now do what ever other initialization is needed
   
@@ -237,9 +249,13 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
   VDOUBLE photonSigmaIetaIeta;
   VDOUBLE photonSeedTime;
   VDOUBLE photonE2OverE9;
+  VINT photonSeedIeta;
   VDOUBLE photonPhi;
   VBOOL photonHasPixelSeed;
   VBOOL photonPasses;
+  math::XYZTLorentzVector diEMP4;
+  unsigned int passingPhotonCount = 0;
+  double evtInvMass = -1.0;
   Categorizer categorizer(photonET, photonEta, photonECALIso, photonHCALIso, photonHOverE, 
 			  photonTrackIso, photonSigmaIetaIeta, photonSeedTime, photonE2OverE9, 
 			  photonPhi, photonHasPixelSeed, photonETMin_, photonAbsEtaMax_, 
@@ -273,6 +289,7 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
 					pRecHitsEE));
       photonE2OverE9.push_back(e2OverE9(const_cast<const reco::Photon*>(&*iPhoton), caloTopology, 
 					pRecHitsEB, pRecHitsEE));
+      photonSeedIeta.push_back(seedIeta(const_cast<const reco::Photon*>(&*iPhoton)));
       photonPhi.push_back(iPhoton->phi());
       photonHasPixelSeed.push_back(iPhoton->hasPixelSeed());
     }
@@ -294,12 +311,16 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
       categorizer.findPassingPhotons();
       categorizer.classify();
 
-      //find the 2 photons that decided the event
+      //find the 2 photons that decided the event and the di-EM Lorentz vector
       VINT passingPhotons = categorizer.getPassingPhotons();
       for (reco::PhotonCollection::const_iterator iPhoton = pPhotons->begin(); 
 	   iPhoton != pPhotons->end(); ++iPhoton) {
 	if (((iPhoton - pPhotons->begin()) == passingPhotons[0]) || 
-	    ((iPhoton - pPhotons->begin()) == passingPhotons[1])) photonPasses.push_back(true);
+	    ((iPhoton - pPhotons->begin()) == passingPhotons[1])) {
+	  photonPasses.push_back(true);
+	  diEMP4+=iPhoton->p4();
+	  ++passingPhotonCount;
+	}
 	else photonPasses.push_back(false);
       }
     }
@@ -329,12 +350,22 @@ EDMCategoryProducer::produce(edm::Event& iEvent, const edm::EventSetup& iSetup)
     putProductIntoEvent(categorizer.getCategory(), iEvent, "eventCategory");
     putProductIntoEvent(categorizer.getEvtPassDPhiMin(), iEvent, "passDPhiMin");
     putProductIntoEvent(categorizer.getEvtDiEMET(), iEvent, "evtDiEMET");
+    if (passingPhotonCount > 2) {
+      STRINGSTREAM err;
+      err << "Error: " << passingPhotonCount << " passing photons.\n";
+      throw cms::Exception("EDMCategoryProducer") << err.str();
+    }
+    if (passingPhotonCount == 2) evtInvMass = diEMP4.M();
+    putProductIntoEvent(evtInvMass, iEvent, "evtInvMass");
+    putProductIntoEvent(pPhotons, photonSeedTime, iEvent, "photonSeedTime");
+    putProductIntoEvent(pPhotons, photonE2OverE9, iEvent, "photonE2OverE9");
+    putProductIntoEvent(pPhotons, photonSeedIeta, iEvent, "photonSeedIeta");
   }
   catch (STRING& badInput) { throw cms::Exception("EDMCategoryProducer") << badInput; }
   catch (cms::Exception& badInput) { throw cms::Exception("EDMCategoryProducer") << badInput; }
 
   //print debug info
-  debugPrint(categorizer);
+  if (categorizer.getCategory() == GG) debugPrint(categorizer, iEvent);
 }
 
 // ------------ method called once each job just before starting event loop  ------------
@@ -372,7 +403,7 @@ float EDMCategoryProducer::recHitTime(const DetId& ID,
 {
   float recHitTime = -1.0;
   EcalRecHitCollection::const_iterator hit = pRecHits->find(ID);
-  if ((hit != pRecHits->end()) && hit->isTimeValid()) recHitTime = fabs(hit->time());
+  if ((hit != pRecHits->end()) && hit->isTimeValid()) recHitTime = hit->time();
   return recHitTime;
 }
 
@@ -433,6 +464,17 @@ float EDMCategoryProducer::seedTime(const reco::Photon* photon,
   return theSeedTime;
 }
 
+int EDMCategoryProducer::seedIeta(const reco::Photon* photon) const
+{
+  unsigned int theSeedIeta = 86;
+  const DetId theSeedID = seedID(photon);
+  try {
+    theSeedIeta = EBDetId(theSeedID).ieta();
+  }
+  catch (cms::Exception& ex) { edm::LogInfo("InvalidEBDetId") << ex.what(); }
+  return theSeedIeta;
+}
+
 float EDMCategoryProducer::e2OverE9(const reco::Photon* photon, edm::ESHandle<CaloTopology>& caloTopology, 
 				    const edm::Handle<EBRecHitCollection>& pRecHitsEB, 
 				    const edm::Handle<EERecHitCollection>& pRecHitsEE) const
@@ -483,6 +525,23 @@ EDMCategoryProducer::putProductIntoEvent(const edm::Handle<reco::PhotonCollectio
   iEvent.put(out, label);
 }
 
+void 
+EDMCategoryProducer::putProductIntoEvent(const edm::Handle<reco::PhotonCollection>& pPhotons, 
+					 const VDOUBLE& vals, edm::Event& iEvent, 
+					 const STRING& label) const
+{
+  std::auto_ptr<edm::ValueMap<double> > out(new edm::ValueMap<double>());
+  edm::ValueMap<double>::Filler filler(*out);
+  try { filler.insert(pPhotons, vals.begin(), vals.end()); }
+  catch (cms::Exception& ex) {
+    STRINGSTREAM err;
+    err << "putProductIntoEvent/" << label << ": " << ex.what();
+    throw cms::Exception("EDMCategoryProducer") << err.str();
+  }
+  filler.fill();
+  iEvent.put(out, label);
+}
+
 void EDMCategoryProducer::putProductIntoEvent(const int vals, edm::Event& iEvent, 
 					      const STRING& label) const
 {
@@ -507,7 +566,7 @@ void EDMCategoryProducer::putProductIntoEvent(const double vals, edm::Event& iEv
   iEvent.put(out, label);
 }
 
-void EDMCategoryProducer::debugPrint(const Categorizer& categorizer) const
+void EDMCategoryProducer::debugPrint(const Categorizer& categorizer, edm::Event& iEvent) const
 {
   //don't print unless event processing is completely finished
   if (!categorizer.done()) {
@@ -558,6 +617,8 @@ void EDMCategoryProducer::debugPrint(const Categorizer& categorizer) const
   //loop over photons
   STRINGSTREAM debug;
   debug << "*****************\n";
+  debug << "Run " << iEvent.run() << ", event " << iEvent.id().event() << ", lumi section ";
+  debug << iEvent.getLuminosityBlock().luminosityBlock() << std::endl;
   for (VDOUBLE_IT iET = photonET.begin(); iET != photonET.end(); ++iET) {
 
     //print photon quantity, cut value, and pass flag
