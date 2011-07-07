@@ -6,6 +6,8 @@
 #include "TH1F.h"
 #include "TH2F.h"
 #include "TGraphAsymmErrors.h"
+#include "TFile.h"
+#include "FWCore/Framework/interface/Event.h"
 
 typedef std::string STRING;
 typedef std::vector<STRING> VSTRING;
@@ -27,5 +29,10 @@ typedef std::vector<TH2F*> VTH2F;
 typedef VTH2F::iterator VTH2F_IT;
 typedef std::vector<TGraphAsymmErrors*> VTGRAPHASYMMERRORS;
 typedef VTGRAPHASYMMERRORS::iterator VTGRAPHASYMMERRORS_IT;
+typedef std::pair<edm::RunNumber_t, edm::EventNumber_t> RUNEVTPAIR;
+typedef std::pair<RUNEVTPAIR, edm::LuminosityBlockNumber_t> RUNEVTLUMIPAIR;
+typedef std::map<RUNEVTPAIR, edm::LuminosityBlockNumber_t> RUNEVTLUMIMAP;
+typedef std::vector<TFile> VTFILE;
+typedef VTFILE::iterator VTFILE_IT;
 
 #endif
