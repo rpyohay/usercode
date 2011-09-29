@@ -38,11 +38,13 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
     chain_->Add((*iIn).c_str());
   }
   treeReader_ = new EventAnalyzer(chain_);
-  treeReader_->SetPrintInterval(10000);
+  treeReader_->SetPrintInterval(100000);
   treeReader_->SetPrintLevel(0);
-  treeReader_->SetUseTrigger(false);
-  treeReader_->AddHltName(HLT_);
-  treeReader_->SetFilter(false);
+  treeReader_->SetUseTrigger(true);
+  for (vector<TString>::const_iterator i = HLT_.begin(); i != HLT_.end(); ++i) {
+    treeReader_->AddHltName(*i);
+  }
+  treeReader_->SetFilter(true);
   treeReader_->SetProcessNEvents(nEvts_);
   treeReader_->IncludeAJson(JSON_);
   treeReader_->SetPhotonTag(photonTag_);

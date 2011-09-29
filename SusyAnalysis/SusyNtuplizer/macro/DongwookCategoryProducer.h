@@ -32,7 +32,7 @@ struct ParameterSet {
   bool pixelVetoOnFake;
   STRING treeName;
   VSTRING input;
-  TString HLT;
+  vector<TString> HLT;
   int nEvts;
   STRING JSON;
   STRING outputFile;
@@ -74,7 +74,7 @@ private:
   bool pixelVetoOnFake_;
   STRING treeName_;
   VSTRING input_;
-  TString HLT_;
+  vector<TString> HLT_;
   int nEvts_;
   STRING JSON_;
   STRING outputFile_;

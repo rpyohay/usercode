@@ -56,8 +56,8 @@ class EventAnalyzer {
   virtual Int_t    GetEntry(Long64_t entry);
   virtual Long64_t LoadTree(Long64_t entry);
   virtual void     Init(TTree *tree);
-  virtual void     Loop(TTree*, Categorizer, susy::Category*);      // event loop for main analysis
-  virtual void     countTriggers(const std::string&);               // event loop for counting
+  virtual void     Loop(TTree*, Categorizer, susy::Category*);  //event loop for main analysis
+  virtual void     countTriggers(const std::string&);           //event loop for counting
 
   // utility functions
   bool isSameObject(TLorentzVector& p1, TLorentzVector& p2);

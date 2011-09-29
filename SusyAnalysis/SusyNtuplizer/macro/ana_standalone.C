@@ -45,10 +45,14 @@ void ana_standalone() {
   pars.pixelVetoOnFake = true;
   pars.treeName = "susyTree";
   pars.input = VSTRING(1, "~/RA3/data/Data2011A_ToRun167913_Filter_NoPileupCorr_Photon_NEW.root");
-  pars.HLT = "";
+  pars.HLT = vector<TString>();
+  pars.HLT.push_back("HLT_Photon32_CaloIdL_Photon26_CaloIdL");
+  pars.HLT.push_back("HLT_Photon36_CaloIdL_Photon22_CaloIdL");
+  pars.HLT.push_back("HLT_Photon40_CaloIdL_Photon28_CaloIdL");
   pars.nEvts = -1;
-//   pars.JSON = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions11/7TeV/Reprocessing/Cert_160404-163869_7TeV_May10ReReco_Collisions11_JSON.txt";
-  pars.JSON = "";
+  pars.JSON = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions11/7TeV/Reprocessing/Cert_160404-163869_7TeV_May10ReReco_Collisions11_JSON.txt";
+  // pars.JSON = "";
+  // pars.outputFile = "/Users/rachelyohay/RA3/data/debug.root";
   pars.outputFile = "/Users/rachelyohay/RA3/data/debug.root";
 
   TStopwatch ts;

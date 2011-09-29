@@ -50,6 +50,9 @@ public :
    bool passesNumeratorSelection(const unsigned int) const;
    unsigned int numGoodVertices() const;
    void countEE(string&);
+   void runMETAnalysis(const string&);
+   void runEEVsFFAnalysis(const std::string&);
+   void runCutFlowAnalysis();
    void debugPrint(const unsigned int) const;
  private:
    TString tag_;   //photon collection tag

@@ -21,7 +21,7 @@ void GMSBAnalysis()
   //loop over events
   TStopwatch ts;
   ts.Start();
-  analyzer.countEE("/Users/rachelyohay/RA3/data/ee.root");
+  analyzer.runEEVsFFAnalysis("/Users/rachelyohay/RA3/data/eeVsFFv4.root");
   ts.Stop();
   std::cout << "RealTime : " << ts.RealTime()/60.0 << " minutes" << std::endl;
   std::cout << "CPUTime  : " << ts.CpuTime()/60.0 << " minutes" << std::endl;

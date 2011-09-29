@@ -473,62 +473,65 @@ void EventAnalyzer::countTriggers(const std::string& fileLabel)
 }
 
 void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category* pCategory) {
-
   if (fChain == 0) return;
-
-  Long64_t nentries = fChain->GetEntries();
-
-  std::cout << "total events in files  : " << nentries << std::endl;
-
-  if(processNEvents <= 0 || processNEvents > nentries) processNEvents = nentries;
-
-  std::cout << "events to be processed : " << processNEvents << std::endl; 
-
-  int nFiltered = 0;
-  TTree* filterTree = 0;
-
-  TFile* filterFile = NULL;
-  if(enableFilter) {
-    filterFile = new TFile(filtered_file_name,"RECREATE");
-    filterTree = (TTree*) fChain->GetTree()->CloneTree(0);
-    filterTree->SetAutoSave();
-  }
 
   //remove this memory-intensive step
   // to check duplicated events
   // std::map<int, std::set<int> > allEvents;
 
   // start event looping
-
+  Long64_t nentries = fChain->GetEntriesFast();
+  if ((processNEvents < 0) || (processNEvents > nentries)) processNEvents = nentries;
+  Long64_t nEvtsProcessed = 0;
   Long64_t nbytes = 0, nb = 0;
+  unsigned int nEvtsPassingJSON = 0;
+  unsigned int nEvtsPassingHLT = 0;
+  unsigned int nEvtsPassingGoodPV = 0;
   for (Long64_t jentry=0; jentry < processNEvents; jentry++) {
-
+    event->Init();
+    pCategory->reset();
+    nEvtsProcessed = jentry + 1;
     if(printLevel > 0) std::cout << "Get the tree contents." << std::endl;
-
     Long64_t ientry = LoadTree(jentry);
-    if (ientry < 0) break;
-    nb = fChain->GetEntry(jentry);   nbytes += nb;
-
-
-    if(printLevel > 0 || (printInterval > 0 && (jentry >= printInterval && jentry%printInterval == 0)) ) {
-      std::cout << int(jentry) << " events processed with run="
-		<< event->runNumber << ", event=" << event->eventNumber << std::endl;
+    if (ientry < 0) {
+      nEvtsProcessed = jentry;
+      break;
     }
-
+    nb = fChain->GetEntry(jentry);   nbytes += nb;
+    if ((printLevel > 0) || ((printInterval > 0) && ((jentry >= printInterval) && 
+						     (jentry % printInterval == 0)))) {
+      cout << jentry << " events processed with run = " << event->runNumber;
+      cout << ", event = " << event->eventNumber << ", lumi section = ";
+      cout << event->luminosityBlockNumber << std::endl;
+    }
 
     if(printLevel > 0) std::cout << "Initialize any global variables to be reset per event." << std::endl;
-
     InitializePerEvent();
 
-
+    //uncomment if you want to apply JSON criteria
     if(printLevel > 0) std::cout << "Apply good run list." << std::endl;
+    bool JSON = isInJson(event->runNumber,event->luminosityBlockNumber);
+    if (JSON) ++nEvtsPassingJSON;
 
-    
-    // uncomment this to use the Json file to flag good data (or bad depending on your outlook)    
-    if(!isInJson(event->runNumber,event->luminosityBlockNumber)) {
-      outTree->Fill();
-      continue;
+    //uncomment if you want to apply HLT criteria
+    bool passHLT = (useTrigger ? PassTriggers() : true);
+    if (JSON && passHLT) ++nEvtsPassingHLT;
+
+    //decide if the event passed the PV requirement
+    bool foundGoodPV = false;
+    vector<susy::Vertex>::const_iterator iPV = event->vertices.begin();
+    while ((iPV != event->vertices.end()) && !foundGoodPV) {
+      if (!iPV->isFake() && (iPV->ndof > 4) && (iPV->position.Z() <= 24.0/*cm*/) && 
+	  (iPV->position.Perp() <= 2.0/*cm*/)) foundGoodPV = true;
+      else ++iPV;
     }
+    if (JSON && passHLT && foundGoodPV) ++nEvtsPassingGoodPV;
+
+    //filter criteria
+    bool filter = !enableFilter || (JSON && passHLT && foundGoodPV);
+
+    // uncomment this to use the Json file to flag good data (or bad depending on your outlook)    
+    if (!JSON) continue;
 
     // uncomment this to print all ntuple variables
 //     Print(*event);
@@ -537,7 +540,7 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
     // if(printLevel > 0) std::cout << "Check duplicated events for data only." << std::endl;
     // bool duplicateEvent = ! (allEvents[event->runNumber].insert(event->eventNumber)).second;
     // if(event->isRealData && duplicateEvent) {
-    //   outTree->Fill();
+    //   if (filter) outTree->Fill();
     //   continue;
     // }
 
@@ -631,18 +634,6 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
 
       if(printLevel > 0) std::cout << "Apply trigger selection in the event." << std::endl;
 
-      //uncomment if you want to apply HLT criteria
-      //bool passHLT = (useTrigger ? PassTriggers() : true);
-
-      //decide if the event passed the PV requirement
-      bool foundGoodPV = false;
-      vector<susy::Vertex>::const_iterator iPV = event->vertices.begin();
-      while ((iPV != event->vertices.end()) && !foundGoodPV) {
-	if (!iPV->isFake() && (iPV->ndof > 4) && (iPV->position.Z() <= 24.0/*cm*/) && 
-	    (iPV->position.Perp() <= 2.0/*cm*/)) foundGoodPV = true;
-	else ++iPV;
-      }
-
       //write the category information to the event
       try {
 	for (susy::PhotonCollection::const_iterator iPhoton = photons.begin(); 
@@ -700,15 +691,7 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
     }
 
     //fill the tree
-    outTree->Fill();
-
-    if(enableFilter) {
-      bool filterThis = /*(loose_photons.size() > 0);*/true; //insert filter criteria here
-      if(filterThis) {
-	nFiltered++;
-	filterTree->Fill();
-      }
-    }// if(enableFilter)
+    if (filter) outTree->Fill();
 
     //store run, event, and lumi section info
     RUNEVTLUMIPAIR runEvtLumiPair(RUNEVTPAIR(event->runNumber, event->eventNumber), 
@@ -730,7 +713,7 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
       break;
     }
 
-    // //debug
+    //debug
     // if (((event->runNumber == 163738) && (event->eventNumber == 125218815)) || 
     // 	((event->runNumber == 166512) && (event->eventNumber == 1469209387)) || 
     // 	((event->runNumber == 166841) && (event->eventNumber == 576002855)) || 
@@ -766,6 +749,12 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
     if (printLevel == 2) debugPrint(categorizer, event);
 
   } // for jentry
+
+  //print JSON, HLT, and good vertex info
+  cout << "No. events total: " << nEvtsProcessed << endl;
+  cout << "No. events passing JSON: " << nEvtsPassingJSON << endl;
+  cout << "No. events passing HLT: " << nEvtsPassingHLT << endl;
+  cout << "No. events passing good vertex: " << nEvtsPassingGoodPV << endl;
 }
 
 void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt) const
