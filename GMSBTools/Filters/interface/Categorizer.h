@@ -1,7 +1,6 @@
 #ifndef GMSBTools_Filters_Categorizer_h
 #define GMSBTools_Filters_Categorizer_h
 
-/* #include "GMSBTools/Filters/interface/Typedefs.h" */
 #include "Typedefs.h"
 
 //event categories
@@ -26,10 +25,10 @@ class Categorizer {
   //constructor from a list of arguments
   Categorizer(const VDOUBLE&, const VDOUBLE&, const VDOUBLE&, const VDOUBLE&, const VDOUBLE&, 
 	      const VDOUBLE&, const VDOUBLE&, const VDOUBLE&, const VDOUBLE&, const VDOUBLE&, 
-	      const VDOUBLE&, const VBOOL&, const double, const double, const double, 
-	      const double, const double, const double, const double, const double, 
-	      const double, const double, const double, const double, const double, 
-	      const double, const double, const double, const bool);
+	      const VDOUBLE&, const VDOUBLE&, const VDOUBLE&, const VBOOL&, const double, 
+	      const double, const double, const double, const double, const double, const double, 
+	      const double, const double, const double, const double, const double, const double, 
+	      const double, const double, const double, const double, const double, const bool);
 
   //copy constructor
   Categorizer(const Categorizer&);
@@ -44,7 +43,9 @@ class Categorizer {
   VDOUBLE getPhotonET() const;
   VDOUBLE getPhotonEta() const;
   VDOUBLE getPhotonECALIso() const;
+  VDOUBLE getPUSubtractedPhotonECALIso() const;
   VDOUBLE getPhotonHCALIso() const;
+  VDOUBLE getPUSubtractedPhotonHCALIso() const;
   VDOUBLE getPhotonHOverE() const;
   VDOUBLE getPhotonR9() const;
   VDOUBLE getPhotonTrackIso() const;
@@ -64,6 +65,8 @@ class Categorizer {
   double getPhotonR9Max() const;
   double getPhotonTrackIsoMaxPTMultiplier() const;
   double getPhotonTrackIsoMaxConstant() const;
+  double getPhotonCombinedIsoMax() const;
+  double getFakeCombinedIsoMax() const;  
   double getPhotonSigmaIetaIetaMax() const;
   double getPhotonAbsSeedTimeMax() const;
   double getPhotonE2OverE9Max() const;
@@ -74,10 +77,14 @@ class Categorizer {
   VBOOL getPhotonPassETMin2(const bool throwException = true) const;
   VBOOL getPhotonPassAbsEtaMax(const bool throwException = true) const;
   VBOOL getPhotonPassECALIsoMax(const bool throwException = true) const;
+  VBOOL getPhotonPassPUSubtractedECALIsoMax(const bool throwException = true) const;
   VBOOL getPhotonPassHCALIsoMax(const bool throwException = true) const;
+  VBOOL getPhotonPassPUSubtractedHCALIsoMax(const bool throwException = true) const;
   VBOOL getPhotonPassHOverEMax(const bool throwException = true) const;
   VBOOL getPhotonPassR9Max(const bool throwException = true) const;
   VBOOL getPhotonPassTrackIsoMax(const bool throwException = true) const;
+  VBOOL getPhotonPassCombinedIsoMax(const bool throwException = true) const;
+  VBOOL getPhotonPassFakeCombinedIsoMax(const bool throwException = true) const;
   VBOOL getPhotonPassSigmaIetaIetaMax(const bool throwException = true) const;
   VBOOL getPhotonPassAbsSeedTimeMax(const bool throwException = true) const;
   VBOOL getPhotonPassE2OverE9Max(const bool throwException = true) const;
@@ -99,7 +106,9 @@ class Categorizer {
   void setPhotonET(const VDOUBLE&);
   void setPhotonEta(const VDOUBLE&);
   void setPhotonECALIso(const VDOUBLE&);
+  void setPUSubtractedPhotonECALIso(const VDOUBLE&);
   void setPhotonHCALIso(const VDOUBLE&);
+  void setPUSubtractedPhotonHCALIso(const VDOUBLE&);
   void setPhotonHOverE(const VDOUBLE&);
   void setPhotonR9(const VDOUBLE&);
   void setPhotonTrackIso(const VDOUBLE&);
@@ -119,6 +128,8 @@ class Categorizer {
   void setPhotonR9Max(const double);
   void setPhotonTrackIsoMaxPTMultiplier(const double);
   void setPhotonTrackIsoMaxConstant(const double);
+  void setPhotonCombinedIsoMax(const double);
+  void setFakeCombinedIsoMax(const double);
   void setPhotonSigmaIetaIetaMax(const double);
   void setPhotonAbsSeedTimeMax(const double);
   void setPhotonE2OverE9Max(const double);
@@ -146,7 +157,9 @@ class Categorizer {
   VDOUBLE photonET_;
   VDOUBLE photonEta_;
   VDOUBLE photonECALIso_;
+  VDOUBLE PUSubtractedPhotonECALIso_;
   VDOUBLE photonHCALIso_;
+  VDOUBLE PUSubtractedPhotonHCALIso_;
   VDOUBLE photonHOverE_;
   VDOUBLE photonR9_;
   VDOUBLE photonTrackIso_;
@@ -168,6 +181,8 @@ class Categorizer {
   double photonR9Max_;
   double photonTrackIsoMaxPTMultiplier_;
   double photonTrackIsoMaxConstant_;
+  double photonCombinedIsoMax_;
+  double fakeCombinedIsoMax_;
   double photonSigmaIetaIetaMax_;
   double photonAbsSeedTimeMax_;
   double photonE2OverE9Max_;
@@ -182,10 +197,14 @@ class Categorizer {
   VBOOL photonPassETMin2_;
   VBOOL photonPassAbsEtaMax_;
   VBOOL photonPassECALIsoMax_;
+  VBOOL photonPassPUSubtractedECALIsoMax_;
   VBOOL photonPassHCALIsoMax_;
+  VBOOL photonPassPUSubtractedHCALIsoMax_;
   VBOOL photonPassHOverEMax_;
   VBOOL photonPassR9Max_;
   VBOOL photonPassTrackIsoMax_;
+  VBOOL photonPassCombinedIsoMax_;
+  VBOOL photonPassFakeCombinedIsoMax_;
   VBOOL photonPassSigmaIetaIetaMax_;
   VBOOL photonPassAbsSeedTimeMax_;
   VBOOL photonPassE2OverE9Max_;
@@ -311,10 +330,14 @@ class Categorizer {
   void decideETMin2();
   void decideAbsEtaMax();
   void decideECALIsoMax();
+  void decidePUSubtractedECALIsoMax();
   void decideHCALIsoMax();
+  void decidePUSubtractedHCALIsoMax();
   void decideR9Max();
   void decideHOverEMax();
   void decideTrackIsoMax();
+  void decideCombinedIsoMax(const VDOUBLE&);
+  void decideFakeCombinedIsoMax(const VDOUBLE&);
   void decideSigmaIetaIetaMax();
   void decideAbsSeedTimeMax();
   void decideE2OverE9Max();

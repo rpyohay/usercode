@@ -8,7 +8,9 @@ Categorizer::Categorizer() :
   photonET_(VDOUBLE()),
   photonEta_(VDOUBLE()),
   photonECALIso_(VDOUBLE()),
+  PUSubtractedPhotonECALIso_(VDOUBLE()),
   photonHCALIso_(VDOUBLE()),
+  PUSubtractedPhotonHCALIso_(VDOUBLE()),
   photonHOverE_(VDOUBLE()),
   photonR9_(VDOUBLE()),
   photonTrackIso_(VDOUBLE()),
@@ -28,6 +30,8 @@ Categorizer::Categorizer() :
   photonR9Max_(-1.0),
   photonTrackIsoMaxPTMultiplier_(-1.0),
   photonTrackIsoMaxConstant_(-1.0),
+  photonCombinedIsoMax_(-1.0),
+  fakeCombinedIsoMax_(-1.0),
   photonSigmaIetaIetaMax_(-1.0),
   photonAbsSeedTimeMax_(-1.0),
   photonE2OverE9Max_(-1.0),
@@ -38,7 +42,9 @@ Categorizer::Categorizer() :
   photonPassETMin2_(VBOOL()),
   photonPassAbsEtaMax_(VBOOL()),
   photonPassECALIsoMax_(VBOOL()),
+  photonPassPUSubtractedECALIsoMax_(VBOOL()),
   photonPassHCALIsoMax_(VBOOL()),
+  photonPassPUSubtractedHCALIsoMax_(VBOOL()),
   photonPassHOverEMax_(VBOOL()),
   photonPassR9Max_(VBOOL()),
   photonPassTrackIsoMax_(VBOOL()),
@@ -62,7 +68,8 @@ Categorizer::Categorizer() :
   foundPassingPhotons_(false) {}
 
 Categorizer::Categorizer(const VDOUBLE& photonET, const VDOUBLE& photonEta, 
-			 const VDOUBLE& photonECALIso, const VDOUBLE& photonHCALIso,
+			 const VDOUBLE& photonECALIso, const VDOUBLE& PUSubtractedPhotonECALIso, 
+			 const VDOUBLE& photonHCALIso, const VDOUBLE& PUSubtractedPhotonHCALIso, 
 			 const VDOUBLE& photonHOverE, const VDOUBLE& photonR9, 
 			 const VDOUBLE& photonTrackIso, const VDOUBLE& photonSigmaIetaIeta, 
 			 const VDOUBLE& photonSeedTime, const VDOUBLE& photonE2OverE9, 
@@ -73,14 +80,17 @@ Categorizer::Categorizer(const VDOUBLE& photonET, const VDOUBLE& photonEta,
 			 const double photonHCALIsoMaxPTMultiplier,
 			 const double photonHCALIsoMaxConstant, const double photonHOverEMax, 
 			 const double photonR9Max, const double photonTrackIsoMaxPTMultiplier,
-			 const double photonTrackIsoMaxConstant,
+			 const double photonTrackIsoMaxConstant, 
+			 const double photonCombinedIsoMax, const double fakeCombinedIsoMax, 
 			 const double photonSigmaIetaIetaMax, const double photonAbsSeedTimeMax,
 			 const double photonE2OverE9Max, const double photonDPhiMin, 
 			 const double photonDRMin, const bool pixelVetoOnFake) :
   photonET_(photonET),
   photonEta_(photonEta),
   photonECALIso_(photonECALIso),
+  PUSubtractedPhotonECALIso_(PUSubtractedPhotonECALIso),
   photonHCALIso_(photonHCALIso),
+  PUSubtractedPhotonHCALIso_(PUSubtractedPhotonHCALIso),
   photonHOverE_(photonHOverE),
   photonR9_(photonR9),
   photonTrackIso_(photonTrackIso),
@@ -100,6 +110,8 @@ Categorizer::Categorizer(const VDOUBLE& photonET, const VDOUBLE& photonEta,
   photonR9Max_(photonR9Max),
   photonTrackIsoMaxPTMultiplier_(photonTrackIsoMaxPTMultiplier),
   photonTrackIsoMaxConstant_(photonTrackIsoMaxConstant),
+  photonCombinedIsoMax_(photonCombinedIsoMax),
+  fakeCombinedIsoMax_(fakeCombinedIsoMax),
   photonSigmaIetaIetaMax_(photonSigmaIetaIetaMax),
   photonAbsSeedTimeMax_(photonAbsSeedTimeMax),
   photonE2OverE9Max_(photonE2OverE9Max),
@@ -110,7 +122,9 @@ Categorizer::Categorizer(const VDOUBLE& photonET, const VDOUBLE& photonEta,
   photonPassETMin2_(VBOOL()),
   photonPassAbsEtaMax_(VBOOL()),
   photonPassECALIsoMax_(VBOOL()),
+  photonPassPUSubtractedECALIsoMax_(VBOOL()),
   photonPassHCALIsoMax_(VBOOL()),
+  photonPassPUSubtractedHCALIsoMax_(VBOOL()),
   photonPassHOverEMax_(VBOOL()),
   photonPassR9Max_(VBOOL()),
   photonPassTrackIsoMax_(VBOOL()),
@@ -137,7 +151,9 @@ Categorizer::Categorizer(const Categorizer& copy) :
   photonET_(copy.getPhotonET()),
   photonEta_(copy.getPhotonEta()),
   photonECALIso_(copy.getPhotonECALIso()),
+  PUSubtractedPhotonECALIso_(copy.getPUSubtractedPhotonECALIso()),
   photonHCALIso_(copy.getPhotonHCALIso()),
+  PUSubtractedPhotonHCALIso_(copy.getPUSubtractedPhotonHCALIso()),
   photonHOverE_(copy.getPhotonHOverE()),
   photonR9_(copy.getPhotonR9()),
   photonTrackIso_(copy.getPhotonTrackIso()),
@@ -157,6 +173,8 @@ Categorizer::Categorizer(const Categorizer& copy) :
   photonR9Max_(copy.getPhotonR9Max()),
   photonTrackIsoMaxPTMultiplier_(copy.getPhotonTrackIsoMaxPTMultiplier()),
   photonTrackIsoMaxConstant_(copy.getPhotonTrackIsoMaxConstant()),
+  photonCombinedIsoMax_(copy.getPhotonCombinedIsoMax()),
+  fakeCombinedIsoMax_(copy.getFakeCombinedIsoMax()),
   photonSigmaIetaIetaMax_(copy.getPhotonSigmaIetaIetaMax()),
   photonAbsSeedTimeMax_(copy.getPhotonAbsSeedTimeMax()),
   photonE2OverE9Max_(copy.getPhotonE2OverE9Max()),
@@ -167,7 +185,9 @@ Categorizer::Categorizer(const Categorizer& copy) :
   photonPassETMin2_(copy.getPhotonPassETMin2(false)),
   photonPassAbsEtaMax_(copy.getPhotonPassAbsEtaMax(false)),
   photonPassECALIsoMax_(copy.getPhotonPassECALIsoMax(false)),
+  photonPassPUSubtractedECALIsoMax_(copy.getPhotonPassPUSubtractedECALIsoMax(false)),
   photonPassHCALIsoMax_(copy.getPhotonPassHCALIsoMax(false)),
+  photonPassPUSubtractedHCALIsoMax_(copy.getPhotonPassPUSubtractedHCALIsoMax(false)),
   photonPassHOverEMax_(copy.getPhotonPassHOverEMax(false)),
   photonPassR9Max_(copy.getPhotonPassR9Max(false)),
   photonPassTrackIsoMax_(copy.getPhotonPassTrackIsoMax(false)),
@@ -198,7 +218,9 @@ Categorizer& Categorizer::operator=(const Categorizer& copy)
     photonET_ = copy.getPhotonET();
     photonEta_ = copy.getPhotonEta();
     photonECALIso_ = copy.getPhotonECALIso();
+    PUSubtractedPhotonECALIso_ = copy.getPUSubtractedPhotonECALIso();
     photonHCALIso_ = copy.getPhotonHCALIso();
+    PUSubtractedPhotonHCALIso_ = copy.getPUSubtractedPhotonHCALIso();
     photonHOverE_ = copy.getPhotonHOverE();
     photonR9_ = copy.getPhotonR9();
     photonTrackIso_ = copy.getPhotonTrackIso();
@@ -218,6 +240,8 @@ Categorizer& Categorizer::operator=(const Categorizer& copy)
     photonR9Max_ = copy.getPhotonR9Max();
     photonTrackIsoMaxPTMultiplier_ = copy.getPhotonTrackIsoMaxPTMultiplier();
     photonTrackIsoMaxConstant_ = copy.getPhotonTrackIsoMaxConstant();
+    photonCombinedIsoMax_ = copy.getPhotonCombinedIsoMax();
+    fakeCombinedIsoMax_ = copy.getFakeCombinedIsoMax();
     photonSigmaIetaIetaMax_ = copy.getPhotonSigmaIetaIetaMax();
     photonAbsSeedTimeMax_ = copy.getPhotonAbsSeedTimeMax();
     photonE2OverE9Max_ = copy.getPhotonE2OverE9Max();
@@ -228,7 +252,9 @@ Categorizer& Categorizer::operator=(const Categorizer& copy)
     photonPassETMin2_ = copy.getPhotonPassETMin2(false);
     photonPassAbsEtaMax_ = copy.getPhotonPassAbsEtaMax(false);
     photonPassECALIsoMax_ = copy.getPhotonPassECALIsoMax(false);
+    photonPassPUSubtractedECALIsoMax_ = copy.getPhotonPassPUSubtractedECALIsoMax(false);
     photonPassHCALIsoMax_ = copy.getPhotonPassHCALIsoMax(false);
+    photonPassPUSubtractedHCALIsoMax_ = copy.getPhotonPassPUSubtractedHCALIsoMax(false);
     photonPassHOverEMax_ = copy.getPhotonPassHOverEMax(false);
     photonPassR9Max_ = copy.getPhotonPassR9Max(false);
     photonPassTrackIsoMax_ = copy.getPhotonPassTrackIsoMax(false);
@@ -258,7 +284,9 @@ Categorizer& Categorizer::operator=(const Categorizer& copy)
 VDOUBLE Categorizer::getPhotonET() const { return photonET_; }
 VDOUBLE Categorizer::getPhotonEta() const { return photonEta_; }
 VDOUBLE Categorizer::getPhotonECALIso() const { return photonECALIso_; }
+VDOUBLE Categorizer::getPUSubtractedPhotonECALIso() const { return PUSubtractedPhotonECALIso_; }
 VDOUBLE Categorizer::getPhotonHCALIso() const { return photonHCALIso_; }
+VDOUBLE Categorizer::getPUSubtractedPhotonHCALIso() const { return PUSubtractedPhotonHCALIso_; }
 VDOUBLE Categorizer::getPhotonHOverE() const { return photonHOverE_; }
 VDOUBLE Categorizer::getPhotonR9() const { return photonR9_; }
 VDOUBLE Categorizer::getPhotonTrackIso() const { return photonTrackIso_; }
@@ -287,6 +315,8 @@ double Categorizer::getPhotonTrackIsoMaxPTMultiplier() const
   return photonTrackIsoMaxPTMultiplier_;
 }
 double Categorizer::getPhotonTrackIsoMaxConstant() const { return photonTrackIsoMaxConstant_; }
+double Categorizer::getPhotonCombinedIsoMax() const { return photonCombinedIsoMax_; }
+double Categorizer::getFakeCombinedIsoMax() const { return fakeCombinedIsoMax_; }
 double Categorizer::getPhotonSigmaIetaIetaMax() const { return photonSigmaIetaIetaMax_; }
 double Categorizer::getPhotonAbsSeedTimeMax() const { return photonAbsSeedTimeMax_; }
 double Categorizer::getPhotonE2OverE9Max() const { return photonE2OverE9Max_; }
@@ -321,12 +351,26 @@ VBOOL Categorizer::getPhotonPassECALIsoMax(const bool throwException) const
   }
   return photonPassECALIsoMax_;
 }
+VBOOL Categorizer::getPhotonPassPUSubtractedECALIsoMax(const bool throwException) const
+{
+  if (throwException && !decided_) {
+    throw STRING("Error in getPhotonPassPUSubtractedECALIsoMax(): call decideAll() first.\n");
+  }
+  return photonPassPUSubtractedECALIsoMax_;
+}
 VBOOL Categorizer::getPhotonPassHCALIsoMax(const bool throwException) const
 {
   if (throwException && !decided_) {
     throw STRING("Error in getPhotonPassHCALIsoMax(): call decideAll() first.\n");
   }
   return photonPassHCALIsoMax_;
+}
+VBOOL Categorizer::getPhotonPassPUSubtractedHCALIsoMax(const bool throwException) const
+{
+  if (throwException && !decided_) {
+    throw STRING("Error in getPhotonPassPUSubtractedHCALIsoMax(): call decideAll() first.\n");
+  }
+  return photonPassPUSubtractedHCALIsoMax_;
 }
 VBOOL Categorizer::getPhotonPassHOverEMax(const bool throwException) const
 {
@@ -348,6 +392,20 @@ VBOOL Categorizer::getPhotonPassTrackIsoMax(const bool throwException) const
     throw STRING("Error in getPhotonPassTrackIsoMax(): call decideAll() first.\n");
   }
   return photonPassTrackIsoMax_;
+}
+VBOOL Categorizer::getPhotonPassCombinedIsoMax(const bool throwException) const
+{
+  if (throwException && !decided_) {
+    throw STRING("Error in getPhotonPassCombinedIsoMax(): call decideAll() first.\n");
+  }
+  return photonPassCombinedIsoMax_;
+}
+VBOOL Categorizer::getPhotonPassFakeCombinedIsoMax(const bool throwException) const
+{
+  if (throwException && !decided_) {
+    throw STRING("Error in getPhotonPassFakeCombinedIsoMax(): call decideAll() first.\n");
+  }
+  return photonPassFakeCombinedIsoMax_;
 }
 VBOOL Categorizer::getPhotonPassSigmaIetaIetaMax(const bool throwException) const
 {
@@ -482,9 +540,19 @@ void Categorizer::setPhotonECALIso(const VDOUBLE& photonECALIso)
   photonECALIso_ = photonECALIso;
   checkInput();
 }
+void Categorizer::setPUSubtractedPhotonECALIso(const VDOUBLE& PUSubtractedPhotonECALIso)
+{
+  PUSubtractedPhotonECALIso_ = PUSubtractedPhotonECALIso;
+  checkInput();
+}
 void Categorizer::setPhotonHCALIso(const VDOUBLE& photonHCALIso)
 {
   photonHCALIso_ = photonHCALIso;
+  checkInput();
+}
+void Categorizer::setPUSubtractedPhotonHCALIso(const VDOUBLE& PUSubtractedPhotonHCALIso)
+{
+  PUSubtractedPhotonHCALIso_ = PUSubtractedPhotonHCALIso;
   checkInput();
 }
 void Categorizer::setPhotonHOverE(const VDOUBLE& photonHOverE)
@@ -565,6 +633,14 @@ void Categorizer::setPhotonTrackIsoMaxConstant(const double photonTrackIsoMaxCon
 {
   photonTrackIsoMaxConstant_ = photonTrackIsoMaxConstant;
 }
+void Categorizer::setPhotonCombinedIsoMax(const double photonCombinedIsoMax)
+{
+  photonCombinedIsoMax_ = photonCombinedIsoMax;
+}
+void Categorizer::setFakeCombinedIsoMax(const double fakeCombinedIsoMax)
+{
+  fakeCombinedIsoMax_ = fakeCombinedIsoMax;
+}
 void Categorizer::setPhotonSigmaIetaIetaMax(const double photonSigmaIetaIetaMax)
 {
   photonSigmaIetaIetaMax_ = photonSigmaIetaIetaMax;
@@ -586,15 +662,27 @@ void Categorizer::setPixelVetoOnFake(const bool pixelVetoOnFake)
 
 void Categorizer::decideAll()
 {
+  VDOUBLE PUSubtractedPhotonCombinedIso;
+  for (VDOUBLE_IT iPUSubtractedECALIso = PUSubtractedPhotonECALIso_.begin(); 
+       iPUSubtractedECALIso != PUSubtractedPhotonECALIso_.end(); ++iPUSubtractedECALIso) {
+    const unsigned int iPhoton = iPUSubtractedECALIso - PUSubtractedPhotonECALIso_.begin();
+    PUSubtractedPhotonCombinedIso.push_back(*iPUSubtractedECALIso + 
+					    PUSubtractedPhotonHCALIso_[iPhoton] + 
+					    photonTrackIso_[iPhoton]);
+  }
   try {
     decideETMin1();
     decideETMin2();
     decideAbsEtaMax();
     decideECALIsoMax();
+    decidePUSubtractedECALIsoMax();
     decideHCALIsoMax();
+    decidePUSubtractedHCALIsoMax();
     decideHOverEMax();
     decideR9Max();
     decideTrackIsoMax();
+    decideCombinedIsoMax(PUSubtractedPhotonCombinedIso);
+    decideFakeCombinedIsoMax(PUSubtractedPhotonCombinedIso);
     decideSigmaIetaIetaMax();
     decideAbsSeedTimeMax();
     decideE2OverE9Max();
@@ -612,7 +700,8 @@ void Categorizer::findPassingPhotons()
     const unsigned int i = iPassETMin2 - photonPassETMin2_.begin();
     photonPassPreselection_.push_back(*iPassETMin2 && photonPassAbsEtaMax_[i] && 
 				      photonPassECALIsoMax_[i] && photonPassHCALIsoMax_[i] && 
-				      photonPassHOverEMax_[i] && photonPassR9Max_[i] && 
+				      photonPassHOverEMax_[i] && photonPassTrackIsoMax_[i] && 
+				      photonPassFakeCombinedIsoMax_[i] && photonPassR9Max_[i] && 
 				      photonPassAbsSeedTimeMax_[i] && photonPassE2OverE9Max_[i]);
   }
   foundPassingPhotons_ = true;
@@ -632,8 +721,7 @@ void Categorizer::classify()
        ++iPassETMin1) {
     const unsigned int i = iPassETMin1 - photonPassETMin1_.begin();
     if (photonPassPreselection_[i]) {
-      if (photonPassSigmaIetaIetaMax_[i] && 
-	  photonPassTrackIsoMax_[i]) {
+      if (photonPassSigmaIetaIetaMax_[i] && photonPassCombinedIsoMax_[i]) {
 	if (photonHasPixelSeed_[i]) photonType_.push_back(E);
 	else photonType_.push_back(G);
 	categorizedPhotons.push_back(i);
@@ -674,7 +762,8 @@ void Categorizer::classify()
 	  deltaR(photonEta_[*iCategorizedPhoton1], photonPhi_[*iCategorizedPhoton1], 
 		 photonEta_[*iCategorizedPhoton2], photonPhi_[*iCategorizedPhoton2]);
 	if (dR > photonDRMin_) {
-	  photonPairsPassingDRMin_[std::make_pair(*iCategorizedPhoton1, *iCategorizedPhoton2)] = dR;
+	  photonPairsPassingDRMin_[std::make_pair(*iCategorizedPhoton1, *iCategorizedPhoton2)] = 
+	    dR;
 	}
 	if (getEvtPassAsymmetricETMin(*iCategorizedPhoton1, *iCategorizedPhoton2)) {
 	  photonPairsPassingAsymmetricETMin_[std::make_pair(*iCategorizedPhoton1, 
@@ -785,8 +874,10 @@ void Categorizer::checkInput()
 {
   initialized_ = 
     ((photonET_.size() == photonEta_.size()) && (photonEta_.size() == photonECALIso_.size()) && 
-     (photonECALIso_.size() == photonHCALIso_.size()) && 
-     (photonHCALIso_.size() == photonHOverE_.size()) && 
+     (photonECALIso_.size() == PUSubtractedPhotonECALIso_.size()) && 
+     (PUSubtractedPhotonECALIso_.size() == photonHCALIso_.size()) && 
+     (photonHCALIso_.size() == PUSubtractedPhotonHCALIso_.size()) && 
+     (PUSubtractedPhotonHCALIso_.size() == photonHOverE_.size()) && 
      (photonHOverE_.size() == photonR9_.size()) && 
      (photonR9_.size() == photonTrackIso_.size()) && 
      (photonTrackIso_.size() == photonSigmaIetaIeta_.size()) && 
@@ -880,11 +971,27 @@ void Categorizer::decideECALIsoMax()
   }
   catch (STRING& vecSizeMismatch) { throw; }
 }
+void Categorizer::decidePUSubtractedECALIsoMax()
+{
+  try {
+    decide2DMax(photonPassPUSubtractedECALIsoMax_, PUSubtractedPhotonECALIso_, 
+		photonECALIsoMaxConstant_, photonECALIsoMaxPTMultiplier_);
+  }
+  catch (STRING& vecSizeMismatch) { throw; }
+}
 void Categorizer::decideHCALIsoMax()
 {
   try {
     decide2DMax(photonPassHCALIsoMax_, photonHCALIso_, photonHCALIsoMaxConstant_, 
 		photonHCALIsoMaxPTMultiplier_);
+  }
+  catch (STRING& vecSizeMismatch) { throw; }
+}
+void Categorizer::decidePUSubtractedHCALIsoMax()
+{
+  try {
+    decide2DMax(photonPassPUSubtractedHCALIsoMax_, PUSubtractedPhotonHCALIso_, 
+		photonHCALIsoMaxConstant_, photonHCALIsoMaxPTMultiplier_);
   }
   catch (STRING& vecSizeMismatch) { throw; }
 }
@@ -904,6 +1011,16 @@ void Categorizer::decideTrackIsoMax()
     decide2DMax(photonPassTrackIsoMax_, photonTrackIso_, photonTrackIsoMaxConstant_, 
 		photonTrackIsoMaxPTMultiplier_);
   }
+  catch (STRING& vecSizeMismatch) { throw; }
+}
+void Categorizer::decideCombinedIsoMax(const VDOUBLE& photonCombinedIso)
+{
+  try { decide1DMax(photonPassCombinedIsoMax_, photonCombinedIso, photonCombinedIsoMax_); }
+  catch (STRING& vecSizeMismatch) { throw; }
+}
+void Categorizer::decideFakeCombinedIsoMax(const VDOUBLE& photonCombinedIso)
+{
+  try { decide1DMax(photonPassFakeCombinedIsoMax_, photonCombinedIso, fakeCombinedIsoMax_); }
   catch (STRING& vecSizeMismatch) { throw; }
 }
 void Categorizer::decideSigmaIetaIetaMax()
