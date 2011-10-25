@@ -25,6 +25,7 @@ typedef std::vector<TH1F*> VTH1F;
 typedef std::vector<TH1F*>::iterator VTH1F_IT;
 typedef std::vector<TH1F*>::const_iterator VTH1F_CONST_IT;
 typedef std::vector<float> VFLOAT;
+typedef std::vector<float>::const_iterator VFLOAT_IT;
 typedef std::vector<TH2F*> VTH2F;
 typedef std::vector<TH2F*>::iterator VTH2F_IT;
 typedef std::vector<TGraphAsymmErrors*> VTGRAPHASYMMERRORS;
