@@ -30,6 +30,10 @@
 #include "../../../GMSBTools/Filters/interface/Categorizer.h"
 #include "../src/SusyCategory.h"
 
+//isolation cone sizes
+#define DR03 0
+#define DR04 1
+
 class EventAnalyzer {
  public :
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
@@ -50,6 +54,10 @@ class EventAnalyzer {
   //PU subtraction effective areas
   double photonECALIsoEffArea_;
   double photonHCALIsoEffArea_;
+
+  //isolation cone size
+  unsigned int isoConeHLT_;
+  unsigned int isoConeOffline_;
 
   EventAnalyzer(TTree *tree=0);
   virtual ~EventAnalyzer();
@@ -91,6 +99,8 @@ class EventAnalyzer {
   {
     photonHCALIsoEffArea_ = photonHCALIsoEffArea;
   }
+  void SetIsoConeHLT(const unsigned int isoConeHLT) { isoConeHLT_ = isoConeHLT; }
+  void SetIsoConeOffline(const unsigned int isoConeOffline) { isoConeOffline_ = isoConeOffline; }
   void debugPrint(const Categorizer&, susy::Event*) const;
 
  private:
@@ -172,7 +182,8 @@ void EventAnalyzer::Initialize() {
   useTrigger = false;
   enableFilter = false;
   filtered_file_name = "filtered.root";
-
+  isoConeHLT_ = DR03;
+  isoConeOffline_ = DR03;
 }
 
 void EventAnalyzer::IncludeAJson(std::string jsonfile) {

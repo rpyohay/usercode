@@ -21,6 +21,7 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <TH1F.h>
+#include <TObjectTable.h>
 
 #include <map>
 #include <set>
@@ -548,7 +549,9 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
     VDOUBLE photonET;
     VDOUBLE photonEta;
     VDOUBLE photonECALIso;
+    VDOUBLE PUSubtractedPhotonECALIso;
     VDOUBLE photonHCALIso;
+    VDOUBLE PUSubtractedPhotonHCALIso;
     VDOUBLE photonHOverE;
     VDOUBLE photonR9;
     VDOUBLE photonTrackIso;
@@ -573,16 +576,51 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
       for (susy::PhotonCollection::const_iterator iPhoton = photons.begin(); 
 	   iPhoton != photons.end(); ++iPhoton) {
 
+	//get isolations
+	double ECALIsoOffline = -1.0;
+	double HCALIsoOffline = -1.0;
+	double trackIso = -1.0;
+	double ECALIsoHLT = -1.0;
+	double HCALIsoHLT = -1.0;
+	switch (isoConeOffline_) {
+	case DR03:
+	  ECALIsoOffline = iPhoton->ecalRecHitSumEtConeDR03 - (photonECALIsoEffArea_*event->rho);
+	  HCALIsoOffline = iPhoton->hcalTowerSumEtConeDR03() - (photonHCALIsoEffArea_*event->rho);
+	  trackIso = iPhoton->trkSumPtHollowConeDR03;
+	  break;
+	case DR04:
+	  ECALIsoOffline = iPhoton->ecalRecHitSumEtConeDR04 - (photonECALIsoEffArea_*event->rho);
+	  HCALIsoOffline = iPhoton->hcalTowerSumEtConeDR04() - (photonHCALIsoEffArea_*event->rho);
+	  trackIso = iPhoton->trkSumPtHollowConeDR04;
+	  break;
+	default:
+	  cerr << "Error: invalid cone size " << isoConeOffline_ << ".  Isolation requirements ";
+	  cerr << "will be ignored.\n";
+	}
+	switch (isoConeHLT_) {
+	case DR03:
+	  ECALIsoHLT = iPhoton->ecalRecHitSumEtConeDR03;
+	  HCALIsoHLT = iPhoton->hcalTowerSumEtConeDR03();
+	  break;
+	case DR04:
+	  ECALIsoHLT = iPhoton->ecalRecHitSumEtConeDR04;
+	  HCALIsoHLT = iPhoton->hcalTowerSumEtConeDR04();
+	  break;
+	default:
+	  cerr << "Error: invalid cone size " << isoConeHLT_ << ".  Isolation requirements will ";
+	  cerr << "be ignored.\n";
+	}
+
 	//fill photon variable vectors
 	photonET.push_back(iPhoton->momentum.Et());
 	photonEta.push_back(iPhoton->caloPosition.Eta());
-	photonECALIso.push_back((double)iPhoton->ecalRecHitSumEtConeDR04 - 
-				(double)(photonECALIsoEffArea_*event->rho));
-	photonHCALIso.push_back((double)iPhoton->hcalTowerSumEtConeDR04() - 
-				(double)(photonHCALIsoEffArea_*event->rho));
+	photonECALIso.push_back(ECALIsoHLT);
+	PUSubtractedPhotonECALIso.push_back(ECALIsoOffline);
+	photonHCALIso.push_back(HCALIsoHLT);
+	PUSubtractedPhotonHCALIso.push_back(HCALIsoOffline);
 	photonHOverE.push_back((double)iPhoton->hadronicOverEm);
 	photonR9.push_back((double)iPhoton->r9);
-	photonTrackIso.push_back((double)iPhoton->trkSumPtHollowConeDR04);
+	photonTrackIso.push_back(trackIso);
 	photonSigmaIetaIeta.push_back((double)iPhoton->sigmaIetaIeta);
 	photonSeedTime.push_back((double)iPhoton->seedTime);
 	photonE2OverE9.push_back((double)((iPhoton->e1x2)/(iPhoton->e3x3)));
@@ -595,7 +633,9 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
       categorizer.setPhotonET(photonET);
       categorizer.setPhotonEta(photonEta);
       categorizer.setPhotonECALIso(photonECALIso);
+      categorizer.setPUSubtractedPhotonECALIso(PUSubtractedPhotonECALIso);
       categorizer.setPhotonHCALIso(photonHCALIso);
+      categorizer.setPUSubtractedPhotonHCALIso(PUSubtractedPhotonHCALIso);
       categorizer.setPhotonHOverE(photonHOverE);
       categorizer.setPhotonR9(photonR9);
       categorizer.setPhotonTrackIso(photonTrackIso);
@@ -648,14 +688,27 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
 				      categorizer.getPhotonPassAbsEtaMax()[photonIndex]);
 	  pCategory->setPassECALIsoMax(tag_, photonIndex, 
 				       categorizer.getPhotonPassECALIsoMax()[photonIndex]);
+	  pCategory->
+	    setPassPUSubtractedECALIsoMax(tag_, photonIndex, 
+					  categorizer.
+					  getPhotonPassPUSubtractedECALIsoMax()[photonIndex]);
 	  pCategory->setPassHCALIsoMax(tag_, photonIndex, 
 				       categorizer.getPhotonPassHCALIsoMax()[photonIndex]);
+	  pCategory->
+	    setPassPUSubtractedHCALIsoMax(tag_, photonIndex, 
+					  categorizer.
+					  getPhotonPassPUSubtractedHCALIsoMax()[photonIndex]);
 	  pCategory->setPassHOverEMax(tag_, photonIndex, 
 				      categorizer.getPhotonPassHOverEMax()[photonIndex]);
 	  pCategory->setPassR9Max(tag_, photonIndex, 
 				  categorizer.getPhotonPassR9Max()[photonIndex]);
 	  pCategory->setPassTrackIsoMax(tag_, photonIndex, 
 					categorizer.getPhotonPassTrackIsoMax()[photonIndex]);
+	  pCategory->setPassCombinedIsoMax(tag_, photonIndex, 
+					   categorizer.getPhotonPassCombinedIsoMax()[photonIndex]);
+	  pCategory->
+	    setPassFakeCombinedIsoMax(tag_, photonIndex, 
+				      categorizer.getPhotonPassFakeCombinedIsoMax()[photonIndex]);
 	  pCategory->
 	    setPassSigmaIetaIetaMax(tag_, photonIndex, 
 				    categorizer.getPhotonPassSigmaIetaIetaMax()[photonIndex]);
@@ -712,38 +765,6 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
     default:
       break;
     }
-
-    //debug
-    // if (((event->runNumber == 163738) && (event->eventNumber == 125218815)) || 
-    // 	((event->runNumber == 166512) && (event->eventNumber == 1469209387)) || 
-    // 	((event->runNumber == 166841) && (event->eventNumber == 576002855)) || 
-    // 	((event->runNumber == 163255) && (event->eventNumber == 398877384))) {
-    //   cout << "Event #" << (jentry + 1) << endl;
-    //   debugPrint(categorizer, event);
-    //   // break;
-    // }
-    // if (((event->runNumber == 167102) && (event->eventNumber == 41367892)) || 
-    // 	((event->runNumber == 167284) && (event->eventNumber == 1044948847)) || 
-    // 	((event->runNumber == 167098) && (event->eventNumber == 226514608)) || 
-    // 	((event->runNumber == 167282) && (event->eventNumber == 364681666)) || 
-    // 	((event->runNumber == 167807) && (event->eventNumber == 163352644)) || 
-    // 	((event->runNumber == 167807) && (event->eventNumber == 1071372467)) || 
-    // 	((event->runNumber == 167807) && (event->eventNumber == 1711604905)) || 
-    // 	((event->runNumber == 167807) && (event->eventNumber == 1920901465)) || 
-    // 	((event->runNumber == 167807) && (event->eventNumber == 2002886211)) || 
-    // 	((event->runNumber == 167830) && (event->eventNumber == 633065492)) || 
-    // 	((event->runNumber == 167830) && (event->eventNumber == 872265467)) || 
-    // 	((event->runNumber == 167830) && (event->eventNumber == 1074870406)) || 
-    // 	((event->runNumber == 167898) && (event->eventNumber == 498944544)) || 
-    // 	((event->runNumber == 167898) && (event->eventNumber == 841183462)) || 
-    // 	((event->runNumber == 167898) && (event->eventNumber == 1939001688)) || 
-    // 	((event->runNumber == 167674) && (event->eventNumber == 381879303)) || 
-    // 	((event->runNumber == 167676) && (event->eventNumber == 78292789)) || 
-    // 	((event->runNumber == 167754) && (event->eventNumber == 88484623))) {
-    //   cout << "MET(run " << event->runNumber << ", event " << event->eventNumber << ") = ";
-    //   map<TString, susy::MET>::const_iterator iMET = event->metMap.find("pfMet");
-    //   if (iMET != event->metMap.end()) cout << iMET->second.met() << endl;
-    // }
 
     //print debug info
     if (printLevel == 2) debugPrint(categorizer, event);
@@ -802,6 +823,8 @@ void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt)
   VBOOL photonPassHOverEMax = categorizer.getPhotonPassHOverEMax();
   VBOOL photonPassR9Max = categorizer.getPhotonPassR9Max();
   VBOOL photonPassTrackIsoMax = categorizer.getPhotonPassTrackIsoMax();
+  VBOOL photonPassCombinedIsoMax = categorizer.getPhotonPassCombinedIsoMax();
+  VBOOL photonPassFakeCombinedIsoMax = categorizer.getPhotonPassFakeCombinedIsoMax();
   VBOOL photonPassSigmaIetaIetaMax = categorizer.getPhotonPassSigmaIetaIetaMax();
   VBOOL photonPassAbsSeedTimeMax = categorizer.getPhotonPassAbsSeedTimeMax();
   VBOOL photonPassE2OverE9Max = categorizer.getPhotonPassE2OverE9Max();
@@ -843,7 +866,7 @@ void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt)
     debug << "-----------------\n";
     debug << "Photon ECAL isolation: " << photonECALIso[i] << " GeV\n";
     debug << "Cut: photon ECAL isolation < (" << photonECALIsoMaxPTMultiplier << "ET + ";
-    debug << photonECALIsoMaxConstant << ") GeV = ";
+    debug << photonECALIsoMaxConstant << " GeV) = ";
     debug << (photonECALIsoMaxPTMultiplier*(*iET) + photonECALIsoMaxConstant) << " GeV\n";
     debug << "Result: ";
     if (photonPassECALIsoMax[i]) debug << "pass\n";
@@ -851,7 +874,7 @@ void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt)
     debug << "-----------------\n";
     debug << "Photon HCAL isolation: " << photonHCALIso[i] << " GeV\n";
     debug << "Cut: photon HCAL isolation < (" << photonHCALIsoMaxPTMultiplier << "ET + ";
-    debug << photonHCALIsoMaxConstant << ") GeV = ";
+    debug << photonHCALIsoMaxConstant << " GeV) = ";
     debug << (photonHCALIsoMaxPTMultiplier*(*iET) + photonHCALIsoMaxConstant) << " GeV\n";
     debug << "Result: ";
     if (photonPassHCALIsoMax[i]) debug << "pass\n";
@@ -871,10 +894,22 @@ void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt)
     debug << "-----------------\n";
     debug << "Photon track isolation: " << photonTrackIso[i] << " GeV\n";
     debug << "Cut: photon track isolation < (" << photonTrackIsoMaxPTMultiplier << "ET + ";
-    debug << photonTrackIsoMaxConstant << ") GeV = ";
+    debug << photonTrackIsoMaxConstant << " GeV) = ";
     debug << (photonTrackIsoMaxPTMultiplier*(*iET) + photonTrackIsoMaxConstant) << " GeV\n";
     debug << "Result: ";
     if (photonPassTrackIsoMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Photon combined isolation: ";
+    debug << (photonECALIso[i] + photonHCALIso[i] + photonTrackIso[i]) << " GeV\n";
+    debug << "Cut: photon combined isolation < 6 GeV\n";
+    debug << "Result: ";
+    if (photonPassCombinedIsoMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "-----------------\n";
+    debug << "Cut: fake combined isolation < 12 GeV\n";
+    debug << "Result: ";
+    if (photonPassFakeCombinedIsoMax[i]) debug << "pass\n";
     else debug << "fail\n";
     debug << "-----------------\n";
     debug << "Photon sigmaIetaIeta: " << photonSigmaIetaIeta[i] << std::endl;

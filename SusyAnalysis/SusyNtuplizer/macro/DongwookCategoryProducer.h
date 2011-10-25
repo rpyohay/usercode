@@ -23,7 +23,11 @@ struct ParameterSet {
   double photonHOverEMax;
   double photonR9Max;
   double photonTrackIsoMaxPTMultiplier;
-  double photonTrackIsoMaxPTConstant;
+  double photonTrackIsoMaxConstant;
+  double photonCombinedIsoMax;
+  double fakeCombinedIsoMax;
+  unsigned int isoConeHLT;
+  unsigned int isoConeOffline;
   double photonSigmaIetaIetaMax;
   double photonAbsSeedTimeMax;
   double photonE2OverE9Max;
@@ -65,7 +69,11 @@ private:
   double photonHOverEMax_;
   double photonR9Max_;
   double photonTrackIsoMaxPTMultiplier_;
-  double photonTrackIsoMaxPTConstant_;
+  double photonTrackIsoMaxConstant_;
+  double photonCombinedIsoMax_;
+  double fakeCombinedIsoMax_;
+  unsigned int isoConeHLT_;
+  unsigned int isoConeOffline_;
   double photonSigmaIetaIetaMax_;
   double photonAbsSeedTimeMax_;
   double photonE2OverE9Max_;

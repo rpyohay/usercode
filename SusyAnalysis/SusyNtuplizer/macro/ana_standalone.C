@@ -1,6 +1,6 @@
 // adapted from SusyAnalysis/SusyNtuplizer/macro/ana.C
 
-#include "../../../GMSBTools/Filters/interface/Typedefs.h"
+#include "EventAnalyzer.h"
 
 void ana_standalone() {
 
@@ -16,8 +16,12 @@ void ana_standalone() {
   gROOT->LoadMacro("SusyEventPrinter.cc++");
 
   // Main analysis code
+  gSystem->SetIncludePath("-I../../..");
   gROOT->LoadMacro("EventAnalyzer.cc++");
   gROOT->LoadMacro("DongwookCategoryProducer.cc++");
+
+  /*now, ECAL/HCAL/track isolation cuts are meant to be matched with loose trigger cuts, so don't 
+    use them (i.e. track isolation) to distinguish photon from fake!*/
 
   //configuration
   ParameterSet pars;
@@ -25,18 +29,33 @@ void ana_standalone() {
   pars.photon1ETMin = 45.0;
   pars.photon2ETMin = 30.0;
   pars.photonAbsEtaMax = 1.4442;
-  pars.photonECALIsoMaxPTMultiplier = 0.006;
-  pars.photonECALIsoMaxConstant = 4.2;
-  // pars.photonECALIsoEffArea = 0.2918;
-  pars.photonECALIsoEffArea = 0.0;
-  pars.photonHCALIsoMaxPTMultiplier = 0.0025;
-  pars.photonHCALIsoMaxConstant = 2.2;
-  // pars.photonHCALIsoEffArea = 0.1039;
-  pars.photonHCALIsoEffArea = 0.0;
+  pars.photonECALIsoMaxPTMultiplier = 0.012; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
+					       EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 
+					       cone*/
+  pars.photonECALIsoMaxConstant = 6.0; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
+					 EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 cone*/
+  pars.photonECALIsoEffArea = 0.1474; /*https://twiki.cern.ch/twiki/bin/view/CMS/
+					RA3IsolationConePileupCorrections, dR = 0.3 cone, 
+					18-Oct-11*/
+  pars.photonHCALIsoMaxPTMultiplier = 0.005; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
+					       EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 
+					       cone*/
+  pars.photonHCALIsoMaxConstant = 4.0; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
+					 EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 cone*/
+  pars.photonHCALIsoEffArea = 0.0467; /*https://twiki.cern.ch/twiki/bin/view/CMS/
+					RA3IsolationConePileupCorrections, dR = 0.3 cone, 
+					18-Oct-11*/
   pars.photonHOverEMax = 0.05;
   pars.photonR9Max = 0.98;
-  pars.photonTrackIsoMaxPTMultiplier = 0.001;
-  pars.photonTrackIsoMaxPTConstant = 2.0;
+  pars.photonTrackIsoMaxPTMultiplier = 0.002; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
+						EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 
+						cone*/
+  pars.photonTrackIsoMaxConstant = 4.0; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
+					  EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 cone*/
+  pars.photonCombinedIsoMax = 6.0;
+  pars.fakeCombinedIsoMax = 12.0;
+  pars.isoConeHLT = DR03;
+  pars.isoConeOffline = DR03;
   pars.photonSigmaIetaIetaMax = 0.011;
   pars.photonAbsSeedTimeMax = -1.0;
   pars.photonE2OverE9Max = -1.0;
@@ -44,16 +63,19 @@ void ana_standalone() {
   pars.photonDRMin = 0.8;
   pars.pixelVetoOnFake = true;
   pars.treeName = "susyTree";
-  pars.input = VSTRING(1, "~/RA3/data/Data2011A_ToRun167913_Filter_NoPileupCorr_Photon_NEW.root");
+//   pars.input = VSTRING(1, "/data2/yohay/RA3/Data2011A_ToRun167913_Filter-JsonHLTtwo43-30GeVPhosWithR9HoverE_NoPileupCorr_Photon_NEW.root");
+  pars.input = VSTRING();
   pars.HLT = vector<TString>();
   pars.HLT.push_back("HLT_Photon32_CaloIdL_Photon26_CaloIdL");
   pars.HLT.push_back("HLT_Photon36_CaloIdL_Photon22_CaloIdL");
   pars.HLT.push_back("HLT_Photon40_CaloIdL_Photon28_CaloIdL");
+  pars.HLT.push_back("HLT_Photon36_CaloIdL_IsoVL_Photon22_CaloIdL_IsoVL");
   pars.nEvts = -1;
-  pars.JSON = "/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions11/7TeV/Reprocessing/Cert_160404-163869_7TeV_May10ReReco_Collisions11_JSON.txt";
-  // pars.JSON = "";
-  // pars.outputFile = "/Users/rachelyohay/RA3/data/debug.root";
-  pars.outputFile = "/Users/rachelyohay/RA3/data/debug.root";
+  pars.JSON = "";
+//   pars.JSON = "/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/JSON_160431-177878_May10ReReco_Run2011APromptRecov4v6_Aug5ReReco_Run2011BPromptRecov1.txt";
+//   pars.outputFile = "/data2/yohay/RA3/Data2011A_ToRun167913_Filter-JsonHLTtwo43-30GeVPhosWithR9HoverE_NoPileupCorr_Photon_NEW_categorized_OR.root";
+//   pars.outputFile = "/data2/yohay/RA3/1140pb-1_ff_categorized_new.root";
+  pars.outputFile = "/data2/yohay/RA3/debug.root";
 
   TStopwatch ts;
 

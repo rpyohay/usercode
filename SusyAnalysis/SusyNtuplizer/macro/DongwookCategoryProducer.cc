@@ -15,7 +15,11 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
   photonHOverEMax_(iConfig.photonHOverEMax),
   photonR9Max_(iConfig.photonR9Max),
   photonTrackIsoMaxPTMultiplier_(iConfig.photonTrackIsoMaxPTMultiplier),
-  photonTrackIsoMaxPTConstant_(iConfig.photonTrackIsoMaxPTConstant),
+  photonTrackIsoMaxConstant_(iConfig.photonTrackIsoMaxConstant),
+  photonCombinedIsoMax_(iConfig.photonCombinedIsoMax),
+  fakeCombinedIsoMax_(iConfig.fakeCombinedIsoMax),
+  isoConeHLT_(iConfig.isoConeHLT),
+  isoConeOffline_(iConfig.isoConeOffline),
   photonSigmaIetaIetaMax_(iConfig.photonSigmaIetaIetaMax),
   photonAbsSeedTimeMax_(iConfig.photonAbsSeedTimeMax),
   photonE2OverE9Max_(iConfig.photonE2OverE9Max),
@@ -38,7 +42,7 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
     chain_->Add((*iIn).c_str());
   }
   treeReader_ = new EventAnalyzer(chain_);
-  treeReader_->SetPrintInterval(100000);
+  treeReader_->SetPrintInterval(10000);
   treeReader_->SetPrintLevel(0);
   treeReader_->SetUseTrigger(true);
   for (vector<TString>::const_iterator i = HLT_.begin(); i != HLT_.end(); ++i) {
@@ -50,6 +54,8 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
   treeReader_->SetPhotonTag(photonTag_);
   treeReader_->SetPhotonECALIsoEffArea(photonECALIsoEffArea_);
   treeReader_->SetPhotonHCALIsoEffArea(photonHCALIsoEffArea_);
+  treeReader_->SetIsoConeHLT(isoConeHLT_);
+  treeReader_->SetIsoConeOffline(isoConeOffline_);
 
   //create the output tree and define new branches
   out.cd();
@@ -62,7 +68,9 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
   VDOUBLE photonET;
   VDOUBLE photonEta;
   VDOUBLE photonECALIso;
+  VDOUBLE PUSubtractedPhotonECALIso;
   VDOUBLE photonHCALIso;
+  VDOUBLE PUSubtractedPhotonHCALIso;
   VDOUBLE photonHOverE;
   VDOUBLE photonR9;
   VDOUBLE photonTrackIso;
@@ -72,15 +80,17 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
   VINT photonSeedIeta;
   VDOUBLE photonPhi;
   VBOOL photonHasPixelSeed;
-  Categorizer categorizer(photonET, photonEta, photonECALIso, photonHCALIso, photonHOverE, 
-			  photonR9, photonTrackIso, photonSigmaIetaIeta, photonSeedTime, 
-			  photonE2OverE9, photonPhi, photonHasPixelSeed, photon1ETMin_, 
-			  photon2ETMin_, photonAbsEtaMax_, photonECALIsoMaxPTMultiplier_, 
+  Categorizer categorizer(photonET, photonEta, photonECALIso, PUSubtractedPhotonECALIso, 
+			  photonHCALIso, PUSubtractedPhotonHCALIso, photonHOverE, photonR9, 
+			  photonTrackIso, photonSigmaIetaIeta, photonSeedTime, photonE2OverE9, 
+			  photonPhi, photonHasPixelSeed, photon1ETMin_, photon2ETMin_, 
+			  photonAbsEtaMax_, photonECALIsoMaxPTMultiplier_, 
 			  photonECALIsoMaxConstant_, photonHCALIsoMaxPTMultiplier_, 
 			  photonHCALIsoMaxConstant_, photonHOverEMax_, photonR9Max_, 
-			  photonTrackIsoMaxPTMultiplier_, photonTrackIsoMaxPTConstant_, 
-			  photonSigmaIetaIetaMax_, photonAbsSeedTimeMax_, photonE2OverE9Max_, 
-			  photonDPhiMin_, photonDRMin_, pixelVetoOnFake_);
+			  photonTrackIsoMaxPTMultiplier_, photonTrackIsoMaxConstant_, 
+			  photonCombinedIsoMax_, fakeCombinedIsoMax_, photonSigmaIetaIetaMax_, 
+			  photonAbsSeedTimeMax_, photonE2OverE9Max_, photonDPhiMin_, photonDRMin_, 
+			  pixelVetoOnFake_);
 
   //run the category producer
   try { treeReader_->Loop(outTree_, categorizer, category_); }
@@ -90,6 +100,7 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
   outTree_->Write();
   out.Write();
   out.Close();
+  outTree_ = NULL;
 
   //write events in each sample to file
   STRING outDebugName(outputFile_.replace(outputFile_.find("root"), 4, "txt"));
@@ -108,8 +119,11 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
 DongwookCategoryProducer::~DongwookCategoryProducer()
 {
   delete chain_;
+  chain_ = NULL;
   delete treeReader_;
+  treeReader_ = NULL;
   delete category_;
+  category_ = NULL;
 }
 
 void DongwookCategoryProducer::writeEvents(const RUNEVTLUMIMAP& evts, ofstream& out, 
