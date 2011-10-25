@@ -15,6 +15,21 @@
 
 #include "SusyEvent.h"
 
+void susy::PUSummaryInfo::Init() {
+  numInteractions = 0;
+  zPositions.clear();
+  sumPTLowPT.clear();
+  sumPTHighPT.clear();
+  numTracksLowPT.clear();
+  numTracksHighPT.clear();
+  instLumi.clear();
+  dataMixerRun.clear();
+  dataMixerEvt.clear();
+  dataMixerLumiSection.clear();
+  BX = 0;
+  trueNumInteractions = 0;
+}
+
 void susy::Particle::Init() {
     status      = 0;
     motherId    = -1;
@@ -410,6 +425,7 @@ void susy::Event::Init() {
     
     generalTracks.clear();
 
+    PU.clear();
     simVertices.clear();
     genParticles.clear();
     gridParams.clear();

@@ -35,10 +35,14 @@ namespace susy {
     bool getPassETMin2(const TString&, const unsigned int) const;
     bool getPassAbsEtaMax(const TString&, const unsigned int) const;
     bool getPassECALIsoMax(const TString&, const unsigned int) const;
+    bool getPassPUSubtractedECALIsoMax(const TString&, const unsigned int) const;
     bool getPassHCALIsoMax(const TString&, const unsigned int) const;
+    bool getPassPUSubtractedHCALIsoMax(const TString&, const unsigned int) const;
     bool getPassHOverEMax(const TString&, const unsigned int) const;
     bool getPassR9Max(const TString&, const unsigned int) const;
     bool getPassTrackIsoMax(const TString&, const unsigned int) const;
+    bool getPassCombinedIsoMax(const TString&, const unsigned int) const;
+    bool getPassFakeCombinedIsoMax(const TString&, const unsigned int) const;
     bool getPassSigmaIetaIetaMax(const TString&, const unsigned int) const;
     bool getPassAbsSeedTimeMax(const TString&, const unsigned int) const;
     bool getPassE2OverE9Max(const TString&, const unsigned int) const;
@@ -62,10 +66,14 @@ namespace susy {
     void setPassETMin2(const TString&, const unsigned int, const bool);
     void setPassAbsEtaMax(const TString&, const unsigned int, const bool);
     void setPassECALIsoMax(const TString&, const unsigned int, const bool);
+    void setPassPUSubtractedECALIsoMax(const TString&, const unsigned int, const bool);
     void setPassHCALIsoMax(const TString&, const unsigned int, const bool);
+    void setPassPUSubtractedHCALIsoMax(const TString&, const unsigned int, const bool);
     void setPassHOverEMax(const TString&, const unsigned int, const bool);
     void setPassR9Max(const TString&, const unsigned int, const bool);
     void setPassTrackIsoMax(const TString&, const unsigned int, const bool);
+    void setPassCombinedIsoMax(const TString&, const unsigned int, const bool);
+    void setPassFakeCombinedIsoMax(const TString&, const unsigned int, const bool);
     void setPassSigmaIetaIetaMax(const TString&, const unsigned int, const bool);
     void setPassAbsSeedTimeMax(const TString&, const unsigned int, const bool);
     void setPassE2OverE9Max(const TString&, const unsigned int, const bool);
@@ -89,10 +97,14 @@ namespace susy {
     const TAG_VALUEMAP_BOOL* getPassETMin2() const;
     const TAG_VALUEMAP_BOOL* getPassAbsEtaMax() const;
     const TAG_VALUEMAP_BOOL* getPassECALIsoMax() const;
+    const TAG_VALUEMAP_BOOL* getPassPUSubtractedECALIsoMax() const;
     const TAG_VALUEMAP_BOOL* getPassHCALIsoMax() const;
+    const TAG_VALUEMAP_BOOL* getPassPUSubtractedHCALIsoMax() const;
     const TAG_VALUEMAP_BOOL* getPassHOverEMax() const;
     const TAG_VALUEMAP_BOOL* getPassR9Max() const;
     const TAG_VALUEMAP_BOOL* getPassTrackIsoMax() const;
+    const TAG_VALUEMAP_BOOL* getPassCombinedIsoMax() const;
+    const TAG_VALUEMAP_BOOL* getPassFakeCombinedIsoMax() const;
     const TAG_VALUEMAP_BOOL* getPassSigmaIetaIetaMax() const;
     const TAG_VALUEMAP_BOOL* getPassAbsSeedTimeMax() const;
     const TAG_VALUEMAP_BOOL* getPassE2OverE9Max() const;
@@ -116,10 +128,14 @@ namespace susy {
     void setPassETMin2(const TAG_VALUEMAP_BOOL&);
     void setPassAbsEtaMax(const TAG_VALUEMAP_BOOL&);
     void setPassECALIsoMax(const TAG_VALUEMAP_BOOL&);
+    void setPassPUSubtractedECALIsoMax(const TAG_VALUEMAP_BOOL&);
     void setPassHCALIsoMax(const TAG_VALUEMAP_BOOL&);
+    void setPassPUSubtractedHCALIsoMax(const TAG_VALUEMAP_BOOL&);
     void setPassHOverEMax(const TAG_VALUEMAP_BOOL&);
     void setPassR9Max(const TAG_VALUEMAP_BOOL&);
     void setPassTrackIsoMax(const TAG_VALUEMAP_BOOL&);
+    void setPassCombinedIsoMax(const TAG_VALUEMAP_BOOL&);
+    void setPassFakeCombinedIsoMax(const TAG_VALUEMAP_BOOL&);
     void setPassSigmaIetaIetaMax(const TAG_VALUEMAP_BOOL&);
     void setPassAbsSeedTimeMax(const TAG_VALUEMAP_BOOL&);
     void setPassE2OverE9Max(const TAG_VALUEMAP_BOOL&);
@@ -137,6 +153,9 @@ namespace susy {
     void setPhotonSeedIeta(const TAG_VALUEMAP_INT&);
     void setPassGoodPV(const TAG_BOOL&);
 
+    //clear all maps
+    void reset();
+
   private:
 
     /*each map is between a string containing the photon collection name and the corresponding 
@@ -146,10 +165,14 @@ namespace susy {
     TAG_VALUEMAP_BOOL passETMin2_;
     TAG_VALUEMAP_BOOL passAbsEtaMax_;
     TAG_VALUEMAP_BOOL passECALIsoMax_;
+    TAG_VALUEMAP_BOOL passPUSubtractedECALIsoMax_;
     TAG_VALUEMAP_BOOL passHCALIsoMax_;
+    TAG_VALUEMAP_BOOL passPUSubtractedHCALIsoMax_;
     TAG_VALUEMAP_BOOL passHOverEMax_;
     TAG_VALUEMAP_BOOL passR9Max_;
     TAG_VALUEMAP_BOOL passTrackIsoMax_;
+    TAG_VALUEMAP_BOOL passCombinedIsoMax_;
+    TAG_VALUEMAP_BOOL passFakeCombinedIsoMax_;
     TAG_VALUEMAP_BOOL passSigmaIetaIetaMax_;
     TAG_VALUEMAP_BOOL passAbsSeedTimeMax_;
     TAG_VALUEMAP_BOOL passE2OverE9Max_;

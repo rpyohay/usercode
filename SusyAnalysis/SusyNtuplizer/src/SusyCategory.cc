@@ -7,10 +7,14 @@ susy::Category::Category() :
   passETMin2_(susy::TAG_VALUEMAP_BOOL()),
   passAbsEtaMax_(susy::TAG_VALUEMAP_BOOL()),
   passECALIsoMax_(susy::TAG_VALUEMAP_BOOL()),
+  passPUSubtractedECALIsoMax_(susy::TAG_VALUEMAP_BOOL()),
   passHCALIsoMax_(susy::TAG_VALUEMAP_BOOL()),
+  passPUSubtractedHCALIsoMax_(susy::TAG_VALUEMAP_BOOL()),
   passHOverEMax_(susy::TAG_VALUEMAP_BOOL()),
   passR9Max_(susy::TAG_VALUEMAP_BOOL()),
   passTrackIsoMax_(susy::TAG_VALUEMAP_BOOL()),
+  passCombinedIsoMax_(susy::TAG_VALUEMAP_BOOL()),
+  passFakeCombinedIsoMax_(susy::TAG_VALUEMAP_BOOL()),
   passSigmaIetaIetaMax_(susy::TAG_VALUEMAP_BOOL()),
   passAbsSeedTimeMax_(susy::TAG_VALUEMAP_BOOL()),
   passE2OverE9Max_(susy::TAG_VALUEMAP_BOOL()),
@@ -33,10 +37,14 @@ susy::Category::Category(const susy::Category& other) :
   passETMin2_(*(other.getPassETMin2())),
   passAbsEtaMax_(*(other.getPassAbsEtaMax())),
   passECALIsoMax_(*(other.getPassECALIsoMax())),
+  passPUSubtractedECALIsoMax_(*(other.getPassPUSubtractedECALIsoMax())),
   passHCALIsoMax_(*(other.getPassHCALIsoMax())),
+  passPUSubtractedHCALIsoMax_(*(other.getPassPUSubtractedHCALIsoMax())),
   passHOverEMax_(*(other.getPassHOverEMax())),
   passR9Max_(*(other.getPassR9Max())),
   passTrackIsoMax_(*(other.getPassTrackIsoMax())),
+  passCombinedIsoMax_(*(other.getPassCombinedIsoMax())),
+  passFakeCombinedIsoMax_(*(other.getPassFakeCombinedIsoMax())),
   passSigmaIetaIetaMax_(*(other.getPassSigmaIetaIetaMax())),
   passAbsSeedTimeMax_(*(other.getPassAbsSeedTimeMax())),
   passE2OverE9Max_(*(other.getPassE2OverE9Max())),
@@ -53,7 +61,7 @@ susy::Category::Category(const susy::Category& other) :
   photonE2OverE9_(*(other.getPhotonE2OverE9())),
   photonSeedIeta_(*(other.getPhotonSeedIeta())) {}
 
-susy::Category::~Category() {}
+susy::Category::~Category() { reset(); }
 
 susy::Category& susy::Category::operator=(const susy::Category& other)
 {
@@ -63,10 +71,14 @@ susy::Category& susy::Category::operator=(const susy::Category& other)
     passETMin2_ = *(other.getPassETMin2());
     passAbsEtaMax_ = *(other.getPassAbsEtaMax());
     passECALIsoMax_ = *(other.getPassECALIsoMax());
+    passPUSubtractedECALIsoMax_ = *(other.getPassPUSubtractedECALIsoMax());
     passHCALIsoMax_ = *(other.getPassHCALIsoMax());
+    passPUSubtractedHCALIsoMax_ = *(other.getPassPUSubtractedHCALIsoMax());
     passHOverEMax_ = *(other.getPassHOverEMax());
     passR9Max_ = *(other.getPassR9Max());
     passTrackIsoMax_ = *(other.getPassTrackIsoMax());
+    passCombinedIsoMax_ = *(other.getPassCombinedIsoMax());
+    passFakeCombinedIsoMax_ = *(other.getPassFakeCombinedIsoMax());
     passSigmaIetaIetaMax_ = *(other.getPassSigmaIetaIetaMax());
     passAbsSeedTimeMax_ = *(other.getPassAbsSeedTimeMax());
     passE2OverE9Max_ = *(other.getPassE2OverE9Max());
@@ -131,11 +143,31 @@ bool susy::Category::getPassECALIsoMax(const TString& tag, const unsigned int ph
   catch (STRING& ex) { throw; }
 }
 
+bool susy::Category::getPassPUSubtractedECALIsoMax(const TString& tag, 
+						   const unsigned int photonIndex) const
+{
+  try {
+    return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passPUSubtractedECALIsoMax_, 
+								    tag, photonIndex)).second;
+  }
+  catch (STRING& ex) { throw; }
+}
+
 bool susy::Category::getPassHCALIsoMax(const TString& tag, const unsigned int photonIndex) const
 {
   try {
     return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passHCALIsoMax_, tag, 
 							photonIndex)).second;
+  }
+  catch (STRING& ex) { throw; }
+}
+
+bool susy::Category::getPassPUSubtractedHCALIsoMax(const TString& tag, 
+						   const unsigned int photonIndex) const
+{
+  try {
+    return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passPUSubtractedHCALIsoMax_, 
+								    tag, photonIndex)).second;
   }
   catch (STRING& ex) { throw; }
 }
@@ -162,7 +194,27 @@ bool susy::Category::getPassTrackIsoMax(const TString& tag, const unsigned int p
 {
   try {
     return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passTrackIsoMax_, tag, 
-							photonIndex)).second;
+								    photonIndex)).second;
+  }
+  catch (STRING& ex) { throw; }
+}
+
+bool susy::Category::getPassCombinedIsoMax(const TString& tag, 
+					   const unsigned int photonIndex) const
+{
+  try {
+    return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passCombinedIsoMax_, tag, 
+								    photonIndex)).second;
+  }
+  catch (STRING& ex) { throw; }
+}
+
+bool susy::Category::getPassFakeCombinedIsoMax(const TString& tag, 
+					       const unsigned int photonIndex) const
+{
+  try {
+    return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passFakeCombinedIsoMax_, tag, 
+								    photonIndex)).second;
   }
   catch (STRING& ex) { throw; }
 }
@@ -327,11 +379,25 @@ void susy::Category::setPassECALIsoMax(const TString& tag, const unsigned int ph
 								  photonIndex, pass);
 }
 
+void susy::Category::setPassPUSubtractedECALIsoMax(const TString& tag, 
+						   const unsigned int photonIndex, const bool pass)
+{
+  setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passPUSubtractedECALIsoMax_, 
+								  tag, photonIndex, pass);
+}
+
 void susy::Category::setPassHCALIsoMax(const TString& tag, const unsigned int photonIndex, 
 				       const bool pass)
 {
   setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passHCALIsoMax_, tag, 
 								  photonIndex, pass);
+}
+
+void susy::Category::setPassPUSubtractedHCALIsoMax(const TString& tag, 
+						   const unsigned int photonIndex, const bool pass)
+{
+  setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passPUSubtractedHCALIsoMax_, 
+								  tag, photonIndex, pass);
 }
 
 void susy::Category::setPassHOverEMax(const TString& tag, const unsigned int photonIndex, 
@@ -352,6 +418,20 @@ void susy::Category::setPassTrackIsoMax(const TString& tag, const unsigned int p
 					const bool pass)
 {
   setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passTrackIsoMax_, tag, 
+								  photonIndex, pass);
+}
+
+void susy::Category::setPassCombinedIsoMax(const TString& tag, const unsigned int photonIndex, 
+					   const bool pass)
+{
+  setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passCombinedIsoMax_, tag, 
+								  photonIndex, pass);
+}
+
+void susy::Category::setPassFakeCombinedIsoMax(const TString& tag, const unsigned int photonIndex, 
+					       const bool pass)
+{
+  setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passFakeCombinedIsoMax_, tag, 
 								  photonIndex, pass);
 }
 
@@ -391,7 +471,7 @@ void susy::Category::setPassPreselection(const TString& tag, const unsigned int 
 }
 
 void susy::Category::setIsDeciding(const TString& tag, const unsigned int photonIndex, 
-				const bool pass)
+				   const bool pass)
 {
   setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(isDeciding_, tag, 
 								  photonIndex, pass);
@@ -466,9 +546,19 @@ const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassECALIsoMax() const
   return &passECALIsoMax_; 
 }
 
+const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassPUSubtractedECALIsoMax() const
+{
+  return &passPUSubtractedECALIsoMax_; 
+}
+
 const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassHCALIsoMax() const
 {
   return &passHCALIsoMax_;
+}
+
+const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassPUSubtractedHCALIsoMax() const
+{
+  return &passPUSubtractedHCALIsoMax_; 
 }
 
 const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassHOverEMax() const { return &passHOverEMax_; }
@@ -478,6 +568,16 @@ const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassR9Max() const { return &pa
 const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassTrackIsoMax() const
 {
   return &passTrackIsoMax_;
+}
+
+const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassCombinedIsoMax() const
+{
+  return &passCombinedIsoMax_;
+}
+
+const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassFakeCombinedIsoMax() const
+{
+  return &passFakeCombinedIsoMax_;
 }
 
 const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassSigmaIetaIetaMax() const
@@ -558,9 +658,21 @@ void susy::Category::setPassECALIsoMax(const susy::TAG_VALUEMAP_BOOL& passECALIs
   passECALIsoMax_ = passECALIsoMax;
 }
 
+void susy::Category::setPassPUSubtractedECALIsoMax(const susy::TAG_VALUEMAP_BOOL& 
+						   passPUSubtractedECALIsoMax)
+{
+  passPUSubtractedECALIsoMax_ = passPUSubtractedECALIsoMax;
+}
+
 void susy::Category::setPassHCALIsoMax(const susy::TAG_VALUEMAP_BOOL& passHCALIsoMax)
 {
   passHCALIsoMax_ = passHCALIsoMax;
+}
+
+void susy::Category::setPassPUSubtractedHCALIsoMax(const susy::TAG_VALUEMAP_BOOL& 
+						   passPUSubtractedHCALIsoMax)
+{
+  passPUSubtractedHCALIsoMax_ = passPUSubtractedHCALIsoMax;
 }
 
 void susy::Category::setPassHOverEMax(const susy::TAG_VALUEMAP_BOOL& passHOverEMax)
@@ -576,6 +688,17 @@ void susy::Category::setPassR9Max(const susy::TAG_VALUEMAP_BOOL& passR9Max)
 void susy::Category::setPassTrackIsoMax(const susy::TAG_VALUEMAP_BOOL& passTrackIsoMax)
 {
   passTrackIsoMax_ = passTrackIsoMax;
+}
+
+void susy::Category::setPassCombinedIsoMax(const susy::TAG_VALUEMAP_BOOL& passCombinedIsoMax)
+{
+  passCombinedIsoMax_ = passCombinedIsoMax;
+}
+
+void 
+susy::Category::setPassFakeCombinedIsoMax(const susy::TAG_VALUEMAP_BOOL& passFakeCombinedIsoMax)
+{
+  passFakeCombinedIsoMax_ = passFakeCombinedIsoMax;
 }
 
 void susy::Category::setPassSigmaIetaIetaMax(const susy::TAG_VALUEMAP_BOOL& passSigmaIetaIetaMax)
@@ -656,4 +779,37 @@ void susy::Category::setPhotonSeedIeta(const susy::TAG_VALUEMAP_INT& photonSeedI
 void susy::Category::setPassGoodPV(const susy::TAG_BOOL& passGoodPV)
 {
   passGoodPV_ = passGoodPV;
+}
+
+void susy::Category::reset()
+{
+  photonType_.clear();
+  passETMin1_.clear();
+  passETMin2_.clear();
+  passAbsEtaMax_.clear();
+  passECALIsoMax_.clear();
+  passPUSubtractedECALIsoMax_.clear();
+  passHCALIsoMax_.clear();
+  passPUSubtractedHCALIsoMax_.clear();
+  passHOverEMax_.clear();
+  passR9Max_.clear();
+  passTrackIsoMax_.clear();
+  passCombinedIsoMax_.clear();
+  passFakeCombinedIsoMax_.clear();
+  passSigmaIetaIetaMax_.clear();
+  passAbsSeedTimeMax_.clear();
+  passE2OverE9Max_.clear();
+  hasPixelSeed_.clear();
+  passPreselection_.clear();
+  isDeciding_.clear();
+  eventCategory_.clear();
+  passDPhiMin_.clear();
+  passDRMin_.clear();
+  passAsymmetricETMin_.clear();
+  evtDiEMET_.clear();
+  evtInvMass_.clear();
+  photonSeedTime_.clear();
+  photonE2OverE9_.clear();
+  photonSeedIeta_.clear();
+  passGoodPV_.clear();
 }
