@@ -11,10 +11,12 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include <iostream>
 
 //the tree has 2 branches: an object of class susy::Event and an object of class susy::Category
 #include "../src/SusyEvent.h"
 #include "../src/SusyCategory.h"
+#include "../../../PhysicsTools/Utilities/interface/LumiReweightingStandAlone.h"
 
 class GMSBAnalyzer {
 public :
@@ -45,20 +47,24 @@ public :
    void setFileMapEntry(const string&, const float, const unsigned int);
    void setFileMap(const map<string, unsigned int>&);
    void setXSec(const vector<float>&);
-   void setNEvts(const vector<unsigned int>&);
+   void setNEvtsProcessed(const vector<unsigned int>&);
    void setWeight(const vector<float>&);
    void setIntLumi(const float);
+   void setMCPU(const Double_t*, const unsigned int);
+   void setDataPU(TFile&);
+   void setPUFile(const string&);
 
    TString getTag() const;
    int getNEvts() const;
-   map<string, unsigned int>* getFileMap() const;
+   string getProcess(const unsigned int) const;
    float getXSec(const string&) const;
-   vector<float>* getXSec() const;
-   unsigned int getNEvts(const string&) const;
-   vector<unsigned int>* getNEvts() const;
+   unsigned int getNEvtsProcessed(const string&) const;
    float getWeight(const string&) const;
-   vector<float>* getWeight() const;
+   unsigned int getSize() const;
    float getIntLumi() const;
+   double getMCPU(const unsigned int) const;
+   double getDataPU(const unsigned int) const;
+   string getPUFile() const;
 
    bool matchedToGenParticle(const susy::Photon&, const VINT&, const UChar_t) const;
    bool passesDenominatorSelection(const unsigned int, const susy::Photon&, const VINT&) const;
@@ -96,37 +102,48 @@ public :
    void skim(const string&, const int);
    void debugPrint(const unsigned int) const;
    void reset();
+   void initPU();
+   void clearPU();
    template<typename T, typename U>
-     bool GMSBAnalyzer::indexOutOfRange(const T& iProcess, const U* vec) const
+     bool indexOutOfRange(const T& iProcess, const U* vec) const
    {
-     const unsigned int vecSize = vec.size();
-     if (index >= vecSize) {
-       cerr << "Error: vector index " << index << " corresponding to process " << iProcess->first;
-       cerr << " is larger than max vector index " << (vecSize - 1) << ".\n";
+     const unsigned int vecSize = vec->size();
+     if (iProcess->second >= vecSize) {
+       cerr << "Error: vector index " << iProcess->second << " corresponding to process ";
+       cerr << iProcess->first << " is larger than max vector index " << (vecSize - 1) << ".\n";
+       return true;
      }
+     else return false;
    }
    template<typename T>
-     T GMSBAnalyzer::getValue(const string& processName, const vector<T>& val) const
+     T getValue(const string& processName, const vector<T>& val) const
      {
        T value = 0;
        map<string, unsigned int>::const_iterator iProcess = fileMap_.find(processName);
        if (iProcess != fileMap_.end()) {
-	 if (!indexOutOfRange(iProcess, &val_)) value = val_[iProcess->second];
+	 if (!indexOutOfRange(iProcess, &val)) value = val[iProcess->second];
        }
        return value;
      }
  private:
-   TString tag_;                       //photon collection tag
-   int     nEvts_;                     //number of events to process
-   map<string, unsigned int> fileMap_; /*key is the MC process name (which should be found within 
-					 the absolute file name in the TChain), mapped value is 
-					 the index of the file in vectors of cross sections, 
-					 number of events processed, and corresponding event 
-					 weights*/
-   vector<float> xSec_;                //MC process cross section, 1 element per process
-   vector<unsigned int> nEvts_;        //no. events processed per MC dataset, 1 element per dataset
-   vector<float> weight_;              //MC process weight, 1 element per process
-   float intLumi_;                     //integrated luminosity to normalize events to
+   TString tag_;                           //photon collection tag
+   int     nEvts_;                         //number of events to process
+   map<string, unsigned int> fileMap_;     /*key is the MC process name (which should be found 
+					     within the absolute file name in the TChain), mapped 
+					     value is the index of the file in vectors of cross 
+					     sections, number of events processed, and 
+					     corresponding event weights*/
+   vector<float> xSec_;                    //MC process cross section, 1 element per process
+   vector<unsigned int> nEvtsProcessed_;   /*no. events processed per MC dataset, 1 element per 
+					     dataset*/
+   vector<float> weight_;                  //MC process weight, 1 element per process
+   float intLumi_;                         //integrated luminosity to normalize events to
+   unsigned int size_;                     //size of map/vectors
+   vector<float> MCPU_;                    //MC PU distribution
+   vector<float> dataPU_;                  //data PU distribution
+   unsigned int PUSize_;                   //number of PU bins
+   string PUFile_;                         //name of data PU file
+   reweight::LumiReWeighting lumiWeights_; //PU reweighting object
 };
 
 #endif
@@ -150,7 +167,9 @@ GMSBAnalyzer::GMSBAnalyzer(TTree *tree)
    tag_ = "";
    nEvts_ = 0;
    intLumi_ = 0.0;
+   PUFile_ = "";
    reset();
+   clearPU();
 }
 
 GMSBAnalyzer::~GMSBAnalyzer()
@@ -162,7 +181,9 @@ GMSBAnalyzer::~GMSBAnalyzer()
    tag_ = "";
    nEvts_ = 0;
    intLumi_ = 0.0;
+   PUFile_ = "";
    reset();
+   clearPU();
 }
 
 Int_t GMSBAnalyzer::GetEntry(Long64_t entry)
@@ -241,8 +262,9 @@ void GMSBAnalyzer::addEntry(const string& processName, const float xSec, const u
 {
   fileMap_[processName] = index;
   xSec_.push_back(xSec);
-  nEvts_.push_back(nEvts);
-  weight_.push_back(xSec*intLumi/nEvts);
+  nEvtsProcessed_.push_back(nEvts);
+  weight_.push_back(xSec*intLumi_/nEvts);
+  ++size_;
 }
 void GMSBAnalyzer::setFileMapEntry(const string& processName, const float xSec, 
 				   const unsigned int nEvts)
@@ -250,14 +272,16 @@ void GMSBAnalyzer::setFileMapEntry(const string& processName, const float xSec,
   //check that the file map and all weight-related vectors are of equal size
   const unsigned int fileMapSize = fileMap_.size();
   const unsigned int xSecSize = xSec_.size();
-  const unsigned int nEvtsSize = nEvts_.size();
+  const unsigned int nEvtsSize = nEvtsProcessed_.size();
   const unsigned int weightSize = weight_.size();
-  if ((fileMapSize != xSecSize) || (xSecSize != nEvtsSize) || (nEvtsSize != weightSize)) {
+  if ((fileMapSize != xSecSize) || (xSecSize != nEvtsSize) || (nEvtsSize != weightSize) || 
+      (weightSize != size_)) {
     cerr << "Error: size mismatch.\n";
     cerr << "fileMapSize = " << fileMapSize << endl;
     cerr << "xSecSize = " << xSecSize << endl;
     cerr << "nEvtsSize = " << nEvtsSize << endl;
     cerr << "weightSize = " << weightSize << endl;
+    cerr << "size_ = " << size_ << endl;
     cerr << "Clearing everything and starting over.\n";
     reset();
   }
@@ -281,9 +305,9 @@ void GMSBAnalyzer::setFileMapEntry(const string& processName, const float xSec,
     else {
 
       //update the map
-      xSec_[index] = xSec;
-      nEvts_[index] = nEvts;
-      weight_[index] = xSec*intLumi/nEvts;
+      xSec_[iProcess->second] = xSec;
+      nEvtsProcessed_[iProcess->second] = nEvts;
+      weight_[iProcess->second] = xSec*intLumi_/nEvts;
     }
   }
   else {
@@ -294,35 +318,124 @@ void GMSBAnalyzer::setFileMapEntry(const string& processName, const float xSec,
 }
 void GMSBAnalyzer::setFileMap(const map<string, unsigned int>& fileMap) { fileMap_ = fileMap; }
 void GMSBAnalyzer::setXSec(const vector<float>& xSec) { xSec_ = xSec; }
-void GMSBAnalyzer::setNEvts(const vector<unsigned int>& nEvts) { nEvts_ = nEvts; }
+void GMSBAnalyzer::setNEvtsProcessed(const vector<unsigned int>& nEvts)
+{
+  nEvtsProcessed_ = nEvts;
+}
 void GMSBAnalyzer::setWeight(const vector<float>& weight) { weight_ = weight; }
 void GMSBAnalyzer::setIntLumi(const float intLumi) { intLumi_ = intLumi; }
+void GMSBAnalyzer::setMCPU(const Double_t* PUArray, const unsigned int arraySize)
+{
+  for (unsigned int iPV = 0; iPV < arraySize; ++iPV) { MCPU_.push_back(PUArray[iPV]); }
+}
+void GMSBAnalyzer::setDataPU(TFile& PUFile)
+{
+  TH1D* PUDist = (TH1D*)PUFile.Get("pileup");
+  for (Int_t iPV = 1; iPV <= PUDist->GetNbinsX(); ++iPV) {
+    dataPU_.push_back(PUDist->GetBinContent(iPV));
+  }
+}
+void GMSBAnalyzer::setPUFile(const string& PUFile) { PUFile_ = PUFile; }
 
 TString GMSBAnalyzer::getTag() const { return tag_; }
 int GMSBAnalyzer::getNEvts() const { return nEvts_; }
-map<string, unsigned int>* GMSBAnalyzer::getFileMap() const { return &fileMap_; }
+string GMSBAnalyzer::getProcess(const unsigned int index) const
+{
+  bool found = false;
+  string process = "";
+  map<string, unsigned int>::const_iterator iMap = fileMap_.begin();
+  while ((iMap != fileMap_.end()) && !found) {
+    if (iMap->second == index) {
+      found = true;
+      process = iMap->first;
+    }
+    ++iMap;
+  }
+  return process;
+}
 float GMSBAnalyzer::getXSec(const string& processName) const
 {
   return getValue<float>(processName, xSec_);
 }
-vector<float>* GMSBAnalyzer::getXSec() const { return &xSec_; }
-unsigned int GMSBAnalyzer::getNEvts(const string&) const
+unsigned int GMSBAnalyzer::getNEvtsProcessed(const string& processName) const
 {
-  return getValue<unsigned int>(processName, nEvts_);
+  return getValue<unsigned int>(processName, nEvtsProcessed_);
 }
-vector<unsigned int>* GMSBAnalyzer::getNEvts() const { return &nEvts_; }
-float GMSBAnalyzer::getWeight(const string&) const
+float GMSBAnalyzer::getWeight(const string& processName) const
 {
   return getValue<float>(processName, weight_);
 }
-vector<float>* GMSBAnalyzer::getWeight() const { return &weight_; }
+unsigned int GMSBAnalyzer::getSize() const { return size_; }
 float GMSBAnalyzer::getIntLumi() const { return intLumi_; }
+double GMSBAnalyzer::getMCPU(const unsigned int iPV) const
+{
+  if (iPV < PUSize_) return MCPU_[iPV];
+  else return -1.0;
+}
+double GMSBAnalyzer::getDataPU(const unsigned int iPV) const
+{
+  if (iPV < PUSize_) return dataPU_[iPV];
+  else return -1.0;
+}
+string GMSBAnalyzer::getPUFile() const { return PUFile_; }
 
 void GMSBAnalyzer::reset()
 {
   fileMap_.clear();
   xSec_.clear();
-  nEvts_.clear();
+  nEvtsProcessed_.clear();
   weight_.clear();
+  size_ = 0;
+}
+void GMSBAnalyzer::initPU()
+{
+  const Double_t PoissonOneXDist[25] = {
+     0.14551,
+     0.0644453,
+     0.0696412,
+     0.0700311,
+     0.0694257,
+     0.0685655,
+     0.0670929,
+     0.0646049,
+     0.0609383,
+     0.0564597,
+     0.0508014,
+     0.0445226,
+     0.0378796,
+     0.0314746,
+     0.0254139,
+     0.0200091,
+     0.0154191,
+     0.0116242,
+     0.00846857,
+     0.00614328,
+     0.00426355,
+     0.00300632,
+     0.00203485,
+     0.00133045,
+     0.000893794
+  };
+  setMCPU(PoissonOneXDist, 25);
+  TFile PUFile(PUFile_.c_str());
+  setDataPU(PUFile);
+  PUFile.Close();
+  const unsigned int MCPUSize = MCPU_.size();
+  const unsigned int dataPUSize = dataPU_.size();
+  cout << "MCPU_.size() = " << MCPU_.size() << endl;
+  cout << "dataPU_.size() = " << dataPU_.size() << endl;
+  if (MCPUSize < dataPUSize) dataPU_.erase(dataPU_.begin() + MCPUSize, dataPU_.end());
+  else if (MCPUSize > dataPUSize) MCPU_.erase(MCPU_.begin() + dataPUSize, MCPU_.end());
+  cout << "MCPU_.size() = " << MCPU_.size() << endl;
+  cout << "dataPU_.size() = " << dataPU_.size() << endl;
+  PUSize_ = dataPU_.size();
+  lumiWeights_ = reweight::LumiReWeighting(MCPU_, dataPU_);
+}
+void GMSBAnalyzer::clearPU()
+{
+  MCPU_.clear();
+  dataPU_.clear();
+  PUSize_ = 0;
+  lumiWeights_ = reweight::LumiReWeighting();
 }
 #endif // #ifdef GMSBAnalyzer_cxx

@@ -8,6 +8,7 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 #include "TRandom3.h"
+#include "TRegexp.h"
 #include "GMSBTools/Filters/interface/Typedefs.h"
 #include "SusyAnalysis/SusyNtuplizer/jec/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "SusyAnalysis/SusyNtuplizer/jec/JetMETObjects/interface/FactorizedJetCorrector.h"
@@ -128,7 +129,10 @@ float GMSBAnalyzer::fillWeightsHistograms(TH2F& ggMETVsDiEMET, TH2F& controlMETV
 {
   TH1D* ggDiEMET = ggMETVsDiEMET.ProjectionY();
   TH1D* controlDiEMET = controlMETVsDiEMET.ProjectionY();
-  const float scale = ggMETVsDiEMET.GetEntries()/controlMETVsDiEMET.GetEntries();
+  float scale = 0.0;
+  if (controlMETVsDiEMET.Integral() != 0.0) {
+    scale = ggMETVsDiEMET.Integral()/controlMETVsDiEMET.Integral();
+  }
   controlDiEMET->Scale(scale);
   controlDiEMETScaled.Add(controlDiEMET);
   controlWeights.Divide(ggDiEMET, &controlDiEMETScaled);
@@ -142,7 +146,8 @@ float GMSBAnalyzer::normAndErrorSquared(const TH2F& ggMETVsDiEMET, const TH1F& c
   const float nGGMinusEW = 
     ggMETVsDiEMET.Integral(1, maxNormBin, 0, -1) - egMET->Integral(1, maxNormBin);
   const float nControl = controlMET.Integral(1, maxNormBin);
-  const float norm = nGGMinusEW/nControl;
+  float norm = 0.0;
+  if (nControl != 0.0) norm = nGGMinusEW/nControl;
   float nGGErrSquared = 0.0;
   float nEGErrSquared = 0.0;
   for (unsigned int iBin = 1; iBin <= maxNormBin; ++iBin) {
@@ -151,8 +156,11 @@ float GMSBAnalyzer::normAndErrorSquared(const TH2F& ggMETVsDiEMET, const TH1F& c
     nGGErrSquared+=(ggErr*ggErr);
     nEGErrSquared+=(egErr*egErr);
   }
-  errSquared = 
-    norm*norm*(((nGGErrSquared + nEGErrSquared)/(nGGMinusEW*nGGMinusEW)) + (1.0/nControl));
+  if (nGGMinusEW == 0.0) errSquared = 0.0;
+  else {
+    errSquared = 
+      norm*norm*(((nGGErrSquared + nEGErrSquared)/(nGGMinusEW*nGGMinusEW)) + (1.0/nControl));
+  }
   return norm;
 }
 
@@ -354,20 +362,40 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
    TH1F meg("meg", "", 150, 0.0, 300.0);
    TH1F mee("mee", "", 150, 0.0, 300.0);
    TH1F mff("mff", "", 150, 0.0, 300.0);
-   setHistogramOptions(mgg, "M_{#gamma#gamma} (GeV)", "");
-   setHistogramOptions(meg, "M_{e#gamma} (GeV)", "");
-   setHistogramOptions(mee, "M_{ee} (GeV)", "");
-   setHistogramOptions(mff, "M_{ff} (GeV)", "");
+   setHistogramOptions(mgg, "M_{#gamma#gamma} (GeV)", "", kSumW2);
+   setHistogramOptions(meg, "M_{e#gamma} (GeV)", "", kSumW2);
+   setHistogramOptions(mee, "M_{ee} (GeV)", "", kSumW2);
+   setHistogramOptions(mff, "M_{ff} (GeV)", "", kSumW2);
 
    //combined isolation histograms (sanity check)
    TH1F ggCombinedIso("ggCombinedIso", "", 40, 0.0, 20.0);
    TH1F egCombinedIso("egCombinedIso", "", 40, 0.0, 20.0);
    TH1F eeCombinedIso("eeCombinedIso", "", 40, 0.0, 20.0);
    TH1F ffCombinedIso("ffCombinedIso", "", 40, 0.0, 20.0);
-   setHistogramOptions(ggCombinedIso, "Combined isolation (GeV)", "");
-   setHistogramOptions(egCombinedIso, "Combined isolation (GeV)", "");
-   setHistogramOptions(eeCombinedIso, "Combined isolation (GeV)", "");
-   setHistogramOptions(ffCombinedIso, "Combined isolation (GeV)", "");
+   setHistogramOptions(ggCombinedIso, "Combined isolation (GeV)", "", kSumW2);
+   setHistogramOptions(egCombinedIso, "Combined isolation (GeV)", "", kSumW2);
+   setHistogramOptions(eeCombinedIso, "Combined isolation (GeV)", "", kSumW2);
+   setHistogramOptions(ffCombinedIso, "Combined isolation (GeV)", "", kSumW2);
+
+   //leading photon ET histograms (sanity check)
+   TH1F ggLeadingPhotonET("ggLeadingPhotonET", "", 150, 0.0, 300.0);
+   TH1F egLeadingPhotonET("egLeadingPhotonET", "", 150, 0.0, 300.0);
+   TH1F eeLeadingPhotonET("eeLeadingPhotonET", "", 150, 0.0, 300.0);
+   TH1F ffLeadingPhotonET("ffLeadingPhotonET", "", 150, 0.0, 300.0);
+   setHistogramOptions(ggLeadingPhotonET, "Leading photon E_{T} (GeV)", "", kSumW2);
+   setHistogramOptions(egLeadingPhotonET, "Leading photon E_{T} (GeV)", "", kSumW2);
+   setHistogramOptions(eeLeadingPhotonET, "Leading photon E_{T} (GeV)", "", kSumW2);
+   setHistogramOptions(ffLeadingPhotonET, "Leading photon E_{T} (GeV)", "", kSumW2);
+
+   //nPV histograms (sanity check)
+   TH1F ggNPV("ggNPV", "", 36, -0.5, 35.5);
+   TH1F egNPV("egNPV", "", 36, -0.5, 35.5);
+   TH1F eeNPV("eeNPV", "", 36, -0.5, 35.5);
+   TH1F ffNPV("ffNPV", "", 36, -0.5, 35.5);
+   setHistogramOptions(ggNPV, "n_{PV}", "", kSumW2);
+   setHistogramOptions(egNPV, "n_{PV}", "", kSumW2);
+   setHistogramOptions(eeNPV, "n_{PV}", "", kSumW2);
+   setHistogramOptions(ffNPV, "n_{PV}", "", kSumW2);
 
    //MET vs. di-EM ET histograms
    TH2F ggMETVsDiEMET("ggMETVsDiEMET", "", nMETBins, METBins, nDiEMETBins, diEMETBins);
@@ -482,9 +510,40 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
      if (ientry < 0) break;
      nb = fChain->GetEntry(jentry);   nbytes += nb;
      if (((jentry + 1) % 10000) == 0) cout << "Event " << (jentry + 1) << endl;
-     cout << fChain->GetCurrentFile()->GetName() << endl;
 
-     //fill MET vs. di-EM ET, invariant mass, and rho histograms
+     //get int. lumi weight for this dataset
+     TString fileName(fChain->GetCurrentFile()->GetName());
+     TString dataset(fileName("ntuple_.*-v[0-9]"));
+     if (dataset.Length() >= 7) dataset.Remove(0, 7);
+     string datasetString((const char*)dataset);
+     map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
+     float lumiWeight = 1.0;
+     if (iDataset != fileMap_.end()) lumiWeight = weight_[iDataset->second];
+     else {
+       /*once comfortable with MC dataset names, remove this and just assume the file is data and 
+	 gets weight 1.0*/
+       cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
+     }
+
+     //get PU weight for this dataset
+     /*in-time reweighting only following 
+       https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupMCReweightingUtilities as of 27-Oct-11 
+       and Tessa's recommendation*/
+     int nPV  = -1;
+     float PUWeight = 1.0;
+     susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+     bool foundInTimeBX = false;
+     while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+       if (iBX->BX == 0) { 
+	 nPV = iBX->numInteractions;
+	 foundInTimeBX = true;
+       }
+       ++iBX;
+     }
+     PUWeight = lumiWeights_.ITweight(nPV);
+     PUWeight = 1.0;
+
+     //fill MET vs. di-EM ET, invariant mass, rho, leading photon ET, and nPV histograms
      const double invMass = susyCategory->getEvtInvMass(tag_);
      double MET = -1.0;
      map<TString, susy::MET>::const_iterator iMET = susyEvent->metMap.find("pfMet");
@@ -492,9 +551,15 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
      else cerr << "Error: PFMET not found in event " << (jentry + 1) << ".\n";
      const double diEMET = susyCategory->getEvtDiEMET(tag_);
      const Float_t rho = susyEvent->rho;
-     rhoSkim.Fill(rho);
+     rhoSkim.Fill(rho, lumiWeight*PUWeight);
      const int evtCategory = susyCategory->getEventCategory(tag_);
-     if (evtCategory != FAIL) rhoPreselected.Fill(rho);
+     if (evtCategory != FAIL) rhoPreselected.Fill(rho, lumiWeight*PUWeight);
+     unsigned int nGoodRecoPV = 0;
+     for (vector<susy::Vertex>::const_iterator iPV = susyEvent->vertices.begin(); 
+	  iPV != susyEvent->vertices.end(); ++iPV) {
+       if (!iPV->isFake() && (iPV->ndof > 4) && (iPV->position.Z() <= 24.0/*cm*/) && 
+	   (iPV->position.Perp() <= 2.0/*cm*/)) ++nGoodRecoPV;
+     }
 
 //      //count jets
 //      unsigned int nJets = 0;
@@ -570,70 +635,91 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 //        cerr << "event " (jentry + 1) << ".\n";
 //      }
 
-     //get combined isolation
+     //get combined isolation and photon ET
      vector<float> combinedIso;
+     vector<float> ET;
      if (evtCategory != FAIL) {
        if (iPhotonMap != susyEvent->photons.end()) {
 	 for (susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin(); 
 	      iPhoton != iPhotonMap->second.end(); ++iPhoton) {
 	   if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin())) {
+	     ET.push_back(iPhoton->momentum.Et());
 	     combinedIso.push_back(iPhoton->ecalRecHitSumEtConeDR03 + 
 				   iPhoton->hcalTowerSumEtConeDR03() + 
 				   iPhoton->trkSumPtHollowConeDR03);
 	   }
 	 }
-	 if (combinedIso.size() != 2) {
-	   cerr << "Error: " << combinedIso.size() << " photons in event " << (jentry + 1);
-	   cerr << ".\n";
+	 if ((combinedIso.size() != 2) || (ET.size() != 2)) {
+	   cerr << "Error: combinedIso.size() = " << combinedIso.size() << " and ET.size() = ";
+	   cerr << ET.size() << " in event " << (jentry + 1) << ".\n";
 	 }
        }
        else {
-	 cerr << "Error: " << tag_ << " photon collection not found in event " (jentry + 1);
+	 cerr << "Error: " << tag_ << " photon collection not found in event " << (jentry + 1);
 	 cerr << ".\n";
        }
      }
 
+     //sort photon ET in ascending order
+     sort(ET.begin(), ET.end());
+
 //      if (nJets == 0) {
        switch (evtCategory) {
        case GG:
-	 ggMETVsDiEMET.Fill(MET, diEMET);
-	 mgg.Fill(invMass);
+	 ggMETVsDiEMET.Fill(MET, diEMET, lumiWeight*PUWeight);
+	 mgg.Fill(invMass, lumiWeight*PUWeight);
 	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
-	      iIso != combinedIso.end(); ++iIso) { ggCombinedIso.Fill(*iIso); }
+	      iIso != combinedIso.end(); ++iIso) {
+	   ggCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
+	 }
+	 ggLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	 ggNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        case EG:
-	 egMETVsDiEMET.Fill(MET, diEMET);
-	 meg.Fill(invMass);
+	 egMETVsDiEMET.Fill(MET, diEMET, lumiWeight*PUWeight);
+	 meg.Fill(invMass, lumiWeight*PUWeight);
 	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
-	      iIso != combinedIso.end(); ++iIso) { egCombinedIso.Fill(*iIso); }
+	      iIso != combinedIso.end(); ++iIso) {
+	   egCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
+	 }
+	 egLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	 egNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        case EE:
 	 if ((invMass >= 71.0/*GeV*/) && (invMass < 76.0/*GeV*/)) {
-	   eeLowSidebandMETVsDiEMET.Fill(MET, diEMET);
+	   eeLowSidebandMETVsDiEMET.Fill(MET, diEMET, lumiWeight*PUWeight);
 	   eeLowSidebandMETVec.push_back(MET);
 	   eeLowSidebandDiEMETVec.push_back(diEMET);
 	 }
 	 if ((invMass >= 81.0/*GeV*/) && (invMass < 101.0/*GeV*/)) {
-	   eeMETVsDiEMET.Fill(MET, diEMET);
+	   eeMETVsDiEMET.Fill(MET, diEMET, lumiWeight*PUWeight);
 	   eeMETVec.push_back(MET);
 	   eeDiEMETVec.push_back(diEMET);
 	 }
 	 if ((invMass >= 106.0/*GeV*/) && (invMass < 111.0/*GeV*/)) {
-	   eeHighSidebandMETVsDiEMET.Fill(MET, diEMET);
+	   eeHighSidebandMETVsDiEMET.Fill(MET, diEMET, lumiWeight*PUWeight);
 	   eeHighSidebandMETVec.push_back(MET);
 	   eeHighSidebandDiEMETVec.push_back(diEMET);
 	 }
-	 mee.Fill(invMass);
+	 mee.Fill(invMass, lumiWeight*PUWeight);
 	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
-	      iIso != combinedIso.end(); ++iIso) { eeCombinedIso.Fill(*iIso); }
+	      iIso != combinedIso.end(); ++iIso) {
+	   eeCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
+	 }
+	 eeLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	 eeNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        case FF:
-	 ffMETVsDiEMET.Fill(MET, diEMET);
+	 ffMETVsDiEMET.Fill(MET, diEMET, lumiWeight*PUWeight);
 	 ffMETVec.push_back(MET);
 	 ffDiEMETVec.push_back(diEMET);
-	 mff.Fill(invMass);
+	 mff.Fill(invMass, lumiWeight*PUWeight);
 	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
-	      iIso != combinedIso.end(); ++iIso) { ffCombinedIso.Fill(*iIso); }
+	      iIso != combinedIso.end(); ++iIso) {
+	   ffCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
+	 }
+	 ffLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	 ffNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        default:
 	 break;
@@ -708,9 +794,14 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
    for (Int_t iBin = 1; iBin <= egMET->GetNbinsX(); ++iBin) {
      const float binContent = egMET->GetBinContent(iBin);
      const float binPoissonError = egMET->GetBinError(iBin);
-     egMET->SetBinError(iBin, 
-			egScale*sqrt(((binPoissonError*binPoissonError)/(binContent*binContent)) + 
-				     ((egMisIDRateErr*egMisIDRateErr)/(egMisIDRate*egMisIDRate))));
+     if (binContent == 0.0) egMET->SetBinError(iBin, 0.0);
+     else {
+       egMET->SetBinError(iBin, 
+			  egScale*sqrt(((binPoissonError*binPoissonError)/
+					(binContent*binContent)) + 
+				       ((egMisIDRateErr*egMisIDRateErr)/
+					(egMisIDRate*egMisIDRate))));
+     }
    }
 
    //normalize ee and ff MET histograms
@@ -735,7 +826,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 
    //add EW contribution to QCD control samples
    eeFinal.Add(egMET);
-   ffFinal.Add(egMET);   
+   ffFinal.Add(egMET);
 
    //make final canvas
    METCanvas.cd();
