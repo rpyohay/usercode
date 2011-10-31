@@ -19,7 +19,7 @@ void GMSBAnalysis()
   for (VSTRING_IT iIn = input.begin(); iIn != input.end(); ++iIn) { tree->Add((*iIn).c_str()); }
   GMSBAnalyzer analyzer(tree);
   analyzer.setTag("photons");
-  analyzer.setNEvts(-1);
+  analyzer.setNEvts(1);
   analyzer.setIntLumi(1140.0/*pb^-1*/);
   analyzer.setFileMapEntry("QCD_Pt-15to30_TuneZ2_7TeV_pythia6-Summer11-PU_S3_START42_V11-v2", 
 			   8.16E+08/*pb*/, 11000000);
@@ -109,7 +109,8 @@ void GMSBAnalysis()
   //loop over events
   TStopwatch ts;
   ts.Start();
-  analyzer.runMETAnalysis("/data2/yohay/RA3/debug_noPUReweighting.root");
+//   analyzer.runMETAnalysis("/data2/yohay/RA3/debug_noPUReweighting.root");
+  analyzer.stripBranch("/data2/yohay/RA3/ntuple_DYToEE_M-20_TuneZ2_7TeV-pythia6-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v2.root", "susyEvent");
   ts.Stop();
   std::cout << "RealTime : " << ts.RealTime()/60.0 << " minutes" << std::endl;
   std::cout << "CPUTime  : " << ts.CpuTime()/60.0 << " minutes" << std::endl;

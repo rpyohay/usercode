@@ -100,6 +100,7 @@ public :
    void runEEVsFFAnalysis(const std::string&);
    void runCutFlowAnalysis();
    void skim(const string&, const int);
+   void stripBranch(const string&, const string&);
    void debugPrint(const unsigned int) const;
    void reset();
    void initPU();

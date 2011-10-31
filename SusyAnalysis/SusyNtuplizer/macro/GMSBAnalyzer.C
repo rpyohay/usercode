@@ -1636,6 +1636,35 @@ void GMSBAnalyzer::skim(const string& outputFile, const int evtCategory)
   out.Close();
 }
 
+void GMSBAnalyzer::stripBranch(const string& outputFile, const string& branch)
+{
+  if (fChain == 0) return;
+
+  //open file and clone tree
+  TFile out(outputFile.c_str(), "RECREATE");
+  out.cd();
+  TTree* skimTree = fChain->CloneTree(0);
+
+  //set user-specified number of entries to process
+  Long64_t nentries = fChain->GetEntriesFast();
+  if (nEvts_ != -1) nentries = nEvts_;
+
+  //copy tree to new file
+  Long64_t nbytes = 0, nb = 0;
+  for (Long64_t jentry=0; jentry<nentries;jentry++) {
+    Long64_t ientry = LoadTree(jentry);
+    if (ientry < 0) break;
+    TBranch* pBranch = fChain->GetTree()->GetBranch(branch.c_str());
+    nb = /*fChain*/pBranch->GetEntry(jentry);   nbytes += nb;
+    if (((jentry + 1) % 10000) == 0) cout << "Event " << (jentry + 1) << endl;
+    skimTree->Fill();
+  }
+
+  //close files
+  out.Write();
+  out.Close();
+}
+
 void GMSBAnalyzer::debugPrint(const unsigned int jentry) const
 {
   //loop over photons
