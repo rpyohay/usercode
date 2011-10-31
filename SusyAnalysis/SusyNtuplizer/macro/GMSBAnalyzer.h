@@ -53,6 +53,9 @@ public :
    void setMCPU(const Double_t*, const unsigned int);
    void setDataPU(TFile&);
    void setPUFile(const string&);
+   void setL1JECFile(const string&);
+   void setL2JECFile(const string&);
+   void setL3JECFile(const string&);
 
    TString getTag() const;
    int getNEvts() const;
@@ -65,6 +68,9 @@ public :
    double getMCPU(const unsigned int) const;
    double getDataPU(const unsigned int) const;
    string getPUFile() const;
+   string getL1JECFile() const;
+   string getL2JECFile() const;
+   string getL3JECFile() const;
 
    bool matchedToGenParticle(const susy::Photon&, const VINT&, const UChar_t) const;
    bool passesDenominatorSelection(const unsigned int, const susy::Photon&, const VINT&) const;
@@ -145,6 +151,9 @@ public :
    unsigned int PUSize_;                   //number of PU bins
    string PUFile_;                         //name of data PU file
    reweight::LumiReWeighting lumiWeights_; //PU reweighting object
+   string L1JECFile_;                      //file name for L1 JEC
+   string L2JECFile_;                      //file name for L2 JEC
+   string L3JECFile_;                      //file name for L3 JEC
 };
 
 #endif
@@ -165,10 +174,8 @@ GMSBAnalyzer::GMSBAnalyzer(TTree *tree)
    Init(tree);
 
    //initialize private data members
-   tag_ = "";
    nEvts_ = 0;
    intLumi_ = 0.0;
-   PUFile_ = "";
    reset();
    clearPU();
 }
@@ -183,6 +190,9 @@ GMSBAnalyzer::~GMSBAnalyzer()
    nEvts_ = 0;
    intLumi_ = 0.0;
    PUFile_ = "";
+   L1JECFile_ = "";
+   L2JECFile_ = "";
+   L3JECFile_ = "";
    reset();
    clearPU();
 }
@@ -337,6 +347,9 @@ void GMSBAnalyzer::setDataPU(TFile& PUFile)
   }
 }
 void GMSBAnalyzer::setPUFile(const string& PUFile) { PUFile_ = PUFile; }
+void GMSBAnalyzer::setL1JECFile(const string& L1JECFile) { L1JECFile_ = L1JECFile; }
+void GMSBAnalyzer::setL2JECFile(const string& L2JECFile) { L2JECFile_ = L2JECFile; }
+void GMSBAnalyzer::setL3JECFile(const string& L3JECFile) { L3JECFile_ = L3JECFile; }
 
 TString GMSBAnalyzer::getTag() const { return tag_; }
 int GMSBAnalyzer::getNEvts() const { return nEvts_; }
@@ -379,6 +392,9 @@ double GMSBAnalyzer::getDataPU(const unsigned int iPV) const
   else return -1.0;
 }
 string GMSBAnalyzer::getPUFile() const { return PUFile_; }
+string GMSBAnalyzer::getL1JECFile() const { return L1JECFile_; }
+string GMSBAnalyzer::getL2JECFile() const { return L2JECFile_; }
+string GMSBAnalyzer::getL3JECFile() const { return L3JECFile_; }
 
 void GMSBAnalyzer::reset()
 {

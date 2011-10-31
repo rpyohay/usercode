@@ -96,6 +96,9 @@ void GMSBAnalysis()
 			   0.008072/*pb*/, 526240);
   analyzer.setPUFile("/data2/yohay/RA3/1140pb-1_PU.root");
   analyzer.initPU();
+  analyzer.setL1JECFile("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L1FastJet.txt");
+  analyzer.setL2JECFile("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L2Relative.txt");
+  analyzer.setL3JECFile("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L3Absolute.txt");
 
 //   const unsigned int size = analyzer.getSize();
 //   for (unsigned int i = 0; i < size; ++i) {
