@@ -2,6 +2,8 @@
 
 cd ../../PhysicsTools/Utilities
 make
+cd ../TagAndProbe
+make
 cd ../../GMSBTools/Filters
 make
 cd ../../SusyAnalysis/SusyNtuplizer/jec/JetMETObjects
