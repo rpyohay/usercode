@@ -3,23 +3,25 @@
 void GMSBAnalysis()
 {
   //load source code and precompiled shared libraries
+  gSystem->Load("libRooFitCore.so");
   gSystem->Load("libSusy.so");
   gSystem->Load("../jec/lib/libJetMETObjects.so");
   gSystem->Load("../../../GMSBTools/lib/libFilters.so");
   gSystem->Load("../../../PhysicsTools/lib/libUtilities.so");
-  gSystem->Load("SusyEventPrinter_cc.so");
-//   gROOT->LoadMacro("SusyEventPrinter.cc+");
+  gSystem->Load("../../../PhysicsTools/lib/libTagAndProbe.so");
+  // gSystem->Load("SusyEventPrinter_cc.so");
+  gROOT->LoadMacro("SusyEventPrinter.cc+");
   gSystem->SetIncludePath("-I../../..");
   gROOT->LoadMacro("GMSBAnalyzer.C++");
 
   //instantiate GMSBAnalyzer object
   vector<string> input;
-  input.push_back("/data2/yohay/RA3/ntuple_DYToEE_M-20_TuneZ2_7TeV-pythia6-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim.root");
+  input.push_back("/Users/rachelyohay/RA3/data/1140pb-1_categorized_combinedIso.root");
   TChain* tree = new TChain("susyTree");
   for (VSTRING_IT iIn = input.begin(); iIn != input.end(); ++iIn) { tree->Add((*iIn).c_str()); }
   GMSBAnalyzer analyzer(tree);
   analyzer.setTag("photons");
-  analyzer.setNEvts(1);
+  analyzer.setNEvts(-1);
   analyzer.setIntLumi(1140.0/*pb^-1*/);
   analyzer.setFileMapEntry("QCD_Pt-15to30_TuneZ2_7TeV_pythia6-Summer11-PU_S3_START42_V11-v2", 
 			   8.16E+08/*pb*/, 11000000);
@@ -95,7 +97,7 @@ void GMSBAnalysis()
   analyzer.setFileMapEntry("DiPhotonBorn_Pt-250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2", 
 			   0.008072/*pb*/, 526240);
   analyzer.setPUFile("/data2/yohay/RA3/1140pb-1_PU.root");
-  analyzer.initPU();
+  // analyzer.initPU();
   analyzer.setL1JECFile("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L1FastJet.txt");
   analyzer.setL2JECFile("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L2Relative.txt");
   analyzer.setL3JECFile("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L3Absolute.txt");
@@ -112,8 +114,11 @@ void GMSBAnalysis()
   //loop over events
   TStopwatch ts;
   ts.Start();
-//   analyzer.runMETAnalysis("/data2/yohay/RA3/debug_noPUReweighting.root");
-  analyzer.stripBranch("/data2/yohay/RA3/ntuple_DYToEE_M-20_TuneZ2_7TeV-pythia6-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v2.root", "susyEvent");
+  // analyzer.runMETAnalysis("/Users/rachelyohay/RA3/data/debug.root");
+  // analyzer.runMETAnalysisWithEEBackgroundFit("/Users/rachelyohay/RA3/data/combinedIso_eeBkgFit.root");
+  // analyzer.runMETAnalysisWithEEBackgroundFit("/Users/rachelyohay/RA3/data/debug.root");
+  analyzer.testFitting("/Users/rachelyohay/RA3/data/combinedIso_eeBkgFit.root", 
+  		       "/Users/rachelyohay/RA3/data/fit2.root");
   ts.Stop();
   std::cout << "RealTime : " << ts.RealTime()/60.0 << " minutes" << std::endl;
   std::cout << "CPUTime  : " << ts.CpuTime()/60.0 << " minutes" << std::endl;

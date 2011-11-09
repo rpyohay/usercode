@@ -79,30 +79,42 @@ public :
    void countEE(string&);
    template<typename T>
      void setHistogramOptions(T& hist, const string& xAxisTitle, const string& yAxisTitle, 
-			      const bool sumW2 = false) const
+			      const string& zAxisTitle, const bool sumW2 = false) const
      {
        hist.GetXaxis()->SetTitle(xAxisTitle.c_str());
        hist.GetYaxis()->SetTitle(yAxisTitle.c_str());
+       hist.GetZaxis()->SetTitle(zAxisTitle.c_str());
        if (sumW2) hist.Sumw2();
      }
    void setCanvasOptions(TCanvas&, const string&, const string&, const float, const float, 
 			 const float, const float, const bool setGrid = false) const;
-   float fillWeightsHistograms(TH2F&, TH2F&, TH1F&, TH1F&) const;
-   float normAndErrorSquared(const TH2F&, const TH1F&, const TH1D*, const unsigned int, 
+   float fillWeightsHistograms(const TH1D*, TH1D*, TH1F&, TH1F&) const;
+   string histName(const string&, const string&, const unsigned int) const;
+   void generateBackgroundSubtractedSpectra(TH3F&, TH2F&) const;
+   float normAndErrorSquared(const TH3F&, const TH1F&, const TH1D*, const unsigned int, 
 			     float&) const;
-   void generateToys(vector<TH1F*>&, vector<TH1F*>&, const TH1F&, const unsigned int, 
-		     const string&, const unsigned int, const Double_t*, const unsigned int, 
-		     const Double_t*, const VFLOAT&, const VFLOAT&) const;
+   void bookToyDiEMETWeightsHistograms(const vector<TH1F*>, const string&, vector<TH1F*>&, 
+				       const Int_t nMETBins = 1) const;
+   void makeToyDiEMETWeightsHistograms(TRandom3&, TH1F&, const TH1F&, vector<TH1F*>&, 
+				       const unsigned int iMETBin = 1) const;
+   void reweightDefault(const VFLOAT&, const VFLOAT&, const TH1F&, TH1F*) const;
+   void reweightBinned(const TH2F&, const TH1F&, TH1F*, const unsigned int) const;
+   void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
+		     const string&, const Double_t*, const unsigned int, const Double_t*, 
+		     const VFLOAT&, const VFLOAT&) const;
+   void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
+		     const string&, const Double_t*, const unsigned int, const Double_t*, 
+		     const TH2F&) const;
    void fillToyDistributions(vector<TH1F*>&, const TH1F&, TCanvas&, vector<TH1F*>&, 
 			     const unsigned int, const string&, const unsigned int) const;
-   void fillDifferenceHistograms(const TH1F&, TH1F&, const vector<TH1F*>&) const;
-   void reweight(const VFLOAT&, const VFLOAT&, TH1F&, const TH1F&) const;
    void setMETErrorBars(TH1F&, const vector<TH1F*>&, const vector<TH1F*>&, const vector<TH1F*>&, 
-			const float, const float) const;
+			const float, const float, const bool doDefault = true) const;
    void makeFinalCanvas(TH1*, const Color_t, const Width_t, const Style_t, const Color_t, 
 			const Size_t, const string&) const;
    void deallocateMemory(VTH1F&) const;
    void runMETAnalysis(const string&);
+   void runMETAnalysisWithEEBackgroundFit(const std::string&);
+   void testFitting(const string&, const string&) const;
    void runEEVsFFAnalysis(const std::string&);
    void runCutFlowAnalysis();
    void skim(const string&, const int);
