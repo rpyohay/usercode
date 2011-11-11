@@ -126,6 +126,34 @@ void GMSBAnalyzer::Loop(const std::string& outputFile)
    out.Close();
 }
 
+// void GMSBAnalyzer::METCorrection(vector<susy::PFJet*>& jets, susy::MET& MET, 
+// 				 const Long64_t evt) const
+// {
+//   //TODO: use L1FastL2L3(Residual) - L1Fast for MC(data)
+//   //TODO: implement eta < 4.7 procedure
+//   for (vector<susy::PFJet*>::iterator iJet = jets.begin(); iJet != jets.end(); ++iJet) {
+//     susy::PFJet* jet = *iJet;
+//     map<TString, Float_t>::const_iterator JEC = jet->jecScaleFactors.find("L1FastL2L3");
+//     if (JEC != jet->jecScaleFactors.end()) {
+//       float scale = JEC->second;
+//       TLorentzVector corrP4 = scale*jet->momentum;
+//       met.mEt.Set(met.metX() + jet->momentum.Px() - corrP4.Px(),
+// 		  met.metY() + jet->momentum.Py() - corrP4.Py());
+//       met.sumEt = met.sumEt - jet->momentum.Pt() + corrP4.Pt();
+//     }
+//     else {
+//       cerr << "Error: L1FastL2L3 JEC not found for jet " << (iJet - jets.begin()) << " in event ";
+//       cerr << evt << ".\n";
+//     }
+//   }
+// }
+
+// void GMSBAnalyzer::cleanJetCollection(const vector<susy::PFJet*>& allJets, 
+// 				      vector<susy::PFJet*>& cleanedJets) const
+// {
+  
+// }
+
 void GMSBAnalyzer::setCanvasOptions(TCanvas& canvas, const string& xAxisTitle, 
 				    const string& yAxisTitle, const float xAxisLowerLim, 
 				    const float xAxisUpperLim, const float yAxisLowerLim, 
@@ -729,46 +757,64 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
      //get int. lumi weight for this dataset
      TString fileName(fChain->GetCurrentFile()->GetName());
      TString dataset;
-     if (fileName.Contains("ntuple_.*-v[0-9]")) dataset = fileName("ntuple_.*-v[0-9]");
+     /*if (fileName.Contains("ntuple_.*-v[0-9]")) */dataset = fileName("ntuple_.*-v[0-9]");
      if (dataset.Length() >= 7) dataset.Remove(0, 7);
+     if ((dataset.Length() >= 3) && 
+	 (dataset.Contains("v2_.*-v[0-9]"))) dataset.Remove(0, 3); //for TT sample
      string datasetString((const char*)dataset);
      map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
      float lumiWeight = 1.0;
      if (iDataset != fileMap_.end()) lumiWeight = weight_[iDataset->second];
-     // else {
-     //   /*once comfortable with MC dataset names, remove this and just assume the file is data and 
-     // 	 gets weight 1.0*/
-     //   cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
-     // }
+     else {
+       /*once comfortable with MC dataset names, remove this and just assume the file is data and 
+     	 gets weight 1.0*/
+       cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
+     }
 
      //get PU weight for this dataset
      /*in-time reweighting only following 
        https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupMCReweightingUtilities as of 27-Oct-11 
        and Tessa's recommendation*/
-     // int nPV  = -1;
+     int nPV  = -1;
      float PUWeight = 1.0;
-     // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
-     // bool foundInTimeBX = false;
-     // while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
-     //   if (iBX->BX == 0) { 
-     // 	 nPV = iBX->numInteractions;
-     // 	 foundInTimeBX = true;
-     //   }
-     //   ++iBX;
-     // }
-     // PUWeight = lumiWeights_.ITweight(nPV);
-     // PUWeight = 1.0;
+     susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+     bool foundInTimeBX = false;
+     while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+       if (iBX->BX == 0) { 
+     	 nPV = iBX->numInteractions;
+     	 foundInTimeBX = true;
+       }
+       ++iBX;
+     }
+     PUWeight = lumiWeights_.ITweight(nPV);
 
      //fill MET vs. di-EM ET, invariant mass, rho, leading photon ET, and nPV histograms
-     const double invMass = susyCategory->getEvtInvMass(tag_);
+     double invMass = -1.0;
+     if (susyCategory->getEvtInvMass()->size() > 0) invMass = susyCategory->getEvtInvMass(tag_);
+     else {
+       cerr << "Error: susyCategory->getEvtInvMass()->size() <= 0 in event " << (jentry + 1);
+       cerr << ".  Using invariant mass -1.0 GeV.\n";
+     }
      double MET = -1.0;
      map<TString, susy::MET>::const_iterator iMET = susyEvent->metMap.find("pfMet");
      if (iMET != susyEvent->metMap.end()) MET = iMET->second.met();
      else cerr << "Error: PFMET not found in event " << (jentry + 1) << ".\n";
-     const double diEMET = susyCategory->getEvtDiEMET(tag_);
+     double diEMET = -1.0;
+     if (susyCategory->getEvtDiEMET()->size() > 0) diEMET = susyCategory->getEvtDiEMET(tag_);
+     else {
+       cerr << "Error: susyCategory->getEvtDiEMET()->size() <= 0 in event " << (jentry + 1);
+       cerr << ".  Using di-EM ET -1.0 GeV.\n";
+     }
      const Float_t rho = susyEvent->rho;
      rhoSkim.Fill(rho, lumiWeight*PUWeight);
-     const int evtCategory = susyCategory->getEventCategory(tag_);
+     int evtCategory = FAIL;
+     if (susyCategory->getEventCategory()->size() > 0) {
+       evtCategory = susyCategory->getEventCategory(tag_);
+     }
+     else {
+       cerr << "Error: susyCategory->getEventCategory()->size() <= 0 in event " << (jentry + 1);
+       cerr << ".  Using event category FAIL.\n";
+     }
      if (evtCategory != FAIL) rhoPreselected.Fill(rho, lumiWeight*PUWeight);
      unsigned int nGoodRecoPV = 0;
      for (vector<susy::Vertex>::const_iterator iPV = susyEvent->vertices.begin(); 
@@ -809,17 +855,23 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	 unsigned int count = 0;
 	 for (susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin(); 
 	      iPhoton != iPhotonMap->second.end(); ++iPhoton) {
-	   if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin())) {
-	     if ((EM1Eta != -9.0) && (EM1Phi != -9.0)) {
-	       EM2Eta = iPhoton->caloPosition.Eta();
-	       EM2Phi = iPhoton->caloPosition.Phi();
-	       ++count;
+	   if (susyCategory->getIsDeciding()->size() > 0) {
+	     if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin())) {
+	       if ((EM1Eta != -9.0) && (EM1Phi != -9.0)) {
+		 EM2Eta = iPhoton->caloPosition.Eta();
+		 EM2Phi = iPhoton->caloPosition.Phi();
+		 ++count;
+	       }
+	       else {
+		 EM1Eta = iPhoton->caloPosition.Eta();
+		 EM1Phi = iPhoton->caloPosition.Phi();
+		 ++count;
+	       }
 	     }
-	     else {
-	       EM1Eta = iPhoton->caloPosition.Eta();
-	       EM1Phi = iPhoton->caloPosition.Phi();
-	       ++count;
-	     }
+	   }
+	   else {
+	     cerr << "Error: susyCategory->getIsDeciding()->size() <= 0 in event " << (jentry + 1);
+	     cerr << ".  Assuming no deciding photons.\n";
 	   }
 	 }
 	 if ((count != 2) && (evtCategory != FAIL)) {
@@ -867,11 +919,17 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
        if (iPhotonMap != susyEvent->photons.end()) {
 	 for (susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin(); 
 	      iPhoton != iPhotonMap->second.end(); ++iPhoton) {
-	   if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin())) {
-	     ET.push_back(iPhoton->momentum.Et());
-	     combinedIso.push_back(iPhoton->ecalRecHitSumEtConeDR03 - 0.1474*rho + 
-				   iPhoton->hcalTowerSumEtConeDR03() - 0.0467*rho + 
-				   iPhoton->trkSumPtHollowConeDR03);
+	   if (susyCategory->getIsDeciding()->size() > 0) {
+	     if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin())) {
+	       ET.push_back(iPhoton->momentum.Et());
+	       combinedIso.push_back(iPhoton->ecalRecHitSumEtConeDR03 - 0.1474*rho + 
+				     iPhoton->hcalTowerSumEtConeDR03() - 0.0467*rho + 
+				     iPhoton->trkSumPtHollowConeDR03);
+	     }
+	   }
+	   else {
+	     cerr << "Error: susyCategory->getIsDeciding()->size() <= 0 in event " << (jentry + 1);
+	     cerr << ".  Assuming no deciding photons.\n";
 	   }
 	 }
 	 if ((combinedIso.size() != 2) || (ET.size() != 2)) {
@@ -2053,9 +2111,9 @@ void GMSBAnalyzer::runEEVsFFAnalysis(const std::string& outputFile)
 
    //set up on-the-fly jet corrections for PF jets
    vector<JetCorrectorParameters> PFJECs;
-   PFJECs.push_back(JetCorrectorParameters("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L1FastJet.txt"));
-   PFJECs.push_back(JetCorrectorParameters("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L2Relative.txt"));
-   PFJECs.push_back(JetCorrectorParameters("/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L3Absolute.txt"));
+   PFJECs.push_back(JetCorrectorParameters(L1JECFile_));
+   PFJECs.push_back(JetCorrectorParameters(L2JECFile_));
+   PFJECs.push_back(JetCorrectorParameters(L3JECFile_));
    FactorizedJetCorrector PFJetCorrector(PFJECs);
    vector<float> corrDiff;
    vector<float> corrSame;
@@ -2111,8 +2169,11 @@ void GMSBAnalyzer::runEEVsFFAnalysis(const std::string& outputFile)
 	   map<TString, Float_t>::const_iterator iCorr = iJet->jecScaleFactors.find("L1FastL2L3");
 	   if (iCorr != iJet->jecScaleFactors.end()) storedCorr = iCorr->second;
 	   if (storedCorr != onTheFlyCorr) {
-	     // cout << "PF jet stored correction: " << storedCorr << ", on the fly correction: ";
-	     // cout << onTheFlyCorr << endl;
+	     cout << "Run " << susyEvent->runNumber << ", event " << susyEvent->eventNumber;
+	     cout << ", lumi section " << susyEvent->luminosityBlockNumber << ", jet ";
+	     cout << (iJet - iJets->second.begin()) << endl;
+	     cout << "PF jet stored correction: " << storedCorr << ", on the fly correction: ";
+	     cout << onTheFlyCorr << endl;
 	     corrDiff.push_back((storedCorr - onTheFlyCorr)/storedCorr);
 	     if (noDiffYet) {
 	       ++nEvtsWithJetCorrDiff;
