@@ -746,24 +746,26 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
     //fill the tree
     if (filter) outTree->Fill();
 
-    //store run, event, and lumi section info
-    RUNEVTLUMIPAIR runEvtLumiPair(RUNEVTPAIR(event->runNumber, event->eventNumber), 
-				  event->luminosityBlockNumber);
-    switch (category) {
-    case GG:
-      ggEvts_.insert(runEvtLumiPair);
-      break;
-    case FF:
-      ffEvts_.insert(runEvtLumiPair);
-      break;
-    case EG:
-      egEvts_.insert(runEvtLumiPair);
-      break;
-    case EE:
-      eeEvts_.insert(runEvtLumiPair);
-      break;
-    default:
-      break;
+    //store run, event, and lumi section info for events passing filter criteria (JSON and HLT)
+    if (filter) {
+      RUNEVTLUMIPAIR runEvtLumiPair(RUNEVTPAIR(event->runNumber, event->eventNumber), 
+				    event->luminosityBlockNumber);
+      switch (category) {
+      case GG:
+	ggEvts_.insert(runEvtLumiPair);
+	break;
+      case FF:
+	ffEvts_.insert(runEvtLumiPair);
+	break;
+      case EG:
+	egEvts_.insert(runEvtLumiPair);
+	break;
+      case EE:
+	eeEvts_.insert(runEvtLumiPair);
+	break;
+      default:
+	break;
+      }
     }
 
     //print debug info
