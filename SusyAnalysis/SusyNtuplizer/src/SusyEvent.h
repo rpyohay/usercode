@@ -27,8 +27,8 @@
 
 namespace susy {
 
-  const float etaGapBegin = 1.442;
-  const float etaGapEnd = 1.556;
+  const float etaGapBegin = 1.4442;
+  const float etaGapEnd = 1.566;
   const float etaGap = 1.499;
   const float etaMax = 2.5;
 
