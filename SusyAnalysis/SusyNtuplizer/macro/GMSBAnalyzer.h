@@ -86,6 +86,14 @@ public :
        hist.GetZaxis()->SetTitle(zAxisTitle.c_str());
        if (sumW2) hist.Sumw2();
      }
+   template<typename T>
+     TLorentzVector correctedJet4Momentum(T& iJet, const string& corrLabel) const
+     {
+       map<TString, Float_t>::const_iterator iCorr = iJet->jecScaleFactors.find(corrLabel);
+       TLorentzVector corrP4;
+       if (iCorr != iJet->jecScaleFactors.end()) corrP4 = iCorr->second*iJet->momentum;
+       return corrP4;
+     }
    void setCanvasOptions(TCanvas&, const string&, const string&, const float, const float, 
 			 const float, const float, const bool setGrid = false) const;
    float fillWeightsHistograms(const TH1D*, TH1D*, TH1F&, TH1F&) const;
@@ -116,6 +124,14 @@ public :
    void runMETAnalysisWithEEBackgroundFit(const std::string&);
    void testFitting(const string&, const string&) const;
    void runEEVsFFAnalysis(const std::string&);
+   bool passJetFiducialCuts(const TLorentzVector&, const Double_t, const Double_t) const;
+   bool passPFJetID(susy::PFJetCollection::const_iterator&) const;
+   bool passCaloJetID(susy::CaloJetCollection::const_iterator&) const;
+   unsigned int numPhotonOverlaps(const susy::PhotonCollection&, const TLorentzVector&, int&) const;
+   TH1F* rightJetHistogram(const string&, const string&, map<string, TH1F*>&) const;
+   TH1F* EMFractionHistogram(const int, const unsigned int, map<string, TH1F*>&, 
+			     const string&) const;
+   void runEMFractionAnalysis(const string&);
    void runCutFlowAnalysis();
    void skim(const string&, const int);
    void stripBranch(const string&, const string&);
