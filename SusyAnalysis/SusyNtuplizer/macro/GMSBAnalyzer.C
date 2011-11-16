@@ -548,6 +548,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
    if (fChain == 0) return;
 
    //open file
+   ofstream outTxt("/data2/yohay/RA3/eventcounts/3558pb-1_event_counts.txt");
    TFile out(outputFile.c_str(), "RECREATE");
    out.cd();
 
@@ -765,28 +766,28 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
      map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
      float lumiWeight = 1.0;
      if (iDataset != fileMap_.end()) lumiWeight = weight_[iDataset->second];
-     else {
-       /*once comfortable with MC dataset names, remove this and just assume the file is data and 
-     	 gets weight 1.0*/
-       cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
-     }
+//      else {
+//        /*once comfortable with MC dataset names, remove this and just assume the file is data and 
+//      	 gets weight 1.0*/
+//        cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
+//      }
 
      //get PU weight for this dataset
      /*in-time reweighting only following 
        https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupMCReweightingUtilities as of 27-Oct-11 
        and Tessa's recommendation*/
-     int nPV  = -1;
+//      int nPV  = -1;
      float PUWeight = 1.0;
-     susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
-     bool foundInTimeBX = false;
-     while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
-       if (iBX->BX == 0) { 
-     	 nPV = iBX->numInteractions;
-     	 foundInTimeBX = true;
-       }
-       ++iBX;
-     }
-     PUWeight = lumiWeights_.ITweight(nPV);
+//      susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+//      bool foundInTimeBX = false;
+//      while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+//        if (iBX->BX == 0) { 
+//      	 nPV = iBX->numInteractions;
+//      	 foundInTimeBX = true;
+//        }
+//        ++iBX;
+//      }
+//      PUWeight = lumiWeights_.ITweight(nPV);
 
      //fill MET vs. di-EM ET, invariant mass, rho, leading photon ET, and nPV histograms
      double invMass = -1.0;
@@ -950,6 +951,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
      bool passTightCombinedIso = true;
        switch (evtCategory) {
        case GG:
+	 outTxt << "gg " << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 outTxt << susyEvent->luminosityBlockNumber << endl;
 	 ggMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
 	      iIso != combinedIso.end(); ++iIso) {
@@ -959,6 +962,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	 ggNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        case EG:
+	 outTxt << "eg " << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 outTxt << susyEvent->luminosityBlockNumber << endl;
 	 egMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
 	      iIso != combinedIso.end(); ++iIso) {
@@ -974,6 +979,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	   eeLowSidebandDiEMETVec.push_back(diEMET);
 	 }
 	 if ((invMass >= 81.0/*GeV*/) && (invMass < 101.0/*GeV*/)) {
+	   outTxt << "ee " << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	   outTxt << susyEvent->luminosityBlockNumber << endl;
 	   eeMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	   eeMETVec.push_back(MET);
 	   eeDiEMETVec.push_back(diEMET);
@@ -994,6 +1001,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	 eeNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        case FF:
+	 outTxt << "ff " << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 outTxt << susyEvent->luminosityBlockNumber << endl;
 	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
 	      iIso != combinedIso.end(); ++iIso) {
 	   ffCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
@@ -1164,6 +1173,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
    ffToyCanvas.Write();
    METCanvas.Write();
    out.Write();
+   outTxt.close();
 
    //deallocate memory
    deallocateMemory(eeDiEMETScaled);
@@ -2606,136 +2616,50 @@ unsigned int GMSBAnalyzer::numGoodVertices() const
 
 void GMSBAnalyzer::countEE(string& outputFile)
 {
-   if (fChain == 0) return;
+  if (fChain == 0) return;
 
-   //open files
-   TFile out(outputFile.c_str(), "RECREATE");
-   out.cd();
-   // ofstream outTxt((outputFile.replace(outputFile.find("root"), 4, "txt")).c_str());
+  //open files
+  TFile out(outputFile.c_str(), "RECREATE");
+  out.cd();
+  // ofstream outTxt((outputFile.replace(outputFile.find("root"), 4, "txt")).c_str());
 
-   //invariant mass histogram
-   Float_t bins[8] = {0.0, 71.0, 76.0, 81.0, 101.0, 106.0, 111.0, 200.0};
-   TH1F mee("mee", "", 7, bins);
+  //invariant mass histogram
+  Float_t bins[8] = {0.0, 71.0, 76.0, 81.0, 101.0, 106.0, 111.0, 200.0};
+  TH1F mee("mee", "", 7, bins);
 
-   //set user-specified number of entries to process
-   Long64_t nentries = fChain->GetEntriesFast();
-   if (nEvts_ != -1) nentries = nEvts_;
+  //set user-specified number of entries to process
+  Long64_t nentries = fChain->GetEntriesFast();
+  if (nEvts_ != -1) nentries = nEvts_;
 
-   Long64_t nbytes = 0, nb = 0;
-   for (Long64_t jentry=0; jentry<nentries;jentry++) {
-      Long64_t ientry = LoadTree(jentry);
-      if (ientry < 0) break;
-      nb = fChain->GetEntry(jentry);   nbytes += nb;
-      // if (Cut(ientry) < 0) continue;
+  Long64_t nbytes = 0, nb = 0;
+  for (Long64_t jentry=0; jentry<nentries;jentry++) {
+    Long64_t ientry = LoadTree(jentry);
+    if (ientry < 0) break;
+    nb = fChain->GetEntry(jentry);   nbytes += nb;
+    // if (Cut(ientry) < 0) continue;
 
-      //if this event is an ee event, what invariant mass bin does it fall into?
-      if (susyCategory->getEventCategory(tag_) == EE) {
-	const double invMass = susyCategory->getEvtInvMass(tag_);
-	mee.Fill(invMass);
-	if (((susyEvent->runNumber == 166841) && (susyEvent->eventNumber == 483584716)) || 
-	    ((susyEvent->runNumber == 166864) && (susyEvent->eventNumber == 394801663)) || 
-	    ((susyEvent->runNumber == 166864) && (susyEvent->eventNumber == 416227374)) || 
-	    ((susyEvent->runNumber == 163817) && (susyEvent->eventNumber == 54364321)) || 
-	    ((susyEvent->runNumber == 163589) && (susyEvent->eventNumber == 54614720)) || 
-	    ((susyEvent->runNumber == 163596) && (susyEvent->eventNumber == 3521103)) || 
-	    ((susyEvent->runNumber == 163660) && (susyEvent->eventNumber == 18512069)) || 
-	    ((susyEvent->runNumber == 163664) && (susyEvent->eventNumber == 11099963)) || 
-	    ((susyEvent->runNumber == 163758) && (susyEvent->eventNumber == 340434605)) || 
-	    ((susyEvent->runNumber == 163817) && (susyEvent->eventNumber == 39521312)) || 
-	    ((susyEvent->runNumber == 165567) && (susyEvent->eventNumber == 660879884)) || 
-	    ((susyEvent->runNumber == 165993) && (susyEvent->eventNumber == 78420443)) || 
-	    ((susyEvent->runNumber == 166380) && (susyEvent->eventNumber == 380536201)) || 
-	    ((susyEvent->runNumber == 166380) && (susyEvent->eventNumber == 1455639992)) || 
-	    ((susyEvent->runNumber == 166408) && (susyEvent->eventNumber == 645967293)) || 
-	    ((susyEvent->runNumber == 166554) && (susyEvent->eventNumber == 681773881)) || 
-	    ((susyEvent->runNumber == 166784) && (susyEvent->eventNumber == 136897277)) || 
-	    ((susyEvent->runNumber == 166787) && (susyEvent->eventNumber == 9069334)) || 
-	    ((susyEvent->runNumber == 166565) && (susyEvent->eventNumber == 127439496)) || 
-	    ((susyEvent->runNumber == 166701) && (susyEvent->eventNumber == 69918333)) || 
-	    ((susyEvent->runNumber == 167039) && (susyEvent->eventNumber == 146433156)) || 
-	    ((susyEvent->runNumber == 167041) && (susyEvent->eventNumber == 120702599)) || 
-	    ((susyEvent->runNumber == 166946) && (susyEvent->eventNumber == 200822952)) || 
-	    ((susyEvent->runNumber == 166950) && (susyEvent->eventNumber == 587885196)) || 
-	    ((susyEvent->runNumber == 167284) && (susyEvent->eventNumber == 429291704)) || 
-	    ((susyEvent->runNumber == 167282) && (susyEvent->eventNumber == 22617452)) || 
-	    ((susyEvent->runNumber == 167898) && (susyEvent->eventNumber == 485562364)) || 
-	    ((susyEvent->runNumber == 167675) && (susyEvent->eventNumber == 622183354)) || 
-	    ((susyEvent->runNumber == 167675) && (susyEvent->eventNumber == 646543455)) || 
-	    ((susyEvent->runNumber == 167746) && (susyEvent->eventNumber == 90136125)) || 
-	    ((susyEvent->runNumber == 167786) && (susyEvent->eventNumber == 45391607)) || 
-	    ((susyEvent->runNumber == 167786) && (susyEvent->eventNumber == 50156901)) || 
-	    ((susyEvent->runNumber == 167786) && (susyEvent->eventNumber == 54739364))) {
-	  cout << susyEvent->runNumber << " " << susyEvent->eventNumber << " " << invMass;
-	  cout << " Dave yes Rachel no\n";
-	}
-	if (((susyEvent->runNumber == 166841) && (susyEvent->eventNumber == 279690939)) || 
-	    ((susyEvent->runNumber == 166841) && (susyEvent->eventNumber == 501897075)) || 
-	    ((susyEvent->runNumber == 166841) && (susyEvent->eventNumber == 779358311)) || 
-	    ((susyEvent->runNumber == 166859) && (susyEvent->eventNumber == 131005283)) || 
-	    ((susyEvent->runNumber == 166859) && (susyEvent->eventNumber == 150130237)) || 
-	    ((susyEvent->runNumber == 166889) && (susyEvent->eventNumber == 249801723)) || 
-	    ((susyEvent->runNumber == 163252) && (susyEvent->eventNumber == 70320781)) || 
-	    ((susyEvent->runNumber == 163255) && (susyEvent->eventNumber == 548957669)) || 
-	    ((susyEvent->runNumber == 163270) && (susyEvent->eventNumber == 523122198)) || 
-	    ((susyEvent->runNumber == 163332) && (susyEvent->eventNumber == 293130827)) || 
-	    ((susyEvent->runNumber == 163332) && (susyEvent->eventNumber == 359113407)) || 
-	    ((susyEvent->runNumber == 163738) && (susyEvent->eventNumber == 172527800)) || 
-	    ((susyEvent->runNumber == 163757) && (susyEvent->eventNumber == 4661645)) || 
-	    ((susyEvent->runNumber == 163758) && (susyEvent->eventNumber == 405869965)) || 
-	    ((susyEvent->runNumber == 163237) && (susyEvent->eventNumber == 85112659)) || 
-	    ((susyEvent->runNumber == 165467) && (susyEvent->eventNumber == 262854623)) || 
-	    ((susyEvent->runNumber == 165472) && (susyEvent->eventNumber == 244217004)) || 
-	    ((susyEvent->runNumber == 165472) && (susyEvent->eventNumber == 845896439)) || 
-	    ((susyEvent->runNumber == 165514) && (susyEvent->eventNumber == 586297947)) || 
-	    ((susyEvent->runNumber == 165558) && (susyEvent->eventNumber == 9393965)) || 
-	    ((susyEvent->runNumber == 165567) && (susyEvent->eventNumber == 69304564)) || 
-	    ((susyEvent->runNumber == 165993) && (susyEvent->eventNumber == 1133251955)) || 
-	    ((susyEvent->runNumber == 166049) && (susyEvent->eventNumber == 463355641)) || 
-	    ((susyEvent->runNumber == 166049) && (susyEvent->eventNumber == 796442372)) || 
-	    ((susyEvent->runNumber == 166346) && (susyEvent->eventNumber == 109458583)) || 
-	    ((susyEvent->runNumber == 165364) && (susyEvent->eventNumber == 857448405)) || 
-	    ((susyEvent->runNumber == 166380) && (susyEvent->eventNumber == 590691805)) || 
-	    ((susyEvent->runNumber == 166408) && (susyEvent->eventNumber == 430241492)) || 
-	    ((susyEvent->runNumber == 166408) && (susyEvent->eventNumber == 632010396)) || 
-	    ((susyEvent->runNumber == 166512) && (susyEvent->eventNumber == 1027686669)) || 
-	    ((susyEvent->runNumber == 166514) && (susyEvent->eventNumber == 22711260)) || 
-	    ((susyEvent->runNumber == 166701) && (susyEvent->eventNumber == 571056335)) || 
-	    ((susyEvent->runNumber == 167041) && (susyEvent->eventNumber == 244226879)) || 
-	    ((susyEvent->runNumber == 167043) && (susyEvent->eventNumber == 105723195)) || 
-	    ((susyEvent->runNumber == 166950) && (susyEvent->eventNumber == 1183700460)) || 
-	    ((susyEvent->runNumber == 166950) && (susyEvent->eventNumber == 1410187165)) || 
-	    ((susyEvent->runNumber == 166966) && (susyEvent->eventNumber == 127715395)) || 
-	    ((susyEvent->runNumber == 167103) && (susyEvent->eventNumber == 79983187)) || 
-	    ((susyEvent->runNumber == 167284) && (susyEvent->eventNumber == 398037294)) || 
-	    ((susyEvent->runNumber == 167284) && (susyEvent->eventNumber == 972681846)) || 
-	    ((susyEvent->runNumber == 167807) && (susyEvent->eventNumber == 1387950147)) || 
-	    ((susyEvent->runNumber == 167830) && (susyEvent->eventNumber == 895644093)) || 
-	    ((susyEvent->runNumber == 167830) && (susyEvent->eventNumber == 1232220016)) || 
-	    ((susyEvent->runNumber == 167898) && (susyEvent->eventNumber == 551478829)) || 
-	    ((susyEvent->runNumber == 167913) && (susyEvent->eventNumber == 329546015)) || 
-	    ((susyEvent->runNumber == 167674) && (susyEvent->eventNumber == 182429068)) || 
-	    ((susyEvent->runNumber == 167674) && (susyEvent->eventNumber == 188130251)) || 
-	    ((susyEvent->runNumber == 167674) && (susyEvent->eventNumber == 212922847)) || 
-	    ((susyEvent->runNumber == 167675) && (susyEvent->eventNumber == 881773084))) {
-	  cout << susyEvent->runNumber << " " << susyEvent->eventNumber << " " << invMass;
-	  cout << " Rachel yes Dave no\n";
-	}
-	// outTxt << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
-	// if ((invMass >= 0.0) && (invMass < 71.0)) outTxt << "1\n";
-	// if ((invMass >= 71.0) && (invMass < 76.0)) outTxt << "2\n";
-	// if ((invMass >= 76.0) && (invMass < 81.0)) outTxt << "3\n";
-	// if ((invMass >= 81.0) && (invMass < 101.0)) outTxt << "4\n";
-	// if ((invMass >= 101.0) && (invMass < 106.0)) outTxt << "5\n";
-	// if ((invMass >= 106.0) && (invMass < 111.0)) outTxt << "6\n";
-	// if (invMass >= 111.0) outTxt << "7\n";
+    //if this event is an ee event, what invariant mass bin does it fall into?
+    if (susyCategory->getEventCategory(tag_) == EE) {
+      const double invMass = susyCategory->getEvtInvMass(tag_);
+      mee.Fill(invMass);
+    }
+
+    //print debug information
+    if ((susyEvent->runNumber == 170876) && 
+	(susyEvent->eventNumber == 229231573)) {
+      debugPrint(jentry);
+      for(susy::TriggerMap::iterator it = susyEvent->hltMap.begin(); it != susyEvent->hltMap.end(); it++) {
+	cout << it->first << ": " << (int(it->second.second)) << endl;
       }
-   }
+      break;
+    }
+  }
 
-   //write histograms
-   // outTxt.close();
-   mee.Write();
-   out.Write();
-   out.Close();
+  //write histograms
+  // outTxt.close();
+  mee.Write();
+  out.Write();
+  out.Close();
 }
 
 void GMSBAnalyzer::skim(const string& outputFile, const int evtCategory)
@@ -2832,6 +2756,9 @@ void GMSBAnalyzer::debugPrint(const unsigned int jentry) const
       cout << "-------IHCAL: " << iPhoton->hcalTowerSumEtConeDR03() << endl;
       cout << "--------------";
       cout << (susyCategory->getPassHCALIsoMax(tag_, i) ? "PASSED\n" : "FAILED\n");
+      cout << "-------ITRK : " << iPhoton->trkSumPtHollowConeDR03 << endl;
+      cout << "--------------";
+      cout << (susyCategory->getPassTrackIsoMax(tag_, i) ? "PASSED\n" : "FAILED\n");
       cout << "-------H/E  : " << iPhoton->hadronicOverEm << endl;
       cout << "--------------";
       cout << (susyCategory->getPassHOverEMax(tag_, i) ? "PASSED\n" : "FAILED\n");
@@ -2846,16 +2773,19 @@ void GMSBAnalyzer::debugPrint(const unsigned int jentry) const
       cout << (susyCategory->getPassE2OverE9Max(tag_, i) ? "PASSED\n" : "FAILED\n");
       cout << "----------------------------";
       cout << (susyCategory->getPassPreselection(tag_, i) ? "PASSED\n" : "FAILED\n");
-      cout << "-------ITRK : " << iPhoton->trkSumPtHollowConeDR03 << endl;
+      cout << "-------ICOMB: " << (iPhoton->ecalRecHitSumEtConeDR03 + 
+				   iPhoton->trkSumPtHollowConeDR03 + 
+				   iPhoton->trkSumPtHollowConeDR03) << endl;
       cout << "--------------";
-      cout << (susyCategory->getPassTrackIsoMax(tag_, i) ? "PASSED\n" : "FAILED\n");
+      cout << (susyCategory->getPassCombinedIsoMax(tag_, i) ? "PASSED\n" : "FAILED\n");
+      cout << "--------------";
+      cout << (susyCategory->getPassFakeCombinedIsoMax(tag_, i) ? "PASSED\n" : "FAILED\n");
       cout << "-------sieie: " << iPhoton->sigmaIetaIeta << endl;
       cout << "--------------";
       cout << (susyCategory->getPassSigmaIetaIetaMax(tag_, i) ? "PASSED\n" : "FAILED\n");
       cout << "-------Seed : " << ((iPhoton->nPixelSeeds) > 0 ? "yes\n" : "no\n");
       cout << "--------------";
       cout << (susyCategory->getHasPixelSeed(tag_, i) ? "PASSED\n" : "FAILED\n");
-      cout << "-------Phi  : " << iPhoton->caloPosition.Phi() << endl;
       cout << "----------------------------";
       switch (susyCategory->getPhotonType(tag_, i)) {
       case FAIL:
@@ -2881,6 +2811,12 @@ void GMSBAnalyzer::debugPrint(const unsigned int jentry) const
   }
 
   //print event quantities
+  cout << "--------------Pass DPhiMin : ";
+  cout << (susyCategory->getPassDPhiMin(tag_) ? "PASSED\n" : "FAILED\n") << endl;
+  cout << "--------------Pass DRMin : ";
+  cout << (susyCategory->getPassDRMin(tag_) ? "PASSED\n" : "FAILED\n") << endl;
+  cout << "--------------Pass asymmetric ETMin: ";
+  cout << (susyCategory->getPassAsymmetricETMin(tag_) ? "PASSED\n" : "FAILED\n") << endl;
   cout << "--------------Category     : ";
   switch(susyCategory->getEventCategory(tag_)) {
   case FAIL:
@@ -2902,10 +2838,7 @@ void GMSBAnalyzer::debugPrint(const unsigned int jentry) const
     cout << "ERROR\n";
     break;
   }
-  cout << "--------------Pass DPhiMin : ";
-  cout << (susyCategory->getPassDPhiMin(tag_) ? "PASSED\n" : "FAILED\n") << endl;
-  cout << "--------------Pass DRMin : ";
-  cout << (susyCategory->getPassDRMin(tag_) ? "PASSED\n" : "FAILED\n") << endl;
+  cout << endl;
   cout << "--------------DiEM ET      : " << susyCategory->getEvtDiEMET(tag_) << endl;
   cout << "--------------InvMass      : " << susyCategory->getEvtInvMass(tag_) << endl;
   cout << endl;
