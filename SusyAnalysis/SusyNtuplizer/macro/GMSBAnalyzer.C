@@ -1,6 +1,5 @@
 #define GMSBAnalyzer_cxx
 #include "GMSBAnalyzer.h"
-#include "../../../GMSBTools/Filters/interface/Categorizer.h"
 #include "../../../DataFormats/Math/interface/deltaR.h"
 #include <iostream>
 #include <fstream>
@@ -525,13 +524,15 @@ void GMSBAnalyzer::setMETErrorBars(TH1F& controlFinal,
 
 void GMSBAnalyzer::makeFinalCanvas(TH1* hist, const Color_t lineColor, const Width_t lineWidth, 
 				   const Style_t fillStyle, const Color_t fillColor, 
-				   const Size_t markerSize, const string& drawOption) const
+				   const Size_t markerSize, const Color_t markerColor, 
+				   const string& drawOption) const
 {
   hist->SetLineColor(lineColor);
   hist->SetLineWidth(lineWidth);
   hist->SetFillStyle(fillStyle);
   hist->SetFillColor(fillColor);
   hist->SetMarkerSize(markerSize);
+  hist->SetMarkerColor(markerColor);
   hist->Draw(drawOption.c_str());
 }
 
@@ -633,6 +634,14 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
    setHistogramOptions(egNPV, "n_{PV}", "", "", kSumW2);
    setHistogramOptions(eeNPV, "n_{PV}", "", "", kSumW2);
    setHistogramOptions(ffNPV, "n_{PV}", "", "", kSumW2);
+
+   //uniform binning ee, gg, and ff di-EM ET histogram
+   TH1F ggDiEMETUniform("ggDiEMETUniform", "ggDiEMETUniform", 100, 0.0, 500.0);
+   TH1F ffDiEMETUniform("ffDiEMETUniform", "ffDiEMETUniform", 100, 0.0, 500.0);
+   TH1F eeDiEMETUniform("eeDiEMETUniform", "eeDiEMETUniform", 100, 0.0, 500.0);
+   setHistogramOptions(ggDiEMETUniform, "Di-EM E_{T} (GeV)", "", "", kSumW2);
+   setHistogramOptions(ffDiEMETUniform, "Di-EM E_{T} (GeV)", "", "", kSumW2);
+   setHistogramOptions(eeDiEMETUniform, "Di-EM E_{T} (GeV)", "", "", kSumW2);
 
    //MET vs. di-EM ET vs. invariant mass histograms
    TH3F ggMETVsDiEMETVsInvMass("ggMETVsDiEMETVsInvMass", "", nInvMassBins, invMassBins, 
@@ -742,6 +751,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
    PFJECs.push_back(JetCorrectorParameters(L3JECFile_));
    FactorizedJetCorrector PFJetCorrector(PFJECs);
 
+   unsigned int nUnequal2 = 0;
+
    //set user-specified number of entries to process
    Long64_t nentries = fChain->GetEntriesFast();
    if (nEvts_ != -1) nentries = nEvts_;
@@ -765,28 +776,28 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
      map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
      float lumiWeight = 1.0;
      if (iDataset != fileMap_.end()) lumiWeight = weight_[iDataset->second];
-     else {
-       /*once comfortable with MC dataset names, remove this and just assume the file is data and 
-     	 gets weight 1.0*/
-       cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
-     }
+     // else {
+     //   /*once comfortable with MC dataset names, remove this and just assume the file is data and 
+     // 	 gets weight 1.0*/
+     //   cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
+     // }
 
      //get PU weight for this dataset
      /*in-time reweighting only following 
        https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupMCReweightingUtilities as of 27-Oct-11 
        and Tessa's recommendation*/
-     int nPV  = -1;
+     // int nPV  = -1;
      float PUWeight = 1.0;
-     susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
-     bool foundInTimeBX = false;
-     while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
-       if (iBX->BX == 0) { 
-     	 nPV = iBX->numInteractions;
-     	 foundInTimeBX = true;
-       }
-       ++iBX;
-     }
-     PUWeight = lumiWeights_.ITweight(nPV);
+     // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+     // bool foundInTimeBX = false;
+     // while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+     //   if (iBX->BX == 0) { 
+     // 	 nPV = iBX->numInteractions;
+     // 	 foundInTimeBX = true;
+     //   }
+     //   ++iBX;
+     // }
+     // PUWeight = lumiWeights_.ITweight(nPV);
 
      //fill MET vs. di-EM ET, invariant mass, rho, leading photon ET, and nPV histograms
      double invMass = -1.0;
@@ -915,6 +926,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
      //get combined isolation and photon ET
      vector<float> combinedIso;
      vector<float> ET;
+     vector<TLorentzVector> photonP4;
+     vector<TLorentzVector> jP4;
      if (evtCategory != FAIL) {
        if (iPhotonMap != susyEvent->photons.end()) {
 	 for (susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin(); 
@@ -925,6 +938,17 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	       combinedIso.push_back(iPhoton->ecalRecHitSumEtConeDR03 - 0.1474*rho + 
 				     iPhoton->hcalTowerSumEtConeDR03() - 0.0467*rho + 
 				     iPhoton->trkSumPtHollowConeDR03);
+	       photonP4.push_back(iPhoton->momentum);
+
+	       //get matching jet corrected p4
+	       for (susy::PFJetCollection::const_iterator iJet = iJets->second.begin(); 
+		    iJet != iJets->second.end(); ++iJet) {
+		 TLorentzVector corrP4 = correctedJet4Momentum(iJet, "L1FastL2L3");
+		 if (passJetFiducialCuts(corrP4, 10.0/*GeV*/, 2.6) && passPFJetID(iJet) && 
+		     (deltaR(iJet->momentum.Eta(), iJet->momentum.Phi(), 
+			     iPhoton->caloPosition.Eta(), 
+			     iPhoton->caloPosition.Phi()) < 0.3)) jP4.push_back(corrP4);
+	       }
 	     }
 	   }
 	   else {
@@ -932,31 +956,41 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	     cerr << ".  Assuming no deciding photons.\n";
 	   }
 	 }
-	 if ((combinedIso.size() != 2) || (ET.size() != 2)) {
+	 if ((combinedIso.size() != 2) || (ET.size() != 2) || (photonP4.size() != 2)) {
 	   cerr << "Error: combinedIso.size() = " << combinedIso.size() << " and ET.size() = ";
-	   cerr << ET.size() << " in event " << (jentry + 1) << ".\n";
+	   cerr << ET.size() << " and photonP4.size() = " << photonP4.size() << " in event ";
+	   cerr << (jentry + 1) << ".\n";
+	 }
+	 if ((jP4.size() != 2) && ((evtCategory == EE) || (evtCategory == FF))) {
+	   // cerr << "Error: jP4.size() = " << jP4.size() << " in event " << (jentry + 1) << ".\n";
+	   ++nUnequal2;
 	 }
        }
        else {
 	 cerr << "Error: " << tag_ << " photon collection not found in event " << (jentry + 1);
 	 cerr << ".\n";
        }
+       //jP4.clear();
+       if (jP4.size() == 2) diEMET = (jP4[0] + jP4[1]).Pt();
+       else diEMET = (photonP4[0] + photonP4[1]).Pt();
      }
 
      //sort photon ET in ascending order
      sort(ET.begin(), ET.end());
-
 //      if (nJets == 0) {
      bool passTightCombinedIso = true;
        switch (evtCategory) {
        case GG:
-	 ggMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
-	      iIso != combinedIso.end(); ++iIso) {
-	   ggCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
+	 if (jP4.size() == 2) {
+	   ggMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	   for (vector<float>::const_iterator iIso = combinedIso.begin(); 
+		iIso != combinedIso.end(); ++iIso) {
+	     ggCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
+	   }
+	   ggLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	   ggNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
+	   ggDiEMETUniform.Fill(diEMET, lumiWeight*PUWeight);
 	 }
-	 ggLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
-	 ggNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        case EG:
 	 egMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
@@ -968,51 +1002,59 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	 egNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        case EE:
-	 if ((invMass >= 71.0/*GeV*/) && (invMass < 76.0/*GeV*/)) {
-	   eeLowSidebandMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-	   eeLowSidebandMETVec.push_back(MET);
-	   eeLowSidebandDiEMETVec.push_back(diEMET);
+	 if (jP4.size() == 2) {
+	   if ((invMass >= 71.0/*GeV*/) && (invMass < 76.0/*GeV*/)) {
+	     eeLowSidebandMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     eeLowSidebandMETVec.push_back(MET);
+	     eeLowSidebandDiEMETVec.push_back(diEMET);
+	   }
+	   if ((invMass >= 81.0/*GeV*/) && (invMass < 101.0/*GeV*/)) {
+	     eeMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     eeMETVec.push_back(MET);
+	     eeDiEMETVec.push_back(diEMET);
+	     eeHTVsMET.Fill(MET, HT, lumiWeight*PUWeight);
+	     eeMETVsNJets30.Fill(nJets30, MET, lumiWeight*PUWeight);
+	     eeMETVsNJets60.Fill(nJets60, MET, lumiWeight*PUWeight);
+	     eeDiEMETUniform.Fill(diEMET, lumiWeight*PUWeight);
+	   }
+	   if ((invMass >= 106.0/*GeV*/) && (invMass < 111.0/*GeV*/)) {
+	     eeHighSidebandMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     eeHighSidebandMETVec.push_back(MET);
+	     eeHighSidebandDiEMETVec.push_back(diEMET);
+	   }
+	   for (vector<float>::const_iterator iIso = combinedIso.begin(); 
+		iIso != combinedIso.end(); ++iIso) {
+	     eeCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
+	   }
+	   eeLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	   eeNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 }
-	 if ((invMass >= 81.0/*GeV*/) && (invMass < 101.0/*GeV*/)) {
-	   eeMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-	   eeMETVec.push_back(MET);
-	   eeDiEMETVec.push_back(diEMET);
-	   eeHTVsMET.Fill(MET, HT, lumiWeight*PUWeight);
-	   eeMETVsNJets30.Fill(nJets30, MET, lumiWeight*PUWeight);
-	   eeMETVsNJets60.Fill(nJets60, MET, lumiWeight*PUWeight);
-	 }
-	 if ((invMass >= 106.0/*GeV*/) && (invMass < 111.0/*GeV*/)) {
-	   eeHighSidebandMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-	   eeHighSidebandMETVec.push_back(MET);
-	   eeHighSidebandDiEMETVec.push_back(diEMET);
-	 }
-	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
-	      iIso != combinedIso.end(); ++iIso) {
-	   eeCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
-	 }
-	 eeLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
-	 eeNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 break;
        case FF:
-	 for (vector<float>::const_iterator iIso = combinedIso.begin(); 
-	      iIso != combinedIso.end(); ++iIso) {
-	   ffCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
-	   passTightCombinedIso = passTightCombinedIso && (*iIso < 9.0/*GeV*/);
+	 if (jP4.size() == 2) {
+	   for (vector<float>::const_iterator iIso = combinedIso.begin(); 
+		iIso != combinedIso.end(); ++iIso) {
+	     ffCombinedIso.Fill(*iIso, lumiWeight*PUWeight);
+	     passTightCombinedIso = passTightCombinedIso && (*iIso < 9.0/*GeV*/);
+	   }
+	   ffMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	   ffMETVec.push_back(MET);
+	   ffDiEMETVec.push_back(diEMET);
+	   ffLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	   ffNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
+	   ffHTVsMET.Fill(MET, HT, lumiWeight*PUWeight);
+	   ffMETVsNJets30.Fill(nJets30, MET, lumiWeight*PUWeight);
+	   ffMETVsNJets60.Fill(nJets60, MET, lumiWeight*PUWeight);
+	   ffDiEMETUniform.Fill(diEMET, lumiWeight*PUWeight);
 	 }
-	 ffMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-	 ffMETVec.push_back(MET);
-	 ffDiEMETVec.push_back(diEMET);
-	 ffLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
-	 ffNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
-	 ffHTVsMET.Fill(MET, HT, lumiWeight*PUWeight);
-	 ffMETVsNJets30.Fill(nJets30, MET, lumiWeight*PUWeight);
-	 ffMETVsNJets60.Fill(nJets60, MET, lumiWeight*PUWeight);
 	 break;
        default:
 	 break;
        }
 //      }
    }
+
+   cout << "nUnequal2 = " << nUnequal2 << endl;
 
    //fill weights histograms
    vector<TH1F*> eeDiEMETScaled;
@@ -1149,11 +1191,11 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 
    //make final canvas
    METCanvas.cd();
-   makeFinalCanvas(dynamic_cast<TH1*>(&eeFinal), 4, 2, 3005, 4, 0, "E2");
-   makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, "E2SAME");
-   makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, "HISTSAME");
+   makeFinalCanvas(dynamic_cast<TH1*>(&eeFinal), 4, 2, 3005, 4, 0, 1, "E2");
+   makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, 1, "E2SAME");
+   makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, 1, "HISTSAME");
    makeFinalCanvas(dynamic_cast<TH1*>(ggMETVsDiEMETVsInvMass.ProjectionZ("ggMET", 0, -1, 0, -1, 
-									 "e")), 1, 1, 0, 0, 1, 
+									 "e")), 1, 1, 0, 0, 1, 1, 
 		   "SAME");
 
    //save
@@ -1702,11 +1744,11 @@ void GMSBAnalyzer::runMETAnalysisWithEEBackgroundFit(const std::string& outputFi
 
    //make final canvas
    METCanvas.cd();
-   makeFinalCanvas(dynamic_cast<TH1*>(&eeFinal), 4, 2, 3005, 4, 0, "E2");
-   makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, "E2SAME");
-   makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, "HISTSAME");
+   makeFinalCanvas(dynamic_cast<TH1*>(&eeFinal), 4, 2, 3005, 4, 0, 1, "E2");
+   makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, 1, "E2SAME");
+   makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, 1, "HISTSAME");
    makeFinalCanvas(dynamic_cast<TH1*>(ggMETVsDiEMETVsInvMass.ProjectionZ("ggMET", 0, -1, 0, -1, 
-									 "e")), 1, 1, 0, 0, 1, 
+									 "e")), 1, 1, 0, 0, 1, 1, 
 		   "SAME");
 
    //save
@@ -1954,11 +1996,11 @@ void GMSBAnalyzer::testFitting(const string& inputFile, const string& outputFile
 
   //make final canvas
   METCanvas.cd();
-  makeFinalCanvas(dynamic_cast<TH1*>(&eeFinal), 4, 2, 3005, 4, 0, "E2");
-  // makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, "E2SAME");
-  makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, "HISTSAME");
+  makeFinalCanvas(dynamic_cast<TH1*>(&eeFinal), 4, 2, 3005, 4, 0, 1, "E2");
+  // makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, 1, "E2SAME");
+  makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, 1, "HISTSAME");
   makeFinalCanvas(dynamic_cast<TH1*>(ggMETVsDiEMETVsInvMass->ProjectionZ("ggMET", 0, -1, 0, -1, 
-									 "e")), 1, 1, 0, 0, 1, 
+									 "e")), 1, 1, 0, 0, 1, 1, 
 		  "SAME");
 
   //save
@@ -2357,59 +2399,6 @@ unsigned int GMSBAnalyzer::numPhotonOverlaps(const susy::PhotonCollection& photo
   return numOverlaps;
 }
 
-TH1F* GMSBAnalyzer::rightJetHistogram(const string& photonType, const string& jetType, 
-				      map<string, TH1F*>& histograms) const
-{
-  stringstream name;
-  name << photonType << "EMFraction" << jetType;
-  map<string, TH1F*>::const_iterator iHist = histograms.find(name.str());
-  if (iHist != histograms.end()) return iHist->second;
-  else return NULL;
-}
-
-TH1F* GMSBAnalyzer::EMFractionHistogram(const int photonIndex, const unsigned int numOverlaps, 
-					map<string, TH1F*>& histograms, 
-					const string& jetType) const
-{
-  TH1F* pHist = NULL;
-  if ((photonIndex == -1) && (numOverlaps > 0)) {
-    cerr << "Error: numOverlaps = " << numOverlaps;
-    cerr << " but photonIndex = -1.  Skipping this jet.\n";
-    return pHist;
-  }
-  int photonType = FAIL;
-  if (photonIndex != -1) photonType = susyCategory->getPhotonType(tag_, photonIndex);
-  switch (numOverlaps) {
-  case 1:
-    switch (photonType) {
-    case G:
-      pHist = rightJetHistogram("g", jetType, histograms);
-      break;
-    case E:
-      pHist = rightJetHistogram("e", jetType, histograms);
-      break;
-    case F:
-      pHist = rightJetHistogram("f", jetType, histograms);
-      break;
-    case FAIL:
-      pHist = rightJetHistogram("fail", jetType, histograms);
-      break;
-    default:
-      cerr << "Error: photon type " << photonType << " invalid for photon ";
-      cerr << photonIndex << ".  Skipping this photon.\n";
-      break;
-    }
-    break;
-  case 0:
-    pHist = rightJetHistogram("other", jetType, histograms);
-    break;
-  default:
-    //count number of jets per event with >1 EM overlap
-    break;
-  }
-  return pHist;
-}
-
 void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
 {
   if (fChain == 0) return;
@@ -2463,22 +2452,38 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
     passing jet ID) overlapping with e, g, f, and fail objects*/
   /*note: would like to extend jets out to |eta| = 4.7, but necessary jet ID variable f_LS doesn't 
     yet exist in ntuple*/
-  TH2F eETJetNormVsEMFractionPF("eETJetNormVsEMFractionPF", "eETJetNormVsEMFractionPF", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F gETJetNormVsEMFractionPF("gETJetNormVsEMFractionPF", "gETJetNormVsEMFractionPF", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F fETJetNormVsEMFractionPF("fETJetNormVsEMFractionPF", "fETJetNormVsEMFractionPF", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F failETJetNormVsEMFractionPF("failETJetNormVsEMFractionPF", "failETJetNormVsEMFractionPF", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F eETJetNormVsEMFractionCalo("eETJetNormVsEMFractionCalo", "eETJetNormVsEMFractionCalo", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F gETJetNormVsEMFractionCalo("gETJetNormVsEMFractionCalo", "gETJetNormVsEMFractionCalo", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F fETJetNormVsEMFractionCalo("fETJetNormVsEMFractionCalo", "fETJetNormVsEMFractionCalo", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F failETJetNormVsEMFractionCalo("failETJetNormVsEMFractionCalo", "failETJetNormVsEMFractionCalo", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  setHistogramOptions(eETJetNormVsEMFractionPF, "EM fraction", "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(gETJetNormVsEMFractionPF, "EM fraction", "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(fETJetNormVsEMFractionPF, "EM fraction", "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(failETJetNormVsEMFractionPF, "EM fraction", "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(eETJetNormVsEMFractionCalo, "EM fraction", "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(gETJetNormVsEMFractionCalo, "EM fraction", "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(fETJetNormVsEMFractionCalo, "EM fraction", "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(failETJetNormVsEMFractionCalo, "EM fraction", "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
+  TH2F eETJetNormVsEMFractionPF("eETJetNormVsEMFractionPF", "eETJetNormVsEMFractionPF", 
+				50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F gETJetNormVsEMFractionPF("gETJetNormVsEMFractionPF", "gETJetNormVsEMFractionPF", 
+				50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F fETJetNormVsEMFractionPF("fETJetNormVsEMFractionPF", "fETJetNormVsEMFractionPF", 
+				50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F failETJetNormVsEMFractionPF("failETJetNormVsEMFractionPF", "failETJetNormVsEMFractionPF", 
+				   50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F eETJetNormVsEMFractionCalo("eETJetNormVsEMFractionCalo", "eETJetNormVsEMFractionCalo", 
+				  50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F gETJetNormVsEMFractionCalo("gETJetNormVsEMFractionCalo", "gETJetNormVsEMFractionCalo", 
+				  50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F fETJetNormVsEMFractionCalo("fETJetNormVsEMFractionCalo", "fETJetNormVsEMFractionCalo", 
+				  50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F failETJetNormVsEMFractionCalo("failETJetNormVsEMFractionCalo", 
+				     "failETJetNormVsEMFractionCalo", 50, 0.0, 1.0, 100, -1.0, 1.0);
+  setHistogramOptions(eETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{E_{Tj} - E_{Te}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(gETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(fETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{E_{Tj} - E_{Tf}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(failETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{E_{Tj} - E_{Tfail}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(eETJetNormVsEMFractionCalo, "EM fraction", 
+		      "#frac{E_{Tj} - E_{Te}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(gETJetNormVsEMFractionCalo, "EM fraction", 
+		      "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(fETJetNormVsEMFractionCalo, "EM fraction", 
+		      "#frac{E_{Tj} - E_{Tf}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(failETJetNormVsEMFractionCalo, "EM fraction", 
+		      "#frac{E_{Tj} - E_{Tfail}}{E_{Tj}}", "", kSumW2);
   map<string, TH2F*> histograms2D;
   histograms2D[string(eETJetNormVsEMFractionPF.GetName())] = &eETJetNormVsEMFractionPF;
   histograms2D[string(gETJetNormVsEMFractionPF.GetName())] = &gETJetNormVsEMFractionPF;
@@ -2488,6 +2493,23 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
   histograms2D[string(gETJetNormVsEMFractionCalo.GetName())] = &gETJetNormVsEMFractionCalo;
   histograms2D[string(fETJetNormVsEMFractionCalo.GetName())] = &fETJetNormVsEMFractionCalo;
   histograms2D[string(failETJetNormVsEMFractionCalo.GetName())] = &failETJetNormVsEMFractionCalo;
+
+  /*(ETjj - ETgg)/ETjj vs. average EM fraction of PF (>10 GeV) and calo (>20 GeV) jets (in 
+    |eta| < 2.6 and passing jet ID) overlapping with e, g, and f objects*/
+  /*note: would like to extend jets out to |eta| = 4.7, but necessary jet ID variable f_LS doesn't 
+    yet exist in ntuple*/
+  TH2F eeETJetNormVsEMFractionPF("eeETJetNormVsEMFractionPF", "eeETJetNormVsEMFractionPF", 
+				 50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F ggETJetNormVsEMFractionPF("ggETJetNormVsEMFractionPF", "ggETJetNormVsEMFractionPF", 
+				 50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F ffETJetNormVsEMFractionPF("ffETJetNormVsEMFractionPF", "ffETJetNormVsEMFractionPF", 
+				 50, 0.0, 1.0, 100, -1.0, 1.0);
+  setHistogramOptions(eeETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{E_{Tjj} - E_{Tee}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(ggETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{E_{Tjj} - E_{T#gamma#gamma}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(ffETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{E_{Tjj} - E_{Tff}}{E_{Tj}}", "", kSumW2);
 
   //canvases to compare EM fractions for the different types of EM objects, 1 per jet algorithm
   TCanvas EMFractionPF("EMFractionPF", "", 600, 600);
@@ -2543,12 +2565,27 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
 
     //check that needed maps exist in this event
     bool proceed = true;
-    if (susyCategory->getPhotonType()->size() <= 0) {
-      cerr << "Error: susyCategory->getPhotonType()->size() = 0 for event " << (jentry + 1);
+    if ((susyCategory->getPhotonType()->size() <= 0) || 
+	(susyCategory->getEventCategory()->size() <= 0) || 
+	(susyCategory->getEvtInvMass()->size() <= 0)) {
+      cerr << "Error: susyCategory->getPhotonType()->size() = 0 or ";
+      cerr << "susyCategory->getEventCategory()->size() <= 0 or ";
+      cerr << "susyCategory->getEvtInvMass()->size() <= 0 for event " << (jentry + 1);
       cerr << ".  Skipping this event.\n";
       proceed = false;
     }
     if (proceed) {
+
+      //corrected p4s of the jets matched to the 2 EM objects if ee, gg, or ff event
+      int category = susyCategory->getEventCategory(tag_);
+      TLorentzVector j1;
+      TLorentzVector j2;
+      TLorentzVector EM1;
+      TLorentzVector EM2;
+      float diEMET = susyCategory->getEvtInvMass(tag_);
+      float EMF1 = 0.0;
+      float EMF2 = 0.0;
+      unsigned int EMObjectCount = 0;
 
       //get photons
       map<TString, susy::PhotonCollection>::const_iterator iPhotonMap = 
@@ -2572,15 +2609,56 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
 	     
 	      //calculate the jet-EM overlap
 	      int overlappingPhotonIndex = -1;
-	      unsigned int numOverlaps = numPhotonOverlaps(iPhotonMap->second, corrP4, 
+	      unsigned int numOverlaps = numPhotonOverlaps(iPhotonMap->second, 
+							   /*corrP4*/iJet->momentum, 
 							   overlappingPhotonIndex);
 
-	      //fill histograms
+	      //fill single object histograms
 	      Float_t EMFraction = 
 		(iJet->neutralEmEnergy + iJet->chargedEmEnergy)/iJet->momentum.Energy();
-	      TH1F* pHist = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
-						histograms, "PF");
-	      if (pHist != NULL) pHist->Fill(EMFraction*lumiWeight*PUWeight);
+	      // Double_t jetET = corrP4.Et();
+	      Double_t jetPT = corrP4.Pt();
+	      TH1F* pHist1D = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
+						  histograms, "", "PF");
+	      TH2F* pHist2D = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
+						  histograms2D, "ETJetNormVs", "PF");
+	      if (pHist1D != NULL) {
+		pHist1D->Fill(EMFraction, lumiWeight*PUWeight);
+
+		//save corrected p4 of jets matched to EM objects
+		if (((string(pHist1D->GetName()).find("eEMFraction") != string::npos) && 
+		     (category == EE)) || 
+		    ((string(pHist1D->GetName()).find("fEMFraction") != string::npos) && 
+		     (category == FF)) || 
+		    ((string(pHist1D->GetName()).find("gEMFraction") != string::npos) && 
+		     (category == GG))) {
+		  switch (EMObjectCount) {
+		  case 0:
+		    j1 = corrP4;
+		    EM1 = iPhotonMap->second[overlappingPhotonIndex].momentum;
+		    EMF1 = EMFraction;
+		    ++EMObjectCount;
+		    break;
+		  case 1:
+		    j2 = corrP4;
+		    EM2 = iPhotonMap->second[overlappingPhotonIndex].momentum;
+		    EMF2 = EMFraction;
+		    ++EMObjectCount;
+		    break;
+		  default:
+		    cerr << "Error: " << (EMObjectCount + 1) << " matched objects in event ";
+		    cerr << (jentry + 1) << ".\n";
+		    ++EMObjectCount;
+		    break;
+		  }
+		}
+	      }
+	      if (pHist2D != NULL) {
+		pHist2D->Fill(EMFraction, 
+			      (/*jetET*/jetPT - 
+			       iPhotonMap->second[overlappingPhotonIndex].momentum.Pt())/jetPT, 
+			      lumiWeight*PUWeight);
+	      }
 	    }
 	  }
 	}
@@ -2604,14 +2682,24 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
 	     
 	      //calculate the jet-EM overlap
 	      int overlappingPhotonIndex = -1;
-	      unsigned int numOverlaps = numPhotonOverlaps(iPhotonMap->second, corrP4, 
+	      unsigned int numOverlaps = numPhotonOverlaps(iPhotonMap->second, 
+							   /*corrP4*/iJet->momentum, 
 							   overlappingPhotonIndex);
 
 	      //fill histograms
 	      Float_t EMFraction = iJet->emEnergyFraction;
-	      TH1F* pHist = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
-						histograms, "Calo");
-	      if (pHist != NULL) pHist->Fill(EMFraction*lumiWeight*PUWeight);
+	      Double_t jetET = corrP4.Et();
+	      TH1F* pHist1D = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
+						  histograms, "", "PF");
+	      TH2F* pHist2D = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
+						  histograms2D, "ETJetNormVs", "PF");
+	      if (pHist1D != NULL) pHist1D->Fill(EMFraction, lumiWeight*PUWeight);
+	      if (pHist2D != NULL) {
+		pHist2D->Fill(EMFraction, 
+			      (jetET - 
+			       iPhotonMap->second[overlappingPhotonIndex].momentum.Et())/jetET, 
+			      lumiWeight*PUWeight);
+	      }
 	    }
 	  }
 	}
@@ -2621,22 +2709,48 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
 	cerr << "Error: " << tag_ << " photon collection not found in ";
 	cerr << "event " << (jentry + 1) << ".\n";
       }
+
+      //fill di-EM pT histograms
+      float diJetPT = (j1 + j2).Pt();
+      float diEMPT = (EM1 + EM2).Pt();
+      TH2F* pHistDiEM = NULL;
+      switch (category) {
+      case EE:
+	pHistDiEM = &eeETJetNormVsEMFractionPF;
+	break;
+      case FF:
+	pHistDiEM = &ffETJetNormVsEMFractionPF;
+	break;
+      case GG:
+	pHistDiEM = &ggETJetNormVsEMFractionPF;
+	break;
+      default:
+	break;
+      }
+      if (pHistDiEM != NULL) {
+	if (EMObjectCount == 2) pHistDiEM->Fill((EMF1 + EMF2)/2.0, (diJetPT - diEMPT)/diJetPT, 
+						lumiWeight*PUWeight);
+	// else {
+	//   cerr << EMObjectCount << " matched objects in event " << (jentry + 1);
+	//   cerr << ".  Skipping event.\n";
+	// }
+      }
     }
   }
 
   EMFractionPF.cd();
-  makeFinalCanvas(&eEMFractionPF, kRed, 1, 0, 0, 1, "E2");
-  makeFinalCanvas(&gEMFractionPF, kBlue, 1, 0, 0, 1, "E2SAME");
-  makeFinalCanvas(&fEMFractionPF, kMagenta, 1, 0, 0, 1, "E2SAME");
-  makeFinalCanvas(&failEMFractionPF, kGreen + 3, 1, 0, 0, 1, "E2SAME");
-  makeFinalCanvas(&otherEMFractionPF, kBlack, 1, 0, 0, 1, "E2SAME");
+  makeFinalCanvas(&eEMFractionPF, kRed, 1, 0, 0, 1, kRed, "E1");
+  makeFinalCanvas(&gEMFractionPF, kBlue, 1, 0, 0, 1, kBlue, "E1SAME");
+  makeFinalCanvas(&fEMFractionPF, kMagenta, 1, 0, 0, 1, kMagenta, "E1SAME");
+  makeFinalCanvas(&failEMFractionPF, kGreen + 3, 1, 0, 0, 1, kGreen + 3, "E1SAME");
+  makeFinalCanvas(&otherEMFractionPF, kBlack, 1, 0, 0, 1, kBlack, "E1SAME");
   EMFractionPF.Write();
   EMFractionCalo.cd();
-  makeFinalCanvas(&eEMFractionCalo, kRed, 1, 0, 0, 1, "E2");
-  makeFinalCanvas(&gEMFractionCalo, kBlue, 1, 0, 0, 1, "E2SAME");
-  makeFinalCanvas(&fEMFractionCalo, kMagenta, 1, 0, 0, 1, "E2SAME");
-  makeFinalCanvas(&failEMFractionCalo, kGreen + 3, 1, 0, 0, 1, "E2SAME");
-  makeFinalCanvas(&otherEMFractionCalo, kBlack, 1, 0, 0, 1, "E2SAME");
+  makeFinalCanvas(&eEMFractionCalo, kRed, 1, 0, 0, 1, kRed, "E1");
+  makeFinalCanvas(&gEMFractionCalo, kBlue, 1, 0, 0, 1, kBlue, "E1SAME");
+  makeFinalCanvas(&fEMFractionCalo, kMagenta, 1, 0, 0, 1, kMagenta, "E1SAME");
+  makeFinalCanvas(&failEMFractionCalo, kGreen + 3, 1, 0, 0, 1, kGreen + 3, "E1SAME");
+  makeFinalCanvas(&otherEMFractionCalo, kBlack, 1, 0, 0, 1, kBlack, "E1SAME");
   EMFractionCalo.Write();
 
   //close

@@ -16,6 +16,7 @@
 //the tree has 2 branches: an object of class susy::Event and an object of class susy::Category
 #include "../src/SusyEvent.h"
 #include "../src/SusyCategory.h"
+#include "../../../GMSBTools/Filters/interface/Categorizer.h"
 #include "../../../PhysicsTools/Utilities/interface/LumiReweightingStandAlone.h"
 
 class GMSBAnalyzer {
@@ -118,7 +119,7 @@ public :
    void setMETErrorBars(TH1F&, const vector<TH1F*>&, const vector<TH1F*>&, const vector<TH1F*>&, 
 			const float, const float, const bool doDefault = true) const;
    void makeFinalCanvas(TH1*, const Color_t, const Width_t, const Style_t, const Color_t, 
-			const Size_t, const string&) const;
+			const Size_t, const Color_t, const string&) const;
    void deallocateMemory(VTH1F&) const;
    void runMETAnalysis(const string&);
    void runMETAnalysisWithEEBackgroundFit(const std::string&);
@@ -128,9 +129,59 @@ public :
    bool passPFJetID(susy::PFJetCollection::const_iterator&) const;
    bool passCaloJetID(susy::CaloJetCollection::const_iterator&) const;
    unsigned int numPhotonOverlaps(const susy::PhotonCollection&, const TLorentzVector&, int&) const;
-   TH1F* rightJetHistogram(const string&, const string&, map<string, TH1F*>&) const;
-   TH1F* EMFractionHistogram(const int, const unsigned int, map<string, TH1F*>&, 
-			     const string&) const;
+   template<typename T/*, typename U*/>
+     T* rightJetHistogram(const string& photonType, const string& identifier, 
+			  const string& jetType, map<string, T*>& histograms) const
+     {
+       stringstream name;
+       name << photonType << identifier << "EMFraction" << jetType;
+       typename map<string, T*>::const_iterator iHist = histograms.find(name.str());
+       if (iHist != histograms.end()) return iHist->second;
+       else return NULL;
+     }
+   template<typename T/*, typename U*/>
+     T* EMFractionHistogram(const int photonIndex, const unsigned int numOverlaps, 
+			    map<string, T*>& histograms, const string& identifier, 
+			    const string& jetType) const
+     {
+       T* pHist = NULL;
+       if ((photonIndex == -1) && (numOverlaps > 0)) {
+	 cerr << "Error: numOverlaps = " << numOverlaps;
+	 cerr << " but photonIndex = -1.  Skipping this jet.\n";
+	 return pHist;
+       }
+       int photonType = FAIL;
+       if (photonIndex != -1) photonType = susyCategory->getPhotonType(tag_, photonIndex);
+       switch (numOverlaps) {
+       case 1:
+	 switch (photonType) {
+	 case G:
+	   pHist = rightJetHistogram("g", identifier, jetType, histograms);
+	   break;
+	 case E:
+	   pHist = rightJetHistogram("e", identifier, jetType, histograms);
+	   break;
+	 case F:
+	   pHist = rightJetHistogram("f", identifier, jetType, histograms);
+	   break;
+	 case FAIL:
+	   pHist = rightJetHistogram("fail", identifier, jetType, histograms);
+	   break;
+	 default:
+	   cerr << "Error: photon type " << photonType << " invalid for photon ";
+	   cerr << photonIndex << ".  Skipping this photon.\n";
+	   break;
+	 }
+	 break;
+       case 0:
+	 pHist = rightJetHistogram("other", identifier, jetType, histograms);
+	 break;
+       default:
+	 //count number of jets per event with >1 EM overlap
+	 break;
+       }
+       return pHist;
+     }
    void runEMFractionAnalysis(const string&);
    void runCutFlowAnalysis();
    void skim(const string&, const int);
