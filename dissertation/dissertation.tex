@@ -1,11 +1,12 @@
 \documentclass[12pt, letterpaper]{report}
 
 \usepackage{graphicx}
+\usepackage{subfig}
 \usepackage{url}
-\usepackage{hyperref}
 \usepackage{color}
 %\usepackage[justification=justified]{caption}[2009/9/16]
 \usepackage[top=1in, bottom=1in, left=1.5in, right=1in]{geometry}
+\usepackage{hyperref}
 
 \frenchspacing %same spacing between words and sentences cf. http://en.wikibooks.org/wiki/LaTeX/Formatting#Space_between_Words_and_Sentences
 
@@ -28,15 +29,82 @@
 %failures of the Higgs mechanism, dark matter, how SUSY ties them together
 
 \chapter{Overview of the Standard Model of Particle Physics}
+%\chapter{The Current State of the Standard Model}
+
+I call it...the Aristocrats.
+
+%The Standard Model of particle physics describes the elementary building blocks of matter as a set of interacting field quanta.  There are four forces by which the quanta, or particles, may interact: the the weak force, electromagnetic force, the strong force, and the gravitational force.  Table 1 lists some properties of the four forces.
+
+%insert table here showing each force, its carrier, and the physical phenomena it applies to
+%\begin{tabular}{|l|l|l|}
+%\hline
+%Force & Associated particle(s) & Physical phenomena \\
+%\hline
+%\hline
+%Weak & $W^{\pm}$ (80.4 $GeV/c$), $Z^{0}$ (91.2 $GeV/c$) & Radioactive $\beta$ decay, fusion in stars \\
+%\hline
+%Electromagnetic & Photon & Electricity, 
+%\end{tabular}
+
+%In addition to the matter particles, there also exist particles associated to each of the forces.  Interactions between matter particles, for instance via scattering or pair production, are mediated by the exchange or creation of virtual force carriers \cite{Cottingham_and_Greenwood}.
+
+In the 1960s, Sheldon Glashow, Steven Weinberg, and Abdus Salam proposed a mathematical framework that unified the electromagnetic and weak forces at an energy scale in the hundreds of $GeV/c$, as well as a mechanism for breaking the electroweak symmetry at low energies \cite{Glashow_Weinberg_and_Salam}.  At the same time, Murray Gell-Mann introduced the concept of quarks to describe hadron spectroscopy, a concept that would later grow into quantum chromodynamics (QCD), the full theory of the strong force \cite{Gell-Mann}.  These two key developments motivated the unified representation of particle physics as a set of fields whose dynamics are invariant under the Standard Model gauge group
+
+\begin{equation}
+SU(3)_{C} \bigotimes SU(2)_{L} \bigotimes U(1)_{EM}
+\end{equation}
+%
+where $SU(3)_{C}$ describes the quark QCD interactions, $SU(2)_{L}$ describes the weak interactions among quarks and leptons, and $U(1)_{EM}$ describes the electromagnetic interaction.
+
+The Standard Model, in particular the electroweak theory, has been an extremely successful predictor of particle production and interaction cross-sections and decay rates, as well as of the exact masses of the electroweak force carriers.  The case for the validity of the Standard Model was bolstered by the many precision QCD and electroweak measurements carried out at the Large Electron-Positron (LEP) collider, which ran from 1989-2000 at center-of-mass energies between 65 and 104 $GeV/c$ \cite{Drees}.  Figure 1 shows some of the highlights of the LEP program.
+
+\begin{figure}
+	\centering
+	\subfloat[Total hadronic cross-section as a function of collider center-of-mass energy.]{\label{fig:LEP_hadronic_xsec}\includegraphics[scale=0.7]{LEP_hadronic_xsec}}
+	\hspace{1cm}
+	\subfloat[Measured and predicted dependence of the $q\overline{q}$, $\mu^{+}\mu^{-}$, and $\tau^{+}\tau^{-}$ pair production cross sections on LEP center-of-mass energy.]{\label{fig:LEP_pair_production_xsecs}\includegraphics[scale=0.7]{LEP_pair_production_xsecs}}
+	\\
+	\subfloat[Measured and predicted dependence of the $W^{+}W^{-}$ pair production cross section on LEP center-of-mass energy.]{\label{fig:LEP_W_pair_production_xsec}\includegraphics[scale=0.7]{LEP_W_pair_production_xsec}}
+	\hspace{1cm}
+	\subfloat[Measured and predicted dependence of the strong coupling constant $\alpha_{s}$ on LEP center-of-mass energy.]{\label{fig:LEP_alphaS_running}\includegraphics[scale=0.7]{LEP_alphaS_running}}
+	\label{fig:LEP}
+	\caption{Selected LEP measurements demonstrating its contribution to the precise understanding of the Standard Model.  Reprinted from \cite{Drees}.}
+\end{figure}
+
+However, there are still deep theoretical problems with the Standard Model, stemming from the introduction of the Higgs scalar into the theory to break electroweak symmetry \cite{Higgs}.  Since the Higgs self-energy diagram is quadratically sensitive to the ultraviolet cutoff scale(footnote: this is a general property of scalar fields), and assuming that there are no new important energy scales of physics between the weak scale ($\mathcal{O}$($10^{2}$ $GeV/c$)) and the Planck scale ($\mathcal{O}$($10^{19}$ $GeV/c$)), in order to be consistent with experimental measurements, this diagram must include a remarkable 17-orders-of-magnitude cancellation that is otherwise poorly motivated \cite{Aitchison}.  The quest to find new physics at an intermediate energy scale between the weak and Planck scales, and thus extend the Standard Model, was the driving force behind the construction of the Large Hadron Collider (LHC) in 2009, the world's highest energy particle accelerator to date.
+
+In this chapter I will briefly describe the Standard Model particle content, the theory and major results of electroweak symmetry breaking (EWSB), and the problems that the Standard Model is as yet ill-prepared to address.
+
 \section{Particle Content}
+%group theory representation
+%doublets, singlets, charges
+%masses: why so different?
+%Fermi vs. Bose statistics
 \section{Electroweak Symmetry Breaking and the Higgs Mechanism}
-\section{The Hierarchy Problem and Fine Tuning}
-\section{Dark Matter and the WIMP Miracle}
+\section{The Hierarchy Problem, The Origins of Mass, and Fine Tuning}
 
 \chapter{The Supersymmetric Extension to the Standard Model}
-\section{SUSY Lagrangian and Particle Content}
+\section{SUSY Lagrangian and Particle Content, SUSY Breaking}
+\section{Dark Matter and the WIMP Miracle}
 \section{Gauge-Mediated SUSY Breaking}
 \section{Experimental Status of SUSY}
+
+The search for evidence of supersymmetry at colliders began in earnest in the 1980s (\cite{SUSY_history}) and continues to this day.  Most recently, the LHC and Tevatron\footnote{Located on the Fermilab site in Batavia, Illinois, the Tevatron was a proton-antiproton collider operating at 1.96 TeV center-of-mass energy.  The Tevatron ran from 1987 to 2011 \cite{Tevatron_lifetime}.} experiments have set the strictest limits on a variety of SUSY breaking scenarios, including GMSB and mSUGRA.
+
+Figure X shows the current limits set by the CMS experiment on the mSUGRA model (with $tan \beta = 10$) in the $m_{0}$-$m_{1/2}$ plane.  (Note that although the plot is truncated at $m_{0}$ = 1000 $GeV/c^{2}$, some searches are sensitive out to $m_{0}$ ~ 2000 $GeV/c^{2}$.)  Although the LHC has pushed the mSUGRA sparticle mass scales above ~1 $TeV/c$, casting some doubt onto the theory's prospects for solving the hierarchy problem, there is still a sizable chunk of mSUGRA parameter space that is not ruled out by collider experiment.  Furthermore, parts of the unexplored regions overlap with areas favored by astrophysics considerations \cite{papers_that_say_all_that_eg_SUSY11}.
+
+%GMSB exclusions:
+%ATLAS SPS8
+%ATLAS GGM
+%CDF/D0 long-lived
+
+%astrophysics exclusions
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.7]{CMS_SUSY_2011Limits_tanb10}
+	\caption{CMS limits on mSUGRA with $tan \beta = 10$.  The limits set by individual searches are shown as separate colored lines.  Solid lines refer to 2011 searches (i.e. using an integrated luminosity of ~1 $fb^{-1}$), while dashed lines refer to 2010 searches (~36 $pb^{-1}$).  Reprinted from \cite{CMS_mSUGRA}.}
+\end{figure}
 
 \chapter{The Large Hadron Collider}
 %see LHC paper
@@ -87,5 +155,16 @@
 \section{Exclusion Contours}
 
 \chapter{Conclusion}
+
+\begin{thebibliography}{99}
+%\bibitem{Cottingham_and_Greenwood} dummy
+\bibitem{Glashow_Weinberg_and_Salam} S.L. Glashow, J. Iliopoulis, and L. Maiani, \textit{Phys. Rev. D} \textbf{2} (1970) 1285; S.L. Glashow, \textit{Nucl. Phys.} \textbf{22(4)} (1961) 579; J. Goldstone, A. Salam, and S. Weinberg, \textit{Phys. Rev.} \textbf{127} (1962) 965; S. Weinberg, \textit{Phys. Rev. Lett.} \textbf{19} (1967) 1264; A. Salam and J.C. Ward, \textit{Phys. Lett.} \textbf{13(2)} (1964) 168.
+\bibitem{Gell-Mann} M. Gell-Mann, \textit{Phys. Lett.} \textbf{8} (1964) 214; G. Zweig, \textit{CERN} \textbf{8419/TH. 412} (1964) (unpublished).
+\bibitem{Drees} J. Drees, \textit{Int. J. Mod. Phys.} \textbf{A17} (2002) 3259.
+\bibitem{Higgs} P.W. Higgs, \textit{Phys. Lett.} \textbf{12(2)} (1964) 132; P.W. Higgs, \textit{Phys. Rev. Lett.} \textbf{13} (1964) 508; P.W. Higgs, \textit{Phys. Rev.} \textbf{145} (1966) 1156.
+\bibitem{Aitchison} I. Aitchison, \textit{Supersymmetry in Particle Physics: An Elementary Introduction} (Cambridge University Press, Cambridge 2007), p. 4.
+\bibitem{Tevatron_lifetime} \url{http://en.wikipedia.org/wiki/Tevatron}.
+\bibitem{CMS_mSUGRA} \url{https://twiki.cern.ch/twiki/bin/view/CMSPublic/PhysicsResultsSUS}.
+\end{thebibliography}
 
 \end{document}
