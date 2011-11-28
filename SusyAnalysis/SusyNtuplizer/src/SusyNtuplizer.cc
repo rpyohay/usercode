@@ -13,7 +13,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyNtuplizer.cc,v 1.15 2011/06/08 16:28:39 dmason Exp $
+// $Id: SusyNtuplizer.cc,v 1.17 2011/11/01 22:14:51 dwjang Exp $
 //
 //
 
@@ -41,6 +41,7 @@
 
 #include "DataFormats/Common/interface/TriggerResults.h"
 #include "FWCore/Common/interface/TriggerNames.h"
+#include "HLTrigger/HLTcore/interface/HLTConfigProvider.h"
 
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
 #include "SimDataFormats/GeneratorProducts/interface/GenEventInfoProduct.h"
@@ -57,6 +58,7 @@
 #include "DataFormats/GsfTrackReco/interface/GsfTrack.h"
 
 #include "DataFormats/METReco/interface/MET.h"
+#include "DataFormats/METReco/interface/GenMET.h"
 #include "DataFormats/EgammaCandidates/interface/Photon.h"
 #include "DataFormats/EgammaCandidates/interface/PhotonFwd.h"
 #include "DataFormats/EgammaCandidates/interface/GsfElectron.h"
@@ -118,11 +120,15 @@
 #include "SimDataFormats/Vertex/interface/SimVertex.h"
 #include "SimDataFormats/Vertex/interface/SimVertexContainer.h"
 
+// pileup summary info
+#include "SimDataFormats/PileupSummaryInfo/interface/PileupSummaryInfo.h"
+
 // system include files
 #include <memory>
 #include <string>
 #include <vector>
 #include <algorithm>
+//#include <stringstream>
 
 #include <TTree.h>
 #include <TFile.h>
@@ -142,6 +148,7 @@ public:
   ~SusyNtuplizer();
 
 private:
+  virtual void beginRun(const edm::Run& iRun, edm::EventSetup const& iSetup);
   virtual void beginJob() ;
   virtual void analyze(const edm::Event&, const edm::EventSetup&);
   virtual void endJob() ;
@@ -180,12 +187,17 @@ private:
   std::vector<std::string> jptJetCollectionTags_;
   std::vector<std::string> metCollectionTags_;
   std::vector<std::string> pfCandidateCollectionTags_;
+  edm::InputTag puSummaryInfoTag_;
 
   edm::ESHandle<MagneticField> magneticField_;
   PropagatorWithMaterial* propagator_;
   edm::ESHandle<TransientTrackBuilder> transientTrackBuilder_;
 
   PFGeometry pfGeom_;
+
+  //for HLT prescales
+  HLTConfigProvider hltConfig_;
+  bool changed_;
 
   // debugLevel
   // 0 : default (no printout from this module)
@@ -220,6 +232,9 @@ private:
   // jetThreshold will be applied on corrected jets' pt
   double jetThreshold_;
 
+  // jet algorithms
+  std::vector<std::string> jetAlgos_;
+
   // PFParticleThreshold
   double pfParticleThreshold_;
 
@@ -247,12 +262,15 @@ SusyNtuplizer::SusyNtuplizer(const edm::ParameterSet& iConfig) {
   photonCollectionTags_      = iConfig.getParameter<std::vector<std::string> >("photonCollectionTags");
   photonIDCollectionTags_    = iConfig.getParameter<std::vector<std::string> >("photonIDCollectionTags");
   genCollectionTag_          = iConfig.getParameter<edm::InputTag>("genCollectionTag");
-  simVertexCollectionTag_    = iConfig.getParameter<edm::InputTag>("simVertexCollectionTag");
+  if (iConfig.existsAs<edm::InputTag>("simVertexCollectionTag")) {
+    simVertexCollectionTag_    = iConfig.getParameter<edm::InputTag>("simVertexCollectionTag");
+  }
   caloJetCollectionTags_     = iConfig.getParameter<std::vector<std::string> >("caloJetCollectionTags");
   pfJetCollectionTags_       = iConfig.getParameter<std::vector<std::string> >("pfJetCollectionTags");
   jptJetCollectionTags_      = iConfig.getParameter<std::vector<std::string> >("jptJetCollectionTags");
   metCollectionTags_         = iConfig.getParameter<std::vector<std::string> >("metCollectionTags");
   pfCandidateCollectionTags_ = iConfig.getParameter<std::vector<std::string> >("pfCandidateCollectionTags");
+  puSummaryInfoTag_ = iConfig.getParameter<edm::InputTag>("puSummaryInfoTag");
 
   muonThreshold_ = iConfig.getParameter<double>("muonThreshold");
   electronThreshold_ = iConfig.getParameter<double>("electronThreshold");
@@ -264,6 +282,12 @@ SusyNtuplizer::SusyNtuplizer(const edm::ParameterSet& iConfig) {
   storeGeneralTracks_ = iConfig.getParameter<bool>("storeGeneralTracks");
   recoMode_ = iConfig.getParameter<bool>("recoMode");
   outputFileName_ = iConfig.getParameter<std::string>("outputFileName");
+
+  //set jet algorithms
+  jetAlgos_.push_back("ak5");
+  jetAlgos_.push_back("ak7");
+  jetAlgos_.push_back("kt4");
+  jetAlgos_.push_back("kt6");
 
   susyEvent_ = new susy::Event;
 
@@ -309,6 +333,21 @@ void SusyNtuplizer::endJob() {
   susyTree_->Write();
   susyTree_->GetCurrentFile()->Close();
 
+}
+
+
+// ---- method called once each job just before starting event loop  ---                                                                     
+void SusyNtuplizer::beginRun(const edm::Run& iRun, edm::EventSetup const& iSetup){
+
+  //intialize HLTConfigProvider                                                                                                              
+  if(!hltConfig_.init(iRun,iSetup,"HLT",changed_) ){
+    edm::LogError("SusyNtuplizer") <<
+      "Error! Can't initialize HLTConfigProvider";
+    throw cms::Exception("HLTConfigProvider::init() returned non 0");
+  }
+  if(changed_) {
+    std::cout << "HLT configuration changed to " << hltConfig_.tableName() << std::endl;
+  }
 }
 
 
@@ -409,7 +448,8 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
     // loop over hlt paths
     for(int i=0; i<nHlt; i++) {
       // get prescale from LumiSummary
-      Int_t prescale = lsH->hltinfo(hltTriggerNames.triggerName(i)).prescale;
+      // Int_t prescale = lsH->hltinfo(hltTriggerNames.triggerName(i)).prescale;
+      Int_t prescale = hltConfig_.prescaleValue(iEvent, iSetup, hltTriggerNames.triggerName(i));
       // check hlt bit
       susyEvent_->hltMap[TString(hltTriggerNames.triggerName(i).c_str())] = std::pair<Int_t, UChar_t>(prescale, UChar_t(hltH->accept(i)));
       if(debugLevel_ > 1) std::cout << hltTriggerNames.triggerName(i) << " : " << hltH->accept(i) << std::endl;
@@ -536,6 +576,9 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   int nMetColl = metCollectionTags_.size();
 
   for(int iMet=0; iMet<nMetColl; iMet++) {
+
+    size_t found = metCollectionTags_[iMet].find("gen");
+    if(found != std::string::npos && iEvent.isRealData()) continue;
 
     //    edm::Handle<edm::View<pat::MET> > metH;
     edm::Handle<edm::View<reco::MET> > metH;
@@ -731,7 +774,10 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	    pho.alpha     = my2ndMoments.alpha;
 	    pho.roundness = myVector[0];
 	    pho.angle     = myVector[1];
-	    
+
+	    std::vector<float> crysCov = EcalClusterTools::localCovariances(*(it->superCluster()->seed()), barrelRecHitsHandle.product(),caloTopology);
+	    pho.sigmaIphiIphi = std::sqrt(crysCov[2]);
+
 	    // general cluster info
 	    seedId = it->superCluster()->seed()->seed();
 	    pho.superClusterPreshowerEnergy = it->superCluster()->preshowerEnergy();
@@ -1200,7 +1246,6 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   // ak5JPTJetsL1FastL2L3
   //
 
-
   int nJetColl = caloJetCollectionTags_.size();
 
   for(int iJetC=0; iJetC < nJetColl; iJetC++) {
@@ -1215,10 +1260,16 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       edm::LogError(name()) << caloJetCollectionTags_[iJetC] << " of JetID is not available!!! " << e.what();
     }
 
-    const JetCorrector* corrL2L3  = JetCorrector::getJetCorrector((key + "CaloL2L3").Data(),iSetup);
-    //    const JetCorrector* corrL2L3R = JetCorrector::getJetCorrector((key + "CaloL2L3Residual").Data(),iSetup);
-    const JetCorrector* corrL1L2L3  = JetCorrector::getJetCorrector((key + "CaloL1L2L3").Data(),iSetup);
-    //    const JetCorrector* corrL1L2L3R = JetCorrector::getJetCorrector((key + "CaloL1L2L3Residual").Data(),iSetup);
+    const JetCorrector* corrL2L3  = 0;
+    const JetCorrector* corrL1L2L3  = 0;
+    if(iEvent.isRealData()) {
+      corrL2L3  = JetCorrector::getJetCorrector((key + "CaloL2L3Residual").Data(),iSetup);
+      corrL1L2L3  = JetCorrector::getJetCorrector((key + "CaloL1L2L3Residual").Data(),iSetup);
+    }
+    else {
+      corrL2L3  = JetCorrector::getJetCorrector((key + "CaloL2L3").Data(),iSetup);
+      corrL1L2L3  = JetCorrector::getJetCorrector((key + "CaloL1L2L3").Data(),iSetup);
+    }
 
     edm::Handle<reco::CaloJetCollection> jetH;
     try {
@@ -1229,12 +1280,10 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	  it != jetH->end(); it++){
 
 	reco::CaloJetRef jetRef(jetH,ijet++);
+	edm::RefToBase<reco::Jet> ref(jetRef);
 
 	TLorentzVector corrP4(it->px(),it->py(),it->pz(),it->energy());
-	float jecScale = 1;
-	//	if(iEvent.isRealData()) jecScale = corrL2L3R->correction(it->p4());
-	if(iEvent.isRealData()) jecScale = corrL2L3->correction(it->p4());
-	else jecScale = corrL2L3->correction(it->p4());
+	float jecScale = corrL1L2L3->correction((const reco::Jet&)*it,iEvent,iSetup);
 	corrP4 *= jecScale;
 
 	if(corrP4.Pt() < jetThreshold_) continue;
@@ -1242,11 +1291,19 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	susy::CaloJet jet;
 
 	// Basic Jet
-	jet.etaMean         = it->etaPhiStatistics().etaMean;
-	jet.phiMean         = it->etaPhiStatistics().phiMean;
-	jet.etaEtaMoment    = it->etaPhiStatistics().etaEtaMoment;
-	jet.etaPhiMoment    = it->etaPhiStatistics().etaPhiMoment;
-	jet.phiPhiMoment    = it->etaPhiStatistics().phiPhiMoment;
+	if (it->energy() < 1e27/*GeV*/) {
+	  jet.etaMean         = it->etaPhiStatistics().etaMean;
+	  jet.phiMean         = it->etaPhiStatistics().phiMean;
+	  jet.etaEtaMoment    = it->etaPhiStatistics().etaEtaMoment;
+	  jet.etaPhiMoment    = it->etaPhiStatistics().etaPhiMoment;
+	  jet.phiPhiMoment    = it->etaPhiStatistics().phiPhiMoment;
+	}
+	else {
+	  std::cout << "Not filling eta/phi moments for possibly corrupt " << key << " calo jet ";
+	  std::cout << (it - jetH->begin()) << " in run " << iEvent.run() << ", event ";
+	  std::cout << iEvent.id().event() << ", lumi section " << iEvent.luminosityBlock();
+	  std::cout << std::endl;
+	}
 	jet.maxDistance     = it->maxDistance();
 	jet.jetArea         = it->jetArea();
 	jet.pileup          = it->pileup();
@@ -1275,9 +1332,7 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 			       it->detectorP4().pz(),it->detectorP4().energy());
 
 	jet.jecScaleFactors["L2L3"] = corrL2L3->correction(it->p4());
-	//	jet.jecScaleFactors["L2L3R"] = corrL2L3R->correction(it->p4());
-	jet.jecScaleFactors["L1L2L3"] = corrL1L2L3->correction((const reco::Jet&)*it,(const edm::RefToBase<reco::Jet>&)jetRef,iEvent,iSetup);
-	//	jet.jecScaleFactors["L1FastL2L3R"] = corrL1FastL2L3R->correction(it->p4());
+	jet.jecScaleFactors["L1L2L3"] = corrL1L2L3->correction((const reco::Jet&)*it,iEvent,iSetup);
 
 	// accessing Jet ID information
 	const reco::JetID& jetID = (*jetIDH)[jetRef];
@@ -1318,28 +1373,38 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   nJetColl = pfJetCollectionTags_.size();
   for(int iJetC=0; iJetC < nJetColl; iJetC++) {
     susy::PFJetCollection jetCollection;
-    TString key = TString(pfJetCollectionTags_[iJetC].c_str()).ReplaceAll("PFJets","");
+    TString key;
+    std::vector<std::string>::const_iterator iAlgo = jetAlgos_.begin();
+    while ((iAlgo != jetAlgos_.end()) && (key.Length() == 0)) {
+      if (pfJetCollectionTags_[iJetC].find(*iAlgo) != std::string::npos) key = *iAlgo;
+      else ++iAlgo;
+    }
 
-    const JetCorrector* corrL2L3  = JetCorrector::getJetCorrector((key + "PFL2L3").Data(),iSetup);
-    //    const JetCorrector* corrL2L3R = JetCorrector::getJetCorrector((key + "PFL2L3Residual").Data(),iSetup);
-    const JetCorrector* corrL1FastL2L3  = JetCorrector::getJetCorrector((key + "PFL1FastL2L3").Data(),iSetup);
-    //    const JetCorrector* corrL1FastL2L3R = JetCorrector::getJetCorrector((key + "PFL1FastL2L3Residual").Data(),iSetup);
+    const JetCorrector* corrL2L3  = 0;
+    const JetCorrector* corrL1FastL2L3  = 0;
+    if(iEvent.isRealData()) {
+      corrL2L3  = JetCorrector::getJetCorrector((key + "PFL2L3Residual").Data(),iSetup);
+      corrL1FastL2L3  = JetCorrector::getJetCorrector((key + "PFL1FastL2L3Residual").Data(),iSetup);
+    }
+    else {
+      corrL2L3  = JetCorrector::getJetCorrector((key + "PFL2L3").Data(),iSetup);
+      corrL1FastL2L3  = JetCorrector::getJetCorrector((key + "PFL1FastL2L3").Data(),iSetup);
+    }
 
     edm::Handle<reco::PFJetCollection> jetH;
     try {
       iEvent.getByLabel(edm::InputTag(pfJetCollectionTags_[iJetC]),jetH);
       if(debugLevel_ > 1) std::cout << "size of " << key << " JetCollection : " << jetH->size() << std::endl;
+
       int ijet = 0;
       for(reco::PFJetCollection::const_iterator it = jetH->begin();
 	  it != jetH->end(); it++){
 
 	reco::PFJetRef jetRef(jetH,ijet++);
+	edm::RefToBase<reco::Jet> ref(jetRef);
 
 	TLorentzVector corrP4(it->px(),it->py(),it->pz(),it->energy());
-	float jecScale = 1;
-	//	if(iEvent.isRealData()) jecScale = corrL2L3R->correction(it->p4());
-	if(iEvent.isRealData()) jecScale = corrL2L3->correction(it->p4());
-	else jecScale = corrL2L3->correction(it->p4());
+	float jecScale = corrL1FastL2L3->correction((const reco::Jet&)*it,iEvent,iSetup);
 	corrP4 *= jecScale;
 
 	if(corrP4.Pt() < jetThreshold_) continue;
@@ -1384,9 +1449,7 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 	jet.neutralMultiplicity = it->neutralMultiplicity();
 
 	jet.jecScaleFactors["L2L3"] = corrL2L3->correction(it->p4());
-	//	jet.jecScaleFactors["L2L3R"] = corrL2L3R->correction(it->p4());
-	jet.jecScaleFactors["L1FastL2L3"] = corrL1FastL2L3->correction((const reco::Jet&)*it,(const edm::RefToBase<reco::Jet>&)jetRef,iEvent,iSetup);
-	//	jet.jecScaleFactors["L1FastL2L3R"] = corrL1FastL2L3R->correction(it->p4());
+	jet.jecScaleFactors["L1FastL2L3"] = corrL1FastL2L3->correction((const reco::Jet&)*it,iEvent,iSetup);
 
 	jetCollection.push_back(jet);
 	if(debugLevel_ > 2) std::cout << "pt, e : " << it->pt() << ", " << it->energy() << std::endl;
@@ -1402,7 +1465,7 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
   }// for PFJet
 
 
-
+  /*
   if(debugLevel_ > 0) std::cout << name() << ", fill jptjet collections" << std::endl;
 
   nJetColl = jptJetCollectionTags_.size();
@@ -1477,38 +1540,135 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
   }// for JPTJet
 
-
+  */
 
 
   if( storeGenInfos_ && ! iEvent.isRealData() ) {
     if(debugLevel_ > 0) std::cout << name() << ", fill generated particle informations" << std::endl;
     fillGenInfos(iEvent, iSetup);
 
-    if(debugLevel_ > 0) std::cout << name() << ", fill simulated vertex informations" << std::endl;
-    edm::Handle<edm::SimVertexContainer> simVertexHandle;
-    iEvent.getByLabel(simVertexCollectionTag_, simVertexHandle);
-
-    // loop over sim vertex coll
-    for(edm::SimVertexContainer::const_iterator vsim=simVertexHandle->begin();
-	vsim!=simVertexHandle->end(); ++vsim){
-      TVector3 vtx(vsim->position().x(),vsim->position().y(),vsim->position().z());
-      if(vsim->parentIndex() != -1) continue; // not primary vertex
-      susyEvent_->simVertices.push_back( TVector3(vsim->position().x(),vsim->position().y(),vsim->position().z()) );
-    }// for sim vertex
-
-    // grid parameters for GGM signals
-    edm::Handle<double> sparm_mChi0Handle;
-    edm::Handle<double> sparm_mGluinoHandle;
-    edm::Handle<double> sparm_mSquarkHandle;
-    edm::Handle<double> sparm_xsecHandle;
-
-    if(iEvent.getByLabel("susyScanChi0", sparm_mChi0Handle))         susyEvent_->gridParams["mChi0"]   = (float)*(sparm_mChi0Handle.product());
-    if(iEvent.getByLabel("susyScanMassGluino", sparm_mGluinoHandle)) susyEvent_->gridParams["mGluino"] = (float)*(sparm_mGluinoHandle.product());
-    if(iEvent.getByLabel("susyScanMassSquark", sparm_mSquarkHandle)) susyEvent_->gridParams["mSquark"] = (float)*(sparm_mSquarkHandle.product());
-    if(iEvent.getByLabel("susyScanCrossSection", sparm_xsecHandle))  susyEvent_->gridParams["xsec"]    = (float)*(sparm_xsecHandle.product());
-
+    // event weighting variables, for example ptHat
     edm::Handle<GenEventInfoProduct> GenEventInfoHandle;
     if(iEvent.getByLabel("generator",GenEventInfoHandle)) susyEvent_->gridParams["ptHat"] = GenEventInfoHandle->binningValues()[0];
+
+    //get PU summary info
+    edm::Handle<std::vector<PileupSummaryInfo> > pPUSummaryInfo;
+    bool foundPUSummaryInfo = false;
+    try { foundPUSummaryInfo = iEvent.getByLabel(puSummaryInfoTag_, pPUSummaryInfo); }
+    catch (cms::Exception& ex) {}
+    if (!foundPUSummaryInfo) {
+      std::cerr << "No collection of type " << puSummaryInfoTag_ << " found in run ";
+      std::cerr << iEvent.run() << ", event " << iEvent.id().event() << ", lumi section ";
+      std::cerr << iEvent.getLuminosityBlock().luminosityBlock() << ".\n";
+    }
+    else {
+
+      //fill PUSummaryInfo object
+      if (debugLevel_ > 0) std::cout << name() << ", fill PU summary information" << std::endl;
+      if (debugLevel_ > 1) {
+        std::cout << "size of PileupSummaryInfo collection: " << pPUSummaryInfo->size();
+        std::cout << std::endl;
+      }
+      for (std::vector<PileupSummaryInfo>::const_iterator iPU = pPUSummaryInfo->begin(); 
+           iPU != pPUSummaryInfo->end(); ++iPU) {
+        const unsigned int index = iPU - pPUSummaryInfo->begin();
+        if (debugLevel_ > 1) {
+          std::cout << "size of z position collection for BX " << index << ": ";
+          std::cout << iPU->getPU_zpositions().size() << std::endl;
+          std::cout << "size of sum pT / low pT collection for BX " << index << ": ";
+          std::cout << iPU->getPU_sumpT_lowpT().size() << std::endl;
+          std::cout << "size of sum pT / high pT collection for BX " << index << ": ";
+          std::cout << iPU->getPU_sumpT_highpT().size() << std::endl;
+          std::cout << "size of track / low pT collection for BX " << index << ": ";
+          std::cout << iPU->getPU_ntrks_lowpT().size() << std::endl;
+          std::cout << "size of track / high pT collection for BX " << index << ": ";
+          std::cout << iPU->getPU_ntrks_highpT().size() << std::endl;
+          std::cout << "size of inst. lumi collection for BX " << index << ": ";
+          std::cout << iPU->getPU_instLumi().size() << std::endl;
+          std::cout << "size of DataMixer event collection for BX " << index << ": ";
+          std::cout << iPU->getPU_EventID().size() << std::endl;
+        }
+        if (debugLevel_ > 2) {
+          std::cout << "No. interactions for BX " << index << ": " << iPU->getPU_NumInteractions();
+          std::cout << std::endl;
+          std::cout << "BX ID for BX " << index << ": " << iPU->getBunchCrossing() << std::endl;
+          //for MC samples earlier than CMSSWv4.2.8 or Fall11, comment out the following 2 lines
+          // std::cout << "True no. interactions for BX " << index << ": ";
+          // std::cout << iPU->getTrueNumInteractions() << std::endl;
+        }
+        susy::PUSummaryInfo PUInfoForThisBX;
+        PUInfoForThisBX.numInteractions = iPU->getPU_NumInteractions();
+        for (std::vector<float>::const_iterator i = iPU->getPU_zpositions().begin(); 
+             i != iPU->getPU_zpositions().end(); ++i) {
+          PUInfoForThisBX.zPositions.push_back(*i);
+          if (debugLevel_ > 2) {
+            std::cout << "Z position for BX " << index << ", interaction ";
+            std::cout << (i - iPU->getPU_zpositions().begin()) << ": " << *i << std::endl;
+          }
+        }
+        for (std::vector<float>::const_iterator i = iPU->getPU_sumpT_lowpT().begin(); 
+             i != iPU->getPU_sumpT_lowpT().end(); ++i) {
+          PUInfoForThisBX.sumPTLowPT.push_back(*i);
+          if (debugLevel_ > 2) {
+            std::cout << "Sum pT (low pT) for BX " << index << ", interaction ";
+            std::cout << (i - iPU->getPU_sumpT_lowpT().begin()) << ": " << *i << std::endl;
+          }
+        }
+        for (std::vector<float>::const_iterator i = iPU->getPU_sumpT_highpT().begin(); 
+             i != iPU->getPU_sumpT_highpT().end(); ++i) {
+          PUInfoForThisBX.sumPTHighPT.push_back(*i);
+          if (debugLevel_ > 2) {
+            std::cout << "Sum pT (high pT) for BX " << index << ", interaction ";
+            std::cout << (i - iPU->getPU_sumpT_highpT().begin()) << ": " << *i << std::endl;
+          }
+        }
+        for (std::vector<int>::const_iterator i = iPU->getPU_ntrks_lowpT().begin(); 
+             i != iPU->getPU_ntrks_lowpT().end(); ++i) {
+          PUInfoForThisBX.numTracksLowPT.push_back(*i);
+          if (debugLevel_ > 2) {
+            std::cout << "No. tracks (low pT) for BX " << index << ", interaction ";
+            std::cout << (i - iPU->getPU_ntrks_lowpT().begin()) << ": " << *i << std::endl;
+          }
+        }
+        for (std::vector<int>::const_iterator i = iPU->getPU_ntrks_highpT().begin(); 
+             i != iPU->getPU_ntrks_highpT().end(); ++i) {
+          PUInfoForThisBX.numTracksHighPT.push_back(*i);
+          if (debugLevel_ > 2) {
+            std::cout << "No. tracks (high pT) for BX " << index << ", interaction ";
+            std::cout << (i - iPU->getPU_ntrks_highpT().begin()) << ": " << *i << std::endl;
+          }
+        }
+        for (std::vector<float>::const_iterator i = iPU->getPU_instLumi().begin(); 
+             i != iPU->getPU_instLumi().end(); ++i) {
+          PUInfoForThisBX.instLumi.push_back(*i);
+          if (debugLevel_ > 2) {
+            std::cout << "Inst. lumi for BX " << index << ", interaction ";
+            std::cout << (i - iPU->getPU_instLumi().begin()) << ": " << *i << std::endl;
+          }
+        }
+        for (std::vector<edm::EventID>::const_iterator i = iPU->getPU_EventID().begin(); 
+             i != iPU->getPU_EventID().end(); ++i) {
+          PUInfoForThisBX.dataMixerRun.push_back(i->run());
+          PUInfoForThisBX.dataMixerEvt.push_back(i->event());
+          PUInfoForThisBX.dataMixerLumiSection.push_back(i->luminosityBlock());
+          if (debugLevel_ > 2) {
+            std::cout << "Event ID for BX " << index << ", interaction ";
+            std::cout << (i - iPU->getPU_EventID().begin()) << ":\n";
+            std::cout << " Run: " << i->run() << std::endl;
+            std::cout << " Event: " << i->event() << std::endl;
+            std::cout << " Lumi section: " << i->luminosityBlock() << std::endl;
+          }
+        }
+        PUInfoForThisBX.BX = iPU->getBunchCrossing();
+        //for MC samples earlier than CMSSWv4.2.8 or Fall11, COMMENT OUT the following line
+//      PUInfoForThisBX.trueNumInteractions = iPU->getTrueNumInteractions();
+        //for MC samples earlier than CMSSWv4.2.8 or Fall11, UNCOMMENT the following line
+        PUInfoForThisBX.trueNumInteractions = -1.0;
+
+        //add PU summary info for this BX to the vector of PU summary info for this event
+        susyEvent_->pu.push_back(PUInfoForThisBX);
+      }
+    }
 
   } // if( storeGenInfos_
 

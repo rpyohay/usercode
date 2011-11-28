@@ -10,7 +10,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyNtuplizer_LinkDef.h,v 1.7 2011/06/03 16:58:47 dwjang Exp $
+// $Id: SusyNtuplizer_LinkDef.h,v 1.8 2011/10/31 19:57:42 dwjang Exp $
 //
 
 #include "SusyEvent.h"
@@ -41,6 +41,7 @@
 #pragma link C++ class  std::pair<TString,double>+;
 #pragma link C++ class  std::pair<unsigned int,double>+;
 #pragma link C++ class  std::pair<unsigned int,int>+;
+#pragma link C++ class  susy::PUSummaryInfo+;
 #pragma link C++ class  susy::Particle+;
 #pragma link C++ class  susy::CorrMETData+;
 #pragma link C++ class  susy::MET+;
@@ -67,6 +68,7 @@
 #pragma link C++ class  std::vector<susy::JPTJet>+;
 #pragma link C++ class  std::vector<susy::PFParticle>+;
 #pragma link C++ class  std::vector<susy::Particle>+;
+#pragma link C++ class  std::vector<susy::PUSummaryInfo>+;
 #pragma link C++ class  std::vector<TVector3>+;
 #pragma link C++ class  std::map<TString, std::vector<susy::Electron> >+;
 #pragma link C++ class  std::map<TString, std::vector<susy::Photon> >+;
@@ -85,5 +87,6 @@
 #pragma link C++ class  std::map<TString, double>+;
 #pragma link C++ class  std::map<TString, std::map<unsigned int, double> >+;
 #pragma link C++ class  std::map<unsigned int, double>+;
+#pragma link C++ class  std::vector<int>+;
 
 #endif
