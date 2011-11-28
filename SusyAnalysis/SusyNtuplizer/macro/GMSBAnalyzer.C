@@ -943,8 +943,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	       //get matching jet corrected p4
 	       for (susy::PFJetCollection::const_iterator iJet = iJets->second.begin(); 
 		    iJet != iJets->second.end(); ++iJet) {
-		 TLorentzVector corrP4 = correctedJet4Momentum(iJet, "L1FastL2L3");
-		 if (passJetFiducialCuts(corrP4, 10.0/*GeV*/, 2.6) && passPFJetID(iJet) && 
+		 TLorentzVector corrP4 = correctedJet4Momentum(iJet, "L1FastL2L3", "L2L3");
+		 if (passJetFiducialCuts(corrP4, 10.0/*GeV*/, 2.6)/* && passPFJetID(iJet)*/ && 
 		     (deltaR(iJet->momentum.Eta(), iJet->momentum.Phi(), 
 			     iPhoton->caloPosition.Eta(), 
 			     iPhoton->caloPosition.Phi()) < 0.3)) jP4.push_back(corrP4);
@@ -970,7 +970,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string& outputFile)
 	 cerr << "Error: " << tag_ << " photon collection not found in event " << (jentry + 1);
 	 cerr << ".\n";
        }
-       //jP4.clear();
+//        jP4.clear();
        if (jP4.size() == 2) diEMET = (jP4[0] + jP4[1]).Pt();
        else diEMET = (photonP4[0] + photonP4[1]).Pt();
      }
@@ -2385,18 +2385,27 @@ bool GMSBAnalyzer::passCaloJetID(susy::CaloJetCollection::const_iterator& iJet) 
 
 unsigned int GMSBAnalyzer::numPhotonOverlaps(const susy::PhotonCollection& photons, 
 					     const TLorentzVector& corrP4, 
-					     int& overlappingPhotonIndex) const
+					     int& overlappingPhotonIndex, const float dR) const
 {
   unsigned int numOverlaps = 0;
   for (susy::PhotonCollection::const_iterator iPhoton = photons.begin(); 
        iPhoton != photons.end(); ++iPhoton) {
     if (deltaR(corrP4.Eta(), corrP4.Phi(), iPhoton->caloPosition.Eta(), 
-	       iPhoton->caloPosition.Phi()) < 0.3) {
+	       iPhoton->caloPosition.Phi()) < dR) {
       overlappingPhotonIndex = iPhoton - photons.begin();
       ++numOverlaps;
     }
   }
   return numOverlaps;
+}
+
+vector<unsigned int> GMSBAnalyzer::getDecidingPhotonIndices(const unsigned int numPhotons) const
+{
+  vector<unsigned int> decidingPhotonIndices;
+  for (unsigned int iPhoton = 0; iPhoton < numPhotons; ++iPhoton) {
+    if (susyCategory->getIsDeciding(tag_, iPhoton)) decidingPhotonIndices.push_back(iPhoton);
+  }
+  return decidingPhotonIndices;
 }
 
 void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
@@ -2411,88 +2420,89 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
   const bool kSumW2 = true;
   const bool kSetGrid = true;
 
-  //EM fraction of PF (>10 GeV) and calo (>20 GeV) jets (in |eta| < 2.6 and passing jet ID)
+  //EM fraction of PF (>10 GeV) jets (in |eta| < 2.6 and passing jet ID)
   /*note: would like to extend jets out to |eta| = 4.7, but necessary jet ID variable f_LS doesn't 
     yet exist in ntuple*/
   //(a) overlapping with e, g, f, and fail objects
   //(b) not overlapping with e, g, f, and fail objects
-  TH1F eEMFractionPF("eEMFractionPF", "eEMFractionPF", 50, 0.0, 1.0);
-  TH1F gEMFractionPF("gEMFractionPF", "gEMFractionPF", 50, 0.0, 1.0);
-  TH1F fEMFractionPF("fEMFractionPF", "fEMFractionPF", 50, 0.0, 1.0);
+  TH1F eLeadingEMFractionPF("eLeadingEMFractionPF", "eLeadingEMFractionPF", 50, 0.0, 1.0);
+  TH1F gLeadingEMFractionPF("gLeadingEMFractionPF", "gLeadingEMFractionPF", 50, 0.0, 1.0);
+  TH1F fLeadingEMFractionPF("fLeadingEMFractionPF", "fLeadingEMFractionPF", 50, 0.0, 1.0);
+  TH1F eTrailingEMFractionPF("eTrailingEMFractionPF", "eTrailingEMFractionPF", 50, 0.0, 1.0);
+  TH1F gTrailingEMFractionPF("gTrailingEMFractionPF", "gTrailingEMFractionPF", 50, 0.0, 1.0);
+  TH1F fTrailingEMFractionPF("fTrailingEMFractionPF", "fTrailingEMFractionPF", 50, 0.0, 1.0);
   TH1F failEMFractionPF("failEMFractionPF", "failEMFractionPF", 50, 0.0, 1.0);
   TH1F otherEMFractionPF("otherEMFractionPF", "otherEMFractionPF", 50, 0.0, 1.0);
-  TH1F eEMFractionCalo("eEMFractionCalo", "eEMFractionCalo", 50, 0.0, 1.0);
-  TH1F gEMFractionCalo("gEMFractionCalo", "gEMFractionCalo", 50, 0.0, 1.0);
-  TH1F fEMFractionCalo("fEMFractionCalo", "fEMFractionCalo", 50, 0.0, 1.0);
-  TH1F failEMFractionCalo("failEMFractionCalo", "failEMFractionCalo", 50, 0.0, 1.0);
-  TH1F otherEMFractionCalo("otherEMFractionCalo", "otherEMFractionCalo", 50, 0.0, 1.0);
-  setHistogramOptions(eEMFractionPF, "EM fraction", "", "", kSumW2);
-  setHistogramOptions(gEMFractionPF, "EM fraction", "", "", kSumW2);
-  setHistogramOptions(fEMFractionPF, "EM fraction", "", "", kSumW2);
+  setHistogramOptions(eLeadingEMFractionPF, "EM fraction", "", "", kSumW2);
+  setHistogramOptions(gLeadingEMFractionPF, "EM fraction", "", "", kSumW2);
+  setHistogramOptions(fLeadingEMFractionPF, "EM fraction", "", "", kSumW2);
+  setHistogramOptions(eTrailingEMFractionPF, "EM fraction", "", "", kSumW2);
+  setHistogramOptions(gTrailingEMFractionPF, "EM fraction", "", "", kSumW2);
+  setHistogramOptions(fTrailingEMFractionPF, "EM fraction", "", "", kSumW2);
   setHistogramOptions(failEMFractionPF, "EM fraction", "", "", kSumW2);
   setHistogramOptions(otherEMFractionPF, "EM fraction", "", "", kSumW2);
-  setHistogramOptions(eEMFractionCalo, "EM fraction", "", "", kSumW2);
-  setHistogramOptions(gEMFractionCalo, "EM fraction", "", "", kSumW2);
-  setHistogramOptions(fEMFractionCalo, "EM fraction", "", "", kSumW2);
-  setHistogramOptions(failEMFractionCalo, "EM fraction", "", "", kSumW2);
-  setHistogramOptions(otherEMFractionCalo, "EM fraction", "", "", kSumW2);
   map<string, TH1F*> histograms;
-  histograms[string(eEMFractionPF.GetName())] = &eEMFractionPF;
-  histograms[string(gEMFractionPF.GetName())] = &gEMFractionPF;
-  histograms[string(fEMFractionPF.GetName())] = &fEMFractionPF;
+  histograms[string(eLeadingEMFractionPF.GetName())] = &eLeadingEMFractionPF;
+  histograms[string(gLeadingEMFractionPF.GetName())] = &gLeadingEMFractionPF;
+  histograms[string(fLeadingEMFractionPF.GetName())] = &fLeadingEMFractionPF;
+  histograms[string(eTrailingEMFractionPF.GetName())] = &eTrailingEMFractionPF;
+  histograms[string(gTrailingEMFractionPF.GetName())] = &gTrailingEMFractionPF;
+  histograms[string(fTrailingEMFractionPF.GetName())] = &fTrailingEMFractionPF;
   histograms[string(failEMFractionPF.GetName())] = &failEMFractionPF;
   histograms[string(otherEMFractionPF.GetName())] = &otherEMFractionPF;
-  histograms[string(eEMFractionCalo.GetName())] = &eEMFractionCalo;
-  histograms[string(gEMFractionCalo.GetName())] = &gEMFractionCalo;
-  histograms[string(fEMFractionCalo.GetName())] = &fEMFractionCalo;
-  histograms[string(failEMFractionCalo.GetName())] = &failEMFractionCalo;
-  histograms[string(otherEMFractionCalo.GetName())] = &otherEMFractionCalo;
 
   /*(ETj - ETg)/ETj vs. EM fraction of PF (>10 GeV) and calo (>20 GeV) jets (in |eta| < 2.6 and 
     passing jet ID) overlapping with e, g, f, and fail objects*/
   /*note: would like to extend jets out to |eta| = 4.7, but necessary jet ID variable f_LS doesn't 
     yet exist in ntuple*/
-  TH2F eETJetNormVsEMFractionPF("eETJetNormVsEMFractionPF", "eETJetNormVsEMFractionPF", 
-				50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F gETJetNormVsEMFractionPF("gETJetNormVsEMFractionPF", "gETJetNormVsEMFractionPF", 
-				50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F fETJetNormVsEMFractionPF("fETJetNormVsEMFractionPF", "fETJetNormVsEMFractionPF", 
-				50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F eLeadingETJetNormVsEMFractionPF("eLeadingETJetNormVsEMFractionPF", 
+				       "eLeadingETJetNormVsEMFractionPF", 
+				       50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F gLeadingETJetNormVsEMFractionPF("gLeadingETJetNormVsEMFractionPF", 
+				       "gLeadingETJetNormVsEMFractionPF", 
+				       50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F fLeadingETJetNormVsEMFractionPF("fLeadingETJetNormVsEMFractionPF", 
+				       "fLeadingETJetNormVsEMFractionPF", 
+				       50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F eTrailingETJetNormVsEMFractionPF("eTrailingETJetNormVsEMFractionPF", 
+					"eTrailingETJetNormVsEMFractionPF", 
+					50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F gTrailingETJetNormVsEMFractionPF("gTrailingETJetNormVsEMFractionPF", 
+					"gTrailingETJetNormVsEMFractionPF", 
+					50, 0.0, 1.0, 100, -1.0, 1.0);
+  TH2F fTrailingETJetNormVsEMFractionPF("fTrailingETJetNormVsEMFractionPF", 
+					"fTrailingETJetNormVsEMFractionPF", 
+					50, 0.0, 1.0, 100, -1.0, 1.0);
   TH2F failETJetNormVsEMFractionPF("failETJetNormVsEMFractionPF", "failETJetNormVsEMFractionPF", 
 				   50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F eETJetNormVsEMFractionCalo("eETJetNormVsEMFractionCalo", "eETJetNormVsEMFractionCalo", 
-				  50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F gETJetNormVsEMFractionCalo("gETJetNormVsEMFractionCalo", "gETJetNormVsEMFractionCalo", 
-				  50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F fETJetNormVsEMFractionCalo("fETJetNormVsEMFractionCalo", "fETJetNormVsEMFractionCalo", 
-				  50, 0.0, 1.0, 100, -1.0, 1.0);
-  TH2F failETJetNormVsEMFractionCalo("failETJetNormVsEMFractionCalo", 
-				     "failETJetNormVsEMFractionCalo", 50, 0.0, 1.0, 100, -1.0, 1.0);
-  setHistogramOptions(eETJetNormVsEMFractionPF, "EM fraction", 
-		      "#frac{E_{Tj} - E_{Te}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(gETJetNormVsEMFractionPF, "EM fraction", 
-		      "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(fETJetNormVsEMFractionPF, "EM fraction", 
-		      "#frac{E_{Tj} - E_{Tf}}{E_{Tj}}", "", kSumW2);
+  setHistogramOptions(eLeadingETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{p_{Tj} - p_{Te}}{p_{Tj}}", "", kSumW2);
+  setHistogramOptions(gLeadingETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{p_{Tj} - p_{T#gamma}}{p_{Tj}}", "", kSumW2);
+  setHistogramOptions(fLeadingETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{p_{Tj} - p_{Tf}}{p_{Tj}}", "", kSumW2);
+  setHistogramOptions(eTrailingETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{p_{Tj} - p_{Te}}{p_{Tj}}", "", kSumW2);
+  setHistogramOptions(gTrailingETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{p_{Tj} - p_{T#gamma}}{p_{Tj}}", "", kSumW2);
+  setHistogramOptions(fTrailingETJetNormVsEMFractionPF, "EM fraction", 
+		      "#frac{p_{Tj} - p_{Tf}}{p_{Tj}}", "", kSumW2);
   setHistogramOptions(failETJetNormVsEMFractionPF, "EM fraction", 
-		      "#frac{E_{Tj} - E_{Tfail}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(eETJetNormVsEMFractionCalo, "EM fraction", 
-		      "#frac{E_{Tj} - E_{Te}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(gETJetNormVsEMFractionCalo, "EM fraction", 
-		      "#frac{E_{Tj} - E_{T#gamma}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(fETJetNormVsEMFractionCalo, "EM fraction", 
-		      "#frac{E_{Tj} - E_{Tf}}{E_{Tj}}", "", kSumW2);
-  setHistogramOptions(failETJetNormVsEMFractionCalo, "EM fraction", 
-		      "#frac{E_{Tj} - E_{Tfail}}{E_{Tj}}", "", kSumW2);
+		      "#frac{p_{Tj} - p_{Tfail}}{p_{Tj}}", "", kSumW2);
   map<string, TH2F*> histograms2D;
-  histograms2D[string(eETJetNormVsEMFractionPF.GetName())] = &eETJetNormVsEMFractionPF;
-  histograms2D[string(gETJetNormVsEMFractionPF.GetName())] = &gETJetNormVsEMFractionPF;
-  histograms2D[string(fETJetNormVsEMFractionPF.GetName())] = &fETJetNormVsEMFractionPF;
+  histograms2D[string(eLeadingETJetNormVsEMFractionPF.GetName())] = 
+    &eLeadingETJetNormVsEMFractionPF;
+  histograms2D[string(gLeadingETJetNormVsEMFractionPF.GetName())] = 
+    &gLeadingETJetNormVsEMFractionPF;
+  histograms2D[string(fLeadingETJetNormVsEMFractionPF.GetName())] = 
+    &fLeadingETJetNormVsEMFractionPF;
+  histograms2D[string(eTrailingETJetNormVsEMFractionPF.GetName())] = 
+    &eTrailingETJetNormVsEMFractionPF;
+  histograms2D[string(gTrailingETJetNormVsEMFractionPF.GetName())] = 
+    &gTrailingETJetNormVsEMFractionPF;
+  histograms2D[string(fTrailingETJetNormVsEMFractionPF.GetName())] = 
+    &fTrailingETJetNormVsEMFractionPF;
   histograms2D[string(failETJetNormVsEMFractionPF.GetName())] = &failETJetNormVsEMFractionPF;
-  histograms2D[string(eETJetNormVsEMFractionCalo.GetName())] = &eETJetNormVsEMFractionCalo;
-  histograms2D[string(gETJetNormVsEMFractionCalo.GetName())] = &gETJetNormVsEMFractionCalo;
-  histograms2D[string(fETJetNormVsEMFractionCalo.GetName())] = &fETJetNormVsEMFractionCalo;
-  histograms2D[string(failETJetNormVsEMFractionCalo.GetName())] = &failETJetNormVsEMFractionCalo;
 
   /*(ETjj - ETgg)/ETjj vs. average EM fraction of PF (>10 GeV) and calo (>20 GeV) jets (in 
     |eta| < 2.6 and passing jet ID) overlapping with e, g, and f objects*/
@@ -2505,17 +2515,27 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
   TH2F ffETJetNormVsEMFractionPF("ffETJetNormVsEMFractionPF", "ffETJetNormVsEMFractionPF", 
 				 50, 0.0, 1.0, 100, -1.0, 1.0);
   setHistogramOptions(eeETJetNormVsEMFractionPF, "EM fraction", 
-		      "#frac{E_{Tjj} - E_{Tee}}{E_{Tj}}", "", kSumW2);
+		      "#frac{p_{Tjj} - p_{Tee}}{p_{Tjj}}", "", kSumW2);
   setHistogramOptions(ggETJetNormVsEMFractionPF, "EM fraction", 
-		      "#frac{E_{Tjj} - E_{T#gamma#gamma}}{E_{Tj}}", "", kSumW2);
+		      "#frac{p_{Tjj} - p_{T#gamma#gamma}}{p_{Tjj}}", "", kSumW2);
   setHistogramOptions(ffETJetNormVsEMFractionPF, "EM fraction", 
-		      "#frac{E_{Tjj} - E_{Tff}}{E_{Tj}}", "", kSumW2);
+		      "#frac{p_{Tjj} - p_{Tff}}{p_{Tjj}}", "", kSumW2);
 
-  //canvases to compare EM fractions for the different types of EM objects, 1 per jet algorithm
+  //canvases to compare EM fractions for the different types of EM objects
+  TCanvas leadingEMFractionPF("leadingEMFractionPF", "", 600, 600);
+  TCanvas trailingEMFractionPF("trailingEMFractionPF", "", 600, 600);
   TCanvas EMFractionPF("EMFractionPF", "", 600, 600);
-  TCanvas EMFractionCalo("EMFractionCalo", "", 600, 600);
+  setCanvasOptions(leadingEMFractionPF, "EM fraction", "", 0.0, 1.0, 0.0, 10000.0, kSetGrid);
+  setCanvasOptions(trailingEMFractionPF, "EM fraction", "", 0.0, 1.0, 0.0, 10000.0, kSetGrid);
   setCanvasOptions(EMFractionPF, "EM fraction", "", 0.0, 1.0, 0.0, 10000.0, kSetGrid);
-  setCanvasOptions(EMFractionCalo, "EM fraction", "", 0.0, 1.0, 0.0, 10000.0, kSetGrid);
+
+  //count events where !=2 matches are found
+  unsigned int numLessThan2 = 0;
+  unsigned int numGreaterThan2 = 0;
+  unsigned int numLessThan2LoosenedDR = 0;
+  unsigned int numGreaterThan2LoosenedDR = 0;
+  unsigned int numLessThan2LoosenedDRNoJetID = 0;
+  unsigned int numGreaterThan2LoosenedDRNoJetID = 0;
 
   //set user-specified number of entries to process
   Long64_t nentries = fChain->GetEntriesFast();
@@ -2582,10 +2602,11 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
       TLorentzVector j2;
       TLorentzVector EM1;
       TLorentzVector EM2;
-      float diEMET = susyCategory->getEvtInvMass(tag_);
       float EMF1 = 0.0;
       float EMF2 = 0.0;
       unsigned int EMObjectCount = 0;
+      unsigned int EMObjectCount05 = 0;
+      unsigned int EMObjectCount05NoJetID = 0;
 
       //get photons
       map<TString, susy::PhotonCollection>::const_iterator iPhotonMap = 
@@ -2593,7 +2614,8 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
       if (iPhotonMap != susyEvent->photons.end()) {
 
 	//loop over PF jets
-	map<TString, susy::PFJetCollection>::const_iterator iPFJets = susyEvent->pfJets.find("ak5");
+	map<TString, susy::PFJetCollection>::const_iterator iPFJets = 
+	  susyEvent->pfJets.find("ak5");
 	if (iPFJets != susyEvent->pfJets.end()) {
 	  for (susy::PFJetCollection::const_iterator iJet = iPFJets->second.begin(); 
 	       iJet != iPFJets->second.end(); ++iJet) {
@@ -2605,105 +2627,172 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
 	      ...with pT > 10 GeV
 	      ...in |eta| < 2.6
 	      ...passing PF jet ID*/
-	    if (passJetFiducialCuts(corrP4, 10.0/*GeV*/, 2.6) && passPFJetID(iJet)) {
-	     
-	      //calculate the jet-EM overlap
-	      int overlappingPhotonIndex = -1;
-	      unsigned int numOverlaps = numPhotonOverlaps(iPhotonMap->second, 
-							   /*corrP4*/iJet->momentum, 
-							   overlappingPhotonIndex);
+	    if (passJetFiducialCuts(corrP4, 10.0/*GeV*/, 2.6)) {
 
-	      //fill single object histograms
-	      Float_t EMFraction = 
-		(iJet->neutralEmEnergy + iJet->chargedEmEnergy)/iJet->momentum.Energy();
-	      // Double_t jetET = corrP4.Et();
-	      Double_t jetPT = corrP4.Pt();
-	      TH1F* pHist1D = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
-						  histograms, "", "PF");
-	      TH2F* pHist2D = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
-						  histograms2D, "ETJetNormVs", "PF");
-	      if (pHist1D != NULL) {
-		pHist1D->Fill(EMFraction, lumiWeight*PUWeight);
+	      //get the indices of the 2 deciding photons
+	      vector<unsigned int> decidingPhotonIndices = 
+		getDecidingPhotonIndices(iPhotonMap->second.size());
 
-		//save corrected p4 of jets matched to EM objects
-		if (((string(pHist1D->GetName()).find("eEMFraction") != string::npos) && 
+	      //does this jet overlap with a deciding photon?
+	      int overlappingPhotonIndex05NoJetID = -1;
+	      unsigned int numOverlaps05NoJetID = 
+		numPhotonOverlaps(iPhotonMap->second, iJet->momentum, 
+				  overlappingPhotonIndex05NoJetID, 0.5);
+	      vector<unsigned int>::const_iterator iOverlappingPhoton05NoJetID = 
+		find(decidingPhotonIndices.begin(), decidingPhotonIndices.end(), 
+		     overlappingPhotonIndex05NoJetID);
+
+	      //if it does, set photon2Index to the index of the other overlapping photon
+	      //otherwise, set photon2Index to -1
+	      unsigned int photon2Index05NoJetID = -1;
+	      if (iOverlappingPhoton05NoJetID != decidingPhotonIndices.end()) {
+		switch (iOverlappingPhoton05NoJetID - decidingPhotonIndices.begin()) {
+		case 0:
+		  photon2Index05NoJetID = *(iOverlappingPhoton05NoJetID + 1);
+		  break;
+		case 1:
+		  photon2Index05NoJetID = *(iOverlappingPhoton05NoJetID - 1);
+		  break;
+		default:
+		  cerr << "Error: iOverlappingPhoton05NoJetID - decidingPhotonIndices.begin() = ";
+		  cerr << (iOverlappingPhoton05NoJetID - decidingPhotonIndices.begin());
+		  cerr << ".  Assuming no second deciding photon.\n";
+		  break;
+		}
+	      }
+
+	      TH1F* pHist1D05NoJetID = 
+		EMFractionHistogram(overlappingPhotonIndex05NoJetID, photon2Index05NoJetID, 
+				    iPhotonMap->second, numOverlaps05NoJetID, histograms, "", 
+				    "PF");
+	      if (pHist1D05NoJetID != NULL) {
+		if (((string(pHist1D05NoJetID->GetName()).find("eEMFraction") != string::npos) && 
 		     (category == EE)) || 
-		    ((string(pHist1D->GetName()).find("fEMFraction") != string::npos) && 
+		    ((string(pHist1D05NoJetID->GetName()).find("fEMFraction") != string::npos) && 
 		     (category == FF)) || 
-		    ((string(pHist1D->GetName()).find("gEMFraction") != string::npos) && 
-		     (category == GG))) {
-		  switch (EMObjectCount) {
+		    ((string(pHist1D05NoJetID->GetName()).find("gEMFraction") != string::npos) && 
+		     (category == GG))) ++EMObjectCount05NoJetID;
+	      }
+
+	      if (passPFJetID(iJet)) {
+	     
+		//calculate the jet-EM overlap
+		int overlappingPhotonIndex03 = -1;
+		int overlappingPhotonIndex05 = -1;
+		unsigned int numOverlaps03 = numPhotonOverlaps(iPhotonMap->second, 
+							       iJet->momentum, 
+							       overlappingPhotonIndex03, 0.3);
+		unsigned int numOverlaps05 = numPhotonOverlaps(iPhotonMap->second, 
+							       iJet->momentum, 
+							       overlappingPhotonIndex05, 0.5);
+
+		//does this jet overlap with a deciding photon?
+		vector<unsigned int>::const_iterator iOverlappingPhoton03 = 
+		  find(decidingPhotonIndices.begin(), decidingPhotonIndices.end(), 
+		       overlappingPhotonIndex03);
+		vector<unsigned int>::const_iterator iOverlappingPhoton05 = 
+		  find(decidingPhotonIndices.begin(), decidingPhotonIndices.end(), 
+		       overlappingPhotonIndex05);
+
+		//if it does, set photon2Index to the index of the other overlapping photon
+		//otherwise, set photon2Index to -1
+		unsigned int photon2Index03 = -1;
+		unsigned int photon2Index05 = -1;
+		if (iOverlappingPhoton03 != decidingPhotonIndices.end()) {
+		  switch (iOverlappingPhoton03 - decidingPhotonIndices.begin()) {
 		  case 0:
-		    j1 = corrP4;
-		    EM1 = iPhotonMap->second[overlappingPhotonIndex].momentum;
-		    EMF1 = EMFraction;
-		    ++EMObjectCount;
+		    photon2Index03 = *(iOverlappingPhoton03 + 1);
 		    break;
 		  case 1:
-		    j2 = corrP4;
-		    EM2 = iPhotonMap->second[overlappingPhotonIndex].momentum;
-		    EMF2 = EMFraction;
-		    ++EMObjectCount;
+		    photon2Index03 = *(iOverlappingPhoton03 - 1);
 		    break;
 		  default:
-		    cerr << "Error: " << (EMObjectCount + 1) << " matched objects in event ";
-		    cerr << (jentry + 1) << ".\n";
-		    ++EMObjectCount;
+		    cerr << "Error: iOverlappingPhoton03 - decidingPhotonIndices.begin() = ";
+		    cerr << (iOverlappingPhoton03 - decidingPhotonIndices.begin());
+		    cerr << ".  Assuming no second deciding photon.\n";
 		    break;
 		  }
 		}
-	      }
-	      if (pHist2D != NULL) {
-		pHist2D->Fill(EMFraction, 
-			      (/*jetET*/jetPT - 
-			       iPhotonMap->second[overlappingPhotonIndex].momentum.Pt())/jetPT, 
-			      lumiWeight*PUWeight);
+		if (iOverlappingPhoton05 != decidingPhotonIndices.end()) {
+		  switch (iOverlappingPhoton05 - decidingPhotonIndices.begin()) {
+		  case 0:
+		    photon2Index05 = *(iOverlappingPhoton05 + 1);
+		    break;
+		  case 1:
+		    photon2Index05 = *(iOverlappingPhoton05 - 1);
+		    break;
+		  default:
+		    cerr << "Error: iOverlappingPhoton05 - decidingPhotonIndices.begin() = ";
+		    cerr << (iOverlappingPhoton05 - decidingPhotonIndices.begin());
+		    cerr << ".  Assuming no second deciding photon.\n";
+		    break;
+		  }
+		}
+
+		//fill single object histograms
+		Float_t EMFraction = 
+		  (iJet->neutralEmEnergy + iJet->chargedEmEnergy)/iJet->momentum.Energy();
+		Double_t jetPT = corrP4.Pt();
+		TH1F* pHist1D = EMFractionHistogram(overlappingPhotonIndex03, photon2Index03, 
+						    iPhotonMap->second, numOverlaps03, histograms, 
+						    "", "PF");
+		TH2F* pHist2D = EMFractionHistogram(overlappingPhotonIndex03, photon2Index03, 
+						    iPhotonMap->second, numOverlaps03, 
+						    histograms2D, "ETJetNormVs", "PF");
+		TH1F* pHist1D05 = EMFractionHistogram(overlappingPhotonIndex05, photon2Index05, 
+						      iPhotonMap->second, numOverlaps05, 
+						      histograms, "", "PF");
+		if (pHist1D != NULL) {
+		  pHist1D->Fill(EMFraction, lumiWeight*PUWeight);
+
+		  //save corrected p4 of jets matched to EM objects
+		  if ((((string(pHist1D->GetName()).find("eLead") != string::npos) || 
+			(string(pHist1D->GetName()).find("eTrail") != string::npos)) && 
+		       (category == EE)) || 
+		      (((string(pHist1D->GetName()).find("fLead") != string::npos) || 
+			(string(pHist1D->GetName()).find("fTrail") != string::npos)) && 
+		       (category == FF)) || 
+		      (((string(pHist1D->GetName()).find("gLead") != string::npos) || 
+			(string(pHist1D->GetName()).find("gTrail") != string::npos)) && 
+		       (category == GG))) {
+		    switch (EMObjectCount) {
+		    case 0:
+		      j1 = corrP4;
+		      EM1 = iPhotonMap->second[overlappingPhotonIndex03].momentum;
+		      EMF1 = EMFraction;
+		      ++EMObjectCount;
+		      break;
+		    case 1:
+		      j2 = corrP4;
+		      EM2 = iPhotonMap->second[overlappingPhotonIndex03].momentum;
+		      EMF2 = EMFraction;
+		      ++EMObjectCount;
+		      break;
+		    default:
+		      cerr << "Error: " << (EMObjectCount + 1) << " matched objects in event ";
+		      cerr << (jentry + 1) << ".\n";
+		      ++EMObjectCount;
+		      break;
+		    }
+		  }
+		}
+		if (pHist2D != NULL) {
+		  pHist2D->Fill(EMFraction, (jetPT - iPhotonMap->second[overlappingPhotonIndex03].
+					     momentum.Pt())/jetPT, lumiWeight*PUWeight);
+		}
+		if (pHist1D05 != NULL) {
+		  if (((string(pHist1D05->GetName()).find("eEMFraction") != string::npos) && 
+		       (category == EE)) || 
+		      ((string(pHist1D05->GetName()).find("fEMFraction") != string::npos) && 
+		       (category == FF)) || 
+		      ((string(pHist1D05->GetName()).find("gEMFraction") != string::npos) && 
+		       (category == GG))) ++EMObjectCount05;
+		}
 	      }
 	    }
 	  }
 	}
 	else cerr << "Error: ak5 PF jet collection not found in event " << (jentry + 1) << ".\n";
-
-	//loop over calo jets
-	map<TString, susy::CaloJetCollection>::const_iterator iCaloJets = 
-	  susyEvent->caloJets.find("ak5");
-	if (iCaloJets != susyEvent->caloJets.end()) {
-	  for (susy::CaloJetCollection::const_iterator iJet = iCaloJets->second.begin(); 
-	       iJet != iCaloJets->second.end(); ++iJet) {
-
-	    //compute corrected P4
-	    TLorentzVector corrP4 = correctedJet4Momentum(iJet, "L1FastL2L3");
-
-	    /*only consider jets...
-	      ...with pT > 20 GeV
-	      ...in |eta| < 2.6
-	      ...passing calo jet ID*/
-	    if (passJetFiducialCuts(corrP4, 20.0/*GeV*/, 2.6) && passCaloJetID(iJet)) {
-	     
-	      //calculate the jet-EM overlap
-	      int overlappingPhotonIndex = -1;
-	      unsigned int numOverlaps = numPhotonOverlaps(iPhotonMap->second, 
-							   /*corrP4*/iJet->momentum, 
-							   overlappingPhotonIndex);
-
-	      //fill histograms
-	      Float_t EMFraction = iJet->emEnergyFraction;
-	      Double_t jetET = corrP4.Et();
-	      TH1F* pHist1D = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
-						  histograms, "", "PF");
-	      TH2F* pHist2D = EMFractionHistogram(overlappingPhotonIndex, numOverlaps, 
-						  histograms2D, "ETJetNormVs", "PF");
-	      if (pHist1D != NULL) pHist1D->Fill(EMFraction, lumiWeight*PUWeight);
-	      if (pHist2D != NULL) {
-		pHist2D->Fill(EMFraction, 
-			      (jetET - 
-			       iPhotonMap->second[overlappingPhotonIndex].momentum.Et())/jetET, 
-			      lumiWeight*PUWeight);
-	      }
-	    }
-	  }
-	}
-	// else cerr << "Error: ak5 calo jet collection not found in event " << (jentry + 1) << ".\n";
       }
       else {
 	cerr << "Error: " << tag_ << " photon collection not found in ";
@@ -2730,30 +2819,181 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
       if (pHistDiEM != NULL) {
 	if (EMObjectCount == 2) pHistDiEM->Fill((EMF1 + EMF2)/2.0, (diJetPT - diEMPT)/diJetPT, 
 						lumiWeight*PUWeight);
-	// else {
-	//   cerr << EMObjectCount << " matched objects in event " << (jentry + 1);
-	//   cerr << ".  Skipping event.\n";
-	// }
+	else if (EMObjectCount < 2) {
+// 	  cerr << EMObjectCount << " matched objects in event " << (jentry + 1);
+// 	  cerr << ".  Skipping event.\n";
+	  ++numLessThan2;
+	}
+	else ++numGreaterThan2;
+	if (EMObjectCount05 < 2) {
+	  ++numLessThan2LoosenedDR;
+	}
+	else ++numGreaterThan2LoosenedDR;
+	if (EMObjectCount05NoJetID < 2) {
+	  ++numLessThan2LoosenedDRNoJetID;
+	}
+	else ++numGreaterThan2LoosenedDRNoJetID;
       }
     }
   }
 
+  cout << "No. gg/ee/ff events with <2 matched EM objects: " << numLessThan2 << endl;
+  cout << "No. gg/ee/ff events with >2 matched EM objects: " << numGreaterThan2 << endl;
+  cout << "No. gg/ee/ff events with <2 matched EM objects, matching dR = 0.5: ";
+  cout << numLessThan2LoosenedDR << endl;
+  cout << "No. gg/ee/ff events with >2 matched EM objects, matching dR = 0.5: ";
+  cout << numGreaterThan2LoosenedDR << endl;
+  cout << "No. gg/ee/ff events with <2 matched EM objects, matching dR = 0.5, no jet ID: ";
+  cout << numLessThan2LoosenedDRNoJetID << endl;
+  cout << "No. gg/ee/ff events with >2 matched EM objects, matching dR = 0.5, no jet ID: ";
+  cout << numGreaterThan2LoosenedDRNoJetID << endl;
+
+  leadingEMFractionPF.cd();
+  makeFinalCanvas(&eLeadingEMFractionPF, kRed, 1, 0, 0, 1, kRed, "E1");
+  makeFinalCanvas(&gLeadingEMFractionPF, kBlue, 1, 0, 0, 1, kBlue, "E1SAME");
+  makeFinalCanvas(&fLeadingEMFractionPF, kMagenta, 1, 0, 0, 1, kMagenta, "E1SAME");
+  leadingEMFractionPF.Write();
+  trailingEMFractionPF.cd();
+  makeFinalCanvas(&eTrailingEMFractionPF, kRed, 1, 0, 0, 1, kRed, "E1");
+  makeFinalCanvas(&gTrailingEMFractionPF, kBlue, 1, 0, 0, 1, kBlue, "E1SAME");
+  makeFinalCanvas(&fTrailingEMFractionPF, kMagenta, 1, 0, 0, 1, kMagenta, "E1SAME");
+  trailingEMFractionPF.Write();
   EMFractionPF.cd();
-  makeFinalCanvas(&eEMFractionPF, kRed, 1, 0, 0, 1, kRed, "E1");
-  makeFinalCanvas(&gEMFractionPF, kBlue, 1, 0, 0, 1, kBlue, "E1SAME");
-  makeFinalCanvas(&fEMFractionPF, kMagenta, 1, 0, 0, 1, kMagenta, "E1SAME");
-  makeFinalCanvas(&failEMFractionPF, kGreen + 3, 1, 0, 0, 1, kGreen + 3, "E1SAME");
-  makeFinalCanvas(&otherEMFractionPF, kBlack, 1, 0, 0, 1, kBlack, "E1SAME");
+  makeFinalCanvas(&eLeadingEMFractionPF, kRed, 1, 0, 0, 1, kRed, "E1");
+  makeFinalCanvas(&gLeadingEMFractionPF, kBlue, 1, 0, 0, 1, kBlue, "E1SAME");
+  makeFinalCanvas(&fLeadingEMFractionPF, kMagenta, 1, 0, 0, 1, kMagenta, "E1SAME");
+  makeFinalCanvas(&eTrailingEMFractionPF, kRed - 7, 1, 0, 0, 1, kRed - 7, "E1SAME");
+  makeFinalCanvas(&gTrailingEMFractionPF, kBlue - 7, 1, 0, 0, 1, kBlue - 7, "E1SAME");
+  makeFinalCanvas(&fTrailingEMFractionPF, kMagenta - 7, 1, 0, 0, 1, kMagenta - 7, "E1SAME");
   EMFractionPF.Write();
-  EMFractionCalo.cd();
-  makeFinalCanvas(&eEMFractionCalo, kRed, 1, 0, 0, 1, kRed, "E1");
-  makeFinalCanvas(&gEMFractionCalo, kBlue, 1, 0, 0, 1, kBlue, "E1SAME");
-  makeFinalCanvas(&fEMFractionCalo, kMagenta, 1, 0, 0, 1, kMagenta, "E1SAME");
-  makeFinalCanvas(&failEMFractionCalo, kGreen + 3, 1, 0, 0, 1, kGreen + 3, "E1SAME");
-  makeFinalCanvas(&otherEMFractionCalo, kBlack, 1, 0, 0, 1, kBlack, "E1SAME");
-  EMFractionCalo.Write();
 
   //close
+  out.Write();
+  out.Close();
+}
+
+void GMSBAnalyzer::compareDataToMC(const string& outputFile)
+{
+  if (fChain == 0) return;
+  const bool kSumW2 = true;
+
+  //open file
+  TFile out(outputFile.c_str(), "RECREATE");
+  out.cd();
+
+  //1D comparison histograms
+  TH1F mee("mee", "mee", 150, 60.0, 360.0);
+  TH1F nJets("nJets", "nJets", 8, -0.5, 7.5); //in ee events
+
+  //1D histogram options
+  setHistogramOptions(mee, "m_{ee} (GeV)", "", "", kSumW2);
+  setHistogramOptions(nJets, "n_{j}", "", "", kSumW2);
+
+  //set user-specified number of entries to process
+  Long64_t nentries = fChain->GetEntriesFast();
+  if (nEvts_ != -1) nentries = nEvts_;
+
+  //loop over events
+  Long64_t nbytes = 0, nb = 0;
+  for (Long64_t jentry=0; jentry<nentries;jentry++) {
+    susyEvent->Init();
+    susyCategory->reset();
+    Long64_t ientry = LoadTree(jentry);
+    if (ientry < 0) break;
+    nb = fChain->GetEntry(jentry);   nbytes += nb;
+    if (((jentry + 1) % 10000) == 0) {
+      cout << "Event " << (jentry + 1) << endl;
+      cout << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+      cout << susyEvent->luminosityBlockNumber << endl;
+    }
+
+    //get int. lumi weight for this dataset
+    TString fileName(fChain->GetCurrentFile()->GetName());
+    TString dataset;
+    /*if (fileName.Contains("ntuple_.*-v[0-9]")) */dataset = fileName("ntuple_.*-v[0-9]");
+    if (dataset.Length() >= 7) dataset.Remove(0, 7);
+    if ((dataset.Length() >= 3) && 
+	(dataset.Contains("v2_.*-v[0-9]"))) dataset.Remove(0, 3); //for TT sample
+    string datasetString((const char*)dataset);
+    map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
+    float weight = 1.0;
+    if (iDataset != fileMap_.end()) weight = weight_[iDataset->second];
+
+    //get PU weight for this dataset
+    /*in-time reweighting only following 
+      https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupMCReweightingUtilities as of 27-Oct-11 
+      and Tessa's recommendation*/
+    int nPV  = -1;
+    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
+    bool foundInTimeBX = false;
+    while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
+      if (iBX->BX == 0) { 
+    	 nPV = iBX->numInteractions;
+    	 foundInTimeBX = true;
+      }
+      ++iBX;
+    }
+    weight*=lumiWeights_.ITweight(nPV);
+
+    //check for corrupted data
+    map<TString, susy::PhotonCollection>::const_iterator iPhotonMap = 
+      susyEvent->photons.find((const char*)tag_);
+    map<TString, susy::PFJetCollection>::const_iterator iJets = susyEvent->pfJets.find("ak5");
+    if ((susyCategory->getEventCategory()->size() > 0) && 
+	(susyCategory->getEvtInvMass()->size() > 0) && (iPhotonMap != susyEvent->photons.end()) && 
+	(iJets != susyEvent->pfJets.end()) && (susyCategory->getIsDeciding()->size() > 0)) {
+
+      //consider ee events
+      if (susyCategory->getEventCategory(tag_) == EE) {
+
+	//plot invariant mass
+	mee.Fill(susyCategory->getEvtInvMass(tag_), weight);
+
+	//loop over PF jets
+	unsigned int numJets = 0;
+	for (susy::PFJetCollection::const_iterator iJet = iJets->second.begin(); 
+	     iJet != iJets->second.end(); ++iJet) {
+
+	  //does jet pass ET, eta, and jet ID cuts?
+	  TLorentzVector corrP4 = correctedJet4Momentum(iJet, "L1FastL2L3");
+	  if ((passJetFiducialCuts(corrP4, 30.0/*GeV*/, 2.6)) && passPFJetID(iJet)) {
+
+	    //does jet not overlap with either e?
+	    bool nonoverlapping = true;
+	    susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin();
+	    while ((iPhoton != iPhotonMap->second.end()) && nonoverlapping) {
+	      if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin()) && 
+		  deltaR(iJet->momentum.Eta(), iJet->momentum.Phi(), iPhoton->momentum.Eta(), 
+			 iPhoton->momentum.Phi()) < 0.8) nonoverlapping = false;
+	      ++iPhoton;
+	    }
+	    if (nonoverlapping) ++numJets;
+	  }
+	}
+
+	//plot nJets
+	nJets.Fill(numJets, weight);
+      }
+    }
+    else {
+      cerr << "Error: corrupted data in run " << susyEvent->runNumber << ", event ";
+      cerr << susyEvent-> eventNumber << ", lumi section " << susyEvent->luminosityBlockNumber;
+      cerr << " (event " << (jentry + 1) << ").\n";
+      cerr << "     susyCategory->getEventCategory()->size() = ";
+      cerr << susyCategory->getEventCategory()->size() << endl;
+      cerr << "     susyCategory->getEvtInvMass()->size() = ";
+      cerr << susyCategory->getEvtInvMass()->size() << endl;
+      cerr << "     iPhotonMap != susyEvent->photons.end() = ";
+      cerr << (iPhotonMap != susyEvent->photons.end() ? true : false) << endl;
+      cerr << "     iJets != susyEvent->pfJets.end() = ";
+      cerr << (iJets != susyEvent->pfJets.end() ? true : false) << endl;
+      cerr << "     susyCategory->getIsDeciding()->size() = ";
+      cerr << susyCategory->getIsDeciding()->size() << endl;
+      cerr << "Skipping event.\n";
+    }
+  }
+
+  //close file
   out.Write();
   out.Close();
 }
@@ -3069,6 +3309,16 @@ void GMSBAnalyzer::countEE(string& outputFile)
   Float_t bins[8] = {0.0, 71.0, 76.0, 81.0, 101.0, 106.0, 111.0, 200.0};
   TH1F mee("mee", "", 7, bins);
 
+  //MET histograms
+  TH1F uncorrMET("uncorrMET", "uncorrMET", 75, 0.0, 150.0);
+  TH1F corrMET("corrMET", "corrMET", 75, 0.0, 150.0);
+  setHistogramOptions(uncorrMET, "ME_{T} (GeV)", "", "", true);
+  setHistogramOptions(corrMET, "ME_{T} (GeV)", "", "", true);
+
+  //MET canvas
+  TCanvas METCanvas("METCanvas", "METCanvas", 600, 600);
+  setCanvasOptions(METCanvas, "ME_{T} (GeV)", "", 0.0, 150.0, 0.0, 20000.0, true);
+
   //set user-specified number of entries to process
   Long64_t nentries = fChain->GetEntriesFast();
   if (nEvts_ != -1) nentries = nEvts_;
@@ -3081,10 +3331,10 @@ void GMSBAnalyzer::countEE(string& outputFile)
     // if (Cut(ientry) < 0) continue;
 
     //if this event is an ee event, what invariant mass bin does it fall into?
-    if (susyCategory->getEventCategory(tag_) == EE) {
-      const double invMass = susyCategory->getEvtInvMass(tag_);
-      mee.Fill(invMass);
-    }
+//     if (susyCategory->getEventCategory(tag_) == EE) {
+//       const double invMass = susyCategory->getEvtInvMass(tag_);
+//       mee.Fill(invMass);
+//     }
 
     //print debug information
     if ((susyEvent->runNumber == 170876) && 
@@ -3094,7 +3344,24 @@ void GMSBAnalyzer::countEE(string& outputFile)
 	   ++i) { cout << i->first << ": " << (int(i->second.second)) << endl; }
       break;
     }
+
+    //plot uncorrected and corrected MET
+    map<TString, susy::MET>::const_iterator iUncorrMET = susyEvent->metMap.find("pfMet");
+    map<TString, susy::MET>::const_iterator iCorrMET = susyEvent->metMap.find("pfType1CorrectedMet");
+    if ((iUncorrMET != susyEvent->metMap.end()) && (iCorrMET != susyEvent->metMap.end())) {
+      cerr << "Uncorrected MET: " << iUncorrMET->second.met() << " GeV\n";
+      cerr << "Corrected MET: " << iCorrMET->second.met() << " GeV\n";
+      uncorrMET.Fill(iUncorrMET->second.met());
+      corrMET.Fill(iCorrMET->second.met());
+    }
+    else cerr << "Error: could not find MET collections.\n";
   }
+
+  //write MET canvas
+  METCanvas.cd();
+  makeFinalCanvas(&uncorrMET, kBlack, 1, 0, 0, 0.7, kBlack, "E2");
+  makeFinalCanvas(&corrMET, kRed, 1, 0, 0, 0.7, kRed, "E2SAME");
+  METCanvas.Write();
 
   //write histograms
   // outTxt.close();

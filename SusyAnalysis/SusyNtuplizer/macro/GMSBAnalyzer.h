@@ -88,11 +88,18 @@ public :
        if (sumW2) hist.Sumw2();
      }
    template<typename T>
-     TLorentzVector correctedJet4Momentum(T& iJet, const string& corrLabel) const
+     TLorentzVector correctedJet4Momentum(T& iJet, const string& corrLabel1, 
+					  const string& corrLabel2 = "") const
      {
-       map<TString, Float_t>::const_iterator iCorr = iJet->jecScaleFactors.find(corrLabel);
+       map<TString, Float_t>::const_iterator iCorr1 = iJet->jecScaleFactors.find(corrLabel1);
+       map<TString, Float_t>::const_iterator iCorr2 = iJet->jecScaleFactors.find(corrLabel2);
        TLorentzVector corrP4;
-       if (iCorr != iJet->jecScaleFactors.end()) corrP4 = iCorr->second*iJet->momentum;
+       if (iCorr1 != iJet->jecScaleFactors.end()) {
+	 if (iCorr2 != iJet->jecScaleFactors.end()) {
+	   corrP4 = (iCorr1->second/iCorr2->second)*iJet->momentum;
+	 }
+	 else corrP4 = iCorr1->second*iJet->momentum;
+       }
        return corrP4;
      }
    void setCanvasOptions(TCanvas&, const string&, const string&, const float, const float, 
@@ -128,8 +135,9 @@ public :
    bool passJetFiducialCuts(const TLorentzVector&, const Double_t, const Double_t) const;
    bool passPFJetID(susy::PFJetCollection::const_iterator&) const;
    bool passCaloJetID(susy::CaloJetCollection::const_iterator&) const;
-   unsigned int numPhotonOverlaps(const susy::PhotonCollection&, const TLorentzVector&, int&) const;
-   template<typename T/*, typename U*/>
+   unsigned int numPhotonOverlaps(const susy::PhotonCollection&, const TLorentzVector&, int&, 
+				  const float) const;
+   template<typename T>
      T* rightJetHistogram(const string& photonType, const string& identifier, 
 			  const string& jetType, map<string, T*>& histograms) const
      {
@@ -139,37 +147,44 @@ public :
        if (iHist != histograms.end()) return iHist->second;
        else return NULL;
      }
-   template<typename T/*, typename U*/>
-     T* EMFractionHistogram(const int photonIndex, const unsigned int numOverlaps, 
+   template<typename T>
+     T* EMFractionHistogram(const int photon1Index, const int photon2Index, 
+			    const susy::PhotonCollection& photons, const unsigned int numOverlaps, 
 			    map<string, T*>& histograms, const string& identifier, 
 			    const string& jetType) const
      {
        T* pHist = NULL;
-       if ((photonIndex == -1) && (numOverlaps > 0)) {
+       if ((photon1Index == -1) && (numOverlaps > 0)) {
 	 cerr << "Error: numOverlaps = " << numOverlaps;
-	 cerr << " but photonIndex = -1.  Skipping this jet.\n";
+	 cerr << " but photon1Index = -1.  Skipping this jet.\n";
 	 return pHist;
        }
-       int photonType = FAIL;
-       if (photonIndex != -1) photonType = susyCategory->getPhotonType(tag_, photonIndex);
+       int photon1Type = FAIL;
+       if (photon1Index != -1) photon1Type = susyCategory->getPhotonType(tag_, photon1Index);
+       string photonType;
+       if ((photon1Index != -1) && (photon2Index != -1)) {
+	 if (photons[photon1Index].momentum.Et() > 
+	     photons[photon2Index].momentum.Et()) photonType = "Leading";
+	 else photonType = "Trailing";
+       }
        switch (numOverlaps) {
        case 1:
-	 switch (photonType) {
+	 switch (photon1Type) {
 	 case G:
-	   pHist = rightJetHistogram("g", identifier, jetType, histograms);
+	   pHist = rightJetHistogram("g" + photonType, identifier, jetType, histograms);
 	   break;
 	 case E:
-	   pHist = rightJetHistogram("e", identifier, jetType, histograms);
+	   pHist = rightJetHistogram("e" + photonType, identifier, jetType, histograms);
 	   break;
 	 case F:
-	   pHist = rightJetHistogram("f", identifier, jetType, histograms);
+	   pHist = rightJetHistogram("f" + photonType, identifier, jetType, histograms);
 	   break;
 	 case FAIL:
 	   pHist = rightJetHistogram("fail", identifier, jetType, histograms);
 	   break;
 	 default:
-	   cerr << "Error: photon type " << photonType << " invalid for photon ";
-	   cerr << photonIndex << ".  Skipping this photon.\n";
+	   cerr << "Error: photon type " << photon1Type << " invalid for photon ";
+	   cerr << photon1Index << ".  Skipping this photon.\n";
 	   break;
 	 }
 	 break;
@@ -182,7 +197,9 @@ public :
        }
        return pHist;
      }
+   vector<unsigned int> getDecidingPhotonIndices(const unsigned int) const;
    void runEMFractionAnalysis(const string&);
+   void compareDataToMC(const string&);
    void runCutFlowAnalysis();
    void skim(const string&, const int);
    void stripBranch(const string&, const string&);
@@ -251,18 +268,13 @@ GMSBAnalyzer::GMSBAnalyzer(TTree *tree)
 
    }
    Init(tree);
-
-   //initialize private data members
-   nEvts_ = 0;
-   intLumi_ = 0.0;
-   reset();
-   clearPU();
 }
 
 GMSBAnalyzer::~GMSBAnalyzer()
 {
    if (!fChain) return;
    delete fChain->GetCurrentFile();
+   fChain = NULL;
 
    //clear private data members
    tag_ = "";
@@ -274,6 +286,12 @@ GMSBAnalyzer::~GMSBAnalyzer()
    L3JECFile_ = "";
    reset();
    clearPU();
+   delete susyEvent;
+   delete susyCategory;
+   susyEvent = NULL;
+   susyCategory = NULL;
+   b_susyEvent_ = NULL;
+   b_susyCategory_ = NULL;
 }
 
 Int_t GMSBAnalyzer::GetEntry(Long64_t entry)
@@ -317,6 +335,12 @@ void GMSBAnalyzer::Init(TTree *tree)
    susyCategory = new susy::Category;
    fChain->SetBranchAddress("susyCategory", &susyCategory, &b_susyCategory_);
    Notify();
+
+   //initialize private data members
+   nEvts_ = 0;
+   intLumi_ = 0.0;
+   reset();
+   clearPU();
 }
 
 Bool_t GMSBAnalyzer::Notify()
