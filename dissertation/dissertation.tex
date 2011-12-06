@@ -4,6 +4,7 @@
 \usepackage{subfig}
 \usepackage{url}
 \usepackage{color}
+\usepackage{mathtools}
 %\usepackage[justification=justified]{caption}[2009/9/16]
 \usepackage[top=1in, bottom=1in, left=1.5in, right=1in]{geometry}
 \usepackage{hyperref}
@@ -159,15 +160,46 @@ Table X summarizes the current best limits on the GMSB scenarios discussed in th
 \subsection{Photons}
 \subsection{Electrons}
 \subsection{Jets and Missing Transverse Energy}
+%full correction procedure, level by level
+%see JES paper for details
+%explain sources of uncertainty in each method
 \section{Photon Identification Efficiency}
 
 \chapter{Data Analysis}
 %look for high MET excess
 %main backgrounds, justify the negligible ones
 \section{Modeling the QCD Background}
+\subsection{Systematic Errors}
+
+\subsection{Jet Energy Scale Uncertainty}
+
+The dijet $\mbox{p}_{\mbox{T}}$ reweighting method utilizes jets corrected for imperfect calorimeter response (see Sec. X for a description of the jet reconstruction and correction procedure).  Since the applied jet energy scale (JES) factor has an error associated to it due to the limitations of the JES derivation (\cite{CMS_JES_paper} and Sec. X), this uncertainty must be propagated to the uncertainty on the dijet $\mbox{p}_{\mbox{T}}$ weights.
+
+The JES contribution to the dijet $\mbox{p}_{\mbox{T}}$ weights is estimated by performing 1000 pseudo-experiments on each of the $\gamma\gamma$ and ff samples.  For the purpose of estimating the JES error, the results of the true experiment may be thought of as a set of measurements:
+
+\begin{itemize}
+  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
+  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
+  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
+  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
+  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
+  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
+  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
+  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
+  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
+  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
+  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
+  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
+\end{itemize}
+
+ Each pseudo-experiment is identical to the true experiment in all respects except for the EM-matched jet $\mbox{p}^{\mu}$, i.e. all EM object 4-vectors remain the same, as do the 4-vectors of non-EM-matched jets, and the sizes of the $\gamma\gamma$ and ff samples remain the same.\footnote{The $\mbox{E}_{\mbox{T}}^{\mbox{miss}}$ is uncorrected and therefore unaffected by a change in the JES.}  In each pseudo-experiment, a random corrected EM-matched jet $\mbox{p}^{\mu}$ is generated according to the uncertainty
+
+If jet energy fluctuates below 20 GeV, there could be a slight effect due to not finding the matched jet.  We have checked in data that the number of times a jet is not found due to ET threshold is only n in large m.  Furthermore, the low ET cut is at 25 GeV, meaning the JEC would have to be mismeasured by at least 20 percent.  Since the typical JEC uncertainty is no more than 5 percent, a mismeasurement of this type is represents a 4sigma event, and should occur in 0.1 percent of cases.  Need to check that this is insignificant.
+
 \section{Modeling the Electroweak Background}
 \section{Results}
 %including all uncertainties
+%reminder table of all uncertainties that are described more thoroughly in previous sections
 
 \chapter{Interpretation of Results in Terms of GMSB Models}
 \section{Simplified Models}
@@ -194,6 +226,7 @@ Table X summarizes the current best limits on the GMSB scenarios discussed in th
 \bibitem{ATLAS_GMSB_1fb-1} G. Aad et al., \textit{CERN-PH-EP-2011-160} (2011).
 %how to do this citation?
 \bibitem{SUSY_primer} S. P. Martin, \textit{A Supersymmetry Primer} \textbf{v4} (2006) 86.  \href{http://arxiv.org/abs/hep-ph/9709356}{arXiv:hep-ph/9709356}.
+\bibitem{CMS_JES_paper} S. Chatrchyan et al., \textit{JINST} \textbf{6} (2011) P11002.
 \end{thebibliography}
 
 \end{document}
