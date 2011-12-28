@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  28 DEC 2011 12:55
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  28 DEC 2011 12:39
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**dissertation.tex
-(./dissertation.tex
+**ch2.tex
+(./ch2.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2009-06-19, ngerman-x-2009-06-19, ancientgreek, ibycus, arabic, armenian
@@ -16,6 +16,16 @@ telugu, indonesian, interlingua, irish, italian, kurmanji, lao, latin, latvian,
  lithuanian, mongolian, mongolianlmc, bokmal, nynorsk, polish, portuguese, roma
 nian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, turkish,
  turkmen, ukrainian, uppersorbian, welsh, loaded.
+(/Users/rachelyohay/Library/texmf/tex/latex/subfiles/subfiles.cls
+Document Class: subfiles 2002/06/08 Federico Garcia
+(/usr/local/texlive/2010/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks14
+\verbatim@line=\toks15
+\verbatim@in@stream=\read1
+)
+Preamble taken from file `dissertation.tex'
+(./dissertation.tex
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/size12.clo
@@ -39,7 +49,7 @@ Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
-\KV@toks@=\toks14
+\KV@toks@=\toks16
 )
 (/usr/local/texlive/2010/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
@@ -94,7 +104,7 @@ Package: caption3 2010/01/14 v3.1m caption3 kernel (AR)
 Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \col@sep=\dimen112
 \extrarowheight=\dimen113
-\NC@list=\toks15
+\NC@list=\toks17
 \extratabsurround=\skip48
 \backup@length=\skip49
 )
@@ -115,7 +125,7 @@ Package: amssymb 2009/06/22 v3.00
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2009/06/22 v3.00 Basic AMSFonts support
-\@emptytoks=\toks16
+\@emptytoks=\toks18
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
@@ -150,7 +160,7 @@ Package: amstext 2000/06/29 v2.01
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
-\@emptytoks=\toks17
+\@emptytoks=\toks19
 \ex@=\dimen116
 ))
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -180,21 +190,21 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
 \dotsspace@=\muskip11
 \c@parentequation=\count107
 \dspbrk@lvl=\count108
-\tag@help=\toks18
+\tag@help=\toks20
 \row@=\count109
 \column@=\count110
 \maxfields@=\count111
-\andhelp@=\toks19
+\andhelp@=\toks21
 \eqnshift@=\dimen119
 \alignsep@=\dimen120
 \tagshift@=\dimen121
 \tagwidth@=\dimen122
 \totwidth@=\dimen123
 \lineht@=\dimen124
-\@envbody=\toks20
+\@envbody=\toks22
 \multlinegap=\skip54
 \multlinetaggap=\skip55
-\mathdisplay@stack=\toks21
+\mathdisplay@stack=\toks23
 LaTeX Info: Redefining \[ on input line 2666.
 LaTeX Info: Redefining \] on input line 2667.
 )
@@ -203,13 +213,7 @@ LaTeX Info: Redefining \] on input line 2667.
 )
 (/Users/rachelyohay/Library/texmf/tex/latex/subfiles/subfiles.sty
 Package: subfiles 2002/06/08 Federico Garcia
-
-(/usr/local/texlive/2010/texmf-dist/tex/latex/tools/verbatim.sty
-Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks22
-\verbatim@line=\toks23
-\verbatim@in@stream=\read1
-))
+)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2010/07/13 v5.5 Page Geometry
 
@@ -339,7 +343,6 @@ File: hpdftex.def 2010/06/18 v6.81g Hyperref driver for pdfTeX
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/atveryend.sty
 Package: atveryend 2010/03/24 v1.5 Hooks at very end of document (HO)
-Package atveryend Info: \enddocument detected (standard).
 )
 \Fld@listcount=\count122
 \c@bookmark@seq@number=\count123
@@ -354,25 +357,24 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 71.
 )
 \Hy@SectionHShift=\skip56
-)
-(./dissertation.aux)
-\openout1 = `dissertation.aux'.
+)))
+No file ch2.aux.
+\openout1 = `ch2.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
 (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
@@ -402,7 +404,7 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 27.
+LaTeX Info: Redefining \subref on input line 2.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
@@ -410,7 +412,7 @@ Package caption Info: End \AtBeginDocument code.
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
 * driver: pdftex
-* paper: letterpaper
+* paper: <default>
 * layout: <same size as paper>
 * layoutoffset:(h,v)=(0.0pt,0.0pt)
 * modes: 
@@ -441,7 +443,7 @@ Package caption Info: End \AtBeginDocument code.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 27.
+Package hyperref Info: Link coloring OFF on input line 2.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
@@ -453,202 +455,137 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
 \c@section@level=\count129
 )
-LaTeX Info: Redefining \ref on input line 27.
-LaTeX Info: Redefining \pageref on input line 27.
-LaTeX Info: Redefining \nameref on input line 27.
-
-(./dissertation.out) (./dissertation.out)
+LaTeX Info: Redefining \ref on input line 2.
+LaTeX Info: Redefining \pageref on input line 2.
+LaTeX Info: Redefining \nameref on input line 2.
 \@outlinefile=\write3
-\openout3 = `dissertation.out'.
+\openout3 = `ch2.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 35.
 
+Chapter 1.
+
+LaTeX Warning: Citation `Glashow_Weinberg_and_Salam' on page 1 undefined on inp
+ut line 26.
+
+
+LaTeX Warning: Citation `Gell-Mann' on page 1 undefined on input line 26.
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 28.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 35.
+LaTeX Font Info:    Try loading font information for U+msb on input line 28.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-) [1
+)
 
-{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./diss
-ertation.tocpdfTeX warning (ext4): destination with the same identifier (name{p
-age.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.34 ...dentification Efficiency}{15}{section.6.3}
-                                                   [1
-
-])
-\tf@toc=\write4
-\openout4 = `dissertation.toc'.
-
- (./ch1.tex [2]
-Chapter 1.
-) [3
-
-] [4
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 83.
- [5]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 83.
- (./dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 83.
+LaTeX Warning: Citation `Drees' on page 1 undefined on input line 34.
 
 
-Package rerunfilecheck Warning: File `dissertation.out' has changed.
+LaTeX Warning: Reference `fig:LEP' on page 1 undefined on input line 34.
+
+<LEP_hadronic_xsec.pdf, id=4, 214.10559pt x 206.36688pt>
+File: LEP_hadronic_xsec.pdf Graphic file (type pdf)
+
+<use LEP_hadronic_xsec.pdf>
+Underfull \hbox (badness 1097) in paragraph at lines 38--38
+\OT1/cmr/m/n/10 a func-tion of col-lider center-of-
+ []
+
+<LEP_pair_production_xsecs.pdf, id=5, 199.91791pt x 265.69736pt>
+File: LEP_pair_production_xsecs.pdf Graphic file (type pdf)
+
+<use LEP_pair_production_xsecs.pdf>
+<LEP_W_pair_production_xsec.pdf, id=6, 211.52596pt x 213.46068pt>
+File: LEP_W_pair_production_xsec.pdf Graphic file (type pdf)
+
+<use LEP_W_pair_production_xsec.pdf>
+Underfull \hbox (badness 2781) in paragraph at lines 42--42
+\OT1/cmr/m/n/10 pen-dence of the $\OML/cmm/m/it/10 W[]W[]$ \OT1/cmr/m/n/10 pair
+
+ []
+
+<LEP_alphaS_running.pdf, id=7, 182.50565pt x 219.90968pt>
+File: LEP_alphaS_running.pdf Graphic file (type pdf)
+
+<use LEP_alphaS_running.pdf>
+Underfull \hbox (badness 1062) in paragraph at lines 44--44
+\OT1/cmr/m/n/10 pling con-stant $\OML/cmm/m/it/10 []$ \OT1/cmr/m/n/10 on LEP
+ []
+
+
+LaTeX Warning: Citation `Drees' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation `Drees' on page 1 undefined on input line 45.
+
+
+LaTeX Warning: Citation `Higgs' on page 1 undefined on input line 49.
+
+
+LaTeX Warning: Citation `Aitchison' on page 1 undefined on input line 49.
+
+[1
+
+
+{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2 <./LEP_hadronic_xsec.pdf> <./LEP_pair_production_xsecs.pdf> <./LEP_W_pair_pr
+oduction_xsec.pdf> <./LEP_alphaS_running.pdf>]
+Overfull \hbox (5.02779pt too wide) in paragraph at lines 58--58
+[]\OT1/cmr/bx/n/17.28 Electroweak Sym-me-try Break-ing and the Higgs
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 61.
+[3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 61.
+ (./ch2.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 61.
+
+
+Package rerunfilecheck Warning: File `ch2.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
 (rerunfilecheck)                or use package `bookmark'.
 
-Package rerunfilecheck Info: Checksums for `dissertation.out':
-(rerunfilecheck)             Before: 2E2B17721FEFB77AAB15CA51E61132A5;3192
-(rerunfilecheck)             After:  801D62DD1A15D68C626BAEEC19C65BEA;47.
+Package rerunfilecheck Info: Checksums for `ch2.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  E0253EC335134F4169C47703B18141D6;351.
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 7771 strings out of 493747
- 117961 string characters out of 3143546
- 211836 words of memory out of 3000000
- 10859 multiletter control sequences out of 15000+200000
- 13133 words of font info for 51 fonts, out of 3000000 for 9000
+ 7655 strings out of 493747
+ 116325 string characters out of 3143546
+ 206733 words of memory out of 3000000
+ 10801 multiletter control sequences out of 15000+200000
+ 11855 words of font info for 46 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 44i,6n,42p,1253b,423s stack positions out of 5000i,500n,10000p,200000b,50000s
-pdfTeX warning (dest): name{chapter.9} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.8.4} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.8.3} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.8.2} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.8.1} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.8} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{section.7.3} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.7.2} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.7.1.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.7.1} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.7} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{section.6.3} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.6.2.3} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.6.2.2} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.6.2.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.6.2} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.6.1} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.6} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.2.3} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.2.2} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.2.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.5.2} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.1.5} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.1.4} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.1.3} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.1.2} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.5.1.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.5.1} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.5} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.4} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{section.3.4} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.3.3} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.3.2} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.3.1.3} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.3.1.2} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{subsection.3.1.1} has been referenced but does not 
-exist, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.3.1} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.3} has been referenced but does not exist, 
-replaced by a fixed one
-
-pdfTeX warning (dest): name{section.2.3} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.2.2} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{section.2.1} has been referenced but does not exist
-, replaced by a fixed one
-
-pdfTeX warning (dest): name{chapter.2} has been referenced but does not exist, 
-replaced by a fixed one
-
-</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
-/usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr
-/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/
-local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on dissertation.pdf (6 pages, 85652 bytes).
+ 53i,11n,45p,1675b,453s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
+/usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
+usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></us
+r/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
+local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/lo
+cal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loca
+l/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/
+texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/tex
+live/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
+e/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
+010/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/20
+10/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/201
+0/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on ch2.pdf (3 pages, 876581 bytes).
 PDF statistics:
- 308 PDF objects out of 1000 (max. 8388607)
- 292 compressed objects within 3 object streams
- 70 named destinations out of 1000 (max. 500000)
- 345 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 725 PDF objects out of 1000 (max. 8388607)
+ 507 compressed objects within 6 object streams
+ 14 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
