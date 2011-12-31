@@ -79,26 +79,64 @@ B/bino & $\widetilde{B}^{0}$ & $B^{0}$ & ($\mathbf{1}$, $\mathbf{1}$, 0) \\
 \section{The Unbroken SUSY Lagrangian}
 \label{sec:The Unbroken SUSY Lagrangian}
 
-%chiral part --> define superpotential
 %gauge part --> perform the gauging transformation and break out the full scalar potential
 
-The first piece of the full unbroken SUSY Lagrangian density consists of the kinetic and interacting terms related to the chiral supermultiplets.  As explained in Sec.~\ref{sec:Supermultiplet Representation}, a chiral supermultiplet consists of a Weyl fermion $\psi$ and a complex scalar $\phi$.  For a collection of such chiral supermultiplets, the Lagrangian is
+The first piece of the full unbroken SUSY Lagrangian density consists of the kinetic and interacting terms related to the chiral supermultiplets.  As explained in Sec.~\ref{sec:Supermultiplet Representation}, a chiral supermultiplet consists of a Weyl fermion $\psi$ (the ordinary fermion) and a complex scalar $\phi$ (the sfermion).  For a collection of such chiral supermultiplets, the Lagrangian is
 
 \begin{eqnarray}
-\label{eq:L_chiral_global}
+\label{eq:L_chiral}
 \mathcal{L}_{chiral} &=& -\partial^{\mu}\phi^{*i}\partial_{\mu}\phi_{i}\mbox{ }-\mbox{ }V_{chiral}(\phi, \phi^{*})\mbox{ }-\mbox{ }i\psi^{\dag i}\overline{\sigma}^{\mu}\partial_{\mu}\psi_{i}\mbox{ }-\mbox{ }\frac{1}{2}M^{ij}\psi_{i}\psi_{j}\mbox{ }\nonumber \\
 &&-\mbox{ }\frac{1}{2}M_{ij}^{*}\psi^{\dag i}\psi^{\dag j}\mbox{ }-\mbox{ }\frac{1}{2}y^{ijk}\phi_{i}\psi_{j}\psi_{k}\mbox{ }-\mbox{ }\frac{1}{2}y_{ijk}^{*}\phi^{*i}\psi^{\dag j}\psi^{\dag k}
 \end{eqnarray}
 %put more horizontal space here
-where $i$ runs over all supermultiplets in Table~\ref{chiral_supermultiplets}, $M^{ij}$ is a mass matrix for the fermions, $y^{ijk}$ are the Yukawa couplings between one scalar and two spinor fields, and $V_{chiral}(\phi, \phi^{*}$ is the scalar potential
+where $i$ runs over all supermultiplets in Table~\ref{chiral_supermultiplets}, $\overline{\sigma}^{\mu}$ are -1 $\times$ the Pauli matrices (except for $\sigma^{0}$ = $\overline{\sigma}^{0}$), $M^{ij}$ is a mass matrix for the fermions, $y^{ijk}$ are the Yukawa couplings between one scalar and two spinor fields, and $V_{chiral}(\phi, \phi^{*}$ is the scalar potential
 
 \begin{eqnarray}
 \label{eq:V_chiral}
 V_{chiral}(\phi, \phi^{*}) &=& M_{ik}^{*}M^{kj}\phi^{*i}\phi_{j}\mbox{ }+\mbox{ }\frac{1}{2}M^{in}y_{jkn}^{*}\phi_{i}\phi^{*j}\phi^{*k}\mbox{ }\nonumber \\
 &&+\mbox{ }\frac{1}{2}M_{in}^{*}y^{jkn}\phi^{*i}\phi_{j}\phi_{k}\mbox{ }+\mbox{ }\frac{1}{4}y^{ijn}y_{kln}^{*}\phi_{i}\phi_{j}\phi^{*k}\phi^{*l}.
 \end{eqnarray}
-%put more horizontal space here
+%
+The Lagrangian can also be written as the kinetic terms plus derivatives of the \textit{superpotential} $W$:
 
+\begin{eqnarray}
+\label{eq:L_chiral_W}
+\mathcal{L}_{chiral} &=& -\partial^{\mu}\phi^{*i}\partial_{\mu}\phi_{i}\mbox{ }-\mbox{ }i\psi^{\dag i}\overline{\sigma}^{\mu}\partial_{\mu}\psi_{i}\mbox{ }\nonumber \\
+&&-\mbox{ }\frac{1}{2}(\frac{\delta^{2}W}{\delta\phi^{i}\delta\phi^{j}}\psi_{i}\psi_{j} + \frac{\delta^{2}W^{*}}{\delta\phi_{i}\delta\phi_{j}}\psi^{\dag i}\psi^{\dag j})\mbox{ }-\mbox{ }\frac{\delta W}{\delta\phi^{i}}\frac{\delta W^{*}}{\delta\phi_{i}}
+\end{eqnarray}
+%
+where
+
+\begin{eqnarray}
+\label{eq:W}
+W &=& M^{ij}\phi_{i}\phi_{j}\mbox{ }+\mbox{ }\frac{1}{6}y^{ijk}\phi_{i}\phi_{j}\phi_{k}.
+\end{eqnarray}
+
+%define the sigmabar above
+The second part of the Lagrangian involves the gauge supermultiplets.  In terms of the spin-1 ordinary gauge boson $A_{\mu}^{a}$ and the spin-1/2 Weyl spinor gaugino $\lambda^{a}$ of the gauge supermultiplet, where $a$ runs over the number of generators for the SM subgroup (i.e. 1-8 for $SU(3)_{C}$, 1-3 for $SU(2)_{L}$, and 1 for $U(1)_{Y}$), this part of the Lagrangian is
+
+\begin{eqnarray}
+\label{eq:L_gauge}
+\mathcal{L}_{gauge} &=& -\frac{1}{4}F_{\mu\nu}^{a}F^{\mu\nu a}\mbox{ }-\mbox{ }i\lambda^{\dag a}\overline{\sigma}^{\mu}D_{\mu}\lambda^{a}\mbox{ }+\mbox{ }\frac{1}{2}D^{a}D^{a}
+\end{eqnarray}
+%
+where 
+
+\begin{eqnarray}
+\label{eq:F}
+F_{\mu\nu}^{a} &=& \partial_{\mu}A_{\nu}^{a}\mbox{ }-\mbox{ }\partial_{\nu}A_{\mu}^{a}\mbox{ }+\mbox{ }gf^{abc}A_{\mu}^{b}A_{\nu}^{c}
+\end{eqnarray}
+%
+($g$ is the coupling constant and $f^{abc}$ are the structure constants for the particular SM gauge group), 
+
+\begin{eqnarray}
+\label{eq:gaugino_covariant_derivative}
+D_{\mu}\lambda^{a} &=& \partial_{\mu}\lambda^{a}\mbox{ }+\mbox{ }gf^{abc}A_{\mu}^{b}\lambda^{c}, 
+\end{eqnarray}
+%
+and $D^{a}$ is an auxiliary field that does not propagate (in the literature, it is used as a bookkeeping tool and can be removed via its algebraic equation of motion).
+
+To build a fully supersymmetric and gauge-invariant Lagrangian, the ordinary derivatives in $\mathcal{L}_{chiral}$ (Eq.~\ref{eq:L_chiral}) must be replaced by covariant derivatives
 
 \section{Soft SUSY Breaking}
 \label{sec:Soft SUSY Breaking}
