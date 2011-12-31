@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  28 DEC 2011 12:43
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  30 DEC 2011 18:08
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -357,8 +357,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 71.
 )
 \Hy@SectionHShift=\skip56
-)))
-No file ch3.aux.
+))) (./ch3.aux)
 \openout1 = `ch3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
@@ -375,7 +374,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
-(/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
 \scratchdimen=\dimen137
@@ -458,347 +457,359 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 2.
 LaTeX Info: Redefining \pageref on input line 2.
 LaTeX Info: Redefining \nameref on input line 2.
+
+(./ch3.out) (./ch3.out)
 \@outlinefile=\write3
 \openout3 = `ch3.out'.
 
 
 Chapter 1.
-LaTeX Font Info:    Try loading font information for U+msa on input line 17.
+LaTeX Font Info:    Try loading font information for U+msa on input line 16.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 17.
+LaTeX Font Info:    Try loading font information for U+msb on input line 16.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
 LaTeX Warning: Reference `sec:Soft SUSY Breaking' on page 1 undefined on input 
-line 29.
+line 28.
 
 
 LaTeX Warning: Reference `tab:chiral_supermultiplets' on page 1 undefined on in
-put line 29.
+put line 28.
 
 
 LaTeX Warning: Reference `tab:gauge_supermultiplets' on page 1 undefined on inp
-ut line 29.
+ut line 28.
 
 [1
 
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
-LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 32.
+LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 31.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 32.
+LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 31.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
+Underfull \hbox (badness 10000) in paragraph at lines 34--34
 []|\OT1/cmr/m/n/12 Spin-0
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
+Underfull \hbox (badness 10000) in paragraph at lines 34--34
 []|\OT1/cmr/m/n/12 Spin-1/2
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 35--36
+Underfull \hbox (badness 1292) in paragraph at lines 34--35
 \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (3)[] \OMS/cmsy/m/n/12 
  \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (2)[] \OMS/cmsy/m/n/12 
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 38--38
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
 []|\OT1/cmr/m/n/12 Left-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 38--38
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 38--38
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
 \OT1/cmr/m/n/12 dou-blet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--40
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--40
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
 \OT1/cmr/m/n/12 up-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--40
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--40
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--42
+Underfull \hbox (badness 10000) in paragraph at lines 41--41
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--42
+Underfull \hbox (badness 10000) in paragraph at lines 41--41
 \OT1/cmr/m/n/12 down-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--42
+Underfull \hbox (badness 10000) in paragraph at lines 41--41
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--42
+Underfull \hbox (badness 10000) in paragraph at lines 41--41
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--46
+Underfull \hbox (badness 10000) in paragraph at lines 45--45
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--46
+Underfull \hbox (badness 10000) in paragraph at lines 45--45
 \OT1/cmr/m/n/12 lep-ton/slepton
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--46
+Underfull \hbox (badness 10000) in paragraph at lines 45--45
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--48
+Underfull \hbox (badness 10000) in paragraph at lines 47--47
 []|\OT1/cmr/m/n/12 Up-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--48
+Underfull \hbox (badness 10000) in paragraph at lines 47--47
 \OT1/cmr/m/n/12 Higgs/Higgsino
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--50
+Underfull \hbox (badness 10000) in paragraph at lines 49--49
 []|\OT1/cmr/m/n/12 Down-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--50
+Underfull \hbox (badness 10000) in paragraph at lines 49--49
 \OT1/cmr/m/n/12 Higgs/Higgsino
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--54
+Underfull \hbox (badness 10000) in paragraph at lines 32--53
 [][]
  []
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 57.
+LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 56.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 57.
+LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 56.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--60
+Underfull \hbox (badness 10000) in paragraph at lines 59--59
 []|\OT1/cmr/m/n/12 Spin-1/2
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--60
+Underfull \hbox (badness 10000) in paragraph at lines 59--59
 []|\OT1/cmr/m/n/12 Spin-1
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 60--61
+Underfull \hbox (badness 1292) in paragraph at lines 59--60
 \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (3)[] \OMS/cmsy/m/n/12 
  \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (2)[] \OMS/cmsy/m/n/12 
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--71
+Underfull \hbox (badness 10000) in paragraph at lines 57--70
 [][]
  []
 
 
-LaTeX Warning: Citation `SUSY_history' on page 2 undefined on input line 98.
-
-
-LaTeX Warning: Citation `Tevatron_lifetime' on page 2 undefined on input line 9
-8.
+LaTeX Warning: Reference `sec:Supermultiplet Representation' on page 2 undefine
+d on input line 85.
 
 [2]
 
-LaTeX Warning: Reference `fig:CMS_SUSY_2011Limits_tanb10' on page 3 undefined o
-n input line 100.
+LaTeX Warning: Reference `chiral_supermultiplets' on page 3 undefined on input 
+line 93.
 
 
-LaTeX Warning: Citation `CMSSM_fits' on page 3 undefined on input line 100.
+LaTeX Warning: Citation `SUSY_history' on page 3 undefined on input line 122.
 
-<CMS_SUSY_2011Limits_tanb10.pdf, id=30, 569.12625pt x 408.52625pt>
+
+LaTeX Warning: Citation `Tevatron_lifetime' on page 3 undefined on input line 1
+22.
+
+[3]
+
+LaTeX Warning: Reference `fig:CMS_SUSY_2011Limits_tanb10' on page 4 undefined o
+n input line 124.
+
+
+LaTeX Warning: Citation `CMSSM_fits' on page 4 undefined on input line 124.
+
+<CMS_SUSY_2011Limits_tanb10.pdf, id=45, 569.12625pt x 408.52625pt>
 File: CMS_SUSY_2011Limits_tanb10.pdf Graphic file (type pdf)
 
 <use CMS_SUSY_2011Limits_tanb10.pdf>
 
-LaTeX Warning: Citation `CMS_mSUGRA' on page 3 undefined on input line 105.
+LaTeX Warning: Citation `CMS_mSUGRA' on page 4 undefined on input line 129.
 
 
-LaTeX Warning: Citation `CMS_mSUGRA' on page 3 undefined on input line 105.
+LaTeX Warning: Citation `CMS_mSUGRA' on page 4 undefined on input line 129.
 
 
-LaTeX Warning: Reference `fig:ATLAS_SPS8_limit' on page 3 undefined on input li
-ne 110.
+LaTeX Warning: Reference `fig:ATLAS_SPS8_limit' on page 4 undefined on input li
+ne 134.
 
 
-LaTeX Warning: Citation `ATLAS' on page 3 undefined on input line 110.
+LaTeX Warning: Citation `ATLAS' on page 4 undefined on input line 134.
 
 
-LaTeX Warning: Citation `SPS' on page 3 undefined on input line 110.
+LaTeX Warning: Citation `SPS' on page 4 undefined on input line 134.
 
 
-LaTeX Warning: Reference `sec:Gauge-Mediated SUSY Breaking' on page 3 undefined
- on input line 110.
+LaTeX Warning: Reference `sec:Gauge-Mediated SUSY Breaking' on page 4 undefined
+ on input line 134.
 
 
-LaTeX Warning: Reference `fig:ATLAS_GGM_limit' on page 3 undefined on input lin
-e 110.
+LaTeX Warning: Reference `fig:ATLAS_GGM_limit' on page 4 undefined on input lin
+e 134.
 
 
 LaTeX Warning: Reference `SUSY Lagrangian and Particle Content, SUSY Breaking' 
-on page 3 undefined on input line 110.
+on page 4 undefined on input line 134.
 
-[3] <ATLAS_SPS8_limit.pdf, id=45, 237.8503pt x 228.18147pt>
+[4 <./CMS_SUSY_2011Limits_tanb10.pdf>]
+<ATLAS_SPS8_limit.pdf, id=88, 237.8503pt x 228.18147pt>
 File: ATLAS_SPS8_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_SPS8_limit.pdf>
 
-LaTeX Warning: Citation `SPS' on page 4 undefined on input line 116.
+LaTeX Warning: Citation `SPS' on page 5 undefined on input line 140.
 
 
-LaTeX Warning: Reference `sec:Gauge-Mediated SUSY Breaking' on page 4 undefined
- on input line 116.
+LaTeX Warning: Reference `sec:Gauge-Mediated SUSY Breaking' on page 5 undefined
+ on input line 140.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 4 undefined on input line 11
-6.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 5 undefined on input line 14
+0.
 
 
-LaTeX Warning: Citation `SPS' on page 4 undefined on input line 116.
+LaTeX Warning: Citation `SPS' on page 5 undefined on input line 140.
 
 
-LaTeX Warning: Reference `sec:Gauge-Mediated SUSY Breaking' on page 4 undefined
- on input line 116.
+LaTeX Warning: Reference `sec:Gauge-Mediated SUSY Breaking' on page 5 undefined
+ on input line 140.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 4 undefined on input line 11
-6.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 5 undefined on input line 14
+0.
 
-<ATLAS_GGM_limit.pdf, id=46, 246.87431pt x 166.9464pt>
+<ATLAS_GGM_limit.pdf, id=89, 246.87431pt x 166.9464pt>
 File: ATLAS_GGM_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_GGM_limit.pdf>
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 4 undefined on input line 12
-3.
-
-
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 4 undefined on input line 12
-3.
-
-
-LaTeX Warning: Citation `SUSY_primer' on page 4 undefined on input line 127.
-
-
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 4 undefined on input line 12
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 5 undefined on input line 14
 7.
 
 
-LaTeX Warning: Reference `fig:ATLAS_SPS8_limit' on page 4 undefined on input li
-ne 127.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 5 undefined on input line 14
+7.
 
 
-LaTeX Warning: Reference `fig:ATLAS_GGM_limit' on page 4 undefined on input lin
-e 127.
+LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 151.
 
 
-LaTeX Warning: Reference `fig:CDF_lifetime_vs_mass' on page 4 undefined on inpu
-t line 127.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 5 undefined on input line 15
+1.
 
 
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 4 undefined on input line
- 127.
+LaTeX Warning: Reference `fig:ATLAS_SPS8_limit' on page 5 undefined on input li
+ne 151.
 
-<CDF_lifetime_vs_mass.pdf, id=47, 258.02155pt x 197.83792pt>
+
+LaTeX Warning: Reference `fig:ATLAS_GGM_limit' on page 5 undefined on input lin
+e 151.
+
+
+LaTeX Warning: Reference `fig:CDF_lifetime_vs_mass' on page 5 undefined on inpu
+t line 151.
+
+
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 5 undefined on input line
+ 151.
+
+<CDF_lifetime_vs_mass.pdf, id=90, 258.02155pt x 197.83792pt>
 File: CDF_lifetime_vs_mass.pdf Graphic file (type pdf)
 
 <use CDF_lifetime_vs_mass.pdf>
 
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 4 undefined on input line
- 132.
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 5 undefined on input line
+ 156.
 
 
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 4 undefined on input line
- 132.
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 5 undefined on input line
+ 156.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 4 undefined on input line 136.
-
-
-LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
-ng' on page 4 undefined on input line 136.
-
-
-LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 4 undefined on input li
-ne 136.
+LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 160.
 
 
 LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
-ng' on page 4 undefined on input line 136.
+ng' on page 5 undefined on input line 160.
 
 
-LaTeX Warning: Citation `WMAP' on page 4 undefined on input line 136.
+LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 5 undefined on input li
+ne 160.
 
 
-LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 4 unde
-fined on input line 136.
+LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
+ng' on page 5 undefined on input line 160.
 
 
-LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 4 unde
-fined on input line 136.
-
-[4 <./CMS_SUSY_2011Limits_tanb10.pdf>] [5 <./ATLAS_SPS8_limit.pdf> <./ATLAS_GGM
-_limit.pdf>]
-
-LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 6 undefined on input li
-ne 144.
+LaTeX Warning: Citation `WMAP' on page 5 undefined on input line 160.
 
 
-LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 6 undefined on inpu
-t line 144.
+LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 5 unde
+fined on input line 160.
 
 
-LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 6 undefined on inpu
-t line 144.
+LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 5 unde
+fined on input line 160.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 146.
-[6 <./CDF_lifetime_vs_mass.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 146.
+[5 <./ATLAS_SPS8_limit.pdf>] [6 <./ATLAS_GGM_limit.pdf> <./CDF_lifetime_vs_mass
+.pdf>]
+
+LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 7 undefined on input li
+ne 168.
+
+
+LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 7 undefined on inpu
+t line 168.
+
+
+LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 7 undefined on inpu
+t line 168.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 170.
+[7]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 170.
  (./ch3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 146.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 170.
 
 
 Package rerunfilecheck Warning: File `ch3.out' has changed.
@@ -806,8 +817,8 @@ Package rerunfilecheck Warning: File `ch3.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `ch3.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  1A1716092DAEA0D035ECDDA55A14710F;641.
+(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             After:  7AF4FBC363723B3144B2B27BFFBD1CC5;523.
 
 LaTeX Warning: There were undefined references.
 
@@ -816,11 +827,11 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 7691 strings out of 493747
- 116822 string characters out of 3143546
- 219733 words of memory out of 3000000
- 10819 multiletter control sequences out of 15000+200000
- 14355 words of font info for 54 fonts, out of 3000000 for 9000
+ 7700 strings out of 493747
+ 116902 string characters out of 3143546
+ 217733 words of memory out of 3000000
+ 10820 multiletter control sequences out of 15000+200000
+ 13750 words of font info for 52 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  53i,15n,44p,1689b,331s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
@@ -845,10 +856,10 @@ xmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-
 dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on ch3.pdf (6 pages, 817318 bytes).
+Output written on ch3.pdf (7 pages, 821625 bytes).
 PDF statistics:
- 463 PDF objects out of 1000 (max. 8388607)
- 374 compressed objects within 4 object streams
- 26 named destinations out of 1000 (max. 500000)
+ 470 PDF objects out of 1000 (max. 8388607)
+ 380 compressed objects within 4 object streams
+ 28 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -3,16 +3,15 @@
 
 \chapter{The Supersymmetric Extension to the Standard Model}
 \label{chap:The Supersymmetric Extension to the Standard Model}
+%most of this comes from the SUSY primer, but how do I cite it?
+%mention MSSM somewhere?
 
 The following introduction to SUSY focuses primarily on the aspects of the formalism that are relevant to phenomenology.  In particular, most of the details of SUSY breaking (about which there is little theoretical consensus) are omitted, except where they are relevant to experiment.
 
-\section{SUSY Lagrangian and Particle Content, SUSY Breaking}
-\label{sec:SUSY Lagrangian and Particle Content, SUSY Breaking}
-
-\subsection{Supermultiplet Representation}
+\section{Supermultiplet Representation}
 \label{sec:Supermultiplet Representation}
 
-The Standard Model is extended to include supersymmetry by the introduction of a supersymmetry transformation that takes fermionic states to bosonic states and vice versa.  In analogy with the known symmetries of the Standard Model, the SUSY transformation has an associated generator and fundamental representation.  All SM particles and their \textit{superpartners} fall into one of two \textit{supermultiplet} representations.  Using the property that
+The Standard Model is extended to include supersymmetry by the introduction of a supersymmetry transformation that takes fermionic states to bosonic states and vice versa.  In analogy with the known symmetries of the Standard Model, the SUSY transformation has associated generators that obey defining commutation relations, and a fundamental representation.  All SM particles and their \textit{superpartners} fall into one of two \textit{supermultiplet} representations.  Using the property that
 
 \begin{equation}
 n_{F} = n_{B},
@@ -70,15 +69,40 @@ B/bino & $\widetilde{B}^{0}$ & $B^{0}$ & ($\mathbf{1}$, $\mathbf{1}$, 0) \\
 \label{tab:gauge_supermultiplets}
 \end{table}
 
-\subsection{The Unbroken SUSY Lagrangian}
+%%include a section on sparticle masses, cf. Table 7.1 of the SUSY primer?
+%The superpartners listed in Tables~\ref{tab:chiral_supermultiplets} and~\ref{tab:gauge_supermultiplets} are not necessarily the mass eigenstates of the theory, because a certain amount of mixing in the gaugino and sfermion sectors is allowed.
+
+%include a section on sparticle decays and production, or an appendix?
+
+%also mention gauge coupling unification
+
+\section{The Unbroken SUSY Lagrangian}
 \label{sec:The Unbroken SUSY Lagrangian}
 
+%chiral part --> define superpotential
+%gauge part --> perform the gauging transformation and break out the full scalar potential
+
+The first piece of the full unbroken SUSY Lagrangian density consists of the kinetic and interacting terms related to the chiral supermultiplets.  As explained in Sec.~\ref{sec:Supermultiplet Representation}, a chiral supermultiplet consists of a Weyl fermion $\psi$ and a complex scalar $\phi$.  For a collection of such chiral supermultiplets, the Lagrangian is
+
+\begin{eqnarray}
+\label{eq:L_chiral_global}
+\mathcal{L}_{chiral} &=& -\partial^{\mu}\phi^{*i}\partial_{\mu}\phi_{i}\mbox{ }-\mbox{ }V_{chiral}(\phi, \phi^{*})\mbox{ }-\mbox{ }i\psi^{\dag i}\overline{\sigma}^{\mu}\partial_{\mu}\psi_{i}\mbox{ }-\mbox{ }\frac{1}{2}M^{ij}\psi_{i}\psi_{j}\mbox{ }\nonumber \\
+&&-\mbox{ }\frac{1}{2}M_{ij}^{*}\psi^{\dag i}\psi^{\dag j}\mbox{ }-\mbox{ }\frac{1}{2}y^{ijk}\phi_{i}\psi_{j}\psi_{k}\mbox{ }-\mbox{ }\frac{1}{2}y_{ijk}^{*}\phi^{*i}\psi^{\dag j}\psi^{\dag k}
+\end{eqnarray}
+%put more horizontal space here
+where $i$ runs over all supermultiplets in Table~\ref{chiral_supermultiplets}, $M^{ij}$ is a mass matrix for the fermions, $y^{ijk}$ are the Yukawa couplings between one scalar and two spinor fields, and $V_{chiral}(\phi, \phi^{*}$ is the scalar potential
+
+\begin{eqnarray}
+\label{eq:V_chiral}
+V_{chiral}(\phi, \phi^{*}) &=& M_{ik}^{*}M^{kj}\phi^{*i}\phi_{j}\mbox{ }+\mbox{ }\frac{1}{2}M^{in}y_{jkn}^{*}\phi_{i}\phi^{*j}\phi^{*k}\mbox{ }\nonumber \\
+&&+\mbox{ }\frac{1}{2}M_{in}^{*}y^{jkn}\phi^{*i}\phi_{j}\phi_{k}\mbox{ }+\mbox{ }\frac{1}{4}y^{ijn}y_{kln}^{*}\phi_{i}\phi_{j}\phi^{*k}\phi^{*l}.
+\end{eqnarray}
+%put more horizontal space here
 
 
-\subsection{Soft SUSY Breaking}
+\section{Soft SUSY Breaking}
 \label{sec:Soft SUSY Breaking}
 
-%supermultiplets (table of them), explain sfermions and gauginos
 %unbroken SUSY Lagrangian
 %addition of soft SUSY-breaking terms and motivation for soft terms
 %how to avoid flavor violation
