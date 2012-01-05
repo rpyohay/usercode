@@ -6,7 +6,7 @@
 %most of this comes from the SUSY primer, but how do I cite it?
 %mention MSSM somewhere?
 
-The following introduction to SUSY focuses primarily on the aspects of the formalism that are relevant to phenomenology.  In particular, most of the details of SUSY breaking (about which there is little theoretical consensus) are omitted, except where they are relevant to experiment.
+The following introduction to SUSY focuses primarily on the aspects of the formalism that are relevant to phenomenology.  In particular, most of the details of SUSY breaking (about which there is little theoretical consensus) are omitted, except where they are relevant to experiment.  The notation is similar to that used in refs.~\ref{SUSY_primer} and~\ref{Aitchison}.
 
 \section{Supermultiplet Representation}
 \label{sec:Supermultiplet Representation}
@@ -28,7 +28,7 @@ where $n_{F}$ is the number of fermionic degrees of freedom per supermultiplet a
 In the gauge supermultiplet, the vector boson is assumed massless (i.e. before EWSB generates a mass for it).  Since the superpartners to the SM particles have not yet been discovered, they must be significantly heavier than their SM counterparts.  Unbroken SUSY predicts that the SM particles and their superpartners must have exactly the same mass, so ultimately a mechanism for SUSY breaking must be introduced to generate masses for the superpartners (see Sec.~\ref{sec:Soft SUSY Breaking}).  Tables~\ref{tab:chiral_supermultiplets} and~\ref{tab:gauge_supermultiplets} show the chiral and gauge supermultiplets of the supersymmetric Standard Model, respectively.  Note that the scalar partners to the SM fermions are denoted by placing an ``s" in front of their names, while the chiral fermion partners to the SM gauge bosons are denoted by appending ``ino" to their names.
 
 \begin{table}[htbp]
-\caption{Chiral supermultiplets of the supersymmetric Standard Model.  Modified from Table 1.1 of \cite{SUSY_primer}.}
+\caption{Chiral supermultiplets of the supersymmetric Standard Model.  Adapted from Table 1.1 of \cite{SUSY_primer}.}
 \begin{tabular}{|m{3cm}|m{2cm}|m{2cm}|m{2cm}|m{4cm}|}
 \hline
 Type of \newline supermultiplet & Notation & Spin-0 component & Spin-1/2 component & Representation under $SU(3)_{C} \otimes SU(2)_{L} \otimes U(1)_{Y}$ \\
@@ -53,7 +53,7 @@ Down-type Higgs/Higgsino doublet & $H_{d}$ & ($H_{d}^{0}$ $H_{d}^{-}$) & ($\wide
 \end{table}
 
 \begin{table}[htbp]
-\caption{Gauge supermultiplets of the supersymmetric Standard Model.  Modified from Table 1.2 of \cite{SUSY_primer}.}
+\caption{Gauge supermultiplets of the supersymmetric Standard Model.  Adapted from Table 1.2 of \cite{SUSY_primer}.}
 \begin{tabular}{|m{5.45cm}|m{2cm}|m{2cm}|m{4cm}|}
 \hline
 Type of supermultiplet & Spin-1/2 component & Spin-1 component & Representation under $SU(3)_{C} \otimes SU(2)_{L} \otimes U(1)_{Y}$ \\
@@ -69,17 +69,8 @@ B/bino & $\widetilde{B}^{0}$ & $B^{0}$ & ($\mathbf{1}$, $\mathbf{1}$, 0) \\
 \label{tab:gauge_supermultiplets}
 \end{table}
 
-%%include a section on sparticle masses, cf. Table 7.1 of the SUSY primer?
-%The superpartners listed in Tables~\ref{tab:chiral_supermultiplets} and~\ref{tab:gauge_supermultiplets} are not necessarily the mass eigenstates of the theory, because a certain amount of mixing in the gaugino and sfermion sectors is allowed.
-
-%include a section on sparticle decays and production, or an appendix?
-
-%also mention gauge coupling unification
-
 \section{The Unbroken SUSY Lagrangian}
 \label{sec:The Unbroken SUSY Lagrangian}
-
-%gauge part --> perform the gauging transformation and break out the full scalar potential
 
 The first piece of the full unbroken SUSY Lagrangian density consists of the kinetic and interacting terms related to the chiral supermultiplets.  As explained in Sec.~\ref{sec:Supermultiplet Representation}, a chiral supermultiplet consists of a Weyl fermion $\psi$ (the ordinary fermion) and a complex scalar $\phi$ (the sfermion).  For a collection of such chiral supermultiplets, the Lagrangian is
 
@@ -112,7 +103,6 @@ where
 W &=& M^{ij}\phi_{i}\phi_{j}\mbox{ }+\mbox{ }\frac{1}{6}y^{ijk}\phi_{i}\phi_{j}\phi_{k}.
 \end{eqnarray}
 
-%define the sigmabar above
 The second part of the Lagrangian involves the gauge supermultiplets.  In terms of the spin-1 ordinary gauge boson $A_{\mu}^{a}$ and the spin-1/2 Weyl spinor gaugino $\lambda^{a}$ of the gauge supermultiplet, where $a$ runs over the number of generators for the SM subgroup (i.e. 1-8 for $SU(3)_{C}$, 1-3 for $SU(2)_{L}$, and 1 for $U(1)_{Y}$), this part of the Lagrangian is
 
 \begin{eqnarray}
@@ -138,18 +128,132 @@ and $D^{a}$ is an auxiliary field that does not propagate (in the literature, it
 
 To build a fully supersymmetric and gauge-invariant Lagrangian, the ordinary derivatives in $\mathcal{L}_{chiral}$ (Eq.~\ref{eq:L_chiral}) must be replaced by covariant derivatives
 
+\begin{eqnarray}
+\label{eq:fermion_sfermion_covariant_derivatives}
+D_{\mu}\phi_{i} &=& \partial_{\mu}\phi_{i}\mbox{ }-\mbox{ }igA_{\mu}^{a}(T^{a}\phi)_{i}\\
+D_{\mu}\phi^{*i} &=& \partial_{\mu}\phi^{*i}\mbox{ }+\mbox{ }igA_{\mu}^{a}(\phi^{*}T^{a})^{i}\\
+D_{\mu}\psi_{i} &=& \partial_{\mu}\psi_{i}\mbox{ }-\mbox{ }igA_{\mu}^{a}(T^{a}\psi)_{i}.
+\end{eqnarray}
+%
+This leads to the full Lagrangian
+
+\begin{eqnarray}
+\label{eq:L_full}
+\mathcal{L} &=& \mathcal{L}_{chiral}\mbox{ }+\mbox{ }\mathcal{L}_{gauge}\mbox{ }\nonumber \\
+&&-\mbox{ }\sqrt{2}g(\phi^{*i}T^{a}\psi_{i})\lambda^{a}\mbox{ }-\mbox{ }\sqrt{2}g\lambda^{\dag a}(\psi^{\dag i}T^{a}\phi_{i})\mbox{ }+\mbox{ }g(\phi^{*i}T^{a}\phi_{i})D^{a}\nonumber \\
+&=&-\partial^{\mu}\phi^{*i}\partial_{\mu}\phi_{i}\mbox{ }-\mbox{ }i\psi^{\dag i}\overline{\sigma}^{\mu}\partial_{\mu}\psi_{i}\mbox{ }+\mbox{ }ig\partial^{\mu}\phi^{*i}A_{\mu}^{a}(T^{a}\phi)_{i}\mbox{ }-\mbox{ }ig\partial_{\mu}\phi_{i}A^{\mu a}(\phi^{*}T^{a})^{i}\mbox{ }\nonumber \\
+&&-\mbox{ }g^{2}A^{\mu a}(\phi^{*}T^{a})^{i}A_{\mu}^{a}(T^{a}\phi)_{i}\mbox{ }-\mbox{ }g\psi^{\dag i}\overline{\sigma}^{\mu}A_{\mu}^{a}(T^{a}\psi)_{i}\mbox{ }-\mbox{ }V_{chiral}(\phi, \phi^{*})\mbox{ }\nonumber \\
+&&-\mbox{ }\frac{1}{2}M^{ij}\psi_{i}\psi_{j}\mbox{ }-\mbox{ }\frac{1}{2}M_{ij}^{*}\psi^{\dag i}\psi^{\dag j}\mbox{ }-\mbox{ }\frac{1}{2}y^{ijk}\phi_{i}\psi_{j}\psi_{k}\mbox{ }-\mbox{ }\frac{1}{2}y_{ijk}^{*}\phi^{*i}\psi^{\dag j}\psi^{\dag k}\mbox{ }\nonumber \\
+&&-\mbox{ }\frac{1}{4}F_{\mu\nu}^{a}F^{\mu\nu a}\mbox{ }-\mbox{ }i\lambda^{\dag a}\overline{\sigma}^{\mu}\partial_{\mu}\lambda^{a}\mbox{ }-\mbox{ }ig\lambda^{\dag a}\overline{\sigma}^{\mu}f^{abc}A_{\mu}^{b}\lambda^{c}\mbox{ }+\mbox{ }\frac{1}{2}D^{a}D^{a}\mbox{ }\nonumber \\
+&&-\mbox{ }\sqrt{2}g(\phi^{*i}T^{a}\psi_{i})\lambda^{a}\mbox{ }-\mbox{ }\sqrt{2}g\lambda^{\dag a}(\psi^{\dag i}T^{a}\phi_{i})\mbox{ }+\mbox{ }g(\phi^{*i}T^{a}\phi_{i})D^{a}.
+\end{eqnarray}
+%
+Writing out $F_{\mu\nu}^{a}$ and $V_{chiral}(\phi, \phi^{*})$ explicitly combining the $D^{a}$ terms using the equation of motion $D^{a} = -g\phi^{*}T^{a}\phi$, and rearranging some terms, the final unbroken SUSY Lagrangian is
+
+\begin{eqnarray}
+\label{eq:L_final}
+\mathcal{L} &=& -\partial^{\mu}\phi^{*i}\partial_{\mu}\phi_{i}\mbox{ }-\mbox{ }i\psi^{\dag i}\overline{\sigma}^{\mu}\partial_{\mu}\psi_{i}\mbox{ }\nonumber \\
+&&-\mbox{ }\frac{1}{4}(\partial_{\mu}A_{\nu}^{a} - \partial_{\nu}A_{\mu}^{a})(\partial^{\mu}A^{\nu a} - \partial^{\nu}A^{\mu a})\mbox{ }-\mbox{ }i\lambda^{\dag a}\overline{\sigma}^{\mu}\partial_{\mu}\lambda^{a}\mbox{ }\nonumber \\
+&&-\mbox{ }M_{ik}^{*}M^{kj}\phi^{*i}\phi_{j}\mbox{ }-\mbox{ }\frac{1}{2}M^{ij}\psi_{i}\psi_{j}\mbox{ }-\mbox{ }\frac{1}{2}M_{ij}^{*}\psi^{\dag i}\psi^{\dag j}\mbox{ }\nonumber \\
+&&+\mbox{ }ig\partial^{\mu}\phi^{*i}A_{\mu}^{a}(T^{a}\phi)_{i}\mbox{ }-\mbox{ }ig\partial_{\mu}\phi_{i}A^{\mu a}(\phi^{*}T^{a})^{i}\mbox{ }-\mbox{ }g\psi^{\dag i}\overline{\sigma}^{\mu}A_{\mu}^{a}(T^{a}\psi)_{i}\mbox{ }\nonumber \\
+&&-\mbox{ }ig\lambda^{\dag a}\overline{\sigma}^{\mu}f^{abc}A_{\mu}^{b}\lambda^{c}\mbox{ }\nonumber \\
+&&-\mbox{ }\frac{1}{4}gf^{abc}[(\partial_{\mu}A_{\nu}^{a} - \partial_{\nu}A_{\mu}^{a})A^{\mu b}A^{\nu c} + A_{\mu}^{b}A_{\nu}^{c}(\partial^{\mu}A^{\nu a} - \partial^{\nu}A^{\mu a})]\nonumber \\
+&&-\mbox{ }\frac{1}{2}M_{in}^{*}y^{jkn}\phi^{*i}\phi_{j}\phi_{k}\mbox{ }-\mbox{ }\frac{1}{2}M^{in}y_{jkn}^{*}\phi_{i}\phi^{*j}\phi^{*k}\mbox{ }\nonumber \\
+&&-\mbox{ }\frac{1}{2}y^{ijk}\phi_{i}\psi_{j}\psi_{k}\mbox{ }-\mbox{ }\frac{1}{2}y_{ijk}^{*}\phi^{*i}\psi^{\dag j}\psi^{\dag k}\mbox{ }\nonumber \\
+&&-\mbox{ }\sqrt{2}g(\phi^{*i}T^{a}\psi_{i})\lambda^{a}\mbox{ }-\mbox{ }\sqrt{2}g\lambda^{\dag a}(\psi^{\dag i}T^{a}\phi_{i})\nonumber \\
+&&-\mbox{ }g^{2}A^{\mu a}(\phi^{*}T^{a})^{i}A_{\mu}^{a}(T^{a}\phi)_{i}\mbox{ }-\mbox{ }\frac{1}{4}g^{2}f^{abc}A_{\mu}^{b}A_{\nu}^{c}f^{abc}A^{\mu b}A^{\nu c}\nonumber \\
+&&-\mbox{ }\frac{1}{4}y^{ijn}y_{kln}^{*}\phi_{i}\phi_{j}\phi^{*k}\phi^{*l}\mbox{ }-\mbox{ }\frac{1}{2}g^{2}(\phi^{*i}T^{a}\phi_{i})^{2}.
+\end{eqnarray}
+%
+The above Lagrangian applies to chiral supermultiplets interacting with one kind of gauge supermultiplet (i.e. one SM gauge group).  In the general case, there are additional terms corresponding to interactions with all three SM gauge groups.
+
+The following list gives a description of the terms in Eq.~\ref{eq:L_final}:
+
+\begin{itemize}
+  \item First two lines: kinetic terms for the four types of fields $\phi_{i}$, $\psi_{i}$, $A_{\mu}^{a}$, and $\lambda^{a}$
+  \item Third line: mass terms for the $\phi_{i}$ and $\psi_{i}$ (see Figs.~\ref{fig:fermion_mass_terms} and~\ref{fig:sfermion_mass_term})
+  \item Fourth and fifth lines: cubic couplings in which $\phi_{i}$, $\psi_{i}$, or $\lambda^{a}$ radiates an $A_{\mu}^{a}$ (see Figs.~\ref{fig:Aphiphi_vertex},~\ref{fig:Apsipsi_vertex}, and~\ref{fig:Alambdalambda_vertex})
+  \item Sixth line: triple gauge boson couplings (see Fig.~\ref{fig:triple_gauge_boson_vertex})
+  \item Seventh line: triple sfermion couplings (see Fig.~\ref{fig:triple_sfermion_vertices})
+  \item Eighth line: cubic couplings in which $\psi_{i}$ radiates a $\phi_{i}$ (see FIg.~\ref{fig:phipsipsi_vertices})
+  \item Ninth line: $\phi_{i}$-$\psi_{i}$-$\lambda^{a}$ vertices (see FIg.~\ref{fig:phipsilambda_vertices})
+  \item $10^{\mathrm{th}}$ line: $A_{\mu}^{a}$-$A_{\mu}^{a}$-$\phi_{i}$-$\phi_{i}$ and quadruple gauge boson couplings (see Figs.~\ref{fig:AAphiphi_vertex} and~\ref{fig:quadruple_gauge_boson_vertex})
+  \item $11^{\mathrm{th}}$ line: $\phi_{i}^{4}$ vertices (see Figs.~\ref{fig:non-gauge_phi4_vertex} and~\ref{fig:gauge_phi4_vertex})
+\end{itemize}
+
+%fix vertical spacing
+\begin{figure}
+	\centering
+	\subfloat[Fermion mass terms.  Reprinted from Figs. 3.2(c) and 3.2(d) of ref.~\ref{SUSY_primer}.]{\label{fig:fermion_mass_terms}\includegraphics[scale=1.35]{fermion_mass_terms}}
+	\hspace{1cm}
+	\subfloat[Sfermion mass terms.  Reprinted from Fig. 3.2(e) of ref.~\ref{SUSY_primer}.]{\label{fig:sfermion_mass_term}\includegraphics[scale=1.35]{sfermion_mass_term}}
+	\\
+	\subfloat[$A\phi\phi$ vertex.  Reprinted from Fig. 3.3(e) of ref.~\ref{SUSY_primer}.]{\label{fig:Aphiphi_vertex}\includegraphics[scale=1.8]{Aphiphi_vertex}}
+	\hspace{1cm}
+	\subfloat[$A\psi\psi$ vertex.  Reprinted from Fig. 3.3(f) of ref.~\ref{SUSY_primer}.]{\label{fig:Apsipsi_vertex}\includegraphics[scale=1.8]{Apsipsi_vertex}}
+	\hspace{1cm}
+	\subfloat[$A\lambda\lambda$ vertex.  Reprinted from Fig. 3.3(c) of ref.~\ref{SUSY_primer}.]{\label{fig:Alambdalambda_vertex}\includegraphics[scale=1.8]{Alambdalambda_vertex}}
+	\\
+	\subfloat[Triple gauge boson vertex.  Reprinted from Fig. 3.3(b) of ref.~\ref{SUSY_primer}.]{\label{fig:triple_gauge_boson_vertex}\includegraphics[scale=1.62]{triple_gauge_boson_vertex}}
+	\hspace{1cm}
+	\subfloat[Triple sfermion vertices.  Reprinted from Figs. 3.2(a) and 3.2(b) of ref.~\ref{SUSY_primer}.]{\label{fig:triple_sfermion_vertices}\includegraphics[scale=1.62]{triple_sfermion_vertices}}
+	\\
+	\subfloat[Cubic couplings in which the fermion radiates a sfermion.  Reprinted from Figs. 3.1(a) and 3.1(b) of ref.~\ref{SUSY_primer}.]{\label{fig:phipsipsi_vertices}\includegraphics[scale=1.07]{phipsipsi_vertices}}
+	\hspace{1cm}
+	\subfloat[Sfermion-fermion-gaugino vertices.  Reprinted from Figs. 3.3(g) and 3.3(h) of ref.~\ref{SUSY_primer}.]{\label{fig:phipsilambda_vertices}\includegraphics[scale=1.07]{phipsilambda_vertices}}
+	\\
+	\subfloat[$AA\phi\phi$ vertex.  Reprinted from Fig. 3.3(d) of ref.~\ref{SUSY_primer}.]{\label{fig:AAphiphi_vertex}\includegraphics[scale=1.22]{AAphiphi_vertex}}
+	\hspace{1cm}
+	\subfloat[Quadruple gauge boson vertex.  Reprinted from Fig. 3.3(a) of ref.~\ref{SUSY_primer}.]{\label{fig:quadruple_gauge_boson_vertex}\includegraphics[scale=1.22]{quadruple_gauge_boson_vertex}}
+	\hspace{1cm}
+	\subfloat[Non-gauge $\phi^{4}$ vertex.  Reprinted from Fig. 3.1(c) of ref.~\ref{SUSY_primer}.]{\label{fig:non-gauge_phi4_vertex}\includegraphics[scale=1.22]{non-gauge_phi4_vertex}}
+	\hspace{1cm}
+	\subfloat[Gauge $\phi^{4}$ vertex.  Reprinted from Fig. 3.3(i) of ref.~\ref{SUSY_primer}.]{\label{fig:gauge_phi4_vertex}\includegraphics[scale=1.22]{gauge_phi4_vertex}}
+	\caption{Interactions in the unbroken SUSY Lagrangian.}
+	\label{fig:unbroken_SUSY_interactions}
+\end{figure}
+
 \section{Soft SUSY Breaking}
 \label{sec:Soft SUSY Breaking}
 
-%unbroken SUSY Lagrangian
-%addition of soft SUSY-breaking terms and motivation for soft terms
-%how to avoid flavor violation
+Since quadratic divergences in sfermion masses vanish to all orders in perturbation theory in plain unbroken SUSY\cite{SUSY_primer} due to the presence of gauge and Yukawa interactions with the necessary relationships between coupling constants, it is desirable that the terms that break SUSY not disturb this property.  In addition, SUSY should be broken spontaneously, as electroweak symmetry is broken in the Standard Model, so that it is only made manifest at high energies.  To satisfy these constraints, SUSY-breaking terms are simply added to the unbroken SUSY Lagrangian in Eq.~\ref{eq:L_final} such that $\mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{unbroken}} + \mathcal{L}_{\mathrm{breaking}}$.  The coefficients of terms in $\mathcal{L}_{\mathrm{breaking}}$ must have positive mass dimension in order not to contribute quadratically divergent loop corrections to the scalar masses (like the Higgs mass).\footnote{This point can be argued via dimensional analysis.  Radiative corrections take the form $\Delta\mbox{m}_{\mathrm{S}}^{2}$, where $\mbox{m}_{\mathrm{S}}$ is the mass of the scalar particle in question.  The dimensions of $\Delta\mbox{m}_{\mathrm{S}}^{2}$ are $\mbox{mass}^{2}$.  $\Delta\mbox{m}_{\mathrm{S}}^{2}$ is proportional to some coupling constant or mass coefficient $k$ multiplied by a function of $\Lambda_{\mathrm{UV}}$, the high energy cutoff scale.  The function of $\Lambda_{\mathrm{UV}}$ is determined by a loop integral, and thus typically takes the form $\Lambda_{\mathrm{UV}}^{2}$ (quadratically divergent) or $\ln\frac{\Lambda_{\mathrm{UV}}}{\mbox{m}_{\mathrm{low}}}$ (logarithmically divergent, where $\mbox{m}_{\mathrm{low}}$ is some other lower-mass scale in the problem).  Now, if $k$ already contributes at least one power of mass to $\Delta\mbox{m}_{\mathrm{S}}^{2}$, then the high-energy behavior---the function of $\Lambda_{\mathrm{UV}}$---can only contribute at most one power of the dimensionful parameter $\Lambda_{\mathrm{UV}}$.  However, there are typically no loop integrals that diverge linearly in $\Lambda_{\mathrm{UV}}$, so by forcing $k$ to have positive mass dimension, the form of the radiative corrections contributed by SUSY-breaking terms is limited to $\Delta\mbox{m}_{\mathrm{S}}^{2} \sim \mbox{m}_{\mathrm{low}}^{2}\ln\frac{\Lambda_{\mathrm{UV}}}{\mbox{m}_{\mathrm{low}}}$.  In effect, the possibility of dangerous corrections proportional to $\Lambda_{\mathrm{UV}}^{2}$ is excluded by dimensional analysis if the requirement that $k$ contribute at least one power of mass is enforced.}  This form of SUSY breaking is called \textit{soft}, and all coefficients of soft SUSY breaking terms are expected to of order $\mbox{m}_{\mathrm{soft}}$ or $\mbox{m}_{\mathrm{soft}}^{2}$.
+
+Soft SUSY breaking terms give masses to the sfermions and gauginos and introduce a cubic sfermion vertex.  The soft terms are given by
+
+%why are some family indices in upstairs-downstairs notation and some not?
+%put in color indices
+\begin{eqnarray}
+\label{eq:L_soft}
+\mathcal{L}_{soft} &=& -\frac{1}{2}(M_{3}\widetilde{g}^{a}\widetilde{g}^{a}\mbox{ + }M_{2}\widetilde{W}^{a}\widetilde{W}^{a}\mbox{ + }M_{1}\widetilde{B}\widetilde{B}\mbox{ + h.c.})\nonumber \\
+&&-\mbox{ }(a_{u}^{ij}\widetilde{u}_{Ri}^{*}\widetilde{Q}_{j}H_{u} - a_{d}^{ij}\widetilde{d}_{Ri}^{*}\widetilde{Q}_{j}H_{d} - a_{e}^{ij}\widetilde{e}_{Ri}^{*}\widetilde{L}_{j}H_{d}\mbox{ + h.c.})\nonumber \\
+&&-\mbox{ }m_{\widetilde{Q}ij}^{2}\widetilde{Q}_{i}^{\dag}\widetilde{Q}_{j}\mbox{ }-\mbox{ }m_{\widetilde{L}ij}^{2}\widetilde{L}_{i}^{\dag}\widetilde{L}_{j}\mbox{ }\nonumber \\
+&&-\mbox{ }m_{\widetilde{\overline{u}}ij}^{2}\widetilde{u}_{Ri}\widetilde{u}_{Rj}^{*}\mbox{ }-\mbox{ }m_{\widetilde{\overline{d}}ij}^{2}\widetilde{d}_{Ri}\widetilde{d}_{Rj}^{*}\mbox{ }-\mbox{ }m_{\widetilde{\overline{e}}ij}^{2}\widetilde{e}_{Ri}\widetilde{e}_{Rj}^{*}\mbox{ }\nonumber \\
+&&-\mbox{ }m_{H_{u}}^{2}H_{u}^{*}H_{u}\mbox{ }-\mbox{ }m_{H_{d}}^{2}H_{d}^{*}H_{d}\mbox{ }-\mbox{ }(bH_{u}H_{d}\mbox{ + h.c.})
+\end{eqnarray}
+%
+where $a$ runs from 1-8 for $\widetilde{g}^{a}$ and from 1-3 for $\widetilde{W}^{a}$, and $i,j$ run over the three families.  The color indices are not shown.  The first line of Eq.~\ref{eq:L_soft} contains the gaugino mass terms.  The second line contains cubic scalar couplings that contribute to mixing between the left- and right-handed third generation sfermions (it is assumed in the supersymmetric Standard Model that the $a_{u}^{ij}$, $a_{d}^{ij}$, and $a_{e}^{ij}$ are negligible unless $i = j = 3$).  The third and fourth lines of Eq.~\ref{eq:L_soft} contain squark and slepton mass terms, and finally the last line contains the Higgs mass terms.
+
+%first line: Weyl spinor products
+%second line: SU(2) 2 x 2 product (just like Weyl spinor product)
+%third line: SU(2) 2 x 2-bar product (like a magnitude squared)
+%fourth line: 2 x 2 and 2 x 2-bar products
+
 %sparticle masses and RG evolution
 %unification of couplings at high scale
 
+%%include a section on sparticle masses, cf. Table 7.1 of the SUSY primer?
+%The superpartners listed in Tables~\ref{tab:chiral_supermultiplets} and~\ref{tab:gauge_supermultiplets} are not necessarily the mass eigenstates of the theory, because a certain amount of mixing in the gaugino and sfermion sectors is allowed.
+
+%also mention gauge coupling unification
+
 \section{Dark Matter and the WIMP Miracle}
+%R-parity
+%collider consequence: sparticles produced in pairs
+
+
 \section{Gauge-Mediated SUSY Breaking}
 \label{sec:Gauge-Mediated SUSY Breaking}
+%how to avoid flavor violation
 %minimal
 %general -- also describe bino-like vs. wino-like in terms of M1 and M2, say it will be important later
 %gravitino LSP because it is so light because of low-scale SUSY breaking
@@ -203,6 +307,6 @@ Finally, if the gravitino is to make up some or all of the dark matter, constrai
 %
 where $\sqrt{\mbox{F}}$ is approximately the SUSY breaking scale, and applying the gravitino mass constraint $\sqrt{\mbox{F}}$ $\lesssim$ 3000 TeV (cf. Eq. X with $\mbox{m}_{\widetilde{G}} \sim$ keV) and $\mbox{m}_{\NLSP}$ = 100 GeV, the upper bound on the neutralino lifetime is 100 meters.  For $\sqrt{\mbox{F}} \sim$ 100 TeV, the neutralino lifetime is detectable on collider time scales.
 
-Recently, a lower bound on the WDM particle mass in either pure warm or mixed warm and cold dark matter scenarios was set using observations of the Lyman-$\alpha$ forest.  For pure WDM, $\mbox{m}_{\mbox{WDM}} >$ 8 keV, while for some mixed WDM-CDM scenarios, $\mbox{m}_{\mbox{WDM}} >$ 1.1-1.5 keV \cite{Lyman_alpha_DM_limits, cosmo_constraints_on_GMSB}.  These bounds and others have motivated the development of more complicated gauge mediation models \cite{cosmo_constraints_on_GMSB}.  However, rather than focus on a specific GMSB model, of which there are many, the search detailed here is interpreted in a minimally model dependent way.  With this approach, the results can be applied to many competing models.  The remainder of this thesis is devoted to the experimental details of the search, analysis strategy, and presentation of the results.
+Recently, a lower bound on the WDM particle mass in either pure warm or mixed warm and cold dark matter scenarios was set using observations of the Lyman-$\alpha$ forest.  For pure WDM, $\mbox{m}_{\mathrm{WDM}} >$ 8 keV, while for some mixed WDM-CDM scenarios, $\mbox{m}_{\mathrm{WDM}} >$ 1.1-1.5 keV \cite{Lyman_alpha_DM_limits, cosmo_constraints_on_GMSB}.  These bounds and others have motivated the development of more complicated gauge mediation models \cite{cosmo_constraints_on_GMSB}.  However, rather than focus on a specific GMSB model, of which there are many, the search detailed here is interpreted in a minimally model dependent way.  With this approach, the results can be applied to many competing models.  The remainder of this thesis is devoted to the experimental details of the search, analysis strategy, and presentation of the results.
 
 \end{document}
