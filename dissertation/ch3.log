@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  7 JAN 2012 17:31
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 JAN 2012 19:39
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -642,7 +642,7 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 173.
 
-<fermion_mass_terms.pdf, id=91, 199.50676pt x 38.54109pt>
+<fermion_mass_terms.pdf, id=95, 199.50676pt x 38.54109pt>
 File: fermion_mass_terms.pdf Graphic file (type pdf)
 
 <use fermion_mass_terms.pdf>
@@ -652,7 +652,7 @@ LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 187.
 
 LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 187.
 
-<sfermion_mass_term.pdf, id=92, 96.35268pt x 39.10791pt>
+<sfermion_mass_term.pdf, id=96, 96.35268pt x 39.10791pt>
 File: sfermion_mass_term.pdf Graphic file (type pdf)
 
 <use sfermion_mass_term.pdf>
@@ -667,7 +667,7 @@ Underfull \hbox (badness 5985) in paragraph at lines 189--189
 []\OT1/cmr/m/n/10 (b) |Sfermion mass terms.
  []
 
-<Aphiphi_vertex.pdf, id=93, 68.58052pt x 54.97769pt>
+<Aphiphi_vertex.pdf, id=97, 68.58052pt x 54.97769pt>
 File: Aphiphi_vertex.pdf Graphic file (type pdf)
  <use Aphiphi_vertex.pdf>
 
@@ -676,7 +676,7 @@ LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 191.
 
 LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 191.
 
-<Apsipsi_vertex.pdf, id=94, 68.0137pt x 56.67805pt>
+<Apsipsi_vertex.pdf, id=98, 68.0137pt x 56.67805pt>
 File: Apsipsi_vertex.pdf Graphic file (type pdf)
  <use Apsipsi_vertex.pdf>
 
@@ -685,7 +685,7 @@ LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 193.
 
 LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 193.
 
-<Alambdalambda_vertex.pdf, id=95, 68.0137pt x 56.11124pt>
+<Alambdalambda_vertex.pdf, id=99, 68.0137pt x 56.11124pt>
 File: Alambdalambda_vertex.pdf Graphic file (type pdf)
 
 <use Alambdalambda_vertex.pdf>
@@ -695,7 +695,7 @@ LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 195.
 
 LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 195.
 
-<triple_gauge_boson_vertex.pdf, id=96, 65.74654pt x 55.54451pt>
+<triple_gauge_boson_vertex.pdf, id=100, 65.74654pt x 55.54451pt>
 File: triple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use triple_gauge_boson_vertex.pdf>
@@ -705,7 +705,7 @@ LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 197.
 
 LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 197.
 
-<triple_sfermion_vertices.pdf, id=97, 181.36972pt x 61.77911pt>
+<triple_sfermion_vertices.pdf, id=101, 181.36972pt x 61.77911pt>
 File: triple_sfermion_vertices.pdf Graphic file (type pdf)
 
 <use triple_sfermion_vertices.pdf>
@@ -715,7 +715,7 @@ LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 199.
 
 LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 199.
 
-<phipsipsi_vertices.pdf, id=98, 213.10947pt x 62.34583pt>
+<phipsipsi_vertices.pdf, id=102, 213.10947pt x 62.34583pt>
 File: phipsipsi_vertices.pdf Graphic file (type pdf)
 
 <use phipsipsi_vertices.pdf>
@@ -725,7 +725,7 @@ LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 201.
 
 LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 201.
 
-<phipsilambda_vertices.pdf, id=99, 159.26532pt x 54.9778pt>
+<phipsilambda_vertices.pdf, id=103, 159.26532pt x 54.9778pt>
 File: phipsilambda_vertices.pdf Graphic file (type pdf)
 
 <use phipsilambda_vertices.pdf>
@@ -735,7 +735,7 @@ LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 203.
 
 LaTeX Warning: Citation `SUSY_primer' on page 5 undefined on input line 203.
 
-<AAphiphi_vertex.pdf, id=100, 67.44688pt x 65.74654pt>
+<AAphiphi_vertex.pdf, id=104, 67.44688pt x 65.74654pt>
 File: AAphiphi_vertex.pdf Graphic file (type pdf)
 
 <use AAphiphi_vertex.pdf>
@@ -755,7 +755,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 205--205
 \OT1/cmr/m/n/10 Reprinted from
  []
 
-<quadruple_gauge_boson_vertex.pdf, id=101, 65.7466pt x 61.77911pt>
+<quadruple_gauge_boson_vertex.pdf, id=105, 65.7466pt x 61.77911pt>
 File: quadruple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use quadruple_gauge_boson_vertex.pdf>
@@ -780,7 +780,7 @@ Underfull \hbox (badness 1259) in paragraph at lines 207--207
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
-<non-gauge_phi4_vertex.pdf, id=102, 73.68147pt x 66.88007pt>
+<non-gauge_phi4_vertex.pdf, id=106, 73.68147pt x 66.88007pt>
 File: non-gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use non-gauge_phi4_vertex.pdf>
@@ -800,7 +800,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 209--209
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
-<gauge_phi4_vertex.pdf, id=103, 65.74654pt x 65.17972pt>
+<gauge_phi4_vertex.pdf, id=107, 65.74654pt x 65.17972pt>
 File: gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use gauge_phi4_vertex.pdf>
@@ -832,7 +832,7 @@ vertex.pdf> <./triple_sfermion_vertices.pdf> <./phipsipsi_vertices.pdf> <./phip
 silambda_vertices.pdf> <./AAphiphi_vertex.pdf> <./quadruple_gauge_boson_vertex.
 pdf> <./non-gauge_phi4_vertex.pdf> <./gauge_phi4_vertex.pdf>]
 
-LaTeX Warning: Reference `SUSY_primer' on page 7 undefined on input line 238.
+LaTeX Warning: Citation `SUSY_primer' on page 7 undefined on input line 238.
 
 [7]
 
@@ -841,184 +841,221 @@ LaTeX Warning: Citation `GMSB' on page 8 undefined on input line 245.
 
 LaTeX Warning: Citation `GMSB' on page 8 undefined on input line 245.
 
-<sfermion_GMSB_mass_terms.pdf, id=525, 370.56622pt x 128.991pt>
+<sfermion_GMSB_mass_terms.pdf, id=529, 370.56622pt x 128.991pt>
 File: sfermion_GMSB_mass_terms.pdf Graphic file (type pdf)
 
 <use sfermion_GMSB_mass_terms.pdf>
 
-LaTeX Warning: Reference `SUSY_primer' on page 8 undefined on input line 249.
+LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 249.
 
 
-LaTeX Warning: Reference `SUSY_primer' on page 8 undefined on input line 249.
+LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 249.
 
-<gaugino_GMSB_mass_term.pdf, id=526, 172.55376pt x 106.36096pt>
+<gaugino_GMSB_mass_term.pdf, id=530, 172.55376pt x 106.36096pt>
 File: gaugino_GMSB_mass_term.pdf Graphic file (type pdf)
 
 <use gaugino_GMSB_mass_term.pdf>
 
-LaTeX Warning: Reference `SUSY_primer' on page 8 undefined on input line 251.
+LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 251.
 
 
-LaTeX Warning: Reference `SUSY_primer' on page 8 undefined on input line 251.
+LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 251.
 
 
 LaTeX Warning: Citation `mSUGRA' on page 8 undefined on input line 256.
 
 [8 <./sfermion_GMSB_mass_terms.pdf> <./gaugino_GMSB_mass_term.pdf>]
-<muegamma.pdf, id=681, 155.01544pt x 68.45575pt>
+<muegamma.pdf, id=685, 155.01544pt x 68.45575pt>
 File: muegamma.pdf Graphic file (type pdf)
  <use muegamma.pdf>
 
-LaTeX Warning: Reference `SUSY_primer' on page 9 undefined on input line 269.
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 269.
 
 
-LaTeX Warning: Reference `SUSY_primer' on page 9 undefined on input line 269.
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 269.
 
 
 LaTeX Warning: Citation `Meade_Seiberg_and_Shih' on page 9 undefined on input l
 ine 290.
 
-[9 <./muegamma.pdf>]
 
-LaTeX Warning: Citation `SUSY_history' on page 10 undefined on input line 307.
-
-
-LaTeX Warning: Citation `Tevatron_lifetime' on page 10 undefined on input line 
-307.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 9 undefined on input line 29
+0.
 
 
-LaTeX Warning: Citation `CMSSM_fits' on page 10 undefined on input line 309.
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 9 undefined on input line
+ 290.
 
-<CMS_SUSY_2011Limits_tanb10.pdf, id=797, 569.12625pt x 408.52625pt>
+
+LaTeX Warning: Citation `CMS_GMSB_1fb-1' on page 9 undefined on input line 290.
+
+
+[9 <./muegamma.pdf>] [10]
+
+LaTeX Warning: Citation `CMS_GMSB_1fb-1' on page 11 undefined on input line 323
+.
+
+<2photons_jets_MET.pdf, id=809, 482.06343pt x 269.35129pt>
+File: 2photons_jets_MET.pdf Graphic file (type pdf)
+
+<use 2photons_jets_MET.pdf>
+<bino_photon_jets_MET.pdf, id=810, 474.51154pt x 258.02351pt>
+File: bino_photon_jets_MET.pdf Graphic file (type pdf)
+
+<use bino_photon_jets_MET.pdf>
+<lepton_photon_jets_MET.pdf, id=811, 434.2346pt x 221.52261pt>
+File: lepton_photon_jets_MET.pdf Graphic file (type pdf)
+
+<use lepton_photon_jets_MET.pdf>
+<wino_photon_jets_MET.pdf, id=812, 432.976pt x 225.29861pt>
+File: wino_photon_jets_MET.pdf Graphic file (type pdf)
+
+<use wino_photon_jets_MET.pdf> [11]
+
+LaTeX Warning: Citation `SUSY_history' on page 12 undefined on input line 357.
+
+
+LaTeX Warning: Citation `Tevatron_lifetime' on page 12 undefined on input line 
+357.
+
+
+LaTeX Warning: Citation `CMSSM_fits' on page 12 undefined on input line 359.
+
+<CMS_SUSY_2011Limits_tanb10.pdf, id=823, 569.12625pt x 408.52625pt>
 File: CMS_SUSY_2011Limits_tanb10.pdf Graphic file (type pdf)
 
 <use CMS_SUSY_2011Limits_tanb10.pdf>
 
-LaTeX Warning: Citation `CMS_mSUGRA' on page 10 undefined on input line 314.
+LaTeX Warning: Citation `CMS_mSUGRA' on page 12 undefined on input line 364.
 
 
-LaTeX Warning: Citation `CMS_mSUGRA' on page 10 undefined on input line 314.
+LaTeX Warning: Citation `CMS_mSUGRA' on page 12 undefined on input line 364.
 
 
-LaTeX Warning: Citation `ATLAS' on page 10 undefined on input line 319.
+LaTeX Warning: Citation `ATLAS' on page 12 undefined on input line 369.
 
 
-LaTeX Warning: Citation `SPS' on page 10 undefined on input line 319.
+LaTeX Warning: Citation `SPS' on page 12 undefined on input line 369.
 
 
 LaTeX Warning: Reference `SUSY Lagrangian and Particle Content, SUSY Breaking' 
-on page 10 undefined on input line 319.
+on page 12 undefined on input line 369.
 
-<ATLAS_SPS8_limit.pdf, id=801, 237.8503pt x 228.18147pt>
+[12 <./2photons_jets_MET.pdf> <./bino_photon_jets_MET.pdf> <./lepton_photon_jet
+s_MET.pdf> <./wino_photon_jets_MET.pdf>]
+<ATLAS_SPS8_limit.pdf, id=2073, 237.8503pt x 228.18147pt>
 File: ATLAS_SPS8_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_SPS8_limit.pdf>
 
-LaTeX Warning: Citation `SPS' on page 10 undefined on input line 325.
+LaTeX Warning: Citation `SPS' on page 13 undefined on input line 375.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 10 undefined on input line 3
-25.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 13 undefined on input line 3
+75.
 
 
-LaTeX Warning: Citation `SPS' on page 10 undefined on input line 325.
+LaTeX Warning: Citation `SPS' on page 13 undefined on input line 375.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 10 undefined on input line 3
-25.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 13 undefined on input line 3
+75.
 
-<ATLAS_GGM_limit.pdf, id=804, 246.87431pt x 166.9464pt>
+<ATLAS_GGM_limit.pdf, id=2076, 246.87431pt x 166.9464pt>
 File: ATLAS_GGM_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_GGM_limit.pdf>
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 10 undefined on input line 3
-32.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 13 undefined on input line 3
+82.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 10 undefined on input line 3
-32.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 13 undefined on input line 3
+82.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 10 undefined on input line 336.
+LaTeX Warning: Citation `SUSY_primer' on page 13 undefined on input line 386.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 10 undefined on input line 3
-36.
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 13 undefined on input line 3
+86.
 
 
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 10 undefined on input lin
-e 336.
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 13 undefined on input lin
+e 386.
 
-[10] [11 <./CMS_SUSY_2011Limits_tanb10.pdf> <./ATLAS_SPS8_limit.pdf>]
-<CDF_lifetime_vs_mass.pdf, id=958, 258.02155pt x 197.83792pt>
+[13 <./CMS_SUSY_2011Limits_tanb10.pdf>] [14 <./ATLAS_SPS8_limit.pdf> <./ATLAS_G
+GM_limit.pdf>] <CDF_lifetime_vs_mass.pdf, id=2329, 258.02155pt x 197.83792pt>
 File: CDF_lifetime_vs_mass.pdf Graphic file (type pdf)
 
 <use CDF_lifetime_vs_mass.pdf>
 
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 12 undefined on input lin
-e 341.
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 15 undefined on input lin
+e 391.
 
 
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 12 undefined on input lin
-e 341.
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 15 undefined on input lin
+e 391.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 12 undefined on input line 345.
-
-
-LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
-ng' on page 12 undefined on input line 345.
-
-
-LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 12 undefined on input l
-ine 345.
+LaTeX Warning: Citation `SUSY_primer' on page 15 undefined on input line 395.
 
 
 LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
-ng' on page 12 undefined on input line 345.
+ng' on page 15 undefined on input line 395.
 
 
-LaTeX Warning: Citation `WMAP' on page 12 undefined on input line 345.
+LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 15 undefined on input l
+ine 395.
 
 
-LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 12 und
-efined on input line 345.
+LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
+ng' on page 15 undefined on input line 395.
 
 
-LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 12 und
-efined on input line 345.
+LaTeX Warning: Citation `WMAP' on page 15 undefined on input line 395.
 
 
-LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 12 undefined on input l
-ine 353.
+LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 15 und
+efined on input line 395.
 
 
-LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 12 undefined on inp
-ut line 353.
+LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 15 und
+efined on input line 395.
 
 
-LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 12 undefined on inp
-ut line 353.
+LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 15 undefined on input l
+ine 403.
 
-[12 <./ATLAS_GGM_limit.pdf>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 355.
- [13 <./CDF_lifetime_vs_mass.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 355.
+
+LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 15 undefined on inp
+ut line 403.
+
+
+LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 15 undefined on inp
+ut line 403.
+
+[15 <./CDF_lifetime_vs_mass.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 405.
+ [16]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 405.
  (./ch3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 355.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 405.
 Package rerunfilecheck Info: File `ch3.out' has not changed.
-(rerunfilecheck)             Checksum: 453C25324BE9426E58204F8DE4389F13;523.
+(rerunfilecheck)             Checksum: 7F9ACF4708CDC95F3AA76BE180D60E94;609.
 
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 7896 strings out of 493747
- 121220 string characters out of 3143546
- 228994 words of memory out of 3000000
- 10959 multiletter control sequences out of 15000+200000
+ 7945 strings out of 493747
+ 122283 string characters out of 3143546
+ 229638 words of memory out of 3000000
+ 10989 multiletter control sequences out of 15000+200000
  13750 words of font info for 52 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  53i,15n,49p,2781b,445s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1035,23 +1072,25 @@ local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/lo
 cal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loca
 l/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
 texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/te
-xlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texli
-ve/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/
-2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/201
-0/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2010/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2010/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fon
-ts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on ch3.pdf (13 pages, 1311007 bytes).
+xlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texl
+ive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive
+/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/20
+10/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2010/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2010/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2010/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2010/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/font
+s/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
+ype1/public/amsfonts/symbols/msam10.pfb>
+Output written on ch3.pdf (16 pages, 1848117 bytes).
 PDF statistics:
- 1227 PDF objects out of 1440 (max. 8388607)
- 1026 compressed objects within 11 object streams
- 66 named destinations out of 1000 (max. 500000)
- 157 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2502 PDF objects out of 2984 (max. 8388607)
+ 2117 compressed objects within 22 object streams
+ 81 named destinations out of 1000 (max. 500000)
+ 185 words of extra memory for PDF output out of 10000 (max. 10000000)
 

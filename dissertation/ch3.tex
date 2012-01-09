@@ -235,7 +235,7 @@ Soft SUSY breaking terms give masses to the sfermions and gauginos and introduce
 %fourth line: 2 x 2 and 2 x 2-bar products
 where $a$ runs from 1-8 for $\widetilde{g}^{a}$ and from 1-3 for $\widetilde{W}^{a}$, and $i,j$ run over the three families.  The color indices are not shown.  The first line of Eq.~\ref{eq:L_soft} contains the gaugino mass terms.  The second line contains cubic scalar couplings that contribute to mixing between the left- and right-handed third generation sfermions (it is assumed in the supersymmetric Standard Model that the $a_{u}^{ij}$, $a_{d}^{ij}$, and $a_{e}^{ij}$ are negligible unless $i = j = 3$).  The third and fourth lines of Eq.~\ref{eq:L_soft} contain squark and slepton mass terms, and finally the last line contains the Higgs mass terms.
 
-Many viable models of achieving soft SUSY breaking have been studied over the last 30 years.  For an overview, see Sec. 6 of ref.~\ref{SUSY_primer}.  However, this thesis will only cover \textit{gauge-mediated SUSY breaking} (GMSB), because the two-photon search performed is far more sensitive to this model than to other models of SUSY breaking.
+Many viable models of achieving soft SUSY breaking have been studied over the last 30 years.  For an overview, see Sec. 6 of ref. \cite{SUSY_primer}.  However, this thesis will only cover \textit{gauge-mediated SUSY breaking} (GMSB), because the two-photon search performed is far more sensitive to this model than to other models of SUSY breaking.
 
 \section{Gauge-Mediated SUSY Breaking}
 \label{sec:Gauge-Mediated SUSY Breaking}
@@ -246,9 +246,9 @@ In gauge-mediated models\cite{GMSB},``hidden" fields spontaneously break the sup
 
 \begin{figure}
 	\centering
-	\subfloat[Sfermion mass terms.  Heavy dashed lines denote messenger sfermions; solid lines denote messenger fermions.  Reprinted from Fig. 6.4 of ref.~\ref{SUSY_primer}.]{\label{fig:sfermion_GMSB_mass_terms}\includegraphics[scale=0.9]{sfermion_GMSB_mass_terms}}
+	\subfloat[Sfermion mass terms.  Heavy dashed lines denote messenger sfermions; solid lines denote messenger fermions.  Reprinted from Fig. 6.4 of ref. \cite{SUSY_primer}.]{\label{fig:sfermion_GMSB_mass_terms}\includegraphics[scale=0.9]{sfermion_GMSB_mass_terms}}
 	\\
-	\subfloat[Gaugino mass term.  The $\langle S\rangle$ part of the loop is a messenger fermion contribution; the $\langle F_{S}\rangle$ part is a messenger sfermion contribution.  Reprinted from Fig. 6.3 of ref.~\ref{SUSY_primer}.]{\label{fig:gaugino_GMSB_mass_term}\includegraphics[scale=0.9]{gaugino_GMSB_mass_term}}
+	\subfloat[Gaugino mass term.  The $\langle S\rangle$ part of the loop is a messenger fermion contribution; the $\langle F_{S}\rangle$ part is a messenger sfermion contribution.  Reprinted from Fig. 6.3 of ref. \cite{SUSY_primer}.]{\label{fig:gaugino_GMSB_mass_term}\includegraphics[scale=0.9]{gaugino_GMSB_mass_term}}
 	\caption{Contributions to sfermion and gaugino masses from loop interactions with messenger particles in the GMSB framework.}
 	\label{fig:gaugino_sfermion_GMSB_mass_terms}
 \end{figure}
@@ -266,7 +266,7 @@ i.e. all sfermion mass matrices arising from the soft terms are assumed to be pr
 \begin{figure}
 	\centering
 	\includegraphics[scale=1.0]{muegamma}
-	\caption{Possible contribution to $\mu\rightarrow e\gamma$ from $m_{\widetilde{\overline{e}}ij}$ soft term.  Reprinted from Fig. 5.6(a) of ref.~\ref{SUSY_primer}.}
+	\caption{Possible contribution to $\mu\rightarrow e\gamma$ from $m_{\widetilde{\overline{e}}ij}$ soft term.  Reprinted from Fig. 5.6(a) of ref. \cite{SUSY_primer}.}
 	\label{fig:muegamma}
 \end{figure}
 
@@ -287,18 +287,68 @@ m_{\phi_{i}}^{2} &=& 2\Lambda^{2}\sum_{a=1}^{3}(\frac{\alpha_{a}}{4\pi})^{2}C_{a
 where $C_{a}(i)$ are group theory factors that are identical for all particles residing in the same type of supermultiplet (e.g. for all left-handed (s)quarks or left-handed (s)leptons).  As explained in the previous paragraph, the gaugino and sfermion masses do not depend on fermion family.
 
 %cite other GGM papers?
-In recent years, much theoretical progress has been made in unifying models of gauge mediation and developing less restrictive models than mGMSB.  \textit{General gauge mediation} (GGM)\cite{Meade_Seiberg_and_Shih} retains the essential features of mGMSB, such as flavor degeneracy and communication of SUSY breaking via messengers, but does not make assumptions about the specific messenger sector or SUSY breaking scale.  The rich collider phenomenology of GGM lends itself well to 
+In recent years, much theoretical progress has been made in unifying models of gauge mediation and developing less restrictive models than mGMSB.  \textit{General gauge mediation} (GGM)\cite{Meade_Seiberg_and_Shih} retains the essential features of mGMSB, such as flavor degeneracy and communication of SUSY breaking via messengers, but does not make assumptions about the specific messenger sector or SUSY breaking scale.  Many different collider final states can be interpreted in terms of GGM, and conversely, GGM implies a wealth of signatures, only a small fraction of which have been searched for at colliders\cite{ATLAS_GMSB_1fb-1, CDF_2010_GMSB_paper, CMS_GMSB_1fb-1}.  The following section discusses the aspects of GGM collider phenomenology relevant to this thesis.
 
-%general -- also describe bino-like vs. wino-like in terms of M1 and M2 (i.e. mixing in the gaugino sector), say it will be important later (copy Table 7.1 of the SUSY primer)
-%gravitino LSP because it is so light because of low-scale SUSY breaking
-%phenomenological differences
-%neutralino lifetime and mass equations
+\section{Phenomenology of General Gauge Mediation}
+\label{sec:Phenomenology of General Gauge Mediation}
+
+The main distinguishing feature of all GMSB phenomenology is that the gravitino $\widetilde{G}$ is very light (eV-keV).  In general, the gravitino mass is proportional to $\langle F\rangle/M_{P}$, where $\langle F\rangle$ is the vacuum expectation value (VEV) of a field F that spontaneously breaks SUSY in the vacuum state and $M_{P}$ is the Planck mass.  In GGM models, $\langle F\rangle \sim 10^{8}$ GeV, leading to a very light gravitino.  In contrast, mSUGRA predicts $\langle F\rangle \sim 10^{20}$ GeV.  The fact that the gravitino is so much lighter than any other particles in the supersymmetric Standard Model, and that it interacts only gravitationally to first order (and thus extremely feebly), leads to two important phenomenological consequences:
+
+\begin{enumerate}
+  \item All sparticle decay chains end with the production of a gravitino.
+  \item The gravitino escapes 4$\pi$, hermetic collider detectors without interacting, leaving a signature of ``missing" momentum transverse to the beam direction.
+\end{enumerate}
+
+Even if the gravitino were lighter than any other sparticle, but heavier than an ordinary SM particle, it still could not decay to the SM particle due to \textit{R-parity}.  R-parity is a conserved quantity of the supersymmetric Standard Model that enforces baryon and lepton number conservation, which would otherwise be generically allowed at levels in conflict with experiment (e.g. the non-observation of baryon- and lepton-number-violating proton decay).  All sparticles have R-parity -1, while all ordinary SM particles have R-parity +1, and R-parity conservation dictates that at any vertex, the product of the R-parities of each leg must be +1.  This leads to two more important consequences:
+
+\begin{enumerate}
+  \item Since conservation of energy only allows it to decay to ordinary SM particles, but R-parity prevents a sparticle-particle-particle vertex, the \textit{lightest supersymmetric particle} (LSP) must be absolutely stable.  All sparticle decays proceed through the \textit{next-to-lightest supersymmetric particle} (NLSP), which in turn decays to the LSP.
+  \item In colliders, sparticles are produced in pairs (particle + particle $\rightarrow$ sparticle + sparticle).
+\end{enumerate}
+
+In GMSB, then, the gravitino is the LSP.  If the NLSP is a gaugino,\footnote{In principle, the NLSP could be anything, but in most popular GGM models, it is either a gaugino or a stau.  The stau NLSP search is not the subject of this thesis, so it will not be considered in this section.} then the possible decays depend on mixing among the gauginos.  Due to the effects of EWSB, the four neutral gauginos $\widetilde{H}_{u}^{0}$, $\widetilde{H}_{d}^{0}$, $\widetilde{B}$, $\widetilde{W}^{0}$ mix into four \textit{neutralino} mass eigenstates $\NLSP, \widetilde{\chi}_{2}^{0}, \widetilde{\chi}_{3}^{0}, \widetilde{\chi}_{4}^{0}$, and the four charged gauginos $\widetilde{H}_{u}^{+}$, $\widetilde{H}_{d}^{-}$, $\widetilde{W}^{+}$, $\widetilde{W}^{-}$ mix into two \textit{chargino} mass eigenstates $\widetilde{\chi}_{1}^{\pm}, \widetilde{\chi}_{2}^{\pm}$ (two mass eigenstates each with two possible charges = four particles).  In the limit that EWSB effects are small, the neutralino and chargino masses can be written as the gauge eigenstate masses plus a small perturbation:
+
+\begin{eqnarray}
+\label{eq:neutralino_chargino_masses}
+m_{\NLSP} &=& M_{1}\mbox{ }-\mbox{ }\frac{m_{Z}^{2}\sin^{2}\theta_{W}(M_{1} + \mu\sin 2\beta)}{\mu^{2} - M_{1}^{2}}\mbox{ + }...\\
+m_{\widetilde{\chi}_{2}^{0}} &=& M_{2}\mbox{ }-\mbox{ }\frac{m_{W}^{2}(M_{2} + \mu\sin 2\beta)}{\mu^{2} - M_{2}^{2}}\mbox{ + }...\\
+m_{\widetilde{\chi}_{3}^{0}} &=& |\mu|\mbox{ + }\frac{m_{Z}^{2}(\sgn(\mu) - \sin 2\beta)(\mu + M_{1}\cos^{2}\theta_{W} + M_{2}\sin^{2}\theta_{W})}{2(\mu + M_{1})(\mu + M_{2})}\mbox{ + }...\\
+m_{\widetilde{\chi}_{4}^{0}} &=& |\mu|\mbox{ + }\frac{m_{Z}^{2}(\sgn(\mu) + \sin 2\beta)(\mu - M_{1}\cos^{2}\theta_{W} - M_{2}\sin^{2}\theta_{W})}{2(\mu - M_{1})(\mu - M_{2})}\mbox{ + }...\\
+m_{\widetilde{\chi}_{1}^{\pm}} &=& M_{2}\mbox{ }-\mbox{ }\frac{m_{W}^{2}(M_{2} + \mu\sin 2\beta)}{\mu^{2} - M_{2}^{2}}\mbox{ + }...\\
+m_{\widetilde{\chi}_{2}^{\pm}} &=& |\mu|\mbox{ + }\frac{m_{W}^{2}\sgn(\mu)(\mu + M_{2}\sin 2\beta)}{\mu^{2} - M_{2}^{2}}\mbox{ + }...
+\end{eqnarray}
+%
+where $\tan\beta = \langle H_{u}^{0}\rangle/\langle H_{d}^{0}\rangle$.
+
+The two scenarios studied in ref. \cite{CMS_GMSB_1fb-1} are the following:
+
+\begin{itemize}
+  \item \textbf{Bino NLSP}: $M_{1} \sim$ few hundred GeV, $M_{2}, |\mu| \gg M_{1}$.  All but the lightest neutralino are effectively inaccessible at the LHC due to their large masses.  The NLSP can always decay to $\gamma + \widetilde{G}$, and if it is heavy enough, to $Z + \widetilde{G}$ or $H + \widetilde{G}$.
+  \item \textbf{Wino NLSP}: $M_{2} \sim$ few hundred GeV, $M_{1}, |\mu| \gg M_{2}$.  The lightest neutralino and the lightest chargino are nearly degenerate in mass, and are the only two particles to play a role at the LHC.  The decays described in the previous bullet point can happen, as well as chargino decays to $W + \widetilde{G}$.
+\end{itemize}
+%
+This thesis studied the classic bino NLSP decay $\gamma + \widetilde{G}$.
+
+Since strong production of SUSY particles dominates over electroweak production at the LHC due to the enhanced $gg$ parton luminosity over the $q\overline{q}$ parton luminosity, early LHC searches are particularly sensitive to light squarks and gluinos.  General gauge mediation makes no a priori restrictions on the mass splitting between the strongly interacting sparticles and the weakly interacting sparticles, so models with light squarks and gluinos are viable.  In fact, such models could not be probed as well at the Tevatron as they are at the LHC due to the aforementioned parton luminosities.
+
+Typical LHC signatures of the bino and wino NLSP scenarios are shown in Figure~\ref{fig:bino_wino_NLSP_signatures}.
+
+\begin{figure}
+	\centering
+	\subfloat[Two gluinos each decay via $\NLSP\rightarrow\gamma\widetilde{G}$.]{\label{fig:2photons_jets_MET}\includegraphics[scale=0.4]{2photons_jets_MET}}
+	\hspace{1cm}
+	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\NLSP\rightarrow Z(\rightarrow q\overline{q})\widetilde{G}$.]{\label{fig:bino_photon_jets_MET}\includegraphics[scale=0.4]{bino_photon_jets_MET}}
+	\\
+	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\chi_{1}^{\pm}\rightarrow W^{\pm}(\rightarrow l^{\pm}\nu_{l})\widetilde{G}$.]{\label{fig:lepton_photon_jets_MET}\includegraphics[scale=0.4]{lepton_photon_jets_MET}}
+	\hspace{1cm}
+	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\chi_{1}^{\pm}\rightarrow W^{\pm}(\rightarrow q\overline{q}^{'})\widetilde{G}$.]{\label{fig:wino_photon_jets_MET}\includegraphics[scale=0.4]{wino_photon_jets_MET}}
+	\caption{Typical LHC signatures of the bino and wino NLSP scenarios.}
+	\label{fig:bino_wino_NLSP_signatures}
+\end{figure}
 
 \section{Dark Matter and the WIMP Miracle}
 %standard WIMP dark matter argument
 %but for GMSB, it's not really a miracle, just another allowed thing because gravitinos are absolutely stable
-%R-parity
-%collider consequence: sparticles produced in pairs
 
 %proofread
 

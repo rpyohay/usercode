@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  7 JAN 2012 17:32
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 JAN 2012 19:38
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -358,20 +358,20 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 (./dissertation.aux)
 \openout1 = `dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
-LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
 
 (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -402,7 +402,7 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 27.
+LaTeX Info: Redefining \subref on input line 28.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
@@ -441,7 +441,7 @@ Package caption Info: End \AtBeginDocument code.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 27.
+Package hyperref Info: Link coloring OFF on input line 28.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
@@ -453,20 +453,20 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
 \c@section@level=\count129
 )
-LaTeX Info: Redefining \ref on input line 27.
-LaTeX Info: Redefining \pageref on input line 27.
-LaTeX Info: Redefining \nameref on input line 27.
+LaTeX Info: Redefining \ref on input line 28.
+LaTeX Info: Redefining \pageref on input line 28.
+LaTeX Info: Redefining \nameref on input line 28.
 
 (./dissertation.out) (./dissertation.out)
 \@outlinefile=\write3
 \openout3 = `dissertation.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 35.
+LaTeX Font Info:    Try loading font information for U+msa on input line 36.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 35.
+LaTeX Font Info:    Try loading font information for U+msb on input line 36.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -477,7 +477,7 @@ ertation.tocpdfTeX warning (ext4): destination with the same identifier (name{p
 age.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.34 ...umberline {7}Data Analysis}{23}{chapter.7}
+l.34 ...dentification Efficiency}{25}{section.6.3}
                                                    [1
 
 ])
@@ -490,7 +490,7 @@ Chapter 1.
 
 ]
 Chapter 2.
-<LEP_hadronic_xsec.pdf, id=240, 214.10559pt x 206.36688pt>
+<LEP_hadronic_xsec.pdf, id=245, 214.10559pt x 206.36688pt>
 File: LEP_hadronic_xsec.pdf Graphic file (type pdf)
 
 <use LEP_hadronic_xsec.pdf>
@@ -498,11 +498,11 @@ Underfull \hbox (badness 1097) in paragraph at lines 38--38
 \OT1/cmr/m/n/10 a func-tion of col-lider center-of-
  []
 
-<LEP_pair_production_xsecs.pdf, id=241, 199.91791pt x 265.69736pt>
+<LEP_pair_production_xsecs.pdf, id=246, 199.91791pt x 265.69736pt>
 File: LEP_pair_production_xsecs.pdf Graphic file (type pdf)
 
 <use LEP_pair_production_xsecs.pdf>
-<LEP_W_pair_production_xsec.pdf, id=242, 211.52596pt x 213.46068pt>
+<LEP_W_pair_production_xsec.pdf, id=247, 211.52596pt x 213.46068pt>
 File: LEP_W_pair_production_xsec.pdf Graphic file (type pdf)
 
 <use LEP_W_pair_production_xsec.pdf>
@@ -511,7 +511,7 @@ Underfull \hbox (badness 2781) in paragraph at lines 42--42
 
  []
 
-<LEP_alphaS_running.pdf, id=243, 182.50565pt x 219.90968pt>
+<LEP_alphaS_running.pdf, id=248, 182.50565pt x 219.90968pt>
 File: LEP_alphaS_running.pdf Graphic file (type pdf)
 
 <use LEP_alphaS_running.pdf>
@@ -679,11 +679,11 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 173.
 
-<fermion_mass_terms.pdf, id=985, 199.50676pt x 38.54109pt>
+<fermion_mass_terms.pdf, id=990, 199.50676pt x 38.54109pt>
 File: fermion_mass_terms.pdf Graphic file (type pdf)
 
 <use fermion_mass_terms.pdf>
-<sfermion_mass_term.pdf, id=988, 96.35268pt x 39.10791pt>
+<sfermion_mass_term.pdf, id=993, 96.35268pt x 39.10791pt>
 File: sfermion_mass_term.pdf Graphic file (type pdf)
 
 <use sfermion_mass_term.pdf>
@@ -691,33 +691,33 @@ Underfull \hbox (badness 5985) in paragraph at lines 189--189
 []\OT1/cmr/m/n/10 (b) |Sfermion mass terms.
  []
 
-<Aphiphi_vertex.pdf, id=991, 68.58052pt x 54.97769pt>
+<Aphiphi_vertex.pdf, id=996, 68.58052pt x 54.97769pt>
 File: Aphiphi_vertex.pdf Graphic file (type pdf)
  <use Aphiphi_vertex.pdf>
-<Apsipsi_vertex.pdf, id=994, 68.0137pt x 56.67805pt>
+<Apsipsi_vertex.pdf, id=999, 68.0137pt x 56.67805pt>
 File: Apsipsi_vertex.pdf Graphic file (type pdf)
  <use Apsipsi_vertex.pdf>
-<Alambdalambda_vertex.pdf, id=997, 68.0137pt x 56.11124pt>
+<Alambdalambda_vertex.pdf, id=1002, 68.0137pt x 56.11124pt>
 File: Alambdalambda_vertex.pdf Graphic file (type pdf)
 
 <use Alambdalambda_vertex.pdf>
-<triple_gauge_boson_vertex.pdf, id=1000, 65.74654pt x 55.54451pt>
+<triple_gauge_boson_vertex.pdf, id=1005, 65.74654pt x 55.54451pt>
 File: triple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use triple_gauge_boson_vertex.pdf>
-<triple_sfermion_vertices.pdf, id=1003, 181.36972pt x 61.77911pt>
+<triple_sfermion_vertices.pdf, id=1008, 181.36972pt x 61.77911pt>
 File: triple_sfermion_vertices.pdf Graphic file (type pdf)
 
 <use triple_sfermion_vertices.pdf>
-<phipsipsi_vertices.pdf, id=1006, 213.10947pt x 62.34583pt>
+<phipsipsi_vertices.pdf, id=1011, 213.10947pt x 62.34583pt>
 File: phipsipsi_vertices.pdf Graphic file (type pdf)
 
 <use phipsipsi_vertices.pdf>
-<phipsilambda_vertices.pdf, id=1009, 159.26532pt x 54.9778pt>
+<phipsilambda_vertices.pdf, id=1014, 159.26532pt x 54.9778pt>
 File: phipsilambda_vertices.pdf Graphic file (type pdf)
 
 <use phipsilambda_vertices.pdf>
-<AAphiphi_vertex.pdf, id=1012, 67.44688pt x 65.74654pt>
+<AAphiphi_vertex.pdf, id=1017, 67.44688pt x 65.74654pt>
 File: AAphiphi_vertex.pdf Graphic file (type pdf)
 
 <use AAphiphi_vertex.pdf>
@@ -730,7 +730,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 205--205
 \OT1/cmr/m/n/10 Reprinted from
  []
 
-<quadruple_gauge_boson_vertex.pdf, id=1015, 65.7466pt x 61.77911pt>
+<quadruple_gauge_boson_vertex.pdf, id=1020, 65.7466pt x 61.77911pt>
 File: quadruple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use quadruple_gauge_boson_vertex.pdf>
@@ -748,7 +748,7 @@ Underfull \hbox (badness 1259) in paragraph at lines 207--207
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
-<non-gauge_phi4_vertex.pdf, id=1018, 73.68147pt x 66.88007pt>
+<non-gauge_phi4_vertex.pdf, id=1023, 73.68147pt x 66.88007pt>
 File: non-gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use non-gauge_phi4_vertex.pdf>
@@ -761,7 +761,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 209--209
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
-<gauge_phi4_vertex.pdf, id=1021, 65.74654pt x 65.17972pt>
+<gauge_phi4_vertex.pdf, id=1026, 65.74654pt x 65.17972pt>
 File: gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use gauge_phi4_vertex.pdf>
@@ -781,117 +781,110 @@ LaTeX Warning: Float too large for page by 43.27156pt on input line 214.
 x.pdf> <./Apsipsi_vertex.pdf> <./Alambdalambda_vertex.pdf> <./triple_gauge_boso
 n_vertex.pdf> <./triple_sfermion_vertices.pdf> <./phipsipsi_vertices.pdf> <./ph
 ipsilambda_vertices.pdf> <./AAphiphi_vertex.pdf> <./quadruple_gauge_boson_verte
-x.pdf> <./non-gauge_phi4_vertex.pdf> <./gauge_phi4_vertex.pdf>]
-
-LaTeX Warning: Reference `SUSY_primer' on page 13 undefined on input line 238.
-
-[13] <sfermion_GMSB_mass_terms.pdf, id=1434, 370.56622pt x 128.991pt>
+x.pdf> <./non-gauge_phi4_vertex.pdf> <./gauge_phi4_vertex.pdf>] [13]
+<sfermion_GMSB_mass_terms.pdf, id=1440, 370.56622pt x 128.991pt>
 File: sfermion_GMSB_mass_terms.pdf Graphic file (type pdf)
 
 <use sfermion_GMSB_mass_terms.pdf>
-
-LaTeX Warning: Reference `SUSY_primer' on page 14 undefined on input line 249.
-
-
-LaTeX Warning: Reference `SUSY_primer' on page 14 undefined on input line 249.
-
-<gaugino_GMSB_mass_term.pdf, id=1435, 172.55376pt x 106.36096pt>
+<gaugino_GMSB_mass_term.pdf, id=1443, 172.55376pt x 106.36096pt>
 File: gaugino_GMSB_mass_term.pdf Graphic file (type pdf)
 
-<use gaugino_GMSB_mass_term.pdf>
-
-LaTeX Warning: Reference `SUSY_primer' on page 14 undefined on input line 251.
-
-
-LaTeX Warning: Reference `SUSY_primer' on page 14 undefined on input line 251.
-
-
-LaTeX Warning: Citation `mSUGRA' on page 14 undefined on input line 256.
-
-[14 <./sfermion_GMSB_mass_terms.pdf> <./gaugino_GMSB_mass_term.pdf>]
-<muegamma.pdf, id=1583, 155.01544pt x 68.45575pt>
+<use gaugino_GMSB_mass_term.pdf> [14 <./sfermion_GMSB_mass_terms.pdf> <./gaugin
+o_GMSB_mass_term.pdf>] <muegamma.pdf, id=1594, 155.01544pt x 68.45575pt>
 File: muegamma.pdf Graphic file (type pdf)
- <use muegamma.pdf>
 
-LaTeX Warning: Reference `SUSY_primer' on page 15 undefined on input line 269.
+<use muegamma.pdf> [15 <./muegamma.pdf>] [16]
+<2photons_jets_MET.pdf, id=1727, 482.06343pt x 269.35129pt>
+File: 2photons_jets_MET.pdf Graphic file (type pdf)
 
+<use 2photons_jets_MET.pdf>
+<bino_photon_jets_MET.pdf, id=1728, 474.51154pt x 258.02351pt>
+File: bino_photon_jets_MET.pdf Graphic file (type pdf)
 
-LaTeX Warning: Reference `SUSY_primer' on page 15 undefined on input line 269.
+<use bino_photon_jets_MET.pdf>
+<lepton_photon_jets_MET.pdf, id=1729, 434.2346pt x 221.52261pt>
+File: lepton_photon_jets_MET.pdf Graphic file (type pdf)
 
-[15 <./muegamma.pdf>]
-<CMS_SUSY_2011Limits_tanb10.pdf, id=1701, 569.12625pt x 408.52625pt>
+<use lepton_photon_jets_MET.pdf>
+<wino_photon_jets_MET.pdf, id=1730, 432.976pt x 225.29861pt>
+File: wino_photon_jets_MET.pdf Graphic file (type pdf)
+
+<use wino_photon_jets_MET.pdf> [17]
+<CMS_SUSY_2011Limits_tanb10.pdf, id=1744, 569.12625pt x 408.52625pt>
 File: CMS_SUSY_2011Limits_tanb10.pdf Graphic file (type pdf)
 
 <use CMS_SUSY_2011Limits_tanb10.pdf>
 
 LaTeX Warning: Reference `SUSY Lagrangian and Particle Content, SUSY Breaking' 
-on page 16 undefined on input line 319.
+on page 18 undefined on input line 369.
 
-<ATLAS_SPS8_limit.pdf, id=1709, 237.8503pt x 228.18147pt>
+[18 <./2photons_jets_MET.pdf> <./bino_photon_jets_MET.pdf> <./lepton_photon_jet
+s_MET.pdf> <./wino_photon_jets_MET.pdf>]
+<ATLAS_SPS8_limit.pdf, id=3001, 237.8503pt x 228.18147pt>
 File: ATLAS_SPS8_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_SPS8_limit.pdf>
-<ATLAS_GGM_limit.pdf, id=1716, 246.87431pt x 166.9464pt>
+<ATLAS_GGM_limit.pdf, id=3008, 246.87431pt x 166.9464pt>
 File: ATLAS_GGM_limit.pdf Graphic file (type pdf)
 
-<use ATLAS_GGM_limit.pdf> [16] [17 <./CMS_SUSY_2011Limits_tanb10.pdf> <./ATLAS_
-SPS8_limit.pdf>]
-<CDF_lifetime_vs_mass.pdf, id=1879, 258.02155pt x 197.83792pt>
+<use ATLAS_GGM_limit.pdf> [19 <./CMS_SUSY_2011Limits_tanb10.pdf>] [20 <./ATLAS_
+SPS8_limit.pdf> <./ATLAS_GGM_limit.pdf>]
+<CDF_lifetime_vs_mass.pdf, id=3262, 258.02155pt x 197.83792pt>
 File: CDF_lifetime_vs_mass.pdf Graphic file (type pdf)
 
 <use CDF_lifetime_vs_mass.pdf>
 
 LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
-ng' on page 18 undefined on input line 345.
+ng' on page 21 undefined on input line 395.
 
 
 LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
-ng' on page 18 undefined on input line 345.
+ng' on page 21 undefined on input line 395.
 
-[18 <./ATLAS_GGM_limit.pdf>]) (./ch4.tex [19 <./CDF_lifetime_vs_mass.pdf>]
+[21 <./CDF_lifetime_vs_mass.pdf>]) (./ch4.tex [22]
 Chapter 4.
-) (./ch5.tex [20
+) (./ch5.tex [23
 
 ]
 Chapter 5.
-) (./ch6.tex [21
+) (./ch6.tex [24
 
 ]
 Chapter 6.
-) (./ch7.tex [22
+) (./ch7.tex [25
 
 ]
 Chapter 7.
-[23
+[26
 
-]) (./ch8.tex [24] [25]
+]) (./ch8.tex [27] [28]
 Chapter 8.
-) (./ch9.tex [26
+) (./ch9.tex [29
 
 ]
 Chapter 9.
-) [27
+) [30
 
-] [28
+] [31
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 83.
- [29]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 83.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 86.
+ [32]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 86.
  (./dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 83.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 86.
 Package rerunfilecheck Info: File `dissertation.out' has not changed.
-(rerunfilecheck)             Checksum: 16543286104DD2EAB806B0AF62AF95FC;3073.
+(rerunfilecheck)             Checksum: 795D9E1E78F42F7CC1405D8F91221D24;3160.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8093 strings out of 493747
- 124278 string characters out of 3143546
- 231505 words of memory out of 3000000
- 11041 multiletter control sequences out of 15000+200000
+ 8144 strings out of 493747
+ 125371 string characters out of 3143546
+ 232215 words of memory out of 3000000
+ 11071 multiletter control sequences out of 15000+200000
  16239 words of font info for 62 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  44i,15n,50p,2804b,518s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -916,18 +909,19 @@ texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2010/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2010/texmf-
 dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2010/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/font
-s/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
-ype1/public/amsfonts/symbols/msam10.pfb>
-Output written on dissertation.pdf (30 pages, 1794038 bytes).
+st/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2010/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/texmf-dist/fonts/typ
+e1/public/amsfonts/symbols/msam10.pfb>
+Output written on dissertation.pdf (33 pages, 2318553 bytes).
 PDF statistics:
- 2245 PDF objects out of 2487 (max. 8388607)
- 1805 compressed objects within 19 object streams
- 151 named destinations out of 1000 (max. 500000)
- 457 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3528 PDF objects out of 3580 (max. 8388607)
+ 2902 compressed objects within 30 object streams
+ 168 named destinations out of 1000 (max. 500000)
+ 485 words of extra memory for PDF output out of 10000 (max. 10000000)
 
