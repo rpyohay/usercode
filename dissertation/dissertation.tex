@@ -10,16 +10,22 @@
 \usepackage{subfiles} %to compile chapters individually in separate files
 %\usepackage[justification=justified]{caption}[2009/9/16]
 \usepackage[top=1in, bottom=1in, left=1.5in, right=1in]{geometry} %margins
+\usepackage{setspace} %line spacing
 \usepackage{hyperref} %bibliography
 
+%to get the subfloat references in 1(a) format instead of 1a
+\DeclareSubrefFormat{myparens}{#1(#2)}
+\captionsetup[subfloat]{subrefformat=myparens}
+
 \frenchspacing %same spacing between words and sentences cf. http://en.wikibooks.org/wiki/LaTeX/Formatting#Space_between_Words_and_Sentences
+\doublespacing %double spacing cf. http://en.wikibooks.org/wiki/LaTeX/Customizing_LaTeX#Spacing
 
 %page numbering--needs to be top right, not yet working
 \pagestyle{myheadings}
 \markright{\hfill}
 
 %shortcuts
-\newcommand{\MET}{$\not\!\! \mbox{E}_{\mbox{T}}$ }
+\newcommand{\MET}{$\not\!\! E_{T}$ }
 \newcommand{\ET}{$\mbox{E}_{\mbox{T}}$ }
 \newcommand{\pT}{$\mbox{p}_{\mbox{T}}$ }
 \newcommand{\NLSP}{\widetilde{\chi}_{1}^{0}}
@@ -27,6 +33,7 @@
 
 \begin{document}
 
+%make the title page compliant with UVa standards
 \title{Search in the Two-Photon Final State for Evidence of New Particle Production at the Large Hadron Collider}
 \author{Rachel P. Yohay \\
 	University of Virginia \\
@@ -36,23 +43,23 @@
 
 \tableofcontents
 
-\subfile{ch1}
+%\subfile{ch1}
 
-\subfile{ch2}
+%\subfile{ch2}
 
 \subfile{ch3}
 
-\subfile{ch4}
+%\subfile{ch4}
 
-\subfile{ch5}
+%\subfile{ch5}
 
 \subfile{ch6}
 
-\subfile{ch7}
+%\subfile{ch7}
 
-\subfile{ch8}
+%\subfile{ch8}
 
-\subfile{ch9}
+%\subfile{ch9}
 
 \begin{thebibliography}{99}
 %\bibitem{Cottingham_and_Greenwood} dummy
@@ -64,7 +71,8 @@
 \bibitem{SUSY_history} E. Fernandez et al., \textit{Phys. Rev. Lett.} \textbf{54} (1985) 1118; E. Fernandex et al., \textit{Phys. Rev.} \textbf{D35} (1987) 374; D. Decamp et al., \textit{Phys. Lett.} \textbf{B237(2)} (1990) 291; F. Abe et al., \textit{Phys. Rev. Lett.} \textbf{75} (1995) 613; S. Abachi et al., \textit{Phys. Rev. Lett.} \textbf{75} (1995) 618; G. Alexander et al., \textit{Phys. Lett.} \textbf{B377(4)} (1996) 273; S. Aid et al., \textit{Z. Phys.} \textbf{C71(2)} (1996) 211; S. Aid et al., \textit{Phys. Lett.} \textbf{B380(3-4} (1996) 461; B. Aubert et al., \textit{Phys. Rev. Lett.} \textbf{95} (2005) 041802.
 %refs. [141] and [142] of the SUSY primer
 \bibitem{GMSB} M. Dine and W. Fischler, \textit{Phys. Lett.} \textbf{B110} (1982) 227; C.R. Nappi and B.A. Ovrut, \textit{Phys. Lett.} \textbf{B113} (1982) 175; L. Alvarez-Gaum\'e, M. Claudson, and M.B. Wise, \textit{Nucl. Phys.} \textbf{B207} (1982) 96; M. Dine and A.E. Nelson, \textit{Phys. Rev.} \textbf{D48} (1993) 1277; M. Dine, A.E. Nelson, and Y. Shirman, \textit{Phys. Rev.} \textbf{D51} (1995) 1362; M. Dine, A.E. Nelson, Y. Nir, and Y. Shirman, \textit{Phys. Rev.} \textbf{D53} (1996) 2658.
-\bibitem{mSUGRA} Insert mSUGRA references [133] and [134] of the SUSY primer here.
+%refs. [133] and [134] of the SUSY primer
+\bibitem{mSUGRA} A.H. Chamseddine, R. Arnowitt, and P. Nath, \textit{Phys. Rev. Lett.} \textbf{49} (1982) 970; R. Barbieri, S. Ferrara, and C.A. Savoy, \textit{Phys. Lett.} \textbf{B119} (1982) 343; L.E. Ib\'a\~{n}ez, \textit{Phys. Lett.} \textbf{B118} (1982) 73; L.J. Hall, J.D. Lykken, and S. Weinberg, \textit{Phys. Rev.} \textbf{D27} (1983) 2359; N. Ohta, \textit{Prog. Theor. Phys.} \textbf{70} (1983) 542; J. Ellis, D.V. Nanopoulos, and K. Tamvakis, \textit{Phys. Lett.} \textbf{B121} (1983) 123; L. Alvarez-Gaum\'e, J. Polchinski, and M. Wise, \textit{Nucl. Phys.} \textbf{B221} (1983) 495.
 \bibitem{Meade_Seiberg_and_Shih} P. Meade, N. Seiberg, and D. Shih, \textit{Progr. Theor. Phys. Suppl.} \textbf{177} (2009) 143.
 \bibitem{ATLAS_GMSB_1fb-1} G. Aad et al., \textit{CERN-PH-EP-2011-160} (2011).
 \bibitem{CDF_2010_GMSB_paper} T. Aaltonen et al., \textit{Phys. Rev. Lett.} \textbf{104} (2010) 011801.

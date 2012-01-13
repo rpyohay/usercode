@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 JAN 2012 19:38
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  12 JAN 2012 12:05
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -234,7 +234,11 @@ Package ifvtex Info: VTeX not detected.
 \Gm@layoutvoffset=\dimen133
 \Gm@dimlist=\toks24
 )
-(/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2010/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
+
+Package: `setspace' 6.7 <2000/12/01>
+) (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2010/06/18 v6.81g Hypertext links for LaTeX
 
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
@@ -356,23 +360,30 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 \Hy@SectionHShift=\skip56
 )
 (./dissertation.aux)
+Runaway argument?
+{\contentsline {figure}{\numberline {1.7}{\ignorespaces ATLAS exclusi\ETC.
+./dissertation.tex:34: File ended while scanning use of \@writefile.
+<inserted text> 
+                \par 
+l.34 \begin{document}
+                     
+? 
 \openout1 = `dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
-LaTeX Font Info:    ... okay on input line 28.
-
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
+LaTeX Font Info:    ... okay on input line 34.
 (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
@@ -402,7 +413,7 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 28.
+LaTeX Info: Redefining \subref on input line 34.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
@@ -441,7 +452,7 @@ Package caption Info: End \AtBeginDocument code.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 28.
+Package hyperref Info: Link coloring OFF on input line 34.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
@@ -453,441 +464,639 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
 \c@section@level=\count129
 )
-LaTeX Info: Redefining \ref on input line 28.
-LaTeX Info: Redefining \pageref on input line 28.
-LaTeX Info: Redefining \nameref on input line 28.
+LaTeX Info: Redefining \ref on input line 34.
+LaTeX Info: Redefining \pageref on input line 34.
+LaTeX Info: Redefining \nameref on input line 34.
 
 (./dissertation.out) (./dissertation.out)
 \@outlinefile=\write3
 \openout3 = `dissertation.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 36.
+LaTeX Font Info:    Try loading font information for U+msa on input line 43.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 36.
+LaTeX Font Info:    Try loading font information for U+msb on input line 43.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./diss
-ertation.tocpdfTeX warning (ext4): destination with the same identifier (name{p
-age.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.34 ...dentification Efficiency}{25}{section.6.3}
-                                                   [1
-
-])
+ertation.toc)
 \tf@toc=\write4
 \openout4 = `dissertation.toc'.
 
- (./ch1.tex [2]
+(./ch3.texpdfTeX warning (ext4): destination with the same identifier (name{pag
+e.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.4 \chapter
+            {The Supersymmetric Extension to the Standard Model} [1
+
+]
 Chapter 1.
-) (./ch2.tex [3
+
+LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 9.
+
+
+LaTeX Warning: Citation `Aitchison' on page 2 undefined on input line 9.
+
+[2
 
 ]
-Chapter 2.
-<LEP_hadronic_xsec.pdf, id=245, 214.10559pt x 206.36688pt>
-File: LEP_hadronic_xsec.pdf Graphic file (type pdf)
 
-<use LEP_hadronic_xsec.pdf>
-Underfull \hbox (badness 1097) in paragraph at lines 38--38
-\OT1/cmr/m/n/10 a func-tion of col-lider center-of-
- []
+LaTeX Warning: Citation `SUSY_primer' on page 3 undefined on input line 32.
 
-<LEP_pair_production_xsecs.pdf, id=246, 199.91791pt x 265.69736pt>
-File: LEP_pair_production_xsecs.pdf Graphic file (type pdf)
 
-<use LEP_pair_production_xsecs.pdf>
-<LEP_W_pair_production_xsec.pdf, id=247, 211.52596pt x 213.46068pt>
-File: LEP_W_pair_production_xsec.pdf Graphic file (type pdf)
+LaTeX Warning: Citation `SUSY_primer' on page 3 undefined on input line 32.
 
-<use LEP_W_pair_production_xsec.pdf>
-Underfull \hbox (badness 2781) in paragraph at lines 42--42
-\OT1/cmr/m/n/10 pen-dence of the $\OML/cmm/m/it/10 W[]W[]$ \OT1/cmr/m/n/10 pair
 
- []
-
-<LEP_alphaS_running.pdf, id=248, 182.50565pt x 219.90968pt>
-File: LEP_alphaS_running.pdf Graphic file (type pdf)
-
-<use LEP_alphaS_running.pdf>
-Underfull \hbox (badness 1062) in paragraph at lines 44--44
-\OT1/cmr/m/n/10 pling con-stant $\OML/cmm/m/it/10 []$ \OT1/cmr/m/n/10 on LEP
- []
-
-[4
-
-] [5 <./LEP_hadronic_xsec.pdf> <./LEP_pair_production_xsecs.pdf> <./LEP_W_pair_
-production_xsec.pdf> <./LEP_alphaS_running.pdf>]
-Overfull \hbox (5.02779pt too wide) in paragraph at lines 58--58
-[]\OT1/cmr/bx/n/17.28 Electroweak Sym-me-try Break-ing and the Higgs
- []
-
-) (./ch3.tex [6]
-Chapter 3.
-[7
-
-]
-Underfull \hbox (badness 10000) in paragraph at lines 34--34
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
 []|\OT1/cmr/m/n/12 Spin-0
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 34--34
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
 []|\OT1/cmr/m/n/12 Spin-1/2
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 34--35
+Underfull \hbox (badness 1292) in paragraph at lines 35--36
 \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (3)[] \OMS/cmsy/m/n/12 
  \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (2)[] \OMS/cmsy/m/n/12 
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 37--37
+Underfull \hbox (badness 10000) in paragraph at lines 38--38
 []|\OT1/cmr/m/n/12 Left-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 37--37
+Underfull \hbox (badness 10000) in paragraph at lines 38--38
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 37--37
+Underfull \hbox (badness 10000) in paragraph at lines 38--38
 \OT1/cmr/m/n/12 dou-blet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--39
+Underfull \hbox (badness 10000) in paragraph at lines 40--40
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--39
+Underfull \hbox (badness 10000) in paragraph at lines 40--40
 \OT1/cmr/m/n/12 up-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--39
+Underfull \hbox (badness 10000) in paragraph at lines 40--40
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 39--39
+Underfull \hbox (badness 10000) in paragraph at lines 40--40
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--41
+Underfull \hbox (badness 10000) in paragraph at lines 42--42
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--41
+Underfull \hbox (badness 10000) in paragraph at lines 42--42
 \OT1/cmr/m/n/12 down-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--41
+Underfull \hbox (badness 10000) in paragraph at lines 42--42
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 41--41
+Underfull \hbox (badness 10000) in paragraph at lines 42--42
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--45
+Underfull \hbox (badness 10000) in paragraph at lines 46--46
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--45
+Underfull \hbox (badness 10000) in paragraph at lines 46--46
 \OT1/cmr/m/n/12 lep-ton/slepton
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 45--45
+Underfull \hbox (badness 10000) in paragraph at lines 46--46
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 47--47
+Underfull \hbox (badness 10000) in paragraph at lines 48--48
 []|\OT1/cmr/m/n/12 Up-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 47--47
+Underfull \hbox (badness 10000) in paragraph at lines 48--48
 \OT1/cmr/m/n/12 Higgs/Higgsino
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--49
+Underfull \hbox (badness 10000) in paragraph at lines 50--50
 []|\OT1/cmr/m/n/12 Down-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--49
+Underfull \hbox (badness 10000) in paragraph at lines 50--50
 \OT1/cmr/m/n/12 Higgs/Higgsino
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 32--53
+Underfull \hbox (badness 10000) in paragraph at lines 33--54
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--59
+LaTeX Warning: Citation `SUSY_primer' on page 3 undefined on input line 57.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 3 undefined on input line 57.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 60--60
 []|\OT1/cmr/m/n/12 Spin-1/2
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 59--59
+Underfull \hbox (badness 10000) in paragraph at lines 60--60
 []|\OT1/cmr/m/n/12 Spin-1
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 59--60
+Underfull \hbox (badness 1292) in paragraph at lines 60--61
 \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (3)[] \OMS/cmsy/m/n/12 
  \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (2)[] \OMS/cmsy/m/n/12 
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--70
+Underfull \hbox (badness 10000) in paragraph at lines 58--71
 [][]
  []
 
-[8]
+[3] [4] [5] [6] [7]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 174.
 
-LaTeX Warning: Reference `chiral_supermultiplets' on page 9 undefined on input 
-line 83.
 
-[9] [10]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 173.
-
- (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
+(/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 173.
-
-<fermion_mass_terms.pdf, id=990, 199.50676pt x 38.54109pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 174.
+ [8]
+<fermion_mass_terms.pdf, id=99, 199.50676pt x 38.54109pt>
 File: fermion_mass_terms.pdf Graphic file (type pdf)
 
 <use fermion_mass_terms.pdf>
-<sfermion_mass_term.pdf, id=993, 96.35268pt x 39.10791pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 188.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 188.
+
+<sfermion_mass_term.pdf, id=100, 96.35268pt x 39.10791pt>
 File: sfermion_mass_term.pdf Graphic file (type pdf)
 
 <use sfermion_mass_term.pdf>
-Underfull \hbox (badness 5985) in paragraph at lines 189--189
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 190.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 190.
+
+
+Underfull \hbox (badness 5985) in paragraph at lines 190--190
 []\OT1/cmr/m/n/10 (b) |Sfermion mass terms.
  []
 
-<Aphiphi_vertex.pdf, id=996, 68.58052pt x 54.97769pt>
+<Aphiphi_vertex.pdf, id=101, 68.58052pt x 54.97769pt>
 File: Aphiphi_vertex.pdf Graphic file (type pdf)
  <use Aphiphi_vertex.pdf>
-<Apsipsi_vertex.pdf, id=999, 68.0137pt x 56.67805pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 192.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 192.
+
+<Apsipsi_vertex.pdf, id=102, 68.0137pt x 56.67805pt>
 File: Apsipsi_vertex.pdf Graphic file (type pdf)
  <use Apsipsi_vertex.pdf>
-<Alambdalambda_vertex.pdf, id=1002, 68.0137pt x 56.11124pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 194.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 194.
+
+<Alambdalambda_vertex.pdf, id=103, 68.0137pt x 56.11124pt>
 File: Alambdalambda_vertex.pdf Graphic file (type pdf)
 
 <use Alambdalambda_vertex.pdf>
-<triple_gauge_boson_vertex.pdf, id=1005, 65.74654pt x 55.54451pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 196.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 196.
+
+<triple_gauge_boson_vertex.pdf, id=104, 65.74654pt x 55.54451pt>
 File: triple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use triple_gauge_boson_vertex.pdf>
-<triple_sfermion_vertices.pdf, id=1008, 181.36972pt x 61.77911pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 198.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 198.
+
+<triple_sfermion_vertices.pdf, id=105, 181.36972pt x 61.77911pt>
 File: triple_sfermion_vertices.pdf Graphic file (type pdf)
 
 <use triple_sfermion_vertices.pdf>
-<phipsipsi_vertices.pdf, id=1011, 213.10947pt x 62.34583pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 200.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 200.
+
+<phipsipsi_vertices.pdf, id=106, 213.10947pt x 62.34583pt>
 File: phipsipsi_vertices.pdf Graphic file (type pdf)
 
 <use phipsipsi_vertices.pdf>
-<phipsilambda_vertices.pdf, id=1014, 159.26532pt x 54.9778pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 202.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 202.
+
+<phipsilambda_vertices.pdf, id=107, 159.26532pt x 54.9778pt>
 File: phipsilambda_vertices.pdf Graphic file (type pdf)
 
 <use phipsilambda_vertices.pdf>
-<AAphiphi_vertex.pdf, id=1017, 67.44688pt x 65.74654pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 204.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 204.
+
+<AAphiphi_vertex.pdf, id=108, 67.44688pt x 65.74654pt>
 File: AAphiphi_vertex.pdf Graphic file (type pdf)
 
 <use AAphiphi_vertex.pdf>
-Underfull \hbox (badness 1442) in paragraph at lines 205--205
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 206.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 206.
+
+
+Underfull \hbox (badness 1442) in paragraph at lines 206--206
 []\OT1/cmr/m/n/10 (j) |$\OML/cmm/m/it/10 AA^^^^^^$ \OT1/cmr/m/n/10 ver-tex.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 205--205
+Underfull \hbox (badness 10000) in paragraph at lines 206--206
 \OT1/cmr/m/n/10 Reprinted from
  []
 
-<quadruple_gauge_boson_vertex.pdf, id=1020, 65.7466pt x 61.77911pt>
+<quadruple_gauge_boson_vertex.pdf, id=109, 65.7466pt x 61.77911pt>
 File: quadruple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use quadruple_gauge_boson_vertex.pdf>
-Underfull \hbox (badness 10000) in paragraph at lines 207--207
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 208.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 208.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 208--208
 []\OT1/cmr/m/n/10 (k) |Quadru-ple
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 207--207
+Underfull \hbox (badness 10000) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 gauge bo-son
  []
 
 
-Underfull \hbox (badness 1259) in paragraph at lines 207--207
+Underfull \hbox (badness 1259) in paragraph at lines 208--208
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
-<non-gauge_phi4_vertex.pdf, id=1023, 73.68147pt x 66.88007pt>
+<non-gauge_phi4_vertex.pdf, id=110, 73.68147pt x 66.88007pt>
 File: non-gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use non-gauge_phi4_vertex.pdf>
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 210.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 210.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 210--210
 []\OT1/cmr/m/n/10 (l) |Non-gauge $\OML/cmm/m/it/10 ^^^[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
+Underfull \hbox (badness 10000) in paragraph at lines 210--210
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
-<gauge_phi4_vertex.pdf, id=1026, 65.74654pt x 65.17972pt>
+<gauge_phi4_vertex.pdf, id=111, 65.74654pt x 65.17972pt>
 File: gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use gauge_phi4_vertex.pdf>
-Underfull \hbox (badness 10000) in paragraph at lines 211--211
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 212.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 212.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 212--212
 []\OT1/cmr/m/n/10 (m) |Gauge $\OML/cmm/m/it/10 ^^^[]$
  []
 
 
-Underfull \hbox (badness 1259) in paragraph at lines 211--211
+Underfull \hbox (badness 1259) in paragraph at lines 212--212
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
 
-LaTeX Warning: Float too large for page by 43.27156pt on input line 214.
+LaTeX Warning: Float too large for page by 43.27156pt on input line 215.
 
-[11] [12 <./fermion_mass_terms.pdf> <./sfermion_mass_term.pdf> <./Aphiphi_verte
-x.pdf> <./Apsipsi_vertex.pdf> <./Alambdalambda_vertex.pdf> <./triple_gauge_boso
-n_vertex.pdf> <./triple_sfermion_vertices.pdf> <./phipsipsi_vertices.pdf> <./ph
-ipsilambda_vertices.pdf> <./AAphiphi_vertex.pdf> <./quadruple_gauge_boson_verte
-x.pdf> <./non-gauge_phi4_vertex.pdf> <./gauge_phi4_vertex.pdf>] [13]
-<sfermion_GMSB_mass_terms.pdf, id=1440, 370.56622pt x 128.991pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 9 undefined on input line 220.
+
+[9] [10 <./fermion_mass_terms.pdf> <./sfermion_mass_term.pdf> <./Aphiphi_vertex
+.pdf> <./Apsipsi_vertex.pdf> <./Alambdalambda_vertex.pdf> <./triple_gauge_boson
+_vertex.pdf> <./triple_sfermion_vertices.pdf> <./phipsipsi_vertices.pdf> <./phi
+psilambda_vertices.pdf> <./AAphiphi_vertex.pdf> <./quadruple_gauge_boson_vertex
+.pdf> <./non-gauge_phi4_vertex.pdf> <./gauge_phi4_vertex.pdf>]
+
+LaTeX Warning: Citation `SUSY_primer' on page 11 undefined on input line 239.
+
+
+LaTeX Warning: Citation `GMSB' on page 11 undefined on input line 246.
+
+
+LaTeX Warning: Citation `GMSB' on page 11 undefined on input line 246.
+
+[11] <sfermion_GMSB_mass_terms.pdf, id=526, 370.56622pt x 128.991pt>
 File: sfermion_GMSB_mass_terms.pdf Graphic file (type pdf)
 
 <use sfermion_GMSB_mass_terms.pdf>
-<gaugino_GMSB_mass_term.pdf, id=1443, 172.55376pt x 106.36096pt>
+
+LaTeX Warning: Citation `SUSY_primer' on page 12 undefined on input line 250.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 12 undefined on input line 250.
+
+<gaugino_GMSB_mass_term.pdf, id=527, 172.55376pt x 106.36096pt>
 File: gaugino_GMSB_mass_term.pdf Graphic file (type pdf)
 
-<use gaugino_GMSB_mass_term.pdf> [14 <./sfermion_GMSB_mass_terms.pdf> <./gaugin
-o_GMSB_mass_term.pdf>] <muegamma.pdf, id=1594, 155.01544pt x 68.45575pt>
-File: muegamma.pdf Graphic file (type pdf)
+<use gaugino_GMSB_mass_term.pdf>
 
-<use muegamma.pdf> [15 <./muegamma.pdf>] [16]
-<2photons_jets_MET.pdf, id=1727, 482.06343pt x 269.35129pt>
+LaTeX Warning: Citation `SUSY_primer' on page 12 undefined on input line 252.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 12 undefined on input line 252.
+
+
+LaTeX Warning: Citation `mSUGRA' on page 12 undefined on input line 257.
+
+[12 <./sfermion_GMSB_mass_terms.pdf> <./gaugino_GMSB_mass_term.pdf>]
+<muegamma.pdf, id=682, 155.01544pt x 68.45575pt>
+File: muegamma.pdf Graphic file (type pdf)
+ <use muegamma.pdf>
+
+LaTeX Warning: Citation `SUSY_primer' on page 13 undefined on input line 270.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 13 undefined on input line 270.
+
+[13 <./muegamma.pdf>]
+
+LaTeX Warning: Citation `Meade_Seiberg_and_Shih' on page 14 undefined on input 
+line 291.
+
+
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 14 undefined on input line 2
+91.
+
+
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 14 undefined on input lin
+e 291.
+
+
+LaTeX Warning: Citation `CMS_GMSB_1fb-1' on page 14 undefined on input line 291
+.
+
+[14] [15]
+
+LaTeX Warning: Citation `CMS_GMSB_1fb-1' on page 16 undefined on input line 324
+.
+
+
+LaTeX Warning: Citation `Tevatron_lifetime' on page 16 undefined on input line 
+333.
+
+[16] <2photons_jets_MET.pdf, id=822, 482.06343pt x 269.35129pt>
 File: 2photons_jets_MET.pdf Graphic file (type pdf)
 
 <use 2photons_jets_MET.pdf>
-<bino_photon_jets_MET.pdf, id=1728, 474.51154pt x 258.02351pt>
+<bino_photon_jets_MET.pdf, id=823, 474.51154pt x 258.02351pt>
 File: bino_photon_jets_MET.pdf Graphic file (type pdf)
 
 <use bino_photon_jets_MET.pdf>
-<lepton_photon_jets_MET.pdf, id=1729, 434.2346pt x 221.52261pt>
+<lepton_photon_jets_MET.pdf, id=824, 434.2346pt x 221.52261pt>
 File: lepton_photon_jets_MET.pdf Graphic file (type pdf)
 
 <use lepton_photon_jets_MET.pdf>
-<wino_photon_jets_MET.pdf, id=1730, 432.976pt x 225.29861pt>
+<wino_photon_jets_MET.pdf, id=825, 432.976pt x 225.29861pt>
 File: wino_photon_jets_MET.pdf Graphic file (type pdf)
 
-<use wino_photon_jets_MET.pdf> [17]
-<CMS_SUSY_2011Limits_tanb10.pdf, id=1744, 569.12625pt x 408.52625pt>
+<use wino_photon_jets_MET.pdf>
+
+LaTeX Warning: Citation `SUSY_history' on page 17 undefined on input line 353.
+
+[17 <./2photons_jets_MET.pdf> <./bino_photon_jets_MET.pdf> <./lepton_photon_jet
+s_MET.pdf> <./wino_photon_jets_MET.pdf>]
+
+LaTeX Warning: Citation `CMSSM_fits' on page 18 undefined on input line 355.
+
+<CMS_SUSY_2011Limits_tanb10.pdf, id=2072, 569.12625pt x 408.52625pt>
 File: CMS_SUSY_2011Limits_tanb10.pdf Graphic file (type pdf)
 
 <use CMS_SUSY_2011Limits_tanb10.pdf>
 
-LaTeX Warning: Reference `SUSY Lagrangian and Particle Content, SUSY Breaking' 
-on page 18 undefined on input line 369.
+LaTeX Warning: Citation `CMS_mSUGRA' on page 18 undefined on input line 360.
 
-[18 <./2photons_jets_MET.pdf> <./bino_photon_jets_MET.pdf> <./lepton_photon_jet
-s_MET.pdf> <./wino_photon_jets_MET.pdf>]
-<ATLAS_SPS8_limit.pdf, id=3001, 237.8503pt x 228.18147pt>
+
+LaTeX Warning: Citation `CMS_mSUGRA' on page 18 undefined on input line 360.
+
+
+LaTeX Warning: Citation `ATLAS' on page 18 undefined on input line 365.
+
+
+LaTeX Warning: Citation `SPS' on page 18 undefined on input line 365.
+
+
+LaTeX Warning: Reference `fig:ATLAS_GGM_limit' on page 18 undefined on input li
+ne 365.
+
+[18 <./CMS_SUSY_2011Limits_tanb10.pdf>]
+<ATLAS_SPS8_limit.pdf, id=2118, 237.8503pt x 228.18147pt>
 File: ATLAS_SPS8_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_SPS8_limit.pdf>
-<ATLAS_GGM_limit.pdf, id=3008, 246.87431pt x 166.9464pt>
+
+LaTeX Warning: Citation `SPS' on page 19 undefined on input line 371.
+
+
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 19 undefined on input line 3
+71.
+
+
+LaTeX Warning: Citation `SPS' on page 19 undefined on input line 371.
+
+
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 19 undefined on input line 3
+71.
+
+<ATLAS_GGM_limit.pdf, id=2123, 246.87431pt x 166.9464pt>
 File: ATLAS_GGM_limit.pdf Graphic file (type pdf)
 
-<use ATLAS_GGM_limit.pdf> [19 <./CMS_SUSY_2011Limits_tanb10.pdf>] [20 <./ATLAS_
-SPS8_limit.pdf> <./ATLAS_GGM_limit.pdf>]
-<CDF_lifetime_vs_mass.pdf, id=3262, 258.02155pt x 197.83792pt>
+<use ATLAS_GGM_limit.pdf>
+
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 19 undefined on input line 3
+78.
+
+
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 19 undefined on input line 3
+78.
+
+
+LaTeX Warning: Citation `SUSY_primer' on page 19 undefined on input line 382.
+
+
+LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 19 undefined on input line 3
+82.
+
+
+LaTeX Warning: Reference `fig:ATLAS_GGM_limit' on page 19 undefined on input li
+ne 382.
+
+
+LaTeX Warning: Reference `fig:CDF_lifetime_vs_mass' on page 19 undefined on inp
+ut line 382.
+
+
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 19 undefined on input lin
+e 382.
+
+<CDF_lifetime_vs_mass.pdf, id=2125, 258.02155pt x 197.83792pt>
 File: CDF_lifetime_vs_mass.pdf Graphic file (type pdf)
 
 <use CDF_lifetime_vs_mass.pdf>
 
-LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
-ng' on page 21 undefined on input line 395.
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 19 undefined on input lin
+e 387.
 
 
-LaTeX Warning: Reference `sec:SUSY Lagrangian and Particle Content, SUSY Breaki
-ng' on page 21 undefined on input line 395.
+LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 19 undefined on input lin
+e 387.
 
-[21 <./CDF_lifetime_vs_mass.pdf>]) (./ch4.tex [22]
-Chapter 4.
-) (./ch5.tex [23
 
-]
-Chapter 5.
-) (./ch6.tex [24
+LaTeX Warning: Citation `SUSY_primer' on page 19 undefined on input line 391.
 
-]
-Chapter 6.
-) (./ch7.tex [25
 
-]
-Chapter 7.
-[26
+LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 19 undefined on input l
+ine 391.
 
-]) (./ch8.tex [27] [28]
-Chapter 8.
-) (./ch9.tex [29
 
-]
-Chapter 9.
-) [30
+LaTeX Warning: Citation `WMAP' on page 19 undefined on input line 391.
 
-] [31
 
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 86.
- [32]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 86.
+LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 19 und
+efined on input line 391.
+
+
+LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 19 und
+efined on input line 391.
+
+[19] [20 <./ATLAS_SPS8_limit.pdf> <./ATLAS_GGM_limit.pdf>] [21 <./CDF_lifetime_
+vs_mass.pdf>]
+
+LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 22 undefined on input l
+ine 399.
+
+
+LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 22 undefined on inp
+ut line 399.
+
+
+LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 22 undefined on inp
+ut line 399.
+
+) (./ch6.tex [22]
+Chapter 2.
+
+LaTeX Warning: Reference `chap:Data Analysis' on page 23 undefined on input lin
+e 9.
+
+) [23
+
+] [24] [25
+
+] [26]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 94.
+ [27]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 94.
  (./dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 86.
-Package rerunfilecheck Info: File `dissertation.out' has not changed.
-(rerunfilecheck)             Checksum: 795D9E1E78F42F7CC1405D8F91221D24;3160.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 94.
 
+
+Package rerunfilecheck Warning: File `dissertation.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `dissertation.out':
+(rerunfilecheck)             Before: D41D8CD98F00B204E9800998ECF8427E;0
+(rerunfilecheck)             After:  9B336C0626E9092EF67CAA57C9B86E61;989.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 8144 strings out of 493747
- 125371 string characters out of 3143546
- 232215 words of memory out of 3000000
- 11071 multiletter control sequences out of 15000+200000
+ 8028 strings out of 493747
+ 123485 string characters out of 3143546
+ 225463 words of memory out of 3000000
+ 11021 multiletter control sequences out of 15000+200000
  16239 words of font info for 62 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 44i,15n,50p,2804b,518s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,15n,50p,2674b,527s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
@@ -907,21 +1116,20 @@ ive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive
 10/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2010/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2010/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2010/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2010/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2010/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/texmf-dist/fonts/typ
-e1/public/amsfonts/symbols/msam10.pfb>
-Output written on dissertation.pdf (33 pages, 2318553 bytes).
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2010/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/font
+s/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/texmf-dist/fonts/ty
+pe1/public/amsfonts/symbols/msam10.pfb>
+Output written on dissertation.pdf (28 pages, 1870909 bytes).
 PDF statistics:
- 3528 PDF objects out of 3580 (max. 8388607)
- 2902 compressed objects within 30 object streams
- 168 named destinations out of 1000 (max. 500000)
- 485 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2578 PDF objects out of 2984 (max. 8388607)
+ 2179 compressed objects within 22 object streams
+ 123 named destinations out of 1000 (max. 500000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
 

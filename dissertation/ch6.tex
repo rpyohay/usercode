@@ -3,12 +3,49 @@
 
 \chapter{Event Selection}
 \label{chap:Event Selection}
-%2 photons + MET
 
-\section{HLT}
+In keeping with the phenomenology described in Sec.~\ref{sec:Phenomenology of General Gauge Mediation}, the candidate GGM events selected in this search consist of two high-$E_{T}$ photons and a significant momentum imbalance transverse to the beam, indicating the production of an escaping gravitino.  This momentum imbalance is usually referred to as \textit{missing transverse energy} and is denoted by the symbol \MET.
+
+However, in order to use real CMS data (as opposed to simulation) to derive predictions for the backgrounds to the search, \textit{control samples} distinct from the \textit{candidate} two-photon sample must be collected.  These samples consist of different numerical combinations of photons, electrons, and jets, and are explained in more detail in Chapter~\ref{chap:Data Analysis}.  Since this search is performed in the high-\MET tail of the \MET distribution, where adequate detector simulation is very difficult, it is advantageous to use \textit{data-driven} background estimates, which capture the true detector response, over numbers derived from simulation.
+
+In the following sections, the reconstruction of photons, electrons, jets, and \MET is explained.  Sec.~\ref{sec:Object Reconstruction} begins with an explanation of the high level reconstruction.  It is followed by Sec.~\ref{sec:HLT}, which describes the triggers used to collect the candidate and control samples.  Finally, the chapter concludes with a measurement of the photon identification efficiency in Sec.~\ref{sec:Photon Identification Efficiency}.
 
 \section{Object Reconstruction}
+\label{sec:Object Reconstruction}
+
+This section describes the \textit{offline} object reconstruction, i.e. the reconstruction of particle objects from events that have already been triggered and written to permanent storage, as opposed to the building of trigger objects explained in Secs.~\ref{sec:Level 1 and High Level Trigger Systems} and~\ref{sec:HLT}.
+
 \subsection{Photons}
+\label{sec:Photons}
+
+%uncalibrated rec hits
+%get each channel's digis (ADC counts for each time slice)
+%apply gain ratio
+%pedestal subtraction using first 3 samples
+%reconstruct pulse shape using weights method
+%reconstruct time using the ratios method
+
+%recover dead channels from TP information
+
+%calibrated rec hits
+%exclude channels 3, 4, 8, 9, 10, 11, 12, 13, 14 = noisy, fixed gain, dead, 1 or more neighbors not responding (i.e. dead VFE strip), TP data only, no TP + no data
+%exclude reco flags for dead channel recovery, dead channel, saturated TP, TP is L1 spike, fails Swiss cross, fails Swiss cross + its neighbor
+%apply intercalibration, time calibration, ADC2GeV, and laser corrections (where do we get these values from?)
+
+%make calibrated ES rec hits
+%3 time slices
+%gain, MIP2GeV, weights amplitude reconstruction, pedestal subtraction, intercalibration constants, angle correction constants, rechitratio
+
+%clustering
+
+
+%seed crystals-->where do they come from?
+%basic clusters-->shape?
+%SC-->hybrid, multi5x5+ES?
+%corrections-->what are they (cracks, containment, laser, ...)?
+
+%selection criteria for photons and fakes
+
 \subsection{Electrons}
 \subsection{Jets and Missing Transverse Energy}
 \label{sec:Jets and Missing Transverse Energy}
@@ -16,7 +53,55 @@
 %see JES paper for details
 %explain sources of uncertainty in each method
 
+\section{HLT}
+\label{sec:HLT}
+
+From the objects described in Sec.~\ref{sec:Object Reconstruction}, four samples of events are formed:
+
+\begin{itemize}
+\item $\gamma\gamma$ candidate sample, in which the two highest $E_{T}$ objects are photons,
+\item $e\gamma$ control sample, in which the two highest $E_{T}$ objects are one electron and one photon,
+\item $ee$ control sample, in which the two highest $E_{T}$ objects are electrons, and
+\item $\mathit{ff}$ control sample, in which the two highest $E_{T}$ objects are fakes.
+\end{itemize}
+%
+The high level triggers used to select the four samples, by run range, are listed in Table~\ref{tab:HLT_by_run_range}.  No trigger is prescaled.
+
+%center the sample names?
+\begin{table}[hcbp]
+\caption{HLT paths triggered by the $\gamma\gamma\mbox{, }e\gamma\mbox{, }ee\mbox{, and }\mathit{ff}$ samples, by run range.  No triggers are prescaled.}
+\centering
+\begin{tabular}{|c|m{2.6cm}|m{2.6cm}|m{2.6cm}|m{2.6cm}|}
+\hline
+Run range & $\gamma\gamma$ & $e\gamma$ & $ee$ & $\mathit{ff}$ \\
+\hline
+\hline
+160404-161215 & Photon26\_\newline IsoVL\_\newline Photon18 & Photon26\_\newline IsoVL\_\newline Photon18 & Photon26\_\newline IsoVL\_\newline Photon18 & Photon26\_\newline IsoVL\_\newline Photon18 \\
+\hline
+161216-166346 & Photon36\_\newline CaloIdL\_\newline Photon22\_\newline CaloIdL &  Photon36\_\newline CaloIdL\_\newline Photon22\_\newline CaloIdL &  Photon36\_\newline CaloIdL\_\newline Photon22\_\newline CaloIdL &  Photon36\_\newline CaloIdL\_\newline Photon22\_\newline CaloIdL \\
+\hline
+166347-180252 & Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL & Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL & Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL\newline\newline Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline R9Id\newline\newline Photon36\_\newline R9Id\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL\newline\newline Photon36\_\newline R9Id\_\newline Photon22\_\newline R9Id & Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL\newline\newline Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline R9Id\newline\newline Photon36\_\newline R9Id\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL\newline\newline Photon36\_\newline R9Id\_\newline Photon22\_\newline R9Id \\
+\hline
+\end{tabular}
+\label{tab:HLT_by_run_range}
+\end{table}
+
+Each piece of the HLT path name is defined as follows.
+
+\begin{itemize}
+\item ``Photon": Energy deposit in the ECAL that fired an L1 trigger (cf. Sec.~\ref{sec:Level 1 and High Level Trigger Systems}).  For Photon26\_IsoVL\_Photon18, the L1 seed $E_{T}$ threshold is 12 GeV, while for all other triggers in Table~\ref{tab:HLT_by_run_range} it is 20 GeV.  %how is L1 energy computed?
+\item Integer following the word ``Photon": $E_{T}$ threshold in GeV for offline reconstructed photon, using the full photon reconstruction of Sec.~\ref{sec:Photons} minus the laser calibrations and assuming the primary vertex at (0, 0, 0).
+\item ``CaloIdL": For EB photons, $H/E < 0.15$ and $\sigma_{i\eta i\eta} < 0.014$.
+\item ``IsoVL": $I_{\mathrm{ECAL}} < 0.012E_{T} + 6$ GeV, $I_{\mathrm{HCAL}} < 0.005E_{T} + 4$ GeV, and $I_{\mathrm{track}} < 0.002E_{T} + 4$ GeV.
+\item ``R9Id": $R9 > 0.8$.
+\end{itemize}
+%
+In addition, the versions of HLT\_Photon26\_IsoVL\_Photon18 and \\Photon36\_CaloIdL\_Photon22\_CaloIdL that were active during runs 160404-163268 included a cut $E_{\mathrm{max}}/E_{5\times 5} < 0.98$ for spike rejection.  $E_{\mathrm{max}}$ is the energy in the highest energy crystal of the EM cluster and $E_{5\times 5}$ is the energy in the 5$\times$5 crystal matrix around the seed crystal.  For runs after 163268, Swiss cross spike rejection of individual crystals from HLT quantities was performed (cf. Sec.~\ref{Photons}).  All information about the evolution of the CMS HLT settings can be found in the HLT configuration browser at \url{http://j2eeps.cern.ch/cms-project-confdb-hltdev/browser/}.
+
+As an example of the naming convention just described, the HLT path Photon36\_CaloIdL\_IsoVL\_Photon22\_R9Id is fired if one photon is found with $E_{T} > 36$ GeV passing the CaloIdL and IsoVL requirements, and another is found with $E_{T} > 22$ GeV passing the R9Id requirement.
+
 \section{Photon Identification Efficiency}
+\label{sec:Photon Identification Efficiency}
 
 Lorum ipsum fuck Republicans.
 
