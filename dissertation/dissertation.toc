@@ -6,9 +6,15 @@
 \contentsline {section}{\numberline {1.5}Phenomenology of General Gauge Mediation}{14}{section.1.5}
 \contentsline {section}{\numberline {1.6}Experimental Status of SUSY}{18}{section.1.6}
 \contentsline {chapter}{\numberline {2}Event Selection}{23}{chapter.2}
-\contentsline {section}{\numberline {2.1}HLT}{24}{section.2.1}
-\contentsline {section}{\numberline {2.2}Object Reconstruction}{24}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Photons}{24}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Electrons}{24}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}Jets and Missing Transverse Energy}{24}{subsection.2.2.3}
-\contentsline {section}{\numberline {2.3}Photon Identification Efficiency}{24}{section.2.3}
+\contentsline {section}{\numberline {2.1}Object Reconstruction}{24}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Photons}{24}{subsection.2.1.1}
+\contentsline {subsubsection}{Uncalibrated EB/EE Hits}{24}{section*.12}
+\contentsline {subsubsection}{Calibrated EB/EE Hits}{24}{section*.14}
+\contentsline {subsubsection}{Calibrated ES Hits}{27}{section*.16}
+\contentsline {subsubsection}{Clustering}{27}{section*.17}
+\contentsline {subsubsection}{Supercluster Corrections}{28}{section*.19}
+\contentsline {subsubsection}{From Supercluster to Photon}{29}{section*.20}
+\contentsline {subsection}{\numberline {2.1.2}Electrons}{30}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Jets and Missing Transverse Energy}{32}{subsection.2.1.3}
+\contentsline {section}{\numberline {2.2}HLT}{32}{section.2.2}
+\contentsline {section}{\numberline {2.3}Photon Identification Efficiency}{34}{section.2.3}
