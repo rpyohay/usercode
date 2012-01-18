@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  17 JAN 2012 15:50
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  17 JAN 2012 18:57
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**ch6.tex
-(./ch6.tex
+**appA.tex
+(./appA.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman-x-2009-06-19, ngerman-x-2009-06-19, ancientgreek, ibycus, arabic, armenian
@@ -361,15 +361,8 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 71.
 )
 \Hy@SectionHShift=\skip56
-))) (./ch6.aux
-
-LaTeX Warning: Label `fig:total_JEC_50_GeV' multiply defined.
-
-
-LaTeX Warning: Label `sub@fig:total_JEC_50_GeV' multiply defined.
-
-)
-\openout1 = `ch6.aux'.
+))) (./appA.aux)
+\openout1 = `appA.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
@@ -385,7 +378,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
- (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
+
+(/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
 \scratchdimen=\dimen137
@@ -469,371 +463,81 @@ LaTeX Info: Redefining \ref on input line 2.
 LaTeX Info: Redefining \pageref on input line 2.
 LaTeX Info: Redefining \nameref on input line 2.
 
-(./ch6.out) (./ch6.out)
+(./appA.out) (./appA.out)
 \@outlinefile=\write3
-\openout3 = `ch6.out'.
+\openout3 = `appA.out'.
 
 
-Chapter 1.
+Appendix A.
 
-LaTeX Warning: Reference `sec:Phenomenology of General Gauge Mediation' on page
- 1 undefined on input line 7.
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 10.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 7.
+LaTeX Font Info:    Try loading font information for U+msa on input line 16.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 7.
+LaTeX Font Info:    Try loading font information for U+msb on input line 16.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
-)
-
-LaTeX Warning: Reference `chap:Data Analysis' on page 1 undefined on input line
- 9.
-
-[1
+) [1
 
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 26.
 
-LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 2
- undefined on input line 16.
-
-
-LaTeX Warning: Reference `sec:Electromagnetic Calorimeter' on page 2 undefined 
-on input line 24.
-
-
-LaTeX Warning: Citation `Bruneliere' on page 2 undefined on input line 24.
-
-
-LaTeX Warning: Citation `time_reco' on page 2 undefined on input line 24.
-
-<pulse.jpg, id=48, 56.3706pt x 52.32349pt>
-File: pulse.jpg Graphic file (type jpg)
- <use pulse.jpg>
-
-LaTeX Warning: Citation `Bruneliere' on page 2 undefined on input line 29.
-
-
-LaTeX Warning: Citation `Bruneliere' on page 2 undefined on input line 29.
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 39.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 39.
- [2]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 26.
 
-LaTeX Warning: Citation `calibration_IN' on page 3 undefined on input line 46.
 
+LaTeX Warning: Citation `CTEQ6' on page 2 undefined on input line 35.
 
-LaTeX Warning: Citation `EB_performance_2006' on page 3 undefined on input line
- 49.
 
+LaTeX Warning: Citation `LPCC_MBUE_WG' on page 2 undefined on input line 35.
 
-LaTeX Warning: Citation `EB_startup_intercalibration' on page 3 undefined on in
-put line 49.
 
+LaTeX Warning: Citation `MadGraph' on page 2 undefined on input line 38.
 
-LaTeX Warning: Citation `CRAFT_calibration' on page 3 undefined on input line 4
-9.
 
+LaTeX Warning: Citation `Tauola' on page 2 undefined on input line 39.
 
-LaTeX Warning: Citation `CRAFT_calibration' on page 3 undefined on input line 4
-9.
-
-
-LaTeX Warning: Citation `CRAFT_ECAL_performance' on page 3 undefined on input l
-ine 49.
-
-
-LaTeX Warning: Citation `CALOR_ECAL_calibration' on page 3 undefined on input l
-ine 49.
-
-[3 <./pulse.jpg>]
-
-LaTeX Warning: Citation `Yang' on page 4 undefined on input line 59.
-
-<intercalibration.pdf, id=68, 294.95998pt x 269.55705pt>
-File: intercalibration.pdf Graphic file (type pdf)
-
-<use intercalibration.pdf>
-
-LaTeX Warning: Citation `Yang' on page 4 undefined on input line 64.
-
-
-LaTeX Warning: Citation `Yang' on page 4 undefined on input line 64.
-
-[4 <./intercalibration.pdf>]
-
-LaTeX Warning: Citation `ECAL_SC_note' on page 5 undefined on input line 88.
-
-[5] <hybrid.pdf, id=190, 426.92136pt x 204.43216pt>
-File: hybrid.pdf Graphic file (type pdf)
- <use hybrid.pdf>
-
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 93.
-
-
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 93.
-
-<Z_mass_vs_corrections.pdf, id=192, 450.59053pt x 176.26874pt>
-File: Z_mass_vs_corrections.pdf Graphic file (type pdf)
-
-<use Z_mass_vs_corrections.pdf>
-
-LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 102.
-
-
-LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 102.
-
-
-LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 102.
-
-
-LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 102.
-
-
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 115.
-
-
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 119.
-
-
-LaTeX Warning: Citation `EB_startup_intercalibration' on page 6 undefined on in
-put line 119.
-
-
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 120.
-
-[6 <./hybrid.pdf>]
-
-LaTeX Warning: Citation `Higgs_note' on page 7 undefined on input line 124.
-
-[7 <./Z_mass_vs_corrections.pdf>]
-
-LaTeX Warning: Reference `chap:Data Analysis' on page 8 undefined on input line
- 131.
-
-
-LaTeX Warning: Citation `Fastjet_conf_proceedings' on page 8 undefined on input
- line 138.
-
-
-LaTeX Warning: Citation `Fastjet_manual' on page 8 undefined on input line 138.
-
-
-[8] <isolation_cones.pdf, id=322, 1027.84pt x 770.88pt>
-File: isolation_cones.pdf Graphic file (type pdf)
-
-<use isolation_cones.pdf>
-<preselected_rho.pdf, id=323, 569.12625pt x 502.87875pt>
-File: preselected_rho.pdf Graphic file (type pdf)
-
-<use preselected_rho.pdf>
-
-LaTeX Warning: Citation `GSF_reco' on page 9 undefined on input line 183.
-
-
-LaTeX Warning: Reference `sec:Modeling the QCD Background' on page 9 undefined 
-on input line 183.
-
-[9 <./isolation_cones.pdf>]
-
-LaTeX Warning: Citation `PF_algo' on page 10 undefined on input line 191.
-
-
-LaTeX Warning: Citation `PF_perf' on page 10 undefined on input line 191.
-
-
-LaTeX Warning: Citation `CMS_JES_paper' on page 10 undefined on input line 191.
-
-
-
-LaTeX Warning: Citation `PF_note' on page 10 undefined on input line 191.
-
-[10 <./preselected_rho.pdf, page is rotated 90 degrees>]
-
-LaTeX Warning: Citation `AK5' on page 11 undefined on input line 225.
-
-[11]
-
-LaTeX Warning: Citation `Salam_talk' on page 12 undefined on input line 231.
-
-<anti-kT.pdf, id=411, 208.45914pt x 144.62683pt>
-File: anti-kT.pdf Graphic file (type pdf)
- <use anti-kT.pdf>
-
-LaTeX Warning: Citation `Wigmans' on page 12 undefined on input line 240.
-
-
-LaTeX Warning: Citation `Wigmans' on page 12 undefined on input line 240.
-
-
-LaTeX Warning: Citation `CDF_JEC_website' on page 12 undefined on input line 24
-0.
-
-
-LaTeX Warning: Citation `CMS_MET_paper' on page 12 undefined on input line 240.
-
-
-
-LaTeX Warning: Citation `CDF_JEC_website' on page 12 undefined on input line 24
-0.
-
-
-LaTeX Warning: Citation `CMS_JES_paper' on page 12 undefined on input line 240.
-
-
-[12 <./anti-kT.pdf>]
-
-LaTeX Warning: Citation `JPT' on page 13 undefined on input line 249.
-
-
-LaTeX Warning: Citation `CMS_JES_paper' on page 13 undefined on input line 249.
-
-
-<total_JEC_50_GeV.pdf, id=498, 191.48268pt x 188.18124pt>
-File: total_JEC_50_GeV.pdf Graphic file (type pdf)
-
-<use total_JEC_50_GeV.pdf>
-<total_JEC_200_GeV.pdf, id=499, 188.73149pt x 188.18124pt>
-File: total_JEC_200_GeV.pdf Graphic file (type pdf)
-
-<use total_JEC_200_GeV.pdf>
-
-LaTeX Warning: Citation `CMS_JES_paper' on page 13 undefined on input line 256.
-
-
-
-LaTeX Warning: Citation `CMS_JES_paper' on page 13 undefined on input line 256.
-
-
-[13] [14 <./total_JEC_50_GeV.pdf> <./total_JEC_200_GeV.pdf>]
-<MET_resolution.pdf, id=674, 255.86049pt x 182.67888pt>
-File: MET_resolution.pdf Graphic file (type pdf)
-
-<use MET_resolution.pdf>
-
-LaTeX Warning: Citation `Pythia' on page 15 undefined on input line 277.
-
-
-LaTeX Warning: Citation `CMS_MET_paper' on page 15 undefined on input line 277.
-
-
-
-LaTeX Warning: Citation `Pythia' on page 15 undefined on input line 277.
-
-
-LaTeX Warning: Citation `CMS_MET_paper' on page 15 undefined on input line 277.
-
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--308
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--308
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--308
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
-
- []
-
-[15 <./MET_resolution.pdf>]
-
-LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 1
-6 undefined on input line 317.
-
-[16]
-
-LaTeX Warning: Reference `Photons' on page 17 undefined on input line 324.
-
-[17]
-
-LaTeX Warning: Reference `fig:MC_N-1_comparisons' on page 18 undefined on input
- line 336.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 498.
-[18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 498.
- (./ch6.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 498.
-Package rerunfilecheck Info: File `ch6.out' has not changed.
-(rerunfilecheck)             Checksum: 2A134F50B572BA2A8326D9A77067108E;453.
+[2]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 47.
+ [3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 47.
+ (./appA.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 47.
+Package rerunfilecheck Info: File `appA.out' has not changed.
+(rerunfilecheck)             Checksum: DB3DF341C306619C1357FEC42A437F59;213.
 
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 7861 strings out of 493747
- 119341 string characters out of 3143546
- 215547 words of memory out of 3000000
- 10934 multiletter control sequences out of 15000+200000
- 15029 words of font info for 56 fonts, out of 3000000 for 9000
+ 7671 strings out of 493747
+ 116239 string characters out of 3143546
+ 203109 words of memory out of 3000000
+ 10812 multiletter control sequences out of 15000+200000
+ 10324 words of font info for 39 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,18n,45p,1316b,522s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
-</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
-/usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
-usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></u
-sr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
-/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/l
-ocal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/loc
-al/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local
-/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/te
-xlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texli
-ve/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/
-2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2
-010/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/20
-10/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2010
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/201
-0/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/201
-0/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/local/texlive/201
-0/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/tex
-mf-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/2010/texmf-di
-st/fonts/type1/public/mathpazo/fplmri.pfb></usr/local/texlive/2010/texmf-dist/f
-onts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/typ
-e1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
-helvetic/uhvr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatin
-o/uplr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplri
-8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></us
-r/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/te
-xlive/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2010
-/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on ch6.pdf (18 pages, 2234298 bytes).
+ 53i,5n,44p,681b,403s stack positions out of 5000i,500n,10000p,200000b,50000s
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
+usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
+r/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/l
+ocal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
+cal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loca
+l/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on appA.pdf (3 pages, 83685 bytes).
 PDF statistics:
- 837 PDF objects out of 1000 (max. 8388607)
- 646 compressed objects within 7 object streams
- 61 named destinations out of 1000 (max. 500000)
- 107 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 73 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
+ 12 named destinations out of 1000 (max. 500000)
+ 25 words of extra memory for PDF output out of 10000 (max. 10000000)
 

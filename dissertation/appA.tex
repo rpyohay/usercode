@@ -1,0 +1,47 @@
+\documentclass[dissertation.tex]{subfiles} 
+\begin{document}
+
+\appendix
+\chapter{Monte Carlo Samples}
+\label{chap:Monte Carlo Samples}
+
+A number of MC samples are utilized in this analysis and referred to throughout the text.  Below is a list of the MC samples used and an explanation of what the sample names mean.
+
+\subsection{List of Samples}
+\label{sec:List of Samples}
+
+%get a definition of the EM enriching filter
+\begin{enumerate}
+\item Drell-Yan:\\\verb+/DYJetsToLL_TuneZ2_M-50_7TeV-madgraph-tauola/+\\\verb+Fall11-PU_S6_START42_V14B-v1/AODSIM+
+\item QCD enriched with $B$ and $D$ meson decays to electrons:\\\verb+/QCD_Pt-20to30_BCtoE_TuneZ2_7TeV-pythia6/+\\\verb+Fall11-PU_S6_START42_V14B-v1/AODSIM+,\\\verb+/QCD_Pt-30to80_BCtoE_TuneZ2_7TeV-pythia6/+\\\verb+Fall11-PU_S6_START42_V14B-v1/AODSIM+,\\\verb+/QCD_Pt-80to170_BCtoE_TuneZ2_7TeV-pythia6/+\\\verb+Fall11-PU_S6_START42_V14B-v1/AODSIM+
+\item Photon + jet doubly enriched with jets passing an EM filter:\\\verb+/GJet_Pt-20_doubleEMEnriched_TuneZ2_7TeV-pythia6/+\\\verb+Fall11-PU_S6_START42_V14B-v1/AODSIM+
+\item $W$ leptonic decays:\\\verb+/WJetsToLNu_TuneZ2_7TeV-madgraph-tauola/+\\\verb+Fall11-PU_S6_START42_V14B-v1/AODSIM+
+\item $t\bar{t}$:\\\verb+/TTJets_TuneZ2_7TeV-madgraph-tauola/+\\\verb+Fall11-PU_S6_START42_V14B-v2/AODSIM+
+\end{enumerate}
+
+\subsection{Explanation of Naming Conventions}
+\label{sec:Explanation of Naming Conventions}
+
+\begin{itemize}
+\item \verb+L+: charged lepton
+\item \verb+B+: $B$ hadron
+\item \verb+C+: $D$, or charmed, hadron
+\item \verb+E+: electron or positron
+\item \verb+G+: photon
+\item \verb+W+: $W$ boson
+\item \verb+Nu+: neutrino
+\item \verb+T+: top quark
+%\item \verb+L+: charged lepton, \verb+B+: $B$ hadron, \verb+C+: $D$, or charmed, hadron, \verb+E+: electron or positron, \verb+G+: photon, \verb+W+: $W$ boson, \verb+Nu+: neutrino, \verb+T+: top quark
+\item \verb+TuneZ2+: Pythia tune incorporating 2010 LHC data with CTEQ6L1 \cite{CTEQ6} PDFs \cite{LPCC_MBUE_WG}
+\item \verb+M-50+: Generated $l^{+}l^{-}$ invariant mass threshold of 50 GeV
+\item \verb+7TeV+: Generated center-of-mass energy 7 TeV
+\item \verb+madgraph+: Hard interaction generated with MadGraph \cite{MadGraph}
+\item \verb+tauola+: $\tau$ decays generated with Tauola \cite{Tauola}
+\item \verb+PU_S6+: Generated with S6 pileup scenario %which is...?
+\item \verb+START42_V14B+: Reconstructed with best alignment and calibration constants and magnetic field conditions as of August 3, 2011
+\item \verb+Pt_XtoY+: \verb+X+ $\leq$ generated $\hat{p}_{T}$ $<$ \verb+Y+
+\item \verb+BCToE+: Enriched in $B$ and $D$ meson decays to electrons
+\item \verb+doubleEMEnriched+: Enriched in electromagnetic jets %using what filter definition...?
+\end{itemize}
+
+\end{document}
