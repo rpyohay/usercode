@@ -1,4 +1,4 @@
-################################################################################
+####################################################################################
 #
 # CondFormats/JetMETObjects Makefile (for standalone use outside CMSSW/SCRAM)
 # ---------------------------------------------------------------------------
@@ -19,11 +19,13 @@
 #
 # [you might want to stick these into e.g. $STANDALONE_DIR/setup.[c]sh]
 #
+# only works for Linux!  on Mac all directory paths should be absolute, not relative
+#
 #             07/11/2009 Philipp Schieferdecker <philipp.schieferdecker@cern.ch>
-################################################################################
+####################################################################################
 
 ifeq ($(STANDALONE_DIR),)
-	standalone_dir:=/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec
+	standalone_dir:=../
 	export STANDALONE_DIR:=$(standalone_dir)
 endif
 
@@ -38,14 +40,15 @@ CXX          = g++
 
 
 ROOTCXXFLAGS = $(shell $(ROOTSYS)/bin/root-config --cflags)
-INC          = $(shell $(ROOTSYS)/bin/root-config --incdir)
-CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I/Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec/JetMETObjects $(ROOTCXXFLAGS)
+CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I. $(ROOTCXXFLAGS)
 
 ROOTLIBS     = $(shell $(ROOTSYS)/bin/root-config --libs)
 
 OBJS         = $(TMPDIR)/JetCorrectorParameters.o \
 	       $(TMPDIR)/SimpleJetCorrector.o \
                $(TMPDIR)/FactorizedJetCorrector.o \
+               $(TMPDIR)/SimpleJetCorrectionUncertainty.o \
+               $(TMPDIR)/JetCorrectionUncertainty.o \
                $(TMPDIR)/JetMETObjects_dict.o
 
 LIB          = libJetMETObjects.so
@@ -54,7 +57,7 @@ LIB          = libJetMETObjects.so
 all: setup lib
 
 setup:
-	rm -f CondFormats; ln -sf /Users/rachelyohay/RA3/src/SusyAnalysis/SusyNtuplizer/jec CondFormats
+	rm -f CondFormats; ln -sf ../ CondFormats
 	mkdir -p $(TMPDIR)
 	mkdir -p $(LIBDIR)
 	mkdir -p $(BINDIR)
@@ -86,20 +89,33 @@ $(TMPDIR)/FactorizedJetCorrector.o: interface/FactorizedJetCorrector.h \
 	$(CXX) $(CXXFLAGS) -c src/FactorizedJetCorrector.cc \
 	-o $(TMPDIR)/FactorizedJetCorrector.o 
 
+$(TMPDIR)/JetCorrectionUncertainty.o: interface/JetCorrectionUncertainty.h \
+				    src/JetCorrectionUncertainty.cc
+	$(CXX) $(CXXFLAGS) -c src/JetCorrectionUncertainty.cc \
+	-o $(TMPDIR)/JetCorrectionUncertainty.o 
+
+$(TMPDIR)/SimpleJetCorrectionUncertainty.o: interface/SimpleJetCorrectionUncertainty.h \
+				    src/SimpleJetCorrectionUncertainty.cc
+	$(CXX) $(CXXFLAGS) -c src/SimpleJetCorrectionUncertainty.cc \
+	-o $(TMPDIR)/SimpleJetCorrectionUncertainty.o 
 
 $(TMPDIR)/JetMETObjects_dict.o: $(TMPDIR)/JetMETObjects_dict.cc
-	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I$(INC) -c $(TMPDIR)/JetMETObjects_dict.cc \
+	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -c $(TMPDIR)/JetMETObjects_dict.cc \
 	-o $(TMPDIR)/JetMETObjects_dict.o
 
 $(TMPDIR)/JetMETObjects_dict.cc: interface/JetCorrectorParameters.h \
 				 interface/SimpleJetCorrector.h \
 				 interface/FactorizedJetCorrector.h \
+				 interface/SimpleJetCorrectionUncertainty.h \
+				 interface/JetCorrectionUncertainty.h \
 				 interface/Linkdef.h
 	rm -rf $(TMPDIR)/JetMETObjects_dict.h
 	rm -rf $(TMPDIR)/JetMETObjects_dict.cc
 	$(ROOTSYS)/bin/rootcint -f $(TMPDIR)/JetMETObjects_dict.cc \
-	-c -I$(TMPDIR) -I$(INC) \
+	-c -I$(TMPDIR) \
 	interface/JetCorrectorParameters.h \
 	interface/SimpleJetCorrector.h \
 	interface/FactorizedJetCorrector.h \
+	interface/JetCorrectionUncertainty.h \
+	interface/SimpleJetCorrectionUncertainty.h \
 	interface/Linkdef.h
