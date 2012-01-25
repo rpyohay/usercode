@@ -33,6 +33,8 @@ typedef std::vector<TGraphAsymmErrors*>::iterator VTGRAPHASYMMERRORS_IT;
 typedef std::pair<Int_t, ULong_t> RUNEVTPAIR;
 typedef std::pair<RUNEVTPAIR, Int_t> RUNEVTLUMIPAIR;
 typedef std::map<RUNEVTPAIR, Int_t> RUNEVTLUMIMAP;
+typedef std::pair<RUNEVTLUMIPAIR, float> RUNEVTLUMIMASSPAIR;
+typedef std::map<RUNEVTLUMIPAIR, float> RUNEVTLUMIMASSMAP;
 typedef std::vector<TFile> VTFILE;
 typedef std::vector<TFile>::iterator VTFILE_IT;
 typedef std::pair<unsigned int, unsigned int> PHOTON_PAIR;

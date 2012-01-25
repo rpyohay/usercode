@@ -1,6 +1,7 @@
 #ifndef GMSBTools_Filters_Categorizer_h
 #define GMSBTools_Filters_Categorizer_h
 
+/* #include "GMSBTools/Filters/interface/Typedefs.h" */
 #include "Typedefs.h"
 
 //event categories
@@ -28,7 +29,8 @@ class Categorizer {
 	      const VDOUBLE&, const VDOUBLE&, const VDOUBLE&, const VBOOL&, const double, 
 	      const double, const double, const double, const double, const double, const double, 
 	      const double, const double, const double, const double, const double, const double, 
-	      const double, const double, const double, const double, const double, const bool);
+	      const double, const double, const double, const double, const double, const double, 
+	      const double, const bool);
 
   //copy constructor
   Categorizer(const Categorizer&);
@@ -63,11 +65,13 @@ class Categorizer {
   double getPhotonHCALIsoMaxConstant() const;
   double getPhotonHOverEMax() const;
   double getPhotonR9Max() const;
+  double getPhotonR9Min() const;
   double getPhotonTrackIsoMaxPTMultiplier() const;
   double getPhotonTrackIsoMaxConstant() const;
   double getPhotonCombinedIsoMax() const;
   double getFakeCombinedIsoMax() const;  
   double getPhotonSigmaIetaIetaMax() const;
+  double getPhotonHLTSigmaIetaIetaMax() const;
   double getPhotonAbsSeedTimeMax() const;
   double getPhotonE2OverE9Max() const;
   double getPhotonDPhiMin() const;
@@ -82,10 +86,12 @@ class Categorizer {
   VBOOL getPhotonPassPUSubtractedHCALIsoMax(const bool throwException = true) const;
   VBOOL getPhotonPassHOverEMax(const bool throwException = true) const;
   VBOOL getPhotonPassR9Max(const bool throwException = true) const;
+  VBOOL getPhotonPassR9Min(const bool throwException = true) const;
   VBOOL getPhotonPassTrackIsoMax(const bool throwException = true) const;
   VBOOL getPhotonPassCombinedIsoMax(const bool throwException = true) const;
   VBOOL getPhotonPassFakeCombinedIsoMax(const bool throwException = true) const;
   VBOOL getPhotonPassSigmaIetaIetaMax(const bool throwException = true) const;
+  VBOOL getPhotonPassHLTSigmaIetaIetaMax(const bool throwException = true) const;
   VBOOL getPhotonPassAbsSeedTimeMax(const bool throwException = true) const;
   VBOOL getPhotonPassE2OverE9Max(const bool throwException = true) const;
   VBOOL getPhotonPassPreselection(const bool throwException = true) const;
@@ -126,11 +132,13 @@ class Categorizer {
   void setPhotonHCALIsoMaxConstant(const double);
   void setPhotonHOverEMax(const double);
   void setPhotonR9Max(const double);
+  void setPhotonR9Min(const double);
   void setPhotonTrackIsoMaxPTMultiplier(const double);
   void setPhotonTrackIsoMaxConstant(const double);
   void setPhotonCombinedIsoMax(const double);
   void setFakeCombinedIsoMax(const double);
   void setPhotonSigmaIetaIetaMax(const double);
+  void setPhotonHLTSigmaIetaIetaMax(const double);
   void setPhotonAbsSeedTimeMax(const double);
   void setPhotonE2OverE9Max(const double);
   void setPhotonDPhiMin(const double);
@@ -179,11 +187,13 @@ class Categorizer {
   double photonHCALIsoMaxConstant_;
   double photonHOverEMax_;
   double photonR9Max_;
+  double photonR9Min_;
   double photonTrackIsoMaxPTMultiplier_;
   double photonTrackIsoMaxConstant_;
   double photonCombinedIsoMax_;
   double fakeCombinedIsoMax_;
   double photonSigmaIetaIetaMax_;
+  double photonHLTSigmaIetaIetaMax_;
   double photonAbsSeedTimeMax_;
   double photonE2OverE9Max_;
   double photonDPhiMin_;
@@ -202,10 +212,12 @@ class Categorizer {
   VBOOL photonPassPUSubtractedHCALIsoMax_;
   VBOOL photonPassHOverEMax_;
   VBOOL photonPassR9Max_;
+  VBOOL photonPassR9Min_;
   VBOOL photonPassTrackIsoMax_;
   VBOOL photonPassCombinedIsoMax_;
   VBOOL photonPassFakeCombinedIsoMax_;
   VBOOL photonPassSigmaIetaIetaMax_;
+  VBOOL photonPassHLTSigmaIetaIetaMax_;
   VBOOL photonPassAbsSeedTimeMax_;
   VBOOL photonPassE2OverE9Max_;
   VBOOL photonPassPreselection_;
@@ -334,11 +346,13 @@ class Categorizer {
   void decideHCALIsoMax();
   void decidePUSubtractedHCALIsoMax();
   void decideR9Max();
+  void decideR9Min();
   void decideHOverEMax();
   void decideTrackIsoMax();
   void decideCombinedIsoMax(const VDOUBLE&);
   void decideFakeCombinedIsoMax(const VDOUBLE&);
   void decideSigmaIetaIetaMax();
+  void decideHLTSigmaIetaIetaMax();
   void decideAbsSeedTimeMax();
   void decideE2OverE9Max();
 
