@@ -14,6 +14,7 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
   photonHCALIsoEffArea_(iConfig.photonHCALIsoEffArea),
   photonHOverEMax_(iConfig.photonHOverEMax),
   photonR9Max_(iConfig.photonR9Max),
+  photonR9Min_(iConfig.photonR9Min),
   photonTrackIsoMaxPTMultiplier_(iConfig.photonTrackIsoMaxPTMultiplier),
   photonTrackIsoMaxConstant_(iConfig.photonTrackIsoMaxConstant),
   photonCombinedIsoMax_(iConfig.photonCombinedIsoMax),
@@ -21,6 +22,7 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
   isoConeHLT_(iConfig.isoConeHLT),
   isoConeOffline_(iConfig.isoConeOffline),
   photonSigmaIetaIetaMax_(iConfig.photonSigmaIetaIetaMax),
+  photonHLTSigmaIetaIetaMax_(iConfig.photonHLTSigmaIetaIetaMax),
   photonAbsSeedTimeMax_(iConfig.photonAbsSeedTimeMax),
   photonE2OverE9Max_(iConfig.photonE2OverE9Max),
   photonDPhiMin_(iConfig.photonDPhiMin),
@@ -31,7 +33,8 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
   HLT_(iConfig.HLT),
   nEvts_(iConfig.nEvts),
   JSON_(iConfig.JSON),
-  outputFile_(iConfig.outputFile)
+  outputFile_(iConfig.outputFile),
+  recategorize_(iConfig.recategorize)
 {
   //open output file (to hold tree with added branches)
   TFile out(outputFile_.c_str(), "RECREATE");
@@ -59,8 +62,15 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
 
   //create the output tree and define new branches
   out.cd();
-  outTree_ = treeReader_->fChain->CloneTree(0);
-  // outTree_ = new TTree("susyTreeCategoryOnly", "");
+  if (recategorize_) {
+    outTree_ = new TTree("susyTree", "SUSY Event");
+    event_ = new susy::Event();
+    outTree_->Branch("susyEvent", "susy::Event", &event_);
+  }
+  else {
+    outTree_ = treeReader_->fChain->CloneTree(0);
+    event_ = NULL;
+  }
   category_ = new susy::Category();
   outTree_->Branch("susyCategory", "susy::Category", &category_);
 
@@ -86,14 +96,14 @@ DongwookCategoryProducer::DongwookCategoryProducer(const ParameterSet& iConfig) 
 			  photonPhi, photonHasPixelSeed, photon1ETMin_, photon2ETMin_, 
 			  photonAbsEtaMax_, photonECALIsoMaxPTMultiplier_, 
 			  photonECALIsoMaxConstant_, photonHCALIsoMaxPTMultiplier_, 
-			  photonHCALIsoMaxConstant_, photonHOverEMax_, photonR9Max_, 
+			  photonHCALIsoMaxConstant_, photonHOverEMax_, photonR9Max_, photonR9Min_, 
 			  photonTrackIsoMaxPTMultiplier_, photonTrackIsoMaxConstant_, 
 			  photonCombinedIsoMax_, fakeCombinedIsoMax_, photonSigmaIetaIetaMax_, 
-			  photonAbsSeedTimeMax_, photonE2OverE9Max_, photonDPhiMin_, photonDRMin_, 
-			  pixelVetoOnFake_);
+			  photonHLTSigmaIetaIetaMax_, photonAbsSeedTimeMax_, photonE2OverE9Max_, 
+			  photonDPhiMin_, photonDRMin_, pixelVetoOnFake_);
 
   //run the category producer
-  try { treeReader_->Loop(outTree_, categorizer, category_); }
+  try { treeReader_->Loop(outTree_, categorizer, category_, event_); }
   catch (STRING& badInput) { throw; }
 
   //write the output file
@@ -124,6 +134,10 @@ DongwookCategoryProducer::~DongwookCategoryProducer()
   treeReader_ = NULL;
   delete category_;
   category_ = NULL;
+  if (event_ != NULL) {
+    delete event_;
+    event_ = NULL;
+  }
 }
 
 void DongwookCategoryProducer::writeEvents(const RUNEVTLUMIMAP& evts, ofstream& out, 
@@ -132,6 +146,17 @@ void DongwookCategoryProducer::writeEvents(const RUNEVTLUMIMAP& evts, ofstream& 
   out << label << ": " << evts.size() << " events\n";
   for (RUNEVTLUMIMAP::const_iterator iEvt = evts.begin(); iEvt != evts.end(); ++iEvt) {
     out << (*iEvt).first.first << " " << (*iEvt).first.second << " " << (*iEvt).second;
+    out << std::endl;
+  }
+  out << "------------\n";
+}
+
+void DongwookCategoryProducer::writeEvents(const RUNEVTLUMIMASSMAP& evts, ofstream& out, 
+					   const STRING& label) const
+{
+  out << label << ": " << evts.size() << " events\n";
+  for (RUNEVTLUMIMASSMAP::const_iterator iEvt = evts.begin(); iEvt != evts.end(); ++iEvt) {
+    out << (*iEvt).first.first.first << " " << (*iEvt).first.first.second << " " << (*iEvt).first.second << " " << (*iEvt).second;
     out << std::endl;
   }
   out << "------------\n";

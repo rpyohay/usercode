@@ -22,6 +22,7 @@ struct ParameterSet {
   double photonHCALIsoEffArea;
   double photonHOverEMax;
   double photonR9Max;
+  double photonR9Min;
   double photonTrackIsoMaxPTMultiplier;
   double photonTrackIsoMaxConstant;
   double photonCombinedIsoMax;
@@ -29,6 +30,7 @@ struct ParameterSet {
   unsigned int isoConeHLT;
   unsigned int isoConeOffline;
   double photonSigmaIetaIetaMax;
+  double photonHLTSigmaIetaIetaMax;
   double photonAbsSeedTimeMax;
   double photonE2OverE9Max;
   double photonDPhiMin;
@@ -40,6 +42,7 @@ struct ParameterSet {
   int nEvts;
   STRING JSON;
   STRING outputFile;
+  bool recategorize;
 
 };
 
@@ -68,6 +71,7 @@ private:
   double photonHCALIsoEffArea_;
   double photonHOverEMax_;
   double photonR9Max_;
+  double photonR9Min_;
   double photonTrackIsoMaxPTMultiplier_;
   double photonTrackIsoMaxConstant_;
   double photonCombinedIsoMax_;
@@ -75,6 +79,7 @@ private:
   unsigned int isoConeHLT_;
   unsigned int isoConeOffline_;
   double photonSigmaIetaIetaMax_;
+  double photonHLTSigmaIetaIetaMax_;
   double photonAbsSeedTimeMax_;
   double photonE2OverE9Max_;
   double photonDPhiMin_;
@@ -86,15 +91,18 @@ private:
   int nEvts_;
   STRING JSON_;
   STRING outputFile_;
+  bool recategorize_;
 
   //tree access
   TChain* chain_;
   EventAnalyzer* treeReader_;
   TTree* outTree_;
   susy::Category* category_;
+  susy::Event* event_;
 
   //write selected events to file
   void writeEvents(const RUNEVTLUMIMAP&, ofstream&, const STRING&) const;
+  void writeEvents(const RUNEVTLUMIMASSMAP&, ofstream&, const STRING&) const;
 };
 
 #endif

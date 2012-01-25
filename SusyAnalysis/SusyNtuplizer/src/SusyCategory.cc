@@ -12,10 +12,12 @@ susy::Category::Category() :
   passPUSubtractedHCALIsoMax_(susy::TAG_VALUEMAP_BOOL()),
   passHOverEMax_(susy::TAG_VALUEMAP_BOOL()),
   passR9Max_(susy::TAG_VALUEMAP_BOOL()),
+  passR9Min_(susy::TAG_VALUEMAP_BOOL()),
   passTrackIsoMax_(susy::TAG_VALUEMAP_BOOL()),
   passCombinedIsoMax_(susy::TAG_VALUEMAP_BOOL()),
   passFakeCombinedIsoMax_(susy::TAG_VALUEMAP_BOOL()),
   passSigmaIetaIetaMax_(susy::TAG_VALUEMAP_BOOL()),
+  passHLTSigmaIetaIetaMax_(susy::TAG_VALUEMAP_BOOL()),
   passAbsSeedTimeMax_(susy::TAG_VALUEMAP_BOOL()),
   passE2OverE9Max_(susy::TAG_VALUEMAP_BOOL()),
   hasPixelSeed_(susy::TAG_VALUEMAP_BOOL()),
@@ -42,10 +44,12 @@ susy::Category::Category(const susy::Category& other) :
   passPUSubtractedHCALIsoMax_(*(other.getPassPUSubtractedHCALIsoMax())),
   passHOverEMax_(*(other.getPassHOverEMax())),
   passR9Max_(*(other.getPassR9Max())),
+  passR9Min_(*(other.getPassR9Min())),
   passTrackIsoMax_(*(other.getPassTrackIsoMax())),
   passCombinedIsoMax_(*(other.getPassCombinedIsoMax())),
   passFakeCombinedIsoMax_(*(other.getPassFakeCombinedIsoMax())),
   passSigmaIetaIetaMax_(*(other.getPassSigmaIetaIetaMax())),
+  passHLTSigmaIetaIetaMax_(*(other.getPassHLTSigmaIetaIetaMax())),
   passAbsSeedTimeMax_(*(other.getPassAbsSeedTimeMax())),
   passE2OverE9Max_(*(other.getPassE2OverE9Max())),
   hasPixelSeed_(*(other.getHasPixelSeed())),
@@ -76,10 +80,12 @@ susy::Category& susy::Category::operator=(const susy::Category& other)
     passPUSubtractedHCALIsoMax_ = *(other.getPassPUSubtractedHCALIsoMax());
     passHOverEMax_ = *(other.getPassHOverEMax());
     passR9Max_ = *(other.getPassR9Max());
+    passR9Min_ = *(other.getPassR9Min());
     passTrackIsoMax_ = *(other.getPassTrackIsoMax());
     passCombinedIsoMax_ = *(other.getPassCombinedIsoMax());
     passFakeCombinedIsoMax_ = *(other.getPassFakeCombinedIsoMax());
     passSigmaIetaIetaMax_ = *(other.getPassSigmaIetaIetaMax());
+    passHLTSigmaIetaIetaMax_ = *(other.getPassHLTSigmaIetaIetaMax());
     passAbsSeedTimeMax_ = *(other.getPassAbsSeedTimeMax());
     passE2OverE9Max_ = *(other.getPassE2OverE9Max());
     hasPixelSeed_ = *(other.getHasPixelSeed());
@@ -190,6 +196,15 @@ bool susy::Category::getPassR9Max(const TString& tag, const unsigned int photonI
   catch (STRING& ex) { throw; }
 }
 
+bool susy::Category::getPassR9Min(const TString& tag, const unsigned int photonIndex) const
+{
+  try {
+    return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passR9Min_, tag, 
+								    photonIndex)).second;
+  }
+  catch (STRING& ex) { throw; }
+}
+
 bool susy::Category::getPassTrackIsoMax(const TString& tag, const unsigned int photonIndex) const
 {
   try {
@@ -224,7 +239,17 @@ bool susy::Category::getPassSigmaIetaIetaMax(const TString& tag,
 {
   try {
     return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passSigmaIetaIetaMax_, tag, 
-							photonIndex)).second;
+								    photonIndex)).second;
+  }
+  catch (STRING& ex) { throw; }
+}
+
+bool susy::Category::getPassHLTSigmaIetaIetaMax(const TString& tag, 
+					     const unsigned int photonIndex) const
+{
+  try {
+    return (*valueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL>(passHLTSigmaIetaIetaMax_, tag, 
+								    photonIndex)).second;
   }
   catch (STRING& ex) { throw; }
 }
@@ -414,6 +439,13 @@ void susy::Category::setPassR9Max(const TString& tag, const unsigned int photonI
 								  photonIndex, pass);
 }
 
+void susy::Category::setPassR9Min(const TString& tag, const unsigned int photonIndex, 
+				  const bool pass)
+{
+  setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passR9Min_, tag, 
+								  photonIndex, pass);
+}
+
 void susy::Category::setPassTrackIsoMax(const TString& tag, const unsigned int photonIndex, 
 					const bool pass)
 {
@@ -439,6 +471,13 @@ void susy::Category::setPassSigmaIetaIetaMax(const TString& tag, const unsigned 
 					     const bool pass)
 {
   setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passSigmaIetaIetaMax_, tag, 
+								  photonIndex, pass);
+}
+
+void susy::Category::setPassHLTSigmaIetaIetaMax(const TString& tag, 
+						const unsigned int photonIndex, const bool pass)
+{
+  setValueMap<susy::TAG_VALUEMAP_BOOL, susy::VALUEMAP_BOOL, bool>(passHLTSigmaIetaIetaMax_, tag, 
 								  photonIndex, pass);
 }
 
@@ -565,6 +604,8 @@ const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassHOverEMax() const { return
 
 const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassR9Max() const { return &passR9Max_; }
 
+const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassR9Min() const { return &passR9Min_; }
+
 const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassTrackIsoMax() const
 {
   return &passTrackIsoMax_;
@@ -583,6 +624,11 @@ const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassFakeCombinedIsoMax() const
 const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassSigmaIetaIetaMax() const
 {
   return &passSigmaIetaIetaMax_;
+}
+
+const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassHLTSigmaIetaIetaMax() const
+{
+  return &passHLTSigmaIetaIetaMax_;
 }
 
 const susy::TAG_VALUEMAP_BOOL* susy::Category::getPassAbsSeedTimeMax() const
@@ -610,7 +656,10 @@ const susy::TAG_BOOL* susy::Category::getPassDPhiMin() const { return &passDPhiM
 
 const susy::TAG_BOOL* susy::Category::getPassDRMin() const { return &passDRMin_; }
 
-const susy::TAG_BOOL* susy::Category::getPassAsymmetricETMin() const { return &passAsymmetricETMin_; }
+const susy::TAG_BOOL* susy::Category::getPassAsymmetricETMin() const
+{
+  return &passAsymmetricETMin_;
+}
 
 const susy::TAG_DOUBLE* susy::Category::getEvtDiEMET() const { return &evtDiEMET_; }
 
@@ -685,6 +734,11 @@ void susy::Category::setPassR9Max(const susy::TAG_VALUEMAP_BOOL& passR9Max)
   passR9Max_ = passR9Max;
 }
 
+void susy::Category::setPassR9Min(const susy::TAG_VALUEMAP_BOOL& passR9Min)
+{
+  passR9Min_ = passR9Min;
+}
+
 void susy::Category::setPassTrackIsoMax(const susy::TAG_VALUEMAP_BOOL& passTrackIsoMax)
 {
   passTrackIsoMax_ = passTrackIsoMax;
@@ -704,6 +758,12 @@ susy::Category::setPassFakeCombinedIsoMax(const susy::TAG_VALUEMAP_BOOL& passFak
 void susy::Category::setPassSigmaIetaIetaMax(const susy::TAG_VALUEMAP_BOOL& passSigmaIetaIetaMax)
 {
   passSigmaIetaIetaMax_ = passSigmaIetaIetaMax;
+}
+
+void 
+susy::Category::setPassHLTSigmaIetaIetaMax(const susy::TAG_VALUEMAP_BOOL& passHLTSigmaIetaIetaMax)
+{
+  passHLTSigmaIetaIetaMax_ = passHLTSigmaIetaIetaMax;
 }
 
 void susy::Category::setPassAbsSeedTimeMax(const susy::TAG_VALUEMAP_BOOL& passAbsSeedTimeMax)
@@ -793,10 +853,12 @@ void susy::Category::reset()
   passPUSubtractedHCALIsoMax_.clear();
   passHOverEMax_.clear();
   passR9Max_.clear();
+  passR9Min_.clear();
   passTrackIsoMax_.clear();
   passCombinedIsoMax_.clear();
   passFakeCombinedIsoMax_.clear();
   passSigmaIetaIetaMax_.clear();
+  passHLTSigmaIetaIetaMax_.clear();
   passAbsSeedTimeMax_.clear();
   passE2OverE9Max_.clear();
   hasPixelSeed_.clear();

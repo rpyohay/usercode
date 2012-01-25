@@ -2,7 +2,7 @@
 
 #include "/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/EventAnalyzer.h"
 
-void ana_standalone_MC() {
+void ana_standalone_MC_NUM() {
 
   gSystem->Load("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/libSusy.so");
 
@@ -27,40 +27,42 @@ void ana_standalone_MC() {
   ParameterSet pars;
   pars.photonTag = "photons";
   pars.photon1ETMin = 40.0;
-  pars.photon2ETMin = 30.0;
+  pars.photon2ETMin = 25.0;
   pars.photonAbsEtaMax = 1.4442;
   pars.photonECALIsoMaxPTMultiplier = 0.012; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 					       EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 
 					       cone*/
   pars.photonECALIsoMaxConstant = 6.0; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 					 EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 cone*/
-  pars.photonECALIsoEffArea = 0.1474; /*https://twiki.cern.ch/twiki/bin/view/CMS/
+  pars.photonECALIsoEffArea = 0.0792; /*https://twiki.cern.ch/twiki/bin/view/CMS/
 					RA3IsolationConePileupCorrections, dR = 0.3 cone, 
-					18-Oct-11*/
+					5-Dec-11*/
   pars.photonHCALIsoMaxPTMultiplier = 0.005; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 					       EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 
 					       cone*/
   pars.photonHCALIsoMaxConstant = 4.0; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 					 EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 cone*/
-  pars.photonHCALIsoEffArea = 0.0467; /*https://twiki.cern.ch/twiki/bin/view/CMS/
+  pars.photonHCALIsoEffArea = 0.0252; /*https://twiki.cern.ch/twiki/bin/view/CMS/
 					RA3IsolationConePileupCorrections, dR = 0.3 cone, 
-					18-Oct-11*/
+					5-Dec-11*/
   pars.photonHOverEMax = 0.05;
   pars.photonR9Max = 0.98;
+  pars.photonR9Min = 0.8;
   pars.photonTrackIsoMaxPTMultiplier = 0.002; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 						EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 
 						cone*/
   pars.photonTrackIsoMaxConstant = 4.0; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 					  EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 cone*/
   pars.photonCombinedIsoMax = 6.0;
-  pars.fakeCombinedIsoMax = 12.0;
+  pars.fakeCombinedIsoMax = 20.0;
   pars.isoConeHLT = DR03;
   pars.isoConeOffline = DR03;
   pars.photonSigmaIetaIetaMax = 0.011;
+  pars.photonHLTSigmaIetaIetaMax = 0.014;
   pars.photonAbsSeedTimeMax = -1.0;
   pars.photonE2OverE9Max = -1.0;
   pars.photonDPhiMin = 0.05;
-  pars.photonDRMin = 0.8;
+  pars.photonDRMin = 0.6;
   pars.pixelVetoOnFake = true;
   pars.treeName = "susyTree";
 //   pars.input = VSTRING(1, "/data2/yohay/RA3/Data2011A_ToRun167913_Filter-JsonHLTtwo43-30GeVPhosWithR9HoverE_NoPileupCorr_Photon_NEW.root");
@@ -69,9 +71,7 @@ FILES
   pars.HLT = vector<TString>();
   pars.HLT.push_back("HLT_Photon32_CaloIdL_Photon26_CaloIdL");
   pars.HLT.push_back("HLT_Photon36_CaloIdL_Photon22_CaloIdL");
-  pars.HLT.push_back("HLT_Photon40_CaloIdL_Photon28_CaloIdL");
   pars.HLT.push_back("HLT_Photon36_CaloIdL_IsoVL_Photon22_CaloIdL_IsoVL");
-  pars.HLT.push_back("HLT_Photon20_R9Id_Photon18_R9Id");
   pars.HLT.push_back("HLT_Photon36_R9Id_Photon22_CaloIdL_IsoVL");
   pars.HLT.push_back("HLT_Photon36_CaloIdL_IsoVL_Photon22_R9Id");
   pars.HLT.push_back("HLT_Photon36_R9Id_Photon22_R9Id");
@@ -80,7 +80,8 @@ FILES
 //   pars.JSON = "/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/JSON_160431-177878_May10ReReco_Run2011APromptRecov4v6_Aug5ReReco_Run2011BPromptRecov1.txt";
 //   pars.outputFile = "/data2/yohay/RA3/Data2011A_ToRun167913_Filter-JsonHLTtwo43-30GeVPhosWithR9HoverE_NoPileupCorr_Photon_NEW_categorized_OR.root";
 //   pars.outputFile = "/data2/yohay/RA3/1140pb-1_ff_categorized_new.root";
-  pars.outputFile = "DATASET_JSON_HLT_PV_skim.root";
+  pars.outputFile = "DATASET_JSON_HLT_PV_skim_v2_NUM.root";
+  pars.recategorize = false;
 
   TStopwatch ts;
 

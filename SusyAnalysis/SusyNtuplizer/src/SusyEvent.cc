@@ -405,6 +405,9 @@ void susy::Event::Init() {
     intgRecLumi                 = 0;
     cosmicFlag                  = 0;
     rho                         = 0;
+    rhoBarrel                   = 0;
+    PassesHcalNoiseFilter       = 0;
+    PassesEcalDeadCellFilter    = 0;
 
     beamSpot                   *= 0;
 

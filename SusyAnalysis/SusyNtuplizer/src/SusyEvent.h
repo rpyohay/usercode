@@ -669,6 +669,9 @@ namespace susy {
     Float_t                                     intgRecLumi;
     UChar_t                                     cosmicFlag; // empty for now
     Float_t                                     rho; // from kt6PFJets
+    Float_t                                     rhoBarrel; // from kt6PFJetsRhoBarrelOnly
+    Bool_t                                      PassesHcalNoiseFilter;
+    Bool_t                                      PassesEcalDeadCellFilter;
 
     TVector3                                    beamSpot;
 

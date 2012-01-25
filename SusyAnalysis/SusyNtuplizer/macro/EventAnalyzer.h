@@ -48,7 +48,7 @@ class EventAnalyzer {
   //events passing particular selections
   RUNEVTLUMIMAP ggEvts_;
   RUNEVTLUMIMAP egEvts_;
-  RUNEVTLUMIMAP eeEvts_;
+  RUNEVTLUMIMASSMAP eeEvts_;
   RUNEVTLUMIMAP ffEvts_;
 
   //PU subtraction effective areas
@@ -64,8 +64,10 @@ class EventAnalyzer {
   virtual Int_t    GetEntry(Long64_t entry);
   virtual Long64_t LoadTree(Long64_t entry);
   virtual void     Init(TTree *tree);
-  virtual void     Loop(TTree*, Categorizer, susy::Category*);  //event loop for main analysis
-  virtual void     countTriggers(const std::string&);           //event loop for counting
+  //event loop for main analysis
+  virtual void     Loop(TTree*, Categorizer, susy::Category*, susy::Event* pEvent = NULL);
+  //event loop for counting
+  virtual void     countTriggers(const std::string&);
 
   // utility functions
   bool isSameObject(TLorentzVector& p1, TLorentzVector& p2);

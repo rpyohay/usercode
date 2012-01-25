@@ -473,7 +473,8 @@ void EventAnalyzer::countTriggers(const std::string& fileLabel)
   delete triggerPassedVsRunRange;
 }
 
-void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category* pCategory) {
+void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category* pCategory, 
+			 susy::Event* pEvent) {
   if (fChain == 0) return;
 
   //remove this memory-intensive step
@@ -491,6 +492,7 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
   for (Long64_t jentry=0; jentry < processNEvents; jentry++) {
     event->Init();
     pCategory->reset();
+    if (pEvent != NULL) pEvent->Init();
     nEvtsProcessed = jentry + 1;
     if(printLevel > 0) std::cout << "Get the tree contents." << std::endl;
     Long64_t ientry = LoadTree(jentry);
@@ -537,13 +539,16 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
     // uncomment this to print all ntuple variables
 //     Print(*event);
 
-    //remove this memory-intensive step
-    // if(printLevel > 0) std::cout << "Check duplicated events for data only." << std::endl;
-    // bool duplicateEvent = ! (allEvents[event->runNumber].insert(event->eventNumber)).second;
-    // if(event->isRealData && duplicateEvent) {
-    //   if (filter) outTree->Fill();
-    //   continue;
-    // }
+//     // remove this memory-intensive step
+//     if(printLevel > 0) std::cout << "Check duplicated events for data only." << std::endl;
+//     bool duplicateEvent = ! (allEvents[event->runNumber].insert(event->eventNumber)).second;
+//     if(event->isRealData && duplicateEvent) {
+//       if (filter) {
+// 	if (pEvent != NULL) *pEvent = *event;
+// 	outTree->Fill();
+//       }
+//       continue;
+//     }
 
     //photon variables to pass to the Categorizer object
     VDOUBLE photonET;
@@ -702,6 +707,8 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
 				      categorizer.getPhotonPassHOverEMax()[photonIndex]);
 	  pCategory->setPassR9Max(tag_, photonIndex, 
 				  categorizer.getPhotonPassR9Max()[photonIndex]);
+	  pCategory->setPassR9Min(tag_, photonIndex, 
+				  categorizer.getPhotonPassR9Min()[photonIndex]);
 	  pCategory->setPassTrackIsoMax(tag_, photonIndex, 
 					categorizer.getPhotonPassTrackIsoMax()[photonIndex]);
 	  pCategory->setPassCombinedIsoMax(tag_, photonIndex, 
@@ -712,6 +719,9 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
 	  pCategory->
 	    setPassSigmaIetaIetaMax(tag_, photonIndex, 
 				    categorizer.getPhotonPassSigmaIetaIetaMax()[photonIndex]);
+	  pCategory->
+	    setPassHLTSigmaIetaIetaMax(tag_, photonIndex, 
+				       categorizer.getPhotonPassHLTSigmaIetaIetaMax()[photonIndex]);
 	  pCategory->setPassAbsSeedTimeMax(tag_, photonIndex, 
 					   categorizer.getPhotonPassAbsSeedTimeMax()[photonIndex]);
 	  pCategory->setPassE2OverE9Max(tag_, photonIndex, 
@@ -744,12 +754,16 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
     }
 
     //fill the tree
-    if (filter) outTree->Fill();
+    if (filter) {
+      if (pEvent != NULL) *pEvent = *event;
+      outTree->Fill();
+    }
 
     //store run, event, and lumi section info for events passing filter criteria (JSON and HLT)
     if (filter) {
       RUNEVTLUMIPAIR runEvtLumiPair(RUNEVTPAIR(event->runNumber, event->eventNumber), 
 				    event->luminosityBlockNumber);
+      RUNEVTLUMIMASSPAIR runEvtLumiMassPair(runEvtLumiPair, evtInvMass);
       switch (category) {
       case GG:
 	ggEvts_.insert(runEvtLumiPair);
@@ -761,7 +775,7 @@ void EventAnalyzer::Loop(TTree* outTree, Categorizer categorizer, susy::Category
 	egEvts_.insert(runEvtLumiPair);
 	break;
       case EE:
-	eeEvts_.insert(runEvtLumiPair);
+	eeEvts_.insert(runEvtLumiMassPair);
 	break;
       default:
 	break;
@@ -810,9 +824,11 @@ void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt)
   double photonHCALIsoMaxConstant = categorizer.getPhotonHCALIsoMaxConstant();
   double photonHOverEMax = categorizer.getPhotonHOverEMax();
   double photonR9Max = categorizer.getPhotonR9Max();
+  double photonR9Min = categorizer.getPhotonR9Min();
   double photonTrackIsoMaxPTMultiplier = categorizer.getPhotonTrackIsoMaxPTMultiplier();
   double photonTrackIsoMaxConstant = categorizer.getPhotonTrackIsoMaxConstant();
   double photonSigmaIetaIetaMax = categorizer.getPhotonSigmaIetaIetaMax();
+  double photonHLTSigmaIetaIetaMax = categorizer.getPhotonHLTSigmaIetaIetaMax();
   double photonAbsSeedTimeMax = categorizer.getPhotonAbsSeedTimeMax();
   double photonE2OverE9Max = categorizer.getPhotonE2OverE9Max();
   double photonDPhiMin = categorizer.getPhotonDPhiMin();
@@ -824,10 +840,12 @@ void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt)
   VBOOL photonPassHCALIsoMax = categorizer.getPhotonPassHCALIsoMax();
   VBOOL photonPassHOverEMax = categorizer.getPhotonPassHOverEMax();
   VBOOL photonPassR9Max = categorizer.getPhotonPassR9Max();
+  VBOOL photonPassR9Min = categorizer.getPhotonPassR9Min();
   VBOOL photonPassTrackIsoMax = categorizer.getPhotonPassTrackIsoMax();
   VBOOL photonPassCombinedIsoMax = categorizer.getPhotonPassCombinedIsoMax();
   VBOOL photonPassFakeCombinedIsoMax = categorizer.getPhotonPassFakeCombinedIsoMax();
   VBOOL photonPassSigmaIetaIetaMax = categorizer.getPhotonPassSigmaIetaIetaMax();
+  VBOOL photonPassHLTSigmaIetaIetaMax = categorizer.getPhotonPassHLTSigmaIetaIetaMax();
   VBOOL photonPassAbsSeedTimeMax = categorizer.getPhotonPassAbsSeedTimeMax();
   VBOOL photonPassE2OverE9Max = categorizer.getPhotonPassE2OverE9Max();
   VBOOL photonPassPreselection = categorizer.getPhotonPassPreselection();
@@ -893,6 +911,10 @@ void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt)
     debug << "Result: ";
     if (photonPassR9Max[i]) debug << "pass\n";
     else debug << "fail\n";
+    debug << "Cut: photon R9 > " << photonR9Min << std::endl;
+    debug << "Result: ";
+    if (photonPassR9Min[i]) debug << "pass\n";
+    else debug << "fail\n";
     debug << "-----------------\n";
     debug << "Photon track isolation: " << photonTrackIso[i] << " GeV\n";
     debug << "Cut: photon track isolation < (" << photonTrackIsoMaxPTMultiplier << "ET + ";
@@ -918,6 +940,10 @@ void EventAnalyzer::debugPrint(const Categorizer& categorizer, susy::Event* evt)
     debug << "Cut: photon sigmaIetaIeta < " << photonSigmaIetaIetaMax << std::endl;
     debug << "Result: ";
     if (photonPassSigmaIetaIetaMax[i]) debug << "pass\n";
+    else debug << "fail\n";
+    debug << "Cut: photon sigmaIetaIeta < " << photonHLTSigmaIetaIetaMax << std::endl;
+    debug << "Result: ";
+    if (photonPassHLTSigmaIetaIetaMax[i]) debug << "pass\n";
     else debug << "fail\n";
     debug << "-----------------\n";
     debug << "Photon seed time: " << photonSeedTime[i] << " ns\n";

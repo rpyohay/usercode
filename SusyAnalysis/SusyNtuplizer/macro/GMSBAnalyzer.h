@@ -57,6 +57,8 @@ public :
    void setL1JECFile(const string&);
    void setL2JECFile(const string&);
    void setL3JECFile(const string&);
+   void setJECErrFile(const string&);
+   void addHLT(const TString&, const unsigned int, const unsigned int, const unsigned int);
 
    TString getTag() const;
    int getNEvts() const;
@@ -72,12 +74,17 @@ public :
    string getL1JECFile() const;
    string getL2JECFile() const;
    string getL3JECFile() const;
+   string getJECErrFile() const;
+   const map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >* getHLT() const;
+   unsigned int getMinRun(const TString&) const;
+   unsigned int getMaxRun(const TString&) const;
 
    bool matchedToGenParticle(const susy::Photon&, const VINT&, const UChar_t) const;
    bool passesDenominatorSelection(const unsigned int, const susy::Photon&, const VINT&) const;
    bool passesNumeratorSelection(const unsigned int) const;
    unsigned int numGoodVertices() const;
    void countEE(string&);
+   void plotTemp(string&);
    template<typename T>
      void setHistogramOptions(T& hist, const string& xAxisTitle, const string& yAxisTitle, 
 			      const string& zAxisTitle, const bool sumW2 = false) const
@@ -88,7 +95,7 @@ public :
        if (sumW2) hist.Sumw2();
      }
    template<typename T>
-     TLorentzVector correctedJet4Momentum(T& iJet, const string& corrLabel1, 
+     TLorentzVector correctedJet4Momentum(T& iJet, const string& corrLabel1, float& JES, 
 					  const string& corrLabel2 = "") const
      {
        map<TString, Float_t>::const_iterator iCorr1 = iJet->jecScaleFactors.find(corrLabel1);
@@ -97,8 +104,12 @@ public :
        if (iCorr1 != iJet->jecScaleFactors.end()) {
 	 if (iCorr2 != iJet->jecScaleFactors.end()) {
 	   corrP4 = (iCorr1->second/iCorr2->second)*iJet->momentum;
+	   JES = iCorr1->second/iCorr2->second;
 	 }
-	 else corrP4 = iCorr1->second*iJet->momentum;
+	 else {
+	   corrP4 = iCorr1->second*iJet->momentum;
+	   JES = iCorr1->second;
+	 }
        }
        return corrP4;
      }
@@ -106,29 +117,66 @@ public :
 			 const float, const float, const bool setGrid = false) const;
    float fillWeightsHistograms(const TH1D*, TH1D*, TH1F&, TH1F&) const;
    string histName(const string&, const string&, const unsigned int) const;
+   void format(const char*, const char*, const char*, const char*, const char*) const;
+   void format(const char*, const float, const float, const float) const;
    void generateBackgroundSubtractedSpectra(TH3F&, TH2F&) const;
    float normAndErrorSquared(const TH3F&, const TH1F&, const TH1D*, const unsigned int, 
 			     float&) const;
+   float razorNormAndErrorSquared(const TH2F&, const TH2F&, const TH2F&, const unsigned int, 
+				  const unsigned int, float&) const;
    void bookToyDiEMETWeightsHistograms(const vector<TH1F*>, const string&, vector<TH1F*>&, 
 				       const Int_t nMETBins = 1) const;
    void makeToyDiEMETWeightsHistograms(TRandom3&, TH1F&, const TH1F&, vector<TH1F*>&, 
 				       const unsigned int iMETBin = 1) const;
    void reweightDefault(const VFLOAT&, const VFLOAT&, const TH1F&, TH1F*) const;
+   void reweightDefault(const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, const TH1F&, 
+			TH1F*, TH2F*) const;
    void reweightBinned(const TH2F&, const TH1F&, TH1F*, const unsigned int) const;
    void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
 		     const string&, const Double_t*, const unsigned int, const Double_t*, 
 		     const VFLOAT&, const VFLOAT&) const;
+   void generateToys(vector<TH1F*>&, vector<TH2F*>&, vector<TH1F*>&, const vector<TH1F*>, 
+		     const unsigned int, const string&, const Double_t*, 
+		     const unsigned int, const Double_t*, const unsigned int, const Double_t*, 
+		     const unsigned int, const Double_t*, const VFLOAT&, const VFLOAT&, 
+		     const VFLOAT&, const VFLOAT&) const;
    void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
 		     const string&, const Double_t*, const unsigned int, const Double_t*, 
 		     const TH2F&) const;
+   void generateToyDijets(const unsigned int, TRandom&, const vector<float>&, 
+			  const vector<float>&, const vector<float>&, const vector<float>&, 
+			  const vector<TLorentzVector>&, const vector<TLorentzVector>&, 
+			  TH1F&) const;
+   void estimateJESError(const unsigned int, vector<TH1F*>&, const vector<TH1F*>&, 
+			 const unsigned int, const Double_t*, const vector<float>&, 
+			 const vector<float>&, const vector<float>&, const vector<float>&, 
+			 const vector<TLorentzVector>&, const vector<TLorentzVector>&, 
+			 const vector<float>&, const vector<float>&, const vector<float>&, 
+			 const vector<float>&, const vector<TLorentzVector>&, 
+			 const vector<TLorentzVector>&) const;
    void fillToyDistributions(vector<TH1F*>&, const TH1F&, TCanvas&, vector<TH1F*>&, 
 			     const unsigned int, const string&, const unsigned int) const;
+   void fillToyDistributions(vector<TH1F*>&, vector<TH1F*>&, const TH1F&, const TH2F&, TCanvas&, 
+			     vector<TH1F*>&, vector<TH2F*>&, const unsigned int, const string&, 
+			     const unsigned int, const unsigned int, const unsigned int) const;
    void setMETErrorBars(TH1F&, const vector<TH1F*>&, const vector<TH1F*>&, const vector<TH1F*>&, 
 			const float, const float, const bool doDefault = true) const;
+   void setRazorErrorBars(TH2F&, const vector<TH1F*>&, const vector<TH1F*>&, const vector<TH1F*>&, 
+			  const float, const float, const bool doDefault = true) const;
    void makeFinalCanvas(TH1*, const Color_t, const Width_t, const Style_t, const Color_t, 
 			const Size_t, const Color_t, const string&) const;
-   void deallocateMemory(VTH1F&) const;
-   void runMETAnalysis(const string&);
+   template<typename T>
+     void deallocateMemory(vector<T>& vec) const
+     {
+       for (typename vector<T>::iterator i = vec.begin(); i != vec.end(); ++i) {
+	 delete *i;
+	 *i = NULL;
+       }
+     }
+   void printDiObjectErrorMessage(const unsigned int, const string&, const int, 
+				  const unsigned int) const;
+   string eventFileName(string, const string&) const;
+   void runMETAnalysis(const string);
    void runMETAnalysisWithEEBackgroundFit(const std::string&);
    void testFitting(const string&, const string&) const;
    void runEEVsFFAnalysis(const std::string&);
@@ -207,6 +255,7 @@ public :
    void reset();
    void initPU();
    void clearPU();
+   string printCategory(const int) const;
    template<typename T, typename U>
      bool indexOutOfRange(const T& iProcess, const U* vec) const
    {
@@ -228,6 +277,8 @@ public :
        }
        return value;
      }
+   bool passUserHLT() const; //if trigger fires in specified active run range supplied by user, return true
+
  private:
    TString tag_;                           //photon collection tag
    int     nEvts_;                         //number of events to process
@@ -250,6 +301,8 @@ public :
    string L1JECFile_;                      //file name for L1 JEC
    string L2JECFile_;                      //file name for L2 JEC
    string L3JECFile_;                      //file name for L3 JEC
+   string JECErrFile_;                     //file name for JEC errors
+   map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> > HLT_; //map of HLT paths and corresponding run ranges to consider
 };
 
 #endif
@@ -284,6 +337,8 @@ GMSBAnalyzer::~GMSBAnalyzer()
    L1JECFile_ = "";
    L2JECFile_ = "";
    L3JECFile_ = "";
+   JECErrFile_ = "";
+   HLT_.clear();
    reset();
    clearPU();
    delete susyEvent;
@@ -453,6 +508,17 @@ void GMSBAnalyzer::setPUFile(const string& PUFile) { PUFile_ = PUFile; }
 void GMSBAnalyzer::setL1JECFile(const string& L1JECFile) { L1JECFile_ = L1JECFile; }
 void GMSBAnalyzer::setL2JECFile(const string& L2JECFile) { L2JECFile_ = L2JECFile; }
 void GMSBAnalyzer::setL3JECFile(const string& L3JECFile) { L3JECFile_ = L3JECFile; }
+void GMSBAnalyzer::setJECErrFile(const string& JECErrFile) { JECErrFile_ = JECErrFile; }
+void GMSBAnalyzer::addHLT(const TString& HLTPath, const unsigned int allowAbove, const unsigned int minRun, const unsigned int maxRun)
+{
+  map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >::const_iterator iHLT = 
+    HLT_.find(pair<TString, unsigned int>(HLTPath, allowAbove));
+  if (iHLT != HLT_.end()) {
+    cout << "Replacing min. run " << iHLT->second.first << " with " << minRun << " and max. run ";
+    cout << iHLT->second.second << " with " << maxRun << " for " << HLTPath << ", allowed above category threshold " << allowAbove << endl;
+  }
+  HLT_[pair<TString, unsigned int>(HLTPath, allowAbove)] = pair<unsigned int, unsigned int>(minRun, maxRun);
+}
 
 TString GMSBAnalyzer::getTag() const { return tag_; }
 int GMSBAnalyzer::getNEvts() const { return nEvts_; }
@@ -498,6 +564,28 @@ string GMSBAnalyzer::getPUFile() const { return PUFile_; }
 string GMSBAnalyzer::getL1JECFile() const { return L1JECFile_; }
 string GMSBAnalyzer::getL2JECFile() const { return L2JECFile_; }
 string GMSBAnalyzer::getL3JECFile() const { return L3JECFile_; }
+string GMSBAnalyzer::getJECErrFile() const { return JECErrFile_; }
+const map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >* GMSBAnalyzer::getHLT() const { return &HLT_; }
+unsigned int GMSBAnalyzer::getMinRun(const TString& HLT) const
+{
+  unsigned int minRun = 0;
+  map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >::const_iterator iHLT = HLT_.begin();
+  while ((iHLT != HLT_.end()) && (minRun == 0)) {
+    if (iHLT->first.first == HLT) minRun = iHLT->second.first;
+    else ++iHLT;
+  }
+  return minRun;
+}
+unsigned int GMSBAnalyzer::getMaxRun(const TString& HLT) const
+{
+  unsigned int maxRun = 0;
+  map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >::const_iterator iHLT = HLT_.begin();
+  while ((iHLT != HLT_.end()) && (maxRun == 0)) {
+    if (iHLT->first.first == HLT) maxRun = iHLT->second.second;
+    else ++iHLT;
+  }
+  return maxRun;
+}
 
 void GMSBAnalyzer::reset()
 {
@@ -558,4 +646,61 @@ void GMSBAnalyzer::clearPU()
   PUSize_ = 0;
   lumiWeights_ = reweight::LumiReWeighting();
 }
+string GMSBAnalyzer::printCategory(const int categoryInt) const
+{
+  string categoryString;
+  switch (categoryInt) {
+  case GG:
+    categoryString = "GG";
+    break;
+  case EG:
+    categoryString = "EG";
+    break;
+  case EE:
+    categoryString = "EE";
+    break;
+  case FF:
+    categoryString = "FF";
+    break;
+  case FAIL:
+    categoryString = "FAIL";
+    break;
+  default:
+    break;
+  }
+  return categoryString;
+}
+bool GMSBAnalyzer::passUserHLT() const
+{
+  bool pass = false;
+
+  //loop over supplied HLT paths
+  map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >::const_iterator iHLT = HLT_.begin();
+  while ((iHLT != HLT_.end()) && !pass) {
+
+    //get applicable run range and category threshold for this path
+    const unsigned int minRun = iHLT->second.first;
+    const unsigned int maxRun = iHLT->second.second;
+    const unsigned int allowAbove = iHLT->first.second;
+
+    //loop over trigger information for this event
+    susy::TriggerMap::const_iterator iInfo = susyEvent->hltMap.begin();
+    while ((iInfo != susyEvent->hltMap.end()) && !pass) {
+
+      //if the event fired the path in question AND it is in the correct run range for the path AND it is the correct category, return true
+      if (iInfo->first.Contains(iHLT->first.first) && (int(iInfo->second.second)) && 
+	  (susyCategory->getEventCategory(tag_) >= (int)allowAbove) && (susyEvent->runNumber >= (int)minRun) && 
+	  (susyEvent->runNumber <= (int)maxRun)) {
+	pass = true;
+      }
+      else ++iInfo;
+    }
+
+    //increment supplied HLT path counter
+    ++iHLT;
+  }
+
+  return pass;
+}
+
 #endif // #ifdef GMSBAnalyzer_cxx
