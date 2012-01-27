@@ -162,9 +162,9 @@ void GMSBAnalysis()
   analyzer.addHLT(TString("HLT_Photon26_IsoVL_Photon18"), 0, 160404, 161215);
   analyzer.addHLT(TString("HLT_Photon36_CaloIdL_Photon22_CaloIdL"), 0, 161216, 166346);
   analyzer.addHLT(TString("HLT_Photon36_CaloIdL_IsoVL_Photon22_CaloIdL_IsoVL"), 0, 166347, 180252);
-  analyzer.addHLT(TString("HLT_Photon36_CaloIdL_IsoVL_Photon22_R9Id"), 2, 166347, 180252);
-  analyzer.addHLT(TString("HLT_Photon36_R9Id_Photon22_CaloIdL_IsoVL"), 2, 166347, 180252);
-  analyzer.addHLT(TString("HLT_Photon36_R9Id_Photon22_R9Id"), 2, 166347, 180252);
+  analyzer.addHLT(TString("HLT_Photon36_CaloIdL_IsoVL_Photon22_R9Id"), 3, 166347, 180252);
+  analyzer.addHLT(TString("HLT_Photon36_R9Id_Photon22_CaloIdL_IsoVL"), 3, 166347, 180252);
+  analyzer.addHLT(TString("HLT_Photon36_R9Id_Photon22_R9Id"), 3, 166347, 180252);
 
 //   const unsigned int size = analyzer.getSize();
 //   for (unsigned int i = 0; i < size; ++i) {

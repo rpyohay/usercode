@@ -890,13 +890,13 @@ void Categorizer::classify()
 // 	std::cout << "Photon " << i2 << " passes IsoVL?  " << ((photonPassECALIsoMax_[i2] && photonPassHCALIsoMax_[i2] && photonPassTrackIsoMax_[i2]) ? "Yes" : "No") << std::endl;
 //       }
 
-      //only allow R9Id on ff and ee due to inefficiency (esp. at high eta) of cut for real photons
+      //only allow R9Id on ff due to inefficiency (esp. at high eta) of cut for real photons
       //if highest ET pair doesn't satisfy this requirement, go on to next highest
       const int category = getCategory(i1, i2);
-      if ((((category == GG) || (category == EG)) && 
+      if ((((category == GG) || (category == EG) || (category == EE)) && 
 	   (photonPassECALIsoMax_[i1] && photonPassHCALIsoMax_[i1] && photonPassTrackIsoMax_[i1] && 
-	    photonPassECALIsoMax_[i2] && photonPassHCALIsoMax_[i2] && photonPassTrackIsoMax_[i2])) || 
-	  ((category == EE) || (category == FF))) {
+	    photonPassECALIsoMax_[i2] && photonPassHCALIsoMax_[i2] && 
+	    photonPassTrackIsoMax_[i2])) || (category == FF)) {
 
 // 	std::cout << "Passed confusing trigger requirement\n";
 

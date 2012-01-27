@@ -675,7 +675,8 @@ bool GMSBAnalyzer::passUserHLT() const
   bool pass = false;
 
   //loop over supplied HLT paths
-  map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >::const_iterator iHLT = HLT_.begin();
+  map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >::const_iterator iHLT = 
+    HLT_.begin();
   while ((iHLT != HLT_.end()) && !pass) {
 
     //get applicable run range and category threshold for this path
@@ -687,10 +688,11 @@ bool GMSBAnalyzer::passUserHLT() const
     susy::TriggerMap::const_iterator iInfo = susyEvent->hltMap.begin();
     while ((iInfo != susyEvent->hltMap.end()) && !pass) {
 
-      //if the event fired the path in question AND it is in the correct run range for the path AND it is the correct category, return true
+      /*if the event fired the path in question AND it is in the correct run range for the path 
+	AND it is the correct category, return true*/
       if (iInfo->first.Contains(iHLT->first.first) && (int(iInfo->second.second)) && 
-	  (susyCategory->getEventCategory(tag_) >= (int)allowAbove) && (susyEvent->runNumber >= (int)minRun) && 
-	  (susyEvent->runNumber <= (int)maxRun)) {
+	  (susyCategory->getEventCategory(tag_) >= (int)allowAbove) && 
+	  (susyEvent->runNumber >= (int)minRun) && (susyEvent->runNumber <= (int)maxRun)) {
 	pass = true;
       }
       else ++iInfo;
