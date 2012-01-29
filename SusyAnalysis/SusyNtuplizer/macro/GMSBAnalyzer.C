@@ -370,7 +370,7 @@ void GMSBAnalyzer::bookToyDiEMETWeightsHistograms(const vector<TH1F*> controlWei
       name << controlSample << "DiEMETToyDistBin" << iBin << "_METBin" << iMETBin;
       float typicalVal = controlWeights[iMETBin - 1]->GetBinContent(iBin);
       float sqrtTypicalVal = sqrt(typicalVal);
-      TH1F* hist = new TH1F(name.str().c_str(), "", 160, typicalVal - 8.0*sqrtTypicalVal, 
+      TH1F* hist = new TH1F(name.str().c_str(), "", 320, typicalVal - 8.0*sqrtTypicalVal, 
 			    typicalVal + 8.0*sqrtTypicalVal);
       hist->Sumw2();
       controlDiEMETToyDistsByBin.push_back(hist);
@@ -438,6 +438,54 @@ void GMSBAnalyzer::reweightDefault(const VFLOAT& controlMETVec, const VFLOAT& co
     }
     hist->Fill(*i, controlWeightsToy.GetBinContent(iDiEMET));
     hist2D->Fill(controlMRVec[iEvt], controlR2Vec[iEvt], controlWeightsToy.GetBinContent(iDiEMET));
+  }
+}
+
+void GMSBAnalyzer::reweightDefault(const VFLOAT& controlMETVec, const VFLOAT& controlMRVec, 
+				   const VFLOAT& controlR2Vec, const VFLOAT& controlDiEMETVec, 
+				   const VFLOAT& controlNjVec, const unsigned int nNjBins, 
+				   const Double_t* NjBins, 
+				   const vector<vector<TH1F*> >& controlWeightsToys, TH1F* hist, 
+				   TH2F* hist2D, const unsigned int iToy) const
+{
+  //loop over events
+  for (VFLOAT_IT i = controlMETVec.begin(); i != controlMETVec.end(); ++i) {
+    const unsigned int iEvt = i - controlMETVec.begin();
+
+    /*search one of the toy weights histograms for the di-EM pT bin of this event--the binning is 
+      identical in all of them, so it doesn't matter which one is used*/
+    Int_t iDiEMET = 1;
+    bool foundDiEMETBin = false;
+    while ((iDiEMET <= controlWeightsToys[0][0]->GetNbinsX()) && !foundDiEMETBin) {
+      if ((controlDiEMETVec[iEvt] >= controlWeightsToys[0][0]->GetBinLowEdge(iDiEMET)) && 
+	  (controlDiEMETVec[iEvt] < controlWeightsToys[0][0]->GetBinLowEdge(iDiEMET + 1))) {
+	foundDiEMETBin = true;
+      }
+      else ++iDiEMET;
+    }
+    if (iDiEMET > controlWeightsToys[0][0]->GetNbinsX()) {
+      cerr << "Error: di-EM ET bin corresponding to event with MET = " << *i;
+      cerr << " GeV, di-EM ET = " << controlDiEMETVec[iEvt] << " GeV not found in histogram ";
+      cerr << controlWeightsToys[0][0]->GetName() << "  Assuming maximum di-EM ET bin.\n";
+    }
+
+    //get the number of jets in the event
+    unsigned int iNjBin = nNjBins;
+    for (unsigned int iNjBinBoundary = 0; iNjBinBoundary < nNjBins; ++iNjBinBoundary) {
+      if ((controlNjVec[iEvt] >= NjBins[iNjBinBoundary]) && 
+	  (controlNjVec[iEvt] < NjBins[iNjBinBoundary + 1])) iNjBin = iNjBinBoundary;
+    }
+    if (iNjBin == nNjBins) {
+      cerr << "Error: no Nj bin found for event with MET = " << *i;
+      cerr << " GeV, di-EM ET = " << controlDiEMETVec[iEvt] << " GeV, Nj = ";
+      cerr << controlNjVec[iEvt] << ".  Assuming Nj = 0.\n";
+      iNjBin = 0;
+    }
+
+    //weight by di-EM ET AND Nj
+    hist->Fill(*i, controlWeightsToys[iNjBin][iToy]->GetBinContent(iDiEMET));
+    hist2D->Fill(controlMRVec[iEvt], controlR2Vec[iEvt], 
+		 controlWeightsToys[iNjBin][iToy]->GetBinContent(iDiEMET));
   }
 }
 
@@ -513,7 +561,8 @@ void GMSBAnalyzer::generateToys(vector<TH1F*>& controlFinalToy, vector<TH2F*>& c
 				const VFLOAT& controlR2Vec, const VFLOAT& controlDiEMETVec) const
 {
   bookToyDiEMETWeightsHistograms(controlWeights, controlSample, controlDiEMETToyDistsByBin);
-  TRandom3 random;
+  TRandom3 random(0); /*guarantees a unique seed cf. 
+			http://root.cern.ch/root/html/TRandom3.html#TRandom3:TRandom3*/
   for (unsigned int iToy = 1; iToy <= nToys; ++iToy) {
     STRINGSTREAM nameWeights;
     nameWeights << controlSample << "WeightsToy" << iToy;
@@ -536,6 +585,26 @@ void GMSBAnalyzer::generateToys(vector<TH1F*>& controlFinalToy, vector<TH2F*>& c
 		    controlWeightsToy, hist, hist2D);
     controlFinalToy.push_back(hist);
     controlFinalToy2D.push_back(hist2D);
+  }
+}
+
+void GMSBAnalyzer::generateToys(vector<TH1F*>& controlDiEMETToyDistsByBin, 
+				vector<TH1F*>& controlWeightsToys, 
+				const vector<TH1F*> controlWeights, const unsigned int nToys, 
+				const string& controlSample, const Double_t* diEMETBins) const
+{
+  bookToyDiEMETWeightsHistograms(controlWeights, controlSample, controlDiEMETToyDistsByBin);
+  TRandom3 random(0); /*guarantees a unique seed cf. 
+			http://root.cern.ch/root/html/TRandom3.html#TRandom3:TRandom3*/
+  for (unsigned int iToy = 1; iToy <= nToys; ++iToy) {
+    STRINGSTREAM nameWeights;
+    nameWeights << controlSample << "WeightsToy" << iToy;
+    TH1F* controlWeightsToy = 
+      new TH1F(nameWeights.str().c_str(), "", controlWeights[0]->GetNbinsX(), diEMETBins);
+    controlWeightsToy->Sumw2();
+    makeToyDiEMETWeightsHistograms(random, *controlWeightsToy, *controlWeights[0], 
+				   controlDiEMETToyDistsByBin);
+    controlWeightsToys.push_back(controlWeightsToy);
   }
 }
 
@@ -566,6 +635,36 @@ void GMSBAnalyzer::generateToys(vector<TH1F*>& controlFinalToy,
       reweightBinned(controlMETVsDiEMET, controlWeightsToy, hist, iMETBin);
       controlFinalToy.push_back(hist);
     }
+  }
+}
+
+void GMSBAnalyzer::makeToyMETDists(const unsigned int nToys, const string& controlSample, 
+				   const unsigned int nMETBins, const Double_t* METBins, 
+				   const unsigned int nMRBins, const Double_t* MRBins, 
+				   const unsigned int nR2Bins, const Double_t* R2Bins, 
+				   const VFLOAT& controlMETVec, const VFLOAT& controlMRVec, 
+				   const VFLOAT& controlR2Vec, const VFLOAT& controlDiEMETVec, 
+				   const VFLOAT& controlNjVec, const unsigned int nNjBins, 
+				   const Double_t* NjBins, 
+				   const vector<vector<TH1F*> >& controlWeightsToys, 
+				   vector<TH1F*>& controlFinalToy, 
+				   vector<TH2F*>& controlFinalToy2D) const
+{
+  for (unsigned int iToy = 1; iToy <= nToys; ++iToy) {
+    STRINGSTREAM nameFinal;
+    nameFinal << controlSample << "FinalToy" << iToy;
+    TH1F* hist = new TH1F(nameFinal.str().c_str(), "", nMETBins, METBins);
+    hist->Sumw2();
+    hist->SetFillStyle(0);
+    nameFinal.str("");
+    nameFinal << controlSample << "FinalToyR2VsMR" << iToy;
+    TH2F* hist2D = new TH2F(nameFinal.str().c_str(), "", nMRBins, MRBins, nR2Bins, R2Bins);
+    hist2D->Sumw2();
+    hist2D->SetFillStyle(0);
+    reweightDefault(controlMETVec, controlMRVec, controlR2Vec, controlDiEMETVec, controlNjVec, 
+		    nNjBins, NjBins, controlWeightsToys, hist, hist2D, iToy - 1);
+    controlFinalToy.push_back(hist);
+    controlFinalToy2D.push_back(hist2D);
   }
 }
 
@@ -854,6 +953,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    const float nToys = 1000;              //number of toys for the MET shape error from reweighting
    const unsigned int nMETBins = 13;      //number of MET bins
    const unsigned int nDiEMETBins = 25;   //number of di-EM ET bins
+   const unsigned int nNjBins = 3;        //number of Nj bins
    const unsigned int nInvMassBins = 150; //number of invariant mass bins
    const unsigned int nMRBins = 20;       //number of MR bins
    const unsigned int nR2Bins = 25;       //number of R2 bins
@@ -866,6 +966,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 				    70.0, 80.0, 90.0, 
 				    100.0, 150.0, 200.0, 
 				    300.0, 400.0, 650.0};
+   const Double_t NjBins[4] = {-0.5, 0.5, 1.5, 99.5};             //Nj bin boundaries
    const Double_t invMassBins[151] = {0.0,                        //invariant mass bin boundaries
 				      2.0, 4.0, 6.0, 8.0, 10.0, 
 				      12.0, 14.0, 16.0, 18.0, 20.0, 
@@ -908,9 +1009,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 				0.22, 0.24, 0.26, 0.28, 0.3, 
 				0.32, 0.34, 0.36, 0.38, 0.4, 
 				0.42, 0.44, 0.46, 0.48, 0.5};
-   const float egMisIDRate = 0.014;      /*take from CMS AN-2010/294 for now; can be computed with 
+   const float egMisIDRate = 0.015;      /*take from CMS AN-2011/515 for now; can be computed with 
 					   Z*/
-   const float egMisIDRateErr = 0.002;   /*take from CMS AN-2010/294 for now; can be computed with 
+   const float egMisIDRateErr = 0.005;   /*take from CMS AN-2011/515 for now; can be computed with 
 					   Z*/
 
    //combined isolation histograms (sanity check)
@@ -1040,36 +1141,78 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    setHistogramOptions(ffR2VsMR, "M_{R} (GeV)", "R^{2}", "", kSumW2);
 
    //MET vs. di-EM ET vs. invariant mass histograms
-   TH3F ggMETVsDiEMETVsInvMass("ggMETVsDiEMETVsInvMass", "", nInvMassBins, invMassBins, 
-			       nDiEMETBins, diEMETBins, nMETBins, METBins);
-   TH3F ggMETVsDijetETVsInvMass("ggMETVsDijetETVsInvMass", "", nInvMassBins, invMassBins, 
-				nDiEMETBins, diEMETBins, nMETBins, METBins);
+   //need an additional 3 copies of the gg, ee, and ff histograms for the 3 Nj bins
+   vector<TH3F> ggMETVsDiEMETVsInvMass;
+   vector<TH3F> ggMETVsDijetETVsInvMass;
+   vector<TH3F> eeMETVsDiEMETVsInvMass;
+   vector<TH3F> eeLowSidebandMETVsDiEMETVsInvMass;
+   vector<TH3F> eeHighSidebandMETVsDiEMETVsInvMass;
+   vector<TH3F> ffMETVsDiEMETVsInvMass;
+   for (unsigned int iNjBin = 1; iNjBin <= nNjBins; ++iNjBin) {
+     ggMETVsDiEMETVsInvMass.push_back(TH3F(histName("ggMETVsDiEMETVsInvMass_", "NjBin", iNjBin).
+					   c_str(), "", nInvMassBins, invMassBins, nDiEMETBins, 
+					   diEMETBins, nMETBins, METBins));
+     ggMETVsDijetETVsInvMass.push_back(TH3F(histName("ggMETVsDijetETVsInvMass_", "NjBin", iNjBin).
+					    c_str(), "", nInvMassBins, invMassBins, nDiEMETBins, 
+					    diEMETBins, nMETBins, METBins));
+     eeMETVsDiEMETVsInvMass.push_back(TH3F(histName("eeMETVsDiEMETVsInvMass_", "NjBin", iNjBin).
+					   c_str(), "", nInvMassBins, invMassBins, nDiEMETBins, 
+					   diEMETBins, nMETBins, METBins));
+     eeLowSidebandMETVsDiEMETVsInvMass.
+       push_back(TH3F(histName("eeLowSidebandMETVsDiEMETVsInvMass_", "NjBin", iNjBin).c_str(), "", 
+		      nInvMassBins, invMassBins, nDiEMETBins, diEMETBins, nMETBins, METBins));
+     eeHighSidebandMETVsDiEMETVsInvMass.
+       push_back(TH3F(histName("eeHighSidebandMETVsDiEMETVsInvMass_", "NjBin", iNjBin).c_str(), "", 
+		      nInvMassBins, invMassBins, nDiEMETBins, diEMETBins, nMETBins, METBins));
+     ffMETVsDiEMETVsInvMass.push_back(TH3F(histName("ffMETVsDiEMETVsInvMass_", "NjBin", iNjBin).
+					   c_str(), "", nInvMassBins, invMassBins, nDiEMETBins, 
+					   diEMETBins, nMETBins, METBins));
+     setHistogramOptions(ggMETVsDiEMETVsInvMass[ggMETVsDiEMETVsInvMass.size() - 1], 
+			 "m_{#gamma#gamma} (GeV)", "Di-EM E_{T} (GeV)", "ME_{T} (GeV)", kSumW2);
+     setHistogramOptions(ggMETVsDijetETVsInvMass[ggMETVsDijetETVsInvMass.size() - 1], 
+			 "m_{#gamma#gamma} (GeV)", "Dijet E_{T} (GeV)", "ME_{T} (GeV)", kSumW2);
+     setHistogramOptions(eeMETVsDiEMETVsInvMass[eeMETVsDiEMETVsInvMass.size() - 1], 
+			 "m_{ee} (GeV)", "Di-EM E_{T} (GeV)", "ME_{T} (GeV)", kSumW2);
+     setHistogramOptions(eeLowSidebandMETVsDiEMETVsInvMass[eeLowSidebandMETVsDiEMETVsInvMass.
+							   size() - 1], "m_{ee} (GeV)", 
+			 "Di-EM E_{T} (GeV)", "ME_{T} (GeV)", kSumW2);
+     setHistogramOptions(eeHighSidebandMETVsDiEMETVsInvMass[eeHighSidebandMETVsDiEMETVsInvMass.
+							    size() - 1], "m_{ee} (GeV)", 
+			 "Di-EM E_{T} (GeV)", "ME_{T} (GeV)", kSumW2);
+     setHistogramOptions(ffMETVsDiEMETVsInvMass[ffMETVsDiEMETVsInvMass.size() - 1], 
+			 "m_{ff} (GeV)", "Di-EM E_{T} (GeV)", "ME_{T} (GeV)", kSumW2);
+   }
+   TH3F ggMETVsDiEMETVsInvMassTot("ggMETVsDiEMETVsInvMassTot", "", nInvMassBins, invMassBins, 
+				  nDiEMETBins, diEMETBins, nMETBins, METBins);
+   TH3F ggMETVsDijetETVsInvMassTot("ggMETVsDijetETVsInvMassTot", "", nInvMassBins, invMassBins, 
+				   nDiEMETBins, diEMETBins, nMETBins, METBins);
    TH3F egMETVsDiEMETVsInvMass("egMETVsDiEMETVsInvMass", "", nInvMassBins, invMassBins, 
 			       nDiEMETBins, diEMETBins, nMETBins, METBins);
-   TH3F eeMETVsDiEMETVsInvMass("eeMETVsDiEMETVsInvMass", "", nInvMassBins, invMassBins, 
-			       nDiEMETBins, diEMETBins, nMETBins, METBins);
-   TH3F eeLowSidebandMETVsDiEMETVsInvMass("eeLowSidebandMETVsDiEMETVsInvMass", "", nInvMassBins, 
-					  invMassBins, nDiEMETBins, diEMETBins, nMETBins, METBins);
-   TH3F eeHighSidebandMETVsDiEMETVsInvMass("eeHighSidebandMETVsDiEMETVsInvMass", "", nInvMassBins, 
-					   invMassBins, nDiEMETBins, diEMETBins, nMETBins, 
-					   METBins);
-   TH3F ffMETVsDiEMETVsInvMass("ffMETVsDiEMETVsInvMass", "", nInvMassBins, invMassBins, 
-			       nDiEMETBins, diEMETBins, nMETBins, METBins);
+   TH3F eeMETVsDiEMETVsInvMassTot("eeMETVsDiEMETVsInvMassTot", "", nInvMassBins, invMassBins, 
+				  nDiEMETBins, diEMETBins, nMETBins, METBins);
+   TH3F eeLowSidebandMETVsDiEMETVsInvMassTot("eeLowSidebandMETVsDiEMETVsInvMassTot", "", 
+					     nInvMassBins, invMassBins, nDiEMETBins, diEMETBins, 
+					     nMETBins, METBins);
+   TH3F eeHighSidebandMETVsDiEMETVsInvMassTot("eeHighSidebandMETVsDiEMETVsInvMassTot", "", 
+					      nInvMassBins, invMassBins, nDiEMETBins, diEMETBins, 
+					      nMETBins, METBins);
+   TH3F ffMETVsDiEMETVsInvMassTot("ffMETVsDiEMETVsInvMassTot", "", nInvMassBins, invMassBins, 
+				  nDiEMETBins, diEMETBins, nMETBins, METBins);
    TH3F eeffMETVsDiEMETVsInvMass("eeffMETVsDiEMETVsInvMass", "", nInvMassBins, invMassBins, 
 				 nDiEMETBins, diEMETBins, nMETBins, METBins);
-   setHistogramOptions(ggMETVsDiEMETVsInvMass, "m_{#gamma#gamma} (GeV)", "Di-EM E_{T} (GeV)", 
+   setHistogramOptions(ggMETVsDiEMETVsInvMassTot, "m_{#gamma#gamma} (GeV)", "Di-EM E_{T} (GeV)", 
 		       "ME_{T} (GeV)", kSumW2);
-   setHistogramOptions(ggMETVsDijetETVsInvMass, "m_{#gamma#gamma} (GeV)", "Dijet E_{T} (GeV)", 
+   setHistogramOptions(ggMETVsDijetETVsInvMassTot, "m_{#gamma#gamma} (GeV)", "Dijet E_{T} (GeV)", 
 		       "ME_{T} (GeV)", kSumW2);
    setHistogramOptions(egMETVsDiEMETVsInvMass, "m_{e#gamma} (GeV)", "Di-EM E_{T} (GeV)", 
 		       "ME_{T} (GeV)", kSumW2);
-   setHistogramOptions(eeMETVsDiEMETVsInvMass, "m_{ee} (GeV)", "Di-EM E_{T} (GeV)", 
+   setHistogramOptions(eeMETVsDiEMETVsInvMassTot, "m_{ee} (GeV)", "Di-EM E_{T} (GeV)", 
 		       "ME_{T} (GeV)", kSumW2);
-   setHistogramOptions(eeLowSidebandMETVsDiEMETVsInvMass, "m_{ee} (GeV)", "Di-EM E_{T} (GeV)", 
+   setHistogramOptions(eeLowSidebandMETVsDiEMETVsInvMassTot, "m_{ee} (GeV)", "Di-EM E_{T} (GeV)", 
 		       "ME_{T} (GeV)", kSumW2);
-   setHistogramOptions(eeHighSidebandMETVsDiEMETVsInvMass, "m_{ee} (GeV)", "Di-EM E_{T} (GeV)", 
+   setHistogramOptions(eeHighSidebandMETVsDiEMETVsInvMassTot, "m_{ee} (GeV)", "Di-EM E_{T} (GeV)", 
 		       "ME_{T} (GeV)", kSumW2);
-   setHistogramOptions(ffMETVsDiEMETVsInvMass, "m_{ff} (GeV)", "Di-EM E_{T} (GeV)", 
+   setHistogramOptions(ffMETVsDiEMETVsInvMassTot, "m_{ff} (GeV)", "Di-EM E_{T} (GeV)", 
 		       "ME_{T} (GeV)", kSumW2);
    setHistogramOptions(eeffMETVsDiEMETVsInvMass, "m_{ee} (GeV)", "ff Di-EM E_{T} (GeV)", 
 		       "ME_{T} (GeV)", kSumW2);
@@ -1148,7 +1291,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    setCanvasOptions(MRCanvas, "M_{R} (GeV)", "", 0.0, 500.0, 0.0, 10000.0, kSetGrid);
    setCanvasOptions(R2Canvas, "R^{2}", "", 0.0, 500.0, 0.0, 10000.0, kSetGrid);
 
-   //MET and di-EM ET vectors
+   //MET, di-EM ET, and Nj vectors
    VFLOAT eeMETVec;
    VFLOAT eeLowSidebandMETVec;
    VFLOAT eeHighSidebandMETVec;
@@ -1157,6 +1300,10 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    VFLOAT eeLowSidebandDiEMETVec;
    VFLOAT eeHighSidebandDiEMETVec;
    VFLOAT ffDiEMETVec;
+   VFLOAT eeNjVec;
+   VFLOAT eeLowSidebandNjVec;
+   VFLOAT eeHighSidebandNjVec;
+   VFLOAT ffNjVec;
 
    //vectors for the JES systematic
    vector<TLorentzVector> ggJ1UncorrP4;
@@ -1245,7 +1392,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 //      PUWeight = lumiWeights_.ITweight(nPV);
 
      //apply user trigger requirement and ECAL/HCAL filters
-     if (passUserHLT() && (susyEvent->PassesHcalNoiseFilter == 1) && (susyEvent->PassesEcalDeadCellFilter == 1)) {
+     if (passUserHLT() && (susyEvent->PassesHcalNoiseFilter == 1) && 
+	 (susyEvent->PassesEcalDeadCellFilter == 1)) {
 
        //fill MET vs. di-EM ET, invariant mass, rho, leading photon ET, and nPV histograms
        double invMass = -1.0;
@@ -1327,8 +1475,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	       }
 	     }
 	     else {
-	       cerr << "Error: susyCategory->getIsDeciding()->size() <= 0 in event " << (jentry + 1);
-	       cerr << ".  Assuming no deciding photons.\n";
+	       cerr << "Error: susyCategory->getIsDeciding()->size() <= 0 in event ";
+	       cerr << (jentry + 1) << ".  Assuming no deciding photons.\n";
 	     }
 	   }
 	   if ((count != 2) && (evtCategory != FAIL)) {
@@ -1340,9 +1488,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	     ...that do not overlap with the 2 selected EM objects
 	     ...in |eta| < 5.0
 	     ...passing PF jet ID*/
-	   if ((deltaR(corrP4.Eta(), corrP4.Phi(), EM1Eta, EM1Phi) > 0.8) && 
-	       (deltaR(corrP4.Eta(), corrP4.Phi(), EM2Eta, EM2Phi) > 0.8) && 
-	       (fabs(corrP4.Eta()) < 5.0)) {
+	   if ((deltaR(corrP4.Eta(), corrP4.Phi(), EM1Eta, EM1Phi) > 0.5) && 
+	       (deltaR(corrP4.Eta(), corrP4.Phi(), EM2Eta, EM2Phi) > 0.5) && 
+	       (fabs(corrP4.Eta()) <= 2.6)) {
 	     bool passed = false;
 	     if ((iJet->neutralHadronEnergy/iJet->momentum.Energy() < 0.99) && 
 		 (iJet->neutralEmEnergy/iJet->momentum.Energy() < 0.99) && 
@@ -1357,8 +1505,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	     if (passed) {
 	       ++nJets;
 	       jetET.push_back(corrP4.Et());
-	       if ((corrP4.Et() >= 30.0/*GeV*/) && (corrP4.Et() < 60.0/*GeV*/)) ++nJets30;
-	       else if (corrP4.Et() >= 60.0/*GeV*/) ++nJets60;
+	       if (corrP4.Et() >= 30.0/*GeV*/) ++nJets30;
+	       if (corrP4.Et() >= 60.0/*GeV*/) ++nJets60;
 	     }
 	   }
 	 }
@@ -1410,7 +1558,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 		   
 		   //JES is L1Fast scale only...
 		   float theJES = 1.0;
-		   TLorentzVector corrP4 = correctedJet4Momentum(iJet, "L1FastL2L3", theJES, "L2L3");
+		   TLorentzVector corrP4 = 
+		     correctedJet4Momentum(iJet, "L1FastL2L3", theJES, "L2L3");
 
 		   if (passJetFiducialCuts(corrP4, 10.0/*GeV*/, 2.6)/* && passPFJetID(iJet)*/ && 
 		       (deltaR(iJet->momentum.Eta(), iJet->momentum.Phi(), 
@@ -1442,8 +1591,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	       }
 	     }
 	     else {
-	       cerr << "Error: susyCategory->getIsDeciding()->size() <= 0 in event " << (jentry + 1);
-	       cerr << ".  Assuming no deciding photons.\n";
+	       cerr << "Error: susyCategory->getIsDeciding()->size() <= 0 in event ";
+	       cerr << (jentry + 1) << ".  Assuming no deciding photons.\n";
 	     }
 	   }
 	   if (combinedIso.size() != 2) {
@@ -1479,6 +1628,18 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 MR = sqrt(MR2);
        }
 
+       //determine Nj bin
+       unsigned int iNjBin = nNjBins;
+       for (unsigned int iNjBinBoundary = 0; iNjBinBoundary < nNjBins; ++iNjBinBoundary) {
+	 if ((nJets30 >= NjBins[iNjBinBoundary]) && 
+	     (nJets30 < NjBins[iNjBinBoundary + 1])) iNjBin = iNjBinBoundary;
+       }
+       if (iNjBin == nNjBins) {
+	 cerr << "Error: no Nj bin found for nJets30 = " << nJets30 << " in event ";
+	 cerr << (jentry + 1) << ".  Assuming nJets30 = 0.\n";
+	 iNjBin = 0;
+       }
+
        switch (evtCategory) {
        case GG:
 	 for (vector<float>::const_iterator i = combinedIso.begin(); i != combinedIso.end(); 
@@ -1498,7 +1659,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 ggDijetSize.Fill(dijetSize);
 	 ggDiEMSize.Fill(diEMSize);
 	 if (dijetSize == 2) {
-	   ggMETVsDijetETVsInvMass.Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	   ggMETVsDijetETVsInvMass[iNjBin].Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	   ggMETVsDijetETVsInvMassTot.Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
 	   ggDiEMETUniform.Fill(dijetPT, lumiWeight*PUWeight);
 	   ggJ1UncorrP4.push_back(uncorrP4[0]);
 	   ggJ2UncorrP4.push_back(uncorrP4[1]);
@@ -1513,19 +1675,22 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 
 	   //use di-EM ET when dijet ET is unavailable
 	   if (diEMSize == 2) {
-	     ggMETVsDijetETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     ggMETVsDijetETVsInvMass[iNjBin].Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     ggMETVsDijetETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     ggDiEMETUniform.Fill(diEMET, lumiWeight*PUWeight);
 	   }
 	   else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
 	 }
 	 if (diEMSize == 2) {
-	   ggMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	   ggMETVsDiEMETVsInvMass[iNjBin].Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	   ggMETVsDiEMETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	   ggR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
 	 }
 	 else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
 
 	 //print the event information to a file
-	 ggEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " " << susyEvent->luminosityBlockNumber << endl;
+	 ggEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 ggEvtFile << susyEvent->luminosityBlockNumber << endl;
 
 	 break;
        case EG:
@@ -1552,7 +1717,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
 
 	 //print the event information to a file
-	 egEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " " << susyEvent->luminosityBlockNumber << endl;
+	 egEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 egEvtFile << susyEvent->luminosityBlockNumber << endl;
 
 	 break;
        case EE:
@@ -1581,18 +1747,24 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 // 					 lumiWeight*PUWeight);
 // 	 }
 	 if (diEMSize == 2) {
-	   if ((invMass >= 71.0/*GeV*/) && (invMass < 81.0/*GeV*/)) { //new sidebands from Yeuh-Feng 6-Jan-12
-	     eeLowSidebandMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	   if ((invMass >= 71.0/*GeV*/) && (invMass < 81.0/*GeV*/)) { /*new sidebands from 
+									Yeuh-Feng 6-Jan-12*/
+	     eeLowSidebandMETVsDiEMETVsInvMass[iNjBin].Fill(invMass, diEMET, MET, 
+							    lumiWeight*PUWeight);
+	     eeLowSidebandMETVsDiEMETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     eeLowSidebandMETVec.push_back(MET);
 	     eeLowSidebandDiEMETVec.push_back(diEMET);
+	     eeLowSidebandNjVec.push_back(nJets30);
 	     eeLowSidebandMRVec.push_back(MR);
 	     eeLowSidebandR2Vec.push_back(R2);
 	   }
 	   if ((invMass >= 81.0/*GeV*/) && (invMass < 101.0/*GeV*/)) {
-	     eeMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     eeMETVsDiEMETVsInvMass[iNjBin].Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     eeMETVsDiEMETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     eeR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
 	     eeMETVec.push_back(MET);
 	     eeDiEMETVec.push_back(diEMET);
+	     eeNjVec.push_back(nJets30);
 	     eeMRVec.push_back(MR);
 	     eeR2Vec.push_back(R2);
 	     eeHTVsMET.Fill(MET, HT, lumiWeight*PUWeight);
@@ -1600,10 +1772,14 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	     eeMETVsNJets60.Fill(nJets60, MET, lumiWeight*PUWeight);
 	     eeDiEMETUniform.Fill(diEMET, lumiWeight*PUWeight);
 	   }
-	   if ((invMass >= 101.0/*GeV*/) && (invMass < 111.0/*GeV*/)) { //new sidebands from Yueh-Feng 6-Jan-12
-	     eeHighSidebandMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	   if ((invMass >= 101.0/*GeV*/) && (invMass < 111.0/*GeV*/)) { /*new sidebands from 
+									  Yueh-Feng 6-Jan-12*/
+	     eeHighSidebandMETVsDiEMETVsInvMass[iNjBin].Fill(invMass, diEMET, MET, 
+							     lumiWeight*PUWeight);
+	     eeHighSidebandMETVsDiEMETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     eeHighSidebandMETVec.push_back(MET);
 	     eeHighSidebandDiEMETVec.push_back(diEMET);
+	     eeHighSidebandNjVec.push_back(nJets30);
 	     eeHighSidebandMRVec.push_back(MR);
 	     eeHighSidebandR2Vec.push_back(R2);
 	   }
@@ -1611,8 +1787,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
 
 	 //print the event information to a file
-	 eeEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " " << susyEvent->luminosityBlockNumber << " " << invMass;
-	 eeEvtFile << endl;
+	 eeEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 eeEvtFile << susyEvent->luminosityBlockNumber << " " << invMass << endl;
 
 	 break;
        case FF:
@@ -1644,7 +1820,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 ffMETVsNJets30.Fill(nJets30, MET, lumiWeight*PUWeight);
 	 ffMETVsNJets60.Fill(nJets60, MET, lumiWeight*PUWeight);
 	 if (dijetSize == 2) {
-	   ffMETVsDiEMETVsInvMass.Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	   ffMETVsDiEMETVsInvMass[iNjBin].Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	   ffMETVsDiEMETVsInvMassTot.Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
 	   ffDiEMETVec.push_back(dijetPT);
 	   ffDiEMETUniform.Fill(dijetPT, lumiWeight*PUWeight);
 	   ffJ1UncorrP4.push_back(uncorrP4[0]);
@@ -1660,7 +1837,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 
 	   //use di-EM ET when dijet ET is unavailable
 	   if (diEMSize == 2) {
-	     ffMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     ffMETVsDiEMETVsInvMass[iNjBin].Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     ffMETVsDiEMETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     ffDiEMETVec.push_back(diEMET);
 	     ffDiEMETUniform.Fill(diEMET, lumiWeight*PUWeight);
 	   }
@@ -1668,6 +1846,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 }
 	 if (diEMSize == 2) {
 	   ffMETVec.push_back(MET);
+	   ffNjVec.push_back(nJets30);
 	   ffR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
 	   ffMRVec.push_back(MR);
 	   ffR2Vec.push_back(R2);
@@ -1675,7 +1854,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
 
 	 //print the event information to a file
-	 ffEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " " << susyEvent->luminosityBlockNumber << endl;
+	 ffEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 ffEvtFile << susyEvent->luminosityBlockNumber << endl;
 
 	 break;
        default:
@@ -1690,76 +1870,132 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    eeEvtFile.close();
    ffEvtFile.close();
 
-   //fill weights histograms
-   vector<TH1F*> eeDiEMETScaled;
-   vector<TH1F*> eeLowSidebandDiEMETScaled;
-   vector<TH1F*> eeHighSidebandDiEMETScaled;
-   vector<TH1F*> ffDiEMETScaled;
-   vector<TH1F*> eeWeights;
-   vector<TH1F*> eeLowSidebandWeights;
-   vector<TH1F*> eeHighSidebandWeights;
-   vector<TH1F*> ffWeights;
+   /*
+     - the innermost vector of TH1F*s has size 1 in this implementation (corresponds to the use of 
+     1 inclusive MET bin)
+     - the vector<vector<TH1F*> > is filled with 3 vector<TH1F*> for the 3 Nj bins
+   */
+   vector<vector<TH1F*>* > eeDiEMETScaled;
+   vector<vector<TH1F*>* > eeLowSidebandDiEMETScaled;
+   vector<vector<TH1F*>* > eeHighSidebandDiEMETScaled;
+   vector<vector<TH1F*>* > ffDiEMETScaled;
+   vector<vector<TH1F*> > eeWeights;
+   vector<vector<TH1F*> > eeLowSidebandWeights;
+   vector<vector<TH1F*> > eeHighSidebandWeights;
+   vector<vector<TH1F*> > ffWeights;
+
+   /*
+     - the vector<vector<vector<TH1F*>* > > is filled with 4 vector<vector<TH1F*>* > for the 4 
+     control samples ee, eeLowSideband, eeHighSideband, ff
+    */
+   vector<vector<vector<TH1F*>* >* > diEMETScaled;
+   diEMETScaled.push_back(&eeDiEMETScaled);
+   diEMETScaled.push_back(&eeLowSidebandDiEMETScaled);
+   diEMETScaled.push_back(&eeHighSidebandDiEMETScaled);
+   diEMETScaled.push_back(&ffDiEMETScaled);
+   vector<vector<vector<TH1F*> >* > weights;
+   weights.push_back(&eeWeights);
+   weights.push_back(&eeLowSidebandWeights);
+   weights.push_back(&eeHighSidebandWeights);
+   weights.push_back(&ffWeights);
+
+   /*
+     - the innermost vector of TH3F*s has size 3 for the 3 Nj bins
+     - the vector<vector<TH3F*> > is filled with 4 vector<TH3F*> for the 4 control samples ee, 
+     eeLowSideband, eeHighSideband, ff
+    */
+   vector<vector<TH3F>* > TH3Fs;
+   TH3Fs.push_back(&eeMETVsDiEMETVsInvMass);
+   TH3Fs.push_back(&eeLowSidebandMETVsDiEMETVsInvMass);
+   TH3Fs.push_back(&eeHighSidebandMETVsDiEMETVsInvMass);
+   TH3Fs.push_back(&ffMETVsDiEMETVsInvMass);
+
+   //names of 4 control samples
    vector<string> controlSamples;
    controlSamples.push_back("ee");
    controlSamples.push_back("eeLowSideband");
    controlSamples.push_back("eeHighSideband");
    controlSamples.push_back("ff");
-   vector<TH3F*> TH3Fs;
-   TH3Fs.push_back(&eeMETVsDiEMETVsInvMass);
-   TH3Fs.push_back(&eeLowSidebandMETVsDiEMETVsInvMass);
-   TH3Fs.push_back(&eeHighSidebandMETVsDiEMETVsInvMass);
-   TH3Fs.push_back(&ffMETVsDiEMETVsInvMass);
-   vector<vector<TH1F*>* > diEMETScaled;
-   diEMETScaled.push_back(&eeDiEMETScaled);
-   diEMETScaled.push_back(&eeLowSidebandDiEMETScaled);
-   diEMETScaled.push_back(&eeHighSidebandDiEMETScaled);
-   diEMETScaled.push_back(&ffDiEMETScaled);
-   vector<vector<TH1F*>* > weights;
-   weights.push_back(&eeWeights);
-   weights.push_back(&eeLowSidebandWeights);
-   weights.push_back(&eeHighSidebandWeights);
-   weights.push_back(&ffWeights);
+
+   //fill weights histograms
    for (vector<string>::const_iterator iControlSample = controlSamples.begin(); 
 	iControlSample != controlSamples.end(); ++iControlSample) {
-     TH1F* histDiEMETScaled = new TH1F(histName(*iControlSample, "DiEMETScaled_METBin", 
-						1).c_str(), "", nDiEMETBins, diEMETBins);
-     TH1F* histWeights = new TH1F(histName(*iControlSample, "Weights_METBin", 1).c_str(), "", 
-				  nDiEMETBins, diEMETBins);
-     setHistogramOptions(*histDiEMETScaled, "Di-EM E_{T} (GeV)", "", "", kSumW2);
-     setHistogramOptions(*histWeights, "Di-EM E_{T} (GeV)", "", "", kSumW2);
-     const unsigned int i = iControlSample - controlSamples.begin();
-     TH3F* pGG3D = &ggMETVsDiEMETVsInvMass;
-     if (*iControlSample == "ff") pGG3D = &ggMETVsDijetETVsInvMass;
-     fillWeightsHistograms(pGG3D->ProjectionY(histName("ggDiEMET_METBin", "", 1).c_str(), 0, -1, 
-					      0, -1, "e"), 
-			   TH3Fs[i]->ProjectionY(histName(*iControlSample, "DiEMET_METBin", 
-							  1).c_str(), 0, -1, 0, -1, "e"), 
-			   *histDiEMETScaled, *histWeights);
-     diEMETScaled[i]->push_back(histDiEMETScaled);
-     weights[i]->push_back(histWeights);
+     for (unsigned int iNjBin = 0; iNjBin < nNjBins; ++iNjBin) {
+       TH1F* histDiEMETScaled = new TH1F(histName(*iControlSample, "DiEMETScaled_METBin1_NjBin", 
+						  iNjBin + 1).c_str(), "", nDiEMETBins, diEMETBins);
+       TH1F* histWeights = new TH1F(histName(*iControlSample, "Weights_METBin1_NjBin", 
+					     iNjBin + 1).c_str(), "", nDiEMETBins, diEMETBins);
+       setHistogramOptions(*histDiEMETScaled, "Di-EM E_{T} (GeV)", "", "", kSumW2);
+       setHistogramOptions(*histWeights, "Di-EM E_{T} (GeV)", "", "", kSumW2);
+       const unsigned int i = iControlSample - controlSamples.begin();
+       TH3F* pGG3D = &ggMETVsDiEMETVsInvMass[iNjBin];
+       if (*iControlSample == "ff") pGG3D = &ggMETVsDijetETVsInvMass[iNjBin];
+       fillWeightsHistograms(pGG3D->
+			     ProjectionY(histName("ggDiEMET_METBin1_", "NjBin", 
+						  iNjBin + 1).c_str(), 0, -1, 0, -1, "e"), 
+			     TH3Fs[i]->at(iNjBin).
+			     ProjectionY(histName(*iControlSample, "DiEMET_METBin1_NjBin", 
+						  iNjBin + 1).c_str(), 0, -1, 0, -1, "e"), 
+			     *histDiEMETScaled, *histWeights);
+       diEMETScaled[i]->at(iNjBin)->push_back(histDiEMETScaled);
+       weights[i]->at(iNjBin).push_back(histWeights);
+     }
    }
 
-   //generate toys for calculating error due to JES for ff reweighting
-   vector<TH1F*> ffDijetWeightsToyDists;
-   estimateJESError(nToys, ffDijetWeightsToyDists, ffWeights, nDiEMETBins, diEMETBins, ffJ1JES, 
-		    ffJ2JES, ffJ1JESErr, ffJ2JESErr, ffJ1UncorrP4, ffJ2UncorrP4, ggJ1JES, ggJ2JES, 
-		    ggJ1JESErr, ggJ2JESErr, ggJ1UncorrP4, ggJ2UncorrP4);
+   //this whole section needs to be updated to account for Nj binning
+//    //generate toys for calculating error due to JES for ff reweighting
+//    vector<TH1F*> ffDijetWeightsToyDists;
+//    estimateJESError(nToys, ffDijetWeightsToyDists, ffWeights, nDiEMETBins, diEMETBins, ffJ1JES, 
+// 		    ffJ2JES, ffJ1JESErr, ffJ2JESErr, ffJ1UncorrP4, ffJ2UncorrP4, ggJ1JES, ggJ2JES, 
+// 		    ggJ1JESErr, ggJ2JESErr, ggJ1UncorrP4, ggJ2UncorrP4);
 
-   //add JES error in quadrature to statistical error of weights, bin by bin
-   format("Dijet pT bin", "Weight", "Stat. error", "JES error", "Total error");
-   for (unsigned int iDijetPTBin = 1; iDijetPTBin <= nDiEMETBins; ++iDijetPTBin) {
-     stringstream bin;
-     bin << diEMETBins[iDijetPTBin - 1] << "-" << diEMETBins[iDijetPTBin] << " GeV";
-     float statErrSquared = ffWeights[0]->GetBinError(iDijetPTBin);
-     float JESErrSquared = ffDijetWeightsToyDists[iDijetPTBin - 1]->GetRMS();
-     format(bin.str().c_str(), ffWeights[0]->GetBinContent(iDijetPTBin), statErrSquared, 
-	    JESErrSquared);
-     statErrSquared*=statErrSquared;
-     JESErrSquared*=JESErrSquared;
-//      ffWeights[0]->SetBinError(iDijetPTBin, sqrt(statErrSquared + JESErrSquared));
+//    //add JES error in quadrature to statistical error of weights, bin by bin
+//    format("Dijet pT bin", "Weight", "Stat. error", "JES error", "Total error");
+//    for (unsigned int iDijetPTBin = 1; iDijetPTBin <= nDiEMETBins; ++iDijetPTBin) {
+//      stringstream bin;
+//      bin << diEMETBins[iDijetPTBin - 1] << "-" << diEMETBins[iDijetPTBin] << " GeV";
+//      float statErrSquared = ffWeights[0]->GetBinError(iDijetPTBin);
+//      float JESErrSquared = ffDijetWeightsToyDists[iDijetPTBin - 1]->GetRMS();
+//      format(bin.str().c_str(), ffWeights[0]->GetBinContent(iDijetPTBin), statErrSquared, 
+// 	    JESErrSquared);
+//      statErrSquared*=statErrSquared;
+//      JESErrSquared*=JESErrSquared;
+// //      ffWeights[0]->SetBinError(iDijetPTBin, sqrt(statErrSquared + JESErrSquared));
+//    }
+
+   /*
+     - innermost vector<TH1F*> or vector<TH2F*> is filled 1000 times for the 1000 toys
+     - vector<vector<TH1F*> > or vector<vector<TH2F*> > is filled 3 times for the 3 Nj bins
+    */
+   vector<vector<TH1F*> > ffWeightsToys(3, vector<TH1F*>());
+   vector<vector<TH1F*> > eeWeightsToys(3, vector<TH1F*>());
+   vector<vector<TH1F*> > eeLowSidebandWeightsToys(3, vector<TH1F*>());
+   vector<vector<TH1F*> > eeHighSidebandWeightsToys(3, vector<TH1F*>());
+
+   /*
+     - innermost vector<TH1F*> is filled once per di-EM pT bin
+     - vector<vector<TH1F*> > is filled 3 times for the 3 Nj bins
+    */
+   vector<vector<TH1F*> > ffDiEMETToyDistsByBin(3, vector<TH1F*>());
+   vector<vector<TH1F*> > eeDiEMETToyDistsByBin(3, vector<TH1F*>());
+   vector<vector<TH1F*> > eeLowSidebandDiEMETToyDistsByBin(3, vector<TH1F*>());
+   vector<vector<TH1F*> > eeHighSidebandDiEMETToyDistsByBin(3, vector<TH1F*>());
+
+   //generate toy di-EM pT weights for calculating error due to MET/razor shape from reweighting
+   for (unsigned int iNjBin = 0; iNjBin < nNjBins; ++iNjBin) {
+     generateToys(ffDiEMETToyDistsByBin[iNjBin], ffWeightsToys[iNjBin], ffWeights[iNjBin], nToys, 
+		  histName("ff", "NjBin", iNjBin + 1), diEMETBins);
+     generateToys(eeDiEMETToyDistsByBin[iNjBin], eeWeightsToys[iNjBin], eeWeights[iNjBin], nToys, 
+		  histName("ee", "NjBin", iNjBin + 1), diEMETBins);
+     generateToys(eeLowSidebandDiEMETToyDistsByBin[iNjBin], eeLowSidebandWeightsToys[iNjBin], 
+		  eeLowSidebandWeights[iNjBin], nToys, 
+		  histName("eeLowSideband", "NjBin", iNjBin + 1), diEMETBins);
+     generateToys(eeHighSidebandDiEMETToyDistsByBin[iNjBin], eeHighSidebandWeightsToys[iNjBin], 
+		  eeHighSidebandWeights[iNjBin], nToys, 
+		  histName("eeHighSideband", "NjBin", iNjBin + 1), diEMETBins);
    }
 
-   //generate toys for calculating error due to MET/razor shape from reweighting
+   //vector<TH1F*> or vector<TH2F*> is filled 1000 times for the 1000 toys
    vector<TH1F*> ffFinalToy;
    vector<TH1F*> eeFinalToy;
    vector<TH1F*> eeLowSidebandFinalToy;
@@ -1768,38 +2004,34 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    vector<TH2F*> eeFinalToyRazor;
    vector<TH2F*> eeLowSidebandFinalToyRazor;
    vector<TH2F*> eeHighSidebandFinalToyRazor;
-   vector<TH1F*> ffDiEMETToyDistsByBin;
-   vector<TH1F*> eeDiEMETToyDistsByBin;
-   vector<TH1F*> eeLowSidebandDiEMETToyDistsByBin;
-   vector<TH1F*> eeHighSidebandDiEMETToyDistsByBin;
-   generateToys(ffFinalToy, ffFinalToyRazor, ffDiEMETToyDistsByBin, ffWeights, nToys, "ff", 
-		diEMETBins, nMETBins, METBins, nMRBins, MRBins, nR2Bins, R2Bins, ffMETVec, 
-		ffMRVec, ffR2Vec, ffDiEMETVec);
-   generateToys(eeFinalToy, eeFinalToyRazor, eeDiEMETToyDistsByBin, eeWeights, nToys, "ee", 
-		diEMETBins, nMETBins, METBins, nMRBins, MRBins, nR2Bins, R2Bins, eeMETVec, 
-		eeMRVec, eeR2Vec, eeDiEMETVec);
-   generateToys(eeLowSidebandFinalToy, eeLowSidebandFinalToyRazor, 
-		eeLowSidebandDiEMETToyDistsByBin, eeLowSidebandWeights, nToys, "eeLowSideband", 
-		diEMETBins, nMETBins, METBins, nMRBins, MRBins, nR2Bins, R2Bins, 
-		eeLowSidebandMETVec, eeLowSidebandMRVec, eeLowSidebandR2Vec, 
-		eeLowSidebandDiEMETVec);
-   generateToys(eeHighSidebandFinalToy, eeHighSidebandFinalToyRazor, 
-		eeHighSidebandDiEMETToyDistsByBin, eeHighSidebandWeights, nToys, "eeHighSideband", 
-		diEMETBins, nMETBins, METBins, nMRBins, MRBins, nR2Bins, R2Bins, 
-		eeHighSidebandMETVec, eeHighSidebandMRVec, eeHighSidebandR2Vec, 
-		eeHighSidebandDiEMETVec);
+
+   //use the toy di-EM pT weights to generate toy MET distributions
+   makeToyMETDists(nToys, "ff", nMETBins, METBins, nMRBins, MRBins, nR2Bins, R2Bins, ffMETVec, 
+		   ffMRVec, ffR2Vec, ffDiEMETVec, ffNjVec, nNjBins, NjBins, ffWeightsToys, 
+		   ffFinalToy, ffFinalToyRazor);
+   makeToyMETDists(nToys, "ee", nMETBins, METBins, nMRBins, MRBins, nR2Bins, R2Bins, eeMETVec, 
+		   eeMRVec, eeR2Vec, eeDiEMETVec, eeNjVec, nNjBins, NjBins, eeWeightsToys, 
+		   eeFinalToy, eeFinalToyRazor);
+   makeToyMETDists(nToys, "eeLowSideband", nMETBins, METBins, nMRBins, MRBins, nR2Bins, R2Bins, 
+		   eeLowSidebandMETVec, eeLowSidebandMRVec, eeLowSidebandR2Vec, 
+		   eeLowSidebandDiEMETVec, eeLowSidebandNjVec, nNjBins, NjBins, 
+		   eeLowSidebandWeightsToys, eeLowSidebandFinalToy, eeLowSidebandFinalToyRazor);
+   makeToyMETDists(nToys, "eeHighSideband", nMETBins, METBins, nMRBins, MRBins, nR2Bins, R2Bins, 
+		   eeHighSidebandMETVec, eeHighSidebandMRVec, eeHighSidebandR2Vec, 
+		   eeHighSidebandDiEMETVec, eeHighSidebandNjVec, nNjBins, NjBins, 
+		   eeHighSidebandWeightsToys, eeHighSidebandFinalToy, eeHighSidebandFinalToyRazor);
 
    //reweight ee and ff MET/razor histograms
    reweightDefault(eeLowSidebandMETVec, eeLowSidebandMRVec, eeLowSidebandR2Vec, 
-		   eeLowSidebandDiEMETVec, *eeLowSidebandWeights[0], &eeLowSidebandFinal, 
-		   &eeLowSidebandR2VsMRFinal);
-   reweightDefault(eeMETVec, eeMRVec, eeR2Vec, eeDiEMETVec, *eeWeights[0], &eeFinal, 
-		   &eeR2VsMRFinal);
+		   eeLowSidebandDiEMETVec, eeLowSidebandNjVec, nNjBins, NjBins, 
+		   eeLowSidebandWeights, &eeLowSidebandFinal, &eeLowSidebandR2VsMRFinal);
+   reweightDefault(eeMETVec, eeMRVec, eeR2Vec, eeDiEMETVec, eeNjVec, nNjBins, NjBins, eeWeights, 
+		   &eeFinal, &eeR2VsMRFinal);
    reweightDefault(eeHighSidebandMETVec, eeHighSidebandMRVec, eeHighSidebandR2Vec, 
-		   eeHighSidebandDiEMETVec, *eeHighSidebandWeights[0], &eeHighSidebandFinal, 
-		   &eeHighSidebandR2VsMRFinal);
-   reweightDefault(ffMETVec, ffMRVec, ffR2Vec, ffDiEMETVec, *ffWeights[0], &ffFinal, 
-		   &ffR2VsMRFinal);
+		   eeHighSidebandDiEMETVec, eeHighSidebandNjVec, nNjBins, NjBins, 
+		   eeHighSidebandWeights, &eeHighSidebandFinal, &eeHighSidebandR2VsMRFinal);
+   reweightDefault(ffMETVec, ffMRVec, ffR2Vec, ffDiEMETVec, ffNjVec, nNjBins, NjBins, ffWeights, 
+		   &ffFinal, &ffR2VsMRFinal);
 
    //make individual histograms of MET/razor toy distributions, 1 per MET/razor bin
    vector<TH1F*> ffMETToyDistsByBin;
@@ -1861,20 +2093,24 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    for (unsigned int iMETBin = 1; iMETBin <= nMETBins; ++iMETBin) {
      cout << "MET bin " << iMETBin << endl;
      cout << "eeLowSideband\n";
-     cout << "Mean of toys: " << eeLowSidebandMETToyDistsByBin[iMETBin - 1]->GetMean() << ", observed no. events: ";
-     cout << eeLowSidebandFinal.GetBinContent(iMETBin) << ", RMS of toys: " << eeLowSidebandMETToyDistsByBin[iMETBin - 1]->GetRMS() << endl;
-     //make canvases with TLines at the observed point if need be
-//      TLine obs(eeLowSidebandFinal.GetBinContent(iMETBin), gPad->getUymin(), eeLowSidebandFinal.GetBinContent(iMETBin), gPad->GetUymax());
+     cout << "Mean of toys: " << eeLowSidebandMETToyDistsByBin[iMETBin - 1]->GetMean();
+     cout << ", observed no. events: " << eeLowSidebandFinal.GetBinContent(iMETBin);
+     cout << ", RMS of toys: " << eeLowSidebandMETToyDistsByBin[iMETBin - 1]->GetRMS() << endl;
+     // //make canvases with TLines at the observed point if need be
+     // TLine obs(eeLowSidebandFinal.GetBinContent(iMETBin), gPad->getUymin(), 
+     // 	       eeLowSidebandFinal.GetBinContent(iMETBin), gPad->GetUymax());
      cout << "eeHighSideband\n";
-     cout << "Mean of toys: " << eeHighSidebandMETToyDistsByBin[iMETBin - 1]->GetMean() << ", observed no. events: ";
-     cout << eeHighSidebandFinal.GetBinContent(iMETBin) << ", RMS of toys: " << eeHighSidebandMETToyDistsByBin[iMETBin - 1]->GetRMS();
-     cout << endl;
+     cout << "Mean of toys: " << eeHighSidebandMETToyDistsByBin[iMETBin - 1]->GetMean();
+     cout << ", observed no. events: " << eeHighSidebandFinal.GetBinContent(iMETBin);
+     cout << ", RMS of toys: " << eeHighSidebandMETToyDistsByBin[iMETBin - 1]->GetRMS() << endl;
      cout << "ee\n";
-     cout << "Mean of toys: " << eeMETToyDistsByBin[iMETBin - 1]->GetMean() << ", observed no. events: ";
-     cout << eeFinal.GetBinContent(iMETBin) << ", RMS of toys: " << eeMETToyDistsByBin[iMETBin - 1]->GetRMS() << endl;
+     cout << "Mean of toys: " << eeMETToyDistsByBin[iMETBin - 1]->GetMean();
+     cout << ", observed no. events: " << eeFinal.GetBinContent(iMETBin) << ", RMS of toys: ";
+     cout << eeMETToyDistsByBin[iMETBin - 1]->GetRMS() << endl;
      cout << "ff\n";
-     cout << "Mean of toys: " << ffMETToyDistsByBin[iMETBin - 1]->GetMean() << ", observed no. events: ";
-     cout << ffFinal.GetBinContent(iMETBin) << ", RMS of toys: " << ffMETToyDistsByBin[iMETBin - 1]->GetRMS() << endl;
+     cout << "Mean of toys: " << ffMETToyDistsByBin[iMETBin - 1]->GetMean();
+     cout << ", observed no. events: " << ffFinal.GetBinContent(iMETBin) << ", RMS of toys: ";
+     cout << ffMETToyDistsByBin[iMETBin - 1]->GetRMS() << endl;
      cout << "--------------------";
    }
 
@@ -1886,9 +2122,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    float eeNormErrSquared = 0.0;
    float ffNormErrSquared = 0.0;
    const float eeNorm = 
-     normAndErrorSquared(ggMETVsDiEMETVsInvMass, eeFinal, egMET, maxNormBin, eeNormErrSquared);
+     normAndErrorSquared(ggMETVsDiEMETVsInvMassTot, eeFinal, egMET, maxNormBin, eeNormErrSquared);
    const float ffNorm = 
-     normAndErrorSquared(ggMETVsDiEMETVsInvMass, ffFinal, egMET, maxNormBin, ffNormErrSquared);
+     normAndErrorSquared(ggMETVsDiEMETVsInvMassTot, ffFinal, egMET, maxNormBin, ffNormErrSquared);
    eeFinal.Scale(eeNorm);
    ffFinal.Scale(ffNorm);
 
@@ -1931,8 +2167,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    makeFinalCanvas(dynamic_cast<TH1*>(&eeFinal), 4, 2, 3005, 4, 0, 1, "E2");
    makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, 1, "E2SAME");
    makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, 1, "HISTSAME");
-   makeFinalCanvas(dynamic_cast<TH1*>(ggMETVsDiEMETVsInvMass.ProjectionZ("ggMET", 0, -1, 0, -1, 
-									 "e")), 1, 1, 0, 0, 1, 1, 
+   makeFinalCanvas(dynamic_cast<TH1*>(ggMETVsDiEMETVsInvMassTot.
+				      ProjectionZ("ggMET", 0, -1, 0, -1, "e")), 1, 1, 0, 0, 1, 1, 
 		   "SAME");
 
    //make final razor canvases
@@ -1975,6 +2211,14 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    deallocateMemory(eeLowSidebandWeights);
    deallocateMemory(eeHighSidebandWeights);
    deallocateMemory(ffWeights);
+   deallocateMemory(ffDiEMETToyDistsByBin);
+   deallocateMemory(eeDiEMETToyDistsByBin);
+   deallocateMemory(eeLowSidebandDiEMETToyDistsByBin);
+   deallocateMemory(eeHighSidebandDiEMETToyDistsByBin);
+   deallocateMemory(ffWeightsToys);
+   deallocateMemory(eeWeightsToys);
+   deallocateMemory(eeLowSidebandWeightsToys);
+   deallocateMemory(eeHighSidebandWeightsToys);
    deallocateMemory(ffFinalToy);
    deallocateMemory(eeFinalToy);
    deallocateMemory(eeLowSidebandFinalToy);
@@ -1991,10 +2235,6 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    deallocateMemory(eeRazorToyDistsByBin);
    deallocateMemory(eeLowSidebandRazorToyDistsByBin);
    deallocateMemory(eeHighSidebandRazorToyDistsByBin);
-   deallocateMemory(ffDiEMETToyDistsByBin);
-   deallocateMemory(eeDiEMETToyDistsByBin);
-   deallocateMemory(eeLowSidebandDiEMETToyDistsByBin);
-   deallocateMemory(eeHighSidebandDiEMETToyDistsByBin);
    out.Close();
 }
 

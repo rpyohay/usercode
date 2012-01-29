@@ -131,6 +131,9 @@ public :
    void reweightDefault(const VFLOAT&, const VFLOAT&, const TH1F&, TH1F*) const;
    void reweightDefault(const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, const TH1F&, 
 			TH1F*, TH2F*) const;
+   void reweightDefault(const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, 
+			const unsigned int, const Double_t*, const vector<vector<TH1F*> >&, TH1F*, 
+			TH2F*, const unsigned int iToy = 0) const;
    void reweightBinned(const TH2F&, const TH1F&, TH1F*, const unsigned int) const;
    void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
 		     const string&, const Double_t*, const unsigned int, const Double_t*, 
@@ -141,8 +144,15 @@ public :
 		     const unsigned int, const Double_t*, const VFLOAT&, const VFLOAT&, 
 		     const VFLOAT&, const VFLOAT&) const;
    void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
+		     const string&, const Double_t*) const;
+   void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
 		     const string&, const Double_t*, const unsigned int, const Double_t*, 
 		     const TH2F&) const;
+   void makeToyMETDists(const unsigned int, const string&, const unsigned int, const Double_t*, 
+			const unsigned int, const Double_t*, const unsigned int, const Double_t*, 
+			const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, 
+			const unsigned int, const Double_t*, const vector<vector<TH1F*> >&, 
+			vector<TH1F*>&, vector<TH2F*>&) const;
    void generateToyDijets(const unsigned int, TRandom&, const vector<float>&, 
 			  const vector<float>&, const vector<float>&, const vector<float>&, 
 			  const vector<TLorentzVector>&, const vector<TLorentzVector>&, 
@@ -171,6 +181,16 @@ public :
        for (typename vector<T>::iterator i = vec.begin(); i != vec.end(); ++i) {
 	 delete *i;
 	 *i = NULL;
+       }
+     }
+   template<typename T>
+     void deallocateMemory(vector<vector<T> >& vec) const
+     {
+       for (typename vector<vector<T> >::iterator i = vec.begin(); i != vec.end(); ++i) {
+	 for (typename vector<T>::iterator j = i->begin(); j != i->end(); ++j) {
+	   delete *j;
+	   *j = NULL;
+	 }
        }
      }
    void printDiObjectErrorMessage(const unsigned int, const string&, const int, 
