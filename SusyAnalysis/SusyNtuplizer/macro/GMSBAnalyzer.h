@@ -115,7 +115,7 @@ public :
      }
    void setCanvasOptions(TCanvas&, const string&, const string&, const float, const float, 
 			 const float, const float, const bool setGrid = false) const;
-   float fillWeightsHistograms(const TH1D*, TH1D*, TH1F&, TH1F&) const;
+   float fillWeightsHistograms(const TH1D*, TH1D*, TH1F&, TH1F&, const float) const;
    string histName(const string&, const string&, const unsigned int) const;
    void format(const char*, const char*, const char*, const char*, const char*) const;
    void format(const char*, const float, const float, const float) const;
@@ -128,21 +128,21 @@ public :
 				       const Int_t nMETBins = 1) const;
    void makeToyDiEMETWeightsHistograms(TRandom3&, TH1F&, const TH1F&, vector<TH1F*>&, 
 				       const unsigned int iMETBin = 1) const;
-   void reweightDefault(const VFLOAT&, const VFLOAT&, const TH1F&, TH1F*) const;
+   void reweightDefault(const VFLOAT&, const VFLOAT&, const TH1F&, TH1F*, const VFLOAT&, const VFLOAT&) const;
    void reweightDefault(const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, const TH1F&, 
-			TH1F*, TH2F*) const;
+			TH1F*, TH2F*, const VFLOAT&, const VFLOAT&) const;
    void reweightDefault(const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, 
 			const unsigned int, const Double_t*, const vector<vector<TH1F*> >&, TH1F*, 
-			TH2F*, const unsigned int iToy = 0) const;
+			TH2F*, const VFLOAT&, const VFLOAT&, const unsigned int iToy = 0) const;
    void reweightBinned(const TH2F&, const TH1F&, TH1F*, const unsigned int) const;
    void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
 		     const string&, const Double_t*, const unsigned int, const Double_t*, 
-		     const VFLOAT&, const VFLOAT&) const;
+		     const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&) const;
    void generateToys(vector<TH1F*>&, vector<TH2F*>&, vector<TH1F*>&, const vector<TH1F*>, 
 		     const unsigned int, const string&, const Double_t*, 
 		     const unsigned int, const Double_t*, const unsigned int, const Double_t*, 
 		     const unsigned int, const Double_t*, const VFLOAT&, const VFLOAT&, 
-		     const VFLOAT&, const VFLOAT&) const;
+		     const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&) const;
    void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
 		     const string&, const Double_t*) const;
    void generateToys(vector<TH1F*>&, vector<TH1F*>&, const vector<TH1F*>, const unsigned int, 
@@ -152,7 +152,7 @@ public :
 			const unsigned int, const Double_t*, const unsigned int, const Double_t*, 
 			const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, const VFLOAT&, 
 			const unsigned int, const Double_t*, const vector<vector<TH1F*> >&, 
-			vector<TH1F*>&, vector<TH2F*>&) const;
+			vector<TH1F*>&, vector<TH2F*>&, const VFLOAT&, const VFLOAT&) const;
    void generateToyDijets(const unsigned int, TRandom&, const vector<float>&, 
 			  const vector<float>&, const vector<float>&, const vector<float>&, 
 			  const vector<TLorentzVector>&, const vector<TLorentzVector>&, 
