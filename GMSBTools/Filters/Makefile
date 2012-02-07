@@ -7,7 +7,7 @@
 ################################################################################
 
 ifeq ($(STANDALONE_DIR),)
-	standalone_dir:=/Users/rachelyohay/RA3/src/GMSBTools
+	standalone_dir:=..
 	export STANDALONE_DIR:=$(standalone_dir)
 endif
 
@@ -23,7 +23,7 @@ CXX          = g++
 
 ROOTCXXFLAGS = $(shell $(ROOTSYS)/bin/root-config --cflags)
 INC          = $(shell $(ROOTSYS)/bin/root-config --incdir)
-CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I/Users/rachelyohay/RA3/src $(ROOTCXXFLAGS)
+CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I../.. $(ROOTCXXFLAGS)
 
 ROOTLIBS     = $(shell $(ROOTSYS)/bin/root-config --libs)
 
@@ -60,7 +60,7 @@ $(TMPDIR)/Categorizer.o: interface/Categorizer.h \
 	-o $(TMPDIR)/Categorizer.o 
 
 $(TMPDIR)/Filters_dict.o: $(TMPDIR)/Filters_dict.cc
-	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I/Users/rachelyohay/RA3/src -I$(INC) -c $(TMPDIR)/Filters_dict.cc \
+	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I../.. -I$(INC) -c $(TMPDIR)/Filters_dict.cc \
 	-o $(TMPDIR)/Filters_dict.o
 
 $(TMPDIR)/Filters_dict.cc: ../Filters/interface/Categorizer.h \
@@ -68,7 +68,7 @@ $(TMPDIR)/Filters_dict.cc: ../Filters/interface/Categorizer.h \
 	rm -rf $(TMPDIR)/Filters_dict.h
 	rm -rf $(TMPDIR)/Filters_dict.cc
 	$(ROOTSYS)/bin/rootcint -f $(TMPDIR)/Filters_dict.cc \
-	-c -I$(TMPDIR) -I/Users/rachelyohay/RA3/src -I$(INC) \
+	-c -I$(TMPDIR) -I../.. -I$(INC) \
 	../Filters/interface/Categorizer.h \
 	../Filters/interface/Typedefs.h \
 	../Filters/interface/Linkdef.h
