@@ -7,7 +7,7 @@
 ################################################################################
 
 ifeq ($(STANDALONE_DIR),)
-	standalone_dir:=/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/PhysicsTools
+	standalone_dir:=..
 	export STANDALONE_DIR:=$(standalone_dir)
 endif
 
@@ -23,7 +23,7 @@ CXX          = g++
 
 ROOTCXXFLAGS = $(shell $(ROOTSYS)/bin/root-config --cflags)
 INC          = $(shell $(ROOTSYS)/bin/root-config --incdir)
-CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src $(ROOTCXXFLAGS)
+CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I../.. $(ROOTCXXFLAGS)
 
 ROOTLIBS     = $(shell $(ROOTSYS)/bin/root-config --libs)
 
@@ -58,7 +58,7 @@ $(TMPDIR)/LumiReweightingStandAlone.o: interface/LumiReweightingStandAlone.h \
 	-o $(TMPDIR)/LumiReweightingStandAlone.o 
 
 $(TMPDIR)/Utilities_dict.o: $(TMPDIR)/Utilities_dict.cc
-	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src -c $(TMPDIR)/Utilities_dict.cc \
+	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I../.. -c $(TMPDIR)/Utilities_dict.cc \
 	-o $(TMPDIR)/Utilities_dict.o
 
 $(TMPDIR)/Utilities_dict.cc: ../Utilities/interface/LumiReweightingStandAlone.h \
@@ -66,6 +66,6 @@ $(TMPDIR)/Utilities_dict.cc: ../Utilities/interface/LumiReweightingStandAlone.h 
 	rm -rf $(TMPDIR)/Utilities_dict.h
 	rm -rf $(TMPDIR)/Utilities_dict.cc
 	$(ROOTSYS)/bin/rootcint -f $(TMPDIR)/Utilities_dict.cc \
-	-c -I$(TMPDIR) -I/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src \
+	-c -I$(TMPDIR) -I../.. \
 	../Utilities/interface/LumiReweightingStandAlone.h \
 	../Utilities/interface/Linkdef.h

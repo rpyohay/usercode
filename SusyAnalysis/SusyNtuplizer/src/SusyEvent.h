@@ -12,7 +12,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyEvent.h,v 1.16 2011/11/01 22:14:51 dwjang Exp $
+// $Id: SusyEvent.h,v 1.4 2011/11/28 10:24:26 yohay Exp $
 //
 
 #ifndef SusyEvent_h
@@ -669,9 +669,6 @@ namespace susy {
     Float_t                                     intgRecLumi;
     UChar_t                                     cosmicFlag; // empty for now
     Float_t                                     rho; // from kt6PFJets
-    Float_t                                     rhoBarrel; // from kt6PFJetsRhoBarrelOnly
-    Bool_t                                      PassesHcalNoiseFilter;
-    Bool_t                                      PassesEcalDeadCellFilter;
 
     TVector3                                    beamSpot;
 
@@ -695,7 +692,7 @@ namespace susy {
     std::vector<susy::Track>                    generalTracks;   // not stored by default
 
     // generated information. Valid only for isRealData == 0, i.e. MC
-    susy::PUSummaryInfoCollection               pu; //PU summary info
+    susy::PUSummaryInfoCollection               PU; //PU summary info
     std::vector<TVector3>                       simVertices; // Geant vertex, primary only, dropped for 2011B analysis
     std::vector<susy::Particle>                 genParticles;
     std::map<TString, Float_t>                  gridParams; // pairs of parameter name and value

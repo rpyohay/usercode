@@ -77,7 +77,7 @@ void ana_standalone() {
   pars.HLT.push_back("HLT_Photon36_R9Id_Photon22_CaloIdL_IsoVL");
   pars.HLT.push_back("HLT_Photon36_R9Id_Photon22_R9Id");
   pars.nEvts = -1;
-  pars.JSON = "/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/JSON_toRun180252.txt";
+  pars.JSON = "/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/JSON_toRun180252.txt";
 //   pars.JSON = "";
   pars.outputFile = "/data2/yohay/RA3/4684pb-1_categorized_18-Jan-12_skim.root";
   pars.recategorize = false;
