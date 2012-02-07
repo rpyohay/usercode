@@ -21,6 +21,7 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <TH1F.h>
+#include <TRegexp.h>
 
 #include <map>
 #include <set>
@@ -108,8 +109,9 @@ void SusyEventAnalyzer::Loop() {
   int nFiltered = 0;
   TTree* filterTree = 0;
 
+  TFile* filterFile = NULL;
   if(enableFilter) {
-    TFile* filterFile = new TFile(filtered_file_name,"RECREATE");
+    filterFile = new TFile(filtered_file_name,"RECREATE");
     filterTree = (TTree*) fChain->GetTree()->CloneTree(0);
     filterTree->SetAutoSave();
   }
@@ -502,3 +504,63 @@ void SusyEventAnalyzer::Loop() {
 
 }
 
+void SusyEventAnalyzer::plot(const string& outputFile)
+{
+  if (fChain == 0) return;
+
+  //open file
+  TFile out(outputFile.c_str(), "RECREATE");
+  out.cd();
+
+  //pThat histogram
+  TH1F pTHat("pTHat", "", 250, 0.0, 500.0);
+  setHistogramOptions(pTHat, "#hat{p}_{T} (GeV)", "", "", true);
+
+  //MET histogram
+  TH1F MET("MET", "", 250, 0.0, 500.0);
+  setHistogramOptions(MET, "ME_{T} (GeV)", "", "", true);
+
+  //set user-specified number of entries to process
+  Long64_t nentries = fChain->GetEntriesFast();
+  if (processNEvents != -1) nentries = processNEvents;
+
+  //loop over events
+  Long64_t nbytes = 0, nb = 0;
+  for (Long64_t jentry=0; jentry<nentries;jentry++) {
+    Long64_t ientry = LoadTree(jentry);
+    if (ientry < 0) break;
+    nb = fChain->GetEntry(jentry);   nbytes += nb;
+    if (((jentry + 1) % 10000) == 0) cout << "Event " << (jentry + 1) << endl;
+
+    //get int. lumi weight for this dataset
+    TString fileName(fChain->GetCurrentFile()->GetName());
+    TString dataset(fileName("diphoton_[-0-9]*"));
+    string datasetString((const char*)dataset);
+    map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
+    float lumiWeight = 1.0;
+    if (iDataset != fileMap_.end()) lumiWeight = weight_[iDataset->second];
+    else {
+      /*once comfortable with MC dataset names, remove this and just assume the file is data and 
+	gets weight 1.0*/
+      cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
+    }
+
+    //fill pThat histogram
+    float evtPTHat = -1.0;
+    map<TString, Float_t>::const_iterator iPTHat = event->gridParams.find("ptHat");
+    if (iPTHat != event->gridParams.end()) evtPTHat = iPTHat->second;
+    pTHat.Fill(evtPTHat, lumiWeight);
+
+    //fill MET histogram
+    float evtMET = -1.0;
+    map<TString, susy::MET>::const_iterator iMET = event->metMap.find("pfMet");
+    if (iMET != event->metMap.end()) {
+      evtMET = iMET->second.met();
+    }
+    MET.Fill(evtMET, lumiWeight);
+  }
+
+  //close
+  out.Write();
+  out.Close();
+}

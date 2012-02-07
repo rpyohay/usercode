@@ -14,48 +14,68 @@
 
 void ana(TString ds="relval", TString physics="ttbar") {
 
-  gSystem->Load("libSusyEvent.so");
-
-  // Look ../jec/JetMETObjects/README
+  //precompiled and to-be-compiled libraries
+  gSystem->Load("libSusy.so");
   gSystem->Load("../jec/lib/libJetMETObjects.so");
+  gSystem->Load("../../../GMSBTools/lib/libFilters.so");
+//   gROOT->LoadMacro("SusyEventPrinter.cc++");
+  gSystem->Load("SusyEventPrinter_cc.so");
+  gSystem->SetIncludePath("-I../../..");
+  gROOT->LoadMacro("SusyEventAnalyzer.cc++");
 
-  // Printing utility for ntuple variables
-  gROOT->LoadMacro("SusyEventPrinter.cc+");
+  //ntuples to run over
+  vector<string> input;
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_10_1_flU.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_1_1_Dz4.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_2_2_hJ4.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_3_1_RDQ.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_4_2_j8E.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_5_2_Fj5.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_6_1_6kI.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_7_2_JW1.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_8_2_Aam.root");
+  input.push_back("/data2/yohay/RA3/diphoton_10-25/susyEvent_9_1_ZtH.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_10_1_Kee.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_1_1_jAk.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_2_1_jxR.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_3_1_pAZ.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_4_1_H56.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_5_1_8XS.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_6_1_bZy.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_7_1_hti.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_8_2_Hyr.root");
+  input.push_back("/data2/yohay/RA3/diphoton_25-250/susyEvent_9_2_EHt.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_10_1_itX.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_11_1_kvU.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_1_1_J6F.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_2_1_iun.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_3_1_SPV.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_4_1_p43.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_5_1_KLb.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_6_1_JBN.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_7_1_D5Z.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_8_2_rs7.root");
+  input.push_back("/data2/yohay/RA3/diphoton_250/susyEvent_9_1_Vvk.root");
+  TChain* tree = new TChain("susyTree");
+  for (vector<string>::const_iterator iIn = input.begin(); iIn != input.end(); 
+       ++iIn) { tree->Add((*iIn).c_str()); }
 
-  // Main analysis code
-  gROOT->LoadMacro("SusyEventAnalyzer.cc+");
+  //analyzer object
+  SusyEventAnalyzer analyzer(tree);
+  analyzer.SetProcessNEvents(-1);
+  analyzer.setIntLumi(4684.0/*pb^-1*/);
+  analyzer.setFileMapEntry("diphoton_10-25", 236.4/*pb*/, 507554);
+  analyzer.setFileMapEntry("diphoton_25-250", 22.37/*pb*/, 532864);
+  analyzer.setFileMapEntry("diphoton_250", 0.008072/*pb*/, 526240);
 
-  // chain of inputs
-  TChain* chain = new TChain("susyTree");
-  chain->Add("../susyEvents.root");
-  //chain->Add("dcap:///pnfs/cms/WAX/resilient/lpcpjm/SusyNtuples/cms423v2_v1/Run2011A-May10ReReco-v1/Photon/susyEvent_1_1_dLs.root");
-
-  SusyEventAnalyzer* sea = new SusyEventAnalyzer(chain);
-
-  // configuration parameters
-  // any values given here will replace the default values
-  sea->SetDataset(physics+"_"+ds);        // dataset name
-  sea->SetPrintInterval(1e4);             // print frequency
-  sea->SetPrintLevel(0);                  // print level for event contents
-  sea->SetUseTrigger(false);
-  sea->AddHltName("HLT_Photon36_CaloIdL_Photon22_CaloIdL");  // add HLT trigger path name
-  sea->AddHltName("HLT_Photon32_CaloIdL_Photon26_CaloIdL");  // add HLT trigger path name
-  sea->SetFilter(false);                  // filter events passing final cuts
-  sea->SetProcessNEvents(10);             // number of events to be processed
-
-  // as an example -- add your favorite Json here.  More than one can be "Include"ed
-  //  sea->IncludeAJson("Cert_161079-161352_7TeV_PromptReco_Collisions11_JSON_noESpbl_v2.txt");
-  //sea->IncludeAJson("anotherJSON.txt");
-
+  //run
   TStopwatch ts;
-
   ts.Start();
-
-  sea->Loop();
-
+  analyzer.plot("/data2/yohay/RA3/pThat_Summer11PythiaDiPhotonBorn_noCuts.root");
   ts.Stop();
-
   std::cout << "RealTime : " << ts.RealTime()/60.0 << " minutes" << std::endl;
   std::cout << "CPUTime  : " << ts.CpuTime()/60.0 << " minutes" << std::endl;
 
+  //clean up
+  delete tree;
 }

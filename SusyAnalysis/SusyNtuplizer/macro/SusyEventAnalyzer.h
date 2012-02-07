@@ -68,6 +68,53 @@ class SusyEventAnalyzer {
   void SetFilter(bool v) {               enableFilter = v; }
   void SetFilteredFileName(TString v) {  filtered_file_name = v; }
 
+  //functions added by Rachel
+  template<typename T>
+  void setHistogramOptions(T& hist, const string& xAxisTitle, const string& yAxisTitle, 
+			   const string& zAxisTitle, const bool sumW2 = false) const
+  {
+    hist.GetXaxis()->SetTitle(xAxisTitle.c_str());
+    hist.GetYaxis()->SetTitle(yAxisTitle.c_str());
+    hist.GetZaxis()->SetTitle(zAxisTitle.c_str());
+    if (sumW2) hist.Sumw2();
+  }
+  template<typename T, typename U>
+  bool indexOutOfRange(const T& iProcess, const U* vec) const
+  {
+    const unsigned int vecSize = vec->size();
+    if (iProcess->second >= vecSize) {
+      cerr << "Error: vector index " << iProcess->second << " corresponding to process ";
+      cerr << iProcess->first << " is larger than max vector index " << (vecSize - 1) << ".\n";
+      return true;
+    }
+    else return false;
+  }
+  template<typename T>
+  T getValue(const string& processName, const vector<T>& val) const
+  {
+    T value = 0;
+    map<string, unsigned int>::const_iterator iProcess = fileMap_.find(processName);
+    if (iProcess != fileMap_.end()) {
+      if (!indexOutOfRange(iProcess, &val)) value = val[iProcess->second];
+    }
+    return value;
+  }
+  void addEntry(const string&, const float, const unsigned int, const unsigned int);
+  void setFileMapEntry(const string&, const float, const unsigned int);
+  void setFileMap(const map<string, unsigned int>&);
+  void setXSec(const vector<float>&);
+  void setNEvtsProcessed(const vector<unsigned int>&);
+  void setWeight(const vector<float>&);
+  void setIntLumi(const float);
+  string getProcess(const unsigned int) const;
+  float getXSec(const string&) const;
+  unsigned int getNEvtsProcessed(const string&) const;
+  float getWeight(const string&) const;
+  unsigned int getSize() const;
+  float getIntLumi() const;
+  void reset();
+  void plot(const string&);
+
  private:
 
   TString ds;               // dataset name to be used for output histfile name
@@ -88,6 +135,18 @@ class SusyEventAnalyzer {
   typedef std::map<int,std::map<int,bool> > RunLumiFlagHolder;  //define map that holds json list
   RunLumiFlagHolder goodrunlumilist;  // instantiate it
 
+  //added by Rachel
+  map<string, unsigned int> fileMap_;     /*key is the MC process name (which should be found 
+					    within the absolute file name in the TChain), mapped 
+					    value is the index of the file in vectors of cross 
+					    sections, number of events processed, and 
+					    corresponding event weights*/
+  vector<float> xSec_;                    //MC process cross section, 1 element per process
+  vector<unsigned int> nEvtsProcessed_;   /*no. events processed per MC dataset, 1 element per 
+					    dataset*/
+  vector<float> weight_;                  //MC process weight, 1 element per process
+  float intLumi_;                         //integrated luminosity to normalize events to
+  unsigned int size_;                     //size of map/vectors
 };
 
 #endif
@@ -106,6 +165,10 @@ SusyEventAnalyzer::~SusyEventAnalyzer()
 {
   if (!fChain) return;
   delete fChain->GetCurrentFile();
+
+  //added by Rachel
+  intLumi_ = 0.0;
+  reset();
 }
 
 Int_t SusyEventAnalyzer::GetEntry(Long64_t entry)
@@ -138,6 +201,10 @@ void SusyEventAnalyzer::Init(TTree *tree)
   event = new susy::Event;
 
   fChain->SetBranchAddress("susyEvent", &event, &b_Event);
+
+  //added by Rachel
+  intLumi_ = 0.0;
+  reset();
 }
 
 void SusyEventAnalyzer::Initialize() {
@@ -188,7 +255,6 @@ void SusyEventAnalyzer::IncludeAJson(std::string jsonfile) {
 	   }
          sscanf(srunnum.c_str(),"%i",&runnum);
          std::cout << " runnum: " << runnum << std::endl;
-         bool newrun=true;
          
        } // inside ""
        if (thing == '[') {
@@ -240,6 +306,122 @@ return false;
 
 }
 
+void SusyEventAnalyzer::addEntry(const string& processName, const float xSec, 
+				 const unsigned int nEvts, const unsigned int index)
+{
+  fileMap_[processName] = index;
+  xSec_.push_back(xSec);
+  nEvtsProcessed_.push_back(nEvts);
+  weight_.push_back(xSec*intLumi_/nEvts);
+  ++size_;
+}
 
+void SusyEventAnalyzer::setFileMapEntry(const string& processName, const float xSec, 
+					const unsigned int nEvts)
+{
+  //check that the file map and all weight-related vectors are of equal size
+  const unsigned int fileMapSize = fileMap_.size();
+  const unsigned int xSecSize = xSec_.size();
+  const unsigned int nEvtsSize = nEvtsProcessed_.size();
+  const unsigned int weightSize = weight_.size();
+  if ((fileMapSize != xSecSize) || (xSecSize != nEvtsSize) || (nEvtsSize != weightSize) || 
+      (weightSize != size_)) {
+    cerr << "Error: size mismatch.\n";
+    cerr << "fileMapSize = " << fileMapSize << endl;
+    cerr << "xSecSize = " << xSecSize << endl;
+    cerr << "nEvtsSize = " << nEvtsSize << endl;
+    cerr << "weightSize = " << weightSize << endl;
+    cerr << "size_ = " << size_ << endl;
+    cerr << "Clearing everything and starting over.\n";
+    reset();
+  }
+
+  //check that nEvts != 0
+  if (nEvts == 0) {
+    cerr << "Error: nEvts = 0.  Event weight is meaningless.  Exiting.\n";
+    return;
+  }
+
+  //if the process name exists in the map, change its attributes
+  map<string, unsigned int>::iterator iProcess = fileMap_.find(processName);
+  if (iProcess != fileMap_.end()) {
+
+    //check that the mapped value (the vector index) doesn't refer to a nonexistent vector element
+    if (indexOutOfRange(iProcess, &xSec_)) {
+      cerr << "Clearing everything and starting over.\n";
+      reset();
+      addEntry(processName, xSec, nEvts, 0);
+    }
+    else {
+
+      //update the map
+      xSec_[iProcess->second] = xSec;
+      nEvtsProcessed_[iProcess->second] = nEvts;
+      weight_[iProcess->second] = xSec*intLumi_/nEvts;
+    }
+  }
+  else {
+
+    //add this process to the map
+    addEntry(processName, xSec, nEvts, xSecSize);
+  }
+}
+
+void SusyEventAnalyzer::setFileMap(const map<string, 
+				   unsigned int>& fileMap) { fileMap_ = fileMap; }
+
+void SusyEventAnalyzer::setXSec(const vector<float>& xSec) { xSec_ = xSec; }
+
+void SusyEventAnalyzer::setNEvtsProcessed(const vector<unsigned int>& nEvts)
+{
+  nEvtsProcessed_ = nEvts;
+}
+
+void SusyEventAnalyzer::setWeight(const vector<float>& weight) { weight_ = weight; }
+
+void SusyEventAnalyzer::setIntLumi(const float intLumi) { intLumi_ = intLumi; }
+
+string SusyEventAnalyzer::getProcess(const unsigned int index) const
+{
+  bool found = false;
+  string process = "";
+  map<string, unsigned int>::const_iterator iMap = fileMap_.begin();
+  while ((iMap != fileMap_.end()) && !found) {
+    if (iMap->second == index) {
+      found = true;
+      process = iMap->first;
+    }
+    ++iMap;
+  }
+  return process;
+}
+
+float SusyEventAnalyzer::getXSec(const string& processName) const
+{
+  return getValue<float>(processName, xSec_);
+}
+
+unsigned int SusyEventAnalyzer::getNEvtsProcessed(const string& processName) const
+{
+  return getValue<unsigned int>(processName, nEvtsProcessed_);
+}
+
+float SusyEventAnalyzer::getWeight(const string& processName) const
+{
+  return getValue<float>(processName, weight_);
+}
+
+unsigned int SusyEventAnalyzer::getSize() const { return size_; }
+
+float SusyEventAnalyzer::getIntLumi() const { return intLumi_; }
+
+void SusyEventAnalyzer::reset()
+{
+  fileMap_.clear();
+  xSec_.clear();
+  nEvtsProcessed_.clear();
+  weight_.clear();
+  size_ = 0;
+}
 
 #endif // #ifdef SusyEventAnalyzer_cxx
