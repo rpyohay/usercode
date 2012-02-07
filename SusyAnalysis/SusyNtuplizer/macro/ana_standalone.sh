@@ -7,7 +7,7 @@ total=0
 queue="8nh"
 for dir in `rfdir $CASTOR_HOME/424p2 | awk '{ print $9 }'`
   do
-  if [ "$dir" = "ntuple_QCD_Pt-40_doubleEMEnriched_TuneZ2_7TeV-pythia6-Summer11-PU_S3_START42_V11-v2" ]
+  if [ "$dir" = "ntuple_DYToEE_M-20_TuneZ2_7TeV-pythia6-Summer11-PU_S3_START42_V11-v2" ] || [ "$dir" = "ntuple_DiPhotonBorn_Pt-10To25_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2" ] || [ "$dir" = "ntuple_DiPhotonBorn_Pt-250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2" ] || [ "$dir" = "ntuple_DiPhotonBorn_Pt-25To250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2" ] || [ "$dir" = "ntuple_v2_TT_TuneZ2_7TeV-pythia6-tauola-Summer11-PU_S3_START42_V11-v2" ]
       then
       sum=0
       for file_size in `rfdir $CASTOR_HOME/424p2/$dir | awk '{ print $5 }'`
@@ -38,12 +38,12 @@ for dir in `rfdir $CASTOR_HOME/424p2 | awk '{ print $9 }'`
       for job in `seq 1 $num_jobs`
 	do
 	let num_files_head=$job*50
-	sed -e "s%DIR%$dir%g" -e "s%NUM_FILES_HEAD%$num_files_head%" -e "s%JOB%$job%g" batch_template.sh > batch_$dir_$job.sh
-	chmod a+x batch_$dir_$job.sh
-	echo "Submitting job ana_standalone_$dir_$job..."
-	echo "bsub -R \"rusage[pool=$sum_MB]\" -q $queue -J ana_standalone_$dir_$job < batch_$dir_$job.sh"
-	bsub -R "rusage[pool=$sum_MB]" -q $queue -J ana_standalone_$dir_$job < batch_$dir_$job.sh
-	rm batch_$dir_$job.sh*
+	sed -e "s%DIR%$dir%g" -e "s%NUM_FILES_HEAD%$num_files_head%" -e "s%JOB%$job%g" batch_template.sh > batch_${dir}_${job}.sh
+	chmod a+x batch_${dir}_${job}.sh
+	echo "Submitting job ana_standalone_${dir}_${job}..."
+	echo "bsub -R \"rusage[pool=$sum_MB]\" -q $queue -J ana_standalone_${dir}_${job} < batch_${dir}_${job}.sh"
+	bsub -R "rusage[pool=$sum_MB]" -q $queue -J ana_standalone_${dir}_${job} < batch_${dir}_${job}.sh
+	rm batch_${dir}_${job}.sh*
       done
   else
       echo "Skipping $dir"

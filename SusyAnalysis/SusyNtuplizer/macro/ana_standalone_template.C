@@ -34,19 +34,19 @@ void ana_standalone_MC_NUM() {
 					       cone*/
   pars.photonECALIsoMaxConstant = 6.0; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 					 EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 cone*/
-  pars.photonECALIsoEffArea = 0.0792; /*https://twiki.cern.ch/twiki/bin/view/CMS/
-					RA3IsolationConePileupCorrections, dR = 0.3 cone, 
-					5-Dec-11*/
+  pars.photonECALIsoEffArea = 0.093; /*https://twiki.cern.ch/twiki/bin/view/CMS/
+				      RA3IsolationConePileupCorrections, dR = 0.3 cone, 
+				      18-Jan-12, default rho_EtaMax*/
   pars.photonHCALIsoMaxPTMultiplier = 0.005; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 					       EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 
 					       cone*/
   pars.photonHCALIsoMaxConstant = 4.0; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 					 EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 cone*/
-  pars.photonHCALIsoEffArea = 0.0252; /*https://twiki.cern.ch/twiki/bin/view/CMS/
+  pars.photonHCALIsoEffArea = 0.0281; /*https://twiki.cern.ch/twiki/bin/view/CMS/
 					RA3IsolationConePileupCorrections, dR = 0.3 cone, 
-					5-Dec-11*/
+					18-Jan-12, default rho_EtaMax*/
   pars.photonHOverEMax = 0.05;
-  pars.photonR9Max = 0.98;
+  pars.photonR9Max = 1.0;
   pars.photonR9Min = 0.8;
   pars.photonTrackIsoMaxPTMultiplier = 0.002; /*https://twiki.cern.ch/twiki/bin/viewauth/CMS/
 						EgammaWorkingPointsv3, IsoVL, assuming dR = 0.3 
@@ -69,18 +69,15 @@ void ana_standalone_MC_NUM() {
   pars.input = VSTRING();
 FILES
   pars.HLT = vector<TString>();
-  pars.HLT.push_back("HLT_Photon32_CaloIdL_Photon26_CaloIdL");
+  pars.HLT.push_back("HLT_Photon26_IsoVL_Photon18");
   pars.HLT.push_back("HLT_Photon36_CaloIdL_Photon22_CaloIdL");
   pars.HLT.push_back("HLT_Photon36_CaloIdL_IsoVL_Photon22_CaloIdL_IsoVL");
-  pars.HLT.push_back("HLT_Photon36_R9Id_Photon22_CaloIdL_IsoVL");
   pars.HLT.push_back("HLT_Photon36_CaloIdL_IsoVL_Photon22_R9Id");
+  pars.HLT.push_back("HLT_Photon36_R9Id_Photon22_CaloIdL_IsoVL");
   pars.HLT.push_back("HLT_Photon36_R9Id_Photon22_R9Id");
   pars.nEvts = -1;
   pars.JSON = "";
-//   pars.JSON = "/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/JSON_160431-177878_May10ReReco_Run2011APromptRecov4v6_Aug5ReReco_Run2011BPromptRecov1.txt";
-//   pars.outputFile = "/data2/yohay/RA3/Data2011A_ToRun167913_Filter-JsonHLTtwo43-30GeVPhosWithR9HoverE_NoPileupCorr_Photon_NEW_categorized_OR.root";
-//   pars.outputFile = "/data2/yohay/RA3/1140pb-1_ff_categorized_new.root";
-  pars.outputFile = "DATASET_JSON_HLT_PV_skim_v2_NUM.root";
+  pars.outputFile = "DATASET_JSON_HLT_PV_skim_v3_NUM.root";
   pars.recategorize = false;
 
   TStopwatch ts;
