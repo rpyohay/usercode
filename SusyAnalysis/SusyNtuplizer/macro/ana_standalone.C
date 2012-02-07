@@ -1,5 +1,3 @@
-//note: you may have to change the SusyEvent class to run over Summer11 skims from before updates!
-
 // adapted from SusyAnalysis/SusyNtuplizer/macro/ana.C
 
 #include "EventAnalyzer.h"
