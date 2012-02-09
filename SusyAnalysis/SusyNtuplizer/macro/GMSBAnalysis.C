@@ -10,18 +10,18 @@ void GMSBAnalysis()
   gSystem->Load("../../../GMSBTools/lib/libFilters.so");
   gSystem->Load("../../../PhysicsTools/lib/libUtilities.so");
   gSystem->Load("../../../PhysicsTools/lib/libTagAndProbe.so");
-//   gSystem->Load("SusyEventPrinter_cc.so");
-  gROOT->LoadMacro("SusyEventPrinter.cc++");
+  gSystem->Load("SusyEventPrinter_cc.so");
+//   gROOT->LoadMacro("SusyEventPrinter.cc++");
   gSystem->SetIncludePath("-I../../.. -I/afs/cern.ch/cms/slc5_amd64_gcc434/lcg/roofit/5.28.00a-cms7/include");
   gROOT->LoadMacro("GMSBAnalyzer.C++");
 
   //instantiate GMSBAnalyzer object
   vector<string> input;
-    input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_DYToEE_M-20_TuneZ2_7TeV-pythia6-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
+//     input.push_back("/data2/yohay/RA3/Zee/ntuple_DYToEE_M-20_TuneZ2_7TeV-pythia6-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v3.root");
   //   input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_DYToTauTau_M-20_TuneZ2_7TeV-pythia6-tauola-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
-    input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_DiPhotonBorn_Pt-10To25_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
-    input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_DiPhotonBorn_Pt-25To250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
-    input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_DiPhotonBorn_Pt-250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
+    input.push_back("/data2/yohay/RA3/diphoton_10-25/ntuple_DiPhotonBorn_Pt-10To25_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v3.root");
+    input.push_back("/data2/yohay/RA3/diphoton_25-250/ntuple_DiPhotonBorn_Pt-25To250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v3.root");
+    input.push_back("/data2/yohay/RA3/diphoton_250/ntuple_DiPhotonBorn_Pt-250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v3.root");
   //   input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_DiPhotonBox_Pt-10To25_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
   //   input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_DiPhotonBox_Pt-25To250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
   //   input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_DiPhotonBox_Pt-250_7TeV-pythia6-Summer11-PU_S4_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
@@ -67,7 +67,7 @@ void GMSBAnalysis()
   // //   input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_QCD_Pt-1800_TuneZ2_7TeV_pythia6-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
   //   input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_WToENu_TuneZ2_7TeV-pythia6-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
   //   input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_WToTauNu_TuneZ2_7TeV-pythia6-tauola-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
-    input.push_back("/data2/yohay/RA3/MCSkims_latestEffectiveAreas/ntuple_v2_TT_TuneZ2_7TeV-pythia6-tauola-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v2.root");
+//     input.push_back("/data2/yohay/RA3/tt/ntuple_v2_TT_TuneZ2_7TeV-pythia6-tauola-Summer11-PU_S3_START42_V11-v2_JSON_HLT_PV_skim_v3.root");
   TChain* tree = new TChain("susyTree");
   for (VSTRING_IT iIn = input.begin(); iIn != input.end(); ++iIn) { tree->Add((*iIn).c_str()); }
   GMSBAnalyzer analyzer(tree);
@@ -175,7 +175,7 @@ void GMSBAnalysis()
   //loop over events
   TStopwatch ts;
   ts.Start();
-  analyzer.runMETAnalysis("/data2/yohay/RA3/4684pb-1_MET_latestEffectiveAreas_MC_EM_enriched_QCD.root");
+  analyzer.runMETAnalysis("/data2/yohay/RA3/4684pb-1_MET_MC_ggInvMass.root");
 //   analyzer.runMETAnalysis("/data2/yohay/RA3/4684pb-1_MET_withJESSyst.root");
 //   analyzer.runEMFractionAnalysis("/data2/yohay/RA3/4684pb-1_EMF_18-Jan-12.root");
 //   analyzer.runMETAnalysis("/data2/yohay/RA3/debug.root");
