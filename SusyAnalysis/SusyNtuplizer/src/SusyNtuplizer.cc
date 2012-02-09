@@ -13,7 +13,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyNtuplizer.cc,v 1.2 2011/11/28 10:24:48 yohay Exp $
+// $Id: SusyNtuplizer.cc,v 1.4 2012/02/07 22:13:44 yohay Exp $
 //
 //
 
@@ -1549,7 +1549,11 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
     // event weighting variables, for example ptHat
     edm::Handle<GenEventInfoProduct> GenEventInfoHandle;
-    if(iEvent.getByLabel("generator",GenEventInfoHandle)) susyEvent_->gridParams["ptHat"] = GenEventInfoHandle->binningValues()[0];
+    if(iEvent.getByLabel("generator",GenEventInfoHandle)) {
+      if (GenEventInfoHandle->binningValues().size() > 0) {
+	susyEvent_->gridParams["ptHat"] = GenEventInfoHandle->binningValues()[0];
+      }
+    }
 
     //get PU summary info
     edm::Handle<std::vector<PileupSummaryInfo> > pPUSummaryInfo;
