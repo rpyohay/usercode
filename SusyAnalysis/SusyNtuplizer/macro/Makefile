@@ -1,5 +1,5 @@
 # Original Author:  Dongwook Jang
-# $Id: Makefile,v 1.1 2011/09/19 11:35:49 yohay Exp $
+# $Id: Makefile,v 1.2 2012/02/07 15:46:32 yohay Exp $
 
 #--------------------------------------------------
 # Change file names for your need
@@ -109,6 +109,8 @@ $(TARGET): $(DICTS)
 	@@echo "Making $(TARGET) ..."
 	@@$(CXX) $(CXXFLAGS) $(SOFLAGS) -o $(TARGET) $(INC) $(LIBS) $(OBJECTS) $(DICTS).cc
 	@@/bin/rm -f $(DICTS).*
+# 	@@echo "Chaning directory to $(JECDIR) and compiling jec package ..."
+# 	make -C $(JECDIR)
 
 clean:
 	@@/bin/rm -f $(TARGET) $(DICTS).* *_cc.d *_cc.so *~
