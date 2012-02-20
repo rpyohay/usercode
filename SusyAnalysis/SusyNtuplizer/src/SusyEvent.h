@@ -12,7 +12,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyEvent.h,v 1.5 2012/01/25 17:43:15 yohay Exp $
+// $Id: SusyEvent.h,v 1.16 2011/11/01 22:14:51 dwjang Exp $
 //
 
 #ifndef SusyEvent_h
@@ -339,7 +339,7 @@ namespace susy {
     bool isEcalEnergyCorrected() {         return (boolPack & (0x1 << 8)); }
     bool isEnergyScaleCorrected() {        return (boolPack & (0x1 << 9)); }
     bool convFlags() {                     return (boolPack & (0x1 << 10)); }
-    bool isPF() const {                    return (boolPack & (0x1 << 11)); }
+    bool isPF() {                          return (boolPack & (0x1 << 11)); }
     bool ecalDriven() {                    return (ecalDrivenSeed() && passingCutBasedPreselection()); }
 
     Float_t hcalOverEcal() { return (hcalDepth1OverEcal + hcalDepth2OverEcal); }

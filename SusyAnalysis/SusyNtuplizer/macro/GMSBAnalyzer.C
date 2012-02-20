@@ -311,7 +311,7 @@ float GMSBAnalyzer::normAndErrorSquared(const TH3F& ggMETVsDiEMETVsInvMass,
 					const unsigned int maxNormBin, float& errSquared) const
 {
   const float nGGMinusEW = 
-    ggMETVsDiEMETVsInvMass.Integral(0, -1, 0, -1, 1, maxNormBin)/* - egMET->Integral(1, maxNormBin)*/;
+    ggMETVsDiEMETVsInvMass.Integral(0, -1, 0, -1, 1, maxNormBin) - egMET->Integral(1, maxNormBin);
   const float nControl = controlMET.Integral(1, maxNormBin);
   float norm = 0.0;
   if (nControl != 0.0) norm = nGGMinusEW/nControl;
@@ -320,9 +320,9 @@ float GMSBAnalyzer::normAndErrorSquared(const TH3F& ggMETVsDiEMETVsInvMass,
   for (unsigned int iBin = 1; iBin <= maxNormBin; ++iBin) {
     const float ggErr = 
       ggMETVsDiEMETVsInvMass.ProjectionZ("ggMET", 0, -1, 0, -1, "e")->GetBinError(iBin);
-//     const float egErr = egMET->GetBinError(iBin);
+    const float egErr = egMET->GetBinError(iBin);
     nGGErrSquared+=(ggErr*ggErr);
-    nEGErrSquared+=/*(egErr*egErr)*/0.0;
+    nEGErrSquared+=(egErr*egErr);
   }
   if (nGGMinusEW == 0.0) errSquared = 0.0;
   else {
@@ -1590,43 +1590,13 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
      nb = fChain->GetEntry(jentry);   nbytes += nb;
      if (((jentry + 1) % 10000) == 0) cout << "Event " << (jentry + 1) << endl;
 
-     //get int. lumi weight for this dataset
-     TString fileName(fChain->GetCurrentFile()->GetName());
-     TString dataset;
-     /*if (fileName.Contains("ntuple_.*-v[0-9]")) */dataset = fileName("ntuple_.*-v[0-9]");
-     if (dataset.Length() >= 7) dataset.Remove(0, 7);
-     if ((dataset.Length() >= 3) && 
-	 (dataset.Contains("v2_TT"))) dataset.Remove(0, 3); //for TT sample
-     string datasetString((const char*)dataset);
-     map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
+     //for data, lumi and PU weights are both 1
      float lumiWeight = 1.0;
-     if (iDataset != fileMap_.end()) lumiWeight = weight_[iDataset->second];
-     else {
-       /*once comfortable with MC dataset names, remove this and just assume the file is data and 
-     	 gets weight 1.0*/
-       cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
-     }
-
-     //get PU weight for this dataset
-     /*in-time reweighting only following 
-       https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupMCReweightingUtilities as of 27-Oct-11 
-       and Tessa's recommendation*/
-     int nPV = -1;
      float PUWeight = 1.0;
-     susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
-     bool foundInTimeBX = false;
-     while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
-       if (iBX->BX == 0) { 
-     	 nPV = iBX->numInteractions;
-     	 foundInTimeBX = true;
-       }
-       ++iBX;
-     }
-     PUWeight = lumiWeights_.ITweight(nPV);
 
      //apply user trigger requirement and ECAL/HCAL filters
-     if (/*passUserHLT() && (susyEvent->PassesHcalNoiseFilter == 1) && 
-	   (susyEvent->PassesEcalDeadCellFilter == 1) || */true) {
+     if (passUserHLT() && (susyEvent->PassesHcalNoiseFilter == 1) && 
+	 (susyEvent->PassesEcalDeadCellFilter == 1)) {
 
        //fill MET vs. di-EM ET, invariant mass, rho, leading/trailing photon ET, and nPV histograms
        double invMass = -1.0;
@@ -1880,65 +1850,64 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 
        switch (evtCategory) {
        case GG:
-	 if (datasetString.find("DiPhoton") != string::npos) {
 
-	   //fill lumi and PU weight vectors
-	   ggLumiWeightVec.push_back(lumiWeight);
-	   ggPUWeightVec.push_back(PUWeight);
+	 //fill lumi and PU weight vectors
+	 ggLumiWeightVec.push_back(lumiWeight);
+	 ggPUWeightVec.push_back(PUWeight);
 
-	   for (vector<float>::const_iterator i = combinedIso.begin(); i != combinedIso.end(); 
-		++i) { ggCombinedIso.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = sigmaIetaIeta.begin(); i != sigmaIetaIeta.end(); 
-		++i) { ggSigmaIetaIeta.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = R9.begin(); i != R9.end(); 
-		++i) { ggR9.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = ECALIso.begin(); i != ECALIso.end(); 
-		++i) { ggECALIso.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = HCALIso.begin(); i != HCALIso.end(); 
-		++i) { ggHCALIso.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = trackIso.begin(); i != trackIso.end(); 
-		++i) { ggTrackIso.Fill(*i, lumiWeight*PUWeight); }
-	   ggLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
-	   ggTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
-	   ggNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
-	   ggDijetSize.Fill(dijetSize);
-	   ggDiEMSize.Fill(diEMSize);
-	   ggPTHat.Fill(pTHat, lumiWeight*PUWeight);
-	   if (dijetSize == 2) {
-	     ggMETVsDijetETVsInvMass[iNjBin]->Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
-	     ggMETVsDijetETVsInvMassTot.Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
-	     ggDijetETUniform[iNjBin]->Fill(dijetPT, lumiWeight*PUWeight);
-	     ggJ1UncorrP4.push_back(uncorrP4[0]);
-	     ggJ2UncorrP4.push_back(uncorrP4[1]);
-	     ggJ1JES.push_back(JES[0]);
-	     ggJ2JES.push_back(JES[1]);
-	     ggJ1JESErr.push_back(JESErr[0]);
-	     ggJ2JESErr.push_back(JESErr[1]);
-	   }
-	   else {
-	     // 	   printDiObjectErrorMessage(dijetSize, "dijet", evtCategory, jentry);
-	     ggMETUnmatched.Fill(MET, lumiWeight*PUWeight);
+	 for (vector<float>::const_iterator i = combinedIso.begin(); i != combinedIso.end(); 
+	      ++i) { ggCombinedIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = sigmaIetaIeta.begin(); i != sigmaIetaIeta.end(); 
+	      ++i) { ggSigmaIetaIeta.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = R9.begin(); i != R9.end(); 
+	      ++i) { ggR9.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = ECALIso.begin(); i != ECALIso.end(); 
+	      ++i) { ggECALIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = HCALIso.begin(); i != HCALIso.end(); 
+	      ++i) { ggHCALIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = trackIso.begin(); i != trackIso.end(); 
+	      ++i) { ggTrackIso.Fill(*i, lumiWeight*PUWeight); }
+	 ggLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	 ggTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
+	 ggNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
+	 ggDijetSize.Fill(dijetSize);
+	 ggDiEMSize.Fill(diEMSize);
+	 ggPTHat.Fill(pTHat, lumiWeight*PUWeight);
+	 if (dijetSize == 2) {
+	   ggMETVsDijetETVsInvMass[iNjBin]->Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	   ggMETVsDijetETVsInvMassTot.Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	   ggDijetETUniform[iNjBin]->Fill(dijetPT, lumiWeight*PUWeight);
+	   ggJ1UncorrP4.push_back(uncorrP4[0]);
+	   ggJ2UncorrP4.push_back(uncorrP4[1]);
+	   ggJ1JES.push_back(JES[0]);
+	   ggJ2JES.push_back(JES[1]);
+	   ggJ1JESErr.push_back(JESErr[0]);
+	   ggJ2JESErr.push_back(JESErr[1]);
+	 }
+	 else {
+	   // 	   printDiObjectErrorMessage(dijetSize, "dijet", evtCategory, jentry);
+	   ggMETUnmatched.Fill(MET, lumiWeight*PUWeight);
 	     
-	     //use di-EM ET when dijet ET is unavailable
-	     if (diEMSize == 2) {
-	       ggMETVsDijetETVsInvMass[iNjBin]->Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-	       ggMETVsDijetETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-	     }
-	     else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
-	   }
+	   //use di-EM ET when dijet ET is unavailable
 	   if (diEMSize == 2) {
-	     ggMETVsDiEMETVsInvMass[iNjBin]->Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-	     ggMETVsDiEMETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     ggMETVsDijetETVsInvMass[iNjBin]->Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	     ggMETVsDijetETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     ggDiEMETUniform[iNjBin]->Fill(diEMET, lumiWeight*PUWeight);
-	     ggR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
 	   }
 	   else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
-	   
-	   //print the event information to a file
-	   ggEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
-	   ggEvtFile << susyEvent->luminosityBlockNumber << endl;
-	   
 	 }
+	 if (diEMSize == 2) {
+	   ggMETVsDiEMETVsInvMass[iNjBin]->Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	   ggMETVsDiEMETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	   ggDiEMETUniform[iNjBin]->Fill(diEMET, lumiWeight*PUWeight);
+	   ggR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
+	 }
+	 else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
+	   
+	 //print the event information to a file
+	 ggEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 ggEvtFile << susyEvent->luminosityBlockNumber << endl;
+
 	 break;
        case EG:
 
@@ -1976,124 +1945,121 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 
 	 break;
        case EE:
-	 if ((datasetString.find("DYToEE") != string::npos) || 
-	     (datasetString.find("TT") != string::npos)) {
-	   for (vector<float>::const_iterator i = combinedIso.begin(); i != combinedIso.end(); 
-		++i) { eeCombinedIso.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = sigmaIetaIeta.begin(); i != sigmaIetaIeta.end(); 
-		++i) { eeSigmaIetaIeta.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = R9.begin(); i != R9.end(); 
-		++i) { eeR9.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = ECALIso.begin(); i != ECALIso.end(); 
-		++i) { eeECALIso.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = HCALIso.begin(); i != HCALIso.end(); 
-		++i) { eeHCALIso.Fill(*i, lumiWeight*PUWeight); }
-	   for (vector<float>::const_iterator i = trackIso.begin(); i != trackIso.end(); 
-		++i) { eeTrackIso.Fill(*i, lumiWeight*PUWeight); }
-	   eeLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
-	   eeTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
-	   eeNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
-	   eeDijetSize.Fill(dijetSize);
-	   eeDiEMSize.Fill(diEMSize);
-	   eePTHat.Fill(pTHat, lumiWeight*PUWeight);
-	   // 	 if (f.size() >= 2) {
-	   // 	   vector<float>::iterator i1 = max_element(fET.begin(), fET.end());
-	   // 	   const unsigned int index1 = i1 - fET.begin();
-	   // 	   fET.erase(i1);
-	   // 	   const unsigned int index2 = max_element(fET.begin(), fET.end()) - fET.begin();
-	   // 	   eeffMETVsDiEMETVsInvMass.Fill(invMass, (f[index1] + f[index2]).Pt(), MET, 
-	   // 					 lumiWeight*PUWeight);
-	   // 	 }
-	   if (diEMSize == 2) {
-	     if ((invMass >= 71.0/*GeV*/) && (invMass < 81.0/*GeV*/)) { /*new sidebands from 
-									  Yeuh-Feng 6-Jan-12*/
-	       //fill lumi and PU weight vectors
-	       eeLowSidebandLumiWeightVec.push_back(lumiWeight);
-	       eeLowSidebandPUWeightVec.push_back(PUWeight);
+	 for (vector<float>::const_iterator i = combinedIso.begin(); i != combinedIso.end(); 
+	      ++i) { eeCombinedIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = sigmaIetaIeta.begin(); i != sigmaIetaIeta.end(); 
+	      ++i) { eeSigmaIetaIeta.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = R9.begin(); i != R9.end(); 
+	      ++i) { eeR9.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = ECALIso.begin(); i != ECALIso.end(); 
+	      ++i) { eeECALIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = HCALIso.begin(); i != HCALIso.end(); 
+	      ++i) { eeHCALIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = trackIso.begin(); i != trackIso.end(); 
+	      ++i) { eeTrackIso.Fill(*i, lumiWeight*PUWeight); }
+	 eeLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
+	 eeTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
+	 eeNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
+	 eeDijetSize.Fill(dijetSize);
+	 eeDiEMSize.Fill(diEMSize);
+	 eePTHat.Fill(pTHat, lumiWeight*PUWeight);
+	 // 	 if (f.size() >= 2) {
+	 // 	   vector<float>::iterator i1 = max_element(fET.begin(), fET.end());
+	 // 	   const unsigned int index1 = i1 - fET.begin();
+	 // 	   fET.erase(i1);
+	 // 	   const unsigned int index2 = max_element(fET.begin(), fET.end()) - fET.begin();
+	 // 	   eeffMETVsDiEMETVsInvMass.Fill(invMass, (f[index1] + f[index2]).Pt(), MET, 
+	 // 					 lumiWeight*PUWeight);
+	 // 	 }
+	 if (diEMSize == 2) {
+	   if ((invMass >= 71.0/*GeV*/) && (invMass < 81.0/*GeV*/)) { /*new sidebands from 
+									Yeuh-Feng 6-Jan-12*/
+	     //fill lumi and PU weight vectors
+	     eeLowSidebandLumiWeightVec.push_back(lumiWeight);
+	     eeLowSidebandPUWeightVec.push_back(PUWeight);
 
-	       if (dijetSize == 2) {
-		 eeLowSidebandMETVsDiEMETVsInvMass[iNjBin]->
-		   Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
-		 eeLowSidebandMETVsDiEMETVsInvMassTot.
-		   Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
-		 eeLowSidebandDiEMETVec.push_back(dijetPT);
-	       }
-	       else {
-		 eeLowSidebandMETVsDiEMETVsInvMass[iNjBin]->
-		   Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-		 eeLowSidebandMETVsDiEMETVsInvMassTot.
-		   Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-		 eeLowSidebandDiEMETVec.push_back(diEMET);
-	       }
-	       eeLowSidebandMETVec.push_back(MET);
-	       eeLowSidebandNjVec.push_back(nJets30);
-	       eeLowSidebandMRVec.push_back(MR);
-	       eeLowSidebandR2Vec.push_back(R2);
+	     if (dijetSize == 2) {
+	       eeLowSidebandMETVsDiEMETVsInvMass[iNjBin]->
+		 Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	       eeLowSidebandMETVsDiEMETVsInvMassTot.
+		 Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	       eeLowSidebandDiEMETVec.push_back(dijetPT);
 	     }
-	     if ((invMass >= 81.0/*GeV*/) && (invMass < 101.0/*GeV*/)) {
-
-	       //fill lumi and PU weight vectors
-	       eeLumiWeightVec.push_back(lumiWeight);
-	       eePUWeightVec.push_back(PUWeight);
-
-	       if (dijetSize == 2) {
-		 eeMETVsDiEMETVsInvMass[iNjBin]->
-		   Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
-		 eeMETVsDiEMETVsInvMassTot.
-		   Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
-		 eeDiEMETVec.push_back(dijetPT);
-		 eeDijetETUniform[iNjBin]->Fill(dijetPT, lumiWeight*PUWeight);
-	       }
-	       else {
-		 eeMETVsDiEMETVsInvMass[iNjBin]->
-		   Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-		 eeMETVsDiEMETVsInvMassTot.
-		   Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-		 eeDiEMETVec.push_back(diEMET);
-	       }
-	       eeR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
-	       eeMETVec.push_back(MET);
-	       eeNjVec.push_back(nJets30);
-	       eeMRVec.push_back(MR);
-	       eeR2Vec.push_back(R2);
-	       eeHTVsMET.Fill(MET, HT, lumiWeight*PUWeight);
-	       eeMETVsNJets30.Fill(nJets30, MET, lumiWeight*PUWeight);
-	       eeMETVsNJets60.Fill(nJets60, MET, lumiWeight*PUWeight);
-	       eeDiEMETUniform[iNjBin]->Fill(diEMET, lumiWeight*PUWeight);
+	     else {
+	       eeLowSidebandMETVsDiEMETVsInvMass[iNjBin]->
+		 Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	       eeLowSidebandMETVsDiEMETVsInvMassTot.
+		 Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	       eeLowSidebandDiEMETVec.push_back(diEMET);
 	     }
-	     if ((invMass >= 101.0/*GeV*/) && (invMass < 111.0/*GeV*/)) { /*new sidebands from 
-									    Yueh-Feng 6-Jan-12*/
-	       //fill lumi and PU weight vectors
-	       eeHighSidebandLumiWeightVec.push_back(lumiWeight);
-	       eeHighSidebandPUWeightVec.push_back(PUWeight);
-
-	       if (dijetSize == 2) {
-		 eeHighSidebandMETVsDiEMETVsInvMass[iNjBin]->
-		   Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
-		 eeHighSidebandMETVsDiEMETVsInvMassTot.
-		   Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
-		 eeHighSidebandDiEMETVec.push_back(dijetPT);
-	       }
-	       else {
-		 eeHighSidebandMETVsDiEMETVsInvMass[iNjBin]->
-		   Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-		 eeHighSidebandMETVsDiEMETVsInvMassTot.
-		   Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
-		 eeHighSidebandDiEMETVec.push_back(diEMET);
-	       }
-	       eeHighSidebandMETVec.push_back(MET);
-	       eeHighSidebandNjVec.push_back(nJets30);
-	       eeHighSidebandMRVec.push_back(MR);
-	       eeHighSidebandR2Vec.push_back(R2);
-	     }
+	     eeLowSidebandMETVec.push_back(MET);
+	     eeLowSidebandNjVec.push_back(nJets30);
+	     eeLowSidebandMRVec.push_back(MR);
+	     eeLowSidebandR2Vec.push_back(R2);
 	   }
-	   else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
+	   if ((invMass >= 81.0/*GeV*/) && (invMass < 101.0/*GeV*/)) {
 
-	   //print the event information to a file
-	   eeEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
-	   eeEvtFile << susyEvent->luminosityBlockNumber << " " << invMass << endl;
-	   
+	     //fill lumi and PU weight vectors
+	     eeLumiWeightVec.push_back(lumiWeight);
+	     eePUWeightVec.push_back(PUWeight);
+
+	     if (dijetSize == 2) {
+	       eeMETVsDiEMETVsInvMass[iNjBin]->
+		 Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	       eeMETVsDiEMETVsInvMassTot.
+		 Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	       eeDiEMETVec.push_back(dijetPT);
+	       eeDijetETUniform[iNjBin]->Fill(dijetPT, lumiWeight*PUWeight);
+	     }
+	     else {
+	       eeMETVsDiEMETVsInvMass[iNjBin]->
+		 Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	       eeMETVsDiEMETVsInvMassTot.
+		 Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	       eeDiEMETVec.push_back(diEMET);
+	     }
+	     eeR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
+	     eeMETVec.push_back(MET);
+	     eeNjVec.push_back(nJets30);
+	     eeMRVec.push_back(MR);
+	     eeR2Vec.push_back(R2);
+	     eeHTVsMET.Fill(MET, HT, lumiWeight*PUWeight);
+	     eeMETVsNJets30.Fill(nJets30, MET, lumiWeight*PUWeight);
+	     eeMETVsNJets60.Fill(nJets60, MET, lumiWeight*PUWeight);
+	     eeDiEMETUniform[iNjBin]->Fill(diEMET, lumiWeight*PUWeight);
+	   }
+	   if ((invMass >= 101.0/*GeV*/) && (invMass < 111.0/*GeV*/)) { /*new sidebands from 
+									  Yueh-Feng 6-Jan-12*/
+	     //fill lumi and PU weight vectors
+	     eeHighSidebandLumiWeightVec.push_back(lumiWeight);
+	     eeHighSidebandPUWeightVec.push_back(PUWeight);
+
+	     if (dijetSize == 2) {
+	       eeHighSidebandMETVsDiEMETVsInvMass[iNjBin]->
+		 Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	       eeHighSidebandMETVsDiEMETVsInvMassTot.
+		 Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
+	       eeHighSidebandDiEMETVec.push_back(dijetPT);
+	     }
+	     else {
+	       eeHighSidebandMETVsDiEMETVsInvMass[iNjBin]->
+		 Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	       eeHighSidebandMETVsDiEMETVsInvMassTot.
+		 Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
+	       eeHighSidebandDiEMETVec.push_back(diEMET);
+	     }
+	     eeHighSidebandMETVec.push_back(MET);
+	     eeHighSidebandNjVec.push_back(nJets30);
+	     eeHighSidebandMRVec.push_back(MR);
+	     eeHighSidebandR2Vec.push_back(R2);
+	   }
 	 }
+	 else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
+
+	 //print the event information to a file
+	 eeEvtFile << susyEvent->runNumber << " " << susyEvent->eventNumber << " ";
+	 eeEvtFile << susyEvent->luminosityBlockNumber << " " << invMass << endl;
+	   
 	 break;
        case FF:
 
@@ -2356,7 +2322,6 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 		   eeHighSidebandLumiWeightVec, eeHighSidebandPUWeightVec);
 
    //reweight ee and ff MET/razor histograms
-   //changed reweightDefault to no di-EM pT reweighting
    reweightDefault(eeLowSidebandMETVec, eeLowSidebandMRVec, eeLowSidebandR2Vec, 
 		   eeLowSidebandDiEMETVec, eeLowSidebandNjVec, nNjBins, NjBins, 
 		   eeLowSidebandWeights, &eeLowSidebandFinal, &eeLowSidebandR2VsMRFinal, 
@@ -2495,16 +2460,16 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 		     eeHighSidebandRazorToyDistsByBin, eeR2VsMRNorm, eeR2VsMRNormErrSquared);
 
    //add EW contribution to QCD control samples
-//    eeFinal.Add(egMET);
-//    ffFinal.Add(egMET);
+   eeFinal.Add(egMET);
+   ffFinal.Add(egMET);
    eeR2VsMRFinal.Add(&egR2VsMR);
    ffR2VsMRFinal.Add(&egR2VsMR);
 
    //make final MET canvas
    METCanvas.cd();
    makeFinalCanvas(dynamic_cast<TH1*>(&eeFinal), 4, 2, 3005, 4, 0, 1, "E2");
-//    makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, 1, "E2SAME");
-//    makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, 1, "HISTSAME");
+   makeFinalCanvas(dynamic_cast<TH1*>(&ffFinal), kMagenta, 2, 3004, kMagenta, 0, 1, "E2SAME");
+   makeFinalCanvas(dynamic_cast<TH1*>(egMET), 8, 2, 3003, 8, 1, 1, "HISTSAME");
    makeFinalCanvas(dynamic_cast<TH1*>(ggMETVsDiEMETVsInvMassTot.
 				      ProjectionZ("ggMET", 0, -1, 0, -1, "e")), 1, 1, 0, 0, 1, 1, 
 		   "SAME");

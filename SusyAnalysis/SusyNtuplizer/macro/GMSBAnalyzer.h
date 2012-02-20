@@ -196,9 +196,6 @@ public :
    void printDiObjectErrorMessage(const unsigned int, const string&, const int, 
 				  const unsigned int) const;
    string eventFileName(string, const string&) const;
-   float HT() const;
-   unsigned int numJets() const;
-   unsigned int isJet(const susy::PFJet&) const;
    void runMETAnalysis(const string);
    void runMETAnalysisWithEEBackgroundFit(const std::string&);
    void testFitting(const string&, const string&) const;
@@ -709,15 +706,7 @@ bool GMSBAnalyzer::passUserHLT() const
 
     //loop over trigger information for this event
     susy::TriggerMap::const_iterator iInfo = susyEvent->hltMap.begin();
-    cout << susyEvent->hltMap.size() << endl;
-/*     unsigned int c = 0; */
     while ((iInfo != susyEvent->hltMap.end()) && !pass) {
-
-/*       cout << iHLT->first.first << endl; */
-/*       cout << __LINE__ << endl; */
-/*       cout << c << endl; */
-/*       cout << iInfo->first << endl; */
-/*       cout << __LINE__ << endl; */
 
       /*if the event fired the path in question AND it is in the correct run range for the path 
 	AND it is the correct category, return true*/
@@ -726,7 +715,7 @@ bool GMSBAnalyzer::passUserHLT() const
 	  (susyEvent->runNumber >= (int)minRun) && (susyEvent->runNumber <= (int)maxRun)) {
 	pass = true;
       }
-      else {++iInfo;/*++c;*/}
+      else ++iInfo;
     }
 
     //increment supplied HLT path counter
