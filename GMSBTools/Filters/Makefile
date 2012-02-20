@@ -1,13 +1,15 @@
-################################################################################
+####################################################################################
 #
 # GMSBTools/Filters Makefile (for standalone use outside CMSSW/SCRAM)
 # ---------------------------------------------------------------------------
 #
 # adapted from SusyAnalysis/SusyNtuplizer/jec/JetMETObjects/Makefile
-################################################################################
+#
+# only works for Linux!  on Mac all directory paths should be absolute, not relative
+####################################################################################
 
 ifeq ($(STANDALONE_DIR),)
-	standalone_dir:=..
+	standalone_dir:=../
 	export STANDALONE_DIR:=$(standalone_dir)
 endif
 
@@ -22,7 +24,6 @@ CXX          = g++
 
 
 ROOTCXXFLAGS = $(shell $(ROOTSYS)/bin/root-config --cflags)
-INC          = $(shell $(ROOTSYS)/bin/root-config --incdir)
 CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I../.. $(ROOTCXXFLAGS)
 
 ROOTLIBS     = $(shell $(ROOTSYS)/bin/root-config --libs)
@@ -60,7 +61,7 @@ $(TMPDIR)/Categorizer.o: interface/Categorizer.h \
 	-o $(TMPDIR)/Categorizer.o 
 
 $(TMPDIR)/Filters_dict.o: $(TMPDIR)/Filters_dict.cc
-	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I../.. -I$(INC) -c $(TMPDIR)/Filters_dict.cc \
+	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I../.. -c $(TMPDIR)/Filters_dict.cc \
 	-o $(TMPDIR)/Filters_dict.o
 
 $(TMPDIR)/Filters_dict.cc: ../Filters/interface/Categorizer.h \
@@ -68,7 +69,7 @@ $(TMPDIR)/Filters_dict.cc: ../Filters/interface/Categorizer.h \
 	rm -rf $(TMPDIR)/Filters_dict.h
 	rm -rf $(TMPDIR)/Filters_dict.cc
 	$(ROOTSYS)/bin/rootcint -f $(TMPDIR)/Filters_dict.cc \
-	-c -I$(TMPDIR) -I../.. -I$(INC) \
+	-c -I$(TMPDIR) -I../.. \
 	../Filters/interface/Categorizer.h \
 	../Filters/interface/Typedefs.h \
 	../Filters/interface/Linkdef.h
