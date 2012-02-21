@@ -3,11 +3,169 @@
 
 \chapter{Data Analysis}
 \label{chap:Data Analysis}
-%look for high MET excess
-%main backgrounds, justify the negligible ones
-%explain the control samples
+
+The signature of GGM SUSY particle production in this search is an excess of two-photon events with high \MET.  \MET is reconstructed using the particle flow algorithm as described in Sec.~\ref{sec:MET}.  Candidate two-photon events, as well as control events, are selected according to the offline object criteria presented in Secs.~\ref{sec:Photons} and~\ref{sec:Electrons}, the event quality criteria in Sec.~\ref{sec:Event Quality}, and the trigger requirements in Sec.~\ref{sec:HLT}.  These are summarized in Table~\ref{tab:selection_summary}.
+
+\begin{table}[hcbp]
+\caption{Selection criteria for $\gamma\gamma$, $e\gamma$, $ee$, and $\mathit{ff}$ events.}
+\centering
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\multirow{2}{*}{Variable} & \multicolumn{4}{c|}{Cut} \\
+\cline{2-5}
+& $\gamma\gamma$ & $e\gamma$ & $ee$ & $\mathit{ff}$ \\
+\hline
+\hline
+%HLT & \begin{tabular}[c]{@{}c@{}}26IsoVL/\\18\\\\36CaloIdL/\\22CaloIdL\\\\36CaloIdLIsoVL/\\22CaloIdLIsoVL\end{tabular} & \begin{tabular}[c]{@{}c@{}}26IsoVL/\\18\\\\36CaloIdL/\\22CaloIdL\\\\36CaloIdLIsoVL/\\22CaloIdLIsoVL\end{tabular} & \begin{tabular}[c]{@{}c@{}}26IsoVL/\\18\\\\36CaloIdL/\\22CaloIdL\\\\36CaloIdLIsoVL/\\22CaloIdLIsoVL\end{tabular} & \begin{tabular}[c]{@{}c@{}}26IsoVL/\\18\\\\36CaloIdL/\\22CaloIdL\\\\36CaloIdLIsoVL/\\22CaloIdLIsoVL\\\\36CaloIdLIsoVL/\\22R9Id\\\\36R9Id/\\22CaloIdLIsoVL\\\\36R9Id/\\22R9Id\end{tabular} \\
+%\hline
+HLT match & IsoVL & IsoVL & IsoVL & IsoVL $||$ R9Id \\
+\hline
+$E_{T}$ & \begin{tabular}[c]{@{}c@{}}$> 40$/\\$> 25$ GeV\end{tabular} & \begin{tabular}[c]{@{}c@{}}$> 40$/\\$> 25$ GeV\end{tabular} & \begin{tabular}[c]{@{}c@{}}$> 40$/\\$> 25$ GeV\end{tabular} & \begin{tabular}[c]{@{}c@{}}$> 40$/\\$> 25$ GeV\end{tabular} \\
+\hline
+SC $|\eta|$ & $< 1.4442$ & $<1.4442$ & $< 1.4442$ & $<1.4442$ \\
+\hline
+$H/E$ & $<0.05$ & $<0.05$ & $<0.05$ & $<0.05$ \\
+\hline
+$R9$ & $< 1$ & $< 1$ & $< 1$ & $< 1$ \\
+\hline
+Pixel seed & No/No & Yes/No & Yes/Yes & No/No \\
+\hline
+$I_{\mathrm{comb}}$, $\sigma_{i\eta i\eta}$ & \begin{tabular}[c]{@{}c@{}}$< 6$ GeV \&\&\\$< 0.011$\end{tabular} & \begin{tabular}[c]{@{}c@{}}$< 6$ GeV \&\&\\$< 0.011$\end{tabular} & \begin{tabular}[c]{@{}c@{}}$< 6$ GeV \&\&\\$< 0.011$\end{tabular} & \begin{tabular}[c]{@{}c@{}}$< 20$ GeV \&\&\\($\geq 6$ GeV $||$\\$\geq 0.011$)\end{tabular} \\
+\hline
+JSON & Yes & Yes & Yes & Yes \\
+\hline
+No. good PVs & $\geq 1$ & $\geq 1$ & $\geq 1$ & $\geq 1$ \\
+\hline
+$\Delta R_{EM}$ & $> 0.6$ & $> 0.6$ & $> 0.6$ & $> 0.6$ \\
+\hline
+$\Delta\phi_{EM}$ & $\geq 0.05$ & $\geq 0.05$ & $\geq 0.05$ & $\geq 0.05$ \\
+\hline
+\end{tabular}
+\label{tab:selection_summary}
+\end{table}
+
+This search utilizes 4.7 $\mbox{fb}^{-1}$ of CMS data collected during the period April-December 2011, corresponding to the following datasets \cite{DAS}:
+
+\begin{itemize}
+\item \verb+/Photon/Run2011A-05Jul2011ReReco-ECAL-v1/AOD+
+\item \verb+/Photon/Run2011A-05Aug2011-v1/AOD+
+\item \verb+/Photon/Run2011A-03Oct2011-v1/AOD+
+\item \verb+/Photon/Run2011B-PromptReco-v1/AOD+
+\end{itemize}
+
+The search strategy is to model the backgrounds to the GGM SUSY signal using \MET shape templates derived from the control samples, and then to look for a high-\MET excess above the estimated background in the $\gamma\gamma$ sample.  There are two categories of backgrounds: QCD processes with no real \MET and electroweak processes with real \MET from neutrinos.  The relevant QCD background processes are multijet production with at least two jets faking photons, photon + jet production with at least one jet faking a photon, diphoton production, and $Z$ production with a radiated photon where at least one of the $Z$ decay products (typically a jet) fakes a photon.  The relevant electroweak background processes, which are small compared to the QCD background, involve $W\rightarrow e\nu$ decay with a recoiling jet that fakes a photon or a real radiated photon.  In both cases, the electron is misidentified as a photon due to a small inefficiency in reconstructing the electron pixel seed.  The main diagrams contributing to the QCD(electroweak) backgrounds are shown in Figure~\ref{fig:QCD_background_diagrams}(\ref{fig:EW_background_diagrams}).  \textcolor{red}{\textbf{Generate these Feynman diagrams.}}
+
+%QCD EM-enriched (isub=11,12,13,28,53,68) (mstp82=4 ==> multiple int. assuming varying impact parameter and hadronic overlap consistent with a double gaussian matter distribution, but turning off at low pt)
+%q_i q_j --> q_i q_j
+%q_i q_i --> q_j q_j
+%q_i q_i_bar --> g g
+%q_i g --> q_i g
+%g g --> q_i q_i_bar
+%g g --> g g
+%photon + jet EM enriched (isub=14,18,29)
+%q_i q_i_bar --> g gamma
+%q_i q_i_bar --> gamma gamma
+%q_i g --> q_i gamma
+%diphoton + jets (pp-->gammagamma, +1 j, +2 j (j ==> sum over gluons and light quarks, not t/b)), tree level to order X (QCD) and Y (QED)
+%DiPhotonBorn: q_i q_i_bar --> gamma gamma
+%DiPhotonBox:  g g --> gamma gamma
+%W + jets
+%W + photon
+%Z + photon
+%
+
+%Wgg, Zgg (negligible)
+
+%\begin{figure}
+%	\centering
+%	\subfloat[Dijet production via $gg$ and $qg$ interactions.]{\label{fig:dijet}\includegraphics[scale=1.35]{dijet}}
+%	\hspace{1cm}
+%	\subfloat[Photon + jet production via $qg$ interactions.]{\label{fig:photon_jet}\includegraphics[scale=1.35]{photon_jet}}
+%	\\
+%	\subfloat[Diphoton production via $q\bar{q}$ and $gg$ interactions.]{\label{fig:diphoton}\includegraphics[scale=1.8]{diphoton}}
+%	\hspace{1cm}
+%	\subfloat[$Z\gamma$ production.]{\label{fig:Zgamma}\includegraphics[scale=1.8]{Zgamma}}
+%	\caption{Representative Feynman diagrams of some QCD backgrounds to the GGM SUSY search with instrumental effects described.}
+%	\label{fig:QCD_background_diagrams}
+%\end{figure}
+%
+%\begin{figure}
+%	\centering
+%	\subfloat[$W\gamma$ production.]{\label{fig:Wgamma}\includegraphics[scale=1.35]{Wgamma}}
+%	\hspace{1cm}
+%	\subfloat[$W$ + jet production.]{\label{fig:W_jet}\includegraphics[scale=1.35]{W_jet}}
+%	\caption{Representative Feynman diagrams of some electoweak backgrounds to the GGM SUSY search with instrumental effects described.}
+%	\label{fig:EW_background_diagrams}
+%\end{figure}
+
+Figure~\ref{fig:MET_data_vs_MC_backgrounds} shows the \MET spectrum of the $\gamma\gamma$ search data sample overlaid on the \MET spectra of MC simulated background components.  The MC spectra are normalized to the integrated luminosity of the $\gamma\gamma$ data sample.  \textcolor{red}{\textbf{Make this plot.}}  The dominant background components are QCD inclusive photon processes.  The MC is not used in the actual background estimation.  It is just shown here to illustrate the breakdown of backgrounds.
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[scale=1.35]{MET_data_vs_MC_backgrounds}
+%	\caption{\MET spectrum of the $\gamma\gamma$ search data sample overlaid on the \MET spectra of MC simulated background components.  The MC spectra are normalized to the integrated luminosity of the $\gamma\gamma$ data sample.  A description of the MC samples used may be found in Appendix~\ref{chap:Monte Carlo Samples}}.
+%	\label{fig:MET_data_vs_MC_backgrounds}
+%\end{figure}
+
+Data control samples are used to model all of the backgrounds.  The primary control sample used to model the QCD background is the $\mathit{ff}$ sample, which is similar to the candidate $\gamma\gamma$ sample but with combined isolation or $\sigma_{i\eta i\eta}$ cuts inverted.  The cuts on these variables are used to distinguish between photons and jets, so by inverting those cuts, the resulting $\mathit{ff}$ sample becomes enriched with QCD dijets.  Because the fake photons are still required to pass a tight cut on $H/E$, they are guaranteed to be very electromagnetic jets, with an EM energy scale and resolution similar to that of the candidate photons.  This insures that the resulting estimate of the \MET shape does not have too long of a tail from severe HCAL mis-measurements that are actually rare in the $\gamma\gamma$ sample, as shown in Figure~\ref{fig:MET_MC_ggVsFF_varyHOverE}.  \textcolor{red}{\textbf{Plot the $\gamma\gamma$/$\mathit{ff}$ \MET agreement for different values of the ff $H/E$ cut in MC.  Make the same plot in data for a restricted \MET range?}}
+
+%\begin{figure}
+%	\centering
+%	\subfloat[MC.  See App.~\ref{chap:Monte Carlo Samples} for the MC samples used.]{\label{fig:MET_MC_ggVsFF_varyHOverE_MC}\includegraphics[scale=1.35]{MET_MC_ggVsFF_varyHOverE_MC}}
+%	\hspace{1cm}
+%	\subfloat[Data, restricted to $\MET < 100$ GeV.]{\label{fig:MET_MC_ggVsFF_varyHOverE_data}\includegraphics[scale=1.35]{MET_MC_ggVsFF_varyHOverE_data}}
+%	\caption{\MET spectra of the $\gamma\gamma$ and $\mathit{ff}$ samples for various values of the $\mathit{ff} H/E$ cut.}
+%	\label{fig:MET_MC_ggVsFF_varyHOverE}
+%\end{figure}
+
+As a cross-check, the $ee$ sample is also used to model the QCD background.  This sample of $Z$ decays should have no true \MET, just like the $\mathit{ff}$ sample, and the electron definition (differing from the photon definition only in the presence of a pixel seed) insures that the electron energy scale and resolution is similar to that of the photon.
+
+Finally, the $e\gamma$ sample is used to model the electroweak background from $W\rightarrow e\nu$ decays.  The $e\gamma$ \MET distribution is scaled by the electron$\rightarrow$photon misidentification rate to predict the number of $W\gamma$ and $W$ + jet events in the $\gamma\gamma$ sample.
+
+
+
 \section{Modeling the QCD Background}
 \label{sec:Modeling the QCD Background}
+
+%explain the procedure, up through normalization and EW subtraction (but don't explain EW subtraction yet)
+%- define jet
+%- show the comparison between reweighted and not to motivate the procedure
+%- for the ee case, explain the sideband subtraction procedure
+%	- show the sideband di-EM pT spectra
+%	- show the sideband weights
+%- show the di-EM pT spectra
+%- show the weights
+%- show the final MET plot with systematics but say they'll be explained later
+
+%EW background
+%explain the procedure
+%show the ee and eg fits
+%show the pT dependence
+
+%systematic studies
+%variations in shape of dijet pT spectra and jet bin migration due to statistics and JES
+%show that effect of rebinning the dijet pT weights is covered by the 1000-toys procedure
+%derive a systematic from subtracting the ee sidebands with different relative weights
+%effect of reweighting with and without Nj component
+%effect of di-EM vs. dijet pT reweighting
+%corrected vs. uncorrected MET
+%HT, MHT, Nj ee vs. ff before and after reweighting
+
+%ee as cross-check
+%slightly better MET resolution than gg or ff
+%MC closure
+%agreement in bins of rho
+%...
+
+%results
+%final number in signal region with all stat. and syst. errors included
+%expectation from GGM models (1 that can be excluded, 1 that can't)
+
+%discuss Dec. vs. Jan. plots in ~/RA3/data--they show that the changes do not significantly affect the result except in the normalization, because of the reduction in gg/eg triggers
+%- run with latest dijet pT reweighting and compare to old
+%	- changes: added 26/18 trigger, removed R9Id for gg/eg, r9 < 1
+%	- result: agreement pretty much the same, fewer overall events
+
 \subsection{Systematic Errors}
 
 \subsubsection{Jet Energy Scale Uncertainty}

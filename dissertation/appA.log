@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  17 JAN 2012 18:57
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  23 JAN 2012 18:21
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -242,7 +242,10 @@ Package ifvtex Info: VTeX not detected.
 Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
 
 Package: `setspace' 6.7 <2000/12/01>
-) (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
+) (/usr/local/texlive/2010/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen134
+)
+(/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2010/06/18 v6.81g Hypertext links for LaTeX
 
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
@@ -289,7 +292,7 @@ Package: xcolor-patch 2009/12/12 xcolor patch
 (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/letltxmacro.sty
 Package: letltxmacro 2008/06/24 v1.3 Let assignment for LaTeX macros (HO)
 )
-\@linkdim=\dimen134
+\@linkdim=\dimen135
 \Hy@linkcounter=\count116
 \Hy@pagecounter=\count117
 
@@ -321,8 +324,8 @@ Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
 Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
 ))
 \Fld@menulength=\count118
-\Field@Width=\dimen135
-\Fld@charsize=\dimen136
+\Field@Width=\dimen136
+\Fld@charsize=\dimen137
 \Field@toks=\toks25
 Package hyperref Info: Hyper figures OFF on input line 5137.
 Package hyperref Info: Link nesting OFF on input line 5142.
@@ -382,13 +385,13 @@ LaTeX Font Info:    ... okay on input line 2.
 (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
-\scratchdimen=\dimen137
+\scratchdimen=\dimen138
 \scratchbox=\box28
 \nofMPsegments=\count125
 \nofMParguments=\count126
 \everyMPshowfont=\toks26
 \MPscratchCnt=\count127
-\MPscratchDim=\dimen138
+\MPscratchDim=\dimen139
 \MPnumerator=\count128
 \everyMPtoPDFconversion=\toks27
 ) (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
@@ -500,17 +503,20 @@ LaTeX Warning: Citation `CTEQ6' on page 2 undefined on input line 35.
 LaTeX Warning: Citation `LPCC_MBUE_WG' on page 2 undefined on input line 35.
 
 
-LaTeX Warning: Citation `MadGraph' on page 2 undefined on input line 38.
+LaTeX Warning: Citation `Pythia6' on page 2 undefined on input line 38.
 
 
-LaTeX Warning: Citation `Tauola' on page 2 undefined on input line 39.
+LaTeX Warning: Citation `MadGraph' on page 2 undefined on input line 39.
 
 [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 47.
- [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 47.
+
+LaTeX Warning: Citation `Tauola' on page 3 undefined on input line 40.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 48.
+[3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 48.
  (./appA.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 47.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 48.
 Package rerunfilecheck Info: File `appA.out' has not changed.
 (rerunfilecheck)             Checksum: DB3DF341C306619C1357FEC42A437F59;213.
 
@@ -519,10 +525,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 7671 strings out of 493747
- 116239 string characters out of 3143546
- 203109 words of memory out of 3000000
- 10812 multiletter control sequences out of 15000+200000
+ 7684 strings out of 493747
+ 116542 string characters out of 3143546
+ 203308 words of memory out of 3000000
+ 10821 multiletter control sequences out of 15000+200000
  10324 words of font info for 39 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  53i,5n,44p,681b,403s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -534,7 +540,7 @@ r/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/l
 ocal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
 cal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loca
 l/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on appA.pdf (3 pages, 83685 bytes).
+Output written on appA.pdf (3 pages, 83766 bytes).
 PDF statistics:
  73 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream

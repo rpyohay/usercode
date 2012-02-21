@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  28 DEC 2011 12:39
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  20 JAN 2012 16:29
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -238,6 +238,13 @@ Package ifvtex Info: VTeX not detected.
 \Gm@layoutvoffset=\dimen133
 \Gm@dimlist=\toks24
 )
+(/usr/local/texlive/2010/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
+
+Package: `setspace' 6.7 <2000/12/01>
+) (/usr/local/texlive/2010/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen134
+)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2010/06/18 v6.81g Hypertext links for LaTeX
 
@@ -285,7 +292,7 @@ Package: xcolor-patch 2009/12/12 xcolor patch
 (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/letltxmacro.sty
 Package: letltxmacro 2008/06/24 v1.3 Let assignment for LaTeX macros (HO)
 )
-\@linkdim=\dimen134
+\@linkdim=\dimen135
 \Hy@linkcounter=\count116
 \Hy@pagecounter=\count117
 
@@ -317,8 +324,8 @@ Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
 Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
 ))
 \Fld@menulength=\count118
-\Field@Width=\dimen135
-\Fld@charsize=\dimen136
+\Field@Width=\dimen136
+\Fld@charsize=\dimen137
 \Field@toks=\toks25
 Package hyperref Info: Hyper figures OFF on input line 5137.
 Package hyperref Info: Link nesting OFF on input line 5142.
@@ -357,8 +364,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 71.
 )
 \Hy@SectionHShift=\skip56
-)))
-No file ch2.aux.
+))) (./ch2.aux)
 \openout1 = `ch2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
@@ -375,16 +381,16 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 2.
 LaTeX Font Info:    ... okay on input line 2.
-(/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
-\scratchdimen=\dimen137
+\scratchdimen=\dimen138
 \scratchbox=\box28
 \nofMPsegments=\count125
 \nofMParguments=\count126
 \everyMPshowfont=\toks26
 \MPscratchCnt=\count127
-\MPscratchDim=\dimen138
+\MPscratchDim=\dimen139
 \MPnumerator=\count128
 \everyMPtoPDFconversion=\toks27
 ) (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
@@ -458,6 +464,8 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 2.
 LaTeX Info: Redefining \pageref on input line 2.
 LaTeX Info: Redefining \nameref on input line 2.
+
+(./ch2.out) (./ch2.out)
 \@outlinefile=\write3
 \openout3 = `ch2.out'.
 
@@ -482,10 +490,11 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 LaTeX Warning: Citation `Drees' on page 1 undefined on input line 34.
 
+[1
 
-LaTeX Warning: Reference `fig:LEP' on page 1 undefined on input line 34.
 
-<LEP_hadronic_xsec.pdf, id=4, 214.10559pt x 206.36688pt>
+{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+<LEP_hadronic_xsec.pdf, id=32, 214.10559pt x 206.36688pt>
 File: LEP_hadronic_xsec.pdf Graphic file (type pdf)
 
 <use LEP_hadronic_xsec.pdf>
@@ -493,11 +502,11 @@ Underfull \hbox (badness 1097) in paragraph at lines 38--38
 \OT1/cmr/m/n/10 a func-tion of col-lider center-of-
  []
 
-<LEP_pair_production_xsecs.pdf, id=5, 199.91791pt x 265.69736pt>
+<LEP_pair_production_xsecs.pdf, id=33, 199.91791pt x 265.69736pt>
 File: LEP_pair_production_xsecs.pdf Graphic file (type pdf)
 
 <use LEP_pair_production_xsecs.pdf>
-<LEP_W_pair_production_xsec.pdf, id=6, 211.52596pt x 213.46068pt>
+<LEP_W_pair_production_xsec.pdf, id=34, 211.52596pt x 213.46068pt>
 File: LEP_W_pair_production_xsec.pdf Graphic file (type pdf)
 
 <use LEP_W_pair_production_xsec.pdf>
@@ -506,7 +515,7 @@ Underfull \hbox (badness 2781) in paragraph at lines 42--42
 
  []
 
-<LEP_alphaS_running.pdf, id=7, 182.50565pt x 219.90968pt>
+<LEP_alphaS_running.pdf, id=35, 182.50565pt x 219.90968pt>
 File: LEP_alphaS_running.pdf Graphic file (type pdf)
 
 <use LEP_alphaS_running.pdf>
@@ -515,56 +524,43 @@ Underfull \hbox (badness 1062) in paragraph at lines 44--44
  []
 
 
-LaTeX Warning: Citation `Drees' on page 1 undefined on input line 45.
+LaTeX Warning: Citation `Drees' on page 2 undefined on input line 45.
 
 
-LaTeX Warning: Citation `Drees' on page 1 undefined on input line 45.
+LaTeX Warning: Citation `Drees' on page 2 undefined on input line 45.
 
 
-LaTeX Warning: Citation `Higgs' on page 1 undefined on input line 49.
+LaTeX Warning: Citation `Higgs' on page 2 undefined on input line 49.
 
 
-LaTeX Warning: Citation `Aitchison' on page 1 undefined on input line 49.
-
-[1
+LaTeX Warning: Citation `Aitchison' on page 2 undefined on input line 49.
 
 
-{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2 <./LEP_hadronic_xsec.pdf> <./LEP_pair_production_xsecs.pdf> <./LEP_W_pair_pr
-oduction_xsec.pdf> <./LEP_alphaS_running.pdf>]
 Overfull \hbox (5.02779pt too wide) in paragraph at lines 58--58
 []\OT1/cmr/bx/n/17.28 Electroweak Sym-me-try Break-ing and the Higgs
  []
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 61.
-[3]
+[2] [3 <./LEP_hadronic_xsec.pdf> <./LEP_pair_production_xsecs.pdf> <./LEP_W_pai
+r_production_xsec.pdf> <./LEP_alphaS_running.pdf>] [4]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 61.
  (./ch2.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 61.
+Package rerunfilecheck Info: File `ch2.out' has not changed.
+(rerunfilecheck)             Checksum: E0253EC335134F4169C47703B18141D6;351.
 
-
-Package rerunfilecheck Warning: File `ch2.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `ch2.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  E0253EC335134F4169C47703B18141D6;351.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 7655 strings out of 493747
- 116325 string characters out of 3143546
- 206733 words of memory out of 3000000
- 10801 multiletter control sequences out of 15000+200000
+ 7712 strings out of 493747
+ 117314 string characters out of 3143546
+ 204640 words of memory out of 3000000
+ 10843 multiletter control sequences out of 15000+200000
  11855 words of font info for 46 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,11n,45p,1675b,453s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,11n,45p,1012b,451s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -582,10 +578,10 @@ e/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
 0/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/te
 xmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on ch2.pdf (3 pages, 876581 bytes).
+Output written on ch2.pdf (4 pages, 878535 bytes).
 PDF statistics:
- 725 PDF objects out of 1000 (max. 8388607)
- 507 compressed objects within 6 object streams
- 14 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 743 PDF objects out of 1000 (max. 8388607)
+ 524 compressed objects within 6 object streams
+ 15 named destinations out of 1000 (max. 500000)
+ 53 words of extra memory for PDF output out of 10000 (max. 10000000)
 

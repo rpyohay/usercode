@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  17 JAN 2012 15:50
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  21 FEB 2012 17:42
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -242,7 +242,10 @@ Package ifvtex Info: VTeX not detected.
 Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
 
 Package: `setspace' 6.7 <2000/12/01>
-) (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
+) (/usr/local/texlive/2010/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen134
+)
+(/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2010/06/18 v6.81g Hypertext links for LaTeX
 
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
@@ -289,7 +292,7 @@ Package: xcolor-patch 2009/12/12 xcolor patch
 (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/letltxmacro.sty
 Package: letltxmacro 2008/06/24 v1.3 Let assignment for LaTeX macros (HO)
 )
-\@linkdim=\dimen134
+\@linkdim=\dimen135
 \Hy@linkcounter=\count116
 \Hy@pagecounter=\count117
 
@@ -321,8 +324,8 @@ Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
 Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
 ))
 \Fld@menulength=\count118
-\Field@Width=\dimen135
-\Fld@charsize=\dimen136
+\Field@Width=\dimen136
+\Fld@charsize=\dimen137
 \Field@toks=\toks25
 Package hyperref Info: Hyper figures OFF on input line 5137.
 Package hyperref Info: Link nesting OFF on input line 5142.
@@ -388,13 +391,13 @@ LaTeX Font Info:    ... okay on input line 2.
  (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
-\scratchdimen=\dimen137
+\scratchdimen=\dimen138
 \scratchbox=\box28
 \nofMPsegments=\count125
 \nofMParguments=\count126
 \everyMPshowfont=\toks26
 \MPscratchCnt=\count127
-\MPscratchDim=\dimen138
+\MPscratchDim=\dimen139
 \MPnumerator=\count128
 \everyMPtoPDFconversion=\toks27
 ) (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
@@ -510,7 +513,7 @@ LaTeX Warning: Citation `Bruneliere' on page 2 undefined on input line 24.
 
 LaTeX Warning: Citation `time_reco' on page 2 undefined on input line 24.
 
-<pulse.jpg, id=48, 56.3706pt x 52.32349pt>
+<pulse.jpg, id=60, 56.3706pt x 52.32349pt>
 File: pulse.jpg Graphic file (type jpg)
  <use pulse.jpg>
 
@@ -557,7 +560,7 @@ ine 49.
 
 LaTeX Warning: Citation `Yang' on page 4 undefined on input line 59.
 
-<intercalibration.pdf, id=68, 294.95998pt x 269.55705pt>
+<intercalibration.pdf, id=80, 294.95998pt x 269.55705pt>
 File: intercalibration.pdf Graphic file (type pdf)
 
 <use intercalibration.pdf>
@@ -569,219 +572,403 @@ LaTeX Warning: Citation `Yang' on page 4 undefined on input line 64.
 
 [4 <./intercalibration.pdf>]
 
-LaTeX Warning: Citation `ECAL_SC_note' on page 5 undefined on input line 88.
+LaTeX Warning: Citation `ECAL_SC_note' on page 5 undefined on input line 91.
 
-[5] <hybrid.pdf, id=190, 426.92136pt x 204.43216pt>
+[5] <hybrid.pdf, id=202, 426.92136pt x 204.43216pt>
 File: hybrid.pdf Graphic file (type pdf)
  <use hybrid.pdf>
 
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 93.
+LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 96.
 
 
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 93.
+LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 96.
 
-<Z_mass_vs_corrections.pdf, id=192, 450.59053pt x 176.26874pt>
+<Z_mass_vs_corrections.pdf, id=204, 450.59053pt x 176.26874pt>
 File: Z_mass_vs_corrections.pdf Graphic file (type pdf)
 
 <use Z_mass_vs_corrections.pdf>
 
-LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 102.
+LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 105.
 
 
-LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 102.
+LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 105.
 
 
-LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 102.
+LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 105.
 
 
-LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 102.
+LaTeX Warning: Citation `Higgs_AN' on page 6 undefined on input line 105.
 
 
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 115.
+LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 118.
 
 
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 119.
+LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 122.
 
 
 LaTeX Warning: Citation `EB_startup_intercalibration' on page 6 undefined on in
-put line 119.
+put line 122.
 
 
-LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 120.
+LaTeX Warning: Citation `ECAL_SC_note' on page 6 undefined on input line 123.
 
 [6 <./hybrid.pdf>]
 
-LaTeX Warning: Citation `Higgs_note' on page 7 undefined on input line 124.
+LaTeX Warning: Citation `Higgs_note' on page 7 undefined on input line 127.
 
 [7 <./Z_mass_vs_corrections.pdf>]
 
 LaTeX Warning: Reference `chap:Data Analysis' on page 8 undefined on input line
- 131.
+ 134.
 
 
 LaTeX Warning: Citation `Fastjet_conf_proceedings' on page 8 undefined on input
- line 138.
+ line 141.
 
 
-LaTeX Warning: Citation `Fastjet_manual' on page 8 undefined on input line 138.
+LaTeX Warning: Citation `Fastjet_manual' on page 8 undefined on input line 141.
 
 
-[8] <isolation_cones.pdf, id=322, 1027.84pt x 770.88pt>
+[8] <isolation_cones.pdf, id=333, 1027.84pt x 770.88pt>
 File: isolation_cones.pdf Graphic file (type pdf)
 
 <use isolation_cones.pdf>
-<preselected_rho.pdf, id=323, 569.12625pt x 502.87875pt>
+<preselected_rho.pdf, id=334, 569.12625pt x 502.87875pt>
 File: preselected_rho.pdf Graphic file (type pdf)
 
 <use preselected_rho.pdf>
 
-LaTeX Warning: Citation `GSF_reco' on page 9 undefined on input line 183.
+LaTeX Warning: Citation `GSF_reco' on page 9 undefined on input line 195.
 
 
 LaTeX Warning: Reference `sec:Modeling the QCD Background' on page 9 undefined 
-on input line 183.
+on input line 195.
 
-[9 <./isolation_cones.pdf>]
+[9] [10 <./isolation_cones.pdf> <./preselected_rho.pdf, page is rotated 90 degr
+ees>]
 
-LaTeX Warning: Citation `PF_algo' on page 10 undefined on input line 191.
-
-
-LaTeX Warning: Citation `PF_perf' on page 10 undefined on input line 191.
+LaTeX Warning: Citation `PF_algo' on page 11 undefined on input line 203.
 
 
-LaTeX Warning: Citation `CMS_JES_paper' on page 10 undefined on input line 191.
+LaTeX Warning: Citation `PF_perf' on page 11 undefined on input line 203.
+
+
+LaTeX Warning: Citation `CMS_JES_paper' on page 11 undefined on input line 203.
 
 
 
-LaTeX Warning: Citation `PF_note' on page 10 undefined on input line 191.
-
-[10 <./preselected_rho.pdf, page is rotated 90 degrees>]
-
-LaTeX Warning: Citation `AK5' on page 11 undefined on input line 225.
+LaTeX Warning: Citation `PF_note' on page 11 undefined on input line 203.
 
 [11]
 
-LaTeX Warning: Citation `Salam_talk' on page 12 undefined on input line 231.
+LaTeX Warning: Citation `AK5' on page 12 undefined on input line 237.
 
-<anti-kT.pdf, id=411, 208.45914pt x 144.62683pt>
+
+LaTeX Warning: Citation `Salam_talk' on page 12 undefined on input line 243.
+
+[12] <anti-kT.pdf, id=428, 208.45914pt x 144.62683pt>
 File: anti-kT.pdf Graphic file (type pdf)
  <use anti-kT.pdf>
 
-LaTeX Warning: Citation `Wigmans' on page 12 undefined on input line 240.
+LaTeX Warning: Citation `Wigmans' on page 13 undefined on input line 252.
 
 
-LaTeX Warning: Citation `Wigmans' on page 12 undefined on input line 240.
+LaTeX Warning: Citation `Wigmans' on page 13 undefined on input line 252.
 
 
-LaTeX Warning: Citation `CDF_JEC_website' on page 12 undefined on input line 24
-0.
+LaTeX Warning: Citation `CDF_JEC_website' on page 13 undefined on input line 25
+2.
 
 
-LaTeX Warning: Citation `CMS_MET_paper' on page 12 undefined on input line 240.
+LaTeX Warning: Citation `CMS_MET_paper' on page 13 undefined on input line 252.
 
 
 
-LaTeX Warning: Citation `CDF_JEC_website' on page 12 undefined on input line 24
-0.
+LaTeX Warning: Citation `CDF_JEC_website' on page 13 undefined on input line 25
+2.
 
 
-LaTeX Warning: Citation `CMS_JES_paper' on page 12 undefined on input line 240.
+LaTeX Warning: Citation `CMS_JES_paper' on page 13 undefined on input line 252.
 
 
-[12 <./anti-kT.pdf>]
+[13 <./anti-kT.pdf>]
 
-LaTeX Warning: Citation `JPT' on page 13 undefined on input line 249.
-
-
-LaTeX Warning: Citation `CMS_JES_paper' on page 13 undefined on input line 249.
+LaTeX Warning: Citation `JPT' on page 14 undefined on input line 261.
 
 
-<total_JEC_50_GeV.pdf, id=498, 191.48268pt x 188.18124pt>
+LaTeX Warning: Citation `CMS_JES_paper' on page 14 undefined on input line 261.
+
+
+<total_JEC_50_GeV.pdf, id=514, 191.48268pt x 188.18124pt>
 File: total_JEC_50_GeV.pdf Graphic file (type pdf)
 
 <use total_JEC_50_GeV.pdf>
-<total_JEC_200_GeV.pdf, id=499, 188.73149pt x 188.18124pt>
+<total_JEC_200_GeV.pdf, id=515, 188.73149pt x 188.18124pt>
 File: total_JEC_200_GeV.pdf Graphic file (type pdf)
 
 <use total_JEC_200_GeV.pdf>
 
-LaTeX Warning: Citation `CMS_JES_paper' on page 13 undefined on input line 256.
+LaTeX Warning: Citation `CMS_JES_paper' on page 14 undefined on input line 268.
 
 
 
-LaTeX Warning: Citation `CMS_JES_paper' on page 13 undefined on input line 256.
+LaTeX Warning: Citation `CMS_JES_paper' on page 14 undefined on input line 268.
 
 
-[13] [14 <./total_JEC_50_GeV.pdf> <./total_JEC_200_GeV.pdf>]
-<MET_resolution.pdf, id=674, 255.86049pt x 182.67888pt>
+[14 <./total_JEC_50_GeV.pdf> <./total_JEC_200_GeV.pdf>]
+<MET_resolution.pdf, id=683, 255.86049pt x 182.67888pt>
 File: MET_resolution.pdf Graphic file (type pdf)
 
 <use MET_resolution.pdf>
 
-LaTeX Warning: Citation `Pythia' on page 15 undefined on input line 277.
+LaTeX Warning: Citation `Pythia8' on page 15 undefined on input line 289.
 
 
-LaTeX Warning: Citation `CMS_MET_paper' on page 15 undefined on input line 277.
-
-
-
-LaTeX Warning: Citation `Pythia' on page 15 undefined on input line 277.
-
-
-LaTeX Warning: Citation `CMS_MET_paper' on page 15 undefined on input line 277.
+LaTeX Warning: Citation `CMS_MET_paper' on page 15 undefined on input line 289.
 
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 308--308
-
- []
+LaTeX Warning: Citation `Pythia8' on page 15 undefined on input line 289.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 308--308
+LaTeX Warning: Citation `CMS_MET_paper' on page 15 undefined on input line 289.
+
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 320--321
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 308--308
+Underfull \hbox (badness 10000) in paragraph at lines 320--321
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
+Underfull \hbox (badness 10000) in paragraph at lines 320--321
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 308--309
-
- []
-
-[15 <./MET_resolution.pdf>]
 
 LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 1
-6 undefined on input line 317.
+6 undefined on input line 329.
 
-[16]
+[16 <./MET_resolution.pdf>] [17] [18]
 
-LaTeX Warning: Reference `Photons' on page 17 undefined on input line 324.
+LaTeX Warning: Reference `fig:beam_halo_brem' on page 19 undefined on input lin
+e 358.
 
-[17]
 
-LaTeX Warning: Reference `fig:MC_N-1_comparisons' on page 18 undefined on input
- line 336.
+LaTeX Warning: Citation `HCAL_noise_CRAFT' on page 19 undefined on input line 3
+70.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 498.
-[18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 498.
+[19]
+
+LaTeX Warning: Citation `HCAL_noise_AN' on page 20 undefined on input line 376.
+
+
+
+LaTeX Warning: Citation `Korzekwa' on page 20 undefined on input line 376.
+
+<R45.pdf, id=775, 1027.84pt x 770.88pt>
+File: R45.pdf Graphic file (type pdf)
+ <use R45.pdf>
+
+LaTeX Warning: Citation `Chen' on page 20 undefined on input line 394.
+
+
+LaTeX Warning: Citation `Chen' on page 20 undefined on input line 394.
+
+[20]
+
+LaTeX Warning: Reference `fig:MC_N-1_comparisons' on page 21 undefined on input
+ line 409.
+
+
+LaTeX Warning: Reference `chap:Monte Carlo Samples' on page 21 undefined on inp
+ut line 409.
+
+[21 <./R45.pdf>] [22]
+
+LaTeX Warning: Citation `tag_and_probe_method_AN' on page 23 undefined on input
+ line 527.
+
+
+LaTeX Warning: Citation `tag_and_probe_method_AN' on page 23 undefined on input
+ line 527.
+
+[23] [24]
+
+LaTeX Warning: Citation `MINUIT' on page 25 undefined on input line 536.
+
+
+LaTeX Warning: Citation `RooFit' on page 25 undefined on input line 536.
+
+
+LaTeX Warning: Citation `Crystal_Ball' on page 25 undefined on input line 538.
+
+
+LaTeX Warning: Citation `tag_and_probe_method_AN' on page 25 undefined on input
+ line 538.
+
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 558--558
+[]|\OT1/cmr/m/n/12 Tag-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 558--558
+\OT1/cmr/m/n/12 pass
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 558--558
+[]|\OT1/cmr/m/n/12 [-1.0,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 558--558
+[]|\OT1/cmr/m/n/12 [1.0,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 560--560
+[]|\OT1/cmr/m/n/12 Tag-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 560--560
+\OT1/cmr/m/n/12 fail
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 560--560
+[]|\OT1/cmr/m/n/12 [-1.0,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 560--560
+[]|\OT1/cmr/m/n/12 [1.0,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--562
+[]|\OT1/cmr/m/n/12 Tag-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--562
+\OT1/cmr/m/n/12 pass
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--562
+\OT1/cmr/m/n/12 back-
+ []
+
+
+Overfull \hbox (2.94756pt too wide) in paragraph at lines 562--562
+[]|\OT1/cmr/m/n/12 0.04750| 
+ []
+
+
+Overfull \hbox (2.94756pt too wide) in paragraph at lines 562--563
+[]|\OT1/cmr/m/n/12 0.01908| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 564--564
+[]|\OT1/cmr/m/n/12 Tag-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 564--564
+\OT1/cmr/m/n/12 fail
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 564--564
+\OT1/cmr/m/n/12 back-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 564--564
+[]|\OT1/cmr/m/n/12 [50.0,
+ []
+
+
+LaTeX Warning: Reference `fig:low_ET_bin' on page 26 undefined on input line 57
+0.
+
+
+LaTeX Warning: Reference `fig:mid-eta_bin' on page 26 undefined on input line 5
+70.
+
+
+LaTeX Warning: Reference `fig:low_ET_bin' on page 26 undefined on input line 57
+0.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 581.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\epsilon' on input line 581.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 581.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `superscript' on input line 581.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\epsilon' on input line 581.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 581.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `superscript' on input line 581.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 581.
+
+[26] <scale_factor_vs_ET.pdf, id=915, 569.12625pt x 569.12625pt>
+File: scale_factor_vs_ET.pdf Graphic file (type pdf)
+
+<use scale_factor_vs_ET.pdf>
+<scale_factor_vs_eta.pdf, id=916, 569.12625pt x 569.12625pt>
+File: scale_factor_vs_eta.pdf Graphic file (type pdf)
+
+<use scale_factor_vs_eta.pdf>
+<scale_factor_vs_Njet.pdf, id=917, 569.12625pt x 569.12625pt>
+File: scale_factor_vs_Njet.pdf Graphic file (type pdf)
+
+<use scale_factor_vs_Njet.pdf>
+<eff_vs_NPV.pdf, id=920, 569.12625pt x 569.12625pt>
+File: eff_vs_NPV.pdf Graphic file (type pdf)
+ <use eff_vs_NPV.pdf>
+<scale_factor_vs_NPV.pdf, id=921, 569.12625pt x 569.12625pt>
+File: scale_factor_vs_NPV.pdf Graphic file (type pdf)
+
+<use scale_factor_vs_NPV.pdf> [27 <./scale_factor_vs_ET.pdf> <./scale_factor_vs
+_eta.pdf> <./scale_factor_vs_Njet.pdf>] [28 <./eff_vs_NPV.pdf> <./scale_factor_
+vs_NPV.pdf>]
+Missing character: There is no Ó in font cmr12!
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 619.
+ [29]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 619.
  (./ch6.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 498.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 619.
 Package rerunfilecheck Info: File `ch6.out' has not changed.
-(rerunfilecheck)             Checksum: 2A134F50B572BA2A8326D9A77067108E;453.
+(rerunfilecheck)             Checksum: 68A2C2AE8ACA09B1C1324073DC4D1889;679.
 
 
 LaTeX Warning: There were undefined references.
@@ -791,13 +978,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 7861 strings out of 493747
- 119341 string characters out of 3143546
- 215547 words of memory out of 3000000
- 10934 multiletter control sequences out of 15000+200000
- 15029 words of font info for 56 fonts, out of 3000000 for 9000
+ 7974 strings out of 493747
+ 121469 string characters out of 3143546
+ 219955 words of memory out of 3000000
+ 11008 multiletter control sequences out of 15000+200000
+ 16623 words of font info for 62 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,18n,45p,1316b,522s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,18n,45p,1316b,456s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -830,10 +1017,10 @@ o/uplr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplri
 r/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/te
 xlive/2010/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2010
 /texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on ch6.pdf (18 pages, 2234298 bytes).
+Output written on ch6.pdf (29 pages, 2786370 bytes).
 PDF statistics:
- 837 PDF objects out of 1000 (max. 8388607)
- 646 compressed objects within 7 object streams
- 61 named destinations out of 1000 (max. 500000)
- 107 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1242 PDF objects out of 1440 (max. 8388607)
+ 881 compressed objects within 9 object streams
+ 90 named destinations out of 1000 (max. 500000)
+ 161 words of extra memory for PDF output out of 10000 (max. 10000000)
 

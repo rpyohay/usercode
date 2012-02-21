@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  15 JAN 2012 16:47
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  29 JAN 2012 12:46
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -238,7 +238,10 @@ Package ifvtex Info: VTeX not detected.
 Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
 
 Package: `setspace' 6.7 <2000/12/01>
-) (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
+) (/usr/local/texlive/2010/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen134
+)
+(/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2010/06/18 v6.81g Hypertext links for LaTeX
 
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
@@ -285,7 +288,7 @@ Package: xcolor-patch 2009/12/12 xcolor patch
 (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/letltxmacro.sty
 Package: letltxmacro 2008/06/24 v1.3 Let assignment for LaTeX macros (HO)
 )
-\@linkdim=\dimen134
+\@linkdim=\dimen135
 \Hy@linkcounter=\count116
 \Hy@pagecounter=\count117
 
@@ -317,8 +320,8 @@ Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
 Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
 ))
 \Fld@menulength=\count118
-\Field@Width=\dimen135
-\Fld@charsize=\dimen136
+\Field@Width=\dimen136
+\Fld@charsize=\dimen137
 \Field@toks=\toks25
 Package hyperref Info: Hyper figures OFF on input line 5137.
 Package hyperref Info: Link nesting OFF on input line 5142.
@@ -359,34 +362,40 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip56
 )
-(./dissertation.aux)
+(./dissertation.aux
+
+LaTeX Warning: Label `fig:total_JEC_50_GeV' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:total_JEC_50_GeV' multiply defined.
+
+)
 \openout1 = `dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 34.
-LaTeX Font Info:    ... okay on input line 34.
-
-(/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
+LaTeX Font Info:    ... okay on input line 35.
+ (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
-\scratchdimen=\dimen137
+\scratchdimen=\dimen138
 \scratchbox=\box28
 \nofMPsegments=\count125
 \nofMParguments=\count126
 \everyMPshowfont=\toks26
 \MPscratchCnt=\count127
-\MPscratchDim=\dimen138
+\MPscratchDim=\dimen139
 \MPnumerator=\count128
 \everyMPtoPDFconversion=\toks27
 ) (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
@@ -406,7 +415,7 @@ e
 ))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 34.
+LaTeX Info: Redefining \subref on input line 35.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
@@ -445,7 +454,7 @@ Package caption Info: End \AtBeginDocument code.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 34.
+Package hyperref Info: Link coloring OFF on input line 35.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
@@ -457,468 +466,674 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
 \c@section@level=\count129
 )
-LaTeX Info: Redefining \ref on input line 34.
-LaTeX Info: Redefining \pageref on input line 34.
-LaTeX Info: Redefining \nameref on input line 34.
+LaTeX Info: Redefining \ref on input line 35.
+LaTeX Info: Redefining \pageref on input line 35.
+LaTeX Info: Redefining \nameref on input line 35.
 
 (./dissertation.out) (./dissertation.out)
 \@outlinefile=\write3
 \openout3 = `dissertation.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 43.
+LaTeX Font Info:    Try loading font information for U+msa on input line 44.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 43.
+LaTeX Font Info:    Try loading font information for U+msb on input line 44.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 ) [1
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./diss
-ertation.toc)
+ertation.tocpdfTeX warning (ext4): destination with the same identifier (name{p
+age.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.30 ...{e}^{\mathrm {MC}}$}{52}{subsection.3.4.2}
+                                                   [1
+
+])
 \tf@toc=\write4
 \openout4 = `dissertation.toc'.
 
-(./ch3.texpdfTeX warning (ext4): destination with the same identifier (name{pag
-e.1}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.4 \chapter
-            {The Supersymmetric Extension to the Standard Model} [1
-
-]
+ (./ch2.tex [2]
 Chapter 1.
-[2
+[3
+
+] <LEP_hadronic_xsec.pdf, id=156, 214.10559pt x 206.36688pt>
+File: LEP_hadronic_xsec.pdf Graphic file (type pdf)
+
+<use LEP_hadronic_xsec.pdf>
+Underfull \hbox (badness 1097) in paragraph at lines 38--38
+\OT1/cmr/m/n/10 a func-tion of col-lider center-of-
+ []
+
+<LEP_pair_production_xsecs.pdf, id=157, 199.91791pt x 265.69736pt>
+File: LEP_pair_production_xsecs.pdf Graphic file (type pdf)
+
+<use LEP_pair_production_xsecs.pdf>
+<LEP_W_pair_production_xsec.pdf, id=158, 211.52596pt x 213.46068pt>
+File: LEP_W_pair_production_xsec.pdf Graphic file (type pdf)
+
+<use LEP_W_pair_production_xsec.pdf>
+Underfull \hbox (badness 2781) in paragraph at lines 42--42
+\OT1/cmr/m/n/10 pen-dence of the $\OML/cmm/m/it/10 W[]W[]$ \OT1/cmr/m/n/10 pair
+
+ []
+
+<LEP_alphaS_running.pdf, id=159, 182.50565pt x 219.90968pt>
+File: LEP_alphaS_running.pdf Graphic file (type pdf)
+
+<use LEP_alphaS_running.pdf>
+Underfull \hbox (badness 1062) in paragraph at lines 44--44
+\OT1/cmr/m/n/10 pling con-stant $\OML/cmm/m/it/10 []$ \OT1/cmr/m/n/10 on LEP
+ []
+
+
+Overfull \hbox (5.02779pt too wide) in paragraph at lines 58--58
+[]\OT1/cmr/bx/n/17.28 Electroweak Sym-me-try Break-ing and the Higgs
+ []
+
+) (./ch3.tex [4] [5 <./LEP_hadronic_xsec.pdf> <./LEP_pair_production_xsecs.pdf>
+ <./LEP_W_pair_production_xsec.pdf> <./LEP_alphaS_running.pdf>] [6]
+Chapter 2.
+[7
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
+Underfull \hbox (badness 10000) in paragraph at lines 32--32
 []|\OT1/cmr/m/n/12 Spin-0
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 35--35
+Underfull \hbox (badness 10000) in paragraph at lines 32--32
 []|\OT1/cmr/m/n/12 Spin-1/2
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 35--36
+Underfull \hbox (badness 1292) in paragraph at lines 32--33
 \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (3)[] \OMS/cmsy/m/n/12 
  \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (2)[] \OMS/cmsy/m/n/12 
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 38--38
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
 []|\OT1/cmr/m/n/12 Left-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 38--38
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 38--38
+Underfull \hbox (badness 10000) in paragraph at lines 35--35
 \OT1/cmr/m/n/12 dou-blet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--40
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--40
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
 \OT1/cmr/m/n/12 up-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--40
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--40
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--42
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--42
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
 \OT1/cmr/m/n/12 down-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--42
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
 \OT1/cmr/m/n/12 quark/squark
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 42--42
+Underfull \hbox (badness 10000) in paragraph at lines 39--39
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--46
+Underfull \hbox (badness 10000) in paragraph at lines 43--43
 []|\OT1/cmr/m/n/12 Right-handed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--46
+Underfull \hbox (badness 10000) in paragraph at lines 43--43
 \OT1/cmr/m/n/12 lep-ton/slepton
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 46--46
+Underfull \hbox (badness 10000) in paragraph at lines 43--43
 \OT1/cmr/m/n/12 sin-glet ($\OMS/cmsy/m/n/12 ^^B$ \OT1/cmr/m/n/12 3
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--48
+Underfull \hbox (badness 10000) in paragraph at lines 45--45
 []|\OT1/cmr/m/n/12 Up-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 48--48
+Underfull \hbox (badness 10000) in paragraph at lines 45--45
 \OT1/cmr/m/n/12 Higgs/Higgsino
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--50
+Underfull \hbox (badness 10000) in paragraph at lines 47--47
 []|\OT1/cmr/m/n/12 Down-type
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 50--50
+Underfull \hbox (badness 10000) in paragraph at lines 47--47
 \OT1/cmr/m/n/12 Higgs/Higgsino
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 33--54
+Underfull \hbox (badness 10000) in paragraph at lines 30--51
 [][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--60
+Underfull \hbox (badness 10000) in paragraph at lines 57--57
 []|\OT1/cmr/m/n/12 Spin-1/2
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 60--60
+Underfull \hbox (badness 10000) in paragraph at lines 57--57
 []|\OT1/cmr/m/n/12 Spin-1
  []
 
 
-Underfull \hbox (badness 1292) in paragraph at lines 60--61
+Underfull \hbox (badness 1292) in paragraph at lines 57--58
 \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (3)[] \OMS/cmsy/m/n/12 
  \OML/cmm/m/it/12 SU\OT1/cmr/m/n/12 (2)[] \OMS/cmsy/m/n/12 
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--71
+Underfull \hbox (badness 10000) in paragraph at lines 55--68
 [][]
  []
 
-[3] [4] [5] [6] [7]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 174.
+[8] [9] [10] [11] [12]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 171.
 
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 174.
- [8]
-<fermion_mass_terms.pdf, id=174, 199.50676pt x 38.54109pt>
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 171.
+ [13]
+<fermion_mass_terms.pdf, id=916, 199.50676pt x 38.54109pt>
 File: fermion_mass_terms.pdf Graphic file (type pdf)
 
 <use fermion_mass_terms.pdf>
-<sfermion_mass_term.pdf, id=177, 96.35268pt x 39.10791pt>
+<sfermion_mass_term.pdf, id=919, 96.35268pt x 39.10791pt>
 File: sfermion_mass_term.pdf Graphic file (type pdf)
 
 <use sfermion_mass_term.pdf>
-Underfull \hbox (badness 5985) in paragraph at lines 190--190
+Underfull \hbox (badness 5985) in paragraph at lines 187--187
 []\OT1/cmr/m/n/10 (b) |Sfermion mass terms.
  []
 
-<Aphiphi_vertex.pdf, id=180, 68.58052pt x 54.97769pt>
+<Aphiphi_vertex.pdf, id=922, 68.58052pt x 54.97769pt>
 File: Aphiphi_vertex.pdf Graphic file (type pdf)
  <use Aphiphi_vertex.pdf>
-<Apsipsi_vertex.pdf, id=183, 68.0137pt x 56.67805pt>
+<Apsipsi_vertex.pdf, id=925, 68.0137pt x 56.67805pt>
 File: Apsipsi_vertex.pdf Graphic file (type pdf)
  <use Apsipsi_vertex.pdf>
-<Alambdalambda_vertex.pdf, id=186, 68.0137pt x 56.11124pt>
+<Alambdalambda_vertex.pdf, id=928, 68.0137pt x 56.11124pt>
 File: Alambdalambda_vertex.pdf Graphic file (type pdf)
 
 <use Alambdalambda_vertex.pdf>
-<triple_gauge_boson_vertex.pdf, id=189, 65.74654pt x 55.54451pt>
+<triple_gauge_boson_vertex.pdf, id=931, 65.74654pt x 55.54451pt>
 File: triple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use triple_gauge_boson_vertex.pdf>
-<triple_sfermion_vertices.pdf, id=192, 181.36972pt x 61.77911pt>
+<triple_sfermion_vertices.pdf, id=934, 181.36972pt x 61.77911pt>
 File: triple_sfermion_vertices.pdf Graphic file (type pdf)
 
 <use triple_sfermion_vertices.pdf>
-<phipsipsi_vertices.pdf, id=195, 213.10947pt x 62.34583pt>
+<phipsipsi_vertices.pdf, id=937, 213.10947pt x 62.34583pt>
 File: phipsipsi_vertices.pdf Graphic file (type pdf)
 
 <use phipsipsi_vertices.pdf>
-<phipsilambda_vertices.pdf, id=198, 159.26532pt x 54.9778pt>
+<phipsilambda_vertices.pdf, id=940, 159.26532pt x 54.9778pt>
 File: phipsilambda_vertices.pdf Graphic file (type pdf)
 
 <use phipsilambda_vertices.pdf>
-<AAphiphi_vertex.pdf, id=201, 67.44688pt x 65.74654pt>
+<AAphiphi_vertex.pdf, id=943, 67.44688pt x 65.74654pt>
 File: AAphiphi_vertex.pdf Graphic file (type pdf)
 
 <use AAphiphi_vertex.pdf>
-Underfull \hbox (badness 1442) in paragraph at lines 206--206
+Underfull \hbox (badness 1442) in paragraph at lines 203--203
 []\OT1/cmr/m/n/10 (j) |$\OML/cmm/m/it/10 AA^^^^^^$ \OT1/cmr/m/n/10 ver-tex.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 206--206
+Underfull \hbox (badness 10000) in paragraph at lines 203--203
 \OT1/cmr/m/n/10 Reprinted from
  []
 
-<quadruple_gauge_boson_vertex.pdf, id=204, 65.7466pt x 61.77911pt>
+<quadruple_gauge_boson_vertex.pdf, id=946, 65.7466pt x 61.77911pt>
 File: quadruple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use quadruple_gauge_boson_vertex.pdf>
-Underfull \hbox (badness 10000) in paragraph at lines 208--208
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 []\OT1/cmr/m/n/10 (k) |Quadru-ple
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 208--208
+Underfull \hbox (badness 10000) in paragraph at lines 205--205
 \OT1/cmr/m/n/10 gauge bo-son
  []
 
 
-Underfull \hbox (badness 1259) in paragraph at lines 208--208
+Underfull \hbox (badness 1259) in paragraph at lines 205--205
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
-<non-gauge_phi4_vertex.pdf, id=207, 73.68147pt x 66.88007pt>
+<non-gauge_phi4_vertex.pdf, id=949, 73.68147pt x 66.88007pt>
 File: non-gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use non-gauge_phi4_vertex.pdf>
-Underfull \hbox (badness 10000) in paragraph at lines 210--210
+Underfull \hbox (badness 10000) in paragraph at lines 207--207
 []\OT1/cmr/m/n/10 (l) |Non-gauge $\OML/cmm/m/it/10 ^^^[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 210--210
+Underfull \hbox (badness 10000) in paragraph at lines 207--207
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
-<gauge_phi4_vertex.pdf, id=210, 65.74654pt x 65.17972pt>
+<gauge_phi4_vertex.pdf, id=952, 65.74654pt x 65.17972pt>
 File: gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use gauge_phi4_vertex.pdf>
-Underfull \hbox (badness 10000) in paragraph at lines 212--212
+Underfull \hbox (badness 10000) in paragraph at lines 209--209
 []\OT1/cmr/m/n/10 (m) |Gauge $\OML/cmm/m/it/10 ^^^[]$
  []
 
 
-Underfull \hbox (badness 1259) in paragraph at lines 212--212
+Underfull \hbox (badness 1259) in paragraph at lines 209--209
 \OT1/cmr/m/n/10 ver-tex. Reprinted
  []
 
 
-LaTeX Warning: Float too large for page by 43.27156pt on input line 215.
+LaTeX Warning: Float too large for page by 43.27156pt on input line 212.
 
-[9] [10 <./fermion_mass_terms.pdf> <./sfermion_mass_term.pdf> <./Aphiphi_vertex
-.pdf> <./Apsipsi_vertex.pdf> <./Alambdalambda_vertex.pdf> <./triple_gauge_boson
-_vertex.pdf> <./triple_sfermion_vertices.pdf> <./phipsipsi_vertices.pdf> <./phi
-psilambda_vertices.pdf> <./AAphiphi_vertex.pdf> <./quadruple_gauge_boson_vertex
-.pdf> <./non-gauge_phi4_vertex.pdf> <./gauge_phi4_vertex.pdf>] [11]
-<sfermion_GMSB_mass_terms.pdf, id=629, 370.56622pt x 128.991pt>
+[14] [15 <./fermion_mass_terms.pdf> <./sfermion_mass_term.pdf> <./Aphiphi_verte
+x.pdf> <./Apsipsi_vertex.pdf> <./Alambdalambda_vertex.pdf> <./triple_gauge_boso
+n_vertex.pdf> <./triple_sfermion_vertices.pdf> <./phipsipsi_vertices.pdf> <./ph
+ipsilambda_vertices.pdf> <./AAphiphi_vertex.pdf> <./quadruple_gauge_boson_verte
+x.pdf> <./non-gauge_phi4_vertex.pdf> <./gauge_phi4_vertex.pdf>] [16]
+<sfermion_GMSB_mass_terms.pdf, id=1358, 370.56622pt x 128.991pt>
 File: sfermion_GMSB_mass_terms.pdf Graphic file (type pdf)
 
 <use sfermion_GMSB_mass_terms.pdf>
-<gaugino_GMSB_mass_term.pdf, id=632, 172.55376pt x 106.36096pt>
+<gaugino_GMSB_mass_term.pdf, id=1361, 172.55376pt x 106.36096pt>
 File: gaugino_GMSB_mass_term.pdf Graphic file (type pdf)
 
-<use gaugino_GMSB_mass_term.pdf> [12 <./sfermion_GMSB_mass_terms.pdf> <./gaugin
-o_GMSB_mass_term.pdf>] <muegamma.pdf, id=791, 155.01544pt x 68.45575pt>
+<use gaugino_GMSB_mass_term.pdf> [17 <./sfermion_GMSB_mass_terms.pdf> <./gaugin
+o_GMSB_mass_term.pdf>] <muegamma.pdf, id=1511, 155.01544pt x 68.45575pt>
 File: muegamma.pdf Graphic file (type pdf)
 
-<use muegamma.pdf> [13 <./muegamma.pdf>] [14] [15] [16]
-<2photons_jets_MET.pdf, id=942, 482.06343pt x 269.35129pt>
+<use muegamma.pdf> [18 <./muegamma.pdf>] [19] [20] [21]
+<2photons_jets_MET.pdf, id=1661, 482.06343pt x 269.35129pt>
 File: 2photons_jets_MET.pdf Graphic file (type pdf)
 
 <use 2photons_jets_MET.pdf>
-<bino_photon_jets_MET.pdf, id=943, 474.51154pt x 258.02351pt>
+<bino_photon_jets_MET.pdf, id=1662, 474.51154pt x 258.02351pt>
 File: bino_photon_jets_MET.pdf Graphic file (type pdf)
 
 <use bino_photon_jets_MET.pdf>
-<lepton_photon_jets_MET.pdf, id=944, 434.2346pt x 221.52261pt>
+<lepton_photon_jets_MET.pdf, id=1663, 434.2346pt x 221.52261pt>
 File: lepton_photon_jets_MET.pdf Graphic file (type pdf)
 
 <use lepton_photon_jets_MET.pdf>
-<wino_photon_jets_MET.pdf, id=945, 432.976pt x 225.29861pt>
+<wino_photon_jets_MET.pdf, id=1664, 432.976pt x 225.29861pt>
 File: wino_photon_jets_MET.pdf Graphic file (type pdf)
 
-<use wino_photon_jets_MET.pdf> [17 <./2photons_jets_MET.pdf> <./bino_photon_jet
+<use wino_photon_jets_MET.pdf> [22 <./2photons_jets_MET.pdf> <./bino_photon_jet
 s_MET.pdf> <./lepton_photon_jets_MET.pdf> <./wino_photon_jets_MET.pdf>]
-<CMS_SUSY_2011Limits_tanb10.pdf, id=2194, 569.12625pt x 408.52625pt>
+<CMS_SUSY_2011Limits_tanb10.pdf, id=2912, 569.12625pt x 408.52625pt>
 File: CMS_SUSY_2011Limits_tanb10.pdf Graphic file (type pdf)
 
-<use CMS_SUSY_2011Limits_tanb10.pdf> [18 <./CMS_SUSY_2011Limits_tanb10.pdf>]
-<ATLAS_SPS8_limit.pdf, id=2249, 237.8503pt x 228.18147pt>
+<use CMS_SUSY_2011Limits_tanb10.pdf> [23 <./CMS_SUSY_2011Limits_tanb10.pdf>]
+<ATLAS_SPS8_limit.pdf, id=2966, 237.8503pt x 228.18147pt>
 File: ATLAS_SPS8_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_SPS8_limit.pdf>
-<ATLAS_GGM_limit.pdf, id=2258, 246.87431pt x 166.9464pt>
+<ATLAS_GGM_limit.pdf, id=2975, 246.87431pt x 166.9464pt>
 File: ATLAS_GGM_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_GGM_limit.pdf>
-<CDF_lifetime_vs_mass.pdf, id=2267, 258.02155pt x 197.83792pt>
+<CDF_lifetime_vs_mass.pdf, id=2984, 258.02155pt x 197.83792pt>
 File: CDF_lifetime_vs_mass.pdf Graphic file (type pdf)
 
-<use CDF_lifetime_vs_mass.pdf> [19] [20 <./ATLAS_SPS8_limit.pdf> <./ATLAS_GGM_l
-imit.pdf>] [21 <./CDF_lifetime_vs_mass.pdf>]) (./ch6.tex [22]
-Chapter 2.
+<use CDF_lifetime_vs_mass.pdf> [24] [25 <./ATLAS_SPS8_limit.pdf> <./ATLAS_GGM_l
+imit.pdf>] [26 <./CDF_lifetime_vs_mass.pdf>]) (./ch6.tex [27]
+Chapter 3.
 
-LaTeX Warning: Reference `chap:Data Analysis' on page 23 undefined on input lin
+LaTeX Warning: Reference `chap:Data Analysis' on page 28 undefined on input lin
 e 9.
 
-[23
+[28
 
 ]
 
 LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 2
-4 undefined on input line 16.
+9 undefined on input line 16.
 
 
-LaTeX Warning: Reference `sec:Electromagnetic Calorimeter' on page 24 undefined
+LaTeX Warning: Reference `sec:Electromagnetic Calorimeter' on page 29 undefined
  on input line 24.
 
-<pulse.jpg, id=2601, 56.3706pt x 52.32349pt>
+<pulse.jpg, id=3313, 56.3706pt x 52.32349pt>
 File: pulse.jpg Graphic file (type jpg)
- <use pulse.jpg> [24] [25 <./pulse.jpg>] <intercalibration.pdf, id=2635, 294.95
+ <use pulse.jpg> [29] [30 <./pulse.jpg>] <intercalibration.pdf, id=3347, 294.95
 998pt x 269.55705pt>
 File: intercalibration.pdf Graphic file (type pdf)
 
-<use intercalibration.pdf> [26 <./intercalibration.pdf>] [27]
-<hybrid.pdf, id=2763, 426.92136pt x 204.43216pt>
+<use intercalibration.pdf> [31 <./intercalibration.pdf>] [32]
+<hybrid.pdf, id=3474, 426.92136pt x 204.43216pt>
 File: hybrid.pdf Graphic file (type pdf)
- <use hybrid.pdf> [28 <./hybrid.pdf>]
+ <use hybrid.pdf>
+<Z_mass_vs_corrections.pdf, id=3478, 450.59053pt x 176.26874pt>
+File: Z_mass_vs_corrections.pdf Graphic file (type pdf)
 
-LaTeX Warning: Reference `chap:Data Analysis' on page 29 undefined on input lin
-e 122.
+<use Z_mass_vs_corrections.pdf>
+
+LaTeX Warning: Citation `Higgs_AN' on page 33 undefined on input line 105.
 
 
-LaTeX Warning: Reference `g_f_criteria' on page 29 undefined on input line 129.
+LaTeX Warning: Citation `Higgs_AN' on page 33 undefined on input line 105.
 
 
+LaTeX Warning: Citation `Higgs_AN' on page 33 undefined on input line 105.
 
-LaTeX Warning: Reference `HLT_by_run_range' on page 29 undefined on input line 
-129.
 
-[29] <isolation_cones.pdf, id=2841, 1027.84pt x 770.88pt>
+LaTeX Warning: Citation `Higgs_AN' on page 33 undefined on input line 105.
+
+[33 <./hybrid.pdf>] [34 <./Z_mass_vs_corrections.pdf>]
+
+LaTeX Warning: Reference `chap:Data Analysis' on page 35 undefined on input lin
+e 134.
+
+[35] <isolation_cones.pdf, id=3610, 1027.84pt x 770.88pt>
 File: isolation_cones.pdf Graphic file (type pdf)
 
 <use isolation_cones.pdf>
-<preselected_rho.pdf, id=2842, 569.12625pt x 502.87875pt>
+<preselected_rho.pdf, id=3611, 569.12625pt x 502.87875pt>
 File: preselected_rho.pdf Graphic file (type pdf)
 
 <use preselected_rho.pdf>
 
-LaTeX Warning: Reference `g_f_criteria' on page 30 undefined on input line 167.
+LaTeX Warning: Reference `sec:Modeling the QCD Background' on page 36 undefined
+ on input line 190.
 
+[36 <./isolation_cones.pdf>] [37 <./preselected_rho.pdf, page is rotated 90 deg
+rees>] [38] <anti-kT.pdf, id=3713, 208.45914pt x 144.62683pt>
+File: anti-kT.pdf Graphic file (type pdf)
 
+<use anti-kT.pdf> [39]
+<total_JEC_50_GeV.pdf, id=3735, 191.48268pt x 188.18124pt>
+File: total_JEC_50_GeV.pdf Graphic file (type pdf)
 
-LaTeX Warning: Reference `HLT_by_run_range' on page 30 undefined on input line 
-167.
+<use total_JEC_50_GeV.pdf>
+<total_JEC_200_GeV.pdf, id=3736, 188.73149pt x 188.18124pt>
+File: total_JEC_200_GeV.pdf Graphic file (type pdf)
 
+<use total_JEC_200_GeV.pdf> [40 <./anti-kT.pdf>] [41 <./total_JEC_50_GeV.pdf> <
+./total_JEC_200_GeV.pdf>]
+<MET_resolution.pdf, id=3982, 255.86049pt x 182.67888pt>
+File: MET_resolution.pdf Graphic file (type pdf)
 
-LaTeX Warning: Reference `g_f_criteria' on page 30 undefined on input line 167.
-
-
-
-LaTeX Warning: Reference `HLT_by_run_range' on page 30 undefined on input line 
-167.
-
-
-LaTeX Warning: Reference `sec:Modeling the QCD Background' on page 30 undefined
- on input line 174.
-
-[30] [31 <./isolation_cones.pdf> <./preselected_rho.pdf, page is rotated 90 deg
-rees>]
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
+<use MET_resolution.pdf> [42 <./MET_resolution.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 315--316
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--209
+Underfull \hbox (badness 10000) in paragraph at lines 315--316
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
+Underfull \hbox (badness 10000) in paragraph at lines 315--316
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
+LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 4
+3 undefined on input line 324.
 
+[43] [44] [45]
+
+LaTeX Warning: Reference `fig:beam_halo_brem' on page 46 undefined on input lin
+e 353.
+
+
+LaTeX Warning: Reference `fig:MC_N-1_comparisons' on page 46 undefined on input
+ line 380.
+
+[46] [47] [48] [49] [50]
+Underfull \hbox (badness 10000) in paragraph at lines 529--529
+[]|\OT1/cmr/m/n/12 Tag-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
-
+Underfull \hbox (badness 10000) in paragraph at lines 529--529
+\OT1/cmr/m/n/12 pass
  []
 
 
-LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 3
-2 undefined on input line 218.
+Underfull \hbox (badness 10000) in paragraph at lines 529--529
+[]|\OT1/cmr/m/n/12 [-1.0,
+ []
 
-[32] [33]
 
-LaTeX Warning: Reference `Photons' on page 34 undefined on input line 225.
+Underfull \hbox (badness 10000) in paragraph at lines 529--529
+[]|\OT1/cmr/m/n/12 [1.0,
+ []
 
-) [34] [35
 
-] [36]
-Underfull \hbox (badness 10000) in paragraph at lines 100--102
+Underfull \hbox (badness 10000) in paragraph at lines 531--531
+[]|\OT1/cmr/m/n/12 Tag-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 531--531
+\OT1/cmr/m/n/12 fail
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 531--531
+[]|\OT1/cmr/m/n/12 [-1.0,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 531--531
+[]|\OT1/cmr/m/n/12 [1.0,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 533--533
+[]|\OT1/cmr/m/n/12 Tag-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 533--533
+\OT1/cmr/m/n/12 pass
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 533--533
+\OT1/cmr/m/n/12 back-
+ []
+
+
+Overfull \hbox (2.94756pt too wide) in paragraph at lines 533--533
+[]|\OT1/cmr/m/n/12 0.04750| 
+ []
+
+
+Overfull \hbox (2.94756pt too wide) in paragraph at lines 533--534
+[]|\OT1/cmr/m/n/12 0.01908| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 535--535
+[]|\OT1/cmr/m/n/12 Tag-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 535--535
+\OT1/cmr/m/n/12 fail
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 535--535
+\OT1/cmr/m/n/12 back-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 535--535
+[]|\OT1/cmr/m/n/12 [50.0,
+ []
+
+
+LaTeX Warning: Reference `fig:low_ET_bin' on page 51 undefined on input line 54
+1.
+
+
+LaTeX Warning: Reference `fig:mid-eta_bin' on page 51 undefined on input line 5
+41.
+
+
+LaTeX Warning: Reference `fig:low_ET_bin' on page 51 undefined on input line 54
+1.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 552.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\epsilon' on input line 552.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 552.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `superscript' on input line 552.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\epsilon' on input line 552.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 552.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `superscript' on input line 552.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 552.
+
+[51] <scale_factor_vs_ET.pdf, id=4127, 569.12625pt x 569.12625pt>
+File: scale_factor_vs_ET.pdf Graphic file (type pdf)
+
+<use scale_factor_vs_ET.pdf>
+<scale_factor_vs_eta.pdf, id=4128, 569.12625pt x 569.12625pt>
+File: scale_factor_vs_eta.pdf Graphic file (type pdf)
+
+<use scale_factor_vs_eta.pdf>
+<scale_factor_vs_Njet.pdf, id=4129, 569.12625pt x 569.12625pt>
+File: scale_factor_vs_Njet.pdf Graphic file (type pdf)
+
+<use scale_factor_vs_Njet.pdf> [52 <./scale_factor_vs_ET.pdf> <./scale_factor_v
+s_eta.pdf> <./scale_factor_vs_Njet.pdf>]
+<eff_vs_NPV.pdf, id=4270, 569.12625pt x 569.12625pt>
+File: eff_vs_NPV.pdf Graphic file (type pdf)
+ <use eff_vs_NPV.pdf>
+<scale_factor_vs_NPV.pdf, id=4271, 569.12625pt x 569.12625pt>
+File: scale_factor_vs_NPV.pdf Graphic file (type pdf)
+
+<use scale_factor_vs_NPV.pdf> [53 <./eff_vs_NPV.pdf> <./scale_factor_vs_NPV.pdf
+>]
+Missing character: There is no Ó in font cmr12!
+) (./appA.tex [54]
+Appendix A.
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 10.
+
+[55
+
+] [56]) [57] [58
+
+] [59]
+Underfull \hbox (badness 10000) in paragraph at lines 105--107
 []\OT1/cmr/m/n/12 Y. Yang, []$\OT1/cmtt/m/n/12 http : / / www . hep . caltech .
  edu / cms / posters / Pi0Poster _
  []
 
-[37]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 114.
- [38]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 114.
+[60]
+Underfull \hbox (badness 10000) in paragraph at lines 126--127
+[][]$\OT1/cmtt/m/n/12 http : / / www-[]cdf . fnal . gov / physics / new / top /
+ 2004 / jets / cdfpublic . html$[]
+ []
+
+[61]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 146.
+ [62]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 146.
  (./dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 114.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 146.
 Package rerunfilecheck Info: File `dissertation.out' has not changed.
-(rerunfilecheck)             Checksum: FF987D062729081F094775A35C9C6993;989.
+(rerunfilecheck)             Checksum: BF820479CD7DCF435AE63DC221723A98;1788.
 
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 8160 strings out of 493747
- 125631 string characters out of 3143546
- 229229 words of memory out of 3000000
- 11100 multiletter control sequences out of 15000+200000
- 17984 words of font info for 67 fonts, out of 3000000 for 9000
+ 8421 strings out of 493747
+ 130343 string characters out of 3143546
+ 234737 words of memory out of 3000000
+ 11242 multiletter control sequences out of 15000+200000
+ 18331 words of font info for 68 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 44i,15n,50p,2674b,522s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 44i,18n,50p,2675b,610s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
@@ -938,25 +1153,36 @@ ive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive
 10/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2010/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2010/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2010/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2010/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/font
-s/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/texmf-dist/fonts/ty
-pe1/public/mathpazo/fplmri.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/
-public/amsfonts/symbols/msam10.pfb></usr/local/texlive/2010/texmf-dist/fonts/ty
-pe1/urw/courier/ucrr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
-helvetic/uhvb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatin
-o/uplr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplri
-8a.pfb>
-Output written on dissertation.pdf (39 pages, 3072712 bytes).
+dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2010/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2010/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2010/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2010/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2010/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/local/texlive/2010/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2010/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1
+/public/mathpazo/fplmr.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/publ
+ic/mathpazo/fplmri.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/a
+msfonts/symbols/msam10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
+courier/ucrr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/helvetic
+/uhvb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/helvetic/uhvr8a
+.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></
+usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/lo
+cal/texlive/2010/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive
+/2010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texm
+f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fon
+ts/type1/urw/times/utmri8a.pfb>
+Output written on dissertation.pdf (63 pages, 4372319 bytes).
 PDF statistics:
- 3073 PDF objects out of 3580 (max. 8388607)
- 2556 compressed objects within 26 object streams
- 167 named destinations out of 1000 (max. 500000)
- 258 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 4566 PDF objects out of 5155 (max. 8388607)
+ 3619 compressed objects within 37 object streams
+ 262 named destinations out of 1000 (max. 500000)
+ 408 words of extra memory for PDF output out of 10000 (max. 10000000)
 
