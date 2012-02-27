@@ -19,6 +19,17 @@
 \BOOKMARK [1][-]{section.3.4}{Photon Identification Efficiency}{chapter.3}% 19
 \BOOKMARK [2][-]{subsection.3.4.1}{Tag and Probe Method}{section.3.4}% 20
 \BOOKMARK [2][-]{subsection.3.4.2}{Photon Efficiency Scale Factor edata/eMC}{section.3.4}% 21
-\BOOKMARK [0][-]{appendix.A}{Monte Carlo Samples}{}% 22
-\BOOKMARK [1][-]{subsection.A.0.3}{List of Samples}{appendix.A}% 23
-\BOOKMARK [2][-]{subsection.A.0.4}{Explanation of Naming Conventions}{subsection.A.0.3}% 24
+\BOOKMARK [0][-]{chapter.4}{Data Analysis}{}% 22
+\BOOKMARK [1][-]{section.4.1}{Modeling the QCD Background}{chapter.4}% 23
+\BOOKMARK [2][-]{subsection.4.1.1}{Outline of the Procedure}{section.4.1}% 24
+\BOOKMARK [2][-]{subsection.4.1.2}{Reweighting}{section.4.1}% 25
+\BOOKMARK [2][-]{subsection.4.1.3}{Normalization}{section.4.1}% 26
+\BOOKMARK [2][-]{subsection.4.1.4}{ff Control Sample}{section.4.1}% 27
+\BOOKMARK [1][-]{section.4.2}{Modeling the Electroweak Background}{chapter.4}% 28
+\BOOKMARK [1][-]{section.4.3}{Systematic Errors}{chapter.4}% 29
+\BOOKMARK [2][-]{subsection.4.3.1}{Jet Energy Scale Uncertainty}{section.4.3}% 30
+\BOOKMARK [2][-]{subsection.4.3.2}{Statistical Uncertainty in the ff or ee Weights}{section.4.3}% 31
+\BOOKMARK [1][-]{section.4.4}{Results}{chapter.4}% 32
+\BOOKMARK [0][-]{appendix.A}{Monte Carlo Samples}{}% 33
+\BOOKMARK [1][-]{subsection.A.0.1}{List of Samples}{appendix.A}% 34
+\BOOKMARK [2][-]{subsection.A.0.2}{Explanation of Naming Conventions}{subsection.A.0.1}% 35

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  21 FEB 2012 18:45
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  27 FEB 2012 17:52
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -471,83 +471,168 @@ LaTeX Info: Redefining \nameref on input line 2.
 
 
 Chapter 1.
-LaTeX Font Info:    Try loading font information for U+msa on input line 7.
+LaTeX Font Info:    Try loading font information for U+msa on input line 9.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 7.
+LaTeX Font Info:    Try loading font information for U+msb on input line 9.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
-LaTeX Warning: Reference `sec:MET' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:MET' on page 1 undefined on input line 9.
 
 
-LaTeX Warning: Reference `sec:Photons' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:Photons' on page 1 undefined on input line 9.
 
 
-LaTeX Warning: Reference `sec:Electrons' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:Electrons' on page 1 undefined on input line 9.
 
 
 LaTeX Warning: Reference `sec:Event Quality' on page 1 undefined on input line 
-7.
+9.
 
 
-LaTeX Warning: Reference `sec:HLT' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:HLT' on page 1 undefined on input line 9.
 
 
-LaTeX Warning: Citation `DAS' on page 1 undefined on input line 47.
+LaTeX Warning: Citation `DAS' on page 1 undefined on input line 49.
 
 [1
 
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 50.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 52.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 50.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 52.
 
 
 LaTeX Warning: Reference `fig:QCD_background_diagrams' on page 2 undefined on i
-nput line 56.
+nput line 58.
 
 
 LaTeX Warning: Reference `fig:EW_background_diagrams' on page 2 undefined on in
-put line 56.
+put line 58.
 
 
 LaTeX Warning: Reference `fig:MET_data_vs_MC_backgrounds' on page 2 undefined o
-n input line 101.
+n input line 103.
 
 
 LaTeX Warning: Reference `fig:MET_MC_ggVsFF_varyHOverE' on page 2 undefined on 
-input line 110.
+input line 112.
 
 [2]
 
-LaTeX Warning: Reference `sec:Jets and Missing Transverse Energy' on page 3 und
-efined on input line 173.
-
-
-LaTeX Warning: Citation `CMS_JES_paper' on page 3 undefined on input line 173.
-
-
-LaTeX Warning: Reference `sec:Jets and Missing Transverse Energy' on page 3 und
-efined on input line 173.
+LaTeX Warning: Reference `sec:Modeling the Electroweak background' on page 3 un
+defined on input line 127.
 
 [3] [4]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 217.
- [5] [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 217.
- (./ch7.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 217.
-Package rerunfilecheck Info: File `ch7.out' has not changed.
-(rerunfilecheck)             Checksum: C6C2A847FF1117728A42C1AE6760BFB9;325.
 
+LaTeX Warning: Reference `fig:hadronic_activity' on page 5 undefined on input l
+ine 143.
+
+
+LaTeX Warning: Reference `sec:Jets and Missing Transverse Energy' on page 5 und
+efined on input line 169.
+
+[5] <di-EM_pT_cartoon.pdf, id=82, 543.38904pt x 346.39664pt>
+File: di-EM_pT_cartoon.pdf Graphic file (type pdf)
+
+<use di-EM_pT_cartoon.pdf>
+
+LaTeX Warning: Reference `fig:hadronic_activity' on page 6 undefined on input l
+ine 205.
+
+
+LaTeX Warning: Reference `fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting' on page 
+6 undefined on input line 205.
+
+
+LaTeX Warning: Reference `sec:Photons' on page 6 undefined on input line 219.
+
+
+LaTeX Warning: Reference `fig:ee_vs_ff_di-EM_vs_dijet_pT_reweighting' on page 6
+ undefined on input line 219.
+
+[6 <./di-EM_pT_cartoon.pdf>]
+<4684pb-1_leadingE_ETBias_log.pdf, id=136, 569.12625pt x 502.87875pt>
+File: 4684pb-1_leadingE_ETBias_log.pdf Graphic file (type pdf)
+
+<use 4684pb-1_leadingE_ETBias_log.pdf>
+<4684pb-1_trailingE_ETBias_log.pdf, id=137, 569.12625pt x 502.87875pt>
+File: 4684pb-1_trailingE_ETBias_log.pdf Graphic file (type pdf)
+
+<use 4684pb-1_trailingE_ETBias_log.pdf>
+<4684pb-1_leadingF_ETBias_log.pdf, id=138, 569.12625pt x 502.87875pt>
+File: 4684pb-1_leadingF_ETBias_log.pdf Graphic file (type pdf)
+
+<use 4684pb-1_leadingF_ETBias_log.pdf>
+<4684pb-1_trailingF_ETBias_log.pdf, id=139, 569.12625pt x 502.87875pt>
+File: 4684pb-1_trailingF_ETBias_log.pdf Graphic file (type pdf)
+
+<use 4684pb-1_trailingF_ETBias_log.pdf>
+<4684pb-1_leadingG_ETBias_log.pdf, id=140, 569.12625pt x 502.87875pt>
+File: 4684pb-1_leadingG_ETBias_log.pdf Graphic file (type pdf)
+
+<use 4684pb-1_leadingG_ETBias_log.pdf>
+<4684pb-1_trailingG_ETBias_log.pdf, id=141, 569.12625pt x 502.87875pt>
+File: 4684pb-1_trailingG_ETBias_log.pdf Graphic file (type pdf)
+
+<use 4684pb-1_trailingG_ETBias_log.pdf>
+<4684pb-1_single_ETBias.pdf, id=142, 569.12625pt x 502.87875pt>
+File: 4684pb-1_single_ETBias.pdf Graphic file (type pdf)
+
+<use 4684pb-1_single_ETBias.pdf>
+
+LaTeX Warning: Reference `fig:reweighting_vs_no_reweighting' on page 7 undefine
+d on input line 263.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 281.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 281.
+
+
+LaTeX Warning: Reference `sec:Jets and Missing Transverse Energy' on page 7 und
+efined on input line 336.
+
+
+LaTeX Warning: Citation `CMS_JES_paper' on page 7 undefined on input line 336.
+
+
+LaTeX Warning: Reference `sec:Jets and Missing Transverse Energy' on page 7 und
+efined on input line 336.
+
+[7] [8 <./4684pb-1_leadingE_ETBias_log.pdf, page is rotated 90 degrees> <./4684
+pb-1_trailingE_ETBias_log.pdf, page is rotated 90 degrees> <./4684pb-1_leadingF
+_ETBias_log.pdf, page is rotated 90 degrees> <./4684pb-1_trailingF_ETBias_log.p
+df, page is rotated 90 degrees> <./4684pb-1_leadingG_ETBias_log.pdf, page is ro
+tated 90 degrees> <./4684pb-1_trailingG_ETBias_log.pdf, page is rotated 90 degr
+ees>] [9 <./4684pb-1_single_ETBias.pdf, page is rotated 90 degrees>] [10]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 381.
+
+[11]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 381.
+ (./ch7.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 381.
+
+
+Package rerunfilecheck Warning: File `ch7.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `ch7.out':
+(rerunfilecheck)             Before: ED7BCD8BAED4379EE97062613B04A195;707
+(rerunfilecheck)             After:  989DD70007980E485F9C5557204A43EF;778.
 
 LaTeX Warning: There were undefined references.
 
@@ -556,13 +641,13 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 7721 strings out of 493747
- 117114 string characters out of 3143546
- 210308 words of memory out of 3000000
- 10848 multiletter control sequences out of 15000+200000
- 14721 words of font info for 55 fonts, out of 3000000 for 9000
+ 7825 strings out of 493747
+ 119891 string characters out of 3143546
+ 212164 words of memory out of 3000000
+ 10923 multiletter control sequences out of 15000+200000
+ 16315 words of font info for 61 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,15n,44p,1254b,379s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,15n,45p,1254b,445s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -576,12 +661,13 @@ texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/tex
 live/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texliv
 e/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2
-010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/20
-10/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on ch7.pdf (6 pages, 158665 bytes).
+010/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/20
+10/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/201
+0/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on ch7.pdf (11 pages, 387778 bytes).
 PDF statistics:
- 124 PDF objects out of 1000 (max. 8388607)
- 100 compressed objects within 1 object stream
- 16 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 549 PDF objects out of 1000 (max. 8388607)
+ 322 compressed objects within 4 object streams
+ 36 named destinations out of 1000 (max. 500000)
+ 121 words of extra memory for PDF output out of 10000 (max. 10000000)
 
