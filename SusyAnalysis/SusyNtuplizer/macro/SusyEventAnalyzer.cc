@@ -12,7 +12,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyEventAnalyzer.cc,v 1.11 2011/06/07 20:30:39 dwjang Exp $
+// $Id: SusyEventAnalyzer.cc,v 1.2 2012/02/07 13:17:18 yohay Exp $
 //
 
 #define SusyEventAnalyzer_cxx
@@ -527,19 +527,19 @@ void SusyEventAnalyzer::plot(const string& outputFile)
   TH1F MCEPT("MCEPT", "", 100, 0.0, 200.0);
   setHistogramOptions(recoEPT, "p_{T} (GeV)", "", "", true);
   setHistogramOptions(MCEPT, "p_{T} (GeV)", "", "", true);
-
+ 
   //electron eta histograms
   TH1F recoEEta("recoEEta", "", 60, -3.0, 3.0);
   TH1F MCEEta("MCEEta", "", 60, -3.0, 3.0);
   setHistogramOptions(recoEEta, "#eta", "", "", true);
   setHistogramOptions(MCEEta, "#eta", "", "", true);
-
+ 
   //electron efficiency histograms
   TH1F numGSFElectronsVsMCElectronPT("numGSFElectronsVsMCElectronPT", "", 100, 0.0, 200.0);
   TH1F numGSFElectronsVsMCElectronEta("numGSFElectronsVsMCElectronEta", "", 60, -3.0, 3.0);
   setHistogramOptions(numGSFElectronsVsMCElectronPT, "p_{T} (GeV)", "", "", true);
   setHistogramOptions(numGSFElectronsVsMCElectronEta, "#eta", "", "", true);
-
+ 
   //number of n-electron events
   unsigned int n0EEvts = 0;
   unsigned int n1EEvts = 0;
@@ -588,7 +588,7 @@ void SusyEventAnalyzer::plot(const string& outputFile)
 
     //check integrity of electron collection
     int eCollSize = -1;
-    map<TString, susy::ElectronCollection>::const_iterator iElectronMap = 
+    map<TString, susy::ElectronCollection>::const_iterator iElectronMap =
       event->electrons.find("gsfElectrons");
     if (iElectronMap != event->electrons.end()) eCollSize = iElectronMap->second.size();
     switch (eCollSize) {
@@ -604,18 +604,18 @@ void SusyEventAnalyzer::plot(const string& outputFile)
     default:
       break;
     }
-//     cout << "Size of electron collection map: " << event->electrons.size() << endl;
-//     for (map<TString, susy::ElectronCollection>::const_iterator iElectronMap = 
-// 	   event->electrons.begin(); iElectronMap != event->electrons.end(); 
-// 	 ++iElectronMap) {
-//       cout << "Electron collection: " << iElectronMap->first << ", size: ";
-//       cout << iElectronMap->second.size() << endl;
-//     }
-    for (vector<susy::Particle>::const_iterator iGenParticle = 
-	   (event->genParticles.begin() + 1); iGenParticle != event->genParticles.end(); 
+    //     cout << "Size of electron collection map: " << event->electrons.size() << endl;
+    //     for (map<TString, susy::ElectronCollection>::const_iterator iElectronMap =
+    //         event->electrons.begin(); iElectronMap != event->electrons.end();
+    //       ++iElectronMap) {
+    //       cout << "Electron collection: " << iElectronMap->first << ", size: ";
+    //       cout << iElectronMap->second.size() << endl;
+    //     }
+    for (vector<susy::Particle>::const_iterator iGenParticle =
+	   (event->genParticles.begin() + 1); iGenParticle != event->genParticles.end();
 	 ++iGenParticle) {
-      if (((iGenParticle->pdgId == 11) || (iGenParticle->pdgId == -11)) && 
-	  ((unsigned int)iGenParticle->status == 3) && 
+      if (((iGenParticle->pdgId == 11) || (iGenParticle->pdgId == -11)) &&
+	  ((unsigned int)iGenParticle->status == 3) &&
 	  ((iGenParticle->motherId == 23) || (iGenParticle->motherId == 22))) {
 	float MCEta = iGenParticle->momentum.Eta();
 	if (fabs(MCEta) < 2.5) MCEPT.Fill(iGenParticle->momentum.Pt());
@@ -625,15 +625,15 @@ void SusyEventAnalyzer::plot(const string& outputFile)
 	  bool foundMCMatch = false;
 	  while ((iElectron != iElectronMap->second.end()) && !foundMCMatch) {
 	    float recoEta = iElectron->momentum.Eta();
-	    if (deltaR(recoEta, iElectron->momentum.Phi(), 
+	    if (deltaR(recoEta, iElectron->momentum.Phi(),
 		       MCEta, iGenParticle->momentum.Phi()) < 0.5) {
-		recoEPT.Fill(iElectron->momentum.Pt());
-		recoEEta.Fill(recoEta);
-		if (fabs(MCEta) < 2.5) {
-		  numGSFElectronsVsMCElectronPT.Fill(iGenParticle->momentum.Pt());
-		}
-		numGSFElectronsVsMCElectronEta.Fill(MCEta);
-		foundMCMatch = true;
+	      recoEPT.Fill(iElectron->momentum.Pt());
+	      recoEEta.Fill(recoEta);
+	      if (fabs(MCEta) < 2.5) {
+		numGSFElectronsVsMCElectronPT.Fill(iGenParticle->momentum.Pt());
+	      }
+	      numGSFElectronsVsMCElectronEta.Fill(MCEta);
+	      foundMCMatch = true;
 	    }
 	    else ++iElectron;
 	  }
@@ -651,7 +651,7 @@ void SusyEventAnalyzer::plot(const string& outputFile)
   GSFRecoEffVsEtaCanvas.cd();
   GSFRecoEffVsEta.Draw("A*");
   GSFRecoEffVsEtaCanvas.Write();
-
+ 
   //print electron statistics
   cout << "No. 0-electron events: " << n0EEvts << endl;
   cout << "No. 1-electron events: " << n1EEvts << endl;
