@@ -1,24 +1,24 @@
 // adapted from SusyAnalysis/SusyNtuplizer/macro/ana.C
 
-#include "/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/EventAnalyzer.h"
+#include "/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/EventAnalyzer.h"
 
 void ana_standalone_MC_NUM() {
 
-  gSystem->Load("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/libSusy.so");
+  gSystem->Load("/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/libSusy.so");
 
   // // Look ../jec/JetMETObjects/README
-  gSystem->Load("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/jec/lib/libJetMETObjects.so");
+  gSystem->Load("/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/jec/lib/libJetMETObjects.so");
 
   //GMSBTools shared library (contains Categorizer class)
-  gSystem->Load("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/GMSBTools/lib/libFilters.so");
+  gSystem->Load("/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src/GMSBTools/lib/libFilters.so");
 
   // Printing utility for ntuple variables
-  gSystem->Load("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/SusyEventPrinter_cc.so");
+  gSystem->Load("/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/SusyEventPrinter_cc.so");
 
   // Main analysis code
-  gSystem->SetIncludePath("-I/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src");
-  gSystem->Load("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/EventAnalyzer_cc.so");
-  gSystem->Load("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/DongwookCategoryProducer_cc.so");
+  gSystem->SetIncludePath("-I/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src");
+  gSystem->Load("/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/EventAnalyzer_cc.so");
+  gSystem->Load("/afs/cern.ch/user/y/yohay/MC_CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/macro/DongwookCategoryProducer_cc.so");
 
   /*now, ECAL/HCAL/track isolation cuts are meant to be matched with loose trigger cuts, so don't 
     use them (i.e. track isolation) to distinguish photon from fake!*/

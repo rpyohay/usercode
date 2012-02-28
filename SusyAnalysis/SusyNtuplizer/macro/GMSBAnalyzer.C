@@ -961,7 +961,7 @@ float GMSBAnalyzer::HT() const
 
       //increase HT for jets passing criteria
       unsigned int isGoodJet = isJet(*iJet, 5.0);
-      if ((isGoodJet == 1) || (isGoodJet == 3)) {
+      if (isGoodJet == 1) {
 	evtHT+=iJet->jecScaleFactors.find("L1FastL2L3")->second*iJet->momentum.Et();
       }
     }
@@ -987,7 +987,7 @@ float GMSBAnalyzer::MHT() const
 
       //increase MHT for jets passing criteria
       unsigned int isGoodJet = isJet(*iJet, 5.0);
-      if ((isGoodJet == 1) || (isGoodJet == 3)) {
+      if (isGoodJet == 1) {
 	evtMHT+=iJet->jecScaleFactors.find("L1FastL2L3")->second*iJet->momentum;
       }
     }
@@ -1013,7 +1013,7 @@ unsigned int GMSBAnalyzer::numJets() const
 
       //count jets passing criteria
       unsigned int isGoodJet = isJet(*iJet, 5.0);
-      if ((isGoodJet == 1) || (isGoodJet == 3)) ++nJets;
+      if (isGoodJet == 1) ++nJets;
     }
   }
 
@@ -1037,7 +1037,7 @@ float GMSBAnalyzer::leadingJetET() const
 
       //count jets passing criteria
       unsigned int isGoodJet = isJet(*iJet, 5.0, 0.0);
-      if ((isGoodJet == 1) || (isGoodJet == 3)) {
+      if (isGoodJet == 1) {
 	const float ET = iJet->jecScaleFactors.find("L1FastL2L3")->second*iJet->momentum.Et();
 	if (ET > ET1) ET1 = ET;
       }
@@ -1051,46 +1051,43 @@ float GMSBAnalyzer::leadingJetET() const
   return ET1;
 }
 
-unsigned int GMSBAnalyzer::isJet(const susy::PFJet& iJet, const float absEtaMax, 
+unsigned int GMSBAnalyzer::isJet(const susy::PFJet& iJet, const float absEtaMax,
 				 const float ETMin) const
 {
   //pass flag
   unsigned int jet = 0;
 
-  //need electrons and photons for rejecting jet/electron and jet/photon overlaps
-  map<TString, susy::ElectronCollection>::const_iterator iElectronMap = 
-    susyEvent->electrons.find("gsfElectrons");
-  map<TString, susy::PhotonCollection>::const_iterator iPhotonMap = 
-    susyEvent->photons.find((const char*)tag_);
-  if ((iElectronMap != susyEvent->electrons.end()) && (iPhotonMap != susyEvent->photons.end())) {
-
-    
-    //compute corrected P4
-    float storedCorr = -1.0;
-    map<TString, Float_t>::const_iterator iCorr = iJet.jecScaleFactors.find("L1FastL2L3");
-    if (iCorr != iJet.jecScaleFactors.end()) storedCorr = iCorr->second;
-    TLorentzVector corrP4 = storedCorr*iJet.momentum;
-
-    //count as a jet if it passes corrected pT, eta, and jet ID cuts
-    if ((corrP4.Et() >= ETMin) && (fabs(corrP4.Eta()) <= absEtaMax)) {
-      bool passedJetID = false;
-      if ((iJet.neutralHadronEnergy/iJet.momentum.Energy() < 0.99) && 
-	  (iJet.neutralEmEnergy/iJet.momentum.Energy() < 0.99) && 
-	  ((unsigned int)iJet.nConstituents > 1)) {
-	if (fabs(iJet.momentum.Eta()) < 2.4) {
-	  if ((iJet.chargedHadronEnergy > 0.0) && 
-	      ((int)iJet.chargedMultiplicity > 0) && 
-	      (iJet.chargedEmEnergy/iJet.momentum.Energy() < 0.99)) passedJetID = true;
-	}
-	else passedJetID = true;
+  //compute corrected P4
+  float storedCorr = -1.0;
+  map<TString, Float_t>::const_iterator iCorr = iJet.jecScaleFactors.find("L1FastL2L3");
+  if (iCorr != iJet.jecScaleFactors.end()) storedCorr = iCorr->second;
+  TLorentzVector corrP4 = storedCorr*iJet.momentum;
+ 
+  //count as a jet if it passes corrected pT, eta, and jet ID cuts
+  if ((corrP4.Et() >= ETMin) && (fabs(corrP4.Eta()) <= absEtaMax)) {
+    bool passedJetID = false;
+    if ((iJet.neutralHadronEnergy/iJet.momentum.Energy() < 0.99) &&
+	(iJet.neutralEmEnergy/iJet.momentum.Energy() < 0.99) &&
+	((unsigned int)iJet.nConstituents > 1)) {
+      if (fabs(iJet.momentum.Eta()) < 2.4) {
+	if ((iJet.chargedHadronEnergy > 0.0) &&
+	    ((int)iJet.chargedMultiplicity > 0) &&
+	    (iJet.chargedEmEnergy/iJet.momentum.Energy() < 0.99)) passedJetID = true;
       }
-      if (passedJetID) {
+      else passedJetID = true;
+    }
+    if (passedJetID) {
+ 
+      //overlap flag false unless a specific overlap is found
+      bool overlap = false;
 
-	//loop over electrons
-	bool overlap = false;
+      //loop over electrons
+      map<TString, susy::ElectronCollection>::const_iterator iElectronMap =
+	susyEvent->electrons.find("gsfElectrons");
+      if (iElectronMap != susyEvent->electrons.end()) {
 	susy::ElectronCollection::const_iterator iElectron = iElectronMap->second.begin();
 	while ((iElectron != iElectronMap->second.end()) && !overlap) {
-
+ 
 	  //Ulla doesn't use the electron SC position for eta/phi
 // 	  //check that SCs were properly stored for this electron
 // 	  unsigned int i = (unsigned int)iElectron->superClusterIndex;
@@ -1100,86 +1097,94 @@ unsigned int GMSBAnalyzer::isJet(const susy::PFJet& iJet, const float absEtaMax,
 // 	    cerr << ".\n";
 // 	    return 2;
 // 	  }
-
+ 
 	  //identify this electron as one which should not be allowed to overlap with a jet
 	  float pT = iElectron->momentum.Pt();
-// 	  float eta = susyEvent->superClusters[i].position.Eta();
+	  // 	    float eta = susyEvent->superClusters[i].position.Eta();
 	  float eta = iElectron->momentum.Eta();
-	  if (iElectron->isPF() && 
-	      (pT > 15.0) && 
-	      (fabs(eta) < absEtaMax) && 
-	      ((iElectron->chargedHadronIso + 
-		iElectron->photonIso + 
-		iElectron->neutralHadronIso)/pT < 0.2) && 
-	      (deltaR(corrP4.Eta(), corrP4.Phi(), 
+	  if (iElectron->isPF() &&
+	      (pT > 15.0) &&
+	      (fabs(eta) < absEtaMax) &&
+	      ((iElectron->chargedHadronIso +
+		iElectron->photonIso +
+		iElectron->neutralHadronIso)/pT < 0.2) &&
+	      (deltaR(corrP4.Eta(), corrP4.Phi(),
 // 		      eta, susyEvent->superClusters[i].position.Phi()) < 0.5)) {
-		      eta, iElectron->momentum.Phi()) < 0.5)) { /*Ulla doesn't use the electron SC 
-								  position for eta/phi*/
+		      eta, iElectron->momentum.Phi()) < 0.5)) { /*Ulla doesn't use the electron 
+								  SC position for eta/phi*/
 	    overlap = true;
 	  }
 	  else ++iElectron;
 	}
-
-	//loop over muons
-	vector<susy::Muon>::const_iterator iMuon = susyEvent->muons.begin();
-	while ((iMuon != susyEvent->muons.end()) && !overlap) {
-
-	  //check that tracks were properly stored for this muon
-	  //in MC sometimes get an unphysical track index
-	  int i = (int)iMuon->trackIndex;
-	  int size = (int)susyEvent->tracks.size();
-	  if (i >= size) {
-	    cerr << "Error: muon track index " << i << " >= size of track collection " << size;
-	    cerr << ".\n";
-	    return 2;
-	  }
-
-	  //identify this muon as one which should not be allowed to overlap with a jet
-	  float pT = iMuon->momentum.Pt();
-	  float eta = iMuon->momentum.Eta();
-	  map<TString, UChar_t>::const_iterator iID = 
-	    iMuon->idPairs.find("muidGlobalMuonPromptTight");
-	  if ((iID != iMuon->idPairs.end()) && ((unsigned int)iID->second == 1) && 
-	      (susyEvent->tracks[iMuon->trackIndex].d0() < 0.02) && 
-	      (susyEvent->tracks[iMuon->trackIndex].dz() < 0.5) && 
-	      (pT > 15.0) && 
-	      (fabs(eta) < absEtaMax) && 
-	      ((iMuon->ecalIsoR03 + iMuon->hcalIsoR03 + iMuon->trackIsoR03)/pT < 0.2) && 
-	      (deltaR(corrP4.Eta(), corrP4.Phi(), eta, iMuon->momentum.Phi()) < 0.5)) {
-	    overlap = true;
-	  }
-	  else ++iMuon;
+      }
+//       else {
+ 
+// 	//error
+// // 	cerr << "Error: gsfElectrons collection not found.\n"; /*GSF electrons missing from a 
+// // 								 number of events in MC due to 
+// // 								 pT/eta acceptance*/
+// 	jet = 3;
+//       }
+ 
+      //loop over muons
+      vector<susy::Muon>::const_iterator iMuon = susyEvent->muons.begin();
+      while ((iMuon != susyEvent->muons.end()) && !overlap) {
+ 
+	//check that tracks were properly stored for this muon
+	//in MC sometimes get an unphysical track index
+	int i = (int)iMuon->trackIndex;
+	int size = (int)susyEvent->tracks.size();
+	if (i >= size) {
+	  cerr << "Error: muon track index " << i << " >= size of track collection " << size;
+	  cerr << ".\n";
+	  return 2;
 	}
-
-	//loop over photons
-	susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin();
+ 
+	//identify this muon as one which should not be allowed to overlap with a jet
+	float pT = iMuon->momentum.Pt();
+	float eta = iMuon->momentum.Eta();
+	map<TString, UChar_t>::const_iterator iID =
+	  iMuon->idPairs.find("muidGlobalMuonPromptTight");
+	if ((iID != iMuon->idPairs.end()) && ((unsigned int)iID->second == 1) &&
+	    (susyEvent->tracks[iMuon->trackIndex].d0() < 0.02) &&
+	    (susyEvent->tracks[iMuon->trackIndex].dz() < 0.5) &&
+	    (pT > 15.0) &&
+	    (fabs(eta) < absEtaMax) &&
+	    ((iMuon->ecalIsoR03 + iMuon->hcalIsoR03 + iMuon->trackIsoR03)/pT < 0.2) &&
+	    (deltaR(corrP4.Eta(), corrP4.Phi(), eta, iMuon->momentum.Phi()) < 0.5)) {
+	  overlap = true;
+	}
+	else ++iMuon;
+      }
+ 
+      //loop over photons
+      map<TString, susy::PhotonCollection>::const_iterator iPhotonMap =
+	susyEvent->photons.find((const char*)tag_);
+      susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin();
+      if (iPhotonMap != susyEvent->photons.end()) {
 	while ((iPhoton != iPhotonMap->second.end()) && !overlap) {
-
+ 
 	  //identify this photon as one which should not be allowed to overlap with a jet
 	  if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin()) &&
-	      (deltaR(corrP4.Eta(), corrP4.Phi(), 
+	      (deltaR(corrP4.Eta(), corrP4.Phi(),
 		      iPhoton->caloPosition.Eta(), iPhoton->caloPosition.Phi()) < 0.5)) {
 	    overlap = true;
 	  }
 	  else ++iPhoton;
 	}
-
-	//if the jet didn't overlap with an electron, muon, or primary EM object, it counts
-	if (!overlap) jet = 1;
       }
+//       else {
+ 
+// 	//error
+// // 	cerr << "Error: " << tag_ << " collection not found.\n";
+// 	jet = 3;
+//       }
+ 
+      //if the jet didn't overlap with an electron, muon, or primary EM object, it counts
+      if (!overlap) jet = 1;
     }
   }
-  else {
-
-    //error
-//     cerr << "Error: gsfElectrons or " << tag_ << " collection not found.\n"; /*GSF electrons 
-// 									       missing from a 
-// 									       number of events in 
-// 									       MC due to pT/eta 
-// 									       acceptance*/
-    jet = 3;
-  }
-
+ 
   //return
   return jet;
 }
