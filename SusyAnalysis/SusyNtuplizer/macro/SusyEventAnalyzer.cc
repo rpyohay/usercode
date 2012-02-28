@@ -22,6 +22,7 @@
 #include <TCanvas.h>
 #include <TH1F.h>
 #include <TRegexp.h>
+#include <TGraphAsymmErrors.h>
 
 #include <map>
 #include <set>
@@ -34,6 +35,7 @@
 
 #include "../jec/JetMETObjects/interface/JetCorrectorParameters.h"
 #include "../jec/JetMETObjects/interface/FactorizedJetCorrector.h"
+#include "DataFormats/Math/interface/deltaR.h"
 
 
 template<typename T> bool EtGreater(const T* p1, const T* p2) {
@@ -520,6 +522,29 @@ void SusyEventAnalyzer::plot(const string& outputFile)
   TH1F MET("MET", "", 250, 0.0, 500.0);
   setHistogramOptions(MET, "ME_{T} (GeV)", "", "", true);
 
+  //electron pT histograms
+  TH1F recoEPT("recoEPT", "", 100, 0.0, 200.0);
+  TH1F MCEPT("MCEPT", "", 100, 0.0, 200.0);
+  setHistogramOptions(recoEPT, "p_{T} (GeV)", "", "", true);
+  setHistogramOptions(MCEPT, "p_{T} (GeV)", "", "", true);
+
+  //electron eta histograms
+  TH1F recoEEta("recoEEta", "", 60, -3.0, 3.0);
+  TH1F MCEEta("MCEEta", "", 60, -3.0, 3.0);
+  setHistogramOptions(recoEEta, "#eta", "", "", true);
+  setHistogramOptions(MCEEta, "#eta", "", "", true);
+
+  //electron efficiency histograms
+  TH1F numGSFElectronsVsMCElectronPT("numGSFElectronsVsMCElectronPT", "", 100, 0.0, 200.0);
+  TH1F numGSFElectronsVsMCElectronEta("numGSFElectronsVsMCElectronEta", "", 60, -3.0, 3.0);
+  setHistogramOptions(numGSFElectronsVsMCElectronPT, "p_{T} (GeV)", "", "", true);
+  setHistogramOptions(numGSFElectronsVsMCElectronEta, "#eta", "", "", true);
+
+  //number of n-electron events
+  unsigned int n0EEvts = 0;
+  unsigned int n1EEvts = 0;
+  unsigned int n2EEvts = 0;
+
   //set user-specified number of entries to process
   Long64_t nentries = fChain->GetEntriesFast();
   if (processNEvents != -1) nentries = processNEvents;
@@ -533,17 +558,19 @@ void SusyEventAnalyzer::plot(const string& outputFile)
     if (((jentry + 1) % 10000) == 0) cout << "Event " << (jentry + 1) << endl;
 
     //get int. lumi weight for this dataset
-    TString fileName(fChain->GetCurrentFile()->GetName());
-    TString dataset(fileName("diphoton_[-0-9]*"));
-    string datasetString((const char*)dataset);
-    map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
+//     TString fileName(fChain->GetCurrentFile()->GetName());
+//     TString dataset(fileName("RA3/.*/"));
+//     dataset.Remove(0, 4);
+//     dataset.Remove(dataset.Length() - 1);
+//     string datasetString((const char*)dataset);
+//     map<string, unsigned int>::const_iterator iDataset = fileMap_.find(datasetString);
     float lumiWeight = 1.0;
-    if (iDataset != fileMap_.end()) lumiWeight = weight_[iDataset->second];
-    else {
-      /*once comfortable with MC dataset names, remove this and just assume the file is data and 
-	gets weight 1.0*/
-      cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
-    }
+//     if (iDataset != fileMap_.end()) lumiWeight = weight_[iDataset->second];
+//     else {
+//       /*once comfortable with MC dataset names, remove this and just assume the file is data and 
+// 	gets weight 1.0*/
+//       cerr << "Error: dataset " << datasetString << " was not entered into the map.\n";
+//     }
 
     //fill pThat histogram
     float evtPTHat = -1.0;
@@ -558,7 +585,77 @@ void SusyEventAnalyzer::plot(const string& outputFile)
       evtMET = iMET->second.met();
     }
     MET.Fill(evtMET, lumiWeight);
+
+    //check integrity of electron collection
+    int eCollSize = -1;
+    map<TString, susy::ElectronCollection>::const_iterator iElectronMap = 
+      event->electrons.find("gsfElectrons");
+    if (iElectronMap != event->electrons.end()) eCollSize = iElectronMap->second.size();
+    switch (eCollSize) {
+    case 0:
+      ++n0EEvts;
+      break;
+    case 1:
+      ++n1EEvts;
+      break;
+    case 2:
+      ++n2EEvts;
+      break;
+    default:
+      break;
+    }
+//     cout << "Size of electron collection map: " << event->electrons.size() << endl;
+//     for (map<TString, susy::ElectronCollection>::const_iterator iElectronMap = 
+// 	   event->electrons.begin(); iElectronMap != event->electrons.end(); 
+// 	 ++iElectronMap) {
+//       cout << "Electron collection: " << iElectronMap->first << ", size: ";
+//       cout << iElectronMap->second.size() << endl;
+//     }
+    for (vector<susy::Particle>::const_iterator iGenParticle = 
+	   (event->genParticles.begin() + 1); iGenParticle != event->genParticles.end(); 
+	 ++iGenParticle) {
+      if (((iGenParticle->pdgId == 11) || (iGenParticle->pdgId == -11)) && 
+	  ((unsigned int)iGenParticle->status == 3) && 
+	  ((iGenParticle->motherId == 23) || (iGenParticle->motherId == 22))) {
+	float MCEta = iGenParticle->momentum.Eta();
+	if (fabs(MCEta) < 2.5) MCEPT.Fill(iGenParticle->momentum.Pt());
+	MCEEta.Fill(MCEta);
+	if (iElectronMap != event->electrons.end()) {
+	  susy::ElectronCollection::const_iterator iElectron = iElectronMap->second.begin();
+	  bool foundMCMatch = false;
+	  while ((iElectron != iElectronMap->second.end()) && !foundMCMatch) {
+	    float recoEta = iElectron->momentum.Eta();
+	    if (deltaR(recoEta, iElectron->momentum.Phi(), 
+		       MCEta, iGenParticle->momentum.Phi()) < 0.5) {
+		recoEPT.Fill(iElectron->momentum.Pt());
+		recoEEta.Fill(recoEta);
+		if (fabs(MCEta) < 2.5) {
+		  numGSFElectronsVsMCElectronPT.Fill(iGenParticle->momentum.Pt());
+		}
+		numGSFElectronsVsMCElectronEta.Fill(MCEta);
+		foundMCMatch = true;
+	    }
+	    else ++iElectron;
+	  }
+	}
+      }
+    }
   }
+  TCanvas GSFRecoEffVsPTCanvas("GSFRecoEffVsPTCanvas", "", 600, 600);
+  TCanvas GSFRecoEffVsEtaCanvas("GSFRecoEffVsEtaCanvas", "", 600, 600);
+  TGraphAsymmErrors GSFRecoEffVsPT(&numGSFElectronsVsMCElectronPT, &MCEPT);
+  TGraphAsymmErrors GSFRecoEffVsEta(&numGSFElectronsVsMCElectronEta, &MCEEta);
+  GSFRecoEffVsPTCanvas.cd();
+  GSFRecoEffVsPT.Draw("A*");
+  GSFRecoEffVsPTCanvas.Write();
+  GSFRecoEffVsEtaCanvas.cd();
+  GSFRecoEffVsEta.Draw("A*");
+  GSFRecoEffVsEtaCanvas.Write();
+
+  //print electron statistics
+  cout << "No. 0-electron events: " << n0EEvts << endl;
+  cout << "No. 1-electron events: " << n1EEvts << endl;
+  cout << "No. 2-electron events: " << n2EEvts << endl;
 
   //close
   out.Write();
