@@ -961,7 +961,7 @@ float GMSBAnalyzer::HT() const
 
       //increase HT for jets passing criteria
       unsigned int isGoodJet = isJet(*iJet, 5.0);
-      if ((isGoodJet == 1) || (isGoodJet == 3)) {
+      if (isGoodJet == 1) {
 	evtHT+=iJet->jecScaleFactors.find("L1FastL2L3")->second*iJet->momentum.Et();
       }
     }
@@ -987,7 +987,7 @@ float GMSBAnalyzer::MHT() const
 
       //increase MHT for jets passing criteria
       unsigned int isGoodJet = isJet(*iJet, 5.0);
-      if ((isGoodJet == 1) || (isGoodJet == 3)) {
+      if (isGoodJet == 1) {
 	evtMHT+=iJet->jecScaleFactors.find("L1FastL2L3")->second*iJet->momentum;
       }
     }
@@ -1000,7 +1000,7 @@ float GMSBAnalyzer::MHT() const
   return evtMHT.Et(); //ET or pT?
 }
 
-unsigned int GMSBAnalyzer::numJets() const
+unsigned int GMSBAnalyzer::numJets(const float absEtaMax) const
 {
   //jet counter
   unsigned int nJets = 0;
@@ -1012,8 +1012,8 @@ unsigned int GMSBAnalyzer::numJets() const
 	 iJet != iJets->second.end(); ++iJet) {
 
       //count jets passing criteria
-      unsigned int isGoodJet = isJet(*iJet, 5.0);
-      if ((isGoodJet == 1) || (isGoodJet == 3)) ++nJets;
+      unsigned int isGoodJet = isJet(*iJet, absEtaMax);
+      if (isGoodJet == 1) ++nJets;
     }
   }
 
@@ -1037,7 +1037,7 @@ float GMSBAnalyzer::leadingJetET() const
 
       //count jets passing criteria
       unsigned int isGoodJet = isJet(*iJet, 5.0, 0.0);
-      if ((isGoodJet == 1) || (isGoodJet == 3)) {
+      if (isGoodJet == 1) {
 	const float ET = iJet->jecScaleFactors.find("L1FastL2L3")->second*iJet->momentum.Et();
 	if (ET > ET1) ET1 = ET;
       }
@@ -1051,46 +1051,43 @@ float GMSBAnalyzer::leadingJetET() const
   return ET1;
 }
 
-unsigned int GMSBAnalyzer::isJet(const susy::PFJet& iJet, const float absEtaMax, 
+unsigned int GMSBAnalyzer::isJet(const susy::PFJet& iJet, const float absEtaMax,
 				 const float ETMin) const
 {
   //pass flag
   unsigned int jet = 0;
 
-  //need electrons and photons for rejecting jet/electron and jet/photon overlaps
-  map<TString, susy::ElectronCollection>::const_iterator iElectronMap = 
-    susyEvent->electrons.find("gsfElectrons");
-  map<TString, susy::PhotonCollection>::const_iterator iPhotonMap = 
-    susyEvent->photons.find((const char*)tag_);
-  if ((iElectronMap != susyEvent->electrons.end()) && (iPhotonMap != susyEvent->photons.end())) {
-
-    
-    //compute corrected P4
-    float storedCorr = -1.0;
-    map<TString, Float_t>::const_iterator iCorr = iJet.jecScaleFactors.find("L1FastL2L3");
-    if (iCorr != iJet.jecScaleFactors.end()) storedCorr = iCorr->second;
-    TLorentzVector corrP4 = storedCorr*iJet.momentum;
-
-    //count as a jet if it passes corrected pT, eta, and jet ID cuts
-    if ((corrP4.Et() >= ETMin) && (fabs(corrP4.Eta()) <= absEtaMax)) {
-      bool passedJetID = false;
-      if ((iJet.neutralHadronEnergy/iJet.momentum.Energy() < 0.99) && 
-	  (iJet.neutralEmEnergy/iJet.momentum.Energy() < 0.99) && 
-	  ((unsigned int)iJet.nConstituents > 1)) {
-	if (fabs(iJet.momentum.Eta()) < 2.4) {
-	  if ((iJet.chargedHadronEnergy > 0.0) && 
-	      ((int)iJet.chargedMultiplicity > 0) && 
-	      (iJet.chargedEmEnergy/iJet.momentum.Energy() < 0.99)) passedJetID = true;
-	}
-	else passedJetID = true;
+  //compute corrected P4
+  float storedCorr = -1.0;
+  map<TString, Float_t>::const_iterator iCorr = iJet.jecScaleFactors.find("L1FastL2L3");
+  if (iCorr != iJet.jecScaleFactors.end()) storedCorr = iCorr->second;
+  TLorentzVector corrP4 = storedCorr*iJet.momentum;
+ 
+  //count as a jet if it passes corrected pT, eta, and jet ID cuts
+  if ((corrP4.Et() >= ETMin) && (fabs(corrP4.Eta()) <= absEtaMax)) {
+    bool passedJetID = false;
+    if ((iJet.neutralHadronEnergy/iJet.momentum.Energy() < 0.99) &&
+	(iJet.neutralEmEnergy/iJet.momentum.Energy() < 0.99) &&
+	((unsigned int)iJet.nConstituents > 1)) {
+      if (fabs(iJet.momentum.Eta()) < 2.4) {
+	if ((iJet.chargedHadronEnergy > 0.0) &&
+	    ((int)iJet.chargedMultiplicity > 0) &&
+	    (iJet.chargedEmEnergy/iJet.momentum.Energy() < 0.99)) passedJetID = true;
       }
-      if (passedJetID) {
+      else passedJetID = true;
+    }
+    if (passedJetID) {
+ 
+      //overlap flag false unless a specific overlap is found
+      bool overlap = false;
 
-	//loop over electrons
-	bool overlap = false;
+      //loop over electrons
+      map<TString, susy::ElectronCollection>::const_iterator iElectronMap =
+	susyEvent->electrons.find("gsfElectrons");
+      if (iElectronMap != susyEvent->electrons.end()) {
 	susy::ElectronCollection::const_iterator iElectron = iElectronMap->second.begin();
 	while ((iElectron != iElectronMap->second.end()) && !overlap) {
-
+ 
 	  //Ulla doesn't use the electron SC position for eta/phi
 // 	  //check that SCs were properly stored for this electron
 // 	  unsigned int i = (unsigned int)iElectron->superClusterIndex;
@@ -1100,86 +1097,94 @@ unsigned int GMSBAnalyzer::isJet(const susy::PFJet& iJet, const float absEtaMax,
 // 	    cerr << ".\n";
 // 	    return 2;
 // 	  }
-
+ 
 	  //identify this electron as one which should not be allowed to overlap with a jet
 	  float pT = iElectron->momentum.Pt();
-// 	  float eta = susyEvent->superClusters[i].position.Eta();
+	  // 	    float eta = susyEvent->superClusters[i].position.Eta();
 	  float eta = iElectron->momentum.Eta();
-	  if (iElectron->isPF() && 
-	      (pT > 15.0) && 
-	      (fabs(eta) < absEtaMax) && 
-	      ((iElectron->chargedHadronIso + 
-		iElectron->photonIso + 
-		iElectron->neutralHadronIso)/pT < 0.2) && 
-	      (deltaR(corrP4.Eta(), corrP4.Phi(), 
+	  if (iElectron->isPF() &&
+	      (pT > 15.0) &&
+	      (fabs(eta) < absEtaMax) &&
+	      ((iElectron->chargedHadronIso +
+		iElectron->photonIso +
+		iElectron->neutralHadronIso)/pT < 0.2) &&
+	      (deltaR(corrP4.Eta(), corrP4.Phi(),
 // 		      eta, susyEvent->superClusters[i].position.Phi()) < 0.5)) {
-		      eta, iElectron->momentum.Phi()) < 0.5)) { /*Ulla doesn't use the electron SC 
-								  position for eta/phi*/
+		      eta, iElectron->momentum.Phi()) < 0.5)) { /*Ulla doesn't use the electron 
+								  SC position for eta/phi*/
 	    overlap = true;
 	  }
 	  else ++iElectron;
 	}
-
-	//loop over muons
-	vector<susy::Muon>::const_iterator iMuon = susyEvent->muons.begin();
-	while ((iMuon != susyEvent->muons.end()) && !overlap) {
-
-	  //check that tracks were properly stored for this muon
-	  //in MC sometimes get an unphysical track index
-	  int i = (int)iMuon->trackIndex;
-	  int size = (int)susyEvent->tracks.size();
-	  if (i >= size) {
-	    cerr << "Error: muon track index " << i << " >= size of track collection " << size;
-	    cerr << ".\n";
-	    return 2;
-	  }
-
-	  //identify this muon as one which should not be allowed to overlap with a jet
-	  float pT = iMuon->momentum.Pt();
-	  float eta = iMuon->momentum.Eta();
-	  map<TString, UChar_t>::const_iterator iID = 
-	    iMuon->idPairs.find("muidGlobalMuonPromptTight");
-	  if ((iID != iMuon->idPairs.end()) && ((unsigned int)iID->second == 1) && 
-	      (susyEvent->tracks[iMuon->trackIndex].d0() < 0.02) && 
-	      (susyEvent->tracks[iMuon->trackIndex].dz() < 0.5) && 
-	      (pT > 15.0) && 
-	      (fabs(eta) < absEtaMax) && 
-	      ((iMuon->ecalIsoR03 + iMuon->hcalIsoR03 + iMuon->trackIsoR03)/pT < 0.2) && 
-	      (deltaR(corrP4.Eta(), corrP4.Phi(), eta, iMuon->momentum.Phi()) < 0.5)) {
-	    overlap = true;
-	  }
-	  else ++iMuon;
+      }
+//       else {
+ 
+// 	//error
+// // 	cerr << "Error: gsfElectrons collection not found.\n"; /*GSF electrons missing from a 
+// // 								 number of events in MC due to 
+// // 								 pT/eta acceptance*/
+// 	jet = 3;
+//       }
+ 
+      //loop over muons
+      vector<susy::Muon>::const_iterator iMuon = susyEvent->muons.begin();
+      while ((iMuon != susyEvent->muons.end()) && !overlap) {
+ 
+	//check that tracks were properly stored for this muon
+	//in MC sometimes get an unphysical track index
+	int i = (int)iMuon->trackIndex;
+	int size = (int)susyEvent->tracks.size();
+	if (i >= size) {
+	  cerr << "Error: muon track index " << i << " >= size of track collection " << size;
+	  cerr << ".\n";
+	  return 2;
 	}
-
-	//loop over photons
-	susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin();
+ 
+	//identify this muon as one which should not be allowed to overlap with a jet
+	float pT = iMuon->momentum.Pt();
+	float eta = iMuon->momentum.Eta();
+	map<TString, UChar_t>::const_iterator iID =
+	  iMuon->idPairs.find("muidGlobalMuonPromptTight");
+	if ((iID != iMuon->idPairs.end()) && ((unsigned int)iID->second == 1) &&
+	    (susyEvent->tracks[iMuon->trackIndex].d0() < 0.02) &&
+	    (susyEvent->tracks[iMuon->trackIndex].dz() < 0.5) &&
+	    (pT > 15.0) &&
+	    (fabs(eta) < absEtaMax) &&
+	    ((iMuon->ecalIsoR03 + iMuon->hcalIsoR03 + iMuon->trackIsoR03)/pT < 0.2) &&
+	    (deltaR(corrP4.Eta(), corrP4.Phi(), eta, iMuon->momentum.Phi()) < 0.5)) {
+	  overlap = true;
+	}
+	else ++iMuon;
+      }
+ 
+      //loop over photons
+      map<TString, susy::PhotonCollection>::const_iterator iPhotonMap =
+	susyEvent->photons.find((const char*)tag_);
+      susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin();
+      if (iPhotonMap != susyEvent->photons.end()) {
 	while ((iPhoton != iPhotonMap->second.end()) && !overlap) {
-
+ 
 	  //identify this photon as one which should not be allowed to overlap with a jet
 	  if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin()) &&
-	      (deltaR(corrP4.Eta(), corrP4.Phi(), 
+	      (deltaR(corrP4.Eta(), corrP4.Phi(),
 		      iPhoton->caloPosition.Eta(), iPhoton->caloPosition.Phi()) < 0.5)) {
 	    overlap = true;
 	  }
 	  else ++iPhoton;
 	}
-
-	//if the jet didn't overlap with an electron, muon, or primary EM object, it counts
-	if (!overlap) jet = 1;
       }
+//       else {
+ 
+// 	//error
+// // 	cerr << "Error: " << tag_ << " collection not found.\n";
+// 	jet = 3;
+//       }
+ 
+      //if the jet didn't overlap with an electron, muon, or primary EM object, it counts
+      if (!overlap) jet = 1;
     }
   }
-  else {
-
-    //error
-//     cerr << "Error: gsfElectrons or " << tag_ << " collection not found.\n"; /*GSF electrons 
-// 									       missing from a 
-// 									       number of events in 
-// 									       MC due to pT/eta 
-// 									       acceptance*/
-    jet = 3;
-  }
-
+ 
   //return
   return jet;
 }
@@ -1211,7 +1216,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 //    const unsigned int nDiEMETBins0j = 12;   //number of di-EM ET bins
 //    const unsigned int nDiEMETBins1j = 14;   //number of di-EM ET bins
    const unsigned int nDiEMETBins0j = 13;   //number of di-EM ET bins
-   const unsigned int nDiEMETBins1j = 15;   //number of di-EM ET bins
+   const unsigned int nDiEMETBins1j = 20;   //number of di-EM ET bins
    const unsigned int nNjBins = 3;        //number of Nj bins
 //    const unsigned int nInvMassBins = 150; //number of invariant mass bins
    const unsigned int nInvMassBins = 500; //number of invariant mass bins
@@ -1251,13 +1256,13 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 				      20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 
 				      80.0, 100.0, 
 				      150.0, 650.0};
-   const Double_t diEMETBins1j[16] = {0.0,                        //di-EM ET bin boundaries
+   const Double_t diEMETBins1j[21] = {0.0,                        //di-EM ET bin boundaries
 				      5.0, 10.0, 15.0, 
 				      20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 
 				      80.0, 100.0, 
 				      120.0, 
-				      150.0, 
-				      200.0, 650.0};
+				      150.0, 200.0, 250.0, 
+				      300.0, 400.0, 500.0, 600.0, 700.0};
    const Double_t NjBins[4] = {-0.5, 0.5, 1.5, 99.5};             //Nj bin boundaries
 //    const Double_t invMassBins[151] = {0.0,                        //invariant mass bin boundaries
 // 				      2.0, 4.0, 6.0, 8.0, 10.0, 
@@ -1516,6 +1521,26 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    setHistogramOptions(egRho, "#rho (GeV/#eta#cdot#phi)", "", "", kSumW2);
    setHistogramOptions(eeRho, "#rho (GeV/#eta#cdot#phi)", "", "", kSumW2);
    setHistogramOptions(ffRho, "#rho (GeV/#eta#cdot#phi)", "", "", kSumW2);
+
+   //PF electron multiplicity (sanity check)
+   TH1F ggPFElectronMultiplicity("ggPFElectronMultiplicity", "", 5, -0.5, 4.5);
+   TH1F egPFElectronMultiplicity("egPFElectronMultiplicity", "", 5, -0.5, 4.5);
+   TH1F eePFElectronMultiplicity("eePFElectronMultiplicity", "", 5, -0.5, 4.5);
+   TH1F ffPFElectronMultiplicity("ffPFElectronMultiplicity", "", 5, -0.5, 4.5);
+   setHistogramOptions(ggPFElectronMultiplicity, "N_{PF e}", "", "", kSumW2);
+   setHistogramOptions(egPFElectronMultiplicity, "N_{PF e}", "", "", kSumW2);
+   setHistogramOptions(eePFElectronMultiplicity, "N_{PF e}", "", "", kSumW2);
+   setHistogramOptions(ffPFElectronMultiplicity, "N_{PF e}", "", "", kSumW2);
+ 
+   //PF muon multiplicity (sanity check)
+   TH1F ggMuonMultiplicity("ggMuonMultiplicity", "", 5, -0.5, 4.5);
+   TH1F egMuonMultiplicity("egMuonMultiplicity", "", 5, -0.5, 4.5);
+   TH1F eeMuonMultiplicity("eeMuonMultiplicity", "", 5, -0.5, 4.5);
+   TH1F ffMuonMultiplicity("ffMuonMultiplicity", "", 5, -0.5, 4.5);
+   setHistogramOptions(ggMuonMultiplicity, "N_{#mu}", "", "", kSumW2);
+   setHistogramOptions(egMuonMultiplicity, "N_{#mu}", "", "", kSumW2);
+   setHistogramOptions(eeMuonMultiplicity, "N_{#mu}", "", "", kSumW2);
+   setHistogramOptions(ffMuonMultiplicity, "N_{#mu}", "", "", kSumW2);
 
    //uniform binning ee, gg, and ff di-EM ET histogram
    vector<TH1F*> ggDiEMETUniform;
@@ -1947,8 +1972,27 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	     (iPV->position.Perp() <= 2.0/*cm*/)) ++nGoodRecoPV;
        }
 
+       //get PF electron multiplicity
+       unsigned int nPFElectrons = 0;
+       map<TString, susy::ElectronCollection>::const_iterator iElectronMap =
+	 susyEvent->electrons.find("gsfElectrons");
+       if (iElectronMap != susyEvent->electrons.end()) {
+	 for (susy::ElectronCollection::const_iterator iElectron = iElectronMap->second.begin();
+	      iElectron != iElectronMap->second.end(); ++iElectron) {
+	   if (iElectron->isPF()) ++nPFElectrons;
+	 }
+       }
+ 
+       //get PF muon multiplicity
+       unsigned int nMuons = 0;
+       for (vector<susy::Muon>::const_iterator iMuon = susyEvent->muons.begin();
+	    iMuon != susyEvent->muons.end(); ++iMuon) {
+	 map<TString, UChar_t>::const_iterator iID =
+	   iMuon->idPairs.find("muidGlobalMuonPromptTight");
+	 if ((iID != iMuon->idPairs.end()) && ((unsigned int)iID->second == 1)) ++nMuons;
+       }
+
        //count jets
-       unsigned int nJets = 0;
        unsigned int nJets30 = 0;
        unsigned int nJets60 = 0;
        vector<float> jetET;
@@ -2022,7 +2066,6 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	       else passed = true;
 	     }
 	     if (passed) {
-	       ++nJets;
 	       jetET.push_back(corrP4.Et());
 	       if (corrP4.Et() >= 30.0/*GeV*/) ++nJets30;
 	       if (corrP4.Et() >= 60.0/*GeV*/) ++nJets60;
@@ -2040,7 +2083,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 objects, |eta| <= 5)*/
        const float cleanHT = HT();
        const float cleanMHT = MHT();
-       const float cleanNj = numJets();
+       const float cleanNj = numJets(5.0);
        const float cleanLeadingJetET = leadingJetET();
 
        //get combined isolation, photon ET, sigmaIetaIeta, R9, and ECAL/HCAL/track isolation
@@ -2156,13 +2199,14 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 
        //determine Nj bin
        unsigned int iNjBin = nNjBins;
+       unsigned int nJets = numJets(2.6);
        for (unsigned int iNjBinBoundary = 0; iNjBinBoundary < nNjBins; ++iNjBinBoundary) {
-	 if ((nJets30 >= NjBins[iNjBinBoundary]) && 
-	     (nJets30 < NjBins[iNjBinBoundary + 1])) iNjBin = iNjBinBoundary;
+	 if ((nJets >= NjBins[iNjBinBoundary]) && 
+	     (nJets < NjBins[iNjBinBoundary + 1])) iNjBin = iNjBinBoundary;
        }
        if (iNjBin == nNjBins) {
-	 cerr << "Error: no Nj bin found for nJets30 = " << nJets30 << " in event ";
-	 cerr << (jentry + 1) << ".  Assuming nJets30 = 0.\n";
+	 cerr << "Error: no Nj bin found for nJets = " << nJets << " in event ";
+	 cerr << (jentry + 1) << ".  Assuming nJets = 0.\n";
 	 iNjBin = 0;
        }
 
@@ -2195,6 +2239,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	   ggTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
 	   ggNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	   ggRho.Fill(rho, lumiWeight*PUWeight);
+	   ggPFElectronMultiplicity.Fill(nPFElectrons, lumiWeight*PUWeight);
+	   ggMuonMultiplicity.Fill(nMuons, lumiWeight*PUWeight);
 	   ggDijetSize.Fill(dijetSize);
 	   ggDiEMSize.Fill(diEMSize);
 	   ggPTHat.Fill(pTHat, lumiWeight*PUWeight);
@@ -2260,6 +2306,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 egTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
 	 egNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 egRho.Fill(rho, lumiWeight*PUWeight);
+	 egPFElectronMultiplicity.Fill(nPFElectrons, lumiWeight*PUWeight);
+	 egMuonMultiplicity.Fill(nMuons, lumiWeight*PUWeight);
 	 egDijetSize.Fill(dijetSize);
 	 egDiEMSize.Fill(diEMSize);
 	 egPTHat.Fill(pTHat, lumiWeight*PUWeight);
@@ -2328,7 +2376,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 		 eeLowSidebandDiEMETVec.push_back(diEMET);
 	       }
 	       eeLowSidebandMETVec.push_back(MET);
-	       eeLowSidebandNjVec.push_back(nJets30);
+	       eeLowSidebandNjVec.push_back(nJets);
 	       eeLowSidebandMRVec.push_back(MR);
 	       eeLowSidebandR2Vec.push_back(R2);
 	     }
@@ -2348,6 +2396,10 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	       eeRho.Fill(rho, lumiWeight*PUWeight);
 	       eeNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 
+	       //fill PF electron and muon multiplicity histograms
+	       eePFElectronMultiplicity.Fill(nPFElectrons, lumiWeight*PUWeight);
+	       eeMuonMultiplicity.Fill(nMuons, lumiWeight*PUWeight);
+
 	       if (dijetSize == 2) {
 		 eeMETVsDiEMETVsInvMass[iNjBin]->
 		   Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
@@ -2365,7 +2417,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	       }
 	       eeR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
 	       eeMETVec.push_back(MET);
-	       eeNjVec.push_back(nJets30);
+	       eeNjVec.push_back(nJets);
 	       eeMRVec.push_back(MR);
 	       eeR2Vec.push_back(R2);
 	       eeHTVsMET.Fill(MET, oldHT, lumiWeight*PUWeight);
@@ -2394,7 +2446,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 		 eeHighSidebandDiEMETVec.push_back(diEMET);
 	       }
 	       eeHighSidebandMETVec.push_back(MET);
-	       eeHighSidebandNjVec.push_back(nJets30);
+	       eeHighSidebandNjVec.push_back(nJets);
 	       eeHighSidebandMRVec.push_back(MR);
 	       eeHighSidebandR2Vec.push_back(R2);
 	     }
@@ -2429,6 +2481,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 ffTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
 	 ffNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
 	 ffRho.Fill(rho, lumiWeight*PUWeight);
+	 ffPFElectronMultiplicity.Fill(nPFElectrons, lumiWeight*PUWeight);
+	 ffMuonMultiplicity.Fill(nMuons, lumiWeight*PUWeight);
 	 ffDijetSize.Fill(dijetSize);
 	 ffDiEMSize.Fill(diEMSize);
 	 ffPTHat.Fill(pTHat, lumiWeight*PUWeight);
@@ -2473,7 +2527,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 }
 	 if (diEMSize == 2) {
 	   ffMETVec.push_back(MET);
-	   ffNjVec.push_back(nJets30);
+	   ffNjVec.push_back(nJets);
 	   ffR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
 	   ffMRVec.push_back(MR);
 	   ffR2Vec.push_back(R2);
