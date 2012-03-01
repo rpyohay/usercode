@@ -13,7 +13,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyNtuplizer.cc,v 1.6 2012/02/10 15:35:08 yohay Exp $
+// $Id: SusyNtuplizer.cc,v 1.17 2011/11/01 22:14:51 dwjang Exp $
 //
 //
 
@@ -628,6 +628,36 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
     edm::LogError(name()) << "rho is not available!!! " << e.what();
   }
 
+  if(debugLevel_ > 0) std::cout << name() << ", fill rhoBarrel calculated from kt6PFJetsRhoBarrelOnly" << std::endl;
+  try {
+    edm::Handle<double> rBH;
+    iEvent.getByLabel("kt6PFJetsRhoBarrelOnly","rho",rBH);
+    susyEvent_->rhoBarrel = *rBH;
+  }
+  catch(cms::Exception& e) {
+    edm::LogError(name()) << "rhoBarrel is not available!!! " << e.what();
+  }
+  
+  if(debugLevel_ > 0) std::cout << name() << ", fill PassesHcalNoiseFilter calculated from HBHENoiseFilterResultProducer" << std::endl;
+  try {
+    edm::Handle<bool> noiseH;
+    iEvent.getByLabel("HBHENoiseFilterResultProducer","HBHENoiseFilterResult",noiseH);
+    susyEvent_->PassesHcalNoiseFilter = *noiseH;
+  }
+  catch(cms::Exception& e) {
+    edm::LogError(name()) << "HBHENoiseFilterResult is not available!!! " << e.what();
+  }
+
+  if(debugLevel_ > 0) std::cout << name() << ", fill PassesEcalDeadCellFilter calculated from ecalDeadCellTPfilter" << std::endl;
+  try {
+    edm::Handle<bool> DeadCellH;
+    iEvent.getByLabel("ecalDeadCellTPfilter",DeadCellH);
+    susyEvent_->PassesEcalDeadCellFilter = *DeadCellH;
+  }
+  catch(cms::Exception& e) {
+    edm::LogError(name()) << "ecalDeadCellTPfilter is not available!!! " << e.what();
+  }
+  
   if(debugLevel_ > 0) std::cout << name() << ", fill PFCandidates" << std::endl;
 
   edm::Handle<reco::PFCandidateCollection> pfH;
@@ -911,7 +941,6 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
     try {
       iEvent.getByLabel(edm::InputTag(electronCollectionTags_[iEleC]),electronH);
       if(debugLevel_ > 1) std::cout << "size of ElectronCollection : " << electronH->size() << std::endl;
-
       int iele = 0;
       for(reco::GsfElectronCollection::const_iterator it = electronH->begin();
 	  it != electronH->end(); it++){
@@ -1548,11 +1577,7 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
     // event weighting variables, for example ptHat
     edm::Handle<GenEventInfoProduct> GenEventInfoHandle;
-    if(iEvent.getByLabel("generator",GenEventInfoHandle)) {
-      if (GenEventInfoHandle->binningValues().size() > 0) {
-	susyEvent_->gridParams["ptHat"] = GenEventInfoHandle->binningValues()[0];
-      }
-    }
+    if(iEvent.getByLabel("generator",GenEventInfoHandle)) susyEvent_->gridParams["ptHat"] = GenEventInfoHandle->binningValues()[0];
 
     //get PU summary info
     edm::Handle<std::vector<PileupSummaryInfo> > pPUSummaryInfo;
@@ -1669,7 +1694,7 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
         PUInfoForThisBX.trueNumInteractions = -1.0;
 
         //add PU summary info for this BX to the vector of PU summary info for this event
-        susyEvent_->PU.push_back(PUInfoForThisBX);
+        susyEvent_->pu.push_back(PUInfoForThisBX);
       }
     }
 
@@ -1922,7 +1947,7 @@ void SusyNtuplizer::fillGenInfos(const edm::Event& iEvent, const edm::EventSetup
     for(reco::GenParticleCollection::const_iterator it = it_begin; it != it_end; it++){
       bool passStatus = (it->status() == 3 || it->status() == 1);
       if(!passStatus) continue;
-      if(it->pt() < 0.0) continue;
+      if(it->pt() < 5.0) continue;
       const reco::GenParticle* gp = &*it;
       susy::Particle part;
 
