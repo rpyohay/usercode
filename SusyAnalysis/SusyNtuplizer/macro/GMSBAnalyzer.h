@@ -199,7 +199,7 @@ public :
    string eventFileName(string, const string&) const;
    float HT() const;
    float MHT() const;
-   unsigned int numJets() const;
+   unsigned int numJets(const float) const;
    float leadingJetET() const;
    unsigned int isJet(const susy::PFJet&, const float, const float ETMin = 30.0) const;
    void runMETAnalysis(const string);
