@@ -140,19 +140,6 @@ I_{\mathrm{comb}} &=& I_{\mathrm{ECAL}} - 0.0792\rho + I_{\mathrm{HCAL}} - 0.025
 %
 where $I_{\mathrm{ECAL}}$, $I_{\mathrm{HCAL}}$, and $I_{\mathrm{track}}$ are $E_{T}$ sums in the annular regions defined in Figure~\ref{fig:isolation_cones} and $\rho$ is the average pileup energy density in the calorimeters (per unit $\eta\cdot\phi$) as measured with the Fastjet algorithm \cite{Fastjet_conf_proceedings, Fastjet_manual}.  Note that the ECAL and track isolation veto strips at constant $\eta$ ensure that the isolation cuts are similarly efficient for converted photons, radiating electrons, and unconverted photons.
 
-Figure~\ref{fig:preselected_rho} shows the $\rho$ distribution for a sample of events with at least two 25 GeV EM objects passing the $|\eta|$, $H/E$, and $R9$ requirements in Table~\ref{tab:g_f_criteria}, and passing the trigger requirements in Table~\ref{tab:HLT_by_run_range}, representing the full 2011 dataset.  Since average $\rho$ is $\sim 5$ GeV, and there is a long tail above this average value, it is necessary to subtract pileup energy from the ECAL and HCAL isolation cones to recover otherwise clean photons in events with large pileup.  The ECAL and HCAL \textit{effective areas} of 0.0792 and 0.0252 (\textcolor{red}{\textbf{Change these to the final values used in the analysis.}}), respectively, are calculated by fitting the average ECAL or HCAL isolation energy vs. $\rho$ in a sample of $Z\rightarrow ee$ events to a straight line.  The slope of the line---which has the units of $\eta\cdot\phi$, or area---is the effective area.
-
-%summarize the combined isolation upper and lower cut optimizations here?
-\textcolor{red}{\textbf{Summarize the combined isolation upper and lower cut optimizations here?}}
-
-%show Dave's rho plots?  make your own?
-\textcolor{red}{\textbf{Summarize the effective area calculation here?}}
-
-%define more precisely?
-A ``pixel seed" is defined as a hit in the pixel detector consistent with a track extrapolated from the position of the ECAL SC back to the primary vertex.  Real photons, having no charge and therefore no bending in the magnetic field, should not have a pixel seed.
-
-%define sigmaIetaIeta
-
 \begin{table}[hcbp]
 \caption{Selection criteria for photons and fakes.}
 \centering
@@ -182,12 +169,36 @@ $I_{\mathrm{comb}}$, $\sigma_{i\eta i\eta}$ & $< 6$ GeV \&\& $< 0.011$ & ($\geq 
 	\label{fig:isolation_cones}
 \end{figure}
 
+Figure~\ref{fig:preselected_rho} shows the $\rho$ distribution for a sample of events with at least two 25 GeV EM objects passing the $|\eta|$, $H/E$, and $R9$ requirements in Table~\ref{tab:g_f_criteria}, and passing the trigger requirements in Table~\ref{tab:HLT_by_run_range}, representing the full 2011 dataset.  Since average $\rho$ is $\sim 5$ GeV, and there is a long tail above this average value, it is necessary to subtract pileup energy from the ECAL and HCAL isolation cones to recover otherwise clean photons in events with large pileup.  The ECAL and HCAL \textit{effective areas} of 0.0792 and 0.0252 (\textcolor{red}{\textbf{Change these to the final values used in the analysis.}}), respectively, are calculated by fitting the average ECAL or HCAL isolation energy vs. $\rho$ in a sample of $Z\rightarrow ee$ events to a straight line.  The slope of the line---which has the units of $\eta\cdot\phi$, or area---is the effective area.
+
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.25]{preselected_rho}
 	\caption{$\rho$ distribution for a sample of events with at least two 25 GeV EM objects passing the $|\eta|$, $H/E$, and $R9$ requirements in Table~\ref{tab:g_f_criteria}, and passing the trigger requirements in Table~\ref{tab:HLT_by_run_range}.  This sample covers the full 2011 dataset.}
 	\label{fig:preselected_rho}
 \end{figure}
+
+%summarize the combined isolation lower bound optimization here
+\textcolor{red}{\textbf{Summarize the combined isolation lower bound optimization here.}}
+
+The upper bound on fake photon combined isolation guarantees that poorly isolated dijet events, with \MET resolution dissimilar to the candidate diphoton events, do not enter the $\mathit{ff}$ sample.  The exact value of 20 GeV (cf. Table~\ref{tab:g_f_criteria}) arises from a low-\MET $\mathit{ff}$/$\gamma\gamma$ $\chi^{2}$ optimization procedure \cite{CMS_AN-2011-515}.  Figure~\ref{fig:f_comb_iso_upper_bound_optimization} shows the value of the Neyman's $\chi^{2}$ between the $\mathit{ff}$ and $\gamma\gamma$ \MET distributions, truncated at either 25 or 50 GeV, vs. upper bound on fake combined isolation.  As shown in the figure, 20 GeV very nearly minimizes the $\chi^{2}$, while also being large enough that a sufficient number of $\mathit{ff}$ events may be collected.
+
+%include similar figures for MC?
+%remake this plot yourself?
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.9]{f_comb_iso_upper_bound_optimization}
+	\caption{Neyman's $\chi^{2}$ between the $\mathit{ff}$ and $\gamma\gamma$ \MET distributions, truncated at either 25 (red) or 50 (blue) GeV, vs. upper bound on fake combined isolation.  The left plot includes all events; the right plot is for events with $\geq 1$ jet defined as in Table~\ref{tab:jet_definition_for_Nj_reweighting}, but with the $\Delta R$ cleaning criteria applied to the two primary EM objects and all additional electrons, photons, and fake photons.  The full reweighting and normalization procedure is employed in the \MET calculation (see Sec.~\ref{sec:Modeling the QCD Background}).  Error bars include statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).  Reprinted from Fig. 9 of ref. \cite{CMS_AN-2011-515}.}
+	\label{fig:f_comb_iso_upper_bound_optimization}
+\end{figure}
+
+%show Dave's rho plots?  make your own?
+\textcolor{red}{\textbf{Summarize the effective area calculation here?}}
+
+%define more precisely?
+A ``pixel seed" is defined as a hit in the pixel detector consistent with a track extrapolated from the position of the ECAL SC back to the primary vertex.  Real photons, having no charge and therefore no bending in the magnetic field, should not have a pixel seed.
+
+%define sigmaIetaIeta
 
 \subsection{Electrons}
 \label{sec:Electrons}
@@ -268,6 +279,41 @@ Figure~\ref{fig:total_JEC} shows the total jet energy correction factor $C_{\mat
 	\caption{Total jet energy correction factor $C_{\mathrm{offset}}C_{\mathrm{MC}}C_{\mathrm{rel}}C_{\mathrm{abs}}$ vs. $\eta$, including uncertainty band, for jets reconstructed with the anti-$k_{T}$ algorithm, $R = 0.5$.  Reprinted from Fig. 26 of ref. \cite{CMS_JES_paper}.}
 	\label{fig:total_JEC}
 \end{figure}
+
+In this analysis, candidate and QCD control events are binned by number of jets satisfying the criteria in Table~\ref{tab:jet_definition_for_Nj_reweighting}.
+
+%add a footnote describing the PF electron and PF muon definitions, with references
+\begin{table}[hcbp]
+\caption{Definition of HB/HE hadronic jets.  \textcolor{red}{\textbf{Add a footnote describing the PF electron and PF muon definitions, with references.}}}
+\centering
+\begin{tabular}{|c|c|}
+\hline
+Variable & Cut \\
+\hline
+\hline
+Algorithm & \verb+L1FastL2L3Residual+ corrected PF \\
+\hline
+$p_{T}$ & $> 30$ GeV \\
+\hline
+$|\eta|$ & $< 2.6$ \\
+\hline
+\begin{tabular}[c]{@{}c@{}}Neutral hadronic\\energy fraction\end{tabular} & $< 0.99$ \\
+\hline
+\begin{tabular}[c]{@{}c@{}}Neutral electromagnetic\\energy fraction\end{tabular} & $< 0.99$ \\
+\hline
+Number of constituents & $> 1$ \\
+\hline
+Charged hadronic energy & $> 0.0$ GeV if $|\eta|  < 2.4$ \\
+\hline
+Number of charged hadrons & $> 0$ if $|\eta|  < 2.4$ \\
+\hline
+\begin{tabular}[c]{@{}c@{}}Charged electromagnetic\\energy fraction\end{tabular} & $< 0.99$ if $|\eta| < 2.4$ \\
+\hline
+\begin{tabular}[c]{@{}c@{}}$\Delta R$ to nearest electron, muon,\\or one of the two\\primary EM objects\end{tabular} & $> 0.5$ \\
+\hline
+\end{tabular}
+\label{tab:jet_definition_for_Nj_reweighting}
+\end{table}
 
 \subsubsection{Missing Transverse Energy}
 \label{sec:MET}

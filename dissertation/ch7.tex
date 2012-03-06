@@ -4,8 +4,6 @@
 \chapter{Data Analysis}
 \label{chap:Data Analysis}
 
-%make sure all plots have bold font removed are are marked as either data or simulation
-
 The signature of GGM SUSY particle production in this search is an excess of two-photon events with high \MET.  \MET is reconstructed using the particle flow algorithm as described in Sec.~\ref{sec:MET}.  Candidate two-photon events, as well as control events, are selected according to the offline object criteria presented in Secs.~\ref{sec:Photons} and~\ref{sec:Electrons}, the event quality criteria in Sec.~\ref{sec:Event Quality}, and the trigger requirements in Sec.~\ref{sec:HLT}.  These are summarized in Table~\ref{tab:selection_summary}.
 
 \begin{table}[hcbp]
@@ -140,26 +138,29 @@ Due to the fact that the CMS ECAL energy resolution is much better than the HCAL
 \item[Normalization] Finally, the control \MET distribution is normalized in a region of low \MET, where contamination from the expected GGM SUSY signal is small.  This implies an extrapolation of the low-\MET QCD background prediction to the high-\MET signal region.
 \end{description}
 
-As explained in the beginning of this chapter, the $\mathit{ff}$ sample is used as the primary QCD control sample, while the $ee$ sample is used as a cross-check.  Both samples have two well-measured EM objects per event, no real \MET, and similar hadronic activity to the $\gamma\gamma$ sample.  Figure~\ref{fig:hadronic_activity} shows a comparison of the shapes of some distributions relevant to hadronic activity between the $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples.  \textcolor{red}{\textbf{Make an observation about the lesser hadronic activity in the $ee$ sample and how the reweighting procedure will account for that.}}
+As explained in the beginning of this chapter, the $\mathit{ff}$ sample is used as the primary QCD control sample, while the $ee$ sample is used as a cross-check.  Both samples have two well-measured EM objects per event, no real \MET, and similar hadronic activity to the $\gamma\gamma$ sample.  Figure~\ref{fig:hadronic_activity} shows a comparison of the shapes of some distributions relevant to hadronic activity between the $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples.  In general, the $ee$ sample has less hadronic activity than the $\gamma\gamma$ and $\mathit{ff}$ samples, as shown by the more steeply falling $ee$ distributions in Figs.~\ref{fig:hadronic_activity_HT},~\ref{fig:hadronic_activity_Nj},~\ref{fig:hadronic_activity_MHT}, and~\ref{fig:hadronic_activity_j1ET}.  In addition to the kinematic reweighting, there is also a reweighting by number of jets per event, which attempts to correct for this difference (see Sec.~\ref{sec:Reweighting}).
 
-%\begin{figure}
-%	\centering
-%	\subfloat[$H_{T}$, defined as the scalar sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_HT}\includegraphics[scale=1.35]{hadronic_activity_HT}}
-%	\hspace{1cm}
-%	\subfloat[Number of jets per event for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_Nj}\includegraphics[scale=1.35]{hadronic_activity_Nj}}
-%	\\
-%	\subfloat[$\not\!\! H_{T}$, defined as the magnitude of the negative vectorial sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_MHT}\includegraphics[scale=1.35]{hadronic_activity_MHT}}
-%	\hspace{1cm}
-%	\subfloat[Corrected $E_{T}$ for the jet with the largest corrected $E_{T}$ per event, for jets defined as in Table~\ref{tab:jet_definition} (excluding the $p_{T}$ requirement).]{\label{fig:hadronic_activity_j1ET}\includegraphics[scale=1.35]{hadronic_activity_j1ET}}
-%	\\
-%	\subfloat[$\rho$ (average pileup energy density in the calorimeters per unit $\eta\cdot\phi$, cf. Sec.~\ref{sec:Photons}).]{\label{fig:hadronic_activity_rho}\includegraphics[scale=1.35]{hadronic_activity_rho}}
-%	\caption{Comparison of the shapes of some distributions relevant to hadronic activity between the $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.}
-%	\label{fig:hadronic_activity}
-%\end{figure}
+%include similar figures for MC?
+\begin{figure}
+	\centering
+	\subfloat[$H_{T}$, defined as the scalar sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_HT}\includegraphics[scale=0.25]{hadronic_activity_HT}}
+	\hspace{0.75cm}
+	\subfloat[Number of jets per event for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_Nj}\includegraphics[scale=0.25]{hadronic_activity_Nj}}
+	\hspace{0.75cm}
+	\subfloat[$\not\!\! H_{T}$, defined as the magnitude of the negative vectorial sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_MHT}\includegraphics[scale=0.25]{hadronic_activity_MHT}}
+	\\
+	\subfloat[Corrected $E_{T}$ for the jet with the largest corrected $E_{T}$ per event, for jets defined as in Table~\ref{tab:jet_definition} (excluding the $p_{T}$ requirement).]{\label{fig:hadronic_activity_j1ET}\includegraphics[scale=0.25]{hadronic_activity_j1ET}}
+	\hspace{0.75cm}
+	\subfloat[$\rho$ (average pileup energy density in the calorimeters per unit $\eta\cdot\phi$, cf. Sec.~\ref{sec:Photons}).]{\label{fig:hadronic_activity_rho}\includegraphics[scale=0.25]{hadronic_activity_rho}}
+	\hspace{0.75cm}
+	\subfloat[Number of good reconstructed primary vertices per event according to the criteria of Sec.~\ref{sec:Event Quality}.]{\label{fig:hadronic_activity_nPV}\includegraphics[scale=0.25]{hadronic_activity_nPV}}
+	\caption{Comparison of the shapes of some distributions relevant to hadronic activity between the $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.  Errors are statistical only.}
+	\label{fig:hadronic_activity}
+\end{figure}
 
 %add a footnote describing the PF electron and PF muon definitions, with references
 \begin{table}[hcbp]
-\caption{Definition of hadronic jets.  \textcolor{red}{\textbf{Add a footnote describing the PF electron and PF muon definitions, with references.}}}
+\caption{Definition of HB/HE/HF hadronic jets.  \textcolor{red}{\textbf{Add a footnote describing the PF electron and PF muon definitions, with references.}}}
 \centering
 \begin{tabular}{|c|c|}
 \hline
@@ -202,57 +203,65 @@ To reweight the control sample events to match the kinematics of the candidate s
 	\label{fig:di-EM_pT_cartoon}
 \end{figure}
 
-Whereas the di-EM $p_{T}$ reweighting accounts for differences in production kinematics between the control and $\gamma\gamma$ samples, a simultaneous reweighting based on the number of jets in the event accounts for differences in hadronic activity between the samples, especially between $ee$ and $\gamma\gamma$ (cf. Fig.~\ref{fig:hadronic_activity}).  Jets are defined as in Table~\ref{tab:jet_definition}, but with $|\eta|$ restricted to 2.6 (i.e. HF jets excluded).  Figure~\ref{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting} shows the effect of reweighting by number of jets per event, which is to increase(decrease) the tail of the $ee$($\mathit{ff}$) \MET spectrum.
+Whereas the di-EM $p_{T}$ reweighting accounts for differences in production kinematics between the control and $\gamma\gamma$ samples, a simultaneous reweighting based on the number of jets in the event accounts for differences in hadronic activity between the samples, especially between $ee$ and $\gamma\gamma$ (cf. Fig.~\ref{fig:hadronic_activity}).  Jets are defined as in Table~\ref{tab:jet_definition_for_Nj_reweighting}.  Figure~\ref{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting} shows the effect of reweighting by number of jets per event, which is to increase(decrease) the tail of the $ee$($\mathit{ff}$) \MET spectrum.
 
 %include ee/gg and ff/gg agreement?
-%\begin{figure}
-%	\centering
-%	\subfloat[$ee$ \MET spectra.]{\label{fig:ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting}\includegraphics[scale=0.25]{ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting}}
-%	\hspace{1cm}
-%	\subfloat[$\mathit{ff}$ \MET spectra.]{\label{fig:ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}\includegraphics[scale=0.25]{ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}}
-%	\\
-%	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra for di-EM $p_{T}$ reweighting only (red) and di-EM $p_{T}$ + number of jets reweighting (blue).]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}\includegraphics[scale=0.25]{ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}}
-%	\caption{\MET spectra of the reweighted $ee$ and $\mathit{ff}$ control samples.  Squares indicate di-EM $p_{T}$ reweighting only; triangles indicate di-EM $p_{T}$ + number of jets reweighting.  PF $p_{T}$ (cf. p.~\pageref{fig:ET_bias_vs_EMF}) is used to calculate the di-EM $p_{T}$.  The full normalization procedure is employed, along with $ee$ sideband subtraction (discussed in Sec.~\ref{sec:ee Control Sample}).}
-%	\label{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting}
-%\end{figure}
+%include similar figures for MC?
+\begin{figure}
+	\centering
+	\subfloat[$ee$ \MET spectra.]{\label{fig:ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting}\includegraphics[scale=0.3]{ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$ \MET spectra.]{\label{fig:ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}\includegraphics[scale=0.3]{ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}}
+	\\
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}}
+	\hspace{1cm}
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra, zoomed x-axis.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom}}
+	\caption{\MET spectra of the reweighted $ee$ and $\mathit{ff}$ control samples.  Blue squares indicate di-EM $p_{T}$ reweighting only; red triangles indicate di-EM $p_{T}$ + number of jets reweighting.  PF $p_{T}$ (cf. p.~\pageref{fig:ET_bias_vs_EMF}) is used to calculate the di-EM $p_{T}$.  The full normalization procedure is employed, along with $ee$ sideband subtraction (discussed in at the end of this section).  Error bars include statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\label{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting}
+\end{figure}
 
 Although the electron and photon energies are well measured by the ECAL, the ECAL-only measurement of the fake photon energy (cf. Sec~\ref{sec:Photons}) is biased slightly low due to the fact that fakes (which are really jets) tend to deposit some energy in the HCAL.  This can be seen in Figs.~\ref{fig:ET_bias_vs_EMF} and~\ref{fig:4684pb-1_single_ETBias}, which show the relative difference between the ECAL-only $E_{T}$ measurement and the PF $E_{T}$ measurement vs. EMF for electrons, photons, and fakes.  PF $E_{T}$ is defined as the \verb+L1Fast+-corrected $E_{T}$ of the nearest PF jet with $p_{T} \geq 20$ GeV (i.e., the $E_{T}$ of the PF jet object reconstructed from the same ECAL shower as the fake photon).  On average, the fakes tend to deposit a few percent more energy in the HCAL than the electrons or photons, which is recovered by the PF algorithm.  For this reason, the PF $p_{T}$ is used in the calculation of di-EM $p_{T}$ rather than the ECAL-only $p_{T}$.  This leads to a modest improvement in the agreement between the $ee$ and $\mathit{ff}$ \MET spectra, as shown in Figure~\ref{fig:ee_vs_ff_di-EM_vs_dijet_pT_reweighting}.
 
+%include similar figures for MC?
 \begin{figure}
 	\centering
-	\subfloat[Leading electron in $ee$ events.]{\label{fig:4684pb-1_leadingE_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_leadingE_ETBias_log}}
+	\subfloat[Leading electron in $ee$ events.]{\label{fig:4684pb-1_eLeading_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_eLeading_ETBias_log}}
 	\hspace{1cm}
-	\subfloat[Trailing electron in $ee$ events.]{\label{fig:4684pb-1_trailingE_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_trailingE_ETBias_log}}
+	\subfloat[Trailing electron in $ee$ events.]{\label{fig:4684pb-1_eTrailing_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_eTrailing_ETBias_log}}
 	\\
-	\subfloat[Leading fake in $\mathit{ff}$ events.]{\label{fig:4684pb-1_leadingF_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_leadingF_ETBias_log}}
+	\subfloat[Leading fake in $\mathit{ff}$ events.]{\label{fig:4684pb-1_fLeading_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_fLeading_ETBias_log}}
 	\hspace{1cm}
-	\subfloat[Trailing fake in $\mathit{ff}$ events.]{\label{fig:4684pb-1_trailingF_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_trailingF_ETBias_log}}
+	\subfloat[Trailing fake in $\mathit{ff}$ events.]{\label{fig:4684pb-1_fTrailing_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_fTrailing_ETBias_log}}
 	\\
-	\subfloat[Leading photon in $\gamma\gamma$ events.]{\label{fig:4684pb-1_leadingG_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_leadingG_ETBias_log}}
+	\subfloat[Leading photon in $\gamma\gamma$ events.]{\label{fig:4684pb-1_gLeading_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_gLeading_ETBias_log}}
 	\hspace{1cm}
-	\subfloat[Trailing photon in $\gamma\gamma$ events.]{\label{fig:4684pb-1_trailingG_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_trailingG_ETBias_log}}
-	\caption{Relative difference between the ECAL-only $E_{T}$ measurement and the PF $E_{T}$ measurement vs. EMF.  PF $E_{T}$ is defined in the text.  \textcolor{red}{\textbf{Replace with current figure.}}}
+	\subfloat[Trailing photon in $\gamma\gamma$ events.]{\label{fig:4684pb-1_gTrailing_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_gTrailing_ETBias_log}}
+	\caption{Relative difference between the ECAL-only $E_{T}$ measurement and the PF $E_{T}$ measurement vs. EMF.  PF $E_{T}$ is defined in the text.}
 	\label{fig:ET_bias_vs_EMF}
 \end{figure}
 
+%include similar figures for MC?
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.5]{4684pb-1_single_ETBias}
-	\caption{Average relative difference between the ECAL-only $E_{T}$ measurement and the PF $E_{T}$ measurement vs. EMF for the two electrons in $ee$ events, the two fakes in $\mathit{ff}$ events, and the two photons in $\gamma\gamma$ events (i.e. profile histograms of Fig.~\ref{fig:ET_bias_vs_EMF}).  PF $E_{T}$ is defined in the text.  \textcolor{red}{\textbf{Replace with current figure.}}}
+	\caption{Average relative difference between the ECAL-only $E_{T}$ measurement and the PF $E_{T}$ measurement vs. EMF for the leading (filled marker) and trailing (open marker) electrons in $ee$ events (red triangles), fakes in $\mathit{ff}$ events (blue squares), and photons in $\gamma\gamma$ events (black circles).  These are nothing more than profile histograms of Fig.~\ref{fig:ET_bias_vs_EMF}.  PF $E_{T}$ is defined in the text.  Error bars are statistical only.}
 	\label{fig:4684pb-1_single_ETBias}
 \end{figure}
 
 %include ee/gg and ff/gg agreement?
-%\begin{figure}
-%	\centering
-%	\subfloat[$ee$ \MET spectra.]{\label{fig:ee_di-EM_vs_dijet_pT_reweighting}\includegraphics[scale=0.25]{ee_di-EM_vs_dijet_pT_reweighting}}
-%	\hspace{1cm}
-%	\subfloat[$\mathit{ff}$ \MET spectra.]{\label{fig:ff_di-EM_vs_dijet_pT_reweighting}\includegraphics[scale=0.25]{ff_di-EM_vs_dijet_pT_reweighting}}
-%	\\
-%	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra for ECAL-only $p_{T}$ estimate (red) and PF $p_{T}$ estimate (blue).]{\label{fig:ee_over_ff_di-EM_vs_dijet_pT_reweighting}\includegraphics[scale=0.25]{ee_over_ff_di-EM_vs_dijet_pT_reweighting}}
-%	\caption{\MET spectra of the reweighted $ee$ and $\mathit{ff}$ control samples.  Squares indicate reweighting using the ECAL-only $p_{T}$ estimate; triangles indicate reweighting using the PF $p_{T}$ estimate.  The full reweighting and normalization procedure is employed, along with $ee$ sideband subtraction (discussed in Sec.~\ref{sec:ee Control Sample}).}
-%	\label{fig:ee_vs_ff_di-EM_vs_dijet_pT_reweighting}
-%\end{figure}
+%include similar figures for MC?
+\begin{figure}
+	\centering
+	\subfloat[$ee$ \MET spectra.]{\label{fig:ee_di-EM_vs_dijet_pT_reweighting}\includegraphics[scale=0.3]{ee_di-EM_vs_dijet_pT_reweighting}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$ \MET spectra.]{\label{fig:ff_di-EM_vs_dijet_pT_reweighting}\includegraphics[scale=0.3]{ff_di-EM_vs_dijet_pT_reweighting}}
+	\\
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra.]{\label{fig:ee_over_ff_di-EM_vs_dijet_pT_reweighting}\includegraphics[scale=0.3]{ee_over_ff_di-EM_vs_dijet_pT_reweighting}}
+	\hspace{1cm}
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra, zoomed x-axis.]{\label{fig:ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom}\includegraphics[scale=0.3]{ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom}}
+	\caption{\MET spectra of the reweighted $ee$ and $\mathit{ff}$ control samples.  Blue squares indicate reweighting using the ECAL-only $p_{T}$ estimate; red triangles indicate reweighting using the PF $p_{T}$ estimate.  The full reweighting and normalization procedure is employed, along with $ee$ sideband subtraction (discussed at the end of this section).  Error bars include statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\label{fig:ee_vs_ff_di-EM_vs_dijet_pT_reweighting}
+\end{figure}
 
 The control sample event weights are defined as
 
@@ -263,23 +272,41 @@ w_{ij} &=& \frac{N_{\mathrm{control}}}{N_{\gamma\gamma}}\frac{N_{\gamma\gamma}^{
 where $i$ runs over the number of di-EM $p_{T}$ bins, $j$ runs over the number of jet bins, $N_{\mathrm{control}}$ is the total number of events in the control sample, $N_{\gamma\gamma}$ is the total number of events in the $\gamma\gamma$ sample, $N_{\gamma\gamma}^{ij}$ is the number of $\gamma\gamma$ events in the $i^{\mathrm{th}}$ di-EM $p_{T}$ bin and $j^{\mathrm{th}}$ jet bin, and $N_{\mathrm{control}}^{ij}$ is the number of control sample events in the $i^{\mathrm{th}}$ di-EM $p_{T}$ bin and $j^{\mathrm{th}}$ jet bin.  The effect of the reweighting is more significant for the $ee$ sample than for the $\mathit{ff}$ sample, as shown in Figure~\ref{fig:reweighting_vs_no_reweighting}.
 
 %include ee/gg and ff/gg agreement?
-%attach ratio plot to the bottom of the canvas
-%\begin{figure}
-%	\centering
-%	\subfloat[$ee$ \MET spectra.]{\label{fig:ee_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.25]{ee_dijet_pT_and_Nj_vs_no_reweighting}}
-%	\hspace{1cm}
-%	\subfloat[$\mathit{ff}$ \MET spectra.]{\label{fig:ff_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.25]{ff_dijet_pT_and_Nj_vs_no_reweighting}}
-%	\caption{\MET spectra of the $ee$ and $\mathit{ff}$ control samples.  Squares indicate full di-EM $p_{T}$ + number of jets reweighting; triangles indicate no reweighting.  PF $p_{T}$ (cf. p.~\pageref{fig:ET_bias_vs_EMF}) is used to calculate the di-EM $p_{T}$.  The full normalization procedure is employed, along with $ee$ sideband subtraction (discussed in Sec.~\ref{sec:ee Control Sample}).}
-%	\label{fig:reweighting_vs_no_reweighting}
-%\end{figure}
+%include similar figures for MC?
+\begin{figure}
+	\centering
+	\subfloat[$ee$ \MET spectra.]{\label{fig:ee_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ee_dijet_pT_and_Nj_vs_no_reweighting}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$ \MET spectra.]{\label{fig:ff_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ff_dijet_pT_and_Nj_vs_no_reweighting}}
+	\\
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting}}
+	\hspace{1cm}
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra, zoomed x-axis.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom}}
+	\caption{\MET spectra of the $ee$ and $\mathit{ff}$ control samples.  Red triangles indicate full di-EM $p_{T}$ + number of jets reweighting; blue squares indicate no reweighting.  PF $p_{T}$ (cf. p.~\pageref{fig:ET_bias_vs_EMF}) is used to calculate the di-EM $p_{T}$.  The full normalization procedure is employed, along with $ee$ sideband subtraction (discussed at the end of this section).  Error bars include statistical, reweighting (where appropriate), and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\label{fig:reweighting_vs_no_reweighting}
+\end{figure}
+
+The $ee$ sample contains a nonnegligible background of $t\bar{t}$ events in which both $W$ bosons decay to electrons.  In order to remove 
+
+The $\mathit{ff}$ di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition}, but with $|\eta| \leq 2.6$) are shown in Figure~\ref{fig:ff_dijet_pT}.  
+
+\begin{figure}
+	\centering
+	\subfloat[$ee$ \MET spectra.]{\label{fig:ee_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ee_dijet_pT_and_Nj_vs_no_reweighting}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$ \MET spectra.]{\label{fig:ff_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ff_dijet_pT_and_Nj_vs_no_reweighting}}
+	\\
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting}}
+	\hspace{1cm}
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra, zoomed x-axis.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom}}
+	\caption{$\mathit{ff}$ di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition}, but with $|\eta| \leq 2.6$).  }
+	\label{fig:ff_dijet_pT}
+\end{figure}
 
 \subsection{Normalization}
 \label{sec:Normalization}
 
 After reweighting, the \MET distributions of the QCD control samples are normalized to the \MET $< 20$ GeV region of the candidate $\gamma\gamma$ \MET spectrum, where signal contamination is low.  The normalization factor is ($N_{\gamma\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}} - N_{\mathrm{electroweak}}^{\not\!\! E_{T} < 20 \mathrm{GeV}})/N_{\mathrm{control}}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$, where $N_{\mathrm{electroweak}}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$ is the expected number of electroweak background events with \MET $< 20$ GeV (discussed in Section~\ref{sec:Modeling the Electroweak Background}).
-
-\subsection{$\mathit{ff}$ Control Sample}
-\label{ff Control Sample}
 
 %- for the ee case, explain the sideband subtraction procedure
 %	- show the sideband di-EM pT spectra
@@ -290,7 +317,6 @@ After reweighting, the \MET distributions of the QCD control samples are normali
 
 %QCD control samples:
 %ff
-%show upper cut optimization
 %show di-EM pT spectra and weights
 %ee
 %obvious that it's a well-measured EM object
@@ -313,6 +339,7 @@ After reweighting, the \MET distributions of the QCD control samples are normali
 %systematic studies
 %variations in shape of dijet pT spectra and jet bin migration due to statistics and JES
 %show that effect of rebinning the dijet pT weights is covered by the 1000-toys procedure
+%Ulla's vs. Yueh-Feng's jet cleaning
 %derive a systematic from subtracting the ee sidebands with different relative weights
 %effect of reweighting with and without Nj component
 %effect of di-EM vs. dijet pT reweighting
@@ -331,44 +358,44 @@ After reweighting, the \MET distributions of the QCD control samples are normali
 %	- result: agreement pretty much the same, fewer overall events
 
 
-\subsection{Jet Energy Scale Uncertainty}
-
-The dijet \pT reweighting method utilizes jets corrected for imperfect calorimeter response (see Sec.~\ref{sec:Jets and Missing Transverse Energy} for a description of the jet reconstruction and correction procedure).  Since the applied jet energy scale (JES) factor has an error associated to it due to the limitations of the JES derivation (\cite{CMS_JES_paper} and Sec.~\ref{sec:Jets and Missing Transverse Energy}), this uncertainty must be propagated to the uncertainty on the dijet \pT weights.
-
-The JES contribution to the dijet \pT weights is estimated by performing 1000 pseudo-experiments on each of the $\gamma\gamma$ and ff samples.  For the purpose of estimating the JES error, the results of the true experiment may be thought of as a set of measurements:
-
-\begin{itemize}
-  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
-\end{itemize}
+%\subsection{Jet Energy Scale Uncertainty}
 %
-From these measurements, the $\gamma\gamma$ and ff dijet \pT spectra and the resulting ff dijet weights can be calculated.  In each of the 1000 pseudo-experiments, a new set of JES factors is generated according to the measured JES uncertainties, and new dijet \pT spectra and weights are subsequently calculated.  The spread of the 1000 weights (binned in dijet \pT) is taken as the error due to JES uncertainty.  The total error on the weights is the quadrature sum of the JES error and the statistical error, and is propagated to the error on the final \MET measurement via a similar pseudo-experiment procedure described in Sec.~\ref{sec:Statistical Uncertainty in the ff or ee Weights}.\footnote{The \MET is uncorrected and therefore its central value per event is unaffected by a change in the JES.}
-
-%do this check
-If the JES uncertainty were to cause the jet energy to be reconstructed below the 20 GeV ntuple cut, there could be a small error or bias in the \MET introduced due to EM-matched jets falling below the matching threshold.  The percentage of jets lost due to jet \ET matching threshold has been checked in data, and found to be X\% (X\% of events).  Furthermore, the trailing EM \ET cut is 25 GeV/c, implying that the JES would have to be mis-measured by at least 20\% to fall below the jet matching threshold.  Since the typical JES uncertainty is no more than 5\%, a mis-measurement of this type is a 4$\sigma$ event and should occur in only 0.1\% of cases.  As expected, this effect is negligible, as shown in Figure X.
-
-%\begin{figure}
-%	\centering
-%	\subfloat[ff dijet \pT weights including effect of jets falling below the matching threshold.]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
-%	\hspace{1cm}
-%	\subfloat[ff dijet \pT weights neglecting effect of jets falling below the matching threshold.]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
-%	\hspace{1cm}
-%	\subfloat[Percentage difference between JES errors shown in (a) and (b).]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
-%	\caption{ff dijet \pT weights with JES error.}
-%\end{figure}
-
-\subsection{Statistical Uncertainty in the ff or ee Weights}
-\label{sec:Statistical Uncertainty in the ff or ee Weights}
+%The dijet \pT reweighting method utilizes jets corrected for imperfect calorimeter response (see Sec.~\ref{sec:Jets and Missing Transverse Energy} for a description of the jet reconstruction and correction procedure).  Since the applied jet energy scale (JES) factor has an error associated to it due to the limitations of the JES derivation (\cite{CMS_JES_paper} and Sec.~\ref{sec:Jets and Missing Transverse Energy}), this uncertainty must be propagated to the uncertainty on the dijet \pT weights.
+%
+%The JES contribution to the dijet \pT weights is estimated by performing 1000 pseudo-experiments on each of the $\gamma\gamma$ and ff samples.  For the purpose of estimating the JES error, the results of the true experiment may be thought of as a set of measurements:
+%
+%\begin{itemize}
+%  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
+%\end{itemize}
+%%
+%From these measurements, the $\gamma\gamma$ and ff dijet \pT spectra and the resulting ff dijet weights can be calculated.  In each of the 1000 pseudo-experiments, a new set of JES factors is generated according to the measured JES uncertainties, and new dijet \pT spectra and weights are subsequently calculated.  The spread of the 1000 weights (binned in dijet \pT) is taken as the error due to JES uncertainty.  The total error on the weights is the quadrature sum of the JES error and the statistical error, and is propagated to the error on the final \MET measurement via a similar pseudo-experiment procedure described in Sec.~\ref{sec:Statistical Uncertainty in the ff or ee Weights}.\footnote{The \MET is uncorrected and therefore its central value per event is unaffected by a change in the JES.}
+%
+%%do this check
+%If the JES uncertainty were to cause the jet energy to be reconstructed below the 20 GeV ntuple cut, there could be a small error or bias in the \MET introduced due to EM-matched jets falling below the matching threshold.  The percentage of jets lost due to jet \ET matching threshold has been checked in data, and found to be X\% (X\% of events).  Furthermore, the trailing EM \ET cut is 25 GeV/c, implying that the JES would have to be mis-measured by at least 20\% to fall below the jet matching threshold.  Since the typical JES uncertainty is no more than 5\%, a mis-measurement of this type is a 4$\sigma$ event and should occur in only 0.1\% of cases.  As expected, this effect is negligible, as shown in Figure X.
+%
+%%\begin{figure}
+%%	\centering
+%%	\subfloat[ff dijet \pT weights including effect of jets falling below the matching threshold.]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
+%%	\hspace{1cm}
+%%	\subfloat[ff dijet \pT weights neglecting effect of jets falling below the matching threshold.]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
+%%	\hspace{1cm}
+%%	\subfloat[Percentage difference between JES errors shown in (a) and (b).]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
+%%	\caption{ff dijet \pT weights with JES error.}
+%%\end{figure}
+%
+%\subsection{Statistical Uncertainty in the ff or ee Weights}
+%\label{sec:Statistical Uncertainty in the ff or ee Weights}
 
 \section{Results}
 \label{sec:Results}
