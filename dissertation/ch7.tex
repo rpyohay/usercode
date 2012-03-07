@@ -286,44 +286,74 @@ where $i$ runs over the number of di-EM $p_{T}$ bins, $j$ runs over the number o
 	\label{fig:reweighting_vs_no_reweighting}
 \end{figure}
 
-The $ee$ sample contains a nonnegligible background of $t\bar{t}$ events in which both $W$ bosons decay to electrons.  In order to remove 
+The $ee$ sample contains a non-negligible background of $t\bar{t}$ events in which both $W$ bosons decay to electrons.  These events have significant real \MET from the two neutrinos (unlike the $\gamma\gamma$ events), and therefore inflate the background estimate at high \MET.  In order to remove the $t\bar{t}$ contribution from the $ee$ sample, a sideband subtraction method is employed.
 
-The $\mathit{ff}$ di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition}, but with $|\eta| \leq 2.6$) are shown in Figure~\ref{fig:ff_dijet_pT}.  
+Only events in the $ee$ sample with 81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV, where $m_{\mathrm{ee}}$ is the di-electron invariant mass, are used in the QCD background estimate.  This choice maximizes the ratio of $Z$ signal to background.  The sidebands used to estimate the background contribution within the $Z$ window are defined such that 71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV and 101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV.
+
+The full reweighting procedure is applied to the $Z$ signal region and the two sideband regions independently.  Only $Z$ signal events are used in the calculation of the di-EM $p_{T}$ weights for the $Z$ signal region, and likewise only the events within a given sideband region are used in the calculation of the weights for that region.  Assuming a constant $t\bar{t}$ background shape, the resulting reweighted sideband \MET distributions are added together and subtracted from the reweighted $Z$ signal \MET distribution.  The sideband subtracted $Z$ signal \MET distribution is then normalized as discussed in Secs.~\ref{sec:Outline of the Procedure} and~\ref{sec:Normalization}.  The statistical and reweighting error from the sideband regions is propagated to the error on the final $ee$ QCD \MET estimate.
+
+The di-EM $p_{T}$ weights for the two $ee$ sideband regions are shown in figure~\ref{fig:ee_sideband_dijet_pT_weights}.  The overall scale of the weights, as well as the trend with di-EM $p_{T}$, is similar for the two regions (except at high di-EM $p_{T}$, where the statistics are poor anyway).  Figure~\ref{fig:all_ee_MET_spectra} shows the \MET spectra for the two sideband regions and the $Z$ signal region after subtraction.  The shapes of the spectra indicate that the high-\MET $t\bar{t}$ tail, present in the sideband distributions, was successfully subtracted from the $Z$ signal distribution.
 
 \begin{figure}
 	\centering
-	\subfloat[$ee$ \MET spectra.]{\label{fig:ee_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ee_dijet_pT_and_Nj_vs_no_reweighting}}
+	\subfloat[71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV, 0 jets.]{\label{fig:eeLowSideband_0_jet_dijet_pT_weights}\includegraphics[scale=0.2]{eeLowSideband_0_jet_dijet_pT_weights}}
 	\hspace{1cm}
-	\subfloat[$\mathit{ff}$ \MET spectra.]{\label{fig:ff_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ff_dijet_pT_and_Nj_vs_no_reweighting}}
+	\subfloat[71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV, 1 jet.]{\label{fig:eeLowSideband_1_jet_dijet_pT_weights}\includegraphics[scale=0.2]{eeLowSideband_1_jet_dijet_pT_weights}}
+	\hspace{1cm}
+	\subfloat[71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV, $\geq$ 2 jets.]{\label{fig:eeLowSideband_2_jet_dijet_pT_weights}\includegraphics[scale=0.2]{eeLowSideband_2_jet_dijet_pT_weights}}
 	\\
-	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting}}
+	\subfloat[101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV, 0 jets.]{\label{fig:eeHighSideband_0_jet_dijet_pT_weights}\includegraphics[scale=0.2]{eeHighSideband_0_jet_dijet_pT_weights}}
 	\hspace{1cm}
-	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra, zoomed x-axis.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom}}
-	\caption{$\mathit{ff}$ di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition}, but with $|\eta| \leq 2.6$).  }
-	\label{fig:ff_dijet_pT}
+	\subfloat[101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV, 1 jet.]{\label{fig:eeHighSideband_1_jet_dijet_pT_weights}\includegraphics[scale=0.2]{eeHighSideband_1_jet_dijet_pT_weights}}
+	\hspace{1cm}
+	\subfloat[101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV, $\geq$ 2 jets.]{\label{fig:eeHighSideband_2_jet_dijet_pT_weights}\includegraphics[scale=0.2]{eeHighSideband_2_jet_dijet_pT_weights}}	
+	\caption{$ee$ sideband di-EM $p_{T}$ weights for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.}
+	\label{fig:ee_sideband_dijet_pT_spectra}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3]{all_ee_MET_spectra}
+	\caption{\MET spectra of the $ee$ sample for 71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV (red triangles), 81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV (black circles), and 101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV (blue squares).  The two sideband distributions (red and blue) are normalized to the area of the $Z$ signal distribution (black).  Errors on the sideband distributions are statistical only, while the error on the $Z$ signal distribution includes statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\label{fig:all_ee_MET_spectra}
+\end{figure}
+
+The $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV), $\mathit{ff}$, and $\gamma\gamma$ di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}) are shown in Figure~\ref{fig:dijet_pT}.  Broad humps in the $\mathit{ff}$ and $\gamma\gamma$ spectra are due to kinematic $\Delta R$ and $p_{T}$ turn-ons that are suppressed in the $ee$ sample due to the invariant mass cut.  Figure~\ref{fig:dijet_pT_weights} shows the weights applied to the $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ \MET spectra as a function of di-EM $p_{T}$ and number of jets per event.
+
+%zoom out?
+\begin{figure}
+	\centering
+	\subfloat[0 jets.]{\label{fig:0_jet_dijet_pT}\includegraphics[scale=0.2]{0_jet_dijet_pT}}
+	\hspace{1cm}
+	\subfloat[1 jet.]{\label{fig:1_jet_dijet_pT}\includegraphics[scale=0.2]{1_jet_dijet_pT}}
+	\hspace{1cm}
+	\subfloat[$\geq$ 2 jets.]{\label{fig:2_jet_dijet_pT}\includegraphics[scale=0.2]{2_jet_dijet_pT}}
+	\caption{$ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) (red triangles), $\mathit{ff}$ (blue squares), and $\gamma\gamma$ (black circles) di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.  \textcolor{red}{\textbf{Zoom out the x-axis to show the full tail out to 500 GeV?}}}
+	\label{fig:dijet_pT}
+\end{figure}
+
+%zoom in?
+\begin{figure}
+	\centering
+	\subfloat[$ee$, 0 jets.]{\label{fig:ee_0_jet_dijet_pT_weights}\includegraphics[scale=0.2]{ee_0_jet_dijet_pT_weights}}
+	\hspace{1cm}
+	\subfloat[$ee$, 1 jet.]{\label{fig:ee_1_jet_dijet_pT_weights}\includegraphics[scale=0.2]{ee_1_jet_dijet_pT_weights}}
+	\hspace{1cm}
+	\subfloat[$ee$, $\geq$ 2 jets.]{\label{fig:ee_2_jet_dijet_pT_weights}\includegraphics[scale=0.2]{ee_2_jet_dijet_pT_weights}}
+	\\
+	\subfloat[$\mathit{ff}$, 0 jets.]{\label{fig:ff_0_jet_dijet_pT_weights}\includegraphics[scale=0.2]{ff_0_jet_dijet_pT_weights}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$, 1 jet.]{\label{fig:ff_1_jet_dijet_pT_weights}\includegraphics[scale=0.2]{ff_1_jet_dijet_pT_weights}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$, $\geq$ 2 jets.]{\label{fig:ff_2_jet_dijet_pT_weights}\includegraphics[scale=0.2]{ff_2_jet_dijet_pT_weights}}
+	\caption{$ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ di-EM $p_{T}$ weights for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.  \textcolor{red}{\textbf{Zoom in the x-axis to hide large weights with large statistical errors?}}}
+	\label{fig:dijet_pT_weights}
 \end{figure}
 
 \subsection{Normalization}
 \label{sec:Normalization}
 
-After reweighting, the \MET distributions of the QCD control samples are normalized to the \MET $< 20$ GeV region of the candidate $\gamma\gamma$ \MET spectrum, where signal contamination is low.  The normalization factor is ($N_{\gamma\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}} - N_{\mathrm{electroweak}}^{\not\!\! E_{T} < 20 \mathrm{GeV}})/N_{\mathrm{control}}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$, where $N_{\mathrm{electroweak}}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$ is the expected number of electroweak background events with \MET $< 20$ GeV (discussed in Section~\ref{sec:Modeling the Electroweak Background}).
-
-%- for the ee case, explain the sideband subtraction procedure
-%	- show the sideband di-EM pT spectra
-%	- show the sideband weights
-%- show the di-EM pT spectra
-%- show the weights
-%- show the final MET plot with systematics but say they'll be explained later
-
-%QCD control samples:
-%ff
-%show di-EM pT spectra and weights
-%ee
-%obvious that it's a well-measured EM object
-%- for the ee case, explain the sideband subtraction procedure
-%	- show the sideband di-EM pT spectra
-%	- show the sideband weights
-%show di-EM pT spectra and weights
+After reweighting, the \MET distributions of the QCD control samples are normalized to the \MET $< 20$ GeV region of the candidate $\gamma\gamma$ \MET spectrum, where signal contamination is low.  The normalization factor is ($N_{\gamma\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}} - N_{e\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}})/N_{\mathrm{control}}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$, where $N_{e\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$ is the expected number of electroweak background events with \MET $< 20$ GeV (discussed in Section~\ref{sec:Modeling the Electroweak Background}).
 
 \section{Modeling the Electroweak Background}
 \label{sec:Modeling the Electroweak Background}
@@ -401,6 +431,7 @@ After reweighting, the \MET distributions of the QCD control samples are normali
 \label{sec:Results}
 
 %results
+%final MET plot
 %final number in signal region with all stat. and syst. errors included
 %reminder table of all uncertainties that are described more thoroughly in previous sections
 %expectation from GGM models (1 that can be excluded, 1 that can't)
