@@ -18,6 +18,29 @@
 #include "../src/SusyCategory.h"
 #include "../../../GMSBTools/Filters/interface/Categorizer.h"
 #include "../../../PhysicsTools/Utilities/interface/LumiReweightingStandAlone.h"
+#include "../../../DataFormats/Math/interface/deltaR.h"
+	 	 
+class minDR {
+ public:
+  void setPhoton(const susy::Photon* photon) { photon_ = const_cast<susy::Photon*>(photon); }
+  void deletePhoton() { photon_ = NULL; }
+  susy::Photon* getPhoton() const { return photon_; }
+  bool operator()(const susy::PFParticle* PFCandidate1, const susy::PFParticle* PFCandidate2)
+  {
+    const float photonEta = photon_->momentum.Eta();
+    const float photonPhi = photon_->momentum.Phi();
+    return (deltaR(photonEta,
+		   photonPhi,
+		   PFCandidate1->momentum.Eta(),
+		   PFCandidate1->momentum.Phi()) <
+	    deltaR(photonEta,
+		   photonPhi,
+		   PFCandidate2->momentum.Eta(),
+		   PFCandidate2->momentum.Phi()));
+  }
+ private:
+  susy::Photon* photon_;
+};
 
 class GMSBAnalyzer {
 public :
@@ -199,9 +222,11 @@ public :
    string eventFileName(string, const string&) const;
    float HT() const;
    float MHT() const;
-   unsigned int numJets() const;
+   unsigned int numJets(const float) const;
    float leadingJetET() const;
    unsigned int isJet(const susy::PFJet&, const float, const float ETMin = 30.0) const;
+   susy::PFParticle* nearestPFCandidate(const susy::Photon*);
+   void fillDRHistogram(TH2F&) const;
    void runMETAnalysis(const string);
    void runMETAnalysisWithEEBackgroundFit(const std::string&);
    void testFitting(const string&, const string&) const;
@@ -303,7 +328,8 @@ public :
        }
        return value;
      }
-   bool passUserHLT() const; //if trigger fires in specified active run range supplied by user, return true
+   bool passUserHLT() const; /*if trigger fires in specified active run range supplied by user, 
+			       return true*/
 
  private:
    TString tag_;                           //photon collection tag
@@ -328,7 +354,10 @@ public :
    string L2JECFile_;                      //file name for L2 JEC
    string L3JECFile_;                      //file name for L3 JEC
    string JECErrFile_;                     //file name for JEC errors
-   map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> > HLT_; //map of HLT paths and corresponding run ranges to consider
+   map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> > HLT_; /*map of HLT paths 
+									       and corresponding 
+									       run ranges to 
+									       consider*/
 };
 
 #endif
