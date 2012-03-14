@@ -1,6 +1,5 @@
 #define GMSBAnalyzer_cxx
 #include "GMSBAnalyzer.h"
-#include "../../../DataFormats/Math/interface/deltaR.h"
 #include <iostream>
 #include <fstream>
 #include <numeric>
@@ -492,13 +491,11 @@ void GMSBAnalyzer::reweightDefault(const VFLOAT& controlMETVec, const VFLOAT& co
     }
 
     //weight by di-EM ET AND Nj
-//     if (iNjBin == 1) {
-      hist->Fill(*i, controlWeightsToys[iNjBin][iToy]->
+    hist->Fill(*i, controlWeightsToys[iNjBin][iToy]->
+	       GetBinContent(iDiEMET)*lumiWeight[iEvt]*PUWeight[iEvt]);
+    hist2D->Fill(controlMRVec[iEvt], controlR2Vec[iEvt], 
+		 controlWeightsToys[iNjBin][iToy]->
 		 GetBinContent(iDiEMET)*lumiWeight[iEvt]*PUWeight[iEvt]);
-      hist2D->Fill(controlMRVec[iEvt], controlR2Vec[iEvt], 
-		   controlWeightsToys[iNjBin][iToy]->
-		   GetBinContent(iDiEMET)*lumiWeight[iEvt]*PUWeight[iEvt]);
-//     }
   }
 }
 
@@ -1189,6 +1186,53 @@ unsigned int GMSBAnalyzer::isJet(const susy::PFJet& iJet, const float absEtaMax,
   return jet;
 }
 
+susy::PFParticle* GMSBAnalyzer::nearestPFCandidate(const susy::Photon* photon)
+{
+  minDR comp;
+  comp.setPhoton(photon);
+  vector<const susy::PFParticle*> PFCandidates;
+  map<TString, susy::PFParticleCollection>::const_iterator iPFCandidateMap = 
+    susyEvent->pfParticles.find("particleFlow");
+  if (iPFCandidateMap != susyEvent->pfParticles.end()) {
+    for (susy::PFParticleCollection::const_iterator iPFParticle = iPFCandidateMap->second.begin(); 
+	 iPFParticle != iPFCandidateMap->second.end(); ++iPFParticle) {
+      PFCandidates.push_back(&*iPFParticle);
+    }
+  }
+  else cerr << "Error: particleFlow PF candidate collection not found.\n";
+  const susy::PFParticle* minDRPFCandidate = 
+    *min_element(PFCandidates.begin(), PFCandidates.end(), comp);
+  comp.deletePhoton();
+  return const_cast<susy::PFParticle*>(minDRPFCandidate);
+}
+
+void GMSBAnalyzer::fillDRHistogram(TH2F& histogram) const
+{
+  map<TString, susy::PhotonCollection>::const_iterator iPhotonMap = 
+    susyEvent->photons.find((const char*)tag_);
+  if (iPhotonMap != susyEvent->photons.end()) {
+    for (susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin(); 
+	 iPhoton != iPhotonMap->second.end(); ++iPhoton) {
+      if (susyCategory->getIsDeciding(tag_, iPhoton - iPhotonMap->second.begin())) {
+	map<TString, susy::PFParticleCollection>::const_iterator iPFCandidateMap = 
+	  susyEvent->pfParticles.find("particleFlow");
+	if (iPFCandidateMap != susyEvent->pfParticles.end()) {
+	  for (susy::PFParticleCollection::const_iterator iPFParticle = 
+		 iPFCandidateMap->second.begin(); iPFParticle != iPFCandidateMap->second.end(); 
+	       ++iPFParticle) {
+	    histogram.Fill(deltaR(iPhoton->momentum.Eta(), iPhoton->momentum.Phi(), 
+				  iPFParticle->momentum.Eta(), iPFParticle->momentum.Phi()), 
+			   (iPFParticle->momentum.Et() - iPhoton->momentum.Et())/
+			   iPhoton->momentum.Et());
+	  }
+	}
+	else cerr << "Error: particleFlow PF candidate collection not found.\n";
+      }
+    }
+  }
+  else cerr << "Error: " << tag_ << " photon collection not found.\n";
+}
+
 void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 {
    if (fChain == 0) return;
@@ -1493,6 +1537,59 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    setHistogramOptions(egTrailingPhotonET, "Trailing photon E_{T} (GeV)", "", "", kSumW2);
    setHistogramOptions(eeTrailingPhotonET, "Trailing photon E_{T} (GeV)", "", "", kSumW2);
    setHistogramOptions(ffTrailingPhotonET, "Trailing photon E_{T} (GeV)", "", "", kSumW2);
+
+   //dR to nearest PF candidate
+   TH1F ggDRToNearestPFCandidate("ggDRToNearestPFCandidate", "", 16, 0.0, 0.8);
+   TH1F egDRToNearestPFCandidate("egDRToNearestPFCandidate", "", 16, 0.0, 0.8);
+   TH1F eeDRToNearestPFCandidate("eeDRToNearestPFCandidate", "", 16, 0.0, 0.8);
+   TH1F ffDRToNearestPFCandidate("ffDRToNearestPFCandidate", "", 16, 0.0, 0.8);
+   setHistogramOptions(ggDRToNearestPFCandidate, "#DeltaR", "", "", kSumW2);
+   setHistogramOptions(egDRToNearestPFCandidate, "#DeltaR", "", "", kSumW2);
+   setHistogramOptions(eeDRToNearestPFCandidate, "#DeltaR", "", "", kSumW2);
+   setHistogramOptions(ffDRToNearestPFCandidate, "#DeltaR", "", "", kSumW2);
+
+   /*relative energy difference between reco::Photon and PF candidate vs. dR between PF candidate 
+     and photon*/
+   TH2F 
+     ggRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand("ggRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand", 
+						  "", 100, 0.0, 1.0, 20, -1.0, 1.0);
+   TH2F 
+     egRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand("egRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand", 
+						  "", 100, 0.0, 1.0, 20, -1.0, 1.0);
+   TH2F 
+     eeRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand("eeRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand", 
+						  "", 100, 0.0, 1.0, 20, -1.0, 1.0);
+   TH2F 
+     ffRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand("ffRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand", 
+						  "", 100, 0.0, 1.0, 20, -1.0, 1.0);
+   setHistogramOptions(ggRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand, "#DeltaR", 
+		       "#frac{E_{T,PF} - E_{T,EM}}{E_{T,EM}}", "", kSumW2);
+   setHistogramOptions(egRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand, "#DeltaR", 
+		       "#frac{E_{T,PF} - E_{T,EM}}{E_{T,EM}}", "", kSumW2);
+   setHistogramOptions(eeRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand, "#DeltaR", 
+		       "#frac{E_{T,PF} - E_{T,EM}}{E_{T,EM}}", "", kSumW2);
+   setHistogramOptions(ffRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand, "#DeltaR", 
+		       "#frac{E_{T,PF} - E_{T,EM}}{E_{T,EM}}", "", kSumW2);
+
+   //recoil vs. di-EM pT
+   TH2F ggRecoilVsDiEMPT("ggRecoilVsDiEMPT", "", 50, 0.0, 500.0, 50, 0.0, 500.0);
+   TH2F egRecoilVsDiEMPT("egRecoilVsDiEMPT", "", 50, 0.0, 500.0, 50, 0.0, 500.0);
+   TH2F eeRecoilVsDiEMPT("eeRecoilVsDiEMPT", "", 50, 0.0, 500.0, 50, 0.0, 500.0);
+   TH2F ffRecoilVsDiEMPT("ffRecoilVsDiEMPT", "", 50, 0.0, 500.0, 50, 0.0, 500.0);
+   setHistogramOptions(ggRecoilVsDiEMPT, "Di-EM p_{T} (GeV)", "Recoil (GeV)", "", kSumW2);
+   setHistogramOptions(egRecoilVsDiEMPT, "Di-EM p_{T} (GeV)", "Recoil (GeV)", "", kSumW2);
+   setHistogramOptions(eeRecoilVsDiEMPT, "Di-EM p_{T} (GeV)", "Recoil (GeV)", "", kSumW2);
+   setHistogramOptions(ffRecoilVsDiEMPT, "Di-EM p_{T} (GeV)", "Recoil (GeV)", "", kSumW2);
+
+   //MET vs. di-EM pT
+   TH2F ggMETVsDiEMPT("ggMETVsDiEMPT", "", 50, 0.0, 500.0, 50, 0.0, 500.0);
+   TH2F egMETVsDiEMPT("egMETVsDiEMPT", "", 50, 0.0, 500.0, 50, 0.0, 500.0);
+   TH2F eeMETVsDiEMPT("eeMETVsDiEMPT", "", 50, 0.0, 500.0, 50, 0.0, 500.0);
+   TH2F ffMETVsDiEMPT("ffMETVsDiEMPT", "", 50, 0.0, 500.0, 50, 0.0, 500.0);
+   setHistogramOptions(ggMETVsDiEMPT, "Di-EM p_{T} (GeV)", "MET (GeV)", "", kSumW2);
+   setHistogramOptions(egMETVsDiEMPT, "Di-EM p_{T} (GeV)", "MET (GeV)", "", kSumW2);
+   setHistogramOptions(eeMETVsDiEMPT, "Di-EM p_{T} (GeV)", "MET (GeV)", "", kSumW2);
+   setHistogramOptions(ffMETVsDiEMPT, "Di-EM p_{T} (GeV)", "MET (GeV)", "", kSumW2);
 
    //pThat histograms
    TH1F ggPTHat("ggPTHat", "", 250, 0.0, 500.0);
@@ -2075,6 +2172,7 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
        vector<TLorentzVector> uncorrP4;
        vector<float> JES;
        vector<float> JESErr;
+       vector<float> dR;
        if (evtCategory != FAIL) {
 	 if (iPhotonMap != susyEvent->photons.end()) {
 	   for (susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin(); 
@@ -2092,6 +2190,13 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 		 HCALIso.push_back(iPhoton->hcalTowerSumEtConeDR03());
 		 trackIso.push_back(iPhoton->trkSumPtHollowConeDR03);
 		 photonP4.push_back(iPhoton->momentum);
+
+		 //get dR to nearest PF candidate
+		 const susy::PFParticle* minDRPFCandidate = nearestPFCandidate(&*iPhoton);
+		 dR.push_back(deltaR(iPhoton->momentum.Eta(), 
+				     iPhoton->momentum.Phi(), 
+				     minDRPFCandidate->momentum.Eta(), 
+				     minDRPFCandidate->momentum.Phi()));
 
 		 //get matching jet corrected p4
 		 for (susy::PFJetCollection::const_iterator iJet = iJets->second.begin(); 
@@ -2150,16 +2255,21 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
        //sort photon ET in ascending order
        sort(ET.begin(), ET.end());
 
-       //get di-EM and dijet pT and razor variables
+       //get di-EM pT, dijet pT, recoil, and razor variables
        double dijetPT = -1.0;
        double diEMET = -1.0;
        double MR = -1.0;
        double R2 = -1.0;
+       double recoil = -1.0;
        const unsigned int dijetSize = jP4.size();
        const unsigned int diEMSize = photonP4.size();
-       if (dijetSize == 2) dijetPT = (jP4[0] + jP4[1]).Pt();
+       if (dijetSize == 2) {
+	 dijetPT = (jP4[0] + jP4[1]).Pt();
+	 recoil = (MET2DVec - (jP4[0] + jP4[1]).Vect().XYvector()).Mod();
+       }
        if (diEMSize == 2) {
 	 diEMET = (photonP4[0] + photonP4[1]).Pt();
+	 recoil = (MET2DVec - (photonP4[0] + photonP4[1]).Vect().XYvector()).Mod();
 	 const double MR2 = 
 	   (photonP4[0].Energy() + photonP4[1].Energy())*
 	   (photonP4[0].Energy() + photonP4[1].Energy()) - 
@@ -2206,6 +2316,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	      ++i) { ggHCALIso.Fill(*i, lumiWeight*PUWeight); }
 	 for (vector<float>::const_iterator i = trackIso.begin(); i != trackIso.end(); 
 	      ++i) { ggTrackIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = dR.begin(); i != dR.end(); 
+	      ++i) { ggDRToNearestPFCandidate.Fill(*i, lumiWeight*PUWeight); }
+	 fillDRHistogram(ggRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand);
 	 ggLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
 	 ggTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
 	 ggNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
@@ -2229,6 +2342,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	   ggJ2JES.push_back(JES[1]);
 	   ggJ1JESErr.push_back(JESErr[0]);
 	   ggJ2JESErr.push_back(JESErr[1]);
+	   ggRecoilVsDiEMPT.Fill(dijetPT, recoil);
+	   ggMETVsDiEMPT.Fill(dijetPT, MET);
 	 }
 	 else {
 	   // 	   printDiObjectErrorMessage(dijetSize, "dijet", evtCategory, jentry);
@@ -2239,6 +2354,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	     ggMETVsDijetETVsInvMass[iNjBin]->Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     ggMETVsDijetETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     ggDiEMETUniform[iNjBin]->Fill(diEMET, lumiWeight*PUWeight);
+	     ggRecoilVsDiEMPT.Fill(diEMET, recoil);
+	     ggMETVsDiEMPT.Fill(diEMET, MET);
 	   }
 	   else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
 	 }
@@ -2273,6 +2390,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	      ++i) { egHCALIso.Fill(*i, lumiWeight*PUWeight); }
 	 for (vector<float>::const_iterator i = trackIso.begin(); i != trackIso.end(); 
 	      ++i) { egTrackIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = dR.begin(); i != dR.end(); 
+	      ++i) { egDRToNearestPFCandidate.Fill(*i, lumiWeight*PUWeight); }
+	 fillDRHistogram(egRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand);
 	 egLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
 	 egTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
 	 egNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
@@ -2289,6 +2409,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	 if (diEMSize == 2) {
 	   egMETVsDiEMETVsInvMass.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	   egR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
+	   egRecoilVsDiEMPT.Fill(diEMET, recoil);
+	   egMETVsDiEMPT.Fill(diEMET, MET);
 	 }
 	 else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
 
@@ -2310,6 +2432,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	      ++i) { eeHCALIso.Fill(*i, lumiWeight*PUWeight); }
 	 for (vector<float>::const_iterator i = trackIso.begin(); i != trackIso.end(); 
 	      ++i) { eeTrackIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = dR.begin(); i != dR.end(); 
+	      ++i) { eeDRToNearestPFCandidate.Fill(*i, lumiWeight*PUWeight); }
+	 fillDRHistogram(eeRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand);
 	 eeLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
 	 eeTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
 	 eeDijetSize.Fill(dijetSize);
@@ -2376,6 +2501,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 		 Fill(invMass, dijetPT, MET, lumiWeight*PUWeight);
 	       eeDiEMETVec.push_back(dijetPT);
 	       eeDijetETUniform[iNjBin]->Fill(dijetPT, lumiWeight*PUWeight);
+	       eeRecoilVsDiEMPT.Fill(dijetPT, recoil);
+	       eeMETVsDiEMPT.Fill(dijetPT, MET);
 	     }
 	     else {
 	       eeMETVsDiEMETVsInvMass[iNjBin]->
@@ -2383,6 +2510,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	       eeMETVsDiEMETVsInvMassTot.
 		 Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	       eeDiEMETVec.push_back(diEMET);
+	       eeRecoilVsDiEMPT.Fill(diEMET, recoil);
+	       eeMETVsDiEMPT.Fill(diEMET, MET);
 	     }
 	     eeR2VsMR.Fill(MR, R2, lumiWeight*PUWeight);
 	     eeMETVec.push_back(MET);
@@ -2445,6 +2574,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	      ++i) { ffHCALIso.Fill(*i, lumiWeight*PUWeight); }
 	 for (vector<float>::const_iterator i = trackIso.begin(); i != trackIso.end(); 
 	      ++i) { ffTrackIso.Fill(*i, lumiWeight*PUWeight); }
+	 for (vector<float>::const_iterator i = dR.begin(); i != dR.end(); 
+	      ++i) { ffDRToNearestPFCandidate.Fill(*i, lumiWeight*PUWeight); }
+	 fillDRHistogram(ffRelEDiffBetPhotonAndPFCandVsDRPhotonPFCand);
 	 ffLeadingPhotonET.Fill(*(ET.end() - 1), lumiWeight*PUWeight);
 	 ffTrailingPhotonET.Fill(*(ET.begin()), lumiWeight*PUWeight);
 	 ffNPV.Fill(nGoodRecoPV, lumiWeight*PUWeight);
@@ -2480,6 +2612,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	   ffJ2JES.push_back(JES[1]);
 	   ffJ1JESErr.push_back(JESErr[0]);
 	   ffJ2JESErr.push_back(JESErr[1]);
+	   ffRecoilVsDiEMPT.Fill(dijetPT, recoil);
+	   ffMETVsDiEMPT.Fill(dijetPT, MET);
 	 }
 	 else {
 // 	   printDiObjectErrorMessage(dijetSize, "dijet", evtCategory, jentry);
@@ -2490,6 +2624,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 	     ffMETVsDiEMETVsInvMass[iNjBin]->Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     ffMETVsDiEMETVsInvMassTot.Fill(invMass, diEMET, MET, lumiWeight*PUWeight);
 	     ffDiEMETVec.push_back(diEMET);
+	     ffRecoilVsDiEMPT.Fill(diEMET, recoil);
+	     ffMETVsDiEMPT.Fill(diEMET, MET);
 	   }
 	   else printDiObjectErrorMessage(diEMSize, "diEM", evtCategory, jentry);
 	 }
@@ -2786,19 +2922,24 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
      cout << "Mean of toys: " << ffMETToyDistsByBin[iMETBin - 1]->GetMean();
      cout << ", observed no. events: " << ffFinal.GetBinContent(iMETBin) << ", RMS of toys: ";
      cout << ffMETToyDistsByBin[iMETBin - 1]->GetRMS() << endl;
-     cout << "--------------------";
+     cout << "--------------------\n";
    }
+
+   /*print out the bin content of eeFinal at this point (after reweighting, before sideband 
+     subtraction and normalization)*/
+   cout << endl << "ee after reweighting:\n";
+   for (Int_t iBin = 1; iBin <= eeFinal.GetNbinsX(); ++iBin) {
+     cout << "MET bin " << iBin << ", " << eeFinal.GetBinContent(iBin) << " events\n";
+   }
+   cout << endl;
 
    //normalize ee and ff MET histograms
    eeFinal.Add(&eeLowSidebandFinal, -1.0);
    eeFinal.Add(&eeHighSidebandFinal, -1.0);
    float eeNormErrSquared = 0.0;
    float ffNormErrSquared = 0.0;
-   //norm calculated assuming no EW contribution
    const float eeNorm = 
      normAndErrorSquared(ggMETVsDiEMETVsInvMassTot, eeFinal, egMET, maxNormBin, eeNormErrSquared);
-//    const float eeNorm = 
-//      normAndErrorSquared(*ggMETVsDiEMETVsInvMass[1], eeFinal, egMET, maxNormBin, eeNormErrSquared);
    const float ffNorm = 
      normAndErrorSquared(ggMETVsDiEMETVsInvMassTot, ffFinal, egMET, maxNormBin, ffNormErrSquared);
    eeFinal.Scale(eeNorm);
@@ -2846,9 +2987,6 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
    makeFinalCanvas(dynamic_cast<TH1*>(ggMETVsDiEMETVsInvMassTot.
 				      ProjectionZ("ggMET", 0, -1, 0, -1, "e")), 1, 1, 0, 0, 1, 1, 
 		   "SAME");
-//    makeFinalCanvas(dynamic_cast<TH1*>(ggMETVsDiEMETVsInvMass[1]->
-// 				      ProjectionZ("ggMET", 0, -1, 0, -1, "e")), 1, 1, 0, 0, 1, 1, 
-// 		   "SAME");
 
    //make final razor canvases
    MRCanvas.cd();
