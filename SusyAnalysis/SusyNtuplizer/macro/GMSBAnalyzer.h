@@ -19,7 +19,7 @@
 #include "../../../GMSBTools/Filters/interface/Categorizer.h"
 #include "../../../PhysicsTools/Utilities/interface/LumiReweightingStandAlone.h"
 #include "../../../DataFormats/Math/interface/deltaR.h"
-
+	 	 
 class minDR {
  public:
   void setPhoton(const susy::Photon* photon) { photon_ = const_cast<susy::Photon*>(photon); }
@@ -29,13 +29,13 @@ class minDR {
   {
     const float photonEta = photon_->momentum.Eta();
     const float photonPhi = photon_->momentum.Phi();
-    return (deltaR(photonEta, 
-		   photonPhi, 
-		   PFCandidate1->momentum.Eta(), 
-		   PFCandidate1->momentum.Phi()) < 
-	    deltaR(photonEta, 
-		   photonPhi, 
-		   PFCandidate2->momentum.Eta(), 
+    return (deltaR(photonEta,
+		   photonPhi,
+		   PFCandidate1->momentum.Eta(),
+		   PFCandidate1->momentum.Phi()) <
+	    deltaR(photonEta,
+		   photonPhi,
+		   PFCandidate2->momentum.Eta(),
 		   PFCandidate2->momentum.Phi()));
   }
  private:
