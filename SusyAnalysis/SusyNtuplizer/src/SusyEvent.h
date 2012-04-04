@@ -334,7 +334,7 @@ namespace susy {
     bool ecalDrivenSeed() {                return (boolPack & (0x1 << 3)); }
     bool trackerDrivenSeed() {             return (boolPack & (0x1 << 4)); }
     bool passingCutBasedPreselection() {   return (boolPack & (0x1 << 5)); }
-    bool passingMvaPreselection() {        return (boolPack & (0x1 << 6)); }
+    bool passingMvaPreselection() const {  return (boolPack & (0x1 << 6)); }
     bool ambiguous() {                     return (boolPack & (0x1 << 7)); }
     bool isEcalEnergyCorrected() {         return (boolPack & (0x1 << 8)); }
     bool isEnergyScaleCorrected() {        return (boolPack & (0x1 << 9)); }
