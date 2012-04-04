@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 
 # change this to 0 if you run on MC files
-realData = 0
+realData = 1
 
 process = cms.Process("RA3")
 
@@ -39,7 +39,7 @@ process.metAnalysisSequence = cms.Sequence(process.producePFMETCorrections*
 process.load("SusyAnalysis.SusyNtuplizer.susyNtuplizer_cfi")
 process.susyNtuplizer.debugLevel = cms.int32(0)
 #process.susyNtuplizer.outputFileName = cms.string(
-#    "/data2/yohay/test_dataset_files/debug.root"
+#    "/data2/yohay/Summer11_TT_debug/Type-I_MET_debug_ntuple.root"
 #    )
 
 if realData:
@@ -59,9 +59,9 @@ if realData:
     )
 else:
     process.source.fileNames = cms.untracked.vstring(
-        'file:/data2/yohay/test_dataset_files/Summer11_DiPhotonJets.root'
+        'file:/data2/yohay/Summer11_TT_debug/26F2AB20-348C-E011-BCF1-0017A4770400.root'
         )
-    process.GlobalTag.globaltag = 'START42_V11::All'
+    process.GlobalTag.globaltag = 'START42_V13::All'
     process.pfJetMETcorr.jetCorrLabel = cms.string("ak5PFL1FastL2L3")
     process.caloJetMETcorr.jetCorrLabel = cms.string("ak5CaloL2L3")
     # JEC for MC
