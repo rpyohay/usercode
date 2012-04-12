@@ -76,7 +76,8 @@ ES calibrated hits are formed from the three samples read out per sensor.  Just 
 
 After calibrated ECAL hits are formed, they must be clustered into shapes that represent the energy deposit from a single particle.  \textit{Basic clusters} are formed around seed hits, defined as a hit that
 
-%define spike rejection variables here, where you talk about a hit being "spike-like"
+%define spike rejection variables here or earlier, where you talk about a hit being "spike-like"
+\textcolor{red}{\textbf{Add description of timing cut and topological spike rejection variables, or earlier.}}
 
 \begin{itemize}
 \item has calibrated $E_{T} >$ 1(0.18) GeV in EB(EE),
@@ -324,8 +325,7 @@ To be consistent with the jet reconstruction, \MET in this analysis is also reco
 \not\!\! E_{T\mathrm{raw}} &=& |-\sum_{i = 1}^{n_{\mathrm{PF}}}\overrightarrow{p}_{Ti}|
 \end{eqnarray}
 %
-where $n_{\mathrm{PF}}$ is the number of PF candidates in the event.  $\not\!\! E_{T\mathrm{raw}}$ must be corrected for the same effects that necessitate jet corrections, since $\not\!\! E_{T\mathrm{raw}}$ is usually the result of jet mis-measurement (except, of course, in electroweak physics processes that include an energetic neutrino, or SUSY production).  Therefore, CMS \textit{Type-I} \MET corrections simply involve replacing the PF jets with their corrected energies (cf. Sec~\ref{sec:Jets}) and recalculating \MET.  Only jets with \textit{electromagnetic fraction} (EMF) below 90\% and $p_{T} > 20$ GeV are replaced.  This ensures that very electromagnetic jets (as well as isolated leptons, which also receive no correction), which consist chiefly of neutral pions and are measured accurately by the ECAL, do not receive a correction derived for jets with a large fraction of their energy in charged hadrons.  In addition, the $p_{T}$ cut guarantees that jet corrections are only applied where they are known to within a few percent.  Since this search looks for excesses in the \MET distribution typically above 100 GeV of \MET, it is not very sensitive to the mis-measurement of low-$p_{T}$ jets.  \textcolor{red}{\textbf{Check this statement and add illustrative plots.}}
-%check for catastrophic mis-measurement of low-pT jets in samples by looking at difference between raw and corrected jet pT vs. pT and MET
+where $n_{\mathrm{PF}}$ is the number of PF candidates in the event.  $\not\!\! E_{T\mathrm{raw}}$ may be corrected for the same effects that necessitate jet corrections, since $\not\!\! E_{T\mathrm{raw}}$ is usually the result of jet mis-measurement (except, of course, in electroweak physics processes that include an energetic neutrino, or SUSY production).  CMS \textit{Type-I} \MET corrections simply involve replacing the PF jets with their corrected energies (cf. Sec~\ref{sec:Jets}) and recalculating \MET.  Only jets with \textit{electromagnetic fraction} (EMF) below 90\% and $p_{T} > 20$ GeV are replaced.  This ensures that very electromagnetic jets (as well as isolated leptons, which also receive no correction), which consist chiefly of neutral pions and are measured accurately by the ECAL, do not receive a correction derived for jets with a large fraction of their energy in charged hadrons.  In addition, the $p_{T}$ cut guarantees that jet corrections are only applied where they are known to within a few percent.  For this search, the level of agreement between the SM background estimate and the two-photon search sample in a low-\MET control region is the same regardless of whether the \MET is corrected or not, so for simplicity the Type-I \MET corrections are not used (see Sec.~\ref{sec:Systematic Errors}).
 
 Figure~\ref{fig:MET_resolution} shows the $\sigma$ of a Gaussian fit to the x- and y-components of calibrated \MET vs. the calibrated PF $E_{T}$ sum in a sample of events containing at least two jets with $p_{T} > 25$ GeV.  Again, PF \MET outperforms \MET constructed of calorimeter towers or track-corrected calorimeter deposits.
 
@@ -382,6 +382,9 @@ Each piece of the HLT path name is defined as follows.
 In addition, the versions of HLT\_Photon26\_IsoVL\_Photon18 and \\Photon36\_CaloIdL\_Photon22\_CaloIdL that were active during runs 160404-163268 included a cut $E_{\mathrm{max}}/E_{5\times 5} < 0.98$ for spike rejection.  $E_{\mathrm{max}}$ is the energy in the highest energy crystal of the EM cluster and $E_{5\times 5}$ is the energy in the 5$\times$5 crystal matrix around the seed crystal.  For runs after 163268, Swiss cross spike rejection of individual crystals from HLT quantities was performed (cf. Sec.~\ref{sec:Clustering}).  All information about the evolution of the CMS HLT settings can be found in the HLT configuration browser at \url{http://j2eeps.cern.ch/cms-project-confdb-hltdev/browser/}.
 
 As an example of the naming convention just described, the HLT path Photon36\_CaloIdL\_IsoVL\_Photon22\_R9Id is fired if one photon is found with $E_{T} > 36$ GeV passing the CaloIdL and IsoVL requirements, and another is found with $E_{T} > 22$ GeV passing the R9Id requirement.
+
+%add a discussion of trigger efficiency here, with plots
+\textcolor{red}{\textbf{Add a discussion of trigger efficiency here, with plots.}}
 
 \section{Event Quality}
 \label{sec:Event Quality}

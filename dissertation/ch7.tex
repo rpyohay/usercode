@@ -199,13 +199,24 @@ Number of charged hadrons & $> 0$ if $|\eta|  < 2.4$ \\
 \subsection{Reweighting}
 \label{sec:Reweighting}
 
-To reweight the control sample events to match the kinematics of the candidate sample events, a weight based on the $p_{T}$ of the di-EM-object system and the number of jets in the event is used.  As explained in Sec.~\ref{sec:Outline of the Procedure}, \MET in the $\gamma\gamma$, $\mathit{ff}$, and $ee$ samples is due to the poorly measured hadronic recoil off the well-measured di-EM system.  Therefore, the $p_{T}$ of the di-EM system is a good handle on the true magnitude of the hadronic recoil, which affects the measured \MET.  The di-EM system is depicted in Figure~\ref{fig:di-EM_pT_cartoon}.
+To reweight the control sample events to match the kinematics of the candidate sample events, a weight based on the $p_{T}$ of the di-EM-object system and the number of jets in the event is used.  As explained in Sec.~\ref{sec:Outline of the Procedure}, \MET in the $\gamma\gamma$, $\mathit{ff}$, and $ee$ samples is due to the poorly measured hadronic recoil off the well-measured di-EM system.  Therefore, the $p_{T}$ of the di-EM system is a good handle on the true magnitude of the hadronic recoil, which affects the measured \MET.  The di-EM system is depicted in Figure~\ref{fig:di-EM_pT_cartoon}.  As shown in Figure~\ref{fig:MET_vs_di-EM_pT}, \MET is largely uncorrelated with di-EM $p_{T}$, so there is little danger of reweighting away a true signal excess.
 
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.5]{di-EM_pT_cartoon}
 	\caption{Cartoon showing the di-EM system in blue and the hadronic recoil in black.  The di-EM $p_{T}$ (dashed blue line) is used to reweight the control sample kinematic properties to match those of the candidate $\gamma\gamma$ sample.}.
 	\label{fig:di-EM_pT_cartoon}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\subfloat[$\gamma\gamma$.]{\label{fig:gg_MET_vs_di-EM_pT}\includegraphics[scale=0.2]{gg_MET_vs_di-EM_pT}}
+	\hspace{1cm}
+	\subfloat[$ee$.]{\label{fig:ee_MET_vs_di-EM_pT}\includegraphics[scale=0.2]{ee_MET_vs_di-EM_pT}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$.]{\label{fig:ff_MET_vs_di-EM_pT}\includegraphics[scale=0.2]{ff_MET_vs_di-EM_pT}}
+	\caption{\MET vs. di-EM $p_{T}$.}
+	\label{fig:MET_vs_di-EM_pT}
 \end{figure}
 
 Whereas the di-EM $p_{T}$ reweighting accounts for differences in production kinematics between the control and $\gamma\gamma$ samples, a simultaneous reweighting based on the number of jets in the event accounts for differences in hadronic activity between the samples, especially between $ee$ and $\gamma\gamma$ (cf. Fig.~\ref{fig:hadronic_activity}).  Jets are defined as in Table~\ref{tab:jet_definition_for_Nj_reweighting}.  Figure~\ref{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting} shows the effect of reweighting by number of jets per event, which is to increase(decrease) the tail of the $ee$($\mathit{ff}$) \MET spectrum.
@@ -319,7 +330,7 @@ The di-EM $p_{T}$ weights for the two $ee$ sideband regions are shown in figure~
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.3]{all_ee_MET_spectra}
-	\caption{\MET spectra of the $ee$ sample for 71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV (red triangles), 81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV (black circles), and 101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV (blue squares).  The two sideband distributions (red and blue) are normalized to the area of the $Z$ signal distribution (black).  Errors on the sideband distributions are statistical only, while the error on the $Z$ signal distribution includes statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\caption{\MET spectra of the $ee$ sample for 71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV (red triangles), 81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV (black circles), and 101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV (blue squares).  The two sideband distributions (red and blue) and the  $Z$ signal distribution (black) are normalized to the total number of $\gamma\gamma$ events.  Errors on the sideband distributions are statistical only, while the error on the $Z$ signal distribution includes statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
 	\label{fig:all_ee_MET_spectra}
 \end{figure}
 
@@ -413,7 +424,7 @@ $e\gamma$ background & N/A & N/A & N/A & N/A & $\alpha$ & [50.0, 100.0] & 0.065 
 \label{tab:feg_fit_parameters}
 \end{table}
 
-Fits to the $ee$ and $e\gamma$ invariant mass spectra are shown in Figure~\ref{fig:feg_fits}.  \textcolor{red}{\textbf{Make these plots.}}  Figure~\ref{fig:feg_vs_pT_eta} indicates that the dependence of $f_{e\rightarrow\gamma}$ on the electron $p_{T}$ and $\eta$ is small.  Applying a $p_{T}$- and $\eta$-dependent misidentification rate (with $p_{T}$ and $\eta$ binned as in Fig.~\ref{fig:feg_vs_pT_eta}) makes only a \textcolor{red}{\textbf{XXX\%}} difference in the final electroweak background estimate with respect to a constant rate derived from all $ee$ and $e\gamma$ events, which is well within the statistical and systematic errors.  \textcolor{red}{\textbf{Prove this statement.}}  Therefore, the constant rate is used in the final electroweak background estimate.  \textcolor{red}{\textbf{Check this statement.}}
+Fits to the $ee$ and $e\gamma$ invariant mass spectra are shown in Figure~\ref{fig:feg_fits}.  \textcolor{red}{\textbf{Make these plots.}}  Figure~\ref{fig:feg_vs_pT_eta} indicates that the dependence of $f_{e\rightarrow\gamma}$ on the electron $p_{T}$ and $\eta$ is small.  Applying a $p_{T}$- and $\eta$-dependent misidentification rate (with $p_{T}$ and $\eta$ binned as in Fig.~\ref{fig:feg_vs_pT_eta}) makes only a \textcolor{red}{\textbf{XXX\%}} difference in the final electroweak background estimate with respect to a constant rate derived from all $ee$ and $e\gamma$ events.  Therefore, the constant rate is used in the final electroweak background estimate, with the largest difference between the constant rate and the $p_{T}$-dependent rate taken as a systematic error.
 
 %\begin{figure}
 %	\centering
@@ -433,9 +444,9 @@ Fits to the $ee$ and $e\gamma$ invariant mass spectra are shown in Figure~\ref{f
 %	\label{fig:feg_vs_pT_eta}
 %\end{figure}
 
-The signal and background shape assumptions are the main sources of systematic error on $f_{e\rightarrow\gamma}$.  To assess the magnitude of this error, $f_{e\rightarrow\gamma}$ is recalculated using both linear and quadratic background shapes, and with a Crystal Ball + generated $Z$ signal shape (as used in Sec.~\ref{sec:Tag_and_Probe_Method}).  The largest difference from the nominal shape is taken as the error.  \textcolor{red}{\textbf{Check that this is how it was done, and do it yourself.  Also check the misidentification rate in MC with varied tracker radiation lengths to see if there is a dependence on the tracker density.}}
+The signal and background shape assumptions are the main sources of systematic error on $f_{e\rightarrow\gamma}$.  \textcolor{red}{\textbf{Check whether the $p_{T}$ dependence or the shapes yield the larger error.}}  To assess the magnitude of this error, $f_{e\rightarrow\gamma}$ is recalculated using both linear and quadratic background shapes, and with a Crystal Ball + generated $Z$ signal shape (as used in Sec.~\ref{sec:Tag_and_Probe_Method}).  The largest difference from the nominal shape is taken as the error.  \textcolor{red}{\textbf{Do it yourself.  Also check the misidentification rate in MC with varied tracker radiation lengths to see if there is a dependence on the tracker density.}}
 
-Using the integrals of the $Z$ fits shown in Fig.~\ref{feg_fits}, Eq.~\ref{eq:feg}, and the shape systematic discussed above, $f_{e\rightarrow\gamma}$ is calculated to be 0.015 $\pm$ 0.002(stat.) $\pm$ 0.005(syst.).  \textcolor{red}{\textbf{Replace with your calculated number.}}  The scaled $e\gamma$ MET distribution is shown in Figure~\ref{fig:eg_MET}.
+Using the integrals of the $Z$ fits shown in Fig.~\ref{feg_fits}, Eq.~\ref{eq:feg}, and the shape  and $p_{T}$ systematics discussed above, $f_{e\rightarrow\gamma}$ is calculated to be 0.015 $\pm$ 0.002(stat.) $\pm$ 0.005(syst.).  \textcolor{red}{\textbf{Replace with your calculated number.}}  The scaled $e\gamma$ MET distribution is shown in Figure~\ref{fig:eg_MET}.
 
 \begin{figure}
 	\centering
@@ -453,80 +464,307 @@ In the 36 $\mbox{pb}^{-1}$ version of this analysis \cite{CMS_GMSB_35pb-1}, it w
 	\label{fig:35pb-1_eg_closure_test}
 \end{figure}
 
-\section{Systematic Errors}
-\label{sec:Systematic Errors}
+\section{Errors on the Background Prediction}
+\label{sec:Errors on the Background Prediction}
 
-%statistical errors
-%	- normalization
-%	- reweighting (incl. sidebands for ee)
+The statistical error on the final background estimate in a particular \MET bin comes from three sources: the number of control sample events collected in that bin, the statistical error on the weights applied to events in that bin, and the statistics of the normalization region.  In the case of the $ee$ control sample, there are contributions from the statistics of the $m_{\mathrm{ee}}$ sidebands as well.
 
-%systematic errors
-%	- EW bkg. estimate from feg
-%	- JES (folded into reweighting, see below for details)
-%	- bin definitions (possibly covered by 1000 toys procedure)
-%	- ee background shape assumption
-%		- get true shape from MC
-%		- get corroborating estimate from OF subtraction
-%	- slightly different hadronic activity between ff, ee, and gg
+In order to estimate the statistical error due to the reweighting procedure, 1000 toy sets of weights are generated.  Each set includes a weight for each (di-EM $p_{T}$, $N_{\mathrm{j}}$) bin, with the values picked from a Gaussian distribution with mean and standard deviation equal to the observed weight for that bin and its statistical error.  All bins are uncorrelated.  For each of the 1000 experiments, the control sample data are reweighted according to the generated weights, and the background estimates are calculated for each \MET bin.  Since the distribution of the toy background estimates follows a Gaussian distribution in each \MET bin, the RMS spread of the estimates is taken as the statistical error due to reweighting.  This procedure is carried out for the $\mathit{ff}$, $ee$, low sideband $ee$, and high sideband $ee$ samples.
 
-%systematic studies
-%variations in shape of dijet pT spectra and jet bin migration due to statistics and JES
-%show that effect of rebinning the dijet pT weights is covered by the 1000-toys procedure
-%derive a systematic from subtracting the ee sidebands with different relative weights
-%	- also how do we know we're not undersubtracting at high MET -- show table of subtracted stuff per MET bin
-%corrected vs. uncorrected MET
-%systematic due to different hadronic activity (explain how it is in data and MC)
-%HT, MHT, Nj ee vs. ff before and after reweighting
+The total statistical error on the background estimate per \MET bin is given by
 
-%ee as cross-check
-%slightly better MET resolution than gg or ff
-%MC closure
-%...
+%fill in at work
+\begin{eqnarray}
+\end{eqnarray}
+%fill in at work and include the eg statistical error
+where \textcolor{red}{\textbf{Fill in at work.}}  For \MET $>$ 100 GeV, the errors due to the number of events collected, the normalization, and the reweighting amount to \textcolor{red}{\textbf{XXX}}\%, \textcolor{red}{\textbf{XXX}}\%, and \textcolor{red}{\textbf{XXX}}\% of the total background estimate.
 
-\subsection{Jet Energy Scale Uncertainty}
+The dominant source of systematic error on the background estimate is the slight difference in hadronic activity between the $ee$, $\mathit{ff}$, and $\gamma\gamma$ samples.  This results in a small bias ($\sim$1 GeV) of the $ee$ \MET distribution towards lower values with respect to the $\mathit{ff}$ and $\gamma\gamma$ samples, as shown in Figure~\ref{fig:avg_MET_vs_di-EM_pT}.  Therefore, the $\mathit{ff}$ sample is used as the primary QCD background estimator, and the difference between the $ee$ and $\mathit{ff}$ predictions is assigned as an error on the knowledge of the hadronic activity.  For \MET $>$ 100 GeV, this error amounts to 43\% of the total QCD + electroweak background estimate.
 
-The dijet \pT reweighting method utilizes jets corrected for imperfect calorimeter response (see Sec.~\ref{sec:Jets and Missing Transverse Energy} for a description of the jet reconstruction and correction procedure).  Since the applied jet energy scale (JES) factor has an error associated to it due to the limitations of the JES derivation (\cite{CMS_JES_paper} and Sec.~\ref{sec:Jets and Missing Transverse Energy}), this uncertainty must be propagated to the uncertainty on the dijet \pT weights.
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.4]{avg_MET_vs_di-EM_pT}
+	\caption{Average \MET vs. di-EM $p_{T}$ for the $\mathit{ff}$ (blue), $ee$ (red), and $\gamma\gamma$ (black) samples.}
+	\label{fig:avg_MET_vs_di-EM_pT}
+\end{figure}
 
-The JES contribution to the dijet \pT weights is estimated by performing 1000 pseudo-experiments on each of the $\gamma\gamma$ and ff samples.  For the purpose of estimating the JES error, the results of the true experiment may be thought of as a set of measurements:
+%calculate the error on the EW background and what fraction of the total background it is
+The second largest source of systematic error comes from the $p_{T}$ dependence of the $e\rightarrow\gamma$ misidentification rate (see~\ref{sec:Modeling the Electroweak Background}).  For \MET $>$ 100 GeV, the expected electroweak background is 3.6 $\pm$ \textcolor{red}{\textbf{XXX}} events, so this error amounts to \textcolor{red}{\textbf{XXX}}\% of the total QCD + electroweak background estimate.
 
-\begin{itemize}
-  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
-  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
-  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
-\end{itemize}
+%%check effect of JES uncertainty on di-EM pT weights?
+%%move this to the signal acceptance section
+%%still need to figure out if JES affects the background prediction
+%The effect of jet energy scale uncertainty on the final background estimate, through binning of events by number of jets, is taken as 2\%.  This figure comes from an earlier version of this analysis based on 35 $\mbox{pb}^{-1}$ of LHC data \cite{CMS_GMSB_35pb-1}.  \textcolor{red}{\textbf{This figure comes from a totally different study.  We have not checked how JES uncertainties affect the di-EM $p_{T}$ weights.  Should we?}}
+
+Finally, the assumption of a constant $t\bar{t}$ and $W$ + jets background shape under the $Z$ peak in the $ee$ sample induces a systematic error on the $ee$ sideband-subtracted background prediction.  To assess the magnitude of this error, the sideband subtraction (see Sec.~\ref{sec:Reweighting}) is performed once using only the prediction from the high sideband, and once using only the prediction from the low sideband.  In each of these cases, the prediction is weighted by a factor of two, to account for the fact that the sideband regions are only half as wide (10 GeV) as the signal region (20 GeV).  The maximum variation from the nominal $ee$ estimate is taken as the error, which amounts to \textcolor{red}{\textbf{XXX}}\% for \MET $>$ 100 GeV.  \textcolor{red}{\textbf{Is this the right way to do this?}}
+
+The uncertainty in how to define the (di-EM $p_{T}$, $N_{\mathrm{j}}$) bins, especially at high di-EM $p_{T}$ where the statistics are low, is covered by the 1000-toys procedure as long as the bins are not too coarse.  This is shown in Figure~\ref{fig:di-EM_pT_bin_size_comparison}.  If the bins are too coarse, the details of the shape of the di-EM $p_{T}$ spectra are lost, and the reweighting has a smaller effect.
+
+\begin{figure}
+	\centering
+	\subfloat[$ee$.]{\label{fig:ee_di-EM_pT_bin_size_comparison}\includegraphics[scale=0.3]{ee_di-EM_pT_bin_size_comparison}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$.]{\label{fig:ff_di-EM_pT_bin_size_comparison}\includegraphics[scale=0.3]{ff_di-EM_pT_bin_size_comparison}}
+	\caption{Comparison of \MET distributions for five different di-EM $p_{T}$ bin definitions: uniform bins of width 10 GeV (red diamonds); uniform bins of width 50 GeV (blue downward-pointing triangles); bins with lower edges \{0.0, 5.0, 10.0, 15.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 100.0, 750.0\} GeV for 0-jet events and \{0.0, 5.0, 10.0, 15.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 100.0, 120.0, 150.0, 200.0, 700.0\} GeV for $\geq$1-jet events (magenta upward-pointing triangles), i.e. a single wide bin at high di-EM $p_{T}$; bins with lower edges \{0.0, 5.0, 10.0, 15.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 100.0, 150.0\} GeV for 0-jet events and \{0.0, 5.0, 10.0, 15.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0, 80.0, 100.0, 120.0, 150.0, 200.0\} GeV for $\geq$1-jet events (green squares), i.e. the bins used in ref. \cite{CMS_GMSB_5fb-1}; and the nominal bin definitions shown in Fig.~\ref{fig:dijet_pT_weights} (black circles).}
+	\label{fig:di-EM_pT_bin_size_comparison}
+\end{figure}
+
+The use of uncorrected instead of corrected PF \MET (see Sec.~\ref{sec:MET}) makes no difference in the agreement of the background predictions and the search sample in a control region at low \MET, as shown in Figure~\ref{fig:Type-I_MET_corrections_vs_uncorrected_MET_zoom}.  Since the control samples are derived from the same data as the search sample, any biases in the \MET reconstruction due to jet energy scale are present equally in both samples.
+
+\begin{figure}
+	\centering
+	\subfloat[Ratio of $\gamma\gamma$ to $ee$ \MET distributions.]{\label{fig:gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.3]{gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
+	\hspace{1cm}
+	\subfloat[Ratio of $\gamma\gamma$ to $\mathit{ff}$ \MET distributions.]{\label{fig:gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.3]{gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
+	\hspace{1cm}
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET distributions.]{\label{fig:ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.3]{ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
+	\caption{Agreement between $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples for uncorrected (red triangles) and corrected (blue squares) \MET.}
+	\label{fig:Type-I_MET_corrections_vs_uncorrected_MET_zoom}
+\end{figure}
+
+Tables~\ref{tab:ee_background_prediction_errors} and~\ref{tab:ff_background_prediction_errors} list all the errors on the $ee$ and $\mathit{ff}$ QCD background predictions, respectively, for the \MET bins used in the search.  Table~\ref{eg_background_prediction_errors} lists the errors on the electroweak background prediction.  Finally, table~\ref{total_background_prediction_errors} shows the errors on the total QCD + electroweak background prediction, broken down by origin (statistical or systematic) and QCD background estimation sample ($ee$ or $\mathit{ff}$).  In the final result, only the $\mathit{ff}$ QCD estimate is used.
+
+\begin{table}[hcbp]
+\caption{Errors on the $ee$ QCD background prediction as a fraction of the $ee$ prediction.}
+\centering
+\begin{tabular}{|p{5cm}|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Source of error}} & \multicolumn{5}{c|}{Fractional uncertainty (\%)} \\
+\cline{2-6}
+& [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
+\hline
+\hline
+
+Total & 3.6 & 7.8 & 16 & 24 & 22 \\
+\hline
+\hspace{0.5cm}Statistics & 3.6 & 7.8 & 16 & 24 & 22 \\
+\hline
+\hspace{1cm}No. events & 3.6 & 7.7 & 15 & 24 & 20 \\
+\hspace{1.5cm}In norm. region & 0.43 & 0.44 & 0.46 & 0.55 & 0.51 \\
+\hspace{1.5cm}In this \MET bin & 3.5 & 7.7 & 15 & 24 & 20 \\
+\hline
+\hspace{1cm}Reweighting & 0.71 & 1.2 & 3.6 & 4.2 & 7.8 \\
+\hspace{1.5cm}In norm. region & 0.2 & 0.2 & 0.21 & 0.25 & 0.23 \\
+\hspace{1.5cm}In this \MET bin & 0.68 & 1.2 & 3.6 & 4.2 & 7.8 \\
+\hline
+\hspace{0.5cm}Systematics & 0.0015 & 0.0015 & 0.0016 & 0.0019 & 0.0018 \\
+\hline
+\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0015 & 0.0016 & 0.0019 & 0.0018 \\
+\hspace{1cm}$m_{ee}$ background shape & 0 & 0 & 0 & 0 & 0 \\
+\hline
+
+%Total & 3.4 & 13 & 30 & 30 & \\
+%\hline
+%\hspace{0.5cm}Statistics & 3.4 & 13 & 30 & 30 & \\
+%\hline
+%\hspace{1cm}No. events & 3.3 & 13 & 30 & 25 & \\
+%\hspace{1.5cm}In norm. region & 0.43 & 0.49 & 0.59 & 0.44 & \\
+%\hspace{1.5cm}In this \MET bin & 3.2 & 13 & 30 & 25 & \\
+%\hline
+%\hspace{1cm}Reweighting & 0.8 & 3.2 & 5.1 & 15 & \\
+%\hspace{1.5cm}In norm. region & 0.2 & 0.22 & 0.27 & 0.2 & \\
+%\hspace{1.5cm}In this \MET bin & 0.78 & 3.2 & 5 & 15 & \\
+%\hline
+%\hspace{0.5cm}Systematics & 0.0015 & 0.0017 & 0.002 & 0.0015 & \\
+%\hline
+%\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0017 & 0.002 & 0.0015 & \\
+%\hspace{1cm}$m_{ee}$ background shape & 0 & 0 & 0 & 0 & \\
+%\hline
+\end{tabular}
+\label{tab:ee_background_prediction_errors}
+\end{table}
+
+\begin{table}[hcbp]
+\caption{Errors on the $\mathit{ff}$ QCD background prediction as a fraction of the $\mathit{ff}$ prediction.}
+\centering
+\begin{tabular}{|p{5cm}|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Source of error}} & \multicolumn{5}{c|}{Fractional uncertainty (\%)} \\
+\cline{2-6}
+& [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
+\hline
+\hline
+
+Total & 15 & 25 & 61 & 34 & 64 \\
+\hline
+\hspace{0.5cm}Statistics & 7.2 & 14 & 30 & 34 & 38 \\
+\hline
+\hspace{1cm}No. events & 7.1 & 14 & 29 & 33 & 36 \\
+\hspace{1.5cm}In norm. region & 0.64 & 0.64 & 0.64 & 0.64 & 0.64 \\
+\hspace{1.5cm}In this \MET bin & 7.1 & 14 & 29 & 33 & 36 \\
+\hline
+\hspace{1cm}Reweighting & 0.89 & 2.7 & 5.2 & 7.2 & 13 \\
+\hspace{1.5cm}In norm. region & 0.28 & 0.28 & 0.28 & 0.28 & 0.28 \\
+\hspace{1.5cm}In this \MET bin & 0.84 & 2.7 & 5.2 & 7.2 & 13 \\
+\hline
+\hspace{0.5cm}Systematics & 13 & 21 & 53 & 5.5 & 52 \\
+\hline
+\hspace{1cm}$ee$/$\mathit{ff}$ difference & 13 & 21 & 53 & 5.5 & 52 \\
+\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0015 & 0.0015 & 0.0015 & 0.0015 \\
+\hline
+
+%Total & 16 & 38 & 48 & 1.5e+02 & \\
+%\hline
+%\hspace{0.5cm}Statistics & 6.4 & 22 & 41 & 85 & \\
+%\hline
+%\hspace{1cm}No. events & 6.3 & 22 & 40 & 78 & \\
+%\hspace{1.5cm}In norm. region & 0.64 & 0.64 & 0.64 & 0.64 & \\
+%\hspace{1.5cm}In this \MET bin & 6.3 & 22 & 40 & 78 & \\
+%\hline
+%\hspace{1cm}Reweighting & 1.1 & 5.2 & 12 & 35 & \\
+%\hspace{1.5cm}In norm. region & 0.28 & 0.28 & 0.28 & 0.28 & \\
+%\hspace{1.5cm}In this \MET bin & 1.1 & 5.2 & 12 & 35 & \\
+%\hline
+%\hspace{0.5cm}Systematics & 15 & 31 & 25 & 1.2e+02 & \\
+%\hline
+%\hspace{1cm}$ee$/$\mathit{ff}$ difference & 15 & 31 & 25 & 1.2e+02 & \\
+%\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0015 & 0.0015 & 0.0015 & \\
+%\hline
+\end{tabular}
+\label{tab:ff_background_prediction_errors}
+\end{table}
+
+\begin{table}[hcbp]
+\caption{Errors on the $e\gamma$ electroweak background prediction as a fraction of the $e\gamma$ prediction.}
+\centering
+\begin{tabular}{|p{5cm}|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Source of error}} & \multicolumn{5}{c|}{Fractional uncertainty (\%)} \\
+\cline{2-6}
+& [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
+\hline
+\hline
+
+Total & 34 & 34 & 35 & 35 & 34 \\
+\hline
+\hspace{0.5cm}Statistics & 3.6 & 5.2 & 6.7 & 7.2 & 6.5 \\
+\hline
+\hspace{0.5cm}Systematics ($f_{e\rightarrow\gamma}$) & 34 & 34 & 34 & 34 & 34 \\
+\hline
+
+%Total & 34 & 34 & 35 & 36 & \\
+%\hline
+%\hspace{0.5cm}Statistics & 2.9 & 4.9 & 7.6 & 13 & \\
+%\hline
+%\hspace{0.5cm}Systematics ($f_{e\rightarrow\gamma}$) & 34 & 34 & 34 & 34 & \\
+%\hline
+\end{tabular}
+\label{tab:eg_background_prediction_errors}
+\end{table}
+
+\begin{table}[hcbp]
+\caption{Errors on the total QCD + electroweak background prediction as a fraction of the total prediction.}
+\centering
+\begin{tabular}{|p{5cm}|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Source of error}} & \multicolumn{5}{c|}{Fractional uncertainty (\%)} \\
+\cline{2-6}
+& [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
+\hline
+\hline
+
+Total ($ee$ + $e\gamma$) & 3.7 & 7.6 & 15 & 21 & 20 \\
+\hline
+\hspace{0.5cm}Statistics & 3.4 & 7.3 & 14 & 21 & 18 \\
+\hline
+\hspace{1cm}QCD & 3.4 & 7.2 & 14 & 21 & 18 \\
+\hspace{1cm}Electroweak & 0.13 & 0.32 & 0.57 & 0.84 & 0.81 \\
+\hline
+\hspace{0.5cm}Systematics & 1.3 & 2.1 & 2.9 & 4 & 4.2 \\
+\hline
+\hspace{1cm}QCD & 0.0014 & 0.0014 & 0.0015 & 0.0017 & 0.0015 \\
+\hspace{1cm}Electroweak & 1.3 & 2.1 & 2.9 & 4 & 4.2 \\
+\hline
+Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 53 & 30 & 53 \\
+\hline
+\hspace{0.5cm}Statistics & 6.9 & 13 & 26 & 29 & 30 \\
+\hline
+\hspace{1cm}QCD & 6.9 & 13 & 26 & 29 & 30 \\
+\hspace{1cm}Electroweak & 0.12 & 0.26 & 0.84 & 0.88 & 1.1 \\
+\hline
+\hspace{0.5cm}Systematics & 12 & 20 & 47 & 6.4 & 43 \\
+\hline
+\hspace{1cm}QCD & 12 & 20 & 46 & 4.9 & 42 \\
+\hspace{1cm}Electroweak & 1.1 & 1.7 & 4.2 & 4.2 & 6 \\
+\hline
+
+%Total ($ee$ + $e\gamma$) & 3.5 & 13 & 26 & 27 & \\
+%\hline
+%\hspace{0.5cm}Statistics & 3.1 & 12 & 25 & 23 & \\
+%\hline
+%\hspace{1cm}QCD & 3.1 & 12 & 25 & 23 & \\
+%\hspace{1cm}Electroweak & 0.13 & 0.48 & 1.1 & 1 & \\
+%\hline
+%\hspace{0.5cm}Systematics & 1.5 & 3.3 & 5.1 & 2.8 & \\
+%\hline
+%\hspace{1cm}QCD & 0.0014 & 0.0015 & 0.0017 & 0.0014 & \\
+%\hspace{1cm}Electroweak & 1.5 & 3.3 & 5.1 & 2.8 & \\
+%\hline
+%Total ($\mathit{ff}$ + $e\gamma$) & 16 & 34 & 40 & 1.2e+02 & \\
+%\hline
+%\hspace{0.5cm}Statistics & 6.1 & 19 & 32 & 65 & \\
+%\hline
+%\hspace{1cm}QCD & 6.1 & 19 & 32 & 65 & \\
+%\hspace{1cm}Electroweak & 0.11 & 0.61 & 1.4 & 2.1 & \\
+%\hline
+%\hspace{0.5cm}Systematics & 14 & 27 & 21 & 99 & \\
+%\hline
+%\hspace{1cm}QCD & 14 & 27 & 20 & 98 & \\
+%\hspace{1cm}Electroweak & 1.3 & 4.2 & 6.2 & 5.6 & \\
+%\hline
+\end{tabular}
+\label{tab:total_background_prediction_errors}
+\end{table}
+
+%show table of systematic errors by source and percentage a la slide 28 of seminar
+%repeat the table in the section about upper limits, this time including the acceptance errors
+
+%The dijet \pT reweighting method utilizes jets corrected for imperfect calorimeter response (see Sec.~\ref{sec:Jets and Missing Transverse Energy} for a description of the jet reconstruction and correction procedure).  Since the applied jet energy scale (JES) factor has an error associated to it due to the limitations of the JES derivation (\cite{CMS_JES_paper} and Sec.~\ref{sec:Jets and Missing Transverse Energy}), this uncertainty must be propagated to the uncertainty on the dijet \pT weights.
 %
-From these measurements, the $\gamma\gamma$ and ff dijet \pT spectra and the resulting ff dijet weights can be calculated.  In each of the 1000 pseudo-experiments, a new set of JES factors is generated according to the measured JES uncertainties, and new dijet \pT spectra and weights are subsequently calculated.  The spread of the 1000 weights (binned in dijet \pT) is taken as the error due to JES uncertainty.  The total error on the weights is the quadrature sum of the JES error and the statistical error, and is propagated to the error on the final \MET measurement via a similar pseudo-experiment procedure described in Sec.~\ref{sec:Statistical Uncertainty in the ff or ee Weights}.\footnote{The \MET is uncorrected and therefore its central value per event is unaffected by a change in the JES.}
-
-%do this check
-If the JES uncertainty were to cause the jet energy to be reconstructed below the 20 GeV ntuple cut, there could be a small error or bias in the \MET introduced due to EM-matched jets falling below the matching threshold.  The percentage of jets lost due to jet \ET matching threshold has been checked in data, and found to be X\% (X\% of events).  Furthermore, the trailing EM \ET cut is 25 GeV/c, implying that the JES would have to be mis-measured by at least 20\% to fall below the jet matching threshold.  Since the typical JES uncertainty is no more than 5\%, a mis-measurement of this type is a 4$\sigma$ event and should occur in only 0.1\% of cases.  As expected, this effect is negligible, as shown in Figure X.
-
-%\begin{figure}
-%	\centering
-%	\subfloat[ff dijet \pT weights including effect of jets falling below the matching threshold.]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
-%	\hspace{1cm}
-%	\subfloat[ff dijet \pT weights neglecting effect of jets falling below the matching threshold.]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
-%	\hspace{1cm}
-%	\subfloat[Percentage difference between JES errors shown in (a) and (b).]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
-%	\caption{ff dijet \pT weights with JES error.}
-%\end{figure}
+%The JES contribution to the dijet \pT weights is estimated by performing 1000 pseudo-experiments on each of the $\gamma\gamma$ and ff samples.  For the purpose of estimating the JES error, the results of the true experiment may be thought of as a set of measurements:
+%
+%\begin{itemize}
+%  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the $\gamma\gamma$ sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\gamma\gamma}}\right\}$
+%  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}1}^{\mu1}, \mbox{p}_{\mbox{j}1}^{\mu2},...,\mbox{p}_{\mbox{j}1}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{uncorrected jet 4-vectors} corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{p}_{\mbox{j}2}^{\mu1}, \mbox{p}_{\mbox{j}2}^{\mu2},...,\mbox{p}_{\mbox{j}2}^{\mu \mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}1}^{1}, \mbox{c}_{\mbox{j}1}^{2},...,\mbox{c}_{\mbox{j}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{JES} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\mbox{c}_{\mbox{j}2}^{1}, \mbox{c}_{\mbox{j}2}^{2},...,\mbox{c}_{\mbox{j}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{leading EM object} in the ff sample $\left\{\sigma_{\mbox{cj}1}^{1}, \sigma_{\mbox{cj}1}^{2},...,\sigma_{\mbox{cj}1}^{\mbox{N}_{\mbox{ff}}}\right\}$
+%  \item The set of \textbf{JES uncertainties} accompanying the uncorrected jet 4-vectors corresponding to the \textbf{trailing EM object} in the ff sample $\left\{\sigma_{\mbox{cj}2}^{1}, \sigma_{\mbox{cj}2}^{2},...,\sigma_{\mbox{cj}2}^{\mbox{N}_{\mbox{ff}}}\right\}$
+%\end{itemize}
+%%
+%From these measurements, the $\gamma\gamma$ and ff dijet \pT spectra and the resulting ff dijet weights can be calculated.  In each of the 1000 pseudo-experiments, a new set of JES factors is generated according to the measured JES uncertainties, and new dijet \pT spectra and weights are subsequently calculated.  The spread of the 1000 weights (binned in dijet \pT) is taken as the error due to JES uncertainty.  The total error on the weights is the quadrature sum of the JES error and the statistical error, and is propagated to the error on the final \MET measurement via a similar pseudo-experiment procedure described in Sec.~\ref{sec:Statistical Uncertainty in the ff or ee Weights}.\footnote{The \MET is uncorrected and therefore its central value per event is unaffected by a change in the JES.}
+%
+%%do this check
+%If the JES uncertainty were to cause the jet energy to be reconstructed below the 20 GeV ntuple cut, there could be a small error or bias in the \MET introduced due to EM-matched jets falling below the matching threshold.  The percentage of jets lost due to jet \ET matching threshold has been checked in data, and found to be X\% (X\% of events).  Furthermore, the trailing EM \ET cut is 25 GeV/c, implying that the JES would have to be mis-measured by at least 20\% to fall below the jet matching threshold.  Since the typical JES uncertainty is no more than 5\%, a mis-measurement of this type is a 4$\sigma$ event and should occur in only 0.1\% of cases.  As expected, this effect is negligible, as shown in Figure X.
+%
+%%\begin{figure}
+%%	\centering
+%%	\subfloat[ff dijet \pT weights including effect of jets falling below the matching threshold.]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
+%%	\hspace{1cm}
+%%	\subfloat[ff dijet \pT weights neglecting effect of jets falling below the matching threshold.]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
+%%	\hspace{1cm}
+%%	\subfloat[Percentage difference between JES errors shown in (a) and (b).]{\label{fig:dummy}\includegraphics[scale=0.7]{dummy}}
+%%	\caption{ff dijet \pT weights with JES error.}
+%%\end{figure}
 
 \section{Results}
 \label{sec:Results}
 
 %results
-%final MET plot
+%final MET plot, with ee and ff separate and also with just ff
 %final number in signal region with all stat. and syst. errors included
 %reminder table of all uncertainties that are described more thoroughly in previous sections
 %MC closure test
 %expectation from GGM models (1 that can be excluded, 1 that can't)
+%mention the official results too and explain that difference is due to jet cleaning method
+%	- my repetition of the AN: nff(MET > 100 GeV) = 17.1, nee(MET > 100 GeV) = 28.2 (from Yueh-FengDiEMPTBinsAndJetDefinition)
+%	- Ulla's jet definition: nff(MET > 100 GeV) = 20.4, nee(MET > 100 GeV) = 29.1 (from rightPFElectronCleaning)
+%	- bigger difference for ff…?  check agreement at low MET?  very good agreement
 
 \end{document}
