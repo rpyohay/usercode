@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  17 MAR 2012 11:39
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  18 APR 2012 17:29
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -59,6 +59,55 @@ File: pdftex.def 2010/02/14 v0.04n Graphics/color for pdfTeX
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
 )
+(/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/epstopdf.sty
+Package: epstopdf 2010/02/09 v2.5 Conversion with epstopdf on the fly (HO)
+
+(/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
+)
+(/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2007/09/30 v1.0 Managing graphics extensions (HO)
+)
+(/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2010/02/22 v3.7 Keyval support for LaTeX options (HO)
+
+(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2010/03/01 v1.9 Key value parser (HO)
+
+(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2010/01/28 v1.3 Prefix for e-TeX command names (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2010/04/01 v0.9 Utility functions of pdfTeX for LuaTeX (HO)
+
+
+(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2010/04/26 v1.7 LaTeX kernel commands for general use (HO)
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 436.
+
+(/usr/local/texlive/2010/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+)))
 (/usr/local/texlive/2010/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
 
@@ -244,38 +293,10 @@ Package: `setspace' 6.7 <2000/12/01>
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2010/06/18 v6.81g Hypertext links for LaTeX
 
-(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2010/04/26 v1.7 LaTeX kernel commands for general use (HO)
-)
-(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
-Package: kvsetkeys 2010/03/01 v1.9 Key value parser (HO)
-
-(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/message (HO)
-)
-(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/etexcmds.sty
-Package: etexcmds 2010/01/28 v1.3 Prefix for e-TeX command names (HO)
-Package etexcmds Info: Could not find \expanded.
-(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
-(etexcmds)             that some package has redefined \expanded.
-(etexcmds)             In the latter case, load this package earlier.
-))
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/pdfescape.sty
 Package: pdfescape 2010/03/01 v1.9 Provides hex, PDF name and string conversion
 s (HO)
-
-(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2010/04/01 v0.9 Utility functions of pdfTeX for LuaTeX (HO)
-
-
-(/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/ifluatex.sty
-Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
-Package ifluatex Info: LuaTeX not detected.
 )
-Package pdftexcmds Info: LuaTeX not detected.
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-))
 (/usr/local/texlive/2010/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2009/01/23 v0.5 Provides ifxetex conditional
 )
@@ -300,9 +321,6 @@ Package: intcalc 2007/09/27 v1.1 Expandable integer calculations (HO)
 )
 (/usr/local/texlive/2010/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
-)
-(/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2010/02/22 v3.7 Keyval support for LaTeX options (HO)
 )
 Package hyperref Info: Hyper figures OFF on input line 3658.
 Package hyperref Info: Link nesting OFF on input line 3663.
@@ -372,20 +390,20 @@ LaTeX Warning: Label `sub@fig:total_JEC_50_GeV' multiply defined.
 )
 \openout1 = `dissertation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
-LaTeX Font Info:    ... okay on input line 35.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
  (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count124
@@ -398,24 +416,10 @@ LaTeX Font Info:    ... okay on input line 35.
 \MPscratchDim=\dimen139
 \MPnumerator=\count128
 \everyMPtoPDFconversion=\toks27
-) (/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
-
-(/usr/local/texlive/2010/texmf-dist/tex/latex/oberdiek/grfext.sty
-Package: grfext 2007/09/30 v1.0 Managing graphics extensions (HO)
 )
-Package grfext Info: Graphics extension search list:
-(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 436.
-
-(/usr/local/texlive/2010/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
-File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
-e
-))
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 35.
+LaTeX Info: Redefining \subref on input line 36.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
 
@@ -454,7 +458,7 @@ Package caption Info: End \AtBeginDocument code.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 \AtBeginShipoutBox=\box29
-Package hyperref Info: Link coloring OFF on input line 35.
+Package hyperref Info: Link coloring OFF on input line 36.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 
@@ -466,20 +470,20 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
 \c@section@level=\count129
 )
-LaTeX Info: Redefining \ref on input line 35.
-LaTeX Info: Redefining \pageref on input line 35.
-LaTeX Info: Redefining \nameref on input line 35.
+LaTeX Info: Redefining \ref on input line 36.
+LaTeX Info: Redefining \pageref on input line 36.
+LaTeX Info: Redefining \nameref on input line 36.
 
 (./dissertation.out) (./dissertation.out)
 \@outlinefile=\write3
 \openout3 = `dissertation.out'.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 46.
+LaTeX Font Info:    Try loading font information for U+msa on input line 47.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 46.
+LaTeX Font Info:    Try loading font information for U+msb on input line 47.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -490,7 +494,7 @@ ertation.tocpdfTeX warning (ext4): destination with the same identifier (name{p
 age.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.30 ...{e}^{\mathrm {MC}}$}{54}{subsection.3.4.2}
+l.30 ...{e}^{\mathrm {MC}}$}{55}{subsection.3.4.2}
                                                    [1
 
 ])
@@ -820,87 +824,111 @@ s_MET.pdf> <./lepton_photon_jets_MET.pdf> <./wino_photon_jets_MET.pdf>]
 File: CMS_SUSY_2011Limits_tanb10.pdf Graphic file (type pdf)
 
 <use CMS_SUSY_2011Limits_tanb10.pdf> [23 <./CMS_SUSY_2011Limits_tanb10.pdf>]
-<ATLAS_SPS8_limit.pdf, id=3006, 237.8503pt x 228.18147pt>
+<ATLAS_SPS8_limit.pdf, id=3007, 237.8503pt x 228.18147pt>
 File: ATLAS_SPS8_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_SPS8_limit.pdf>
-<ATLAS_GGM_limit.pdf, id=3015, 246.87431pt x 166.9464pt>
-File: ATLAS_GGM_limit.pdf Graphic file (type pdf)
+<can_excl02_bino_mN375_met100_1jet.pdf, id=3016, 569.12625pt x 440.64626pt>
+File: can_excl02_bino_mN375_met100_1jet.pdf Graphic file (type pdf)
 
-<use ATLAS_GGM_limit.pdf>
-<CDF_lifetime_vs_mass.pdf, id=3024, 258.02155pt x 197.83792pt>
+<use can_excl02_bino_mN375_met100_1jet.pdf>
+<Wino_Exclusion_.pdf, id=3017, 569.12625pt x 546.04pt>
+File: Wino_Exclusion_.pdf Graphic file (type pdf)
+
+<use Wino_Exclusion_.pdf>
+
+LaTeX Warning: Reference `fig:ATLAS_GGM_limit' on page 24 undefined on input li
+ne 379.
+
+<CDF_lifetime_vs_mass.pdf, id=3025, 258.02155pt x 197.83792pt>
 File: CDF_lifetime_vs_mass.pdf Graphic file (type pdf)
 
-<use CDF_lifetime_vs_mass.pdf> [24] [25 <./ATLAS_SPS8_limit.pdf> <./ATLAS_GGM_l
-imit.pdf>] [26 <./CDF_lifetime_vs_mass.pdf>]) (./ch6.tex [27]
+<use CDF_lifetime_vs_mass.pdf> [24] [25 <./ATLAS_SPS8_limit.pdf>] [26 <./can_ex
+cl02_bino_mN375_met100_1jet.pdf, page is rotated 90 degrees> <./Wino_Exclusion_
+.pdf, page is rotated 90 degrees>] [27 <./CDF_lifetime_vs_mass.pdf>])
+(./ch6.tex [28]
 Chapter 3.
-[28
+[29
 
 ]
 
-LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 2
-9 undefined on input line 16.
+LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 3
+0 undefined on input line 16.
 
 
-LaTeX Warning: Reference `sec:Electromagnetic Calorimeter' on page 29 undefined
+LaTeX Warning: Reference `sec:Electromagnetic Calorimeter' on page 30 undefined
  on input line 24.
 
-<pulse.jpg, id=3355, 56.3706pt x 52.32349pt>
+<pulse.jpg, id=3351, 56.3706pt x 52.32349pt>
 File: pulse.jpg Graphic file (type jpg)
- <use pulse.jpg> [29] [30 <./pulse.jpg>] <intercalibration.pdf, id=3388, 294.95
+ <use pulse.jpg> [30] [31 <./pulse.jpg>] <intercalibration.pdf, id=3384, 294.95
 998pt x 269.55705pt>
 File: intercalibration.pdf Graphic file (type pdf)
 
-<use intercalibration.pdf> [31 <./intercalibration.pdf>] [32]
-<hybrid.pdf, id=3516, 426.92136pt x 204.43216pt>
+<use intercalibration.pdf> [32 <./intercalibration.pdf>] [33]
+<hybrid.pdf, id=3512, 426.92136pt x 204.43216pt>
 File: hybrid.pdf Graphic file (type pdf)
  <use hybrid.pdf>
-<Z_mass_vs_corrections.pdf, id=3520, 450.59053pt x 176.26874pt>
+<Z_mass_vs_corrections.pdf, id=3516, 450.59053pt x 176.26874pt>
 File: Z_mass_vs_corrections.pdf Graphic file (type pdf)
 
 <use Z_mass_vs_corrections.pdf>
 
-LaTeX Warning: Citation `Higgs_AN' on page 33 undefined on input line 105.
+LaTeX Warning: Citation `Higgs_AN' on page 34 undefined on input line 106.
 
 
-LaTeX Warning: Citation `Higgs_AN' on page 33 undefined on input line 105.
+LaTeX Warning: Citation `Higgs_AN' on page 34 undefined on input line 106.
 
 
-LaTeX Warning: Citation `Higgs_AN' on page 33 undefined on input line 105.
+LaTeX Warning: Citation `Higgs_AN' on page 34 undefined on input line 106.
 
 
-LaTeX Warning: Citation `Higgs_AN' on page 33 undefined on input line 105.
+LaTeX Warning: Citation `Higgs_AN' on page 34 undefined on input line 106.
 
-[33 <./hybrid.pdf>] [34 <./Z_mass_vs_corrections.pdf>]
-<isolation_cones.pdf, id=3638, 1027.84pt x 770.88pt>
+[34 <./hybrid.pdf>] [35 <./Z_mass_vs_corrections.pdf>]
+<isolation_cones.pdf, id=3634, 1027.84pt x 770.88pt>
 File: isolation_cones.pdf Graphic file (type pdf)
  <use isolation_cones.pdf>
-[35] [36 <./isolation_cones.pdf>]
-<preselected_rho.pdf, id=3680, 569.12625pt x 502.87875pt>
+[36] [37 <./isolation_cones.pdf>]
+<preselected_rho.pdf, id=3677, 569.12625pt x 502.87875pt>
 File: preselected_rho.pdf Graphic file (type pdf)
 
 <use preselected_rho.pdf>
-<f_comb_iso_upper_bound_optimization.pdf, id=3688, 443.52649pt x 156.13623pt>
+<f_comb_iso_upper_bound_optimization.pdf, id=3685, 443.52649pt x 156.13623pt>
 File: f_comb_iso_upper_bound_optimization.pdf Graphic file (type pdf)
 
-<use f_comb_iso_upper_bound_optimization.pdf> [37 <./preselected_rho.pdf, page 
-is rotated 90 degrees>] [38 <./f_comb_iso_upper_bound_optimization.pdf>]
-[39] <anti-kT.pdf, id=3918, 208.45914pt x 144.62683pt>
+<use f_comb_iso_upper_bound_optimization.pdf>
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 38 undefined on input 
+line 192.
+
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 38 undefined on input 
+line 192.
+
+[38 <./preselected_rho.pdf, page is rotated 90 degrees>] [39 <./f_comb_iso_uppe
+r_bound_optimization.pdf>] [40]
+<anti-kT.pdf, id=3912, 208.45914pt x 144.62683pt>
 File: anti-kT.pdf Graphic file (type pdf)
- <use anti-kT.pdf>
-[40] [41 <./anti-kT.pdf>]
-<total_JEC_50_GeV.pdf, id=4018, 191.48268pt x 188.18124pt>
+ <use anti-kT.pdf> [41]
+[42 <./anti-kT.pdf>]
+<total_JEC_50_GeV.pdf, id=4014, 191.48268pt x 188.18124pt>
 File: total_JEC_50_GeV.pdf Graphic file (type pdf)
 
 <use total_JEC_50_GeV.pdf>
-<total_JEC_200_GeV.pdf, id=4019, 188.73149pt x 188.18124pt>
+<total_JEC_200_GeV.pdf, id=4015, 188.73149pt x 188.18124pt>
 File: total_JEC_200_GeV.pdf Graphic file (type pdf)
 
-<use total_JEC_200_GeV.pdf> [42 <./total_JEC_50_GeV.pdf> <./total_JEC_200_GeV.p
-df>] <MET_resolution.pdf, id=4189, 255.86049pt x 182.67888pt>
+<use total_JEC_200_GeV.pdf>
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 43 undefined on input 
+line 328.
+
+[43 <./total_JEC_50_GeV.pdf> <./total_JEC_200_GeV.pdf>]
+<MET_resolution.pdf, id=4183, 255.86049pt x 182.67888pt>
 File: MET_resolution.pdf Graphic file (type pdf)
 
-<use MET_resolution.pdf> [43] [44 <./MET_resolution.pdf>]
+<use MET_resolution.pdf> [44] [45 <./MET_resolution.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 366--367
 
  []
@@ -917,525 +945,713 @@ Underfull \hbox (badness 10000) in paragraph at lines 366--367
 
 
 LaTeX Warning: Reference `sec:Level 1 and High Level Trigger Systems' on page 4
-5 undefined on input line 375.
+6 undefined on input line 375.
 
-[45] [46]
+[46] [47]
 
-LaTeX Warning: Reference `fig:beam_halo_brem' on page 47 undefined on input lin
-e 404.
+LaTeX Warning: Reference `fig:beam_halo_brem' on page 48 undefined on input lin
+e 407.
 
-[47] [48] <R45.pdf, id=4293, 1027.84pt x 770.88pt>
+[48] [49] <R45.pdf, id=4288, 1027.84pt x 770.88pt>
 File: R45.pdf Graphic file (type pdf)
- <use R45.pdf> [49 <./R45.pdf>]
+ <use R45.pdf> [50 <./R45.pdf>]
 
-LaTeX Warning: Reference `fig:MC_N-1_comparisons' on page 50 undefined on input
- line 455.
+LaTeX Warning: Reference `fig:MC_N-1_comparisons' on page 51 undefined on input
+ line 458.
 
-[50] [51] [52] [53]
-Underfull \hbox (badness 10000) in paragraph at lines 604--604
+[51] [52] [53] [54]
+Underfull \hbox (badness 10000) in paragraph at lines 607--607
 []|\OT1/cmr/m/n/12 Tag-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 604--604
+Underfull \hbox (badness 10000) in paragraph at lines 607--607
 \OT1/cmr/m/n/12 pass
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 604--604
+Underfull \hbox (badness 10000) in paragraph at lines 607--607
 []|\OT1/cmr/m/n/12 [-1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 604--604
+Underfull \hbox (badness 10000) in paragraph at lines 607--607
 []|\OT1/cmr/m/n/12 [1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 606--606
+Underfull \hbox (badness 10000) in paragraph at lines 609--609
 []|\OT1/cmr/m/n/12 Tag-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 606--606
+Underfull \hbox (badness 10000) in paragraph at lines 609--609
 \OT1/cmr/m/n/12 fail
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 606--606
+Underfull \hbox (badness 10000) in paragraph at lines 609--609
 []|\OT1/cmr/m/n/12 [-1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 606--606
+Underfull \hbox (badness 10000) in paragraph at lines 609--609
 []|\OT1/cmr/m/n/12 [1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 608--608
+Underfull \hbox (badness 10000) in paragraph at lines 611--611
 []|\OT1/cmr/m/n/12 Tag-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 608--608
+Underfull \hbox (badness 10000) in paragraph at lines 611--611
 \OT1/cmr/m/n/12 pass
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 608--608
+Underfull \hbox (badness 10000) in paragraph at lines 611--611
 \OT1/cmr/m/n/12 back-
  []
 
 
-Overfull \hbox (2.94756pt too wide) in paragraph at lines 608--608
+Overfull \hbox (2.94756pt too wide) in paragraph at lines 611--611
 []|\OT1/cmr/m/n/12 0.04750| 
  []
 
 
-Overfull \hbox (2.94756pt too wide) in paragraph at lines 608--609
+Overfull \hbox (2.94756pt too wide) in paragraph at lines 611--612
 []|\OT1/cmr/m/n/12 0.01908| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 610--610
+Underfull \hbox (badness 10000) in paragraph at lines 613--613
 []|\OT1/cmr/m/n/12 Tag-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 610--610
+Underfull \hbox (badness 10000) in paragraph at lines 613--613
 \OT1/cmr/m/n/12 fail
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 610--610
+Underfull \hbox (badness 10000) in paragraph at lines 613--613
 \OT1/cmr/m/n/12 back-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 610--610
+Underfull \hbox (badness 10000) in paragraph at lines 613--613
 []|\OT1/cmr/m/n/12 [50.0,
  []
 
 
-LaTeX Warning: Reference `fig:low_ET_bin' on page 54 undefined on input line 61
-6.
+LaTeX Warning: Reference `fig:low_ET_bin' on page 55 undefined on input line 61
+9.
 
 
-LaTeX Warning: Reference `fig:mid-eta_bin' on page 54 undefined on input line 6
-16.
+LaTeX Warning: Reference `fig:mid-eta_bin' on page 55 undefined on input line 6
+19.
 
 
-LaTeX Warning: Reference `fig:low_ET_bin' on page 54 undefined on input line 61
-6.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 627.
+LaTeX Warning: Reference `fig:low_ET_bin' on page 55 undefined on input line 61
+9.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\epsilon' on input line 627.
+(hyperref)                removing `math shift' on input line 630.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 627.
+(hyperref)                removing `\epsilon' on input line 630.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 627.
+(hyperref)                removing `subscript' on input line 630.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\epsilon' on input line 627.
+(hyperref)                removing `superscript' on input line 630.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 627.
+(hyperref)                removing `\epsilon' on input line 630.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `superscript' on input line 627.
+(hyperref)                removing `subscript' on input line 630.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 627.
+(hyperref)                removing `superscript' on input line 630.
 
-<scale_factor_vs_ET.pdf, id=4436, 569.12625pt x 569.12625pt>
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 630.
+
+<scale_factor_vs_ET.pdf, id=4431, 569.12625pt x 569.12625pt>
 File: scale_factor_vs_ET.pdf Graphic file (type pdf)
 
 <use scale_factor_vs_ET.pdf>
-<scale_factor_vs_eta.pdf, id=4437, 569.12625pt x 569.12625pt>
+<scale_factor_vs_eta.pdf, id=4432, 569.12625pt x 569.12625pt>
 File: scale_factor_vs_eta.pdf Graphic file (type pdf)
 
 <use scale_factor_vs_eta.pdf>
-<scale_factor_vs_Njet.pdf, id=4438, 569.12625pt x 569.12625pt>
+<scale_factor_vs_Njet.pdf, id=4433, 569.12625pt x 569.12625pt>
 File: scale_factor_vs_Njet.pdf Graphic file (type pdf)
 
-<use scale_factor_vs_Njet.pdf> [54] [55 <./scale_factor_vs_ET.pdf> <./scale_fac
+<use scale_factor_vs_Njet.pdf> [55] [56 <./scale_factor_vs_ET.pdf> <./scale_fac
 tor_vs_eta.pdf> <./scale_factor_vs_Njet.pdf>]
-<eff_vs_NPV.pdf, id=4585, 569.12625pt x 569.12625pt>
+<eff_vs_NPV.pdf, id=4580, 569.12625pt x 569.12625pt>
 File: eff_vs_NPV.pdf Graphic file (type pdf)
  <use eff_vs_NPV.pdf>
-<scale_factor_vs_NPV.pdf, id=4586, 569.12625pt x 569.12625pt>
+<scale_factor_vs_NPV.pdf, id=4581, 569.12625pt x 569.12625pt>
 File: scale_factor_vs_NPV.pdf Graphic file (type pdf)
 
-<use scale_factor_vs_NPV.pdf> [56 <./eff_vs_NPV.pdf> <./scale_factor_vs_NPV.pdf
+<use scale_factor_vs_NPV.pdf> [57 <./eff_vs_NPV.pdf> <./scale_factor_vs_NPV.pdf
 >]
 Missing character: There is no Ó in font cmr12!
- [57]) (./ch7.tex [58] [59]
+ [58]) (./ch7.tex [59] [60]
 Chapter 4.
-
-LaTeX Warning: Reference `fig:QCD_background_diagrams' on page 60 undefined on 
-input line 59.
-
-
-LaTeX Warning: Reference `fig:EW_background_diagrams' on page 60 undefined on i
-nput line 59.
-
-[60
+[61
 
 ]
 
-LaTeX Warning: Reference `fig:MET_data_vs_MC_backgrounds' on page 61 undefined 
-on input line 106.
+LaTeX Warning: Reference `fig:QCD_background_diagrams' on page 62 undefined on 
+input line 54.
 
 
-LaTeX Warning: Reference `fig:MET_MC_ggVsFF_varyHOverE' on page 61 undefined on
- input line 115.
+LaTeX Warning: Reference `fig:EW_background_diagrams' on page 62 undefined on i
+nput line 54.
 
-[61]
+Package epstopdf Info: Source file: <qg_to_qg_1.eps>
+(epstopdf)                    date: 2012-04-18 16:29:11
+(epstopdf)                    size: 2653 bytes
+(epstopdf)             Output file: <qg_to_qg_1-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-04-18 16:29:17
+(epstopdf)                    size: 3097 bytes
+(epstopdf)             Command: <epstopdf --outfile=qg_to_qg_1-eps-converted-to
+.pdf qg_to_qg_1.eps>
+(epstopdf)             \includegraphics on input line 80.
+Package epstopdf Info: Output file is already uptodate.
+<qg_to_qg_1-eps-converted-to.pdf, id=4701, 114.4275pt x 71.26625pt>
+File: qg_to_qg_1-eps-converted-to.pdf Graphic file (type pdf)
 
-LaTeX Warning: Reference `sec:Modeling the Electroweak background' on page 62 u
-ndefined on input line 130.
+<use qg_to_qg_1-eps-converted-to.pdf>
+Package epstopdf Info: Source file: <qg_to_qg_2.eps>
+(epstopdf)                    date: 2012-04-18 14:51:01
+(epstopdf)                    size: 2605 bytes
+(epstopdf)             Output file: <qg_to_qg_2-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-04-18 14:51:35
+(epstopdf)                    size: 3139 bytes
+(epstopdf)             Command: <epstopdf --outfile=qg_to_qg_2-eps-converted-to
+.pdf qg_to_qg_2.eps>
+(epstopdf)             \includegraphics on input line 82.
+Package epstopdf Info: Output file is already uptodate.
 
-[62] <hadronic_activity_HT.pdf, id=4724, 511.9125pt x 739.76375pt>
+<qg_to_qg_2-eps-converted-to.pdf, id=4702, 114.4275pt x 71.26625pt>
+File: qg_to_qg_2-eps-converted-to.pdf Graphic file (type pdf)
+
+<use qg_to_qg_2-eps-converted-to.pdf>
+Package epstopdf Info: Source file: <gg_to_gg.eps>
+(epstopdf)                    date: 2012-04-18 14:53:30
+(epstopdf)                    size: 3397 bytes
+(epstopdf)             Output file: <gg_to_gg-eps-converted-to.pdf>
+(epstopdf)                    date: 2012-04-18 14:53:33
+(epstopdf)                    size: 3286 bytes
+(epstopdf)             Command: <epstopdf --outfile=gg_to_gg-eps-converted-to.p
+df gg_to_gg.eps>
+(epstopdf)             \includegraphics on input line 84.
+Package epstopdf Info: Output file is already uptodate.
+
+<gg_to_gg-eps-converted-to.pdf, id=4703, 114.4275pt x 71.26625pt>
+File: gg_to_gg-eps-converted-to.pdf Graphic file (type pdf)
+
+<use gg_to_gg-eps-converted-to.pdf>
+
+LaTeX Warning: Reference `fig:MET_data_vs_MC_backgrounds' on page 62 undefined 
+on input line 113.
+
+[62 <./qg_to_qg_1-eps-converted-to.pdf> <./qg_to_qg_2-eps-converted-to.pdf> <./
+gg_to_gg-eps-converted-to.pdf>]
+
+LaTeX Warning: Reference `fig:MET_MC_ggVsFF_varyHOverE' on page 63 undefined on
+ input line 122.
+
+
+LaTeX Warning: Reference `sec:Modeling the Electroweak background' on page 63 u
+ndefined on input line 137.
+
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 63 undefined on input 
+line 137.
+
+[63] [64]pdfTeX warning (ext4): destination with the same identifier (name{subf
+igure.4.1.1}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.158 	\subfloat
+                [$H_{T}$, defined as the scalar sum of corrected jet $E_{T}$...
+<hadronic_activity_HT.pdf, id=4736, 511.9125pt x 739.76375pt>
 File: hadronic_activity_HT.pdf Graphic file (type pdf)
 
-<use hadronic_activity_HT.pdf>
-<hadronic_activity_Nj.pdf, id=4727, 511.9125pt x 739.76375pt>
+<use hadronic_activity_HT.pdf>pdfTeX warning (ext4): destination with the same 
+identifier (name{subfigure.4.1.2}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.160 	\subfloat
+                [Number of jets per event for jets defined as in Table~\ref{...
+<hadronic_activity_Nj.pdf, id=4739, 511.9125pt x 739.76375pt>
 File: hadronic_activity_Nj.pdf Graphic file (type pdf)
 
 <use hadronic_activity_Nj.pdf>
-Underfull \hbox (badness 1571) in paragraph at lines 153--153
+Underfull \hbox (badness 1571) in paragraph at lines 160--160
 \OT1/cmr/m/n/10 for jets de-fined as in Ta-
  []
 
-<hadronic_activity_MHT.pdf, id=4730, 511.9125pt x 739.76375pt>
+pdfTeX warning (ext4): destination with the same identifier (name{subfigure.4.1
+.3}) has been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.162 	\subfloat
+                [$\not\!\! H_{T}$, defined as the magnitude of the negative ...
+<hadronic_activity_MHT.pdf, id=4742, 511.9125pt x 739.76375pt>
 File: hadronic_activity_MHT.pdf Graphic file (type pdf)
 
 <use hadronic_activity_MHT.pdf>
-<hadronic_activity_j1ET.pdf, id=4733, 511.9125pt x 739.76375pt>
+<hadronic_activity_j1ET.pdf, id=4745, 511.9125pt x 739.76375pt>
 File: hadronic_activity_j1ET.pdf Graphic file (type pdf)
 
 <use hadronic_activity_j1ET.pdf>
-<hadronic_activity_rho.pdf, id=4736, 511.9125pt x 739.76375pt>
+<hadronic_activity_rho.pdf, id=4748, 511.9125pt x 739.76375pt>
 File: hadronic_activity_rho.pdf Graphic file (type pdf)
 
 <use hadronic_activity_rho.pdf>
-Underfull \hbox (badness 1275) in paragraph at lines 159--159
+Underfull \hbox (badness 1275) in paragraph at lines 166--166
 \OT1/cmr/m/n/10 den-sity in the calorime-ters
  []
 
-<hadronic_activity_nPV.pdf, id=4739, 511.9125pt x 739.76375pt>
+<hadronic_activity_nPV.pdf, id=4751, 511.9125pt x 739.76375pt>
 File: hadronic_activity_nPV.pdf Graphic file (type pdf)
 
-<use hadronic_activity_nPV.pdf> [63]
-Overfull \hbox (7.53871pt too wide) in paragraph at lines 170--197
+<use hadronic_activity_nPV.pdf>
+Overfull \hbox (7.53871pt too wide) in paragraph at lines 177--204
  [][] 
  []
 
-<di-EM_pT_cartoon.pdf, id=4754, 543.38904pt x 346.39664pt>
+<di-EM_pT_cartoon.pdf, id=4758, 543.38904pt x 346.39664pt>
 File: di-EM_pT_cartoon.pdf Graphic file (type pdf)
 
 <use di-EM_pT_cartoon.pdf>
-<ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, id=4758, 569.12625pt x 546.04p
+<gg_MET_vs_di-EM_pT.pdf, id=4759, 569.12625pt x 502.87875pt>
+File: gg_MET_vs_di-EM_pT.pdf Graphic file (type pdf)
+
+<use gg_MET_vs_di-EM_pT.pdf>
+<ee_MET_vs_di-EM_pT.pdf, id=4760, 569.12625pt x 502.87875pt>
+File: ee_MET_vs_di-EM_pT.pdf Graphic file (type pdf)
+
+<use ee_MET_vs_di-EM_pT.pdf>
+<ff_MET_vs_di-EM_pT.pdf, id=4761, 569.12625pt x 502.87875pt>
+File: ff_MET_vs_di-EM_pT.pdf Graphic file (type pdf)
+
+<use ff_MET_vs_di-EM_pT.pdf> [65] [66 <./hadronic_activity_HT.pdf> <./hadronic_
+activity_Nj.pdf> <./hadronic_activity_MHT.pdf> <./hadronic_activity_j1ET.pdf> <
+./hadronic_activity_rho.pdf> <./hadronic_activity_nPV.pdf>] [67 <./di-EM_pT_car
+toon.pdf>]
+<ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, id=5088, 569.12625pt x 546.04p
 t>
 File: ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf Graphic file (type pdf)
  <use ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf>
-<ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, id=4759, 569.12625pt x 546.04p
+<ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, id=5089, 569.12625pt x 546.04p
 t>
 File: ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf Graphic file (type pdf)
  <use ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf>
-<ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, id=4760, 569.12625pt x
+<ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, id=5090, 569.12625pt x
  259.97125pt>
 File: ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf Graphic file (type
  pdf)
  <use ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf>
-<ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom.pdf, id=4761, 569.1262
+<ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom.pdf, id=5091, 569.1262
 5pt x 259.97125pt>
 File: ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom.pdf Graphic file 
 (type pdf)
 
-<use ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom.pdf> [64] [65]
-[66 <./hadronic_activity_HT.pdf> <./hadronic_activity_Nj.pdf> <./hadronic_activ
-ity_MHT.pdf> <./hadronic_activity_j1ET.pdf> <./hadronic_activity_rho.pdf> <./ha
-dronic_activity_nPV.pdf>]
-<4684pb-1_eLeading_ETBias_log.pdf, id=5050, 569.12625pt x 546.04pt>
+<use ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom.pdf>
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 68 undefined on input 
+line 242.
+
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 68 undefined on input 
+line 242.
+
+<4684pb-1_eLeading_ETBias_log.pdf, id=5099, 569.12625pt x 546.04pt>
 File: 4684pb-1_eLeading_ETBias_log.pdf Graphic file (type pdf)
 
 <use 4684pb-1_eLeading_ETBias_log.pdf>
-<4684pb-1_eTrailing_ETBias_log.pdf, id=5051, 569.12625pt x 546.04pt>
+<4684pb-1_eTrailing_ETBias_log.pdf, id=5100, 569.12625pt x 546.04pt>
 File: 4684pb-1_eTrailing_ETBias_log.pdf Graphic file (type pdf)
 
 <use 4684pb-1_eTrailing_ETBias_log.pdf>
-<4684pb-1_fLeading_ETBias_log.pdf, id=5052, 569.12625pt x 546.04pt>
+<4684pb-1_fLeading_ETBias_log.pdf, id=5101, 569.12625pt x 546.04pt>
 File: 4684pb-1_fLeading_ETBias_log.pdf Graphic file (type pdf)
 
 <use 4684pb-1_fLeading_ETBias_log.pdf>
-<4684pb-1_fTrailing_ETBias_log.pdf, id=5053, 569.12625pt x 546.04pt>
+<4684pb-1_fTrailing_ETBias_log.pdf, id=5102, 569.12625pt x 546.04pt>
 File: 4684pb-1_fTrailing_ETBias_log.pdf Graphic file (type pdf)
 
 <use 4684pb-1_fTrailing_ETBias_log.pdf>
-<4684pb-1_gLeading_ETBias_log.pdf, id=5054, 569.12625pt x 546.04pt>
+<4684pb-1_gLeading_ETBias_log.pdf, id=5103, 569.12625pt x 546.04pt>
 File: 4684pb-1_gLeading_ETBias_log.pdf Graphic file (type pdf)
 
 <use 4684pb-1_gLeading_ETBias_log.pdf>
-<4684pb-1_gTrailing_ETBias_log.pdf, id=5055, 569.12625pt x 546.04pt>
+<4684pb-1_gTrailing_ETBias_log.pdf, id=5104, 569.12625pt x 546.04pt>
 File: 4684pb-1_gTrailing_ETBias_log.pdf Graphic file (type pdf)
 
 <use 4684pb-1_gTrailing_ETBias_log.pdf>
-<4684pb-1_single_ETBias.pdf, id=5056, 569.12625pt x 546.04pt>
+<4684pb-1_single_ETBias.pdf, id=5105, 569.12625pt x 546.04pt>
 File: 4684pb-1_single_ETBias.pdf Graphic file (type pdf)
 
 <use 4684pb-1_single_ETBias.pdf>
-<ee_di-EM_vs_dijet_pT_reweighting.pdf, id=5059, 569.12625pt x 546.04pt>
+<ee_di-EM_vs_dijet_pT_reweighting.pdf, id=5108, 569.12625pt x 546.04pt>
 File: ee_di-EM_vs_dijet_pT_reweighting.pdf Graphic file (type pdf)
 
 <use ee_di-EM_vs_dijet_pT_reweighting.pdf>
-<ff_di-EM_vs_dijet_pT_reweighting.pdf, id=5060, 569.12625pt x 546.04pt>
+<ff_di-EM_vs_dijet_pT_reweighting.pdf, id=5109, 569.12625pt x 546.04pt>
 File: ff_di-EM_vs_dijet_pT_reweighting.pdf Graphic file (type pdf)
 
 <use ff_di-EM_vs_dijet_pT_reweighting.pdf>
-<ee_over_ff_di-EM_vs_dijet_pT_reweighting.pdf, id=5061, 569.12625pt x 259.97125
+<ee_over_ff_di-EM_vs_dijet_pT_reweighting.pdf, id=5110, 569.12625pt x 259.97125
 pt>
 File: ee_over_ff_di-EM_vs_dijet_pT_reweighting.pdf Graphic file (type pdf)
  <use ee_over_ff_di-EM_vs_dijet_pT_reweighting.pdf>
-<ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom.pdf, id=5062, 569.12625pt x 259.
+<ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom.pdf, id=5111, 569.12625pt x 259.
 97125pt>
 File: ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom.pdf Graphic file (type pdf)
 
  <use ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom.pdf>
-<ee_dijet_pT_and_Nj_vs_no_reweighting.pdf, id=5066, 569.12625pt x 546.04pt>
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 68 undefined on input 
+line 285.
+
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 68 undefined on input 
+line 285.
+
+[68 <./gg_MET_vs_di-EM_pT.pdf, page is rotated 90 degrees> <./ee_MET_vs_di-EM_p
+T.pdf, page is rotated 90 degrees> <./ff_MET_vs_di-EM_pT.pdf, page is rotated 9
+0 degrees>] [69 <./ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, page is rota
+ted 90 degrees> <./ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, page is rota
+ted 90 degrees> <./ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, page
+ is rotated 90 degrees> <./ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_z
+oom.pdf, page is rotated 90 degrees>] [70 <./4684pb-1_eLeading_ETBias_log.pdf, 
+page is rotated 90 degrees> <./4684pb-1_eTrailing_ETBias_log.pdf, page is rotat
+ed 90 degrees> <./4684pb-1_fLeading_ETBias_log.pdf, page is rotated 90 degrees>
+ <./4684pb-1_fTrailing_ETBias_log.pdf, page is rotated 90 degrees> <./4684pb-1_
+gLeading_ETBias_log.pdf, page is rotated 90 degrees> <./4684pb-1_gTrailing_ETBi
+as_log.pdf, page is rotated 90 degrees>] [71 <./4684pb-1_single_ETBias.pdf, pag
+e is rotated 90 degrees>] [72 <./ee_di-EM_vs_dijet_pT_reweighting.pdf, page is 
+rotated 90 degrees> <./ff_di-EM_vs_dijet_pT_reweighting.pdf, page is rotated 90
+ degrees> <./ee_over_ff_di-EM_vs_dijet_pT_reweighting.pdf, page is rotated 90 d
+egrees> <./ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom.pdf, page is rotated 9
+0 degrees>]
+<ee_dijet_pT_and_Nj_vs_no_reweighting.pdf, id=5936, 569.12625pt x 546.04pt>
 File: ee_dijet_pT_and_Nj_vs_no_reweighting.pdf Graphic file (type pdf)
 
 <use ee_dijet_pT_and_Nj_vs_no_reweighting.pdf>
-<ff_dijet_pT_and_Nj_vs_no_reweighting.pdf, id=5067, 569.12625pt x 546.04pt>
+<ff_dijet_pT_and_Nj_vs_no_reweighting.pdf, id=5937, 569.12625pt x 546.04pt>
 File: ff_dijet_pT_and_Nj_vs_no_reweighting.pdf Graphic file (type pdf)
 
 <use ff_dijet_pT_and_Nj_vs_no_reweighting.pdf>
-<ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting.pdf, id=5068, 569.12625pt x 259.9
+<ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting.pdf, id=5938, 569.12625pt x 259.9
 7125pt>
 File: ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting.pdf Graphic file (type pdf)
  <use ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting.pdf>
-<ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom.pdf, id=5069, 569.12625pt x 
+<ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom.pdf, id=5939, 569.12625pt x 
 259.97125pt>
 File: ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom.pdf Graphic file (type 
 pdf)
  <use ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom.pdf>
-[67 <./di-EM_pT_cartoon.pdf>] [68 <./ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting
-.pdf, page is rotated 90 degrees> <./ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting
-.pdf, page is rotated 90 degrees> <./ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_rew
-eighting.pdf, page is rotated 90 degrees> <./ee_over_ff_dijet_pT_and_Nj_vs_dije
-t_pT_reweighting_zoom.pdf, page is rotated 90 degrees>] [69 <./4684pb-1_eLeadin
-g_ETBias_log.pdf, page is rotated 90 degrees> <./4684pb-1_eTrailing_ETBias_log.
-pdf, page is rotated 90 degrees> <./4684pb-1_fLeading_ETBias_log.pdf, page is r
-otated 90 degrees> <./4684pb-1_fTrailing_ETBias_log.pdf, page is rotated 90 deg
-rees> <./4684pb-1_gLeading_ETBias_log.pdf, page is rotated 90 degrees> <./4684p
-b-1_gTrailing_ETBias_log.pdf, page is rotated 90 degrees>] [70 <./4684pb-1_sing
-le_ETBias.pdf, page is rotated 90 degrees>] [71 <./ee_di-EM_vs_dijet_pT_reweigh
-ting.pdf, page is rotated 90 degrees> <./ff_di-EM_vs_dijet_pT_reweighting.pdf, 
-page is rotated 90 degrees> <./ee_over_ff_di-EM_vs_dijet_pT_reweighting.pdf, pa
-ge is rotated 90 degrees> <./ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom.pdf,
- page is rotated 90 degrees>] [72 <./ee_dijet_pT_and_Nj_vs_no_reweighting.pdf, 
-page is rotated 90 degrees> <./ff_dijet_pT_and_Nj_vs_no_reweighting.pdf, page i
-s rotated 90 degrees> <./ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting.pdf, page
- is rotated 90 degrees> <./ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom.pd
-f, page is rotated 90 degrees>]
 
-LaTeX Warning: Reference `fig:ee_sideband_dijet_pT_weights' on page 73 undefine
-d on input line 300.
+LaTeX Warning: Reference `sec:Systematic Errors' on page 73 undefined on input 
+line 308.
 
-<eeLowSideband_0_jet_dijet_pT_weights.pdf, id=5990, 569.12625pt x 546.04pt>
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 73 undefined on input 
+line 308.
+
+[73 <./ee_dijet_pT_and_Nj_vs_no_reweighting.pdf, page is rotated 90 degrees> <.
+/ff_dijet_pT_and_Nj_vs_no_reweighting.pdf, page is rotated 90 degrees> <./ee_ov
+er_ff_dijet_pT_and_Nj_vs_no_reweighting.pdf, page is rotated 90 degrees> <./ee_
+over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom.pdf, page is rotated 90 degrees>
+]
+
+LaTeX Warning: Reference `fig:ee_sideband_dijet_pT_weights' on page 74 undefine
+d on input line 318.
+
+<eeLowSideband_0_jet_dijet_pT_weights.pdf, id=6128, 569.12625pt x 546.04pt>
 File: eeLowSideband_0_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use eeLowSideband_0_jet_dijet_pT_weights.pdf>
-<eeLowSideband_1_jet_dijet_pT_weights.pdf, id=5991, 569.12625pt x 546.04pt>
+<eeLowSideband_1_jet_dijet_pT_weights.pdf, id=6129, 569.12625pt x 546.04pt>
 File: eeLowSideband_1_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use eeLowSideband_1_jet_dijet_pT_weights.pdf>
-<eeLowSideband_2_jet_dijet_pT_weights.pdf, id=5992, 569.12625pt x 546.04pt>
+<eeLowSideband_2_jet_dijet_pT_weights.pdf, id=6130, 569.12625pt x 546.04pt>
 File: eeLowSideband_2_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use eeLowSideband_2_jet_dijet_pT_weights.pdf>
-<eeHighSideband_0_jet_dijet_pT_weights.pdf, id=5993, 569.12625pt x 546.04pt>
+<eeHighSideband_0_jet_dijet_pT_weights.pdf, id=6131, 569.12625pt x 546.04pt>
 File: eeHighSideband_0_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use eeHighSideband_0_jet_dijet_pT_weights.pdf>
-<eeHighSideband_1_jet_dijet_pT_weights.pdf, id=5994, 569.12625pt x 546.04pt>
+<eeHighSideband_1_jet_dijet_pT_weights.pdf, id=6132, 569.12625pt x 546.04pt>
 File: eeHighSideband_1_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use eeHighSideband_1_jet_dijet_pT_weights.pdf>
-<eeHighSideband_2_jet_dijet_pT_weights.pdf, id=5995, 569.12625pt x 546.04pt>
+<eeHighSideband_2_jet_dijet_pT_weights.pdf, id=6133, 569.12625pt x 546.04pt>
 File: eeHighSideband_2_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use eeHighSideband_2_jet_dijet_pT_weights.pdf>
-<all_ee_MET_spectra.pdf, id=5998, 569.12625pt x 546.04pt>
+<all_ee_MET_spectra.pdf, id=6136, 569.12625pt x 546.04pt>
 File: all_ee_MET_spectra.pdf Graphic file (type pdf)
 
-<use all_ee_MET_spectra.pdf> [73] [74 <./eeLowSideband_0_jet_dijet_pT_weights.p
-df, page is rotated 90 degrees> <./eeLowSideband_1_jet_dijet_pT_weights.pdf, pa
-ge is rotated 90 degrees> <./eeLowSideband_2_jet_dijet_pT_weights.pdf, page is 
-rotated 90 degrees> <./eeHighSideband_0_jet_dijet_pT_weights.pdf, page is rotat
-ed 90 degrees> <./eeHighSideband_1_jet_dijet_pT_weights.pdf, page is rotated 90
- degrees> <./eeHighSideband_2_jet_dijet_pT_weights.pdf, page is rotated 90 degr
-ees> <./all_ee_MET_spectra.pdf, page is rotated 90 degrees>]
-<0_jet_dijet_pT.pdf, id=6324, 569.12625pt x 546.04pt>
+<use all_ee_MET_spectra.pdf>
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 74 undefined on input 
+line 340.
+
+
+LaTeX Warning: Reference `sec:Systematic Errors' on page 74 undefined on input 
+line 340.
+
+[74] [75 <./eeLowSideband_0_jet_dijet_pT_weights.pdf, page is rotated 90 degree
+s> <./eeLowSideband_1_jet_dijet_pT_weights.pdf, page is rotated 90 degrees> <./
+eeLowSideband_2_jet_dijet_pT_weights.pdf, page is rotated 90 degrees> <./eeHigh
+Sideband_0_jet_dijet_pT_weights.pdf, page is rotated 90 degrees> <./eeHighSideb
+and_1_jet_dijet_pT_weights.pdf, page is rotated 90 degrees> <./eeHighSideband_2
+_jet_dijet_pT_weights.pdf, page is rotated 90 degrees> <./all_ee_MET_spectra.pd
+f, page is rotated 90 degrees>]
+<0_jet_dijet_pT.pdf, id=6458, 569.12625pt x 546.04pt>
 File: 0_jet_dijet_pT.pdf Graphic file (type pdf)
  <use 0_jet_dijet_pT.pdf>
-<1_jet_dijet_pT.pdf, id=6325, 569.12625pt x 546.04pt>
+<1_jet_dijet_pT.pdf, id=6459, 569.12625pt x 546.04pt>
 File: 1_jet_dijet_pT.pdf Graphic file (type pdf)
  <use 1_jet_dijet_pT.pdf>
-<2_jet_dijet_pT.pdf, id=6326, 569.12625pt x 546.04pt>
+<2_jet_dijet_pT.pdf, id=6460, 569.12625pt x 546.04pt>
 File: 2_jet_dijet_pT.pdf Graphic file (type pdf)
  <use 2_jet_dijet_pT.pdf>
-<ee_0_jet_dijet_pT_weights.pdf, id=6329, 569.12625pt x 546.04pt>
+<ee_0_jet_dijet_pT_weights.pdf, id=6463, 569.12625pt x 546.04pt>
 File: ee_0_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use ee_0_jet_dijet_pT_weights.pdf>
-<ee_1_jet_dijet_pT_weights.pdf, id=6330, 569.12625pt x 546.04pt>
+<ee_1_jet_dijet_pT_weights.pdf, id=6464, 569.12625pt x 546.04pt>
 File: ee_1_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use ee_1_jet_dijet_pT_weights.pdf>
-<ee_2_jet_dijet_pT_weights.pdf, id=6331, 569.12625pt x 546.04pt>
+<ee_2_jet_dijet_pT_weights.pdf, id=6465, 569.12625pt x 546.04pt>
 File: ee_2_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use ee_2_jet_dijet_pT_weights.pdf>
-<ff_0_jet_dijet_pT_weights.pdf, id=6332, 569.12625pt x 546.04pt>
+<ff_0_jet_dijet_pT_weights.pdf, id=6466, 569.12625pt x 546.04pt>
 File: ff_0_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use ff_0_jet_dijet_pT_weights.pdf>
-<ff_1_jet_dijet_pT_weights.pdf, id=6333, 569.12625pt x 546.04pt>
+<ff_1_jet_dijet_pT_weights.pdf, id=6467, 569.12625pt x 546.04pt>
 File: ff_1_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
 <use ff_1_jet_dijet_pT_weights.pdf>
-<ff_2_jet_dijet_pT_weights.pdf, id=6334, 569.12625pt x 546.04pt>
+<ff_2_jet_dijet_pT_weights.pdf, id=6468, 569.12625pt x 546.04pt>
 File: ff_2_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 
-<use ff_2_jet_dijet_pT_weights.pdf> [75 <./0_jet_dijet_pT.pdf, page is rotated 
+<use ff_2_jet_dijet_pT_weights.pdf> [76 <./0_jet_dijet_pT.pdf, page is rotated 
 90 degrees> <./1_jet_dijet_pT.pdf, page is rotated 90 degrees> <./2_jet_dijet_p
-T.pdf, page is rotated 90 degrees>] [76 <./ee_0_jet_dijet_pT_weights.pdf, page 
+T.pdf, page is rotated 90 degrees>] [77 <./ee_0_jet_dijet_pT_weights.pdf, page 
 is rotated 90 degrees> <./ee_1_jet_dijet_pT_weights.pdf, page is rotated 90 deg
 rees> <./ee_2_jet_dijet_pT_weights.pdf, page is rotated 90 degrees> <./ff_0_jet
 _dijet_pT_weights.pdf, page is rotated 90 degrees> <./ff_1_jet_dijet_pT_weights
 .pdf, page is rotated 90 degrees> <./ff_2_jet_dijet_pT_weights.pdf, page is rot
 ated 90 degrees>]
-Underfull \hbox (badness 10000) in paragraph at lines 404--404
+Underfull \hbox (badness 10000) in paragraph at lines 422--422
 []|\OT1/cmr/m/n/12 [-1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 404--404
+Underfull \hbox (badness 10000) in paragraph at lines 422--422
 []|\OT1/cmr/m/n/12 [1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--406
+Underfull \hbox (badness 10000) in paragraph at lines 424--424
 []|\OT1/cmr/m/n/12 [-1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--406
+Underfull \hbox (badness 10000) in paragraph at lines 424--424
 []|\OT1/cmr/m/n/12 [1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 408--408
+Underfull \hbox (badness 10000) in paragraph at lines 426--426
 []|$\OML/cmm/m/it/12 ee$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 408--408
+Underfull \hbox (badness 10000) in paragraph at lines 426--426
 \OT1/cmr/m/n/12 back-
  []
 
 
-Overfull \hbox (2.94756pt too wide) in paragraph at lines 408--408
+Overfull \hbox (2.94756pt too wide) in paragraph at lines 426--426
 []|\OT1/cmr/m/n/12 0.04750| 
  []
 
 
-Overfull \hbox (2.94756pt too wide) in paragraph at lines 408--409
+Overfull \hbox (2.94756pt too wide) in paragraph at lines 426--427
 []|\OT1/cmr/m/n/12 0.01908| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 410--410
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
 []|$\OML/cmm/m/it/12 e^^M$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 410--410
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
 \OT1/cmr/m/n/12 back-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 410--410
+Underfull \hbox (badness 10000) in paragraph at lines 428--428
 []|\OT1/cmr/m/n/12 [50.0,
  []
 
 
-LaTeX Warning: Reference `fig:feg_fits' on page 77 undefined on input line 416.
+LaTeX Warning: Reference `fig:feg_fits' on page 78 undefined on input line 434.
 
 
 
-LaTeX Warning: Reference `fig:feg_vs_pT_eta' on page 77 undefined on input line
- 416.
+LaTeX Warning: Reference `fig:feg_vs_pT_eta' on page 78 undefined on input line
+ 434.
 
 
-LaTeX Warning: Reference `fig:feg_vs_pT_eta' on page 77 undefined on input line
- 416.
+LaTeX Warning: Reference `fig:feg_vs_pT_eta' on page 78 undefined on input line
+ 434.
 
-[77]
+[78]
 
-LaTeX Warning: Reference `feg_fits' on page 78 undefined on input line 438.
+LaTeX Warning: Reference `feg_fits' on page 79 undefined on input line 456.
 
-<eg_MET.pdf, id=6758, 569.12625pt x 546.04pt>
+<eg_MET.pdf, id=6895, 569.12625pt x 546.04pt>
 File: eg_MET.pdf Graphic file (type pdf)
- <use eg_MET.pdf> [78 <./eg_MET.pdf, page is rotated 90 degrees>]
-<35pb-1_eg_closure_test.pdf, id=6811, 569.12625pt x 408.52625pt>
+ <use eg_MET.pdf>
+<35pb-1_eg_closure_test.pdf, id=6898, 569.12625pt x 408.52625pt>
 File: 35pb-1_eg_closure_test.pdf Graphic file (type pdf)
 
-<use 35pb-1_eg_closure_test.pdf>) (./appA.tex [79 <./35pb-1_eg_closure_test.pdf
->] [80]
+<use 35pb-1_eg_closure_test.pdf> [79] [80 <./eg_MET.pdf, page is rotated 90 deg
+rees>] [81 <./35pb-1_eg_closure_test.pdf>]
+<avg_MET_vs_di-EM_pT.pdf, id=6973, 569.12625pt x 502.87875pt>
+File: avg_MET_vs_di-EM_pT.pdf Graphic file (type pdf)
+
+<use avg_MET_vs_di-EM_pT.pdf> [82 <./avg_MET_vs_di-EM_pT.pdf, page is rotated 9
+0 degrees>] <mee_bkg_shape_error.pdf, id=7025, 511.9125pt x 739.76375pt>
+File: mee_bkg_shape_error.pdf Graphic file (type pdf)
+
+<use mee_bkg_shape_error.pdf> [83 <./mee_bkg_shape_error.pdf>]
+<ee_di-EM_pT_bin_size_comparison.pdf, id=7075, 569.12625pt x 546.04pt>
+File: ee_di-EM_pT_bin_size_comparison.pdf Graphic file (type pdf)
+
+<use ee_di-EM_pT_bin_size_comparison.pdf>
+<ff_di-EM_pT_bin_size_comparison.pdf, id=7076, 569.12625pt x 546.04pt>
+File: ff_di-EM_pT_bin_size_comparison.pdf Graphic file (type pdf)
+
+<use ff_di-EM_pT_bin_size_comparison.pdf>
+<gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=7083, 569.12
+625pt x 259.97125pt>
+File: gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf Graphic fil
+e (type pdf)
+
+<use gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf>
+<gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=7084, 569.12
+625pt x 259.97125pt>
+File: gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf Graphic fil
+e (type pdf)
+
+<use gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf>
+<ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=7085, 569.12
+625pt x 259.97125pt>
+File: ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf Graphic fil
+e (type pdf)
+
+<use ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf>
+
+LaTeX Warning: Reference `eg_background_prediction_errors' on page 84 undefined
+ on input line 534.
+
+
+LaTeX Warning: Reference `total_background_prediction_errors' on page 84 undefi
+ned on input line 534.
+
+[84 <./ee_di-EM_pT_bin_size_comparison.pdf, page is rotated 90 degrees> <./ff_d
+i-EM_pT_bin_size_comparison.pdf, page is rotated 90 degrees>]
+
+LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
+s' on page 85 undefined on input line 693.
+
+[85 <./gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, page is r
+otated 90 degrees> <./gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom
+.pdf, page is rotated 90 degrees> <./ee_over_ff_Type-I_MET_corrections_vs_uncor
+rected_MET_zoom.pdf, page is rotated 90 degrees>] [86]
+<MET_final_ee_ff_eg.pdf, id=7332, 511.9125pt x 739.76375pt>
+File: MET_final_ee_ff_eg.pdf Graphic file (type pdf)
+
+<use MET_final_ee_ff_eg.pdf>
+<MET_final_ff_eg.pdf, id=7335, 511.9125pt x 739.76375pt>
+File: MET_final_ff_eg.pdf Graphic file (type pdf)
+
+<use MET_final_ff_eg.pdf>
+
+LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
+s' on page 87 undefined on input line 705.
+
+
+LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
+s' on page 87 undefined on input line 705.
+
+
+Overfull \hbox (58.57668pt too wide) in paragraph at lines 707--724
+ [][] 
+ []
+
+) (./appA.tex [87 <./MET_final_ee_ff_eg.pdf> <./MET_final_ff_eg.pdf>] [88]
 Appendix A.
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 12.
 
-[81
+[89
 
-] [82]) [83] [84
+] [90]) [91] [92
 
-] [85]
-Underfull \hbox (badness 10000) in paragraph at lines 107--109
+] [93]
+Underfull \hbox (badness 10000) in paragraph at lines 110--112
 []\OT1/cmr/m/n/12 Y. Yang, []$\OT1/cmtt/m/n/12 http : / / www . hep . caltech .
  edu / cms / posters / Pi0Poster _
  []
 
-[86]
-Underfull \hbox (badness 10000) in paragraph at lines 130--131
+[94]
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
 [][]$\OT1/cmtt/m/n/12 http : / / www-[]cdf . fnal . gov / physics / new / top /
  2004 / jets / cdfpublic . html$[]
  []
 
-[87]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 156.
- [88]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 156.
+[95]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 159.
+ [96]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 159.
  (./dissertation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 156.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 159.
 Package rerunfilecheck Info: File `dissertation.out' has not changed.
-(rerunfilecheck)             Checksum: 1D14CBEB4C8BE40CFD109D36FFFE30B9;2321.
+(rerunfilecheck)             Checksum: BCE759C0F1A38B7D3AEDC93B13DB8CF7;2339.
 
 
 LaTeX Warning: There were undefined references.
@@ -1445,62 +1661,83 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 8890 strings out of 493747
- 144391 string characters out of 3143546
- 249663 words of memory out of 3000000
- 11558 multiletter control sequences out of 15000+200000
+ 9079 strings out of 493747
+ 149762 string characters out of 3143546
+ 256369 words of memory out of 3000000
+ 11676 multiletter control sequences out of 15000+200000
  19578 words of font info for 73 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  44i,18n,50p,2675b,558s stack positions out of 5000i,500n,10000p,200000b,50000s
-</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
-></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
-</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
-usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></u
-sr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb>
-</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
-/usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></
-usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></us
-r/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
-local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/lo
-cal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loca
-l/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/
-texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/te
-xlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texl
-ive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive
-/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/20
-10/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2010/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2010/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2010/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2010/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2010/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2010/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2010/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2010/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/local/texlive/2010/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2010/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1
-/public/mathpazo/fplmr.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/publ
-ic/mathpazo/fplmri.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public/a
-msfonts/symbols/msam10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
-courier/ucrr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/helvetic
-/uhvb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/helvetic/uhvr8a
-.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></
-usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/lo
-cal/texlive/2010/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive
-/2010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texm
-f-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fon
-ts/type1/urw/times/utmri8a.pfb>
-Output written on dissertation.pdf (89 pages, 5854816 bytes).
+pdfTeX warning (dest): name{table.caption.67} has been referenced but does no
+t exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{figure.caption.66} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{table.caption.62} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{figure.caption.56} has been referenced but does not
+ exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{table.caption.55} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{table.caption.43} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{figure.caption.44} has been referenced but does not
+ exist, replaced by a fixed one
+
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><
+/usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></
+usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></us
+r/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr
+/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></
+usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb
+></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+</usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
+/usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></u
+sr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/l
+ocal/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/loc
+al/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local
+/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/t
+exlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/tex
+live/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texliv
+e/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2
+010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2010
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2010/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2010/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2010/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2010/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2010/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2010/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2010/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/local/texlive/2010/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2010/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2010/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2010/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2010/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2010/texmf-dist/fonts/typ
+e1/public/mathpazo/fplmr.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/pu
+blic/mathpazo/fplmri.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/public
+/amsfonts/symbols/msam10.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/ur
+w/courier/ucrr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/helvet
+ic/uhvb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/helvetic/uhvr
+8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb>
+</usr/local/texlive/2010/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb></usr/
+local/texlive/2010/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texli
+ve/2010/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/te
+xmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/f
+onts/type1/urw/times/utmri8a.pfb>
+Output written on dissertation.pdf (97 pages, 6010258 bytes).
 PDF statistics:
- 7051 PDF objects out of 7423 (max. 8388607)
- 4885 compressed objects within 49 object streams
- 366 named destinations out of 1000 (max. 500000)
- 702 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 7680 PDF objects out of 8907 (max. 8388607)
+ 5146 compressed objects within 52 object streams
+ 407 named destinations out of 1000 (max. 500000)
+ 782 words of extra memory for PDF output out of 10000 (max. 10000000)
 

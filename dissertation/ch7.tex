@@ -4,10 +4,7 @@
 \chapter{Data Analysis}
 \label{chap:Data Analysis}
 
-%update the int. lumi. everywhere
-\textcolor{red}{\textbf{Update the int. lumi. everywhere.}}
-
-The signature of GGM SUSY particle production in this search is an excess of two-photon events with high \MET.  \MET is reconstructed using the particle flow algorithm as described in Sec.~\ref{sec:MET}.  Candidate two-photon events, as well as control events, are selected according to the offline object criteria presented in Secs.~\ref{sec:Photons} and~\ref{sec:Electrons}, the event quality criteria in Sec.~\ref{sec:Event Quality}, and the trigger requirements in Sec.~\ref{sec:HLT}.  These are summarized in Table~\ref{tab:selection_summary}.
+The signature of GGM SUSY particle production in this search is an excess of two-photon events with high \MET.  \MET is reconstructed using the particle flow algorithm as described in Sec.~\ref{sec:MET}.  Candidate two-photon events, as well as control events, are selected according to the offline object criteria presented in Secs.~\ref{sec:Photons} ,~\ref{sec:Electrons}, and~\ref{sec:Jets}; the event quality criteria in Sec.~\ref{sec:Event Quality}; and the trigger requirements in Sec.~\ref{sec:HLT}.  These are summarized in Table~\ref{tab:selection_summary}.
 
 \begin{table}[hcbp]
 \caption{Selection criteria for $\gamma\gamma$, $e\gamma$, $ee$, and $\mathit{ff}$ events.}
@@ -19,8 +16,6 @@ The signature of GGM SUSY particle production in this search is an excess of two
 & $\gamma\gamma$ & $e\gamma$ & $ee$ & $\mathit{ff}$ \\
 \hline
 \hline
-%HLT & \begin{tabular}[c]{@{}c@{}}26IsoVL/\\18\\\\36CaloIdL/\\22CaloIdL\\\\36CaloIdLIsoVL/\\22CaloIdLIsoVL\end{tabular} & \begin{tabular}[c]{@{}c@{}}26IsoVL/\\18\\\\36CaloIdL/\\22CaloIdL\\\\36CaloIdLIsoVL/\\22CaloIdLIsoVL\end{tabular} & \begin{tabular}[c]{@{}c@{}}26IsoVL/\\18\\\\36CaloIdL/\\22CaloIdL\\\\36CaloIdLIsoVL/\\22CaloIdLIsoVL\end{tabular} & \begin{tabular}[c]{@{}c@{}}26IsoVL/\\18\\\\36CaloIdL/\\22CaloIdL\\\\36CaloIdLIsoVL/\\22CaloIdLIsoVL\\\\36CaloIdLIsoVL/\\22R9Id\\\\36R9Id/\\22CaloIdLIsoVL\\\\36R9Id/\\22R9Id\end{tabular} \\
-%\hline
 HLT match & IsoVL & IsoVL & IsoVL & IsoVL $||$ R9Id \\
 \hline
 $E_{T}$ & \begin{tabular}[c]{@{}c@{}}$> 40$/\\$> 25$ GeV\end{tabular} & \begin{tabular}[c]{@{}c@{}}$> 40$/\\$> 25$ GeV\end{tabular} & \begin{tabular}[c]{@{}c@{}}$> 40$/\\$> 25$ GeV\end{tabular} & \begin{tabular}[c]{@{}c@{}}$> 40$/\\$> 25$ GeV\end{tabular} \\
@@ -56,54 +51,34 @@ This search utilizes 4.7 $\mbox{fb}^{-1}$ of CMS data collected during the perio
 \item \verb+/Photon/Run2011B-PromptReco-v1/AOD+
 \end{itemize}
 
-The search strategy is to model the backgrounds to the GGM SUSY signal using \MET shape templates derived from the control samples, and then to look for a high-\MET excess above the estimated background in the $\gamma\gamma$ sample.  There are two categories of backgrounds: QCD processes with no real \MET and electroweak processes with real \MET from neutrinos.  The relevant QCD background processes are multijet production with at least two jets faking photons, photon + jet production with at least one jet faking a photon, diphoton production, and $Z$ production with a radiated photon where at least one of the $Z$ decay products (typically a jet) fakes a photon.  The relevant electroweak background processes, which are small compared to the QCD background, involve $W\rightarrow e\nu$ decay with a recoiling jet that fakes a photon or a real radiated photon (the $W$ may come from the decay of a top quark in $t\bar{t}$ events).  In both cases, the electron is misidentified as a photon due to a small inefficiency in reconstructing the electron pixel seed.  The main diagrams contributing to the QCD(electroweak) backgrounds are shown in Figure~\ref{fig:QCD_background_diagrams}(\ref{fig:EW_background_diagrams}).  \textcolor{red}{\textbf{Generate these Feynman diagrams.}}
+The search strategy is to model the backgrounds to the GGM SUSY signal using \MET shape templates derived from the control samples, and then to look for a high-\MET excess above the estimated background in the $\gamma\gamma$ sample.  There are two categories of backgrounds: QCD processes with no real \MET and electroweak processes with real \MET from neutrinos.  The relevant QCD background processes are multijet production with at least two jets faking photons, photon + jet production with at least one jet faking a photon, and diphoton production, and $Z$ production with a radiated photon where at least one of the $Z$ decay products (typically a jet) fakes a photon.  The relevant electroweak background processes, which are small compared to the QCD background, involve $W\rightarrow e\nu$ decay with a recoiling jet that fakes a photon or a real radiated photon (the $W$ may come from the decay of a top quark in $t\bar{t}$ events).  In both cases, the electron is misidentified as a photon due to a small inefficiency in reconstructing the electron pixel seed.  The main diagrams contributing to the QCD(electroweak) backgrounds are shown in Figure~\ref{fig:QCD_background_diagrams}(\ref{fig:EW_background_diagrams}).
 
-%QCD EM-enriched (isub=11,12,13,28,53,68) (mstp82=4 ==> multiple int. assuming varying impact parameter and hadronic overlap consistent with a double gaussian matter distribution, but turning off at low pt)
-%q_i q_j --> q_i q_j
-%q_i q_i --> q_j q_j
-%q_i q_i_bar --> g g
-%q_i g --> q_i g
-%g g --> q_i q_i_bar
-%g g --> g g
-%photon + jet EM enriched (isub=14,18,29)
-%q_i q_i_bar --> g gamma
-%q_i q_i_bar --> gamma gamma
-%q_i g --> q_i gamma
-%diphoton + jets (pp-->gammagamma, +1 j, +2 j (j ==> sum over gluons and light quarks, not t/b)), tree level to order X (QCD) and Y (QED)
-%DiPhotonBorn: q_i q_i_bar --> gamma gamma
-%DiPhotonBox:  g g --> gamma gamma
-%W + jets
-%W + photon
-%Z + photon
-%
+\begin{figure}
+	\centering
+	\subfloat[Dijet production via $gg$ and $qg$ interactions.]{\label{fig:dijet}\includegraphics[scale=1.0]{dijet_cropped}}
+	\\
+	\subfloat[Photon + jet production via $qg$ interactions.]{\label{fig:qg_to_qa}\includegraphics[scale=1.0]{qg_to_qa}}
+	\hspace{1cm}
+	\subfloat[Diphoton production via $q\bar{q}$ and $gg$ interactions.]{\label{fig:diphoton}\includegraphics[scale=1.0]{diphoton_cropped}}
+	\hspace{1cm}
+	\subfloat[$Z\gamma$ production.]{\label{fig:Zgamma}\includegraphics[scale=1.0]{Zgamma_cropped}}
+	\caption{Representative Feynman diagrams of some QCD backgrounds to the GGM SUSY search.}
+	\label{fig:QCD_background_diagrams}
+\end{figure}
 
-%Wgg, Zgg (negligible)
+\begin{figure}
+	\centering
+	\subfloat[$W\gamma$ production.]{\label{fig:Wgamma}\includegraphics[scale=1.0]{qq_to_W_to_enu_to_enua}}
+	\hspace{1cm}
+	\subfloat[$W$ + jet production.]{\label{fig:W_jet}\includegraphics[scale=1.0]{qg_to_qW_to_qenu}}
+	\hspace{1cm}
+	\subfloat[$t\bar{t}$ production.]{\label{fig:ttbar}\includegraphics[scale=0.5]{gg_to_tt_to_WbWb_to_ffbenub_to_ffbenuba}}
+	\caption{Representative Feynman diagrams of some electroweak backgrounds to the GGM SUSY search.}
+	\label{fig:EW_background_diagrams}
+\end{figure}
 
-%\begin{figure}
-%	\centering
-%	\subfloat[Dijet production via $gg$ and $qg$ interactions.]{\label{fig:dijet}\includegraphics[scale=1.35]{dijet}}
-%	\hspace{1cm}
-%	\subfloat[Photon + jet production via $qg$ interactions.]{\label{fig:photon_jet}\includegraphics[scale=1.35]{photon_jet}}
-%	\\
-%	\subfloat[Diphoton production via $q\bar{q}$ and $gg$ interactions.]{\label{fig:diphoton}\includegraphics[scale=1.8]{diphoton}}
-%	\hspace{1cm}
-%	\subfloat[$Z\gamma$ production.]{\label{fig:Zgamma}\includegraphics[scale=1.8]{Zgamma}}
-%	\caption{Representative Feynman diagrams of some QCD backgrounds to the GGM SUSY search with instrumental effects described.}
-%	\label{fig:QCD_background_diagrams}
-%\end{figure}
-%
-%\begin{figure}
-%	\centering
-%	\subfloat[$W\gamma$ production.]{\label{fig:Wgamma}\includegraphics[scale=1.35]{Wgamma}}
-%	\hspace{1cm}
-%	\subfloat[$W$ + jet production.]{\label{fig:W_jet}\includegraphics[scale=1.35]{W_jet}}
-%	\hspace{1cm}
-%	\subfloat[$t\bar{t}$ production.]{\label{fig:ttbar}\includegraphics[scale=1.35]{ttbar}}
-%	\caption{Representative Feynman diagrams of some electoweak backgrounds to the GGM SUSY search with instrumental effects described.}
-%	\label{fig:EW_background_diagrams}
-%\end{figure}
-
-Figure~\ref{fig:MET_data_vs_MC_backgrounds} shows the \MET spectrum of the $\gamma\gamma$ search data sample overlaid on the \MET spectra of MC simulated background components.  The MC spectra are normalized to the integrated luminosity of the $\gamma\gamma$ data sample.  \textcolor{red}{\textbf{Make this plot.}}  The dominant background components are QCD inclusive photon processes.  The MC is not used in the actual background estimation.  It is just shown here to illustrate the breakdown of backgrounds.
+%include a data/MC comparison if time permits
+%Figure~\ref{fig:MET_data_vs_MC_backgrounds} shows the \MET spectrum of the $\gamma\gamma$ search data sample overlaid on the \MET spectra of MC simulated background components.  The MC spectra are normalized to the integrated luminosity of the $\gamma\gamma$ data sample.  The dominant background components are QCD inclusive photon processes.  The MC is not used in the actual background estimation.  It is just shown here to illustrate the breakdown of backgrounds.
 
 %\begin{figure}
 %	\centering
@@ -112,7 +87,10 @@ Figure~\ref{fig:MET_data_vs_MC_backgrounds} shows the \MET spectrum of the $\gam
 %	\label{fig:MET_data_vs_MC_backgrounds}
 %\end{figure}
 
-Data control samples are used to model all of the backgrounds.  The primary control sample used to model the QCD background is the $\mathit{ff}$ sample, which is similar to the candidate $\gamma\gamma$ sample but with combined isolation or $\sigma_{i\eta i\eta}$ cuts inverted.  The cuts on these variables are used to distinguish between photons and jets, so by inverting those cuts, the resulting $\mathit{ff}$ sample becomes enriched with QCD dijets.  Because the fake photons are still required to pass a tight cut on $H/E$, they are guaranteed to be very electromagnetic jets, with an EM energy scale and resolution similar to that of the candidate photons.  This insures that the resulting estimate of the \MET shape does not have too long of a tail from severe HCAL mis-measurements that are actually rare in the $\gamma\gamma$ sample, as shown in Figure~\ref{fig:MET_MC_ggVsFF_varyHOverE}.  \textcolor{red}{\textbf{Plot the $\gamma\gamma$/$\mathit{ff}$ \MET agreement for different values of the ff $H/E$ cut in MC.  Make the same plot in data for a restricted \MET range?}}
+Data control samples are used to model all of the backgrounds.  The primary control sample used to model the QCD background is the $\mathit{ff}$ sample, which is similar to the candidate $\gamma\gamma$ sample but with combined isolation or $\sigma_{i\eta i\eta}$ cuts inverted.  The cuts on these variables are used to distinguish between photons and jets, so by inverting those cuts, the resulting $\mathit{ff}$ sample becomes enriched with QCD dijets.  Because the fake photons are still required to pass a tight cut on $H/E$, they are guaranteed to be very electromagnetic jets, with an EM energy scale and resolution similar to that of the candidate photons.  This insures that the resulting estimate of the \MET shape does not have too long of a tail from severe HCAL mis-measurements that are actually rare in the $\gamma\gamma$ sample.
+
+%append this line to the previous paragraph if time permits
+%, as shown in Figure~\ref{fig:MET_MC_ggVsFF_varyHOverE}.  \textcolor{red}{\textbf{Plot the $\gamma\gamma$/$\mathit{ff}$ \MET agreement for different values of the ff $H/E$ cut in MC.  Make the same plot in data for a restricted \MET range?}}
 
 %\begin{figure}
 %	\centering
@@ -127,7 +105,7 @@ As a cross-check, the $ee$ sample is also used to model the QCD background.  Thi
 
 Finally, the $e\gamma$ sample is used to model the electroweak background from $W\rightarrow e\nu$ decays.  The $e\gamma$ \MET distribution is scaled by the electron$\rightarrow$photon misidentification rate to predict the number of $W\gamma$, $W$ + jet, and $t\bar{t}$ events in the $\gamma\gamma$ sample.
 
-The remainder of this chapter describes the data analysis procedures and the final results of the search.  Sec.~\ref{sec:Modeling the QCD Background} addresses the QCD background estimation.  Sec.~\ref{sec:Modeling the Electroweak background} addresses the electroweak background estimation.  The chapter concludes with a discussion of systematic errors in Sec.~\ref{sec:Systematic Errors} and a presentation of the final results in Sec.~\ref{sec:Results}.
+The remainder of this chapter describes the data analysis procedures and the final results of the search.  Sec.~\ref{sec:Modeling the QCD Background} addresses the QCD background estimation.  Sec.~\ref{sec:Modeling the Electroweak Background} addresses the electroweak background estimation.  The chapter concludes with a discussion of systematic errors in Sec.~\ref{sec:Errors on the Background Prediction} and a presentation of the final results in Sec.~\ref{sec:Results}.
 
 \section{Modeling the QCD Background}
 \label{sec:Modeling the QCD Background}
@@ -491,12 +469,14 @@ The dominant source of systematic error on the background estimate is the slight
 %calculate the error on the EW background and what fraction of the total background it is
 The second largest source of systematic error comes from the $p_{T}$ dependence of the $e\rightarrow\gamma$ misidentification rate (see~\ref{sec:Modeling the Electroweak Background}).  For \MET $>$ 100 GeV, the expected electroweak background is 3.6 $\pm$ \textcolor{red}{\textbf{XXX}} events, so this error amounts to \textcolor{red}{\textbf{XXX}}\% of the total QCD + electroweak background estimate.
 
-%%check effect of JES uncertainty on di-EM pT weights?
-%%move this to the signal acceptance section
-%%still need to figure out if JES affects the background prediction
-%The effect of jet energy scale uncertainty on the final background estimate, through binning of events by number of jets, is taken as 2\%.  This figure comes from an earlier version of this analysis based on 35 $\mbox{pb}^{-1}$ of LHC data \cite{CMS_GMSB_35pb-1}.  \textcolor{red}{\textbf{This figure comes from a totally different study.  We have not checked how JES uncertainties affect the di-EM $p_{T}$ weights.  Should we?}}
+Finally, the assumption of a constant $t\bar{t}$ and $W$ + jets background shape under the $Z$ peak in the $ee$ sample induces a systematic error on the $ee$ sideband-subtracted background prediction.  To assess the magnitude of this error, the sideband subtraction (see Sec.~\ref{sec:Reweighting}) is performed once using only the prediction from the high sideband, and once using only the prediction from the low sideband.  In each of these cases, the prediction is weighted by a factor of two, to account for the fact that the sideband regions are only half as wide (10 GeV) as the signal region (20 GeV).  The maximum variation from the nominal $ee$ estimate is taken as the error, which amounts to \textcolor{red}{\textbf{XXX}}\% for \MET $>$ 100 GeV.  \textcolor{red}{\textbf{Is this the right way to do this?}}  \MET distributions using the nominal $ee$ sideband subtraction, the low-sideband-only subtraction, and the high-sideband-only subtraction are shown in Figure~\ref{fig:mee_bkg_shape_error}.
 
-Finally, the assumption of a constant $t\bar{t}$ and $W$ + jets background shape under the $Z$ peak in the $ee$ sample induces a systematic error on the $ee$ sideband-subtracted background prediction.  To assess the magnitude of this error, the sideband subtraction (see Sec.~\ref{sec:Reweighting}) is performed once using only the prediction from the high sideband, and once using only the prediction from the low sideband.  In each of these cases, the prediction is weighted by a factor of two, to account for the fact that the sideband regions are only half as wide (10 GeV) as the signal region (20 GeV).  The maximum variation from the nominal $ee$ estimate is taken as the error, which amounts to \textcolor{red}{\textbf{XXX}}\% for \MET $>$ 100 GeV.  \textcolor{red}{\textbf{Is this the right way to do this?}}
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.4]{mee_bkg_shape_error}
+	\caption{$ee$ \MET distributions using the nominal sideband subtraction (black circles), low sideband only (red squares), and high sideband only (blue triangles).  The bottom plot shows the ratio of the low sideband distribution to the nominal (red squares) and the ratio of the high sideband distribution to the nominal (blue triangles).}
+	\label{fig:mee_bkg_shape_error}
+\end{figure}
 
 The uncertainty in how to define the (di-EM $p_{T}$, $N_{\mathrm{j}}$) bins, especially at high di-EM $p_{T}$ where the statistics are low, is covered by the 1000-toys procedure as long as the bins are not too coarse.  This is shown in Figure~\ref{fig:di-EM_pT_bin_size_comparison}.  If the bins are too coarse, the details of the shape of the di-EM $p_{T}$ spectra are lost, and the reweighting has a smaller effect.
 
@@ -534,8 +514,7 @@ Tables~\ref{tab:ee_background_prediction_errors} and~\ref{tab:ff_background_pred
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-
-Total & 3.6 & 7.8 & 16 & 24 & 22 \\
+Total & 3.9 & 8.1 & 16 & 25 & 25 \\
 \hline
 \hspace{0.5cm}Statistics & 3.6 & 7.8 & 16 & 24 & 22 \\
 \hline
@@ -547,29 +526,11 @@ Total & 3.6 & 7.8 & 16 & 24 & 22 \\
 \hspace{1.5cm}In norm. region & 0.2 & 0.2 & 0.21 & 0.25 & 0.23 \\
 \hspace{1.5cm}In this \MET bin & 0.68 & 1.2 & 3.6 & 4.2 & 7.8 \\
 \hline
-\hspace{0.5cm}Systematics & 0.0015 & 0.0015 & 0.0016 & 0.0019 & 0.0018 \\
+\hspace{0.5cm}Systematics & 1.4 & 2 & 0.72 & 5.5 & 12 \\
 \hline
 \hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0015 & 0.0016 & 0.0019 & 0.0018 \\
-\hspace{1cm}$m_{ee}$ background shape & 0 & 0 & 0 & 0 & 0 \\
+\hspace{1cm}$m_{ee}$ background shape & 1.4 & 2 & 0.72 & 5.5 & 12 \\
 \hline
-
-%Total & 3.4 & 13 & 30 & 30 & \\
-%\hline
-%\hspace{0.5cm}Statistics & 3.4 & 13 & 30 & 30 & \\
-%\hline
-%\hspace{1cm}No. events & 3.3 & 13 & 30 & 25 & \\
-%\hspace{1.5cm}In norm. region & 0.43 & 0.49 & 0.59 & 0.44 & \\
-%\hspace{1.5cm}In this \MET bin & 3.2 & 13 & 30 & 25 & \\
-%\hline
-%\hspace{1cm}Reweighting & 0.8 & 3.2 & 5.1 & 15 & \\
-%\hspace{1.5cm}In norm. region & 0.2 & 0.22 & 0.27 & 0.2 & \\
-%\hspace{1.5cm}In this \MET bin & 0.78 & 3.2 & 5 & 15 & \\
-%\hline
-%\hspace{0.5cm}Systematics & 0.0015 & 0.0017 & 0.002 & 0.0015 & \\
-%\hline
-%\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0017 & 0.002 & 0.0015 & \\
-%\hspace{1cm}$m_{ee}$ background shape & 0 & 0 & 0 & 0 & \\
-%\hline
 \end{tabular}
 \label{tab:ee_background_prediction_errors}
 \end{table}
@@ -584,7 +545,6 @@ Total & 3.6 & 7.8 & 16 & 24 & 22 \\
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-
 Total & 15 & 25 & 61 & 34 & 64 \\
 \hline
 \hspace{0.5cm}Statistics & 7.2 & 14 & 30 & 34 & 38 \\
@@ -602,24 +562,6 @@ Total & 15 & 25 & 61 & 34 & 64 \\
 \hspace{1cm}$ee$/$\mathit{ff}$ difference & 13 & 21 & 53 & 5.5 & 52 \\
 \hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0015 & 0.0015 & 0.0015 & 0.0015 \\
 \hline
-
-%Total & 16 & 38 & 48 & 1.5e+02 & \\
-%\hline
-%\hspace{0.5cm}Statistics & 6.4 & 22 & 41 & 85 & \\
-%\hline
-%\hspace{1cm}No. events & 6.3 & 22 & 40 & 78 & \\
-%\hspace{1.5cm}In norm. region & 0.64 & 0.64 & 0.64 & 0.64 & \\
-%\hspace{1.5cm}In this \MET bin & 6.3 & 22 & 40 & 78 & \\
-%\hline
-%\hspace{1cm}Reweighting & 1.1 & 5.2 & 12 & 35 & \\
-%\hspace{1.5cm}In norm. region & 0.28 & 0.28 & 0.28 & 0.28 & \\
-%\hspace{1.5cm}In this \MET bin & 1.1 & 5.2 & 12 & 35 & \\
-%\hline
-%\hspace{0.5cm}Systematics & 15 & 31 & 25 & 1.2e+02 & \\
-%\hline
-%\hspace{1cm}$ee$/$\mathit{ff}$ difference & 15 & 31 & 25 & 1.2e+02 & \\
-%\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0015 & 0.0015 & 0.0015 & \\
-%\hline
 \end{tabular}
 \label{tab:ff_background_prediction_errors}
 \end{table}
@@ -634,20 +576,12 @@ Total & 15 & 25 & 61 & 34 & 64 \\
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-
 Total & 34 & 34 & 35 & 35 & 34 \\
 \hline
 \hspace{0.5cm}Statistics & 3.6 & 5.2 & 6.7 & 7.2 & 6.5 \\
 \hline
 \hspace{0.5cm}Systematics ($f_{e\rightarrow\gamma}$) & 34 & 34 & 34 & 34 & 34 \\
 \hline
-
-%Total & 34 & 34 & 35 & 36 & \\
-%\hline
-%\hspace{0.5cm}Statistics & 2.9 & 4.9 & 7.6 & 13 & \\
-%\hline
-%\hspace{0.5cm}Systematics ($f_{e\rightarrow\gamma}$) & 34 & 34 & 34 & 34 & \\
-%\hline
 \end{tabular}
 \label{tab:eg_background_prediction_errors}
 \end{table}
@@ -662,17 +596,16 @@ Total & 34 & 34 & 35 & 35 & 34 \\
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-
-Total ($ee$ + $e\gamma$) & 3.7 & 7.6 & 15 & 21 & 20 \\
+Total ($ee$ + $e\gamma$) & 4 & 7.9 & 15 & 22 & 22 \\
 \hline
 \hspace{0.5cm}Statistics & 3.4 & 7.3 & 14 & 21 & 18 \\
 \hline
 \hspace{1cm}QCD & 3.4 & 7.2 & 14 & 21 & 18 \\
 \hspace{1cm}Electroweak & 0.13 & 0.32 & 0.57 & 0.84 & 0.81 \\
 \hline
-\hspace{0.5cm}Systematics & 1.3 & 2.1 & 2.9 & 4 & 4.2 \\
+\hspace{0.5cm}Systematics & 1.9 & 2.8 & 2.9 & 6.3 & 12 \\
 \hline
-\hspace{1cm}QCD & 0.0014 & 0.0014 & 0.0015 & 0.0017 & 0.0015 \\
+\hspace{1cm}QCD & 1.4 & 1.9 & 0.66 & 4.8 & 11 \\
 \hspace{1cm}Electroweak & 1.3 & 2.1 & 2.9 & 4 & 4.2 \\
 \hline
 Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 53 & 30 & 53 \\
@@ -687,37 +620,9 @@ Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 53 & 30 & 53 \\
 \hspace{1cm}QCD & 12 & 20 & 46 & 4.9 & 42 \\
 \hspace{1cm}Electroweak & 1.1 & 1.7 & 4.2 & 4.2 & 6 \\
 \hline
-
-%Total ($ee$ + $e\gamma$) & 3.5 & 13 & 26 & 27 & \\
-%\hline
-%\hspace{0.5cm}Statistics & 3.1 & 12 & 25 & 23 & \\
-%\hline
-%\hspace{1cm}QCD & 3.1 & 12 & 25 & 23 & \\
-%\hspace{1cm}Electroweak & 0.13 & 0.48 & 1.1 & 1 & \\
-%\hline
-%\hspace{0.5cm}Systematics & 1.5 & 3.3 & 5.1 & 2.8 & \\
-%\hline
-%\hspace{1cm}QCD & 0.0014 & 0.0015 & 0.0017 & 0.0014 & \\
-%\hspace{1cm}Electroweak & 1.5 & 3.3 & 5.1 & 2.8 & \\
-%\hline
-%Total ($\mathit{ff}$ + $e\gamma$) & 16 & 34 & 40 & 1.2e+02 & \\
-%\hline
-%\hspace{0.5cm}Statistics & 6.1 & 19 & 32 & 65 & \\
-%\hline
-%\hspace{1cm}QCD & 6.1 & 19 & 32 & 65 & \\
-%\hspace{1cm}Electroweak & 0.11 & 0.61 & 1.4 & 2.1 & \\
-%\hline
-%\hspace{0.5cm}Systematics & 14 & 27 & 21 & 99 & \\
-%\hline
-%\hspace{1cm}QCD & 14 & 27 & 20 & 98 & \\
-%\hspace{1cm}Electroweak & 1.3 & 4.2 & 6.2 & 5.6 & \\
-%\hline
 \end{tabular}
 \label{tab:total_background_prediction_errors}
 \end{table}
-
-%show table of systematic errors by source and percentage a la slide 28 of seminar
-%repeat the table in the section about upper limits, this time including the acceptance errors
 
 %The dijet \pT reweighting method utilizes jets corrected for imperfect calorimeter response (see Sec.~\ref{sec:Jets and Missing Transverse Energy} for a description of the jet reconstruction and correction procedure).  Since the applied jet energy scale (JES) factor has an error associated to it due to the limitations of the JES derivation (\cite{CMS_JES_paper} and Sec.~\ref{sec:Jets and Missing Transverse Energy}), this uncertainty must be propagated to the uncertainty on the dijet \pT weights.
 %
@@ -756,15 +661,39 @@ Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 53 & 30 & 53 \\
 \section{Results}
 \label{sec:Results}
 
-%results
-%final MET plot, with ee and ff separate and also with just ff
-%final number in signal region with all stat. and syst. errors included
-%reminder table of all uncertainties that are described more thoroughly in previous sections
-%MC closure test
-%expectation from GGM models (1 that can be excluded, 1 that can't)
-%mention the official results too and explain that difference is due to jet cleaning method
-%	- my repetition of the AN: nff(MET > 100 GeV) = 17.1, nee(MET > 100 GeV) = 28.2 (from Yueh-FengDiEMPTBinsAndJetDefinition)
-%	- Ulla's jet definition: nff(MET > 100 GeV) = 20.4, nee(MET > 100 GeV) = 29.1 (from rightPFElectronCleaning)
-%	- bigger difference for ff…?  check agreement at low MET?  very good agreement
+Figure~\ref{fig:MET_final} shows the \MET distribution of the $\gamma\gamma$ search sample along with the predicted \MET distributions of the QCD and electroweak backgrounds.  The observed number of two-photon events, background estimates and their errors, and expected number of two-photon events from two representative GGM SUSY models are listed in Table~\ref{tab:results_summary_table}.  (Details of the SUSY MC production are given in Chapter~\ref{chap:Interpretation of Results in Terms of GMSB Models} and App.~\ref{chap:Monte Carlo Samples}.)  No deviation from the Standard Model prediction is observed in the $\gamma\gamma$ search sample.
+
+\begin{figure}
+	\centering
+	\subfloat[$ee$ + $e\gamma$ and $\mathit{ff}$ + $e\gamma$.  The widths of the bands correspond to the errors given in Table~\ref{tab:total_background_prediction_errors}, excluding the error associated with the difference between the $ee$ and $\mathit{ff}$ QCD estimates for the $\mathit{ff}$ + $e\gamma$ \MET distribution.]{\label{fig:MET_final_ee_ff_eg}\includegraphics[scale=0.35]{MET_final_ee_ff_eg}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$ + $e\gamma$.  The widths of the bands correspond to the errors given in Table~\ref{tab:total_background_prediction_errors}, including the error associated with the difference between the $ee$ and $\mathit{ff}$ QCD estimates.]{\label{fig:MET_final_ff_eg}\includegraphics[scale=0.35]{MET_final_ff_eg}}
+	\caption{\MET distribution of the $\gamma\gamma$ search sample (black circles) along with the predicted \MET distributions of the QCD and electroweak backgrounds (blue band for $ee$ QCD prediction + electroweak prediction, purple band for $\mathit{ff}$ QCD prediction + electroweak prediction).  The electroweak background prediction is shown in green.  The bottom plots show the ratio of the $\gamma\gamma$ \MET distribution to the $ee$ + $e\gamma$ background distribution (blue) and $\mathit{ff}$ + $e\gamma$ background distribution (purple).}
+	\label{fig:MET_final}
+\end{figure}
+
+\begin{table}[hcbp]
+\caption{Observed numbers of two-photon events, background estimates and their errors, and expected numbers of two-photon events from two representative GGM SUSY models (details of MC simulation given in Chapter~\ref{chap:Interpretation of Results in Terms of GMSB Models} and App.~\ref{chap:Monte Carlo Samples}) for the \MET bins used in the search.  Errors on the background estimates are detailed in Tables~\ref{tab:ee_background_prediction_errors},~\ref{tab:ff_background_prediction_errors},~\ref{tab:eg_background_prediction_errors}, and~\ref{tab:total_background_prediction_errors}.  Errors on the expected numbers of GGM events are purely statistical.}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Source}} & \multicolumn{5}{c|}{No. events} \\
+\cline{2-6}
+& [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
+\hline
+\hline
+Data observed ($\gamma\gamma$) & 354 & 93 & 37 & 33 & 17 \\
+\hline
+\begin{tabular}{@{}c@{}}Background predicted\\($\mathit{ff}$ + $e\gamma$)\\\end{tabular} & 362 $\pm$ 51.6 & 113 $\pm$ 27.1 & 27.2 $\pm$ 14.5 & 24.1 $\pm$ 7.27 & 20.4 $\pm$ 10.9 \\
+\hline
+GGM1 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
+\hline
+GGM2 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
+\hline
+\end{tabular}
+\label{tab:results_summary_table}
+\end{table}
+
+%MC closure test?
 
 \end{document}
