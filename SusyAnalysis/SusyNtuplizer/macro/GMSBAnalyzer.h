@@ -19,7 +19,13 @@
 #include "../../../GMSBTools/Filters/interface/Categorizer.h"
 #include "../../../PhysicsTools/Utilities/interface/LumiReweightingStandAlone.h"
 #include "../../../DataFormats/Math/interface/deltaR.h"
-	 	 
+#include "RooFitResult.h"
+
+#define LOWER_BOUND 0
+#define UPPER_BOUND 1
+#define VALUE 2
+#define UNIT 3
+
 class minDR {
  public:
   void setPhoton(const susy::Photon* photon) { photon_ = const_cast<susy::Photon*>(photon); }
@@ -29,13 +35,13 @@ class minDR {
   {
     const float photonEta = photon_->momentum.Eta();
     const float photonPhi = photon_->momentum.Phi();
-    return (deltaR(photonEta,
-		   photonPhi,
-		   PFCandidate1->momentum.Eta(),
-		   PFCandidate1->momentum.Phi()) <
-	    deltaR(photonEta,
-		   photonPhi,
-		   PFCandidate2->momentum.Eta(),
+    return (deltaR(photonEta, 
+		   photonPhi, 
+		   PFCandidate1->momentum.Eta(), 
+		   PFCandidate1->momentum.Phi()) < 
+	    deltaR(photonEta, 
+		   photonPhi, 
+		   PFCandidate2->momentum.Eta(), 
 		   PFCandidate2->momentum.Phi()));
   }
  private:
@@ -82,6 +88,13 @@ public :
    void setL3JECFile(const string&);
    void setJECErrFile(const string&);
    void addHLT(const TString&, const unsigned int, const unsigned int, const unsigned int);
+   void setDiEMInvMassFitParLowerBound(const unsigned int, const string, const float, 
+				       const bool overwrite = false);
+   void setDiEMInvMassFitParUpperBound(const unsigned int, const string, const float, 
+				       const bool overwrite = false);
+   void setDiEMInvMassFitPar(const unsigned int, const string, const float, 
+			     const bool overwrite = false);
+   void setDiEMInvMassFitParUnit(const string, const string, const bool overwrite = false);
 
    TString getTag() const;
    int getNEvts() const;
@@ -101,6 +114,10 @@ public :
    const map<pair<TString, unsigned int>, pair<unsigned int, unsigned int> >* getHLT() const;
    unsigned int getMinRun(const TString&) const;
    unsigned int getMaxRun(const TString&) const;
+   float getDiEMInvMassFitParLowerBound(const unsigned int, const string) const;
+   float getDiEMInvMassFitParUpperBound(const unsigned int, const string) const;
+   float getDiEMInvMassFitPar(const unsigned int, const string) const;
+   string getDiEMInvMassFitParUnit(const string) const;
 
    bool matchedToGenParticle(const susy::Photon&, const VINT&, const UChar_t) const;
    bool passesDenominatorSelection(const unsigned int, const susy::Photon&, const VINT&) const;
@@ -143,8 +160,10 @@ public :
    void format(const char*, const char*, const char*, const char*, const char*) const;
    void format(const char*, const float, const float, const float) const;
    void generateBackgroundSubtractedSpectra(TH3F&, TH2F&) const;
-   float normAndErrorSquared(const TH3F&, const TH1F&, const TH1D*, const unsigned int, 
-			     float&) const;
+   float normAndErrorSquared(const TH3F&, const TH1F&, const TH1D*, const vector<TH1F*>&, 
+			     const vector<TH1F*>&, const vector<TH1F*>&, const float, const float, 
+			     const unsigned int, float&, float&, float&, float&, 
+			     const bool doDefault = true) const;
    float razorNormAndErrorSquared(const TH2F&, const TH2F&, const TH2F&, const unsigned int, 
 				  const unsigned int, float&) const;
    void bookToyDiEMETWeightsHistograms(const vector<TH1F*>, const string&, vector<TH1F*>&, 
@@ -193,8 +212,10 @@ public :
    void fillToyDistributions(vector<TH1F*>&, vector<TH1F*>&, const TH1F&, const TH2F&, TCanvas&, 
 			     vector<TH1F*>&, vector<TH2F*>&, const unsigned int, const string&, 
 			     const unsigned int, const unsigned int, const unsigned int) const;
-   void setMETErrorBars(TH1F&, const vector<TH1F*>&, const vector<TH1F*>&, const vector<TH1F*>&, 
-			const float, const float, const bool doDefault = true) const;
+   void setMETErrorBars(TH1F&, const TH1F&, const TH1F&, const vector<TH1F*>&, 
+			const vector<TH1F*>&, const vector<TH1F*>&, const float, const float, 
+			const float, const float, const float, ofstream&, 
+			const bool doDefault = true) const;
    void setRazorErrorBars(TH2F&, const vector<TH1F*>&, const vector<TH1F*>&, const vector<TH1F*>&, 
 			  const float, const float, const bool doDefault = true) const;
    void makeFinalCanvas(TH1*, const Color_t, const Width_t, const Style_t, const Color_t, 
@@ -227,6 +248,11 @@ public :
    unsigned int isJet(const susy::PFJet&, const float, const float ETMin = 30.0) const;
    susy::PFParticle* nearestPFCandidate(const susy::Photon*);
    void fillDRHistogram(TH2F&) const;
+   float fitDiEMInvariantMass(vector<TH3F*>&, const unsigned int, const int, 
+			      const unsigned int, const int, float&, const unsigned int) const;
+   float electronPhotonMisIDRate(vector<TH3F*>&, vector<TH3F*>&, const unsigned int, 
+				 const int, const unsigned int, const int, 
+				 float&) const;
    void runMETAnalysis(const string);
    void runMETAnalysisWithEEBackgroundFit(const std::string&);
    void testFitting(const string&, const string&) const;
@@ -358,6 +384,33 @@ public :
 									       and corresponding 
 									       run ranges to 
 									       consider*/
+   map<string, float> eeInvMassFitParLowerBounds_;
+   map<string, float> eeInvMassFitParUpperBounds_;
+   map<string, float> eeInvMassFitPars_;
+   map<string, float> egInvMassFitParLowerBounds_;
+   map<string, float> egInvMassFitParUpperBounds_;
+   map<string, float> egInvMassFitPars_;
+   map<string, string> diEMInvMassFitParUnits_;
+
+   const map<string, float>* getDiEMInvMassFitParMapFloat(const unsigned int, 
+							  const unsigned int) const;
+
+   map<string, float>* getDiEMInvMassFitParMapFloat(const unsigned int, const unsigned int);
+
+   const map<string, string>* getDiEMInvMassFitParMapString(const unsigned int) const;
+
+   map<string, string>* getDiEMInvMassFitParMapString(const unsigned int);
+
+   void setDiEMInvMassFitParPropertyFloat(const unsigned int, const unsigned int, const string, 
+					  const float, const bool);
+
+   void setDiEMInvMassFitParPropertyString(const unsigned int, const string, const string, 
+					   const bool);
+
+   float getDiEMInvMassFitParPropertyFloat(const unsigned int, const unsigned int, 
+					   const string) const;
+
+   string getDiEMInvMassFitParPropertyString(const unsigned int, const string) const;
 };
 
 #endif
@@ -394,6 +447,12 @@ GMSBAnalyzer::~GMSBAnalyzer()
    L3JECFile_ = "";
    JECErrFile_ = "";
    HLT_.clear();
+   eeInvMassFitParLowerBounds_.clear();
+   eeInvMassFitParUpperBounds_.clear();
+   eeInvMassFitPars_.clear();
+   egInvMassFitParLowerBounds_.clear();
+   egInvMassFitParUpperBounds_.clear();
+   egInvMassFitPars_.clear();
    reset();
    clearPU();
    delete susyEvent;
@@ -574,6 +633,26 @@ void GMSBAnalyzer::addHLT(const TString& HLTPath, const unsigned int allowAbove,
   }
   HLT_[pair<TString, unsigned int>(HLTPath, allowAbove)] = pair<unsigned int, unsigned int>(minRun, maxRun);
 }
+void GMSBAnalyzer::setDiEMInvMassFitParLowerBound(const unsigned int sample, const string name, 
+						  const float val, const bool overwrite)
+{
+  setDiEMInvMassFitParPropertyFloat(sample, LOWER_BOUND, name, val, overwrite);
+}
+void GMSBAnalyzer::setDiEMInvMassFitParUpperBound(const unsigned int sample, const string name, 
+						  const float val, const bool overwrite)
+{
+  setDiEMInvMassFitParPropertyFloat(sample, UPPER_BOUND, name, val, overwrite);
+}
+void GMSBAnalyzer::setDiEMInvMassFitPar(const unsigned int sample, const string name, 
+					const float val, const bool overwrite)
+{
+  setDiEMInvMassFitParPropertyFloat(sample, VALUE, name, val, overwrite);
+}
+void GMSBAnalyzer::setDiEMInvMassFitParUnit(const string name, const string val, 
+					    const bool overwrite)
+{
+  setDiEMInvMassFitParPropertyString(UNIT, name, val, overwrite);
+}
 
 TString GMSBAnalyzer::getTag() const { return tag_; }
 int GMSBAnalyzer::getNEvts() const { return nEvts_; }
@@ -640,6 +719,37 @@ unsigned int GMSBAnalyzer::getMaxRun(const TString& HLT) const
     else ++iHLT;
   }
   return maxRun;
+}
+float GMSBAnalyzer::getDiEMInvMassFitParLowerBound(const unsigned int sample, 
+						   const string name) const
+{
+  float lowerBound = 0.0;
+  try { lowerBound = getDiEMInvMassFitParPropertyFloat(sample, LOWER_BOUND, name); }
+  catch (string badName) {}
+  return lowerBound;
+}
+float GMSBAnalyzer::getDiEMInvMassFitParUpperBound(const unsigned int sample, 
+						   const string name) const
+{
+  float upperBound = 0.0;
+  try { upperBound = getDiEMInvMassFitParPropertyFloat(sample, UPPER_BOUND, name); }
+  catch (string badName) {}
+  return upperBound;
+}
+float GMSBAnalyzer::getDiEMInvMassFitPar(const unsigned int sample, 
+					 const string name) const
+{
+  float par = 0.0;
+  try { par = getDiEMInvMassFitParPropertyFloat(sample, VALUE, name); }
+  catch (string badName) {}
+  return par;
+}
+string GMSBAnalyzer::getDiEMInvMassFitParUnit(const string name) const
+{
+  string par;
+  try { par = getDiEMInvMassFitParPropertyString(UNIT, name); }
+  catch (string badName) {}
+  return par;
 }
 
 void GMSBAnalyzer::reset()
@@ -758,6 +868,198 @@ bool GMSBAnalyzer::passUserHLT() const
   }
 
   return pass;
+}
+
+const map<string, float>* 
+  GMSBAnalyzer::getDiEMInvMassFitParMapFloat(const unsigned int sample, 
+					     const unsigned int property) const
+{
+  const map<string, float>* diEMInvMassFitParMap = NULL;
+  switch (property) {
+  case LOWER_BOUND:
+    switch (sample) {
+    case EE:
+      diEMInvMassFitParMap = &eeInvMassFitParLowerBounds_;
+      break;
+    case EG:
+      diEMInvMassFitParMap = &egInvMassFitParLowerBounds_;
+      break;
+    default:
+      cerr << "Invalid sample " << sample << ".  No action taken.\n";
+      break;
+    }
+    break;
+  case UPPER_BOUND:
+    switch (sample) {
+    case EE:
+      diEMInvMassFitParMap = &eeInvMassFitParUpperBounds_;
+      break;
+    case EG:
+      diEMInvMassFitParMap = &egInvMassFitParUpperBounds_;
+      break;
+    default:
+      cerr << "Invalid sample " << sample << ".  No action taken.\n";
+      break;
+    }
+    break;
+  case VALUE:
+    switch (sample) {
+    case EE:
+      diEMInvMassFitParMap = &eeInvMassFitPars_;
+      break;
+    case EG:
+      diEMInvMassFitParMap = &egInvMassFitPars_;
+      break;
+    default:
+      cerr << "Invalid sample " << sample << ".  No action taken.\n";
+      break;
+    }
+    break;
+  default:
+    cerr << "Invalid di-EM invariant mass fit parameter property " << property;
+    cerr << ".  No action taken.\n";
+    break;
+  }
+  return diEMInvMassFitParMap;
+}
+
+map<string, float>* GMSBAnalyzer::getDiEMInvMassFitParMapFloat(const unsigned int sample, 
+							       const unsigned int property)
+{
+  map<string, float>* diEMInvMassFitParMap = NULL;
+  switch (property) {
+  case LOWER_BOUND:
+    switch (sample) {
+    case EE:
+      diEMInvMassFitParMap = &eeInvMassFitParLowerBounds_;
+      break;
+    case EG:
+      diEMInvMassFitParMap = &egInvMassFitParLowerBounds_;
+      break;
+    default:
+      cerr << "Invalid sample " << sample << ".  No action taken.\n";
+      break;
+    }
+    break;
+  case UPPER_BOUND:
+    switch (sample) {
+    case EE:
+      diEMInvMassFitParMap = &eeInvMassFitParUpperBounds_;
+      break;
+    case EG:
+      diEMInvMassFitParMap = &egInvMassFitParUpperBounds_;
+      break;
+    default:
+      cerr << "Invalid sample " << sample << ".  No action taken.\n";
+      break;
+    }
+    break;
+  case VALUE:
+    switch (sample) {
+    case EE:
+      diEMInvMassFitParMap = &eeInvMassFitPars_;
+      break;
+    case EG:
+      diEMInvMassFitParMap = &egInvMassFitPars_;
+      break;
+    default:
+      cerr << "Invalid sample " << sample << ".  No action taken.\n";
+      break;
+    }
+    break;
+  default:
+    cerr << "Invalid di-EM invariant mass fit parameter property " << property;
+    cerr << ".  No action taken.\n";
+    break;
+  }
+  return diEMInvMassFitParMap;
+}
+
+const map<string, string>* 
+GMSBAnalyzer::getDiEMInvMassFitParMapString(const unsigned int property) const
+{
+  const map<string, string>* diEMInvMassFitParMap = NULL;
+  if (property == UNIT) return &diEMInvMassFitParUnits_;
+  else {
+    cerr << "Invalid di-EM invariant mass fit parameter property " << property;
+    cerr << ".  No action taken.\n";
+  }
+  return diEMInvMassFitParMap;
+}
+
+map<string, string>* GMSBAnalyzer::getDiEMInvMassFitParMapString(const unsigned int property)
+{
+  map<string, string>* diEMInvMassFitParMap = NULL;
+  if (property == UNIT) diEMInvMassFitParMap = &diEMInvMassFitParUnits_;
+  else {
+    cerr << "Invalid di-EM invariant mass fit parameter property " << property;
+    cerr << ".  No action taken.\n";
+  }
+  return diEMInvMassFitParMap;
+}
+
+void GMSBAnalyzer::setDiEMInvMassFitParPropertyFloat(const unsigned int sample, 
+						     const unsigned int property, 
+						     const string name, const float val, 
+						     const bool overwrite)
+{
+  map<string, float>* diEMInvMassFitParMap = getDiEMInvMassFitParMapFloat(sample, property);
+  if (diEMInvMassFitParMap == NULL) return;
+  map<string, float>::iterator iMap = diEMInvMassFitParMap->find(name);
+  if ((iMap == diEMInvMassFitParMap->end()) || overwrite) {
+    diEMInvMassFitParMap->insert(pair<string, float>(name, val));
+  }
+  else {
+    cerr << "Property " << property << " for parameter " << name << " already set to ";
+    cerr << iMap->second << " and overwrites not allowed.\n";
+  }
+}
+
+void GMSBAnalyzer::setDiEMInvMassFitParPropertyString(const unsigned int property, 
+						      const string name, const string val, 
+						      const bool overwrite)
+{
+  map<string, string>* diEMInvMassFitParMap = getDiEMInvMassFitParMapString(property);
+  if (diEMInvMassFitParMap == NULL) return;
+  map<string, string>::iterator iMap = diEMInvMassFitParMap->find(name);
+  if ((iMap == diEMInvMassFitParMap->end()) || overwrite) {
+    diEMInvMassFitParMap->insert(pair<string, string>(name, val));
+  }
+  else {
+    cerr << "Property " << property << " for parameter " << name << " already set to ";
+    cerr << iMap->second << " and overwrites not allowed.\n";
+  }
+}
+
+float GMSBAnalyzer::getDiEMInvMassFitParPropertyFloat(const unsigned int sample, 
+						      const unsigned int property, 
+						      const string name) const
+{
+  const map<string, float>* diEMInvMassFitParMap = getDiEMInvMassFitParMapFloat(sample, property);
+  if (diEMInvMassFitParMap == NULL) throw property;
+  map<string, float>::const_iterator iMap = diEMInvMassFitParMap->find(name);
+  if (iMap != diEMInvMassFitParMap->end()) {
+    return iMap->second;
+  }
+  else {
+    cerr << "Parameter " << name << " not found.\n";
+    throw name;
+  }
+}
+
+string GMSBAnalyzer::getDiEMInvMassFitParPropertyString(const unsigned int property, 
+							const string name) const
+{
+  const map<string, string>* diEMInvMassFitParMap = getDiEMInvMassFitParMapString(property);
+  if (diEMInvMassFitParMap == NULL) throw property;
+  map<string, string>::const_iterator iMap = diEMInvMassFitParMap->find(name);
+  if (iMap != diEMInvMassFitParMap->end()) {
+    return iMap->second;
+  }
+  else {
+    cerr << "Parameter " << name << " not found.\n";
+    throw name;
+  }
 }
 
 #endif // #ifdef GMSBAnalyzer_cxx
