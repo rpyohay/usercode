@@ -1,5 +1,0 @@
-<lcgdict>
-<class name="CutScanKey"/>
-<class name="std::vector<CutScanKey>"/>
-<class name="edm::Wrapper<std::vector<CutScanKey> >"/>
-</lcgdict>
