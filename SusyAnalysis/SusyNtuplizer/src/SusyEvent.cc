@@ -10,7 +10,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyEvent.cc,v 1.3 2011/11/28 10:24:26 yohay Exp $
+// $Id: SusyEvent.cc,v 1.13 2011/11/01 22:14:51 dwjang Exp $
 //
 
 #include "SusyEvent.h"
@@ -405,6 +405,9 @@ void susy::Event::Init() {
     intgRecLumi                 = 0;
     cosmicFlag                  = 0;
     rho                         = 0;
+    rhoBarrel                   = 0;
+    PassesHcalNoiseFilter       = 0;
+    PassesEcalDeadCellFilter    = 0;
 
     beamSpot                   *= 0;
 
@@ -426,7 +429,7 @@ void susy::Event::Init() {
     
     generalTracks.clear();
 
-    PU.clear();
+    pu.clear();
     simVertices.clear();
     genParticles.clear();
     gridParams.clear();
