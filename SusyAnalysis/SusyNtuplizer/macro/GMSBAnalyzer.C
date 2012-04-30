@@ -2566,9 +2566,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
       and Tessa's recommendation*/
     int nPV = -1;
     float PUWeight = 1.0;
-    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
     bool foundInTimeBX = false;
-    while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+    while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
       if (iBX->BX == 0) { 
 	nPV = iBX->numInteractions;
 	foundInTimeBX = true;
@@ -4110,9 +4110,9 @@ void GMSBAnalyzer::runMETAnalysisWithEEBackgroundFit(const std::string& outputFi
       and Tessa's recommendation*/
     // int nPV  = -1;
     float PUWeight = 1.0;
-    // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+    // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
     // bool foundInTimeBX = false;
-    // while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+    // while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
     //   if (iBX->BX == 0) { 
     // 	 nPV = iBX->numInteractions;
     // 	 foundInTimeBX = true;
@@ -5266,9 +5266,9 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
       and Tessa's recommendation*/
     // int nPV  = -1;
     float PUWeight = 1.0;
-    // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+    // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
     // bool foundInTimeBX = false;
-    // while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+    // while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
     //   if (iBX->BX == 0) { 
     // 	 nPV = iBX->numInteractions;
     // 	 foundInTimeBX = true;
@@ -5512,9 +5512,9 @@ void GMSBAnalyzer::compareDataToMC(const string& outputFile)
       https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupMCReweightingUtilities as of 27-Oct-11 
       and Tessa's recommendation*/
     int nPV  = -1;
-    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
     bool foundInTimeBX = false;
-    while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+    while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
       if (iBX->BX == 0) { 
     	 nPV = iBX->numInteractions;
     	 foundInTimeBX = true;
@@ -5934,8 +5934,8 @@ void GMSBAnalyzer::countEE(string& outputFile)
 	 i != susyEvent->l1Map.end(); ++i) {
       cout << i->first << ": " << (int(i->second.second)) << endl;
     }
-    for (susy::PUSummaryInfoCollection::const_iterator i = susyEvent->PU.begin(); 
-	 i != susyEvent->PU.end(); ++i) { cout << i->numInteractions << endl; }
+    for (susy::PUSummaryInfoCollection::const_iterator i = susyEvent->pu.begin(); 
+	 i != susyEvent->pu.end(); ++i) { cout << i->numInteractions << endl; }
 
     //plot uncorrected and corrected MET
     map<TString, susy::MET>::const_iterator iUncorrMET = susyEvent->metMap.find("pfMet");

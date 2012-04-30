@@ -23,7 +23,7 @@ CXX          = g++
 
 ROOTCXXFLAGS = $(shell $(ROOTSYS)/bin/root-config --cflags)
 INC          = $(shell $(ROOTSYS)/bin/root-config --incdir)
-CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I../.. -I/afs/cern.ch/cms/slc5_amd64_gcc434/lcg/roofit/5.28.00a-cms7/include $(ROOTCXXFLAGS)
+CXXFLAGS     = -O3 -Wall -fPIC -DSTANDALONE -I../.. -I/uscmst1/prod/sw/cms/slc5_amd64_gcc434/lcg/roofit/5.28.00a-cms12/include $(ROOTCXXFLAGS)
 
 ROOTLIBS     = $(shell $(ROOTSYS)/bin/root-config --libs) #-lRooFitCore
 
@@ -64,7 +64,7 @@ $(TMPDIR)/RooErfXGaussian.o: interface/RooErfXGaussian.h \
 	-o $(TMPDIR)/RooErfXGaussian.o 
 
 $(TMPDIR)/TagAndProbe_dict.o: $(TMPDIR)/TagAndProbe_dict.cc
-	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I../.. -I/afs/cern.ch/cms/slc5_amd64_gcc434/lcg/roofit/5.28.00a-cms7/include -c $(TMPDIR)/TagAndProbe_dict.cc \
+	$(CXX) $(CXXFLAGS) -I$(TMPDIR) -I../.. -I/uscmst1/prod/sw/cms/slc5_amd64_gcc434/lcg/roofit/5.28.00a-cms12/include -c $(TMPDIR)/TagAndProbe_dict.cc \
 	-o $(TMPDIR)/TagAndProbe_dict.o
 
 $(TMPDIR)/TagAndProbe_dict.cc: ../TagAndProbe/interface/RooCMSShape.h \
@@ -73,7 +73,7 @@ $(TMPDIR)/TagAndProbe_dict.cc: ../TagAndProbe/interface/RooCMSShape.h \
 	rm -rf $(TMPDIR)/TagAndProbe_dict.h
 	rm -rf $(TMPDIR)/TagAndProbe_dict.cc
 	$(ROOTSYS)/bin/rootcint -f $(TMPDIR)/TagAndProbe_dict.cc \
-	-c -I$(TMPDIR) -I../.. -I/afs/cern.ch/cms/slc5_amd64_gcc434/lcg/roofit/5.28.00a-cms7/include \
+	-c -I$(TMPDIR) -I../.. -I/uscmst1/prod/sw/cms/slc5_amd64_gcc434/lcg/roofit/5.28.00a-cms12/include \
 	../TagAndProbe/interface/RooCMSShape.h \
 	../TagAndProbe/interface/RooErfXGaussian.h \
 	../TagAndProbe/interface/PhysicsToolsTagAndProbeLinkDef.h
