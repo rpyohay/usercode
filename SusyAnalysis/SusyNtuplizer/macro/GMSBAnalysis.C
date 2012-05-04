@@ -162,7 +162,7 @@ void GMSBAnalysis()
   analyzer.setFileMapEntry("DiPhotonJets_7TeV-madgraph-Summer11-PU_S4_START42_V11-v1", 
 			   154.7/*pb*/, 1150800);
   analyzer.setPUFile("/data2/yohay/RA3/160404-180252_PU.root");
-  analyzer.initPU();
+  analyzer.initPU("Summer11");
   analyzer.setL1JECFile("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L1FastJet.txt");
   analyzer.setL2JECFile("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L2Relative.txt");
   analyzer.setL3JECFile("/afs/cern.ch/user/y/yohay/scratch0/CMSSW_4_2_4_patch2/src/SusyAnalysis/SusyNtuplizer/jec/Jec11_V1_AK5PF_L3Absolute.txt");
