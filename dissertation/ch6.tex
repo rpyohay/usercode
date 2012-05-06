@@ -8,7 +8,7 @@ In keeping with the phenomenology described in Sec.~\ref{sec:Phenomenology of Ge
 
 However, in order to use real CMS data (as opposed to simulation) to derive predictions for the backgrounds to the search, \textit{control samples} distinct from the \textit{candidate} two-photon sample must be collected.  These samples consist of different numerical combinations of photons, electrons, and jets, and are explained in more detail in Chapter~\ref{chap:Data Analysis}.  Since this search is performed in the high-\MET tail of the \MET distribution, where adequate detector simulation is very difficult, it is advantageous to use \textit{data-driven} background estimates, which capture the true detector response, over numbers derived from simulation.
 
-In the following sections, the reconstruction of photons, electrons, jets, and \MET is explained.  Sec.~\ref{sec:Object Reconstruction} begins with an explanation of the high level reconstruction.  It is followed by Sec.~\ref{sec:HLT}, which describes the triggers used to collect the candidate and control samples.  Finally, the chapter concludes with a measurement of the photon identification efficiency in Sec.~\ref{sec:Photon Identification Efficiency}.
+In the following sections, the reconstruction of photons, electrons, jets, and \MET is explained.  Sec.~\ref{sec:Object Reconstruction} begins with an explanation of the high level reconstruction.  It is followed by Sec.~\ref{sec:HLT}, which describes the triggers used to collect the candidate and control samples.  Sec.~\ref{sec:Event Quality} describes event cleaning cuts that are applied to the candidate and control samples.  Finally, the chapter concludes with a measurement of the photon identification efficiency in Sec.~\ref{sec:Photon Identification Efficiency}.
 
 \section{Object Reconstruction}
 \label{sec:Object Reconstruction}
@@ -21,7 +21,7 @@ This section describes the \textit{offline} object reconstruction, i.e. the reco
 \subsubsection{Uncalibrated EB/EE Hits}
 \label{sec:Uncalibrated EB/EE Hits}
 
-Photon reconstruction begins with the ADC count value for each of the 10 recorded time samples per ECAL crystal per trigger.  To construct an \textit{uncalibrated hit}, the gain (1, 6, or 12; see Sec.~\ref{sec:Electromagnetic Calorimeter}) of each sample is determined and the ADC count value scaled appropriately.  The pedestal is estimated from the average of the first three samples, which, for a properly time in hit, should contain no signal.  This pedestal value is subtracted from the rest of the samples.  Finally, the amplitude of the pulse is reconstructed using a predetermined weight for each sample \cite{Bruneliere}.  The weights correspond to the pulse shape expected from the MGPA and shaping circuit response.  The time of the hit is also reconstructed using the ratios between neighboring time samples \cite{time_reco}.  A typical ECAL channel pulse shape is shown in Figure~\ref{fig:pulse}.
+Photon reconstruction begins with the ADC count value for each of the 10 recorded time samples per ECAL crystal per trigger.  To construct an \textit{uncalibrated hit}, the gain (1, 6, or 12; see Sec.~\ref{sec:Electromagnetic Calorimeter}) of each sample is determined and the ADC count value scaled appropriately.  The pedestal is estimated from the average of the first three samples, which, for a properly timed in hit, should contain no signal.  This pedestal value is subtracted from the rest of the samples.  Finally, the amplitude of the pulse is reconstructed using a predetermined weight for each sample \cite{Bruneliere}.  The weights correspond to the pulse shape expected from the MGPA and shaping circuit response.  The time of the hit is also reconstructed using the ratios between neighboring time samples \cite{time_reco}.  A typical ECAL channel pulse shape is shown in Figure~\ref{fig:pulse}.
 
 \begin{figure}
 	\centering
@@ -37,13 +37,18 @@ In the next phase of the photon reconstruction, calibrations are applied to the 
 
 \begin{itemize}
 \item they are excessively noisy,
-\item they are stuck in fixed gain,
+\item they are stuck in fixed gain (i.e. the MGPA gain does not change properly to avoid saturation),
 \item they are totally dead,
 \item they have one or more neighboring dead channels, or
-\item they do not have good trigger primitives (i.e. trigger primitive is missing, saturated, or spike-like).
+\item they do not have good trigger primitives (i.e. trigger primitive is missing, saturated, or \textit{spike-like}).
 \end{itemize}
-%
-In addition, no uncalibrated hits that are spike-like are eligible for calibration.  The calibrations applied are crystal transparency loss corrections measured continuously by the laser/LED system, energy intercalibrations (relative energy calibration between crystals), absolute scale calibrations between ADC counts and GeV,\footnote{The ADC-GeV scale factors (one for EB and one for EE) are defined such that the sum of fully calibrated and scaled hits in a particular 5 $\times$ cluster of crystals (plus the associated energy deposited in ES) is 50 GeV for a 50 GeV incident unconverted photon \cite{calibration_IN}.} and time intercalibrations (relative time calibration between crystals).
+
+\marginpar{\textcolor{blue}{Added this paragraph and the next about spikes}}\textit{ECAL spikes} are hits in which low energy protons and heavy ions from jets ionize in the sensitive volume of the EB APD, causing the APD to register a fake large-amplitude hit.  Because they are not the result of a real electromagnetic shower, spikes tend to be isolated.  They may also appear to arrive early or late with respect to the nominal bunch crossing.  Most spikes are reconstructed with a hit time $\sim$10 ns earlier than real EM hits because unlike real hits, whose pulse shapes include the time constant associated with crystal scintillation, the reconstructed spikes only involve the rise time of the electronics.  There also is a long tail of late arriving spikes due to slow neutrons from jets \cite{EGM_10_002}.
+
+%get L1 spike rejection citation
+Because of their particular timing and topological characteristics, cuts have been developed to effectively identify and reject spike-like hits.  This analysis utilizes both the ``Swiss cross" cut 1 - $E_{4}/E_{1} >$ 0.95, where $E_{1}$ is the energy of the spike candidate crystal and $E_{4}$ is the sum of the energies in the four crystals whose edges are parallel to the four edges of the spike candidate crystal, and a timing cut $t \geq$ 3 ns, to flag spikes.  More information about these cuts can be found in ref. \cite{EGM_10_002}.  A simpler algorithm using the fine grain veto bit of the L1 TPG is used to reject spikes at the trigger level \textcolor{red}{\textbf{[insert citation]}}.
+
+In addition to the trigger primitives, no uncalibrated hits that are spike-like are eligible for calibration.  The calibrations applied are crystal transparency loss corrections measured continuously by the laser/LED system, energy intercalibrations (relative energy calibration between crystals), absolute scale calibrations between ADC counts and GeV,\footnote{The ADC-GeV scale factors (one for EB and one for EE) are defined such that the sum of fully calibrated and scaled hits in a particular 5 $\times$ 5 cluster of crystals (plus the associated energy deposited in ES) is 50 GeV for a 50 GeV incident unconverted photon \cite{calibration_IN}.} and time intercalibrations (relative time calibration between crystals).
 
 %reference for EE lab intercalibrations?
 The ECAL crystals were pre-calibrated before installation in CMS using laboratory light yield and photodetector gain measurements \cite{EB_performance_2006}.  In addition, some EB and EE crystals were intercalibrated using test beams \cite{EB_startup_intercalibration}, and all EB crystals were intercalibrated with cosmic ray muons \cite{CRAFT_calibration}.  EE precalibrations were validated with LHC \textit{splash events} in 2009 \cite{CRAFT_calibration, CRAFT_ECAL_performance}, in which the beam was dumped onto a collimator approximately 150 meters upstream of CMS, causing a spray of muons to enter CMS at one endcap and exit at the other.  Splash events were also used to derive time intercalibration constants.  Before colliding beam operations commenced, the intercalibration precision was estimated to be 0.5\%-2.2\% in EB and 1\%-5\% in EE \cite{CALOR_ECAL_calibration}.
@@ -68,16 +73,12 @@ By September 2011, the intercalibration precision in EB was measured to be betwe
 \subsubsection{Calibrated ES Hits}
 \label{sec:Calibrated ES Hits}
 
-%what are angle correction constants?
-ES calibrated hits are formed from the three samples read out per sensor.  Just as in the case of EB/EE crystals, ES uncalibrated hits gain-adjusted, pedestal-subtracted, and reconstructed using weights.  To make a calibrated ES hit, intercalibration constants, angle correction constants, and a MIP-GeV absolute scale factor are applied.
+\marginpar{\textcolor{blue}{Added parenthetical remark}}ES calibrated hits are formed from the three samples read out per sensor.  Just as in the case of EB/EE crystals, ES uncalibrated hits gain-adjusted, pedestal-subtracted, and reconstructed using weights.  To make a calibrated ES hit, intercalibration constants, angle correction constants (for the non-uniformity of sensor angle with respect to the vertical across ES), and a MIP-GeV absolute scale factor are applied.
 
 \subsubsection{Clustering}
 \label{sec:Clustering}
 
 After calibrated ECAL hits are formed, they must be clustered into shapes that represent the energy deposit from a single particle.  \textit{Basic clusters} are formed around seed hits, defined as a hit that
-
-%define spike rejection variables here or earlier, where you talk about a hit being "spike-like"
-\textcolor{red}{\textbf{Add description of timing cut and topological spike rejection variables, or earlier.}}
 
 \begin{itemize}
 \item has calibrated $E_{T} >$ 1(0.18) GeV in EB(EE),
@@ -85,11 +86,11 @@ After calibrated ECAL hits are formed, they must be clustered into shapes that r
 \item is not poorly calibrated,
 \item was reconstructed with the standard algorithm (i.e. not a special recovery algorithm for channels with subpar data integrity),
 \item is not saturated,
-\item is not spike-like \textcolor{red}{\textbf{(define spike rejection variables here)}}, and
+\item is not spike-like, and
 \item is in time (EB).
 \end{itemize}
 %
-EB basic clusters are formed around the seeds via the \textit{hybrid} algorithm, while EE basic clusters are formed with the \textit{multi5x5} algorithm \cite{ECAL_SC_note}.  In addition to non-radiating electrons and unconverted photons, both algorithms are designed to also recover all of the energy associated with electron bremsstrahlung deposits and photon conversions.  The geometry of the CMS magnetic field means that bremsstrahlung and conversions will tend to spread the shower out in $\phi$, not $\eta$.  Both algorithms work by forming basic clusters around seeds, then combining the basic clusters into \textit{superclusters} (SC) by searching in a window extended in the $\phi$ direction for all basic clusters consistent with bremsstrahlung radiation from the primary electron, or with a photon conversion.  Figure~\ref{fig:hybrid} illustrates the hybrid algorithm in EB.  In EE, the energy deposited in ES must also be added into the total clustered energy sum.
+EB basic clusters are formed around the seeds via the \textit{hybrid} algorithm, while EE basic clusters are formed with the \verb+multi5x5+ algorithm \cite{ECAL_SC_note}.  In addition to non-radiating electrons and unconverted photons, both algorithms are designed to also recover all of the energy associated with electron bremsstrahlung deposits and photon conversions.  The geometry of the CMS magnetic field means that bremsstrahlung and conversions will tend to spread the shower out in $\phi$, not $\eta$.  Both algorithms work by forming basic clusters around seeds, then combining the basic clusters into \textit{superclusters} (SC) by searching in a window extended in the $\phi$ direction for all basic clusters consistent with bremsstrahlung radiation from the primary electron, or with a photon conversion.  Figure~\ref{fig:hybrid} illustrates the hybrid algorithm in EB.  In EE, the energy deposited in ES must also be added into the total clustered energy sum.
 
 \begin{figure}
 	\centering
@@ -116,13 +117,12 @@ The total clustered ECAL energy is defined as
 E &=& F \times \sum_{i=1}^{n_{\mathrm{crystal}}} G \times c_{i} \times A_{i}
 \end{eqnarray}
 %
-where $G$ is the ADC-GeV or MIP-GeV scale factor, $c_{i}$ are the intercalibration constants, $A_{i}$ is the uncalibrated hit amplitude in ADC counts, and $F$ is SC correction factor.  $G$ and $c_{i}$ were explained in Sec.~\ref{sec:Calibrated EB/EE Hits}.  $F$ is a product of three factors for hybrid SCs (two for multi5x5 SCs) \cite{ECAL_SC_note}:
+where $G$ is the ADC-GeV or MIP-GeV scale factor, $c_{i}$ are the intercalibration constants, $A_{i}$ is the uncalibrated hit amplitude in ADC counts, and $F$ is a SC correction factor.  $G$ and $c_{i}$ were explained in Sec.~\ref{sec:Calibrated EB/EE Hits}.  $F$ is a product of three factors for hybrid SCs (two for \verb+multi5x5+ SCs) \cite{ECAL_SC_note}:
 
 \begin{enumerate}
-  %what exactly does this mean?
-  \item $C_{EB}(\eta)$, which compensates for lateral energy leakage due to the crystal off-pointing in EB.  These corrections are taken from MC simulation \cite{ECAL_SC_note} and were confirmed in test beams \cite{EB_startup_intercalibration}.
-  \item $f(\mbox{brem})$, which corrects for the biases in the clustering algorithms for showers characterized by differing amounts of bremsstrahlung.  These corrections are taken from MC simulation \cite{ECAL_SC_note}.
-  \item Residual correction $f(E_{T}, \eta)$, due to the variation in $\eta$ of detector material traversed by a primary electron or photon, and to any residual $E_{T}$ dependence of the reconstruction.  These corrections are determined from $Z\rightarrow ee$ data samples. %where is this documented?
+  \item $C_{\mathrm{EB}}(\eta)$, which compensates for lateral energy leakage due to the crystal off-pointing in EB.  These corrections are taken from MC simulation \cite{ECAL_SC_note} and were confirmed in test beams \cite{EB_startup_intercalibration}.
+  \item $f(\mbox{brem})$, which corrects for biases in the clustering algorithms for showers characterized by differing amounts of bremsstrahlung.  These corrections are taken from MC simulation \cite{ECAL_SC_note}.
+  \item Residual correction $f(E_{T}, \eta)$, due to the variation in $\eta$ of detector material traversed by a primary electron or photon, and to any residual $E_{T}$ dependence of the reconstruction.  These corrections are determined from MC and validated on $Z\rightarrow ee$ data samples \cite{ECALEnergyScaleCorrections_Twiki}.\marginpar{\textcolor{blue}{Changed}}
 \end{enumerate}
 
 As a benchmark of ECAL calibration performance, the extra energy smearing in MC needed to achieve data/MC agreement in the $Z$ width was between $\sim$0.9\% (in the central part of EB for electrons with little bremsstrahlung) and $\sim$3.3\% (in the outer part of EE for heavily radiating electrons) \cite{Higgs_note}.
@@ -130,19 +130,12 @@ As a benchmark of ECAL calibration performance, the extra energy smearing in MC 
 \subsubsection{From Supercluster to Photon}
 \label{sec:From Supercluster to Photon}
 
-The CMS photon object is any SC with $E_{T} > 10$ GeV and $H/E < 0.5$, unless the SC $E_{T} > 100$ GeV, in which case the $H/E$ requirement is dropped.  $H/E$ is defined as the ratio of energy in the HCAL in a 0.15 cone around the SC centroid, directly behind the SC, to the SC energy.  SCs with $R9 > 0.94(0.95)$ in EB(EE), where $R9$ is defined as the ratio of the energy in the central 3$\times$3 cluster of crystals divided by the SC energy $E_{3\times 3}/E_{SC}$, are the best calibrated and most accurate type of electromagnetic shower.  Therefore, for these objects, the photon energy is defined as the energy sum of the fully calibrated hits in the central 5 $\times$ 5 cluster around the seed (with $C_{EB}(\eta)$ applied for EB photons).  For all other SCs, the photon energy is equal to the fully corrected SC energy (cf. Sec.~\ref{sec:Supercluster Corrections}).
+The CMS photon object is any SC with $E_{T} > 10$ GeV and $H/E < 0.5$, unless the SC $E_{T} > 100$ GeV, in which case the $H/E$ requirement is dropped.  $H/E$ is defined as the ratio of energy in the HCAL in a 0.15 cone around the SC centroid, directly behind the SC, to the SC energy.  SCs with $R9 > 0.94(0.95)$ in EB(EE), where $R9$ is defined as the ratio of the energy in the central 3$\times$3 cluster of crystals divided by the SC energy $E_{3\times 3}/E_{\mathrm{SC}}$, are the best calibrated and most accurate type of electromagnetic shower.  Therefore, for these objects, the photon energy is defined as the energy sum of the fully calibrated hits in the central 5 $\times$ 5 cluster around the seed (with $C_{\mathrm{EB}}(\eta)$ applied for EB photons).  For all other SCs, the photon energy is equal to the fully corrected SC energy (cf. Sec.~\ref{sec:Supercluster Corrections}).
 
-In this search, candidate photons and \textit{fake photons} ($\mathit{f}$, ``fakes") are further selected according to the criteria listed in Table~\ref{tab:g_f_criteria}.  Fakes are used in the determination of the QCD background, as explained in Chapter~\ref{chap:Data Analysis}.  $I_{\mathrm{comb}}$ is defined as
-
-%fix with latest effective areas
-\begin{eqnarray}
-I_{\mathrm{comb}} &=& I_{\mathrm{ECAL}} - 0.0792\rho + I_{\mathrm{HCAL}} - 0.0252\rho + I_{\mathrm{track}}
-\end{eqnarray}
-%
-where $I_{\mathrm{ECAL}}$, $I_{\mathrm{HCAL}}$, and $I_{\mathrm{track}}$ are $E_{T}$ sums in the annular regions defined in Figure~\ref{fig:isolation_cones} and $\rho$ is the average pileup energy density in the calorimeters (per unit $\eta\cdot\phi$) as measured with the Fastjet algorithm \cite{Fastjet_conf_proceedings, Fastjet_manual}.  Note that the ECAL and track isolation veto strips at constant $\eta$ ensure that the isolation cuts are similarly efficient for converted photons, radiating electrons, and unconverted photons.
+\marginpar{\textcolor{blue}{Reorganized next 3 paragraphs; edited Table~\ref{tab:g_f_criteria} caption}}In this search, candidate photons and \textit{fake photons} ($\mathit{f}$, ``fakes") are further selected according to the criteria listed in Table~\ref{tab:g_f_criteria}.  Fakes are used in the determination of the QCD background, as explained in Chapter~\ref{chap:Data Analysis}.
 
 \begin{table}[hcbp]
-\caption{Selection criteria for photons and fakes.}
+\caption{Selection criteria for photons and fakes.  ``Pixel seed," $I_{\mathrm{comb}}$, and $\sigma_{i\eta i\eta}$ are defined in the text.}
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
@@ -157,49 +150,63 @@ $R9$ & $< 1$ & $< 1$ \\
 \hline
 Has pixel seed & No & No \\
 \hline
-$I_{\mathrm{comb}}$, $\sigma_{i\eta i\eta}$ & $< 6$ GeV \&\& $< 0.011$ & ($\geq 6$ and $< 20$ GeV) $|| \geq 0.011$ \\
+$I_{\mathrm{comb}}$, $\sigma_{i\eta i\eta}$ & $< 6$ GeV \&\& $< 0.011$ & ($\geq 6$ \&\& $< 20$ GeV) $|| \geq 0.011$ \\
 \hline
 \end{tabular}
 \label{tab:g_f_criteria}
 \end{table}
 
+\marginpar{\textcolor{blue}{Updated effective area}}$I_{\mathrm{comb}}$ is defined as
+
+\begin{eqnarray}
+I_{\mathrm{comb}} &=& I_{\mathrm{ECAL}} - 0.093\rho + I_{\mathrm{HCAL}} - 0.0281\rho + I_{\mathrm{track}}
+\end{eqnarray}
+%
+where $I_{\mathrm{ECAL}}$, $I_{\mathrm{HCAL}}$, and $I_{\mathrm{track}}$ are $E_{T}$ sums in the annular regions defined in Figure~\ref{fig:isolation_cones} and $\rho$ is the average pileup energy density in the calorimeters (per unit $\eta\cdot\phi$) as measured with the Fastjet algorithm \cite{Fastjet_conf_proceedings, Fastjet_manual}.  Note that the ECAL and track isolation veto strips at constant $\eta$ ensure that the isolation cuts are similarly efficient for converted photons, radiating electrons, and unconverted photons.
+
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.25]{isolation_cones}
+	\includegraphics[scale=0.3]{isolation_cones}
 	\caption{ECAL, HCAL, and track Isolation cones.}
 	\label{fig:isolation_cones}
 \end{figure}
 
-Figure~\ref{fig:preselected_rho} shows the $\rho$ distribution for a sample of events with at least two 25 GeV EM objects passing the $|\eta|$, $H/E$, and $R9$ requirements in Table~\ref{tab:g_f_criteria}, and passing the trigger requirements in Table~\ref{tab:HLT_by_run_range}, representing the full 2011 dataset.  Since average $\rho$ is $\sim 5$ GeV, and there is a long tail above this average value, it is necessary to subtract pileup energy from the ECAL and HCAL isolation cones to recover otherwise clean photons in events with large pileup.  The ECAL and HCAL \textit{effective areas} of 0.0792 and 0.0252 (\textcolor{red}{\textbf{Change these to the final values used in the analysis.}}), respectively, are calculated by fitting the average ECAL or HCAL isolation energy vs. $\rho$ in a sample of $Z\rightarrow ee$ events to a straight line.  The slope of the line---which has the units of $\eta\cdot\phi$, or area---is the effective area.
+$\sigma_{i\eta i\eta}$ is the log energy weighted extent of the shower in $\eta$ and is defined as\marginpar{\textcolor{blue}{Added $\sigma_{i\eta i\eta}$ definition}}
+
+\begin{eqnarray}
+\sigma_{i\eta i\eta} &=& \frac{\sum_{i = 1}^{25}w_{i}(\eta_{i} - \bar{\eta})^{2}}{\sum_{i = 1}^{25}w_{i}}
+\end{eqnarray}
+%
+where the sums run over the 5 $\times$ 5 matrix of crystals surrounding the seed, $w_{i} = \max(0, 4.7 + \ln(E_{i}/E))$, $E_{i}$ is the energy of the $i^{\mathrm{th}}$ crystal, $E$ is the total energy in the 25 crystals, $\eta_{i}$ is the offset in $\eta$ of the $i^{\mathrm{th}}$ crystal from the seed, and $\bar{\eta}$ is the weighted average $\eta$ of the 25 crystals (using the $w_{i}$ as weights) \cite{CMS-QCD-10-019}.
+
+\marginpar{\textcolor{blue}{Changed average $\rho$; updated fig.~\ref{fig:preselected_rho}}}Figure~\ref{fig:preselected_rho} shows the $\rho$ distribution for a sample of two-photon events, with at least one 40 GeV and one 25 GeV photon, passing the selection requirements in Table~\ref{tab:g_f_criteria} and the trigger requirements in Table~\ref{tab:HLT_by_run_range}.  This sample represents the full 2011 dataset of 4.7 $\mbox{fb}^{-1}$.  Since the average $\rho$ is $\sim 7.5$ GeV, and there is a long tail above this average value, it is necessary to subtract pileup energy from the ECAL and HCAL isolation cones to recover otherwise clean photons in events with large pileup.  The ECAL and HCAL \textit{effective areas} of 0.093 and 0.0281, respectively, are calculated by fitting the average ECAL or HCAL isolation energy vs. $\rho$ in a sample of $Z\rightarrow ee$ events to a straight line.  The slope of the line---which has the units of $\eta\cdot\phi$, or area---is the effective area.
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=0.25]{preselected_rho}
-	\caption{$\rho$ distribution for a sample of events with at least two 25 GeV EM objects passing the $|\eta|$, $H/E$, and $R9$ requirements in Table~\ref{tab:g_f_criteria}, and passing the trigger requirements in Table~\ref{tab:HLT_by_run_range}.  This sample covers the full 2011 dataset.}
+	\includegraphics[scale=0.3]{preselected_rho}
+	\caption{$\rho$ distribution for a sample of two-photon events, with at least one 40 GeV and one 25 GeV photon, passing the selection requirements in Table~\ref{tab:g_f_criteria} and the trigger requirements in Table~\ref{tab:HLT_by_run_range}.  This sample covers the full 2011 dataset of 4.7 $\mbox{fb}^{-1}$.}
 	\label{fig:preselected_rho}
 \end{figure}
 
-%summarize the combined isolation lower bound optimization here
-\textcolor{red}{\textbf{Summarize the combined isolation lower bound optimization here.}}
+\marginpar{\textcolor{blue}{New}}The cut on combined isolation of 6 GeV (Table~\ref{tab:g_f_criteria}) is the result of an $S/\sqrt{B}$ optimization procedure \cite{CMS_AN-2011-515}.  $S$ is a sample of photons in simulated GGM events that are products of neutralino decay, while $B$ is a sample of photons matched to generated hadronic jets in simulated QCD events.  Figure~\ref{fig:Icomb_optimization} shows the value of $S/\sqrt{B}$ vs. combined isolation, in particular the pronounced peak around 6 GeV.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{Icomb_optimization}
+	\caption{$S/\sqrt{B}$ ($S$ and $B$ defined in the text) vs. combined isolation.  Reprinted from Fig. 7 of ref. \cite{CMS_AN-2011-515}.}
+	\label{fig:Icomb_optimization}
+\end{figure}
 
 The upper bound on fake photon combined isolation guarantees that poorly isolated dijet events, with \MET resolution dissimilar to the candidate diphoton events, do not enter the $\mathit{ff}$ sample.  The exact value of 20 GeV (cf. Table~\ref{tab:g_f_criteria}) arises from a low-\MET $\mathit{ff}$/$\gamma\gamma$ $\chi^{2}$ optimization procedure \cite{CMS_AN-2011-515}.  Figure~\ref{fig:f_comb_iso_upper_bound_optimization} shows the value of the Neyman's $\chi^{2}$ between the $\mathit{ff}$ and $\gamma\gamma$ \MET distributions, truncated at either 25 or 50 GeV, vs. upper bound on fake combined isolation.  As shown in the figure, 20 GeV very nearly minimizes the $\chi^{2}$, while also being large enough that a sufficient number of $\mathit{ff}$ events may be collected.
 
-%include similar figures for MC?
-%remake this plot yourself?
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.9]{f_comb_iso_upper_bound_optimization}
-	\caption{Neyman's $\chi^{2}$ between the $\mathit{ff}$ and $\gamma\gamma$ \MET distributions, truncated at either 25 (red) or 50 (blue) GeV, vs. upper bound on fake combined isolation.  The left plot includes all events; the right plot is for events with $\geq 1$ jet defined as in Table~\ref{tab:jet_definition_for_Nj_reweighting}, but with the $\Delta R$ cleaning criteria applied to the two primary EM objects and all additional electrons, photons, and fake photons.  The full reweighting and normalization procedure is employed in the \MET calculation (see Sec.~\ref{sec:Modeling the QCD Background}).  Error bars include statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).  Reprinted from Fig. 9 of ref. \cite{CMS_AN-2011-515}.}
+	\caption{Neyman's $\chi^{2}$ between the $\mathit{ff}$ and $\gamma\gamma$ \MET distributions, truncated at either 25 (red) or 50 (blue) GeV, vs. upper bound on fake combined isolation.  The left plot includes all events; the right plot is for events with $\geq 1$ jet defined as in Table~\ref{tab:jet_definition_for_Nj_reweighting}, but with the $\Delta R$ cleaning criteria applied to the two primary EM objects and all additional electrons, photons, and fake photons.  The full reweighting and normalization procedure is employed in the \MET calculation (see Sec.~\ref{sec:Modeling the QCD Background}).  Error bars include statistical, reweighting, and normalization error (see Sec.~\ref{sec:Errors on the Background Prediction}).  Reprinted from Fig. 9 of ref. \cite{CMS_AN-2011-515}.}
 	\label{fig:f_comb_iso_upper_bound_optimization}
 \end{figure}
 
-%show Dave's rho plots?  make your own?
-\textcolor{red}{\textbf{Summarize the effective area calculation here?}}
-
-%define more precisely?
-A ``pixel seed" is defined as a hit in the pixel detector consistent with a track extrapolated from the position of the ECAL SC back to the primary vertex.  Real photons, having no charge and therefore no bending in the magnetic field, should not have a pixel seed.
-
-%define sigmaIetaIeta
+Finally, a ``pixel seed" is defined as a hit in the pixel detector consistent with a track extrapolated from the position of the ECAL SC back to the primary vertex.  Real photons, having no charge and therefore no bending in the magnetic field, should not have a pixel seed.
 
 \subsection{Electrons}
 \label{sec:Electrons}
@@ -236,7 +243,7 @@ In this analysis, jets and \MET are formed from \textit{particle flow} (PF) cand
 \item If global (silicon + muon layers) muon $p_{T}$ is compatible with silicon track $p_{T}$, ID as a muon and remove corresponding tracks from block
 \item ID electron tracks via special algorithm and removed all corresponding tracks and cluster from block
 \item Remove fake tracks from the block
-\item Remove excess track-cluster links via $\Delta R){\mathrm{track-cluster}}$ minimization (but allow multiple tracks to be associated to one cluster)
+\item \marginpar{\textcolor{blue}{Fixed typo}}Remove excess track-cluster links via $\Delta R_{\mathrm{track-cluster}}$ minimization (but allow multiple tracks to be associated to one cluster)
 \item If the cluster energy is significantly larger then the energy of the linked track, ID as a PF photon or PF neutral hadron and remove corresponding clusters from the block
 \item If the cluster is not linked to a track, ID as a PF photon or PF neutral hadron and remove corresponding clusters from the block
 \item Remaining track-cluster links are PF charged hadrons
@@ -283,9 +290,10 @@ Figure~\ref{fig:total_JEC} shows the total jet energy correction factor $C_{\mat
 
 In this analysis, candidate and QCD control events are binned by number of jets satisfying the criteria in Table~\ref{tab:jet_definition_for_Nj_reweighting}.
 
-%add a footnote describing the PF electron and PF muon definitions, with references
 \begin{table}[hcbp]
-\caption{Definition of HB/HE hadronic jets.  \textcolor{red}{\textbf{Add a footnote describing the PF electron and PF muon definitions, with references.}}}
+\caption{Definition of HB/HE hadronic jets.}
+\centering
+\begin{minipage}{\textwidth}
 \centering
 \begin{tabular}{|c|c|}
 \hline
@@ -310,9 +318,10 @@ Number of charged hadrons & $> 0$ if $|\eta|  < 2.4$ \\
 \hline
 \begin{tabular}[c]{@{}c@{}}Charged electromagnetic\\energy fraction\end{tabular} & $< 0.99$ if $|\eta| < 2.4$ \\
 \hline
-\begin{tabular}[c]{@{}c@{}}$\Delta R$ to nearest electron, muon,\\or one of the two\\primary EM objects\end{tabular} & $> 0.5$ \\
+\begin{tabular}[c]{@{}c@{}}$\Delta R$ to nearest PF electron\footnote{A PF electron is defined as an electron reconstructed with the PF algorithm \cite{CMS_AN-2010/034} with $p_{T} >$ 15 GeV, $|\eta| <$ 2.6, and ($I_{\mathrm{charged}} + I_{\mathrm{photon}} + I_{\mathrm{neutral}}$)/$p_{T} <$ 0.2, where $I_{\mathrm{charged}}$($I_{\mathrm{photon}}$)($I_{\mathrm{neutral}}$) is the sum of PF charged hadron(PF photon)(PF neutral hadron) momenta in a $\Delta$R = 0.4 cone around the PF electron.}, muon\footnote{Muons are reconstructed \cite{CMS_CR-2009/347} from a combination of muon station and inner tracker hits.  Here, a muon must have track $\chi^{2} <$ 10, at least one good muon station hit, inner track transverse impact parameter $<$ 0.02 cm, inner track longitudinal impact parameter $<$ 0.5 cm, $p_{T} >$ 15 GeV, $|\eta| <$ 2.6, and ($I_{\mathrm{ECAL}} + I_{\mathrm{HCAL}} + I_{\mathrm{track}}$)/$p_{T} <$ 0.2, where $I_{\mathrm{ECAL}}$($I_{\mathrm{HCAL}}$)($I_{\mathrm{track}}$) is the sum of ECAL(HCAL)(track) momenta in a $\Delta$R = 0.3 cone around the muon.},\\or one of the two\\primary EM objects\end{tabular} & $> 0.5$ \\
 \hline
 \end{tabular}
+\end{minipage}
 \label{tab:jet_definition_for_Nj_reweighting}
 \end{table}
 
@@ -359,11 +368,11 @@ In all samples, the leading EM object is required to have $E_{T} > 40$ GeV, whil
 Run range & $\gamma\gamma$ & $e\gamma$ & $ee$ & $\mathit{ff}$ \\
 \hline
 \hline
-160404-163261 & Photon26\_\newline IsoVL\_\newline Photon18 & Photon26\_\newline IsoVL\_\newline Photon18 & Photon26\_\newline IsoVL\_\newline Photon18 & Photon26\_\newline IsoVL\_\newline Photon18 \\
+160404-163261 & \texttt{Photon26\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon18} & \texttt{Photon26\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon18} & \texttt{Photon26\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon18} & \texttt{Photon26\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon18} \\
 \hline
-161216-166967 & Photon36\_\newline CaloIdL\_\newline Photon22\_\newline CaloIdL &  Photon36\_\newline CaloIdL\_\newline Photon22\_\newline CaloIdL &  Photon36\_\newline CaloIdL\_\newline Photon22\_\newline CaloIdL &  Photon36\_\newline CaloIdL\_\newline Photon22\_\newline CaloIdL \\
+161216-166967 & \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL} & \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL} & \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL} & \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL} \\
 \hline
-166347-180252 & Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL & Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL & Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL & Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL\newline\newline Photon36\_\newline CaloIdL\_\newline IsoVL\_\newline Photon22\_\newline R9Id\newline\newline Photon36\_\newline R9Id\_\newline Photon22\_\newline CaloIdL\_\newline IsoVL\newline\newline Photon36\_\newline R9Id\_\newline Photon22\_\newline R9Id \\
+166347-180252 & \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL} & \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL} & \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL} & \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL}\newline\newline \texttt{Photon36\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL\_}\newline \texttt{Photon22\_}\newline \texttt{R9Id}\newline\newline \texttt{Photon36\_}\newline \texttt{R9Id\_}\newline \texttt{Photon22\_}\newline \texttt{CaloIdL\_}\newline \texttt{IsoVL}\newline\newline \texttt{Photon36\_}\newline \texttt{R9Id\_}\newline \texttt{Photon22\_}\newline \texttt{R9Id} \\
 \hline
 \end{tabular}
 \label{tab:HLT_by_run_range}

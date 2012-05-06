@@ -113,7 +113,7 @@ The remainder of this chapter describes the data analysis procedures and the fin
 \subsection{Outline of the Procedure}
 \label{sec:Outline of the Procedure}
 
-Due to the fact that the CMS ECAL energy resolution is much better than the HCAL energy resolution, the energies of the two candidate photons in the events of the $\gamma\gamma$ sample are typically measured to far greater accuracy and precision than the energy of the hadronic recoil in those events.  Therefore, fake \MET in the $\gamma\gamma$ sample is almost entirely the result of hadronic mis-measurement in QCD dijet, photon + jet, and diphoton events.  The strategy employed to model this background is to find a control sample in data consisting of two well-measured EM objects, just like the candidate $\gamma\gamma$ sample, and assign each event a weight to account for the underlying kinematic differences between the control and candidate samples.  Once the reweighted \MET spectrum of the control sample is created, it is then normalized in the low-\MET region, the assumption being that GGM SUSY does not predict a significant amount of events at low \MET.  There are three aspects to this QCD background estimation procedure that bear highlighting:
+Due to the fact that the CMS ECAL energy resolution is much better than the HCAL energy resolution, the energies of the two candidate photons in the events of the $\gamma\gamma$ sample are typically measured to far greater accuracy and precision than the energy of the hadronic recoil in those events.  Therefore, fake \MET in the $\gamma\gamma$ sample is almost entirely the result of hadronic mis-measurement in QCD dijet, photon + jet, and diphoton events.  The strategy employed to model this background is to find a control sample in data consisting of two well-measured EM objects, just like the candidate $\gamma\gamma$ sample, and assign each event a weight to account for the underlying kinematic differences between the control and candidate samples.  Once the reweighted \MET spectrum of the control sample is created, it is then normalized in the low-\MET region, the assumption being that GGM SUSY does not predict a significant amount of events at low \MET.  There are three aspects of this QCD background estimation procedure that bear highlighting:
 
 \begin{description}
 \item[Choice of control sample] Since the underlying cause of \MET in the candidate sample is mis-measured hadronic activity, a control sample with similar hadronic activity to the candidate sample should be chosen.  Hadronic activity refers to number of jets, jet $E_{T}$, pileup, etc.
@@ -123,7 +123,6 @@ Due to the fact that the CMS ECAL energy resolution is much better than the HCAL
 
 As explained in the beginning of this chapter, the $\mathit{ff}$ sample is used as the primary QCD control sample, while the $ee$ sample is used as a cross-check.  Both samples have two well-measured EM objects per event, no real \MET, and similar hadronic activity to the $\gamma\gamma$ sample.  Figure~\ref{fig:hadronic_activity} shows a comparison of the shapes of some distributions relevant to hadronic activity between the $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples.  In general, the $ee$ sample has less hadronic activity than the $\gamma\gamma$ and $\mathit{ff}$ samples, as shown by the more steeply falling $ee$ distributions in Figs.~\ref{fig:hadronic_activity_HT},~\ref{fig:hadronic_activity_Nj},~\ref{fig:hadronic_activity_MHT}, and~\ref{fig:hadronic_activity_j1ET}.  In addition to the kinematic reweighting, there is also a reweighting by number of jets per event, which attempts to correct for this difference (see Sec.~\ref{sec:Reweighting}).
 
-%include similar figures for MC?
 \begin{figure}
 	\centering
 	\subfloat[$H_{T}$, defined as the scalar sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_HT}\includegraphics[scale=0.25]{hadronic_activity_HT}}
@@ -141,9 +140,10 @@ As explained in the beginning of this chapter, the $\mathit{ff}$ sample is used 
 	\label{fig:hadronic_activity}
 \end{figure}
 
-%add a footnote describing the PF electron and PF muon definitions, with references
 \begin{table}[hcbp]
-\caption{Definition of HB/HE/HF hadronic jets.  \textcolor{red}{\textbf{Add a footnote describing the PF electron and PF muon definitions, with references.}}}
+\caption{Definition of HB/HE/HF hadronic jets.}
+\centering
+\begin{minipage}{\textwidth}
 \centering
 \begin{tabular}{|c|c|}
 \hline
@@ -168,9 +168,10 @@ Number of charged hadrons & $> 0$ if $|\eta|  < 2.4$ \\
 \hline
 \begin{tabular}[c]{@{}c@{}}Charged electromagnetic\\energy fraction\end{tabular} & $< 0.99$ if $|\eta| < 2.4$ \\
 \hline
-\begin{tabular}[c]{@{}c@{}}$\Delta R$ to nearest electron, muon,\\or one of the two\\primary EM objects\end{tabular} & $> 0.5$ \\
+\begin{tabular}[c]{@{}c@{}}$\Delta R$ to nearest PF electron\footnote{A PF electron is defined as an electron reconstructed with the PF algorithm \cite{CMS_AN-2010/034} with $p_{T} >$ 15 GeV, $|\eta| <$ 2.6, and ($I_{\mathrm{charged}} + I_{\mathrm{photon}} + I_{\mathrm{neutral}}$)/$p_{T} <$ 0.2, where $I_{\mathrm{charged}}$($I_{\mathrm{photon}}$)($I_{\mathrm{neutral}}$) is the sum of PF charged hadron(PF photon)(PF neutral hadron) momenta in a $\Delta$R = 0.4 cone around the PF electron.}, muon\footnote{Muons are reconstructed \cite{CMS_CR-2009/347} from a combination of muon station and inner tracker hits.  Here, a muon must have track $\chi^{2} <$ 10, at least one good muon station hit, inner track transverse impact parameter $<$ 0.02 cm, inner track longitudinal impact parameter $<$ 0.5 cm, $p_{T} >$ 15 GeV, $|\eta| <$ 2.6, and ($I_{\mathrm{ECAL}} + I_{\mathrm{HCAL}} + I_{\mathrm{track}}$)/$p_{T} <$ 0.2, where $I_{\mathrm{ECAL}}$($I_{\mathrm{HCAL}}$)($I_{\mathrm{track}}$) is the sum of ECAL(HCAL)(track) momenta in a $\Delta$R = 0.3 cone around the muon.},\\or one of the two\\primary EM objects\end{tabular} & $> 0.5$ \\
 \hline
 \end{tabular}
+\end{minipage}
 \label{tab:jet_definition}
 \end{table}
 
@@ -210,7 +211,7 @@ Whereas the di-EM $p_{T}$ reweighting accounts for differences in production kin
 	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting}}
 	\hspace{1cm}
 	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra, zoomed x-axis.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom}}
-	\caption{\MET spectra of the reweighted $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ control samples.  Blue squares indicate di-EM $p_{T}$ reweighting only; red triangles indicate di-EM $p_{T}$ + number of jets reweighting.  PF $p_{T}$ (cf. p.~\pageref{fig:ET_bias_vs_EMF}) is used to calculate the di-EM $p_{T}$.  The full normalization procedure is employed, along with $ee$ sideband subtraction (discussed in at the end of this section).  Error bars include statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\caption{\MET spectra of the reweighted $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ control samples.  Blue squares indicate di-EM $p_{T}$ reweighting only; red triangles indicate di-EM $p_{T}$ + number of jets reweighting.  PF $p_{T}$ (cf. p.~\pageref{fig:MET_vs_di-EM_pT}) is used to calculate the di-EM $p_{T}$.  The full normalization procedure is employed, along with $ee$ sideband subtraction (discussed at the end of this section).  Error bars are statistical only.}
 	\label{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting}
 \end{figure}
 
@@ -253,7 +254,7 @@ Although the electron and photon energies are well measured by the ECAL, the ECA
 	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra.]{\label{fig:ee_over_ff_di-EM_vs_dijet_pT_reweighting}\includegraphics[scale=0.3]{ee_over_ff_di-EM_vs_dijet_pT_reweighting}}
 	\hspace{1cm}
 	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra, zoomed x-axis.]{\label{fig:ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom}\includegraphics[scale=0.3]{ee_over_ff_di-EM_vs_dijet_pT_reweighting_zoom}}
-	\caption{\MET spectra of the reweighted $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ control samples.  Blue squares indicate reweighting using the ECAL-only $p_{T}$ estimate; red triangles indicate reweighting using the PF $p_{T}$ estimate.  The full reweighting and normalization procedure is employed, along with $ee$ sideband subtraction (discussed at the end of this section).  Error bars include statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\caption{\MET spectra of the reweighted $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ control samples.  Blue squares indicate reweighting using the ECAL-only $p_{T}$ estimate; red triangles indicate reweighting using the PF $p_{T}$ estimate.  The full reweighting and normalization procedure is employed, along with $ee$ sideband subtraction (discussed at the end of this section).  Error bars are statistical only.}
 	\label{fig:ee_vs_ff_di-EM_vs_dijet_pT_reweighting}
 \end{figure}
 
@@ -276,7 +277,7 @@ where $i$ runs over the number of di-EM $p_{T}$ bins, $j$ runs over the number o
 	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting}}
 	\hspace{1cm}
 	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET spectra, zoomed x-axis.]{\label{fig:ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom}\includegraphics[scale=0.3]{ee_over_ff_dijet_pT_and_Nj_vs_no_reweighting_zoom}}
-	\caption{\MET spectra of the $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ control samples.  Red triangles indicate full di-EM $p_{T}$ + number of jets reweighting; blue squares indicate no reweighting.  PF $p_{T}$ (cf. p.~\pageref{fig:ET_bias_vs_EMF}) is used to calculate the di-EM $p_{T}$.  The full normalization procedure is employed, along with $ee$ sideband subtraction (discussed at the end of this section).  Error bars include statistical, reweighting (where appropriate), and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\caption{\MET spectra of the $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ control samples.  Red triangles indicate full di-EM $p_{T}$ + number of jets reweighting; blue squares indicate no reweighting.  PF $p_{T}$ (cf. p.~\pageref{fig:ET_bias_vs_EMF}) is used to calculate the di-EM $p_{T}$.  The full normalization procedure is employed, along with $ee$ sideband subtraction (discussed at the end of this section).  Error bars are statistical only.}
 	\label{fig:reweighting_vs_no_reweighting}
 \end{figure}
 
@@ -286,7 +287,7 @@ Only events in the $ee$ sample with 81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV, whe
 
 The full reweighting procedure is applied to the $Z$ signal region and the two sideband regions independently.  Only $Z$ signal events are used in the calculation of the di-EM $p_{T}$ weights for the $Z$ signal region, and likewise only the events within a given sideband region are used in the calculation of the weights for that region.  Assuming a constant $t\bar{t}$ background shape, the resulting reweighted sideband \MET distributions are added together and subtracted from the reweighted $Z$ signal \MET distribution.  The sideband subtracted $Z$ signal \MET distribution is then normalized as discussed in Secs.~\ref{sec:Outline of the Procedure} and~\ref{sec:Normalization}.  The statistical and reweighting error from the sideband regions is propagated to the error on the final $ee$ QCD \MET estimate.
 
-The di-EM $p_{T}$ weights for the two $ee$ sideband regions are shown in figure~\ref{fig:ee_sideband_dijet_pT_weights}.  The overall scale of the weights, as well as the trend with di-EM $p_{T}$, is similar for the two regions (except at high di-EM $p_{T}$, where the statistics are poor anyway).  Figure~\ref{fig:all_ee_MET_spectra} shows the \MET spectra for the two sideband regions and the $Z$ signal region after subtraction.  The shapes of the spectra indicate that the high-\MET $t\bar{t}$ tail, present in the sideband distributions, was successfully subtracted from the $Z$ signal distribution.
+The di-EM $p_{T}$ weights for the two $ee$ sideband regions are shown in Figure~\ref{fig:ee_sideband_dijet_pT_weights}.  The overall scale of the weights, as well as the trend with di-EM $p_{T}$, is similar for the two regions (except at high di-EM $p_{T}$, where the statistics are poor anyway).  Figure~\ref{fig:all_ee_MET_spectra} shows the \MET spectra for the two sideband regions and the $Z$ signal region after subtraction.  The shapes of the spectra indicate that the high-\MET $t\bar{t}$ tail, present in the sideband distributions, was successfully subtracted from the $Z$ signal distribution.
 
 \begin{figure}
 	\centering
@@ -302,13 +303,13 @@ The di-EM $p_{T}$ weights for the two $ee$ sideband regions are shown in figure~
 	\hspace{1cm}
 	\subfloat[101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV, $\geq$ 2 jets.]{\label{fig:eeHighSideband_2_jet_dijet_pT_weights}\includegraphics[scale=0.2]{eeHighSideband_2_jet_dijet_pT_weights}}	
 	\caption{$ee$ sideband di-EM $p_{T}$ weights for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.}
-	\label{fig:ee_sideband_dijet_pT_spectra}
+	\label{fig:ee_sideband_dijet_pT_weights}
 \end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.3]{all_ee_MET_spectra}
-	\caption{\MET spectra of the $ee$ sample for 71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV (red triangles), 81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV (black circles), and 101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV (blue squares).  The two sideband distributions (red and blue) and the  $Z$ signal distribution (black) are normalized to the total number of $\gamma\gamma$ events.  Errors on the sideband distributions are statistical only, while the error on the $Z$ signal distribution includes statistical, reweighting, and normalization error (see Sec.~\ref{sec:Systematic Errors}).}
+	\caption{\MET spectra of the $ee$ sample for 71 GeV $\leq m_{\mathrm{ee}} <$ 81 GeV (red triangles), 81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV (black circles), and 101 GeV $\leq m_{\mathrm{ee}} <$ 111 GeV (blue squares).  The two sideband distributions (red and blue) and the  $Z$ signal distribution (black) are normalized to the total number of $\gamma\gamma$ events.  Errors are statistical only.}
 	\label{fig:all_ee_MET_spectra}
 \end{figure}
 
@@ -322,7 +323,7 @@ The $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV), $\mathit{ff}$, and $\gamma\g
 	\subfloat[1 jet.]{\label{fig:1_jet_dijet_pT}\includegraphics[scale=0.2]{1_jet_dijet_pT}}
 	\hspace{1cm}
 	\subfloat[$\geq$ 2 jets.]{\label{fig:2_jet_dijet_pT}\includegraphics[scale=0.2]{2_jet_dijet_pT}}
-	\caption{$ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) (red triangles), $\mathit{ff}$ (blue squares), and $\gamma\gamma$ (black circles) di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.  \textcolor{red}{\textbf{Zoom out the x-axis to show the full tail out to 500 GeV?}}}
+	\caption{$ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) (red triangles), $\mathit{ff}$ (blue squares), and $\gamma\gamma$ (black circles) di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.}
 	\label{fig:dijet_pT}
 \end{figure}
 
@@ -340,7 +341,7 @@ The $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV), $\mathit{ff}$, and $\gamma\g
 	\subfloat[$\mathit{ff}$, 1 jet.]{\label{fig:ff_1_jet_dijet_pT_weights}\includegraphics[scale=0.2]{ff_1_jet_dijet_pT_weights}}
 	\hspace{1cm}
 	\subfloat[$\mathit{ff}$, $\geq$ 2 jets.]{\label{fig:ff_2_jet_dijet_pT_weights}\includegraphics[scale=0.2]{ff_2_jet_dijet_pT_weights}}
-	\caption{$ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ di-EM $p_{T}$ weights for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.  \textcolor{red}{\textbf{Zoom in the x-axis to hide large weights with large statistical errors?}}}
+	\caption{$ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) and $\mathit{ff}$ di-EM $p_{T}$ weights for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.}
 	\label{fig:dijet_pT_weights}
 \end{figure}
 
@@ -379,61 +380,59 @@ f_{e\rightarrow\gamma} = \frac{N_{e\gamma}^{Z}}{2N_{ee}^{Z} + N_{e\gamma}^{Z}}
 \label{eq:feg}
 \end{eqnarray}
 
-A Crystal Ball function is used to model the $Z$ signal shape in both the $ee$ and $e\gamma$ samples, while an exponential convoluted with an error function (``RooCMSShape", see Sec.~\ref{sec:Tag_and_Probe_Method}) is used to model the background shape.  The fixed fit parameters are identical for the two samples, but the other parameters are allowed to float independently.  Table~\ref{tab:feg_fit_parameters} shows the values and ranges of the fixed and floating fit parameters, respectively.  \textcolor{red}{\textbf{Edit this to reflect the actual study once done.}}
+A Crystal Ball function is used to model the $Z$ signal shape in both the $ee$ and $e\gamma$ samples, while an exponential convoluted with an error function (\verb+RooCMSShape+, see Sec.~\ref{sec:Tag_and_Probe_Method}) is used to model the background shape.  The fixed fit parameters are identical for the two samples, but the other parameters are allowed to float independently.  Table~\ref{tab:feg_fit_parameters} shows the values and ranges of the fixed and floating fit parameters, respectively.
 
 \begin{table}[hcbp]
-\caption{Parameter values for the signal and background PDFs for the $ee$ and $e\gamma$ samples.  When a bracketed range is given, the parameter is allowed to float within that range.  When a constant is given, the parameter is fixed to that constant.  \textcolor{red}{\textbf{Edit this to reflect the actual study once done.}}}
+\caption{Parameter values for the signal and background PDFs for the $ee$ and $e\gamma$ samples.  When a bracketed range is given, the parameter is allowed to float within that range.  When a constant is given, the parameter is fixed to that constant.}
 \centering
 \begin{tabular}{|m{1.25cm}|m{1.25cm}|m{1.25cm}|m{1.25cm}|m{1.25cm}|m{1.25cm}|m{1.25cm}|m{1.25cm}|m{1.25cm}|}
 \hline
-& \multicolumn{4}{c|}{Crystal Ball fit parameters} & \multicolumn{4}{c|}{RooCMSShape fit parameters} \\
+& \multicolumn{4}{c|}{Crystal Ball fit parameters} & \multicolumn{4}{c|}{\texttt{RooCMSShape} fit parameters} \\
 \hline
 PDF & $\mu$ & $\sigma$ & $\alpha$ & n & $\mu$ & $\alpha$ & $\beta$ & $\gamma$ \\
 \hline
-$ee$ signal & [-1.0, 1.0] & [1.0, 3.0] & 0.87 & 97.0 & N/A & N/A & N/A & N/A \\
+$ee$ signal & [86.2, 96.2] & [1.0, 5.0] & 1.063 & 143.16 & N/A & N/A & N/A & N/A \\
 \hline
-$e\gamma$ signal & [-1.0, 1.0] & [1.0, 3.0] & 0.73 & 134.9 & N/A & N/A & N/A & N/A \\
+$e\gamma$ signal & [86.2, 96.2] & [1.0, 5.0] & 1.063 & 143.16 & N/A & N/A & N/A & N/A \\
 \hline
-$ee$ background & N/A & N/A & N/A & N/A & 65.0 & 61.949 & 0.04750 & 0.01908 \\
+$ee$ background & N/A & N/A & N/A & N/A & 58 & 97.0 & 0.0922 & 0.191 \\
 \hline
-$e\gamma$ background & N/A & N/A & N/A & N/A & $\alpha$ & [50.0, 100.0] & 0.065 & 0.048 \\
+$e\gamma$ background & N/A & N/A & N/A & N/A & 56 & 72.02 & 0.098 & 0.0375 \\
 \hline
 \end{tabular}
 \label{tab:feg_fit_parameters}
 \end{table}
 
-Fits to the $ee$ and $e\gamma$ invariant mass spectra are shown in Figure~\ref{fig:feg_fits}.  \textcolor{red}{\textbf{Make these plots.}}  Figure~\ref{fig:feg_vs_pT_eta} indicates that the dependence of $f_{e\rightarrow\gamma}$ on the electron $p_{T}$ and $\eta$ is small.  Applying a $p_{T}$- and $\eta$-dependent misidentification rate (with $p_{T}$ and $\eta$ binned as in Fig.~\ref{fig:feg_vs_pT_eta}) makes only a \textcolor{red}{\textbf{XXX\%}} difference in the final electroweak background estimate with respect to a constant rate derived from all $ee$ and $e\gamma$ events.  Therefore, the constant rate is used in the final electroweak background estimate, with the largest difference between the constant rate and the $p_{T}$-dependent rate taken as a systematic error.
+Fits to the $ee$ and $e\gamma$ invariant mass spectra are shown in Figure~\ref{fig:feg_fits}.  Figure~\ref{fig:feg_vs_pT_eta} indicates that the dependence of $f_{e\rightarrow\gamma}$ on the electron $p_{T}$ and $\eta$ is small.  (Note that all fit parameters are floating in the $p_{T}$-dependent fits.)  Therefore, a constant misidentification rate (derived from all $ee$ and $e\gamma$ events), rather than a $p_{T}$- and $\eta$-dependent misidentification rate, is used in the final electroweak background estimate, with the difference between the constant rate and the rate for electrons with $p_{T}$ between 25 and 40 GeV (the range in which the bulk of the trailing photons in the $\gamma\gamma$ sample lie) taken as a systematic error.
 
-%\begin{figure}
-%	\centering
-%	\subfloat[$ee$.]{\label{fig:mee_fit}\includegraphics[scale=0.2]{mee_fit}}
-%	\hspace{1cm}
-%	\subfloat[$e\gamma$.]{\label{fig:meg_fit}\includegraphics[scale=0.2]{meg_fit}}
-%	\caption{Fits to the $ee$ and $e\gamma$ invariant mass spectra using the Crystal Ball + RooCMSShape function described in the text and in Table~\ref{tab:feg_fit_parameters}.}
-%	\label{fig:feg_fits}
-%\end{figure}
+\begin{figure}
+	\centering
+	\subfloat[$ee$.]{\label{fig:mee_fit}\includegraphics[scale=0.3]{mee_fit}}
+	\hspace{1cm}
+	\subfloat[$e\gamma$.]{\label{fig:meg_fit}\includegraphics[scale=0.3]{meg_fit}}
+	\caption{Fits to the $ee$ and $e\gamma$ invariant mass spectra using the Crystal Ball \texttt{RooCMSShape} function described in the text and in Table~\ref{tab:feg_fit_parameters}.  The total fit is shown in blue, while the background component is shown in red.}
+	\label{fig:feg_fits}
+\end{figure}
 
-%\begin{figure}
-%	\centering
-%	\subfloat[$f_{e\rightarrow\gamma}$ vs. electron $p_{T}$.]{\label{fig:feg_vs_pT}\includegraphics[scale=0.2]{feg_vs_pT}}
-%	\hspace{1cm}
-%	\subfloat[$f_{e\rightarrow\gamma}$ vs. electron $\eta$.]{\label{fig:feg_vs_eta}\includegraphics[scale=0.2]{feg_vs_eta}}
-%	\caption{$f_{e\rightarrow\gamma}$ vs. electron $p_{T}$ and $\eta$.  Red squares indicate Drell-Yan and $W$ MC (see App.~\ref{chap:Monte Carlo Samples}); black circles indicate data.}
-%	\label{fig:feg_vs_pT_eta}
-%\end{figure}
+\begin{figure}
+	\centering
+	\subfloat[$f_{e\rightarrow\gamma}$ vs. electron $p_{T}$.  For the lowest $p_{T}$ bin, the fit to the $e\gamma$ spectrum does not converge well, so the $Z$ signal fraction is fixed to the value in Fig.~\ref{fig:meg_fit}.]{\label{fig:feg_vs_pT}\includegraphics[scale=0.3]{feg_vs_pT}}
+	\hspace{1cm}
+	\subfloat[$f_{e\rightarrow\gamma}$ vs. electron $\eta$.]{\label{fig:feg_vs_eta}\includegraphics[scale=0.3]{feg_vs_eta}}
+	\caption{$f_{e\rightarrow\gamma}$ vs. electron $p_{T}$ and $\eta$.}
+	\label{fig:feg_vs_pT_eta}
+\end{figure}
 
-The signal and background shape assumptions are the main sources of systematic error on $f_{e\rightarrow\gamma}$.  \textcolor{red}{\textbf{Check whether the $p_{T}$ dependence or the shapes yield the larger error.}}  To assess the magnitude of this error, $f_{e\rightarrow\gamma}$ is recalculated using both linear and quadratic background shapes, and with a Crystal Ball + generated $Z$ signal shape (as used in Sec.~\ref{sec:Tag_and_Probe_Method}).  The largest difference from the nominal shape is taken as the error.  \textcolor{red}{\textbf{Do it yourself.  Also check the misidentification rate in MC with varied tracker radiation lengths to see if there is a dependence on the tracker density.}}
-
-Using the integrals of the $Z$ fits shown in Fig.~\ref{feg_fits}, Eq.~\ref{eq:feg}, and the shape  and $p_{T}$ systematics discussed above, $f_{e\rightarrow\gamma}$ is calculated to be 0.015 $\pm$ 0.002(stat.) $\pm$ 0.005(syst.).  \textcolor{red}{\textbf{Replace with your calculated number.}}  The scaled $e\gamma$ MET distribution is shown in Figure~\ref{fig:eg_MET}.
+Using the integrals of the $Z$ fits shown in Fig.~\ref{fig:feg_fits}, Eq.~\ref{eq:feg}, and the $p_{T}$ systematic discussed above, $f_{e\rightarrow\gamma}$ is calculated to be 0.014 $\pm$ 0.000(stat.) $\pm$ 0.004(syst.).  The scaled $e\gamma$ MET distribution is shown in Figure~\ref{fig:eg_MET}.
 
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.4]{eg_MET}
-	\caption{\MET spectrum of the $e\gamma$ sample after scaling by $f_{e\rightarrow\gamma}$.  The total error on $f_{e\rightarrow\gamma}$ is propagated to the total error on the electroweak background estimate.  \textcolor{red}{\textbf{How to properly treat the error when the same events are used in the $f_{e\rightarrow\gamma}$ calculation and in the $e\gamma$ sample?  Replace with figure using latest $f_{e\rightarrow\gamma}$, and include error bars.}}}
+	\caption{\MET spectrum of the $e\gamma$ sample after scaling by $f_{e\rightarrow\gamma}$.  The total error on $f_{e\rightarrow\gamma}$ is propagated to the total error on the electroweak background estimate.}
 	\label{fig:eg_MET}
 \end{figure}
 
-In the 36 $\mbox{pb}^{-1}$ version of this analysis \cite{CMS_GMSB_35pb-1}, it was shown that the $ee$ sample could accurately predict the QCD and real $Z$ contribution to the $e\gamma$ sample at low \MET, and that the expectation from $W\rightarrow e\nu$ MC accounted for the remaining $W$ contribution at high \MET.  A plot of the \MET distributions of the 2010 $e\gamma$ sample and the predicted components is shown in Figure~\ref{fig:35pb-1_eg_closure_test}.  \textcolor{red}{\textbf{Repeat for current selection?}}  This exercise helps to validate both the QCD and electroweak background prediction methods.
+In the 36 $\mbox{pb}^{-1}$ version of this analysis \cite{CMS_GMSB_35pb-1}, it was shown that the $ee$ sample could accurately predict the QCD and real $Z$ contribution to the $e\gamma$ sample at low \MET, and that the expectation from $W\rightarrow e\nu$ MC accounted for the remaining $W$ contribution at high \MET.  A plot of the \MET distributions of the 2010 $e\gamma$ sample and the predicted components is shown in Figure~\ref{fig:35pb-1_eg_closure_test}.  This exercise helps to validate both the QCD and electroweak background prediction methods.
 
 \begin{figure}
 	\centering
@@ -447,15 +446,43 @@ In the 36 $\mbox{pb}^{-1}$ version of this analysis \cite{CMS_GMSB_35pb-1}, it w
 
 The statistical error on the final background estimate in a particular \MET bin comes from three sources: the number of control sample events collected in that bin, the statistical error on the weights applied to events in that bin, and the statistics of the normalization region.  In the case of the $ee$ control sample, there are contributions from the statistics of the $m_{\mathrm{ee}}$ sidebands as well.
 
-In order to estimate the statistical error due to the reweighting procedure, 1000 toy sets of weights are generated.  Each set includes a weight for each (di-EM $p_{T}$, $N_{\mathrm{j}}$) bin, with the values picked from a Gaussian distribution with mean and standard deviation equal to the observed weight for that bin and its statistical error.  All bins are uncorrelated.  For each of the 1000 experiments, the control sample data are reweighted according to the generated weights, and the background estimates are calculated for each \MET bin.  Since the distribution of the toy background estimates follows a Gaussian distribution in each \MET bin, the RMS spread of the estimates is taken as the statistical error due to reweighting.  This procedure is carried out for the $\mathit{ff}$, $ee$, low sideband $ee$, and high sideband $ee$ samples.
+In order to estimate the statistical error due to the reweighting procedure, 1000 toy sets of weights are generated.  Each set includes a weight for each (di-EM $p_{T}$, $N_{\mathrm{j}}$) bin, with the values picked from a Gaussian distribution with mean and standard deviation equal to the observed weight for that bin and its statistical error.  The effect of reweighting error is not correlated between \MET bins.  For each of the 1000 experiments, the control sample data are reweighted according to the generated weights, and the background estimates are calculated for each \MET bin.  Since the distribution of the toy background estimates follows a Gaussian distribution in each \MET bin, the RMS spread of the estimates is taken as the statistical error due to reweighting.  This procedure is carried out for the $\mathit{ff}$, $ee$, low sideband $ee$, and high sideband $ee$ samples.
 
 The total statistical error on the background estimate per \MET bin is given by
 
-%fill in at work
 \begin{eqnarray}
+\sigma_{\mathrm{stat}}^{2} &=& \sigma_{\mathrm{stat,QCD}}^{2} + \sigma_{\mathrm{stat,EW}}^{2}
+\label{eq:total_stat_error}
 \end{eqnarray}
-%fill in at work and include the eg statistical error
-where \textcolor{red}{\textbf{Fill in at work.}}  For \MET $>$ 100 GeV, the errors due to the number of events collected, the normalization, and the reweighting amount to \textcolor{red}{\textbf{XXX}}\%, \textcolor{red}{\textbf{XXX}}\%, and \textcolor{red}{\textbf{XXX}}\% of the total background estimate.
+%
+where $\sigma_{\mathrm{stat,QCD}}^{2}$ is the square of the total statistical error on the QCD prediction in the \MET bin
+
+\begin{eqnarray}
+\sigma_{\mathrm{stat,QCD}}^{2} &=& \sigma_{\mathrm{stat,}s}^{2} + \sigma_{\mathrm{Poisson,QCD}}^{2} + \sigma_{\mathrm{reweight,}s}^{2} + \sigma_{\mathrm{reweight,QCD}}^{2}
+\label{eq:QCD_stat_error}
+\end{eqnarray}
+%
+and $\sigma_{\mathrm{stat,EW}}$ is the Poisson error on the number of $e\gamma$ events in the \MET bin (= $\sqrt{N_{e\gamma}}$, where $N_{e\gamma}$ is the prediction in the \MET bin after scaling by $f_{e\rightarrow\gamma}$).  The contributions to $\sigma_{\mathrm{stat,QCD}}^{2}$ are discussed below.
+
+\begin{itemize}
+
+\item $\sigma_{\mathrm{stat,}s}^{2}$ is the statistical error contributed by the normalization factor $s$ (i.e. from Poisson error in the normalization region \MET $<$ 20 GeV):
+
+\begin{eqnarray}
+\sigma_{\mathrm{stat,}s}^{2} &=& \frac{N_{\mathrm{control}}^{2}}{(N_{\gamma\gamma}^{\mathrm{norm}} - N_{e\gamma}^{\mathrm{norm}})^{2}}(\left[\sigma_{\mathrm{Poisson,}\gamma\gamma}^{\mathrm{norm}}\right]^{2} + \left[\sigma_{\mathrm{Poisson,}e\gamma}^{\mathrm{norm}}\right]^{2}) + \nonumber \\
+&&\frac{N_{\mathrm{control}}^{2}}{(N_{\mathrm{control}}^{\mathrm{norm}})^{2}}(\sigma_{\mathrm{Poisson,control}}^{\mathrm{norm}})^{2}
+\label{eq:norm_stat_error}
+\end{eqnarray}
+%
+where $N_{\mathrm{control}}$ is the number of reweighted, normalized events in the \MET bin, $N_{\gamma\gamma}^{\mathrm{norm}}$ is the number of $\gamma\gamma$ events in the normalization region, $N_{e\gamma}^{\mathrm{norm}}$ is the number of $e\gamma$ events in the normalization region (after scaling by $f_{e\rightarrow\gamma}$), $\sigma_{\mathrm{Poisson,}\gamma\gamma}^{\mathrm{norm}}$ is the Poisson error on the number of $\gamma\gamma$ events in the normalization region (= $\sqrt{N_{\gamma\gamma}^{\mathrm{norm}}}$), $\sigma_{\mathrm{Poisson,}e\gamma}^{\mathrm{norm}}$ is the Poisson error on the number of $e\gamma$ events in the normalization region (= $\sqrt{N_{e\gamma}^{\mathrm{norm}}}$), $N_{\mathrm{control}}^{\mathrm{norm}}$ is the number of QCD control ($ee$ or $\mathit{ff}$) events in the normalization region, and $\sigma_{\mathrm{Poisson,control}}^{\mathrm{norm}}$ is the Poisson error on the number of QCD control ($ee$ or $\mathit{ff}$) events in the normalization region (= $\sqrt{\sum_{i = 1}^{N_{\mathrm{control}}^{\mathrm{norm}}}w_{i}^{2}}$, where $w_{i}$ is the di-EM $p_{T}$ weight applied to event $i$).  For the $ee$ control region, $N_{\mathrm{control}}$ and $N_{\mathrm{control,norm}}$ are sideband subtracted, and $\sigma_{\mathrm{Poisson,control}}^{\mathrm{norm}}$ includes the Poisson error on the number of sideband events.
+
+\item $\sigma_{\mathrm{Poisson,QCD}}$ is the Poisson error due to the number of QCD control ($ee$ or $\mathit{ff}$) events in the \MET bin, equal to $\sqrt{\sum_{i = 1}^{N_{\mathrm{control}}}w_{i}^{2}}$, where $w_{i}$ is the di-EM $p_{T}$ weight applied to event $i$.  For the $ee$ control region, $\sigma_{\mathrm{Poisson,QCD}}$ includes the Poisson error on the number of subtracted  sideband events.
+
+\item $\sigma_{\mathrm{reweight,}s}$ is the error contributed by the control sample reweighting in the normalization region (= $\frac{N_{\mathrm{control}}^{2}}{(N_{\mathrm{control}}^{\mathrm{norm}})^{2}}\sigma_{\mathrm{reweight,control}}^{\mathrm{norm}}$).  $\sigma_{\mathrm{reweight,control}}^{\mathrm{norm}}$ is the quadrature sum of the RMS of the 1000 toy reweighting experiments for each \MET bin in the normalization region.  For the $ee$ control sample, it also includes (in quadrature) the RMS of the toys in the sideband samples.
+
+\item $\sigma_{\mathrm{reweight,QCD}}$ is the error contributed by the control sample reweighting in the \MET bin (= $s\sigma_{\mathrm{reweight,control}}$).  $\sigma_{\mathrm{reweight,control}}$ is the RMS of the 1000 toy reweighting experiments for the \MET bin.  For the $ee$ control sample, it also includes (in quadrature) the RMS of the toys in the sideband samples.
+
+\end{itemize}
 
 The dominant source of systematic error on the background estimate is the slight difference in hadronic activity between the $ee$, $\mathit{ff}$, and $\gamma\gamma$ samples.  This results in a small bias ($\sim$1 GeV) of the $ee$ \MET distribution towards lower values with respect to the $\mathit{ff}$ and $\gamma\gamma$ samples, as shown in Figure~\ref{fig:avg_MET_vs_di-EM_pT}.  Therefore, the $\mathit{ff}$ sample is used as the primary QCD background estimator, and the difference between the $ee$ and $\mathit{ff}$ predictions is assigned as an error on the knowledge of the hadronic activity.  For \MET $>$ 100 GeV, this error amounts to 43\% of the total QCD + electroweak background estimate.
 
@@ -466,10 +493,9 @@ The dominant source of systematic error on the background estimate is the slight
 	\label{fig:avg_MET_vs_di-EM_pT}
 \end{figure}
 
-%calculate the error on the EW background and what fraction of the total background it is
-The second largest source of systematic error comes from the $p_{T}$ dependence of the $e\rightarrow\gamma$ misidentification rate (see~\ref{sec:Modeling the Electroweak Background}).  For \MET $>$ 100 GeV, the expected electroweak background is 3.6 $\pm$ \textcolor{red}{\textbf{XXX}} events, so this error amounts to \textcolor{red}{\textbf{XXX}}\% of the total QCD + electroweak background estimate.
+The second largest source of systematic error comes from the $p_{T}$ dependence of the $e\rightarrow\gamma$ misidentification rate (see~\ref{sec:Modeling the Electroweak Background}).  For \MET $>$ 100 GeV, the expected electroweak background is 3.4 $\pm$ 1.0 events, so this error amounts to 4.8\% of the total QCD + electroweak background estimate.
 
-Finally, the assumption of a constant $t\bar{t}$ and $W$ + jets background shape under the $Z$ peak in the $ee$ sample induces a systematic error on the $ee$ sideband-subtracted background prediction.  To assess the magnitude of this error, the sideband subtraction (see Sec.~\ref{sec:Reweighting}) is performed once using only the prediction from the high sideband, and once using only the prediction from the low sideband.  In each of these cases, the prediction is weighted by a factor of two, to account for the fact that the sideband regions are only half as wide (10 GeV) as the signal region (20 GeV).  The maximum variation from the nominal $ee$ estimate is taken as the error, which amounts to \textcolor{red}{\textbf{XXX}}\% for \MET $>$ 100 GeV.  \textcolor{red}{\textbf{Is this the right way to do this?}}  \MET distributions using the nominal $ee$ sideband subtraction, the low-sideband-only subtraction, and the high-sideband-only subtraction are shown in Figure~\ref{fig:mee_bkg_shape_error}.
+Finally, the assumption of a constant $t\bar{t}$ and $W$ + jets background shape under the $Z$ peak in the $ee$ sample induces a systematic error on the $ee$ sideband-subtracted background prediction.  To assess the magnitude of this error, the sideband subtraction (see Sec.~\ref{sec:Reweighting}) is performed once using only the prediction from the high sideband, and once using only the prediction from the low sideband.  In each of these cases, the prediction is weighted by a factor of two, to account for the fact that the sideband regions are only half as wide (10 GeV) as the signal region (20 GeV).  The maximum variation from the nominal $ee$ estimate is taken as the error, which amounts to 11\% for \MET $>$ 100 GeV.  \MET distributions using the nominal $ee$ sideband subtraction, the low-sideband-only subtraction, and the high-sideband-only subtraction are shown in Figure~\ref{fig:mee_bkg_shape_error}.
 
 \begin{figure}
 	\centering
@@ -502,7 +528,7 @@ The use of uncorrected instead of corrected PF \MET (see Sec.~\ref{sec:MET}) mak
 	\label{fig:Type-I_MET_corrections_vs_uncorrected_MET_zoom}
 \end{figure}
 
-Tables~\ref{tab:ee_background_prediction_errors} and~\ref{tab:ff_background_prediction_errors} list all the errors on the $ee$ and $\mathit{ff}$ QCD background predictions, respectively, for the \MET bins used in the search.  Table~\ref{eg_background_prediction_errors} lists the errors on the electroweak background prediction.  Finally, table~\ref{total_background_prediction_errors} shows the errors on the total QCD + electroweak background prediction, broken down by origin (statistical or systematic) and QCD background estimation sample ($ee$ or $\mathit{ff}$).  In the final result, only the $\mathit{ff}$ QCD estimate is used.
+Tables~\ref{tab:ee_background_prediction_errors} and~\ref{tab:ff_background_prediction_errors} list all the errors on the $ee$ and $\mathit{ff}$ QCD background predictions, respectively, for the \MET bins used in the search.  Table~\ref{tab:eg_background_prediction_errors} lists the errors on the electroweak background prediction.  Finally, Table~\ref{tab:total_background_prediction_errors} shows the errors on the total QCD + electroweak background prediction, broken down by origin (statistical or systematic) and QCD background estimation sample ($ee$ or $\mathit{ff}$).  In the final result, only the $\mathit{ff}$ QCD estimate is used.
 
 \begin{table}[hcbp]
 \caption{Errors on the $ee$ QCD background prediction as a fraction of the $ee$ prediction.}
@@ -522,13 +548,13 @@ Total & 3.9 & 8.1 & 16 & 25 & 25 \\
 \hspace{1.5cm}In norm. region & 0.43 & 0.44 & 0.46 & 0.55 & 0.51 \\
 \hspace{1.5cm}In this \MET bin & 3.5 & 7.7 & 15 & 24 & 20 \\
 \hline
-\hspace{1cm}Reweighting & 0.71 & 1.2 & 3.6 & 4.2 & 7.8 \\
-\hspace{1.5cm}In norm. region & 0.2 & 0.2 & 0.21 & 0.25 & 0.23 \\
-\hspace{1.5cm}In this \MET bin & 0.68 & 1.2 & 3.6 & 4.2 & 7.8 \\
+\hspace{1cm}Reweighting & 0.73 & 1.2 & 3.5 & 4.3 & 7.7 \\
+\hspace{1.5cm}In norm. region & 0.19 & 0.19 & 0.2 & 0.24 & 0.23 \\
+\hspace{1.5cm}In this \MET bin & 0.71 & 1.2 & 3.5 & 4.3 & 7.7 \\
 \hline
 \hspace{0.5cm}Systematics & 1.4 & 2 & 0.72 & 5.5 & 12 \\
 \hline
-\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0015 & 0.0016 & 0.0019 & 0.0018 \\
+\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0012 & 0.0012 & 0.0013 & 0.0015 & 0.0014 \\
 \hspace{1cm}$m_{ee}$ background shape & 1.4 & 2 & 0.72 & 5.5 & 12 \\
 \hline
 \end{tabular}
@@ -547,20 +573,20 @@ Total & 3.9 & 8.1 & 16 & 25 & 25 \\
 \hline
 Total & 15 & 25 & 61 & 34 & 64 \\
 \hline
-\hspace{0.5cm}Statistics & 7.2 & 14 & 30 & 34 & 38 \\
+\hspace{0.5cm}Statistics & 7.2 & 14 & 30 & 33 & 38 \\
 \hline
 \hspace{1cm}No. events & 7.1 & 14 & 29 & 33 & 36 \\
 \hspace{1.5cm}In norm. region & 0.64 & 0.64 & 0.64 & 0.64 & 0.64 \\
 \hspace{1.5cm}In this \MET bin & 7.1 & 14 & 29 & 33 & 36 \\
 \hline
-\hspace{1cm}Reweighting & 0.89 & 2.7 & 5.2 & 7.2 & 13 \\
-\hspace{1.5cm}In norm. region & 0.28 & 0.28 & 0.28 & 0.28 & 0.28 \\
-\hspace{1.5cm}In this \MET bin & 0.84 & 2.7 & 5.2 & 7.2 & 13 \\
+\hspace{1cm}Reweighting & 0.85 & 2.7 & 5.1 & 6.9 & 13 \\
+\hspace{1.5cm}In norm. region & 0.27 & 0.27 & 0.27 & 0.27 & 0.27 \\
+\hspace{1.5cm}In this \MET bin & 0.81 & 2.6 & 5.1 & 6.9 & 13 \\
 \hline
 \hspace{0.5cm}Systematics & 13 & 21 & 53 & 5.5 & 52 \\
 \hline
 \hspace{1cm}$ee$/$\mathit{ff}$ difference & 13 & 21 & 53 & 5.5 & 52 \\
-\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0015 & 0.0015 & 0.0015 & 0.0015 & 0.0015 \\
+\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0012 & 0.0012 & 0.0012 & 0.0012 & 0.0012 \\
 \hline
 \end{tabular}
 \label{tab:ff_background_prediction_errors}
@@ -576,11 +602,11 @@ Total & 15 & 25 & 61 & 34 & 64 \\
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-Total & 34 & 34 & 35 & 35 & 34 \\
+Total & 29 & 29 & 30 & 30 & 30 \\
 \hline
 \hspace{0.5cm}Statistics & 3.6 & 5.2 & 6.7 & 7.2 & 6.5 \\
 \hline
-\hspace{0.5cm}Systematics ($f_{e\rightarrow\gamma}$) & 34 & 34 & 34 & 34 & 34 \\
+\hspace{0.5cm}Systematics ($f_{e\rightarrow\gamma}$) & 29 & 29 & 29 & 29 & 29 \\
 \hline
 \end{tabular}
 \label{tab:eg_background_prediction_errors}
@@ -596,29 +622,29 @@ Total & 34 & 34 & 35 & 35 & 34 \\
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-Total ($ee$ + $e\gamma$) & 4 & 7.9 & 15 & 22 & 22 \\
+Total ($ee$ + $e\gamma$) & 3.9 & 7.8 & 15 & 22 & 22 \\
 \hline
 \hspace{0.5cm}Statistics & 3.4 & 7.3 & 14 & 21 & 18 \\
 \hline
-\hspace{1cm}QCD & 3.4 & 7.2 & 14 & 21 & 18 \\
-\hspace{1cm}Electroweak & 0.13 & 0.32 & 0.57 & 0.84 & 0.81 \\
+\hspace{1cm}QCD & 3.4 & 7.3 & 14 & 21 & 18 \\
+\hspace{1cm}Electroweak & 0.13 & 0.3 & 0.53 & 0.79 & 0.76 \\
 \hline
-\hspace{0.5cm}Systematics & 1.9 & 2.8 & 2.9 & 6.3 & 12 \\
+\hspace{0.5cm}Systematics & 1.7 & 2.5 & 2.4 & 5.8 & 11 \\
 \hline
-\hspace{1cm}QCD & 1.4 & 1.9 & 0.66 & 4.8 & 11 \\
-\hspace{1cm}Electroweak & 1.3 & 2.1 & 2.9 & 4 & 4.2 \\
+\hspace{1cm}QCD & 1.4 & 1.9 & 0.66 & 4.9 & 11 \\
+\hspace{1cm}Electroweak & 1 & 1.7 & 2.3 & 3.2 & 3.4 \\
 \hline
-Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 53 & 30 & 53 \\
+Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 54 & 30 & 54 \\
 \hline
 \hspace{0.5cm}Statistics & 6.9 & 13 & 26 & 29 & 30 \\
 \hline
 \hspace{1cm}QCD & 6.9 & 13 & 26 & 29 & 30 \\
-\hspace{1cm}Electroweak & 0.12 & 0.26 & 0.84 & 0.88 & 1.1 \\
+\hspace{1cm}Electroweak & 0.11 & 0.24 & 0.79 & 0.83 & 1.1 \\
 \hline
-\hspace{0.5cm}Systematics & 12 & 20 & 47 & 6.4 & 43 \\
+\hspace{0.5cm}Systematics & 12 & 20 & 47 & 5.9 & 43 \\
 \hline
-\hspace{1cm}QCD & 12 & 20 & 46 & 4.9 & 42 \\
-\hspace{1cm}Electroweak & 1.1 & 1.7 & 4.2 & 4.2 & 6 \\
+\hspace{1cm}QCD & 12 & 20 & 47 & 4.9 & 43 \\
+\hspace{1cm}Electroweak & 0.9 & 1.3 & 3.4 & 3.4 & 4.8 \\
 \hline
 \end{tabular}
 \label{tab:total_background_prediction_errors}
@@ -661,7 +687,7 @@ Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 53 & 30 & 53 \\
 \section{Results}
 \label{sec:Results}
 
-Figure~\ref{fig:MET_final} shows the \MET distribution of the $\gamma\gamma$ search sample along with the predicted \MET distributions of the QCD and electroweak backgrounds.  The observed number of two-photon events, background estimates and their errors, and expected number of two-photon events from two representative GGM SUSY models are listed in Table~\ref{tab:results_summary_table}.  (Details of the SUSY MC production are given in Chapter~\ref{chap:Interpretation of Results in Terms of GMSB Models} and App.~\ref{chap:Monte Carlo Samples}.)  No deviation from the Standard Model prediction is observed in the $\gamma\gamma$ search sample.
+Figure~\ref{fig:MET_final}(~\ref{fig:MET_final_geq1j}) shows the \MET distribution of the inclusive($\geq$1-jet) $\gamma\gamma$ search sample along with the predicted \MET distributions of the QCD and electroweak backgrounds.  The observed number of two-photon events, background estimates and their errors, and expected number of inclusive($\geq$1-jet) two-photon events from two representative GGM SUSY models are listed in Table~\ref{tab:results_summary_table}(~\ref{tab:results_summary_table_geq1j}).  (Details of the SUSY MC production are given in Chapter~\ref{chap:Interpretation of Results in Terms of GMSB Models} and App.~\ref{chap:Monte Carlo Samples}.)  No deviation from the Standard Model prediction is observed in the $\gamma\gamma$ search sample.
 
 \begin{figure}
 	\centering
@@ -670,6 +696,15 @@ Figure~\ref{fig:MET_final} shows the \MET distribution of the $\gamma\gamma$ sea
 	\subfloat[$\mathit{ff}$ + $e\gamma$.  The widths of the bands correspond to the errors given in Table~\ref{tab:total_background_prediction_errors}, including the error associated with the difference between the $ee$ and $\mathit{ff}$ QCD estimates.]{\label{fig:MET_final_ff_eg}\includegraphics[scale=0.35]{MET_final_ff_eg}}
 	\caption{\MET distribution of the $\gamma\gamma$ search sample (black circles) along with the predicted \MET distributions of the QCD and electroweak backgrounds (blue band for $ee$ QCD prediction + electroweak prediction, purple band for $\mathit{ff}$ QCD prediction + electroweak prediction).  The electroweak background prediction is shown in green.  The bottom plots show the ratio of the $\gamma\gamma$ \MET distribution to the $ee$ + $e\gamma$ background distribution (blue) and $\mathit{ff}$ + $e\gamma$ background distribution (purple).}
 	\label{fig:MET_final}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\subfloat[$ee$ + $e\gamma$ and $\mathit{ff}$ + $e\gamma$.  The widths of the bands correspond to the errors given in Table~\ref{tab:total_background_prediction_errors}, excluding the error associated with the difference between the $ee$ and $\mathit{ff}$ QCD estimates for the $\mathit{ff}$ + $e\gamma$ \MET distribution.]{\label{fig:MET_final_ee_ff_eg_geq1j}\includegraphics[scale=0.35]{MET_final_ee_ff_eg_geq1}}
+	\hspace{1cm}
+	\subfloat[$\mathit{ff}$ + $e\gamma$.  The widths of the bands correspond to the errors given in Table~\ref{tab:total_background_prediction_errors}, including the error associated with the difference between the $ee$ and $\mathit{ff}$ QCD estimates.]{\label{fig:MET_final_ff_eg_geq1j}\includegraphics[scale=0.35]{MET_final_ff_eg_geq1}}
+	\caption{\MET distribution of the $\gamma\gamma$ + $\geq$1 jet search sample (black circles) along with the predicted \MET distributions of the QCD and electroweak backgrounds (blue band for $ee$ QCD prediction + electroweak prediction, purple band for $\mathit{ff}$ QCD prediction + electroweak prediction).  The electroweak background prediction is shown in green.  The bottom plots show the ratio of the $\gamma\gamma$ \MET distribution to the $ee$ + $e\gamma$ background distribution (blue) and $\mathit{ff}$ + $e\gamma$ background distribution (purple).}
+	\label{fig:MET_final_geq1j}
 \end{figure}
 
 \begin{table}[hcbp]
@@ -682,9 +717,9 @@ Figure~\ref{fig:MET_final} shows the \MET distribution of the $\gamma\gamma$ sea
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-Data observed ($\gamma\gamma$) & 354 & 93 & 37 & 33 & 17 \\
+\begin{tabular}{@{}c@{}}Data observed\\($\gamma\gamma$)\\\end{tabular} & 354 & 93 & 37 & 33 & 17 \\
 \hline
-\begin{tabular}{@{}c@{}}Background predicted\\($\mathit{ff}$ + $e\gamma$)\\\end{tabular} & 362 $\pm$ 51.6 & 113 $\pm$ 27.1 & 27.2 $\pm$ 14.5 & 24.1 $\pm$ 7.27 & 20.4 $\pm$ 10.9 \\
+\begin{tabular}{@{}c@{}}Background predicted\\($\mathit{ff}$ + $e\gamma$)\\\end{tabular} & 361 $\pm$ 51.5 & 113 $\pm$ 27.1 & 26.9 $\pm$ 14.5 & 23.9 $\pm$ 7.23 & 20.2 $\pm$ 10.9 \\
 \hline
 GGM1 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
 \hline
@@ -692,6 +727,28 @@ GGM2 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
 \hline
 \end{tabular}
 \label{tab:results_summary_table}
+\end{table}
+
+\begin{table}[hcbp]
+\caption{Observed numbers of two-photon + $\geq$1-jet events, background estimates and their errors, and expected numbers of two-photon + $\geq$1-jet events from two representative GGM SUSY models (details of MC simulation given in Chapter~\ref{chap:Interpretation of Results in Terms of GMSB Models} and App.~\ref{chap:Monte Carlo Samples}) for the \MET bins used in the search.  Errors on the background estimates are detailed in Tables~\ref{tab:ee_background_prediction_errors},~\ref{tab:ff_background_prediction_errors},~\ref{tab:eg_background_prediction_errors}, and~\ref{tab:total_background_prediction_errors}.  Errors on the expected numbers of GGM events are purely statistical.}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\multirow{2}{*}{Source}} & \multicolumn{5}{c|}{No. events} \\
+\cline{2-6}
+& [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
+\hline
+\hline
+\begin{tabular}{@{}c@{}}Data observed\\($\gamma\gamma$ + $\geq$1 jet)\\\end{tabular} & 202 & 63 & 27 & 25 & 11 \\
+\hline
+\begin{tabular}{@{}c@{}}Background predicted\\($\mathit{ff}$ + $e\gamma$)\\\end{tabular} & 200 $\pm$ 35.4 & 77.7 $\pm$ 28.1 & 19.4 $\pm$ 8.55 & 14.7 $\pm$ 7.04 & 14.4 $\pm$ 5.59 \\
+\hline
+GGM1 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
+\hline
+GGM2 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
+\hline
+\end{tabular}
+\label{tab:results_summary_table_geq1j}
 \end{table}
 
 %MC closure test?

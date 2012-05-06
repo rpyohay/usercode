@@ -4,18 +4,101 @@
 \chapter{Interpretation of Results in Terms of GMSB Models}
 \label{chap:Interpretation of Results in Terms of GMSB Models}
 
+%are the upper limits on sigma or sigma*BR^2?
+As shown in Figs.~\ref{fig:MET_final} and~\ref{fig:MET_final_geq1j} and Tables~\ref{tab:results_summary_table} and~\ref{tab:results_summary_table_geq1j}, no excess of events above the Standard Model expectation is found in either the $\geq$0- or $\geq$1-jet analyses for the GMSB-sensitive region \MET $\geq$ 50 GeV.  Therefore, upper limits on the production cross sections \textcolor{red}{\textbf{$\mathbf{\times\mbox{ }\mathcal{BR}(\NLSP\rightarrow\gamma\tilde{G})^{2}}$}} of various GMSB models are calculated and then translated into statements of exclusion.  Section~\ref{sec:Simplified Models} describes the GMSB models that were generated with MC and tested for exclusion.  The upper limit calculation is laid out in Section~\ref{sec:Upper Limit Calculation}, and the translation to model exclusions is described in Section~\ref{sec:Translation of Upper Limits to Model Exclusions}.  The upper limits themselves are presented in Section~\ref{sec:Cross Section Upper Limits}, and, finally, the exclusions are presented in Section~\ref{sec:Exclusion Contours}.
+
 \section{Simplified Models}
+\label{sec:Simplified Models}
 %signal uncertainties, scale factor stuff, MC parameters 
 %repeat the table in the section about upper limits, this time including the acceptance errors
 %%check effect of JES uncertainty on di-EM pT weights?
 %The effect of jet energy scale uncertainty on the final background estimate, through binning of events by number of jets, is taken as 2\%.  This figure comes from an earlier version of this analysis based on 35 $\mbox{pb}^{-1}$ of LHC data \cite{CMS_GMSB_35pb-1}.  \textcolor{red}{\textbf{This figure comes from a totally different study.  We have not checked how JES uncertainties affect the di-EM $p_{T}$ weights.  Should we?}}
 
 \section{Upper Limit Calculation}
+\label{sec:Upper Limit Calculation}
+
+The upper limits are calculated according to the prescription followed for the 2011 ATLAS + CMS Higgs limit combination \cite{CMS-NOTE-2011/005}.  This prescription utilizes the frequentist $\mbox{CL}_{s}$ method \cite{Read} with profile likelihood test statistic \cite{Cowan_Cranmer_Gross_Vitells}.  The $\mbox{CL}_{s}$ method and the profile likelihood are explained in Section~\ref{sec:CLs and the Profile Likelihood Test Statistic}, using specific signal MC points to illustrate the procedure.  First, however, the signal MC acceptance $\times$ efficiency, which is an input to the limit setting procedure, is presented in Section~\ref{sec:Signal Acceptance Times Efficiency}.
+
+\subsection{Signal Acceptance $\times$ Efficiency}
+\label{sec:Signal Acceptance Times Efficiency}
+
+%show acceptances and comment on them
+
+\subsection{$\mbox{CL}_{s}$ and the Profile Likelihood Test Statistic}
+\label{sec:CLs and the Profile Likelihood Test Statistic}
+
+%procedure for upper limit calculation
+%1. prepare inputs
+%2. run limit for each signal point
+%	1. calculate asymptotic CLs limit
+%		1. define r = #signal/#signal(expected)
+%		2. command: combine -M Asymptotic input_file > asymptotic.log
+%		3. documentation of asymptotic CLs: http://arxiv.org/abs/1007.1727
+%		4. "compute quickly an estimate of the observed and expected limits, which is fairly accurate when the event yields are not too small and the systematical uncertainties don't play a major role in the result"
+%		5. output: observed limit on r, median expected limit on r, edges of 68% and 95% uncertainty bands for expected limit on r
+%	2. calculate profile likelihood limit
+%		1. command: combine -M ProfileLikelihood input_file -t 250 > profileliklihood.log
+%		2. "quick estimate of the observed limit only and can be over-aggressive in the case of low statistics"
+%		3. output: observed limit on r, median expected limit on r, edges of 68% and 95% uncertainty bands for expected limit on r
+%	3. if +/-2 sigma profile likelihood values are nan, replace them with the corresponding asymptotic CLs numbers
+%	4. if +/-2 sigma profile likelihood values are unequal and asymptotic CLs observed limit > 0.0001:
+%		1. if asymptotic CLs observed limit > +2 sigma profile likelihood value, set +2 sigma profile likelihood value to 1.3*(asymptotic CLs observed limit)
+%		2. if asymptotic CLs observed limit < -2 sigma profile likelihood value, set -2 sigma profile likelihood value to 0.7*(asymptotic CLs observed limit)
+%		3. why the lower bound on asymptotic CLs observed limit?
+%		4. why does the observed limit have to be within the +/-2 sigma profile likelihood band?
+%	5. if +/-2 sigma profile likelihood values are equal, replace with +/- 2 sigma asymptotic CLs values
+%	6. set no. decimals to 6
+%	7. range is -2 - +2 sigma profile likelihood value
+%	8. steps are range/100
+%	9. loop over 100 possible r values between -2 and +2 sigma profile likelihood values
+%		1. if r > 0.0001 compute fully frequentist CLs p-values for this r hypothesis
+%			1. command: combine -M HybridNew --frequentist --saveToys --saveHybridResult --clsAcc 0 -s -1 -n $MODEL --singlePoint this_r_value input_file &> CLsFrequ.$MODEL.this_r_value.log
+%			2. output: CLs +/- sigma_CLs, CLb +/- sigma_CLb, CLs+b +/- sigma_CLs+b
+%			3. CLs+b: P(x < xobs | r*s + b) = 1 - CLs; CLb: P(x < xobs | b) = 1 - CLb; CLs: (1 - CLs+b)/(1 - CLb) = 1 - CLs
+%			4. test statistic is "profile likelihood modified for upper limits": L(x | r*s + b, theta_hat)/L(x | r'_hat*s + b, theta_hat) where theta_hat maximizes L(x | r*s + b, theta), r'_hat maximizes L(x | r'*s + b, theta_hat), and 0 <= r' <= r
+%			5. minimum 500 toys
+%			6. --singlePoint this_r_value and --clsAcc 0 means just compute the p-values for this r hypothesis
+%		2. why the r > 0.0001 condition?
+%		3. could further parallelize this by making each one of these loops a separate job
+%	10. hadd the output files for step 9
+%	11. compute the observed and expected fully frequentist CLs limits from the grid of p-values
+%		1. command: combine input_file -M HybridNew --frequentist --grid=$MODEL.root > $MODEL.obs.log with --expectedFromGrid for the +/-1 and +/-2 sigma bands
+%		2. output: median expected limit, observed limit, and +/-1 and +/-2 sigma bands
+%		3. now that the code has the p-values for each r hypothesis, it just picks the r for p = 0.05
+
+%methods are defined by
+%	(a) construction of the test statistic
+%	(b) treatment of nuisance parameters
+
+%to understand:
+%	- asymptotic CLs
+%	- profile likelihood
+%	- fully frequentist CLs
+%	- shape analysis (I don't think we do it, but could we?)
+
+%test statistics
+%	- Neyman-Pearson lemma: q_mu (Eq. 25) is the most powerful discriminator
+%	- likelihood is the product of Poisson probabilities of the observed events given the expected signal and background rates
+%	- construct PDF of q_mu by throwing toys according to the Poisson probabilities in the likelihoods
+%	- problem with plain old q_mu: sometimes, can exclude a signal with mu = 0 (happens when background estimate fluctuates low; if background estimate is low relative to expected signal, you are "more sensitive" to smaller mus)
+%	- divide CLs+b by CLb to solve problem of excluding weak signals when downward fluctuations of background estimate occur
+%	- when observation is ~ background estimate, CLs limits are stronger than CLs+b (overcoverage: P(obs. interval contains true value of parameter) > P(true interval contains true value of parameter), or CLs interval is wider than it "should" be, or than CLs+b interval)
+%	- profile likelihood test statistic: Eq. (30) (used for CLs)
+%	- another way to formulate the mu = 0 problem: mu >= mu_hat for all mu, so if the data represent an upward fluctuation s.t. mu_hat > mu for a particular mu (without the constarint), that would not be considered evidence against that mu (because the test statistic would evaluate to 0, meaning CLs+b = 1 and you don't exclude)
+%	- hybrid L(x | mu, theta) = L(x | mu*s + b) * rho(theta | theta_tilde), where theta_tilde is the nominal value of the nuisance parameter (we always use log-normal distribution for rho)
+%	- can take a conceptual leap from Bayesian to frequentist to replace rho with p(theta_tilde | theta) in the likelihood
+%	- in LHC CLs, test statistic sampling is "fully frequentist", meaning that s and b are never modified before throwing toys by rho (rho is just an extra multiplicative term in L, and s and b for the particular mu are evaluated at the MLE estimator for theta)
+%	- asymptotic profile likelihood approximation (i.e. asymptotic CLs) gives a straightforward formula for finding the mu that gives CLs = 0.95 without having to throw toy experiments
+%	- downside of asymptotic CLs: for small numbers of events gives very biased result, which is why you need to do full CLs with toys (asymptotic CLs can be used to get an idea of the true limit and of the maximum range around it that you should scan with real CLs)
+%	- Poisson distributions for x | s, b are in Eq. (3)
+
+\section{Translation of Upper Limits to Model Exclusions}
+\label{sec:Translation of Upper Limits to Model Exclusions}
 
 \section{Cross Section Upper Limits}
+\label{sec:Cross Section Upper Limits}
 
 \section{Exclusion Contours}
-
-Lorum ipsum fuck Republicans.
+\label{sec:Exclusion Contours}
 
 \end{document}
