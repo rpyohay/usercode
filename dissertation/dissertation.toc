@@ -1,49 +1,46 @@
-\contentsline {chapter}{\numberline {1}Overview of the Standard Model of Particle Physics}{3}{chapter.1}
-\contentsline {section}{\numberline {1.1}Particle Content}{6}{section.1.1}
-\contentsline {section}{\numberline {1.2}Electroweak Symmetry Breaking and the Higgs Mechanism}{6}{section.1.2}
-\contentsline {section}{\numberline {1.3}The Hierarchy Problem, The Origins of Mass, and Fine Tuning}{6}{section.1.3}
-\contentsline {chapter}{\numberline {2}The Supersymmetric Extension to the Standard Model}{7}{chapter.2}
-\contentsline {section}{\numberline {2.1}Supermultiplet Representation}{7}{section.2.1}
-\contentsline {section}{\numberline {2.2}The Unbroken SUSY Lagrangian}{8}{section.2.2}
-\contentsline {section}{\numberline {2.3}Soft SUSY Breaking}{14}{section.2.3}
-\contentsline {section}{\numberline {2.4}Gauge-Mediated SUSY Breaking}{16}{section.2.4}
-\contentsline {section}{\numberline {2.5}Phenomenology of General Gauge Mediation}{19}{section.2.5}
-\contentsline {section}{\numberline {2.6}Experimental Status of SUSY}{23}{section.2.6}
-\contentsline {chapter}{\numberline {3}Event Selection}{29}{chapter.3}
-\contentsline {section}{\numberline {3.1}Object Reconstruction}{30}{section.3.1}
-\contentsline {subsection}{\numberline {3.1.1}Photons}{30}{subsection.3.1.1}
-\contentsline {subsubsection}{Uncalibrated EB/EE Hits}{30}{section*.13}
-\contentsline {subsubsection}{Calibrated EB/EE Hits}{30}{section*.15}
-\contentsline {subsubsection}{Calibrated ES Hits}{33}{section*.17}
-\contentsline {subsubsection}{Clustering}{33}{section*.18}
-\contentsline {subsubsection}{Supercluster Corrections}{34}{section*.21}
-\contentsline {subsubsection}{From Supercluster to Photon}{36}{section*.22}
-\contentsline {subsection}{\numberline {3.1.2}Electrons}{41}{subsection.3.1.2}
-\contentsline {subsection}{\numberline {3.1.3}Jets and Missing Transverse Energy}{41}{subsection.3.1.3}
-\contentsline {subsubsection}{Particle Flow}{41}{section*.28}
-\contentsline {subsubsection}{Jets}{42}{section*.29}
-\contentsline {subsubsection}{Missing Transverse Energy}{44}{section*.33}
-\contentsline {section}{\numberline {3.2}HLT}{47}{section.3.2}
-\contentsline {section}{\numberline {3.3}Event Quality}{50}{section.3.3}
-\contentsline {section}{\numberline {3.4}Photon Identification Efficiency}{52}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Tag and Probe Method}{54}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Photon Efficiency Scale Factor $\epsilon _{e}^{\mathrm {data}}/\epsilon _{e}^{\mathrm {MC}}$}{57}{subsection.3.4.2}
-\contentsline {chapter}{\numberline {4}Data Analysis}{63}{chapter.4}
-\contentsline {section}{\numberline {4.1}Modeling the QCD Background}{67}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Outline of the Procedure}{67}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Reweighting}{68}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Normalization}{79}{subsection.4.1.3}
-\contentsline {section}{\numberline {4.2}Modeling the Electroweak Background}{79}{section.4.2}
-\contentsline {section}{\numberline {4.3}Errors on the Background Prediction}{85}{section.4.3}
-\contentsline {section}{\numberline {4.4}Results}{93}{section.4.4}
-\contentsline {chapter}{\numberline {5}Interpretation of Results in Terms of GMSB Models}{97}{chapter.5}
-\contentsline {section}{\numberline {5.1}Simplified Models}{97}{section.5.1}
-\contentsline {section}{\numberline {5.2}Upper Limit Calculation}{97}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Signal Acceptance $\times $ Efficiency}{98}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}$\unhbox \voidb@x \hbox {CL}_{s}$ and the Profile Likelihood Test Statistic}{98}{subsection.5.2.2}
-\contentsline {section}{\numberline {5.3}Translation of Upper Limits to Model Exclusions}{98}{section.5.3}
-\contentsline {section}{\numberline {5.4}Cross Section Upper Limits}{98}{section.5.4}
-\contentsline {section}{\numberline {5.5}Exclusion Contours}{98}{section.5.5}
-\contentsline {chapter}{\numberline {A}Monte Carlo Samples}{99}{appendix.A}
-\contentsline {subsection}{\numberline {A.0.1}List of Samples}{99}{subsection.A.0.1}
-\contentsline {subsection}{\numberline {A.0.2}Explanation of Naming Conventions}{100}{subsection.A.0.2}
+\contentsline {chapter}{\numberline {1}The Supersymmetric Extension to the Standard Model}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Supermultiplet Representation}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}The Unbroken SUSY Lagrangian}{4}{section.1.2}
+\contentsline {section}{\numberline {1.3}Soft SUSY Breaking}{10}{section.1.3}
+\contentsline {section}{\numberline {1.4}Gauge-Mediated SUSY Breaking}{12}{section.1.4}
+\contentsline {section}{\numberline {1.5}Phenomenology of General Gauge Mediation}{15}{section.1.5}
+\contentsline {section}{\numberline {1.6}Experimental Status of SUSY}{19}{section.1.6}
+\contentsline {chapter}{\numberline {2}Event Selection}{25}{chapter.2}
+\contentsline {section}{\numberline {2.1}Object Reconstruction}{26}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Photons}{26}{subsection.2.1.1}
+\contentsline {subsubsection}{Uncalibrated EB/EE Hits}{26}{section*.12}
+\contentsline {subsubsection}{Calibrated EB/EE Hits}{26}{section*.14}
+\contentsline {subsubsection}{Calibrated ES Hits}{29}{section*.16}
+\contentsline {subsubsection}{Clustering}{29}{section*.17}
+\contentsline {subsubsection}{Supercluster Corrections}{30}{section*.20}
+\contentsline {subsubsection}{From Supercluster to Photon}{32}{section*.21}
+\contentsline {subsection}{\numberline {2.1.2}Electrons}{37}{subsection.2.1.2}
+\contentsline {subsection}{\numberline {2.1.3}Jets and Missing Transverse Energy}{37}{subsection.2.1.3}
+\contentsline {subsubsection}{Particle Flow}{37}{section*.27}
+\contentsline {subsubsection}{Jets}{38}{section*.28}
+\contentsline {subsubsection}{Missing Transverse Energy}{40}{section*.32}
+\contentsline {section}{\numberline {2.2}HLT}{43}{section.2.2}
+\contentsline {section}{\numberline {2.3}Event Quality}{46}{section.2.3}
+\contentsline {section}{\numberline {2.4}Photon Identification Efficiency}{48}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Tag and Probe Method}{50}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Photon Efficiency Scale Factor $\epsilon _{e}^{\mathrm {data}}/\epsilon _{e}^{\mathrm {MC}}$}{53}{subsection.2.4.2}
+\contentsline {chapter}{\numberline {3}Data Analysis}{59}{chapter.3}
+\contentsline {section}{\numberline {3.1}Modeling the QCD Background}{63}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Outline of the Procedure}{63}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Reweighting}{64}{subsection.3.1.2}
+\contentsline {subsection}{\numberline {3.1.3}Normalization}{75}{subsection.3.1.3}
+\contentsline {section}{\numberline {3.2}Modeling the Electroweak Background}{75}{section.3.2}
+\contentsline {section}{\numberline {3.3}Errors on the Background Prediction}{81}{section.3.3}
+\contentsline {section}{\numberline {3.4}Results}{89}{section.3.4}
+\contentsline {chapter}{\numberline {4}Interpretation of Results in Terms of GMSB Models}{93}{chapter.4}
+\contentsline {section}{\numberline {4.1}Simplified Models}{93}{section.4.1}
+\contentsline {section}{\numberline {4.2}Upper Limit Calculation and Model Exclusion}{93}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Signal Acceptance $\times $ Efficiency}{94}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}$\unhbox \voidb@x \hbox {CL}_{s}$ and the Profile Likelihood Test Statistic}{96}{subsection.4.2.2}
+\contentsline {subsubsection}{Profile Likelihood}{97}{section*.75}
+\contentsline {subsubsection}{$\unhbox \voidb@x \hbox {CL}_{s}$}{100}{section*.76}
+\contentsline {section}{\numberline {4.3}Cross Section Upper Limits}{103}{section.4.3}
+\contentsline {section}{\numberline {4.4}Exclusion Contours}{104}{section.4.4}
+\contentsline {chapter}{\numberline {A}Monte Carlo Samples}{107}{appendix.A}
+\contentsline {subsection}{\numberline {A.0.1}List of Samples}{107}{subsection.A.0.1}
+\contentsline {subsection}{\numberline {A.0.2}Explanation of Naming Conventions}{108}{subsection.A.0.2}
