@@ -96,6 +96,8 @@ class GMSBAnalyzer {
   void setDiEMInvMassFitPar(const unsigned int, const string, const float, 
 			    const bool overwrite = false);
   void setDiEMInvMassFitParUnit(const string, const string, const bool overwrite = false);
+  void setPUReweightingFlag(const bool);
+  void setHLTFlag(const bool);
   void setJESUncertaintyMode(const bool);
   void setJESUncertaintyShift(const float);
   void initJECUncertainty(const string&);
@@ -122,6 +124,8 @@ class GMSBAnalyzer {
   float getDiEMInvMassFitParUpperBound(const unsigned int, const string) const;
   float getDiEMInvMassFitPar(const unsigned int, const string) const;
   string getDiEMInvMassFitParUnit(const string) const;
+  bool getPUReweightingFlag() const;
+  bool getHLTFlag() const;
   bool getJESUncertaintyMode() const;
   float getJESUncertaintyShift() const;
   const JetCorrectionUncertainty* getJECUncertaintyObject() const;
@@ -400,6 +404,8 @@ class GMSBAnalyzer {
   map<string, float> egInvMassFitParUpperBounds_;
   map<string, float> egInvMassFitPars_;
   map<string, string> diEMInvMassFitParUnits_;
+  bool doPUReweighting_;
+  bool doHLT_;
   bool JESUncertToy_;
   float shift_;
   JetCorrectionUncertainty* JECErr_;
@@ -465,6 +471,8 @@ GMSBAnalyzer::~GMSBAnalyzer()
   egInvMassFitParLowerBounds_.clear();
   egInvMassFitParUpperBounds_.clear();
   egInvMassFitPars_.clear();
+  doPUReweighting_ = false;
+  doHLT_ = false;
   JESUncertToy_ = false;
   shift_ = 0.0;
   if (JECErr_ != NULL) delete JECErr_;
@@ -524,6 +532,8 @@ void GMSBAnalyzer::Init(TTree *tree)
   //initialize private data members
   nEvts_ = 0;
   intLumi_ = 0.0;
+  doPUReweighting_ = true;
+  doHLT_ = true;
   JESUncertToy_ = false;
   shift_ = 0.0;
   JECErr_ = NULL;
@@ -675,9 +685,13 @@ void GMSBAnalyzer::setDiEMInvMassFitParUnit(const string name, const string val,
 {
   setDiEMInvMassFitParPropertyString(UNIT, name, val, overwrite);
 }
+void GMSBAnalyzer::setPUReweightingFlag(const bool doPUReweighting) { doPUReweighting_ = doPUReweighting; }
+void GMSBAnalyzer::setHLTFlag(const bool doHLT) { doHLT_ = doHLT; }
 void GMSBAnalyzer::setJESUncertaintyMode(const bool JESUncertToy) { JESUncertToy_ = JESUncertToy; }
 void GMSBAnalyzer::setJESUncertaintyShift(const float shift) { shift_ = shift; }
-void GMSBAnalyzer::initJECUncertainty(const string& file) { JECErr_ = new JetCorrectionUncertainty(file); }
+void GMSBAnalyzer::initJECUncertainty(const string& file) {
+  JECErr_ = new JetCorrectionUncertainty(file);
+}
 
 TString GMSBAnalyzer::getTag() const { return tag_; }
 int GMSBAnalyzer::getNEvts() const { return nEvts_; }
@@ -779,6 +793,8 @@ string GMSBAnalyzer::getDiEMInvMassFitParUnit(const string name) const
   catch (string badName) {}
   return par;
 }
+bool GMSBAnalyzer::getPUReweightingFlag() const { return doPUReweighting_; }
+bool GMSBAnalyzer::getHLTFlag() const { return doHLT_; }
 bool GMSBAnalyzer::getJESUncertaintyMode() const { return JESUncertToy_; }
 float GMSBAnalyzer::getJESUncertaintyShift() const { return shift_; }
 const JetCorrectionUncertainty* GMSBAnalyzer::getJECUncertaintyObject() const { return JECErr_; }
