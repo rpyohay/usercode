@@ -7,6 +7,7 @@
 #include "TCanvas.h"
 #include "TLegend.h"
 #include "TGraphErrors.h"
+#include "TF1.h"
 #include "RooRealVar.h"
 #include "RooCBShape.h"
 #include "RooAddPdf.h"
@@ -142,7 +143,7 @@ void doIt()
   }
 }
 
-void plot()
+void plotIt()
 {
   string samples[3] = {"gg", "ee", "ff"};
   TFile RPY("/Users/rachelyohay/RA3/data/4684pb-1_MET_18-Jan-12_skim_correctEESidebandSubtraction.root");
@@ -1625,53 +1626,53 @@ void compareEEToGG1ToGG2()
       const float diEMPTScale = 1.0/diEMPT[i][j]->Integral();
       const float dijetPTScale = 1.0/dijetPT[i][j]->Integral();
       // if (i != 1) {
-	if (j == 0) {
-	  leadingPhotonETLegend->AddEntry(leadingPhotonET[i], entryName.c_str(), "lp");
-	  trailingPhotonETLegend->AddEntry(trailingPhotonET[i], entryName.c_str(), "lp");
-	}
-	diEMPTLegend[j]->AddEntry(diEMPT[i][j], entryName.c_str(), "lp");
-	dijetPTLegend[j]->AddEntry(dijetPT[i][j], entryName.c_str(), "lp");
+      if (j == 0) {
+	leadingPhotonETLegend->AddEntry(leadingPhotonET[i], entryName.c_str(), "lp");
+	trailingPhotonETLegend->AddEntry(trailingPhotonET[i], entryName.c_str(), "lp");
+      }
+      diEMPTLegend[j]->AddEntry(diEMPT[i][j], entryName.c_str(), "lp");
+      dijetPTLegend[j]->AddEntry(dijetPT[i][j], entryName.c_str(), "lp");
       // }
       out.cd();
       // if (i != 1) {
-	if (j == 0) {
-	  leadingPhotonETCanvas->cd();
-	  leadingPhotonET[i]->Rebin(3);
-	  leadingPhotonET[i]->Scale(leadingPhotonETScale);
-	  leadingPhotonET[i]->SetMarkerColor(i + 1);
-	  leadingPhotonET[i]->SetMarkerSize(0.5);
-	  leadingPhotonET[i]->SetLineColor(i + 1);
-	  leadingPhotonET[i]->GetXaxis()->SetTitle("E_{T} (GeV)");
-	  leadingPhotonET[i]->Draw(drawOpt.c_str());
-	  leadingPhotonETLegend->Draw();
-	  trailingPhotonETCanvas->cd();
-	  trailingPhotonET[i]->Rebin(3);
-	  trailingPhotonET[i]->Scale(trailingPhotonETScale);
-	  trailingPhotonET[i]->SetMarkerColor(i + 1);
-	  trailingPhotonET[i]->SetMarkerSize(0.5);
-	  trailingPhotonET[i]->SetLineColor(i + 1);
-	  trailingPhotonET[i]->GetXaxis()->SetTitle("E_{T} (GeV)");
-	  trailingPhotonET[i]->Draw(drawOpt.c_str());
-	  trailingPhotonETLegend->Draw();
-	}
-	diEMPTCanvas[j]->cd();
-	diEMPT[i][j]->Rebin(5);
-	diEMPT[i][j]->Scale(diEMPTScale);
-	diEMPT[i][j]->SetMarkerColor(i + 1);
-	diEMPT[i][j]->SetMarkerSize(0.5);
-	diEMPT[i][j]->SetLineColor(i + 1);
-	diEMPT[i][j]->GetXaxis()->SetTitle("Di-EM p_{T} (GeV)");
-	diEMPT[i][j]->Draw(drawOpt.c_str());
-	diEMPTLegend[j]->Draw();
-	dijetPTCanvas[j]->cd();
-	dijetPT[i][j]->Rebin(5);
-	dijetPT[i][j]->Scale(dijetPTScale);
-	dijetPT[i][j]->SetMarkerColor(i + 1);
-	dijetPT[i][j]->SetMarkerSize(0.5);
-	dijetPT[i][j]->SetLineColor(i + 1);
-	dijetPT[i][j]->GetXaxis()->SetTitle("Dijet p_{T} (GeV)");
-	dijetPT[i][j]->Draw(drawOpt.c_str());
-	dijetPTLegend[j]->Draw();
+      if (j == 0) {
+	leadingPhotonETCanvas->cd();
+	leadingPhotonET[i]->Rebin(3);
+	leadingPhotonET[i]->Scale(leadingPhotonETScale);
+	leadingPhotonET[i]->SetMarkerColor(i + 1);
+	leadingPhotonET[i]->SetMarkerSize(0.5);
+	leadingPhotonET[i]->SetLineColor(i + 1);
+	leadingPhotonET[i]->GetXaxis()->SetTitle("E_{T} (GeV)");
+	leadingPhotonET[i]->Draw(drawOpt.c_str());
+	leadingPhotonETLegend->Draw();
+	trailingPhotonETCanvas->cd();
+	trailingPhotonET[i]->Rebin(3);
+	trailingPhotonET[i]->Scale(trailingPhotonETScale);
+	trailingPhotonET[i]->SetMarkerColor(i + 1);
+	trailingPhotonET[i]->SetMarkerSize(0.5);
+	trailingPhotonET[i]->SetLineColor(i + 1);
+	trailingPhotonET[i]->GetXaxis()->SetTitle("E_{T} (GeV)");
+	trailingPhotonET[i]->Draw(drawOpt.c_str());
+	trailingPhotonETLegend->Draw();
+      }
+      diEMPTCanvas[j]->cd();
+      diEMPT[i][j]->Rebin(5);
+      diEMPT[i][j]->Scale(diEMPTScale);
+      diEMPT[i][j]->SetMarkerColor(i + 1);
+      diEMPT[i][j]->SetMarkerSize(0.5);
+      diEMPT[i][j]->SetLineColor(i + 1);
+      diEMPT[i][j]->GetXaxis()->SetTitle("Di-EM p_{T} (GeV)");
+      diEMPT[i][j]->Draw(drawOpt.c_str());
+      diEMPTLegend[j]->Draw();
+      dijetPTCanvas[j]->cd();
+      dijetPT[i][j]->Rebin(5);
+      dijetPT[i][j]->Scale(dijetPTScale);
+      dijetPT[i][j]->SetMarkerColor(i + 1);
+      dijetPT[i][j]->SetMarkerSize(0.5);
+      dijetPT[i][j]->SetLineColor(i + 1);
+      dijetPT[i][j]->GetXaxis()->SetTitle("Dijet p_{T} (GeV)");
+      dijetPT[i][j]->Draw(drawOpt.c_str());
+      dijetPTLegend[j]->Draw();
       // }
       if (i == 2) {
 	if (j == 0) {
@@ -2301,4 +2302,140 @@ void plotDependentEGMisIDRate(const string& inFile, const string& outFile,
   //close all files
   out.Close();
   in.Close();
+}
+
+void estimateJESUncertaintyOnBkg(const vector<string>& inputFileNames, const vector<float>& METBins, const string& outputFileName)
+{
+  //find lowest MET bin to define offset
+  float minMET = METBins[0];
+  for (vector<float>::const_iterator iMETBin = METBins.begin(); iMETBin != METBins.end(); ++iMETBin) {
+    if (*iMETBin < minMET) minMET = *iMETBin;
+  }
+
+  //loop over JES uncertainty toys
+  vector<vector<float> > nEEBkg(METBins.size(), vector<float>());
+  vector<vector<float> > nFFBkg(METBins.size(), vector<float>());
+  for (vector<string>::const_iterator iInputFileName = inputFileNames.begin(); iInputFileName != inputFileNames.end(); ++iInputFileName) {
+    TFile file(iInputFileName->c_str());
+    if (!file.IsOpen()) {
+      cerr << "Error opening file " << *iInputFileName << ". Quitting.\n";
+      return;
+    }
+
+    //get bkg. estimates
+    TH1F* eeFinal = NULL;
+    TH1F* ffFinal = NULL;
+    file.GetObject("eeFinal", eeFinal);
+    file.GetObject("ffFinal", ffFinal);
+    if ((eeFinal == NULL) || (ffFinal == NULL)) {
+      cerr << "Error: eeFinal = " << eeFinal << " and ffFinal = " << ffFinal << " in file " << *iInputFileName << ".  Quitting.\n";
+      file.Close();
+      return;
+    }
+
+    //determine offset
+    const Int_t eeOffset = eeFinal->FindBin(minMET);
+    const Int_t ffOffset = ffFinal->FindBin(minMET);
+
+    //fill vector of toy bkg. estimates for each MET bin
+    for (vector<float>::const_iterator iMETBin = METBins.begin(); iMETBin != METBins.end(); ++iMETBin) {
+      Int_t eeBin = eeFinal->FindBin(*iMETBin);
+      Int_t ffBin = ffFinal->FindBin(*iMETBin);
+      nEEBkg[eeBin - eeOffset].push_back(eeFinal->GetBinContent(eeBin));
+      nFFBkg[ffBin - ffOffset].push_back(ffFinal->GetBinContent(ffBin));
+    }
+
+    //close file
+    file.Close();
+  }
+
+  //open file to save fits
+  TFile out(outputFileName.c_str(), "RECREATE");
+  if (!out.IsOpen()) {
+    cerr << "Error opening file " << outputFileName << ".  Quitting.\n";
+    return;
+  }
+
+  //loop over MET bins
+  for (vector<float>::const_iterator iMETBin = METBins.begin(); iMETBin != METBins.end(); ++iMETBin) {
+    const unsigned int i = iMETBin - METBins.begin();
+
+    //plot distribution of bkg. estimates from toys
+    stringstream eeHistName;
+    stringstream ffHistName;
+    eeHistName << "eeBkgToyDist_METBin" << i;
+    ffHistName << "ffBkgToyDist_METBin" << i;
+    vector<float> eeBkgToys(nEEBkg[i]);
+    vector<float> ffBkgToys(nFFBkg[i]);
+    sort(eeBkgToys.begin(), eeBkgToys.end());
+    sort(ffBkgToys.begin(), ffBkgToys.end());
+    const float eeStep = (*(eeBkgToys.end() - 1) - *(eeBkgToys.begin()))/25.0;
+    const float ffStep = (*(ffBkgToys.end() - 1) - *(ffBkgToys.begin()))/25.0;
+    TH1F eeBkgToyDist(eeHistName.str().c_str(), "", 26, *(eeBkgToys.begin()), *(eeBkgToys.end() - 1) + eeStep);
+    TH1F ffBkgToyDist(ffHistName.str().c_str(), "", 26, *(ffBkgToys.begin()), *(ffBkgToys.end() - 1) + ffStep);
+    for (vector<float>::const_iterator iToy = eeBkgToys.begin(); iToy != eeBkgToys.end(); ++iToy) { eeBkgToyDist.Fill(*iToy); }
+    for (vector<float>::const_iterator iToy = ffBkgToys.begin(); iToy != ffBkgToys.end(); ++iToy) { ffBkgToyDist.Fill(*iToy); }
+
+    //fit with Gaussian to get relative error
+//     //sometimes the Gaussian peak is not in the center of the axis, so constrain the fit to equal amounts around the maximum bin
+//     const Int_t eeMaxBin = eeBkgToyDist.GetMaximumBin();
+//     const Int_t ffMaxBin = ffBkgToyDist.GetMaximumBin();
+//     const float eeRangeLeftToMax = eeBkgToyDist.GetBinLowEdge(eeMaxBin) - eeBkgToyDist.GetBinLowEdge(1);
+//     const float ffRangeLeftToMax = ffBkgToyDist.GetBinLowEdge(ffMaxBin) - ffBkgToyDist.GetBinLowEdge(1);
+//     const float eeRangeRightToMax = 
+//       eeBkgToyDist.GetBinLowEdge(eeBkgToyDist.GetNbinsX()) - (eeBkgToyDist.GetBinLowEdge(eeMaxBin) + eeBkgToyDist.GetBinWidth(eeMaxBin));
+//     const float ffRangeRightToMax = 
+//       ffBkgToyDist.GetBinLowEdge(ffBkgToyDist.GetNbinsX()) - (ffBkgToyDist.GetBinLowEdge(ffMaxBin) + ffBkgToyDist.GetBinWidth(ffMaxBin));
+//     float eeRangeMin = 0.0;
+//     float eeRangeMax = 0.0;
+//     float ffRangeMin = 0.0;
+//     float ffRangeMax = 0.0;
+//     if (eeRangeRightToMax > eeRangeLeftToMax) {
+//       eeRangeMin = eeBkgToyDist.GetBinLowEdge(1);
+//       eeRangeMax = eeBkgToyDist.GetBinLowEdge(eeMaxBin);
+//     }
+//     else {
+//       eeRangeMax = eeBkgToyDist.GetBinLowEdge(eeMaxBin) + eeBkgToyDist.GetBinWidth(eeMaxBin);
+//       eeRangeMin = eeBkgToyDist.GetBinLowEdge(eeMaxBin);
+//     }
+//     if (ffRangeRightToMax > ffRangeLeftToMax) {
+//       ffRangeMin = ffBkgToyDist.GetBinLowEdge(1);
+//       ffRangeMax = ffBkgToyDist.GetBinLowEdge(ffMaxBin);
+//     }
+//     else {
+//       ffRangeMax = ffBkgToyDist.GetBinLowEdge(ffMaxBin) + ffBkgToyDist.GetBinWidth(ffMaxBin);
+//       ffRangeMin = ffBkgToyDist.GetBinLowEdge(ffMaxBin);
+//     }
+//     TF1* eeFit = new TF1("eeFit", "gaus", eeRangeMin, eeRangeMax);
+//     TF1* ffFit = new TF1("ffFit", "gaus", ffRangeMin, ffRangeMax);
+    eeBkgToyDist.Fit("gaus", "LQM");
+    ffBkgToyDist.Fit("gaus", "LQM");
+//     eeBkgToyDist.Fit(eeFit, "LQMR");
+//     ffBkgToyDist.Fit(ffFit, "LQMR");
+    TF1* eeFit = eeBkgToyDist.GetFunction("gaus");
+    TF1* ffFit = ffBkgToyDist.GetFunction("gaus");
+    if ((eeFit == NULL) || (ffFit == NULL)) {
+      cerr << "Error: eeFit = " << eeFit << " and ffFit = " << ffFit << ".  Quitting.\n";
+      return;
+    }
+    if (i < (METBins.size() - 1)) cout << *iMETBin << " GeV <= MET < " << *(iMETBin + 1);
+    else cout << "MET >= " << *iMETBin;
+    cout << " GeV\n";
+    cout << "\tRel. JES uncertainty on ee bkg.: " << eeFit->GetParameter(2)/eeFit->GetParameter(1) << endl;
+    //     cout << "\tChi2/ndof for ee toy fit: " << eeFit->GetChisquare()/eeFit->GetNDF() << endl;
+    cout << "\tRel. JES uncertainty on ff bkg.: " << ffFit->GetParameter(2)/ffFit->GetParameter(1) << endl;
+    //     cout << "\tChi2/ndof for ff toy fit: " << ffFit->GetChisquare()/ffFit->GetNDF() << endl;
+    cout << "\tAbs. JES uncertainty on ee bkg.: " << eeFit->GetParameter(2) << endl;
+    cout << "\tAbs. JES uncertainty on ff bkg.: " << ffFit->GetParameter(2) << endl;
+
+    //write
+    eeBkgToyDist.Write();
+    ffBkgToyDist.Write();
+    delete eeFit;
+    delete ffFit;
+  }
+
+  //close
+  out.Write();
+  out.Close();
 }
