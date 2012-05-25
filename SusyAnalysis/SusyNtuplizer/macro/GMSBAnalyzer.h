@@ -677,7 +677,9 @@ void GMSBAnalyzer::setDiEMInvMassFitParUnit(const string name, const string val,
 }
 void GMSBAnalyzer::setJESUncertaintyMode(const bool JESUncertToy) { JESUncertToy_ = JESUncertToy; }
 void GMSBAnalyzer::setJESUncertaintyShift(const float shift) { shift_ = shift; }
-void GMSBAnalyzer::initJECUncertainty(const string& file) { JECErr_ = new JetCorrectionUncertainty(file); }
+void GMSBAnalyzer::initJECUncertainty(const string& file) {
+  JECErr_ = new JetCorrectionUncertainty(file);
+}
 
 TString GMSBAnalyzer::getTag() const { return tag_; }
 int GMSBAnalyzer::getNEvts() const { return nEvts_; }
