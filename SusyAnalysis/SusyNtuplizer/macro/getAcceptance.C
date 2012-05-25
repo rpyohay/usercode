@@ -32,6 +32,8 @@ void getAcceptance_JOB()
   analyzer.addHLT(TString("HLT_Photon36_CaloIdL_IsoVL_Photon22_R9Id"), 3, 0, -1);
   analyzer.addHLT(TString("HLT_Photon36_R9Id_Photon22_CaloIdL_IsoVL"), 3, 0, -1);
   analyzer.addHLT(TString("HLT_Photon36_R9Id_Photon22_R9Id"), 3, 0, -1);
+  analyzer.setPUReweightingFlag(false);
+  analyzer.setHLTFlag(false);
 
   //loop over events
   TStopwatch ts;
