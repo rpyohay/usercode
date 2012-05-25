@@ -19,6 +19,7 @@
 #include "../../../GMSBTools/Filters/interface/Categorizer.h"
 #include "../../../PhysicsTools/Utilities/interface/LumiReweightingStandAlone.h"
 #include "../../../DataFormats/Math/interface/deltaR.h"
+#include "../jec/JetMETObjects/interface/JetCorrectionUncertainty.h"
 #include "RooFitResult.h"
 
 #define LOWER_BOUND 0
@@ -95,6 +96,9 @@ class GMSBAnalyzer {
   void setDiEMInvMassFitPar(const unsigned int, const string, const float, 
 			    const bool overwrite = false);
   void setDiEMInvMassFitParUnit(const string, const string, const bool overwrite = false);
+  void setJESUncertaintyMode(const bool);
+  void setJESUncertaintyShift(const float);
+  void initJECUncertainty(const string&);
 
   TString getTag() const;
   int getNEvts() const;
@@ -118,6 +122,10 @@ class GMSBAnalyzer {
   float getDiEMInvMassFitParUpperBound(const unsigned int, const string) const;
   float getDiEMInvMassFitPar(const unsigned int, const string) const;
   string getDiEMInvMassFitParUnit(const string) const;
+  bool getJESUncertaintyMode() const;
+  float getJESUncertaintyShift() const;
+  const JetCorrectionUncertainty* getJECUncertaintyObject() const;
+  JetCorrectionUncertainty* getJECUncertaintyObject();
 
   bool matchedToGenParticle(const susy::Photon&, const VINT&, const UChar_t) const;
   bool passesDenominatorSelection(const unsigned int, const susy::Photon&, const VINT&) const;
@@ -392,6 +400,9 @@ class GMSBAnalyzer {
   map<string, float> egInvMassFitParUpperBounds_;
   map<string, float> egInvMassFitPars_;
   map<string, string> diEMInvMassFitParUnits_;
+  bool JESUncertToy_;
+  float shift_;
+  JetCorrectionUncertainty* JECErr_;
 
   const map<string, float>* getDiEMInvMassFitParMapFloat(const unsigned int, 
 							 const unsigned int) const;
@@ -454,6 +465,10 @@ GMSBAnalyzer::~GMSBAnalyzer()
   egInvMassFitParLowerBounds_.clear();
   egInvMassFitParUpperBounds_.clear();
   egInvMassFitPars_.clear();
+  JESUncertToy_ = false;
+  shift_ = 0.0;
+  if (JECErr_ != NULL) delete JECErr_;
+  JECErr_ = NULL;
   reset();
   clearPU();
   delete susyEvent;
@@ -509,6 +524,9 @@ void GMSBAnalyzer::Init(TTree *tree)
   //initialize private data members
   nEvts_ = 0;
   intLumi_ = 0.0;
+  JESUncertToy_ = false;
+  shift_ = 0.0;
+  JECErr_ = NULL;
   reset();
   clearPU();
 }
@@ -657,6 +675,9 @@ void GMSBAnalyzer::setDiEMInvMassFitParUnit(const string name, const string val,
 {
   setDiEMInvMassFitParPropertyString(UNIT, name, val, overwrite);
 }
+void GMSBAnalyzer::setJESUncertaintyMode(const bool JESUncertToy) { JESUncertToy_ = JESUncertToy; }
+void GMSBAnalyzer::setJESUncertaintyShift(const float shift) { shift_ = shift; }
+void GMSBAnalyzer::initJECUncertainty(const string& file) { JECErr_ = new JetCorrectionUncertainty(file); }
 
 TString GMSBAnalyzer::getTag() const { return tag_; }
 int GMSBAnalyzer::getNEvts() const { return nEvts_; }
@@ -758,6 +779,10 @@ string GMSBAnalyzer::getDiEMInvMassFitParUnit(const string name) const
   catch (string badName) {}
   return par;
 }
+bool GMSBAnalyzer::getJESUncertaintyMode() const { return JESUncertToy_; }
+float GMSBAnalyzer::getJESUncertaintyShift() const { return shift_; }
+const JetCorrectionUncertainty* GMSBAnalyzer::getJECUncertaintyObject() const { return JECErr_; }
+JetCorrectionUncertainty* GMSBAnalyzer::getJECUncertaintyObject() { return JECErr_; }
 
 void GMSBAnalyzer::reset()
 {
