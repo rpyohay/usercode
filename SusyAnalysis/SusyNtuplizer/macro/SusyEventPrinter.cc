@@ -419,8 +419,8 @@ void Print(const susy::Event& event) {
   std::cout << "generalTracks size(" << event.generalTracks.size() << ") =========>" << std::endl;
 
   if(!event.isRealData) {
-    std::cout << "pu size(" << event.PU.size() << ") =========>" << std::endl;
-    for(susy::PUSummaryInfoCollection::const_iterator it = event.PU.begin(); it != event.PU.end(); it++) {
+    std::cout << "pu size(" << event.pu.size() << ") =========>" << std::endl;
+    for(susy::PUSummaryInfoCollection::const_iterator it = event.pu.begin(); it != event.pu.end(); it++) {
       std::cout << "\tpu : "; Print(*it);
     }
     std::cout << std::endl;

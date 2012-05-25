@@ -13,7 +13,7 @@
 */
 //
 // Original Author:  Dongwook Jang
-// $Id: SusyNtuplizer.cc,v 1.3 2012/01/25 17:43:15 yohay Exp $
+// $Id: SusyNtuplizer.cc,v 1.17 2011/11/01 22:14:51 dwjang Exp $
 //
 //
 
@@ -1494,10 +1494,10 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
 
   /*
-    if(debugLevel_ > 0) std::cout << name() << ", fill jptjet collections" << std::endl;
+  if(debugLevel_ > 0) std::cout << name() << ", fill jptjet collections" << std::endl;
 
-    nJetColl = jptJetCollectionTags_.size();
-    for(int iJetC=0; iJetC < nJetColl; iJetC++) {
+  nJetColl = jptJetCollectionTags_.size();
+  for(int iJetC=0; iJetC < nJetColl; iJetC++) {
     susy::JPTJetCollection jetCollection;
     TString key(jptJetCollectionTags_[iJetC].c_str());
 
@@ -1508,65 +1508,65 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
     edm::Handle<reco::JPTJetCollection> jetH;
     try {
-    iEvent.getByLabel(edm::InputTag(jptJetCollectionTags_[iJetC]),jetH);
-    if(debugLevel_ > 1) std::cout << "size of " << key << " JetCollection : " << jetH->size() << std::endl;
-    int ijet = 0;
-    for(reco::JPTJetCollection::const_iterator it = jetH->begin();
-    it != jetH->end(); it++){
+      iEvent.getByLabel(edm::InputTag(jptJetCollectionTags_[iJetC]),jetH);
+      if(debugLevel_ > 1) std::cout << "size of " << key << " JetCollection : " << jetH->size() << std::endl;
+      int ijet = 0;
+      for(reco::JPTJetCollection::const_iterator it = jetH->begin();
+	  it != jetH->end(); it++){
 
-    reco::JPTJetRef jetRef(jetH,ijet++);
+	reco::JPTJetRef jetRef(jetH,ijet++);
 
-    TLorentzVector corrP4(it->px(),it->py(),it->pz(),it->energy());
-    float jecScale = 1;
-    //	if(iEvent.isRealData()) jecScale = corrL2L3R->correction(it->p4());
-    if(iEvent.isRealData()) jecScale = corrL2L3->correction(it->p4());
-    else jecScale = corrL2L3->correction(it->p4());
-    corrP4 *= jecScale;
+	TLorentzVector corrP4(it->px(),it->py(),it->pz(),it->energy());
+	float jecScale = 1;
+	//	if(iEvent.isRealData()) jecScale = corrL2L3R->correction(it->p4());
+	if(iEvent.isRealData()) jecScale = corrL2L3->correction(it->p4());
+	else jecScale = corrL2L3->correction(it->p4());
+	corrP4 *= jecScale;
 
-    if(corrP4.Pt() < jetThreshold_) continue;
+	if(corrP4.Pt() < jetThreshold_) continue;
 
-    susy::JPTJet jet;
+	susy::JPTJet jet;
 
-    // Basic Jet
-    jet.etaMean         = it->etaPhiStatistics().etaMean;
-    jet.phiMean         = it->etaPhiStatistics().phiMean;
-    jet.etaEtaMoment    = it->etaPhiStatistics().etaEtaMoment;
-    jet.etaPhiMoment    = it->etaPhiStatistics().etaPhiMoment;
-    jet.phiPhiMoment    = it->etaPhiStatistics().phiPhiMoment;
-    jet.maxDistance     = it->maxDistance();
-    jet.jetArea         = it->jetArea();
-    jet.pileup          = it->pileup();
-    jet.nPasses         = it->nPasses();
-    jet.nConstituents   = it->nConstituents();
+	// Basic Jet
+	jet.etaMean         = it->etaPhiStatistics().etaMean;
+	jet.phiMean         = it->etaPhiStatistics().phiMean;
+	jet.etaEtaMoment    = it->etaPhiStatistics().etaEtaMoment;
+	jet.etaPhiMoment    = it->etaPhiStatistics().etaPhiMoment;
+	jet.phiPhiMoment    = it->etaPhiStatistics().phiPhiMoment;
+	jet.maxDistance     = it->maxDistance();
+	jet.jetArea         = it->jetArea();
+	jet.pileup          = it->pileup();
+	jet.nPasses         = it->nPasses();
+	jet.nConstituents   = it->nConstituents();
 
-    jet.vertex.SetXYZ(it->vx(),it->vy(),it->vz());
-    jet.momentum.SetXYZT(it->px(),it->py(),it->pz(),it->energy());
+	jet.vertex.SetXYZ(it->vx(),it->vy(),it->vz());
+	jet.momentum.SetXYZT(it->px(),it->py(),it->pz(),it->energy());
 
-    jet.chargedHadronEnergy = it->chargedHadronEnergy();
-    jet.neutralHadronEnergy = it->neutralHadronEnergy();
-    jet.chargedEmEnergy     = it->chargedEmEnergy();
-    jet.neutralEmEnergy     = it->neutralEmEnergy();
-    jet.chargedMultiplicity = it->chargedMultiplicity();
-    jet.muonMultiplicity    = it->muonMultiplicity();
-    jet.elecMultiplicity    = it->elecMultiplicity();
-    jet.getZSPCor           = it->getZSPCor();
+	jet.chargedHadronEnergy = it->chargedHadronEnergy();
+	jet.neutralHadronEnergy = it->neutralHadronEnergy();
+	jet.chargedEmEnergy     = it->chargedEmEnergy();
+	jet.neutralEmEnergy     = it->neutralEmEnergy();
+	jet.chargedMultiplicity = it->chargedMultiplicity();
+	jet.muonMultiplicity    = it->muonMultiplicity();
+	jet.elecMultiplicity    = it->elecMultiplicity();
+	jet.getZSPCor           = it->getZSPCor();
 
-    jet.jecScaleFactors["L2L3"] = corrL2L3->correction(it->p4());
-    //	jet.jecScaleFactors["L2L3R"] = corrL2L3R->correction(it->p4());
-    jet.jecScaleFactors["L1L2L3"] = corrL1L2L3->correction((const reco::Jet&)*it,(const edm::RefToBase<reco::Jet>&)jetRef,iEvent,iSetup);
-    //	jet.jecScaleFactors["L1L2L3R"] = corrL1L2L3R->correction(it->p4());
+	jet.jecScaleFactors["L2L3"] = corrL2L3->correction(it->p4());
+	//	jet.jecScaleFactors["L2L3R"] = corrL2L3R->correction(it->p4());
+	jet.jecScaleFactors["L1L2L3"] = corrL1L2L3->correction((const reco::Jet&)*it,(const edm::RefToBase<reco::Jet>&)jetRef,iEvent,iSetup);
+	//	jet.jecScaleFactors["L1L2L3R"] = corrL1L2L3R->correction(it->p4());
 
-    jetCollection.push_back(jet);
-    if(debugLevel_ > 2) std::cout << "pt, e : " << it->pt() << ", " << it->energy() << std::endl;
-    }// for it
+	jetCollection.push_back(jet);
+	if(debugLevel_ > 2) std::cout << "pt, e : " << it->pt() << ", " << it->energy() << std::endl;
+      }// for it
     }
     catch(cms::Exception& e) {
-    edm::LogError(name()) << jptJetCollectionTags_[iJetC] << " jet collection is not available!!! " << e.what();
+      edm::LogError(name()) << jptJetCollectionTags_[iJetC] << " jet collection is not available!!! " << e.what();
     }
 
     susyEvent_->jptJets[key] = jetCollection;
 
-    }// for JPTJet
+  }// for JPTJet
 
   */
 
@@ -1577,11 +1577,7 @@ void SusyNtuplizer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
     // event weighting variables, for example ptHat
     edm::Handle<GenEventInfoProduct> GenEventInfoHandle;
-    if (iEvent.getByLabel("generator",GenEventInfoHandle)) {
-      if (GenEventInfoHandle->binningValues().size() > 0) {
-	susyEvent_->gridParams["ptHat"] = GenEventInfoHandle->binningValues()[0];
-      }
-    }
+    if(iEvent.getByLabel("generator",GenEventInfoHandle)) susyEvent_->gridParams["ptHat"] = GenEventInfoHandle->binningValues()[0];
 
     //get PU summary info
     edm::Handle<std::vector<PileupSummaryInfo> > pPUSummaryInfo;
@@ -1951,7 +1947,7 @@ void SusyNtuplizer::fillGenInfos(const edm::Event& iEvent, const edm::EventSetup
     for(reco::GenParticleCollection::const_iterator it = it_begin; it != it_end; it++){
       bool passStatus = (it->status() == 3 || it->status() == 1);
       if(!passStatus) continue;
-      if(it->pt() < 0.0) continue;
+      if(it->pt() < 5.0) continue;
       const reco::GenParticle* gp = &*it;
       susy::Particle part;
 
