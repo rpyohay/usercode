@@ -12,7 +12,7 @@ if [ "$found" != "" ]
     then
     what_to_grep="skim"
 else
-    what_to_grep="root"
+    what_to_grep="tree"
 fi
 
 #generate CONDOR executable
