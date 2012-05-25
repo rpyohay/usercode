@@ -2574,9 +2574,9 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
       and Tessa's recommendation*/
     int nPV = -1;
     float PUWeight = 1.0;
-    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
     bool foundInTimeBX = false;
-    while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+    while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
       if (iBX->BX == 0) { 
 	nPV = iBX->numInteractions;
 	foundInTimeBX = true;
@@ -3332,8 +3332,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 //   vector<double> egMisIDRateErrsVsEta;
 //   for (unsigned int iEPTBin = 1; iEPTBin <= nEPTBins; ++iEPTBin) {
 //     float pTDepEGMisIDRateErr = -1.0;
-//     const float pTDepEGMisIDRate = electronPhotonMisIDRate(eePTVsEtaVsMHists, egPTVsEtaVsMHists,
-// 							   iEPTBin, iEPTBin, 0, -1,
+//     const float pTDepEGMisIDRate = electronPhotonMisIDRate(eePTVsEtaVsMHists, egPTVsEtaVsMHists, 
+// 							   iEPTBin, iEPTBin, 0, -1, 
 // 							   pTDepEGMisIDRateErr);
 //     pTBinCenters.push_back((ePTBins[iEPTBin] + ePTBins[iEPTBin - 1])/2.0);
 //     pTErr.push_back((ePTBins[iEPTBin] - ePTBins[iEPTBin - 1])/2.0);
@@ -3345,8 +3345,8 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 //   }
 //   for (unsigned int iEEtaBin = 1; iEEtaBin <= nEEtaBins; ++iEEtaBin) {
 //     float etaDepEGMisIDRateErr = -1.0;
-//     const float etaDepEGMisIDRate = electronPhotonMisIDRate(eePTVsEtaVsMHists, egPTVsEtaVsMHists,
-// 							    0, -1, iEEtaBin, iEEtaBin,
+//     const float etaDepEGMisIDRate = electronPhotonMisIDRate(eePTVsEtaVsMHists, egPTVsEtaVsMHists, 
+// 							    0, -1, iEEtaBin, iEEtaBin, 
 // 							    etaDepEGMisIDRateErr);
 //     etaBinCenters.push_back((eEtaBins[iEEtaBin] + eEtaBins[iEEtaBin - 1])/2.0);
 //     etaErr.push_back((eEtaBins[iEEtaBin] - eEtaBins[iEEtaBin - 1])/2.0);
@@ -3357,14 +3357,14 @@ void GMSBAnalyzer::runMETAnalysis(const std::string outputFile)
 //     cout << "f_(e-->g) = " << etaDepEGMisIDRate << " +/- " << etaDepEGMisIDRateErr << endl;
 //   }
 //   egMisIDRateVsPT.cd();
-//   TGraphErrors egMisIDRateVsPTGraph(nEPTBins, &pTBinCenters[0], &egMisIDRatesVsPT[0], &pTErr[0],
+//   TGraphErrors egMisIDRateVsPTGraph(nEPTBins, &pTBinCenters[0], &egMisIDRatesVsPT[0], &pTErr[0], 
 // 				    &egMisIDRateErrsVsPT[0]);
 //   egMisIDRateVsPTGraph.SetMarkerStyle(20);
 //   egMisIDRateVsPTGraph.SetMarkerColor(kBlack);
 //   egMisIDRateVsPTGraph.SetMarkerSize(0.7);
 //   egMisIDRateVsPTGraph.Draw("AP");
 //   egMisIDRateVsEta.cd();
-//   TGraphErrors egMisIDRateVsEtaGraph(nEEtaBins, &etaBinCenters[0], &egMisIDRatesVsEta[0],
+//   TGraphErrors egMisIDRateVsEtaGraph(nEEtaBins, &etaBinCenters[0], &egMisIDRatesVsEta[0], 
 // 				     &etaErr[0], &egMisIDRateErrsVsEta[0]);
 //   egMisIDRateVsEtaGraph.SetMarkerStyle(20);
 //   egMisIDRateVsEtaGraph.SetMarkerColor(kBlack);
@@ -4128,9 +4128,9 @@ void GMSBAnalyzer::runMETAnalysisWithEEBackgroundFit(const std::string& outputFi
       and Tessa's recommendation*/
     // int nPV  = -1;
     float PUWeight = 1.0;
-    // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+    // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
     // bool foundInTimeBX = false;
-    // while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+    // while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
     //   if (iBX->BX == 0) { 
     // 	 nPV = iBX->numInteractions;
     // 	 foundInTimeBX = true;
@@ -5284,9 +5284,9 @@ void GMSBAnalyzer::runEMFractionAnalysis(const string& outputFile)
       and Tessa's recommendation*/
     // int nPV  = -1;
     float PUWeight = 1.0;
-    // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+    // susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
     // bool foundInTimeBX = false;
-    // while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+    // while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
     //   if (iBX->BX == 0) { 
     // 	 nPV = iBX->numInteractions;
     // 	 foundInTimeBX = true;
@@ -5494,6 +5494,7 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
   Float_t nGG2Neutralino = -1.0;
   Float_t nGG2NeutralinoErr = -1.0;
   UInt_t n2Neutralino = 0;
+  UInt_t nNtuplized = 0;
   TTree accTree("accTree", "");
   accTree.Branch("nGG", &nGG, "nGG/F");
   accTree.Branch("nGGErr", &nGGErr, "nGGErr/F");
@@ -5502,6 +5503,7 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
   accTree.Branch("nGG2Neutralino", &nGG2Neutralino, "nGG2Neutralino/F");
   accTree.Branch("nGG2NeutralinoErr", &nGG2NeutralinoErr, "nGG2NeutralinoErr/F");
   accTree.Branch("n2Neutralino", &n2Neutralino, "n2Neutralino/i");
+  accTree.Branch("nNtuplized", &nNtuplized, "nNtuplized/i");
 
   //define constants
   const bool kSumW2 = true;
@@ -5530,6 +5532,12 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
   setHistogramOptions(ggNPV, "n_{PV}", "", "", kSumW2);
   setHistogramOptions(ffNPV, "n_{PV}", "", "", kSumW2);
 
+  //gg and ff true nPV histograms
+  TH1F ggTrueNPV("ggTrueNPV", "", 36, -0.5, 35.5);
+  TH1F ffTrueNPV("ffTrueNPV", "", 36, -0.5, 35.5);
+  setHistogramOptions(ggTrueNPV, "n_{PV}", "", "", kSumW2);
+  setHistogramOptions(ffTrueNPV, "n_{PV}", "", "", kSumW2);
+
   //gg and ff rho histograms
   TH1F ggRho("ggRho", "", 200, 0.0, 20.0);
   TH1F ffRho("ffRho", "", 200, 0.0, 20.0);
@@ -5547,6 +5555,7 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
     if (ientry < 0) break;
     nb = fChain->GetEntry(jentry);   nbytes += nb;
     if (((jentry + 1) % 10000) == 0) cout << "Event " << (jentry + 1) << endl;
+    ++nNtuplized;
 
     //get PU weight for this dataset
     /*in-time reweighting only following 
@@ -5554,19 +5563,22 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
       using observed no. interactions*/
     int nPV = -1;
     float PUWeight = 1.0;
-    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
-    bool foundInTimeBX = false;
-    while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
-      if (iBX->BX == 0) { 
-	nPV = iBX->numInteractions;
-	foundInTimeBX = true;
+    if (doPUReweighting_) {
+      susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
+      bool foundInTimeBX = false;
+      while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
+	if (iBX->BX == 0) { 
+	  nPV = iBX->numInteractions;
+	  foundInTimeBX = true;
+	}
+	++iBX;
       }
-      ++iBX;
+      PUWeight = lumiWeights_.ITweight(nPV);
     }
-    PUWeight = lumiWeights_.ITweight(nPV);
+//     ggTrueNPV.Fill(nPV, PUWeight);
 
     //apply user trigger requirement and ECAL/HCAL filters
-    if (passUserHLT()) {
+    if (!doHLT_ || (doHLT_ && passUserHLT())) {
 
       //get MET
       double MET = -1.0;
@@ -5598,24 +5610,6 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
 	iNjBin = 0;
       }
 
-      //       //get the 2 deciding EM objects
-      //       vector<susy::Photon*> decidingPhotons;
-      //       map<TString, susy::PhotonCollection>::const_iterator iPhotonMap = 
-      // 	susyEvent->photons.find((const char*)tag_);
-      //       if (iPhotonMap != susyEvent->photons.end()) {
-      // 	for (susy::PhotonCollection::const_iterator iPhoton = iPhotonMap->second.begin(); 
-      // 	     iPhoton != iPhotonMap->second.end(); ++iPhoton) {
-      // 	  const unsigned int photonIndex = iPhoton - iPhotonMap->second.begin();
-      // 	  if (susyCategory->getIsDeciding()->size() > 0) {
-      // 	    if (susyCategory->getIsDeciding(tag_, photonIndex)) decidingPhotons.push_back(&*iPhoton);
-      // 	  }
-      // 	}
-      //       }
-      //       size_type nDecidingPhotons = decidingPhotons.size();
-      //       if (nDecidingPhotons != 2) {
-      // 	cerr << "Error: " << nDecidingPhotons << " deciding photons in event " << (jentry + 1) << " but only 2 expected.\n";
-      //       }
-
       //determine how many events have >=2 neutralino decay photons
       unsigned int nNeutralinoDecayPhotons = 0;
       vector<susy::Particle>::const_iterator iGenParticle = susyEvent->genParticles.begin();
@@ -5623,16 +5617,17 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
 	if ((iGenParticle->pdgId == 22) && (iGenParticle->status == 3) && (iGenParticle->motherId == 1000022)) ++nNeutralinoDecayPhotons;
 	++iGenParticle;
       }
-      if (nNeutralinoDecayPhotons >= 2) ++n2Neutralino;
+//       if (nNeutralinoDecayPhotons >= 2) ++n2Neutralino;
 
       //determine event category
       int evtCategory = FAIL;
       if (susyCategory->getEventCategory()->size() > 0) {
 	evtCategory = susyCategory->getEventCategory(tag_);
+	++n2Neutralino;
       }
       else {
-	cerr << "Error: susyCategory->getEventCategory()->size() <= 0 in event " << (jentry + 1);
-	cerr << ".  Using event category FAIL.\n";
+	cout << "Error: susyCategory->getEventCategory()->size() <= 0 in event " << (jentry + 1);
+	cout << ".  Using event category FAIL.\n";
       }
       switch (evtCategory) {
       case GG:
@@ -5641,6 +5636,7 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
 	ggMET.Fill(MET, PUWeight);
 	if (nNeutralinoDecayPhotons >= 2) gg2NeutralinoMET.Fill(MET, PUWeight);
 	ggNPV.Fill(nGoodRecoPV, PUWeight);
+	ggTrueNPV.Fill(nPV, PUWeight);
 	ggRho.Fill(rho, PUWeight);
 	break;
       case FF:
@@ -5649,6 +5645,7 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
 	ffMET.Fill(MET, PUWeight);
 	if (nNeutralinoDecayPhotons >= 2) ff2NeutralinoMET.Fill(MET, PUWeight);
 	ffNPV.Fill(nGoodRecoPV, PUWeight);
+	ffTrueNPV.Fill(nPV, PUWeight);
 	ffRho.Fill(rho, PUWeight);
 	break;
       default:
@@ -5656,11 +5653,12 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
       }
     }
   }
+//   ggTrueNPV.Scale(1.0/ggTrueNPV.Integral(0, -1));
 
   //get sum of squares of weights for errors
   TArrayD* sumW2Array = ggMET.GetSumw2();
   Double_t nGGMETGeq50SumW2 = 0.0;
-  for (Int_t iBin = 10; iBin <= (ggMET.GetNbinsX() + 1); ++iBin) { nGGMETGeq50SumW2+=sumW2Array->At(iBin - 1); }
+  for (Int_t iBin = 10; iBin <= (ggMET.GetNbinsX() + 1); ++iBin) { nGGMETGeq50SumW2+=sumW2Array->At(iBin); }
 
   //fill no. gg events and no. total events
   nGG = ggMET.Integral(0, -1);
@@ -5670,6 +5668,15 @@ void GMSBAnalyzer::makeAcceptancePlots(const string& outputFile)
   nGG2Neutralino = gg2NeutralinoMET.Integral();
   nGG2NeutralinoErr = sqrt(gg2NeutralinoMET.GetSumw2()->GetSum());
   accTree.Fill();
+
+//   //write out acceptance information
+//   string outTxtName(eventFileName(outputFile, "acc"));
+//   ofstream outTxt(outTxtName.c_str());
+//   if (!outTxt.is_open()) cerr << "Error opening file " << outTxtName << endl;
+//   outTxt << "50-60 60-70 70-80 80-100 >100\n";
+//   for (Int_t iBin = 10; iBin <= ggMET.GetNbinsX(); ++iBin) {
+//     if (iBin == 
+//     outTxt << ggMET.GetBinContent(iBin) << " +/- " << ggMET.GetBinError(iBin) << " ";
 
   //save
   out.cd();
@@ -5729,9 +5736,9 @@ void GMSBAnalyzer::compareDataToMC(const string& outputFile)
       https://twiki.cern.ch/twiki/bin/viewauth/CMS/PileupMCReweightingUtilities as of 27-Oct-11 
       and Tessa's recommendation*/
     int nPV  = -1;
-    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->PU.begin();
+    susy::PUSummaryInfoCollection::const_iterator iBX = susyEvent->pu.begin();
     bool foundInTimeBX = false;
-    while ((iBX != susyEvent->PU.end()) && !foundInTimeBX) {
+    while ((iBX != susyEvent->pu.end()) && !foundInTimeBX) {
       if (iBX->BX == 0) { 
 	nPV = iBX->numInteractions;
 	foundInTimeBX = true;
@@ -6151,8 +6158,8 @@ void GMSBAnalyzer::countEE(string& outputFile)
 	 i != susyEvent->l1Map.end(); ++i) {
       cout << i->first << ": " << (int(i->second.second)) << endl;
     }
-    for (susy::PUSummaryInfoCollection::const_iterator i = susyEvent->PU.begin(); 
-	 i != susyEvent->PU.end(); ++i) { cout << i->numInteractions << endl; }
+    for (susy::PUSummaryInfoCollection::const_iterator i = susyEvent->pu.begin(); 
+	 i != susyEvent->pu.end(); ++i) { cout << i->numInteractions << endl; }
 
     //plot uncorrected and corrected MET
     map<TString, susy::MET>::const_iterator iUncorrMET = susyEvent->metMap.find("pfMet");
