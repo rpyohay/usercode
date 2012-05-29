@@ -495,7 +495,9 @@ The dominant source of systematic error on the background estimate is the slight
 
 The second largest source of systematic error comes from the $p_{T}$ dependence of the $e\rightarrow\gamma$ misidentification rate (see~\ref{sec:Modeling the Electroweak Background}).  For \MET $>$ 100 GeV, the expected electroweak background is 3.4 $\pm$ 1.0 events, so this error amounts to 4.8\% of the total QCD + electroweak background estimate.
 
-Finally, the assumption of a constant $t\bar{t}$ and $W$ + jets background shape under the $Z$ peak in the $ee$ sample induces a systematic error on the $ee$ sideband-subtracted background prediction.  To assess the magnitude of this error, the sideband subtraction (see Sec.~\ref{sec:Reweighting}) is performed once using only the prediction from the high sideband, and once using only the prediction from the low sideband.  In each of these cases, the prediction is weighted by a factor of two, to account for the fact that the sideband regions are only half as wide (10 GeV) as the signal region (20 GeV).  The maximum variation from the nominal $ee$ estimate is taken as the error, which amounts to 11\% for \MET $>$ 100 GeV.  \MET distributions using the nominal $ee$ sideband subtraction, the low-sideband-only subtraction, and the high-sideband-only subtraction are shown in Figure~\ref{fig:mee_bkg_shape_error}.
+The assumption of a constant $t\bar{t}$ and $W$ + jets background shape under the $Z$ peak in the $ee$ sample induces a systematic error on the $ee$ sideband-subtracted background prediction.  To assess the magnitude of this error, the sideband subtraction (see Sec.~\ref{sec:Reweighting}) is performed once using only the prediction from the high sideband, and once using only the prediction from the low sideband.  In each of these cases, the prediction is weighted by a factor of two, to account for the fact that the sideband regions are only half as wide (10 GeV) as the signal region (20 GeV).  The maximum variation from the nominal $ee$ estimate is taken as the error, which amounts to 11\% for \MET $>$ 100 GeV.  \MET distributions using the nominal $ee$ sideband subtraction, the low-sideband-only subtraction, and the high-sideband-only subtraction are shown in Figure~\ref{fig:mee_bkg_shape_error}.
+
+\marginpar{\textcolor{blue}{Added this paragraph}}Finally, the few percent error on the jet energy correction factors introduces an error on the final background estimate through (a) the use of the PF $p_{T}$ to measure the di-EM $p_{T}$, (b) the counting of jets passing a 30 GeV $p_{T}$ threshold for placement of the event in an $N_{\mathrm{j}}$ bin for reweighting, and (c) the counting of jets above threshold for the $\geq1$-jet version of the selection.  To estimate this error, 100 pseudo-experiments are generated with identical properties as the true data sample, except with corrected jet energies (in all events) all shifted by an amount $r\sigma(p_{T}, \eta)$.  $r$ is a random number drawn from a Gaussian distribution with mean 0 and width 1, and $\sigma(p_{T}, \eta)$ is the uncertainty on the jet energy correction factor (which, like the correction factor itself, is a function of $p_{T}$ and $\eta$).  The same factor $r$ is applied to all jets in all events in the pseudo-experiment because the jet energy correction errors are correlated from jet to jet (they result from e.g. uncertainties in MC simulation or uncertainties in ECAL energy scale \cite{CMS_JES_paper}).  The standard error of the mean of the 100 resulting background estimates in each relevant \MET bin is taken as the error.  The error in each \MET bin is assumed to be uncorrelated.  This process is repeated for both the inclusive and $\geq1$-jet selections.  For \MET $\geq$ 100 GeV, the jet energy correction uncertainty is 1.5\%(2.2\%) of the total background for the inclusive($\geq$1-jet) selection.
 
 \begin{figure}
 	\centering
@@ -552,11 +554,30 @@ Total & 3.9 & 8.1 & 16 & 25 & 25 \\
 \hspace{1.5cm}In norm. region & 0.19 & 0.19 & 0.2 & 0.24 & 0.23 \\
 \hspace{1.5cm}In this \MET bin & 0.71 & 1.2 & 3.5 & 4.3 & 7.7 \\
 \hline
-\hspace{0.5cm}Systematics & 1.4 & 2 & 0.72 & 5.5 & 12 \\
+\hspace{0.5cm}Systematics & 2.6 & 4.4 & 1.2 & 7.5 & 14 \\
 \hline
 \hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0012 & 0.0012 & 0.0013 & 0.0015 & 0.0014 \\
 \hspace{1cm}$m_{ee}$ background shape & 1.4 & 2 & 0.72 & 5.5 & 12 \\
+\hspace{1cm}Jet energy scale & 2.2 & 3.9 & 0.96 & 5.1 & 6.9 \\
 \hline
+%w/o JES systematic
+%Total & 3.9 & 8.1 & 16 & 25 & 25 \\
+%\hline
+%\hspace{0.5cm}Statistics & 3.6 & 7.8 & 16 & 24 & 22 \\
+%\hline
+%\hspace{1cm}No. events & 3.6 & 7.7 & 15 & 24 & 20 \\
+%\hspace{1.5cm}In norm. region & 0.43 & 0.44 & 0.46 & 0.55 & 0.51 \\
+%\hspace{1.5cm}In this \MET bin & 3.5 & 7.7 & 15 & 24 & 20 \\
+%\hline
+%\hspace{1cm}Reweighting & 0.73 & 1.2 & 3.5 & 4.3 & 7.7 \\
+%\hspace{1.5cm}In norm. region & 0.19 & 0.19 & 0.2 & 0.24 & 0.23 \\
+%\hspace{1.5cm}In this \MET bin & 0.71 & 1.2 & 3.5 & 4.3 & 7.7 \\
+%\hline
+%\hspace{0.5cm}Systematics & 1.4 & 2 & 0.72 & 5.5 & 12 \\
+%\hline
+%\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0012 & 0.0012 & 0.0013 & 0.0015 & 0.0014 \\
+%\hspace{1cm}$m_{ee}$ background shape & 1.4 & 2 & 0.72 & 5.5 & 12 \\
+%\hline
 \end{tabular}
 \label{tab:ee_background_prediction_errors}
 \end{table}
@@ -583,11 +604,30 @@ Total & 15 & 25 & 61 & 34 & 64 \\
 \hspace{1.5cm}In norm. region & 0.27 & 0.27 & 0.27 & 0.27 & 0.27 \\
 \hspace{1.5cm}In this \MET bin & 0.81 & 2.6 & 5.1 & 6.9 & 13 \\
 \hline
-\hspace{0.5cm}Systematics & 13 & 21 & 53 & 5.5 & 52 \\
+\hspace{0.5cm}Systematics & 13 & 21 & 53 & 6.6 & 52 \\
 \hline
 \hspace{1cm}$ee$/$\mathit{ff}$ difference & 13 & 21 & 53 & 5.5 & 52 \\
 \hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0012 & 0.0012 & 0.0012 & 0.0012 & 0.0012 \\
+\hspace{1cm}Jet energy scale & 0.099 & 1.7 & 1.8 & 3.5 & 1.8 \\
 \hline
+%w/o JES systematic
+%Total & 15 & 25 & 61 & 34 & 64 \\
+%\hline
+%\hspace{0.5cm}Statistics & 7.2 & 14 & 30 & 33 & 38 \\
+%\hline
+%\hspace{1cm}No. events & 7.1 & 14 & 29 & 33 & 36 \\
+%\hspace{1.5cm}In norm. region & 0.64 & 0.64 & 0.64 & 0.64 & 0.64 \\
+%\hspace{1.5cm}In this \MET bin & 7.1 & 14 & 29 & 33 & 36 \\
+%\hline
+%\hspace{1cm}Reweighting & 0.85 & 2.7 & 5.1 & 6.9 & 13 \\
+%\hspace{1.5cm}In norm. region & 0.27 & 0.27 & 0.27 & 0.27 & 0.27 \\
+%\hspace{1.5cm}In this \MET bin & 0.81 & 2.6 & 5.1 & 6.9 & 13 \\
+%\hline
+%\hspace{0.5cm}Systematics & 13 & 21 & 53 & 5.5 & 52 \\
+%\hline
+%\hspace{1cm}$ee$/$\mathit{ff}$ difference & 13 & 21 & 53 & 5.5 & 52 \\
+%\hspace{1cm}$f_{e\rightarrow\gamma}$ (in norm. region) & 0.0012 & 0.0012 & 0.0012 & 0.0012 & 0.0012 \\
+%\hline
 \end{tabular}
 \label{tab:ff_background_prediction_errors}
 \end{table}
@@ -629,9 +669,9 @@ Total ($ee$ + $e\gamma$) & 3.9 & 7.8 & 15 & 22 & 22 \\
 \hspace{1cm}QCD & 3.4 & 7.3 & 14 & 21 & 18 \\
 \hspace{1cm}Electroweak & 0.13 & 0.3 & 0.53 & 0.79 & 0.76 \\
 \hline
-\hspace{0.5cm}Systematics & 1.7 & 2.5 & 2.4 & 5.8 & 11 \\
+\hspace{0.5cm}Systematics & 2.7 & 4.5 & 2.6 & 7.4 & 13 \\
 \hline
-\hspace{1cm}QCD & 1.4 & 1.9 & 0.66 & 4.9 & 11 \\
+\hspace{1cm}QCD & 2.5 & 4.1 & 1.1 & 6.7 & 12 \\
 \hspace{1cm}Electroweak & 1 & 1.7 & 2.3 & 3.2 & 3.4 \\
 \hline
 Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 54 & 30 & 54 \\
@@ -641,11 +681,36 @@ Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 54 & 30 & 54 \\
 \hspace{1cm}QCD & 6.9 & 13 & 26 & 29 & 30 \\
 \hspace{1cm}Electroweak & 0.11 & 0.24 & 0.79 & 0.83 & 1.1 \\
 \hline
-\hspace{0.5cm}Systematics & 12 & 20 & 47 & 5.9 & 43 \\
+\hspace{0.5cm}Systematics & 12 & 20 & 47 & 6.7 & 43 \\
 \hline
-\hspace{1cm}QCD & 12 & 20 & 47 & 4.9 & 43 \\
+\hspace{1cm}QCD & 12 & 20 & 47 & 5.8 & 43 \\
 \hspace{1cm}Electroweak & 0.9 & 1.3 & 3.4 & 3.4 & 4.8 \\
 \hline
+%w/o JES systematic
+%Total ($ee$ + $e\gamma$) & 3.9 & 7.8 & 15 & 22 & 22 \\
+%\hline
+%\hspace{0.5cm}Statistics & 3.4 & 7.3 & 14 & 21 & 18 \\
+%\hline
+%\hspace{1cm}QCD & 3.4 & 7.3 & 14 & 21 & 18 \\
+%\hspace{1cm}Electroweak & 0.13 & 0.3 & 0.53 & 0.79 & 0.76 \\
+%\hline
+%\hspace{0.5cm}Systematics & 1.7 & 2.5 & 2.4 & 5.8 & 11 \\
+%\hline
+%\hspace{1cm}QCD & 1.4 & 1.9 & 0.66 & 4.9 & 11 \\
+%\hspace{1cm}Electroweak & 1 & 1.7 & 2.3 & 3.2 & 3.4 \\
+%\hline
+%Total ($\mathit{ff}$ + $e\gamma$) & 14 & 24 & 54 & 30 & 54 \\
+%\hline
+%\hspace{0.5cm}Statistics & 6.9 & 13 & 26 & 29 & 30 \\
+%\hline
+%\hspace{1cm}QCD & 6.9 & 13 & 26 & 29 & 30 \\
+%\hspace{1cm}Electroweak & 0.11 & 0.24 & 0.79 & 0.83 & 1.1 \\
+%\hline
+%\hspace{0.5cm}Systematics & 12 & 20 & 47 & 5.9 & 43 \\
+%\hline
+%\hspace{1cm}QCD & 12 & 20 & 47 & 4.9 & 43 \\
+%\hspace{1cm}Electroweak & 0.9 & 1.3 & 3.4 & 3.4 & 4.8 \\
+%\hline
 \end{tabular}
 \label{tab:total_background_prediction_errors}
 \end{table}
@@ -710,44 +775,44 @@ Figure~\ref{fig:MET_final}(~\ref{fig:MET_final_geq1j}) shows the \MET distributi
 \begin{table}[hcbp]
 \caption{Observed numbers of two-photon events, background estimates and their errors, and expected numbers of two-photon events from two representative GGM SUSY models (details of MC simulation given in Chapter~\ref{chap:Interpretation of Results in Terms of GMSB Models} and App.~\ref{chap:Monte Carlo Samples}) for the \MET bins used in the search.  Errors on the background estimates are detailed in Tables~\ref{tab:ee_background_prediction_errors},~\ref{tab:ff_background_prediction_errors},~\ref{tab:eg_background_prediction_errors}, and~\ref{tab:total_background_prediction_errors}.  Errors on the expected numbers of GGM events are purely statistical.}
 \centering
-\begin{tabular}{|c|c|c|c|c|c|}
+{\footnotesize\begin{tabular}{|c|c|c|c|c|c|}
 \hline
 \multicolumn{1}{|c|}{\multirow{2}{*}{Source}} & \multicolumn{5}{c|}{No. events} \\
 \cline{2-6}
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-\begin{tabular}{@{}c@{}}Data observed\\($\gamma\gamma$)\\\end{tabular} & 354 & 93 & 37 & 33 & 17 \\
+\begin{tabular}{@{}c@{}}Observation\\($\gamma\gamma$)\\\end{tabular} & 354 & 93 & 37 & 33 & 17 \\
 \hline
-\begin{tabular}{@{}c@{}}Background predicted\\($\mathit{ff}$ + $e\gamma$)\\\end{tabular} & 361 $\pm$ 51.5 & 113 $\pm$ 27.1 & 26.9 $\pm$ 14.5 & 23.9 $\pm$ 7.23 & 20.2 $\pm$ 10.9 \\
+\begin{tabular}{@{}c@{}}Predicted\\background\\($\mathit{ff}$ + $e\gamma$)\\\end{tabular} & 361 $\pm$ 51.5 & 113 $\pm$ 27.1 & 26.9 $\pm$ 14.5 & 23.9 $\pm$ 7.23 & 20.2 $\pm$ 10.9 \\
 \hline
-GGM1 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
+\begin{tabular}{@{}c@{}}$m_{\tilde{q}} = 720$ GeV\\$M_{3} = 720$ GeV\\$M_{1}$ = 375 GeV\\\end{tabular} & 13.3 $\pm$ 2.13 & 17.7 $\pm$ 2.46 & 15.3 $\pm$ 2.33 & 42.9 $\pm$ 3.82 & 966 $\pm$ 18.3 \\
 \hline
-GGM2 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
+\begin{tabular}{@{}c@{}}$m_{\tilde{q}} = 1440$ GeV\\$M_{3} = 1440$ GeV\\$M_{1}$ = 375 GeV\\\end{tabular} & 0.008 $\pm$ 0.003 & 0.009 $\pm$ 0.003 & 0.012 $\pm$ 0.003 & 0.030 $\pm$ 0.005 & 1.92 $\pm$ 0.04 \\
 \hline
-\end{tabular}
+\end{tabular}}
 \label{tab:results_summary_table}
 \end{table}
 
 \begin{table}[hcbp]
 \caption{Observed numbers of two-photon + $\geq$1-jet events, background estimates and their errors, and expected numbers of two-photon + $\geq$1-jet events from two representative GGM SUSY models (details of MC simulation given in Chapter~\ref{chap:Interpretation of Results in Terms of GMSB Models} and App.~\ref{chap:Monte Carlo Samples}) for the \MET bins used in the search.  Errors on the background estimates are detailed in Tables~\ref{tab:ee_background_prediction_errors},~\ref{tab:ff_background_prediction_errors},~\ref{tab:eg_background_prediction_errors}, and~\ref{tab:total_background_prediction_errors}.  Errors on the expected numbers of GGM events are purely statistical.}
 \centering
-\begin{tabular}{|c|c|c|c|c|c|}
+{\footnotesize\begin{tabular}{|c|c|c|c|c|c|}
 \hline
 \multicolumn{1}{|c|}{\multirow{2}{*}{Source}} & \multicolumn{5}{c|}{No. events} \\
 \cline{2-6}
 & [50, 60) & [60, 70) & [70, 80) & [80, 100) & $\geq$100 \\
 \hline
 \hline
-\begin{tabular}{@{}c@{}}Data observed\\($\gamma\gamma$ + $\geq$1 jet)\\\end{tabular} & 202 & 63 & 27 & 25 & 11 \\
+\begin{tabular}{@{}c@{}}Observation\\($\gamma\gamma$ + $\geq$1 jet)\\\end{tabular} & 202 & 63 & 27 & 25 & 11 \\
 \hline
-\begin{tabular}{@{}c@{}}Background predicted\\($\mathit{ff}$ + $e\gamma$)\\\end{tabular} & 200 $\pm$ 35.4 & 77.7 $\pm$ 28.1 & 19.4 $\pm$ 8.55 & 14.7 $\pm$ 7.04 & 14.4 $\pm$ 5.59 \\
+\begin{tabular}{@{}c@{}}Predicted\\background\\($\mathit{ff}$ + $e\gamma$)\\\end{tabular} & 200 $\pm$ 35.4 & 77.7 $\pm$ 28.1 & 19.4 $\pm$ 8.55 & 14.7 $\pm$ 7.04 & 14.4 $\pm$ 5.59 \\
 \hline
-GGM1 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
+\begin{tabular}{@{}c@{}}$m_{\tilde{q}} = 720$ GeV\\$M_{3} = 720$ GeV\\$M_{1}$ = 375 GeV\\\end{tabular} & 13.3 $\pm$ 2.13 & 17.7 $\pm$ 2.46 & 15.3 $\pm$ 2.33 & 42.9 $\pm$ 3.82 & 965 $\pm$ 18.3 \\
 \hline
-GGM2 expected \textcolor{red}{\textbf{(fill in)}} & & & & & \\
+\begin{tabular}{@{}c@{}}$m_{\tilde{q}} = 1440$ GeV\\$M_{3} = 1440$ GeV\\$M_{1}$ = 375 GeV\\\end{tabular} & 0.008 $\pm$ 0.003 & 0.009 $\pm$ 0.003 & 0.012 $\pm$ 0.003 & 0.031 $\pm$ 0.004 & 1.92 $\pm$ 0.04 \\
 \hline
-\end{tabular}
+\end{tabular}}
 \label{tab:results_summary_table_geq1j}
 \end{table}
 

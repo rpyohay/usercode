@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  26 APR 2012 10:26
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  29 MAY 2012 15:15
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -942,127 +942,145 @@ df, page is rotated 90 degrees>] [22 <./eg_MET.pdf, page is rotated 90 degrees>
 File: avg_MET_vs_di-EM_pT.pdf Graphic file (type pdf)
 
 <use avg_MET_vs_di-EM_pT.pdf> [25]
-<mee_bkg_shape_error.pdf, id=2851, 511.9125pt x 739.76375pt>
+Underfull \hbox (badness 10000) in paragraph at lines 500--500
+[][]\OT1/cmr/m/n/12 Added
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--500
+\OT1/cmr/m/n/12 this
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 500--500
+\OT1/cmr/m/n/12 para-
+ []
+
+
+LaTeX Warning: Citation `CMS_JES_paper' on page 26 undefined on input line 500.
+
+
+[26 <./avg_MET_vs_di-EM_pT.pdf, page is rotated 90 degrees>]
+<mee_bkg_shape_error.pdf, id=2899, 511.9125pt x 739.76375pt>
 File: mee_bkg_shape_error.pdf Graphic file (type pdf)
 
 <use mee_bkg_shape_error.pdf>
-<ee_di-EM_pT_bin_size_comparison.pdf, id=2853, 569.12625pt x 546.04pt>
+<ee_di-EM_pT_bin_size_comparison.pdf, id=2901, 569.12625pt x 546.04pt>
 File: ee_di-EM_pT_bin_size_comparison.pdf Graphic file (type pdf)
 
 <use ee_di-EM_pT_bin_size_comparison.pdf>
-<ff_di-EM_pT_bin_size_comparison.pdf, id=2854, 569.12625pt x 546.04pt>
+<ff_di-EM_pT_bin_size_comparison.pdf, id=2902, 569.12625pt x 546.04pt>
 File: ff_di-EM_pT_bin_size_comparison.pdf Graphic file (type pdf)
 
 <use ff_di-EM_pT_bin_size_comparison.pdf>
 
-LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 26 undefined on input line 514
+LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 27 undefined on input line 516
 .
 
 
-LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 26 undefined on input line 514
+LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 27 undefined on input line 516
 .
 
 
-LaTeX Warning: Reference `sec:MET' on page 26 undefined on input line 518.
+LaTeX Warning: Reference `sec:MET' on page 27 undefined on input line 520.
 
-
-<gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=2858, 569.12
+[27 <./mee_bkg_shape_error.pdf>] [28 <./ee_di-EM_pT_bin_size_comparison.pdf, pa
+ge is rotated 90 degrees> <./ff_di-EM_pT_bin_size_comparison.pdf, page is rotat
+ed 90 degrees>]
+<gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=3047, 569.12
 625pt x 259.97125pt>
 File: gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf Graphic fil
 e (type pdf)
 
 <use gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf>
-<gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=2859, 569.12
+<gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=3048, 569.12
 625pt x 259.97125pt>
 File: gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf Graphic fil
 e (type pdf)
 
 <use gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf>
-<ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=2860, 569.12
+<ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=3049, 569.12
 625pt x 259.97125pt>
 File: ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf Graphic fil
 e (type pdf)
 
-<use ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf> [26 <./avg_
-MET_vs_di-EM_pT.pdf, page is rotated 90 degrees>] [27 <./mee_bkg_shape_error.pd
-f>] [28 <./ee_di-EM_pT_bin_size_comparison.pdf, page is rotated 90 degrees> <./
-ff_di-EM_pT_bin_size_comparison.pdf, page is rotated 90 degrees> <./gg_over_ee_
-Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, page is rotated 90 degrees>
- <./gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, page is rota
-ted 90 degrees> <./ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pd
-f, page is rotated 90 degrees>]
+<use ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf>
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 29 undefined on input line 690.
+s' on page 29 undefined on input line 755.
 
 
 LaTeX Warning: Reference `chap:Monte Carlo Samples' on page 29 undefined on inp
-ut line 690.
+ut line 755.
 
-[29] [30] <MET_final_ee_ff_eg.pdf, id=3203, 511.9125pt x 739.76375pt>
+[29 <./gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, page is r
+otated 90 degrees> <./gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom
+.pdf, page is rotated 90 degrees> <./ee_over_ff_Type-I_MET_corrections_vs_uncor
+rected_MET_zoom.pdf, page is rotated 90 degrees>] [30]
+<MET_final_ee_ff_eg.pdf, id=3205, 511.9125pt x 739.76375pt>
 File: MET_final_ee_ff_eg.pdf Graphic file (type pdf)
 
 <use MET_final_ee_ff_eg.pdf>
-<MET_final_ff_eg.pdf, id=3206, 511.9125pt x 739.76375pt>
+<MET_final_ff_eg.pdf, id=3208, 511.9125pt x 739.76375pt>
 File: MET_final_ff_eg.pdf Graphic file (type pdf)
 
 <use MET_final_ff_eg.pdf>
-<MET_final_ee_ff_eg_geq1.pdf, id=3209, 511.9125pt x 739.76375pt>
+<MET_final_ee_ff_eg_geq1.pdf, id=3211, 511.9125pt x 739.76375pt>
 File: MET_final_ee_ff_eg_geq1.pdf Graphic file (type pdf)
 
 <use MET_final_ee_ff_eg_geq1.pdf>
-<MET_final_ff_eg_geq1.pdf, id=3212, 511.9125pt x 739.76375pt>
+<MET_final_ff_eg_geq1.pdf, id=3214, 511.9125pt x 739.76375pt>
 File: MET_final_ff_eg_geq1.pdf Graphic file (type pdf)
 
 <use MET_final_ff_eg_geq1.pdf>
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 31 undefined on input line 711.
+s' on page 31 undefined on input line 776.
 
 
 LaTeX Warning: Reference `chap:Monte Carlo Samples' on page 31 undefined on inp
-ut line 711.
+ut line 776.
 
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 31 undefined on input line 711.
+s' on page 31 undefined on input line 776.
 
 
 LaTeX Warning: Reference `chap:Monte Carlo Samples' on page 31 undefined on inp
-ut line 711.
+ut line 776.
 
 
-Overfull \hbox (58.57668pt too wide) in paragraph at lines 713--730
+Overfull \hbox (1.8265pt too wide) in paragraph at lines 778--795
  [][] 
  []
 
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 31 undefined on input line 733.
+s' on page 31 undefined on input line 798.
 
 
 LaTeX Warning: Reference `chap:Monte Carlo Samples' on page 31 undefined on inp
-ut line 733.
+ut line 798.
 
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 31 undefined on input line 733.
+s' on page 31 undefined on input line 798.
 
 
 LaTeX Warning: Reference `chap:Monte Carlo Samples' on page 31 undefined on inp
-ut line 733.
+ut line 798.
 
 
-Overfull \hbox (61.84053pt too wide) in paragraph at lines 735--752
+Overfull \hbox (1.8265pt too wide) in paragraph at lines 800--817
  [][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 756.
-[31] [32 <./MET_final_ee_ff_eg.pdf> <./MET_final_ff_eg.pdf>] [33 <./MET_final_e
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 821.
+[31 <./MET_final_ee_ff_eg.pdf> <./MET_final_ff_eg.pdf>] [32] [33 <./MET_final_e
 e_ff_eg_geq1.pdf> <./MET_final_ff_eg_geq1.pdf>] [34]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 756.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 821.
  (./ch7.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 756.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 821.
 Package rerunfilecheck Info: File `ch7.out' has not changed.
 (rerunfilecheck)             Checksum: A1C20DB4D08FDB3E996860C4474E408A;543.
 
@@ -1071,13 +1089,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8590 strings out of 493747
- 139848 string characters out of 3143546
- 247018 words of memory out of 3000000
- 11506 multiletter control sequences out of 15000+200000
+ 8591 strings out of 493747
+ 139863 string characters out of 3143546
+ 249018 words of memory out of 3000000
+ 11507 multiletter control sequences out of 15000+200000
  15029 words of font info for 56 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,24n,45p,1377b,459s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,24n,45p,1620b,459s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -1100,7 +1118,7 @@ f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf
 dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2010/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local/texlive/2010/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on ch7.pdf (34 pages, 1638412 bytes).
+Output written on ch7.pdf (34 pages, 1640911 bytes).
 PDF statistics:
  3526 PDF objects out of 3580 (max. 8388607)
  1803 compressed objects within 19 object streams
