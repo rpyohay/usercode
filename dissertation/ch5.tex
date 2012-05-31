@@ -47,12 +47,6 @@ A longitudinal quarter cross-sectional view of CMS is shown in Figure~\ref{fig:C
 \section{The Detectors and Their Operating Principles}
 \label{sec:The Detectors and Their Operating Principles}
 
-%layout of the detector (names of the sub-parts, technologies used)
-%explanation of how the technology works and short motivation for choosing it
-%short explanation of the readout
-%if the detector triggers, explanation of the trigger primitive generation
-%performance benchmarks
-
 \subsection{Tracking System}
 \label{sec:Tracking System}
 
@@ -86,16 +80,158 @@ A longitudinal quarter view of the three barrel pixel (BPix) layers and two forw
 %insert reference to BPix Lorentz angle
 Since the electric field in the depletion region of the BPix sensors is perpendicular (i.e. pointing along $r$) to the magnetic field of CMS (i.e. pointing along $z$), the charge carriers in the silicon experience a Lorentz drift along $\phi$.  The multi-pixel sensor pitch is such that this causes the charge from one particle hit to be shared among multiple pixels.  Particle hits are reconstructed reading out the analog pixel signal and interpolating between signals in multiple pixels.  This method achieves a 15-20 $\mu\mbox{m}$ spatial resolution, which is comparable to the sensor pitch.  To induce this effect in FPix, the sensor wedges are tilted by the BPix Lorentz angle of $20^{\circ}$ \textcolor{red}{\textbf{(insert reference to BPix Lorentz angle)}} with respect to the $y$-axis.
 
-%sensor technology, bias voltage
-%readout system (diagram)
-%performance
+%bias voltage of the pixels?
+%explanantion of electrical isolation of pixels?
+Each multi-pixel sensor consists of an array of $52\times80$ n-type pixels implanted onto an n-type substrate with 320 $\mu\mbox{m}$ thickness.  The other face of the substrate is covered with a thin layer of p-type semiconductor.  Except for the outer edges, which are held at ground potential to prevent sparking between the sensor edges and the connected readout chip \cite{pixel_design_paper}, the p-side is reverse biased at \textcolor{red}{\textbf{a few hundred volts}}.  The pixels are held at ground potential.  A particle entering through the p-side will cause a burst of current to flow across the p-n junction.  The charge will be collected by the pixels, which are bump-bonded to the readout.  The BPix and FPix sensors employ slightly different technologies for electrically isolating the individual pixels, but both rely on the idea of surrounding the pixels with a p-type material to provide a p-n junction.  Since both pixel and surrounding p-type material are held at ground potential, the p-n junction acts as a barrier to current flow.  \textcolor{red}{\textbf{Is this right?}}
+
+Each $52\times80$ pixel sensor is bump bonded to a readout chip (ROC).  The ROCs provide zero suppression and amplify,  buffer, and communicate the signals from the sensors.  A single token bit manager (TBM) controls $\sim16$ ROCs in the barrel or $\sim24$ ROCs in the endcaps.  Its purpose is to distribute the clock and trigger to the ROCs (the latter initiates a transmission of the signal further upstream to be assembled into the full event readout of CMS).  The clock and trigger are supplied by the pixel front end controller (pFEC), which interfaces to the central clock and data acquisition systems.  Analog signals that are collected from the pixel front ends are digitized by the pixel front end digitizer (pxFED).  A diagram of the readout system is shown in Figure~\ref{fig:pixel_readout}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{pixel_readout}
+	\caption{Pixel control and readout system.  Reprinted from Fig. 3.9 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:pixel_readout}
+\end{figure}
+
+Figure~\ref{fig:pixel_results} shows some results highlighting the performance of the pixel detector.
+
+\begin{figure}
+	\centering
+ 	\subfloat[BPix hit resolution in the $r\cdot\phi$ coordinate \cite{pixel_DPG_Twiki_rphi_res}.]{\label{fig:pixel_results_rphi_res}\includegraphics[scale=0.18]{pixel_results_rphi_res}}
+	\hspace{1cm}
+	\subfloat[BPix hit resolution in the $z$ coordinate vs. track dip angle, showing the effect of charge sharing on resolution \cite{pixel_DPG_Twiki_z_res}.]{\label{fig:pixel_results_z_res}\includegraphics[scale=0.18]{pixel_results_z_res}}
+	\hspace{1cm}
+	\subfloat[Pixel reconstruction efficiency vs. bias voltage for a group of three wedges in FPix \cite{pixel_DPG_Twiki_eff}.]{\label{fig:pixel_results_eff}\includegraphics[scale=0.18]{pixel_results_eff}}
+	\caption{Pixel detector performance highlights.}
+	\label{fig:pixel_results}
+\end{figure}
 
 \subsubsection{Silicon Strip Tracker}
+\label{sec:Silicon Strip Tracker}
+
+The silicon strip tracker is divided into four parts: the inner barrel (TIB) and inner disks (TID), covering the radial extent $20\mbox{ cm} < r < 55\mbox{ cm}$ and $z$ extent $80\mbox{ cm} < |z| < 90\mbox{ cm}$; and the outer barrel (TOB) and endcap (TEC), covering the radial extent $61\mbox{ cm} < r < 108\mbox{ cm}$ and $z$ extent $124\mbox{ cm} < |z| < 282\mbox{ cm}$.  A number of the tracker layers and endcaps hold double-sided strip modules (shown as double lines in Figure~\ref{fig:strip_longitudinal_xsec}), with the rear module tilted at an angle of 100 mrad with respect to the front module, to provide a measurement in two coordinates.  There are a total of 15,148 modules in the tracker, arranged as shown in the longitudinal cross-sectional view of Fig.~\ref{fig:strip_longitudinal_xsec}.  For the TIB and TOB, the modules are arranged in straight rows end-to-end along $z$, with repeating rows covering the full $2\pi$ extent in $\phi$.  In each of the TID disks, the modules are arranged into three concentric circular rings of increasing $r$.  In the TEC, the modules are affixed to $\phi$-wedges called $\textit{petals}$.   One side of the TEC and its petal structure is shown in Figure~\ref{fig:tracker_TEC}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{strip_longitudinal_xsec}
+	\caption{Longitudinal cross section of the silicon strip detector.  Reprinted from Fig. 3.1 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:strip_longitudinal_xsec}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{tracker_TEC}
+	\caption{View of one tracker endcap, with the outline of a petal shown in blue.  There are nine petals per wedge-shaped sector (one per TEC disk).  Reprinted from Fig. 3.30 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:tracker_TEC}
+\end{figure}
+
+Like the pixels, the strip sensors generate a signal when current flows across a p-n junction in response to interaction with a charged particle.  Whereas the pixels are n-type implants on an n-type substrate, with a solid p-type rear layer to which the high voltage is connected, the strips are p-type implants on an n-type substrate, with a solid n-type rear layer connecting to the high voltage.  The p-n junction in the strip sensors is at the strip-substrate boundary, whereas in the pixel sensors it is at the boundary between the rear layer and the substrate.  Each sensor has either 512 or 768 electrically isolated strips, with pitch varying from 80-205 $\mu\mbox{m}$ depending on location.  Strip lengths in $z$ range from $\sim10$ to $\sim25$ cm.  Thin (320 $\mu\mbox{m}$) sensors are used in the TIB, TID, and inner four rings of the TEC, while thick (500 $\mu\mbox{m}$) sensors are used in the TOB and the outer rings of the TEC.  The thicker sensors compensate for the increased strip capacitance (and hence electronics noise) of the longer strips in the outer layers/disk of the tracker such that strip signal:noise is maintained above 10 everywhere.
+
+The strips are wire bonded to a front end readout chip called the APV25.  The APV25 amplifies and shapes the strip signals before sending the full analog pulse information to an APVMUX, which multiplexes the output of two APV25s.   Then, the electrical signal from the APVMUX is set differentially a few centimeters to an optical driver, where it is converted to an optical signal and sent to one of the 450 front end drivers (FEDs).  The FEDs convert the signal back to an electrical pulse and digitize it for use in the global event assembly.  As for the pixels, analog readout is used on detector so that hit reconstruction may benefit from charge sharing.
+
+Clock, trigger, and control signals are sent from the front end controllers (FECs) to phase locked loop (PLL) chips on the front ends.  The FECs interface to the global clock and trigger system.  Four or six APV25s, an APVMUX, and a PLL chip all sit on a \textit{hybrid}, two which one thin or two thick sensors are also affixed.  The sensor-hybrid combination and its frame form a module.  Figure ~\ref{fig:tracker_module} shows a diagram of a module, while Figure~\ref{fig:tracker_readout} shows a block diagram of the strip readout architecture.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{tracker_module}
+	\caption{Exploded view of a strip module with two sensors.  Reprinted from Fig. 3.22 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:tracker_module}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{tracker_readout}
+	\caption{Block diagram of the strip readout architecture.  Reprinted from Fig. 3.20 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:tracker_readout}
+\end{figure}
+
+As an example of the strip capabilities, strip hit resolution and signal:noise measurements are shown in Figure~\ref{fig:tracker_results}.  The entire pixel + strip tracker has been used successfully in the reconstruction of primary and secondary vertices, electrons, muons, tau decays, and charm and bottom hadron decays.  In addition, the superior performance of the tracker over the hadronic calorimeter for low energy charged hadrons has been exploited in the the particle flow jet and \MET reconstruction technique (see Sec.~\ref{sec:Particle Flow}).  The CMS silicon strips, as well as the pixels, are well aligned and operating at close to design performance.  
+
+\begin{figure}
+	\centering
+ 	\subfloat[TIB signal:noise \cite{tracker_DPG_Twiki_TIB_SNR}.]{\label{fig:tracker_results_TIB_SNR}\includegraphics[scale=0.3]{tracker_results_TIB_SNR.gif}}
+	\hspace{1cm}
+	\subfloat[TIB and TOB hit resolution as a function of strip pitch \cite{tracker_DPG_Twiki_res}.]{\label{fig:tracker_results_res}\includegraphics[scale=0.2]{tracker_results_res.gif}}
+	\caption{Strip detector performance highlights.}
+	\label{fig:tracker_results}
+\end{figure}
+
 \subsection{Electromagnetic Calorimeter}
 \label{sec:Electromagnetic Calorimeter}
-%make this big, include EE work
-%discuss crystal radiation damage
+
+The electromagnetic calorimeter (ECAL) is composed of 68,524 lead tungstate ($\mbox{PbWO}_{4}$) crystals, divided into one barrel (EB) layer and two endcap (EE) disks.  In EB, there are 1700 crystals per \textit{supermodule} (SM), arranged in a $20\times85$ grid in $\phi\times\eta$.  Two SMs are laid out end-to-end to form one row at fixed $\phi$, with a total of 18 rows needed to cover the entire $2\pi$ extent in $\phi$.  The SMs may be operated independently.  In EE, the independent unit is a wedge-shaped sector, with nine sectors covering each endcap side.  The 7,324 EE crystals are divided approximately evenly between the 18 EE sectors.  A two-layer preshower detector is placed in front of the EE disks, each layer consisting of a lead absorber followed by 1.9 mm pitch silicon strip detectors (the strips in the first layer are rotated $90^{\circ}$ with respect to the second layer).  The ECAL layout is shown in Figure~\ref{fig:ECAL_layout}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{ECAL_layout}
+	\caption{Layout of the ECAL detector.  Reprinted from Fig. 4.5 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:ECAL_layout}
+\end{figure}
+
+The electromagnetic energy resolution can be parametrized as $(\sigma/E)^{2} = (S/\sqrt{E})^{2} + (N/E)^{2} + (C)^{2}$, where $S$ characterizes the size of photostatistical fluctuations, $N$ characterizes the contribution from electronics noise, and $C$ is a constant accounting for imperfect intercalibration between crystals, non-uniformity of crystal performance, and incomplete shower containment within one crystal.  The design goal of the ECAL is to achieve C = 0.5\%.  Therefore, fast, dense, and relatively radiation hard $\mbox{PbWO}_{4}$ was chosen as the crystal material.  When a photon or electron strikes the crystal, it initiates an electromagnetic (EM) shower.  Due to the density, short radiation length, and small Moli\`ere radius of $\mbox{PbWO}_{4}$, nearly the entirety of an EM shower can be contained in a single 23-cm long crystal with front face dimensions $2.2\mbox{ cm}\times2.2\mbox{ cm}$.  The crystals scintillate in the blue-green part of the spectrum, emitting $\sim80$\% of the scintillation light within 25 ns.  Light is transmitted along the length of the crystals and collected at the rear with avalanche photodiodes (semiconductor diodes) in EB or vacuum phototriodes (conventional photomultipliers) in EE.  Since the light output is low and varies with temperature, the crystals must be kept precisely at $18^{\circ}$C.  The EB and EE crystals, which are slightly tapered to match the lateral shower development, are shown in Figure~\ref{fig:ECAL_crystals}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{ECAL_crystals}
+	\caption{Left: EB crystal with attached APD.  Right: EE crystal with attached VPT.  Reprinted from Fig. 4.2 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:ECAL_crystals}
+\end{figure}
+
+For each trigger, 10 samples, each separated by 25 ns, are read out.  The 10-sample pulse is amplified and shaped by a multi-gain preamplifier (MGPA) residing on a very front end (VFE) card serving five crystals.  The MGPA can switch between gains 1, 6, and 12 to avoid saturation of the electronics, and affords a dynamic range up to 3 TeV.  The samples are digitized on the VFE card, then sent to the front end (FE) card serving five VFEs.  Digitized samples are buffered in the FE card until receipt of a trigger, when they are sent over an optical link to the data concentrator card (DCC) that interfaces to the global DAQ.  The DCC interfaces to the \textit{selective readout} processor, which decides whether a crystal should be read out with or without zero suppression based on its proximity to a high-energy hit.  The clock is transmitted to the FE cards from the Clock and Control System (CCS) boards.  A flow chart of the crystal readout is given in Figure~\ref{fig:ECAL_readout}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{ECAL_readout}
+	\caption{Flow chart of the crystal readout, showing the 10-sample pulse shape.  Reprinted from Fig. 4.9 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:ECAL_readout}
+\end{figure}
+
+At each bunch crossing, the trigger concentrator cards (TCC) of the ECAL compute \textit{trigger primitives} from $5\times5$ non-overlapping transverse energy sums (in the endcaps the geometry is not always $5\times5$).  This information, along with a special bit in EB only characterizing the transverse shower profile that is used for rejection of anomalous APD hits (see Sec.~\ref{sec:Calibrated EB/EE Hits}), is transmitted from the TCCs to the synchronization and link boards (SLBs), and then on to the global trigger system.  The trigger decision is communicated to the DCCs, which request the buffered data from the front ends if the decision is affirmative.
+
+Despite the radiation hardness of lead tungstate relative to other types of crystals, it still suffers from transparency loss due to radiation-induced lattice damage, as shown in Figure~\ref{fig:ECAL_rad_damage}.  In addition, any unforeseen change in the gains of the MGPAs and VPTs, or in the pedestal levels, will degrade the energy resolution.  For this reason, a continuously running calibration system is installed with the ECAL.  The system makes use of the LHC abort gaps to read out the pedestal levels, test pulses fired into the MGPAs, and laser (EB and EE) or LED (EE only) pulses fired into the crystals at regular intervals.  Laser and LED events are used to compute corrections to the crystal gains for transparency loss, while the other types of calibration events serve to monitor changes in the electronics performance due to magnetic field or high voltage cycling.  The mean time between transparency measurements is $\sim40$ minutes.  Figure~\ref{fig:ECAL_laser_system} shows the architecture of the laser monitoring system.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{ECAL_rad_damage}
+	\caption{Relative response of the crystals to blue laser pulses from February 1, 2011 to January 1, 2012 \cite{ECAL_DPG_Twiki_rad_damage}.  Technical stops, during which the LHC is turned off for maintenance and development, are shown in gray.  These periods of inactivity correspond to growth in the crystal response, as radiation damage recovery occurs.}
+	\label{fig:ECAL_rad_damage}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{ECAL_laser_system}
+	\caption{Architecture of the laser monitoring system.  Reprinted from Fig. 4.16 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:ECAL_laser_system}
+\end{figure}
+
+The current ECAL energy resolution is somewhat worse than the design goal of 0.5\%.  An incomplete understanding of the transparency loss is the main limiting factor in improving the resolution.  However, as more radiation damage data accumulate, more refined models of transparency loss can be built, leading to better resolution.  Energy resolution vs. $|\eta|$ can be seen in Figure~\ref{fig:ECAL_res_vs_eta}.
+
+\begin{figure}
+	\centering
+ 	\subfloat[EB \cite{ECAL_DPG_Twiki_res_vs_eta_EB}.]{\label{fig:ECAL_res_vs_eta_EB}\includegraphics[scale=0.2]{ECAL_res_vs_eta_EB}}
+	\hspace{1cm}
+	\subfloat[EE \cite{ECAL_DPG_Twiki_res_vs_eta_EE}.]{\label{fig:ECAL_res_vs_eta_EE}\includegraphics[scale=0.2]{ECAL_res_vs_eta_EE}}
+	\caption{Energy resolution vs. $|\eta|$ for $Z$ decay electrons for data (blue) and MC (red).  The dotted lines show the locations of module gaps (three per SM).}
+	\label{fig:ECAL_res_vs_eta}
+\end{figure}
+
+The 10-sample readout coupled with the fast scintillation time of lead tungstate allows for a very precise reconstruction of the time of ECAL hits.  ECAL timing is used for searches for long-lived particles that decay to photons or jets, such as long-lived neutralinos in GMSB \cite{long-lived_GMSB_paper}.  Figure~\ref{fig:ECAL_timing_res} shows the timing resolution in EE.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3]{ECAL_timing_res}
+	\caption{Distribution of reconstructed times of $Z$ decay electrons in EE \cite{ECAL_DPG_Twiki_timing_res}.}
+	\label{fig:ECAL_timing_res}
+\end{figure}
+
 \subsection{Hadronic Calorimeter}
+
+%layout of the detector (names of the sub-parts, technologies used)
+%explanation of how the technology works and short motivation for choosing it
+%short explanation of the readout (discuss crystal radiation damage monitoring)
+%if the detector triggers, explanation of the trigger primitive generation
+%performance benchmarks
+
 \subsection{Muon System}
 %spend very little time on this
 
