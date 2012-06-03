@@ -204,7 +204,8 @@ Despite the radiation hardness of lead tungstate relative to other types of crys
 	\label{fig:ECAL_laser_system}
 \end{figure}
 
-The current ECAL energy resolution is somewhat worse than the design goal of 0.5\%.  An incomplete understanding of the transparency loss is the main limiting factor in improving the resolution.  However, as more radiation damage data accumulate, more refined models of transparency loss can be built, leading to better resolution.  Energy resolution vs. $|\eta|$ can be seen in Figure~\ref{fig:ECAL_res_vs_eta}.
+%include the parts about tracker material?
+The current ECAL energy resolution is somewhat worse than the design goal of 0.5\%.  An incomplete understanding of (a) the transparency loss and (b) the photon conversion and electron bremsstrahlung processes in the $\sim1X_{0}$ of tracker material in front of the ECAL are the main limiting factors in improving the resolution.  However, as more data accumulate, more refined models of transparency loss and EM interactions in the tracker can be built, leading to better resolution.  \textcolor{red}{\textbf{Is it accurate/desirable to blame tracker material here for degraded EM resolution?}}  Energy resolution vs. $|\eta|$ can be seen in Figure~\ref{fig:ECAL_res_vs_eta}.
 
 \begin{figure}
 	\centering
@@ -226,21 +227,130 @@ The 10-sample readout coupled with the fast scintillation time of lead tungstate
 
 \subsection{Hadronic Calorimeter}
 
-%layout of the detector (names of the sub-parts, technologies used)
-%explanation of how the technology works and short motivation for choosing it
-%short explanation of the readout (discuss crystal radiation damage monitoring)
-%if the detector triggers, explanation of the trigger primitive generation
-%performance benchmarks
+The CMS hadronic calorimeter (HCAL) has four parts: HCAL barrel (HB), HCAL endcap (HE), and HCAL outer (HO), which all utilize the same brass absorber / plastic scintillator sandwich technology; and HCAL forward (HF), which is a \u{C}erenkov detector made of quartz fibers.  A quarter longitudinal cross-sectional view of HCAL is shown in Figure~\ref{fig:HCAL_longitudinal_xsec}.  Like EB, HB is formed of 36 $\phi$-wedges (18 cover $2\pi$ in positive $\eta$, 18 cover $2\pi$ in negative $\eta$).  Each wedge is divided into 16 along $\eta$ and four along $\phi$, for a total of 64 readout towers per wedge (compare 1700 individually read out crystals per EB wedge).  HE is divided into 36 $\phi$-wedges containing 38 readout towers each.  HO consists of five rings around HB and HE distributed symmetrically along $z$.  There are 72 $\phi$-slices per ring, with each $\phi$-slice further divided into 5, 6, or 8 along $z$ depending on ring.  The HF fibers are distributed within the steel absorber.  HF is divided into 18 $\phi$-wedges per endcap side, each containing 24 readout towers.  All HB towers have a single readout channel except for the two in each wedge at highest $|\eta|$, which are segmented into two longitudinal layers for readout.  In HE, all towers have two longitudinal readout layers, except for the three rings of towers closest to the beam line, which have three.  There are also two longitudinal depths of HF fibers.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{HCAL_longitudinal_xsec}
+	\caption{Quarter longitudinal cross-sectional view of HCAL (and muon stations in purple).  Reprinted from Fig. 5.1 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:HCAL_longitudinal_xsec}
+\end{figure}
+
+%are the scintillator layers right?
+HB, HE, and HO are all sampling calorimeters consisting of alternating layers of brass absorber and plastic scintillator.  The absorber initiates the hadronic shower, and as shower particles travel through the scintillator the scintillation light is read out by wavelength-shifting (WLS) fibers connected to the scintillator tiles.\footnote{By contrast, in the ECAL, the crystal material acts as both absorber and scintillator, greatly reducing the contribution to energy resolution from sampling fluctuations.}  The full development of the shower is sampled by the layers of instrumented scintillator \textcolor{red}{\textbf{(14 in HB, 18 in HE, and two in HO)}}.  Light output from all tiles in a single readout tower is collected via the WLS fibers and merged into a single signal that is amplified by a hybrid photodiode (HPD).  A diagram of the optical readout of HB (similar for HE and HO) is shown in Figure~\ref{fig:HCAL_HB_optics}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{HCAL_HB_optics}
+	\caption{Diagram of the optical readout of HB.  Reprinted from Fig. 5.7 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:HCAL_HB_optics}
+\end{figure}
+
+Due to the extremely harsh radiation environment near the beam line, HF is constructed of a 1.2-m thick, 1.7-m long ring of steel absorber with radiation hard quartz fibers distributed within the steel and running parallel to the beam line.  Hadronic showers develop in the steel and are sampled in the quartz fibers when charged shower particles hit the the fibers and emit \u{C}erenkov light.  The light is transmitted by total internal reflection down the fibers to a photomultiplier tube (PMT), where the signals from all fibers in an HF tower are merged into one.  Since only relativistic particles emit \u{C}erenkov light in these fibers, it is mostly the EM component of the hadronic shower, consisting of neutral pions decaying to photons that interact electromagnetically with the absorber, that is sampled \cite{Akchurin_Wigmans}.  The charged hadrons produced in hadronic showers are typically too slow to generate \u{C}erenkov light.  Figure~\ref{fig:HCAL_HF_xsec} shows a cross-sectional view of one side of HF.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{HCAL_HF_xsec}
+	\caption{Cross-sectional view of one side of HF.  The $z$-axis is horizontal.  Reprinted from Fig. 5.28 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:HCAL_HF_xsec}
+\end{figure}
+
+%get no. time slices per tower per trigger in 2011
+Electrical signals from either HPDs (HB/HE/HO) or PMTs (HF) are digitized on the front ends by means of a fast charge-integrating ADC.  The digitized signals are sent off-detector to the HCAL Trigger/Read-Out (HTR) boards, where they await a trigger decision.  If the trigger is accepted, the signals are sent on to the HCAL data concentrator cards (DCCs), which interface to the global DAQ system.  HCAL trigger primitives, consisting of transverse energy sums over an entire tower, are calculated in the HTR boards and sent to the global trigger system.  HCAL may send up to seven time samples per tower per trigger (compared to 10 for the ECAL), but only sent \textcolor{red}{\textbf{N}} in 2011 in order to mitigate the effect of overlapping signals from surrounding bunch crossings (\textit{out-of-time pileup}).
+
+Selected HCAL performance results can be seen in Figure~\ref{fig:HCAL_performance}.
+
+\begin{figure}
+	\centering
+ 	\subfloat[Data/MC comparison of HB response to charged tracks of 9-11 GeV/$c$ momentum \cite{CMS-DP-2010-025}.]{\label{fig:HCAL_performance_HB_response}\includegraphics[scale=0.4]{HCAL_performance_HB_response}}
+	\hspace{1cm}
+	\subfloat[Distribution of tower multiplicity, clearly showing three peaks in rate corresponding to noise sources (see Sec.~\ref{sec:Event Quality}) \cite{HCAL_noise_CRAFT}.]{\label{fig:HCAL_performance_noise}\includegraphics[scale=0.4]{HCAL_performance_noise}}
+	\hspace{1cm}
+	\subfloat[Timing resolution vs. tower energy \cite{CMS-DP-2010-025}.]{\label{fig:HCAL_performance_timing}\includegraphics[scale=0.4]{HCAL_performance_timing}}
+	\caption{Selected HCAL performance results.}
+	\label{fig:HCAL_performance}
+\end{figure}
 
 \subsection{Muon System}
-%spend very little time on this
+
+Beginning at a radius of $\sim10$ interaction lengths from the beam line, where all particles except muons should have been stopped by the HCAL, are the muon chambers, interspersed with the iron return yoke of the CMS magnetic field.  Three technologies are employed: drift tubes in the barrel section (MB), cathode strip chambers (CSCs) in the endcap section (ME), and resistive plate chambers (RPCs) in both sections to provide an independent trigger with superior time resolution.  There are four barrel layers of stations extending out to $|\eta| = 1.2$.  Each endcap consists of five disks of stations as shown in Figure~\ref{fig:muons_layout_ME}, covering $1.4 < |\eta| < 2.4$.  RPCs populate the barrel and endcap muon systems alongside the DT chambers and CSCs.  Since they have time resolution much better than a few ns, they are used to assign the bunch crossing of muon tracks and provide a $p_{T}$ trigger with sharp turn-on.
+
+\begin{figure}
+	\centering
+ 	\subfloat[One of the five wheels of MB, showing the four layers of muon stations.  The five wheels are spaced symmetrically in $z$ about $z = 0$.  As a muon traverses the muon detectors, its curvature in the transverse plane changes direction and magnitude due to the magnetic field in the return yoke, which is of opposite sign and reduced strength relative to the field within the solenoid volume.  Reprinted from Fig. 7.3 of ref. \cite{CMS_detector_paper}.]{\label{fig:muons_layout_MB}\includegraphics[scale=0.5]{muons_layout_MB}}
+	\hspace{1cm}
+	\subfloat[Quarter longitudinal cross section of CMS highlighting the location of the ME disks.  Reprinted from Fig. 7.47 of ref. \cite{CMS_detector_paper}.]{\label{fig:muons_layout_ME}\includegraphics[scale=0.5]{muons_layout_ME}}
+	\caption{View of the MB and ME layout in CMS.}
+	\label{fig:muons_layout}
+\end{figure}
+
+Each DT chamber consists of two $r\cdot\phi$ superlayers (SLs) and optionally one $z$ SL (in all chambers except those in the fourth layer).  The SLs contain four rows of drift tubes, with the rows staggered such that there are no gaps in the coverage.  The $r\cdot\phi$ SLs have the tube axis parallel to the beam line, while the $z$ SL is perpendicular to the beam line.  The tubes are $\sim2.4$ m in length and $13\mbox{ mm}\times42\mbox{ mm}$ in cross section.  Each chamber therefore records eight $r\cdot\phi$ tracking points and optionally four $z$ tracking points.  The tubes are filled with an 85\%Ar + 15\% $\mbox{CO}_{2}$ gas mixture.  An anode wire at 3600 V runs the length of the tube, while the walls are covered with electrodes held at 1800 V or -1200 V depending on wall.  When a muon passes through the tube, it ionizes the gas atoms.  The liberated electrons drift along the electric field lines created by the electrodes to the anode, which is read out.  Figure ~\ref{fig:muons_DT} shows the electric field lines within a drift tube as well as the contours of equal drift time.  The maximum drift time is 380 ns.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{muons_DT}
+	\caption{Electric field lines within a drift tube as well as the contours of equal drift time.  Reprinted from Fig. 7.5 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:muons_DT}
+\end{figure}
+
+CSCs consist of alternating layers of cathode strips (four planes oriented along $r$) and anode wires (three planes oriented along $\phi$).  A 40\%Ar + 50\%$\mbox{CO}_{2}$ + 10\%$\mbox{CF}_{4}$ gas mixture fills the space between two successive planes, forming six gas gaps.  When a muon ionizes the gas atoms, the positive ions drift toward the anode and are read out to provide a measurement of $r$, just as in the DTs.  However, an image charge is induced on the cathode strips, which is also read out to provide a measurement of $\phi$.  The wires are spaces 3.2 mm apart.  The cathode strips have pitch varying from 8.4 mm at the end closest to the beam line to 16 mm at the other end, and are spaced 0.5 mm apart.  A trapezoidal CSC is shown in Figure~\ref{fig:muons_CSC_wedge}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{muons_CSC_wedge}
+	\caption{CSC wedge, showing the cathode and wire planes.  Reprinted from Fig. 7.49 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:muons_CSC_wedge}
+\end{figure}
+
+Track stubs from the muon system are combined with tracks from the tracking system to form more precise muon tracks than either system could form alone, as shown in Figure~\ref{fig:muon_pT_res}.  This leads to extremely good di-muon invariant mass resolution (Figure~\ref{fig:muon_inv_mass}) over a large $p_{T}$ range.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{muon_pT_res}
+	\caption{Muon $p_{T}$ resolution as a function of muon $p_{T}$ for tracker information only (blue), muon information only (black), and both tracker and muon information combined (red).  Reprinted from Fig. 1.2 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:muon_pT_res}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.7]{muon_inv_mass}
+	\caption{Di-muon invariant mass spectrum broken down by trigger path \cite{MUO_POG_Twiki_inv_mass}.  The light(dark) gray regions show the contribution from high-$p_{T}$(low-$p_{T}$) di-muon triggers.  Note that no $B_{s}\rightarrow\mu^{+}\mu^{-}$ decays have been observed \cite{CMS-BPH-11-020}; the light blue region just shows the amount of triggers dedicated to the $B_{s}\rightarrow\mu^{+}\mu^{-}$ search.}
+	\label{fig:muon_inv_mass}
+\end{figure}
 
 \section{Triggering, Data Acquisition, and Data Transfer}
 \label{sec:Triggering, Data Acquisition, and Data Transfer}
 
 \subsection{Level 1 and High Level Trigger Systems}
 \label{sec:Level 1 and High Level Trigger Systems}
-%talk about trigger primitives for the ECAL especially (there is a reference to this section from the HLT section in ch. 6 when we talk about L1 seeds), SR, etc.
+
+The Level-1 (L1) trigger system, which encompasses dedicated hardware processors to construct trigger objects (typically high $p_{T}$ jets, electrons, photons, taus, and muons) out of the calorimeter and muon hits, distributes a L1 accept or reject to all subdetectors at the LHC bunch crossing frequency of 40 MHz.  Further data filtering is performed by the High Level Trigger (HLT) system, a farm of $\sim1000$ commercially available processors running a slimmed down version of the CMS event reconstruction software CMSSW.  The data rate received by the HLT is $\sim100$ kHz; the output rate of events permanently written to disk is $\sim100$ Hz.  An L1 trigger \textit{latency} (time between the collision and the distribution of the L1 decision to the subdetectors) of 3.2 $\mu\mbox{s}$ is achieved via the use of fast electronics and sufficiently deep buffers to pipeline trigger primitives waiting to be analyzed.  This latency corresponds to the length of the LHC abort gap, so in principle CMS may be operated with zero \textit{dead time} (during which LHC bunches are missed because the L1 system is blocked while processing other triggers).
+
+At the bottom, the L1 trigger consists of trigger primitive generators (TPGs) in the calorimeter and muon systems that send $E_{T}$ sums or muon track stubs to the regional calorimeter trigger (RCT) or muon track finders, respectively.  The RCT, DT track finder (DTTF), and CSC track finder (CSCTF) sort and rank the regional trigger primitives based on $p_{T}$ and quality.  The ranked RCT candidates and muon track stubs are sent to the global calorimeter trigger (GMT) and global muon trigger (GMT), respectively, where high-level objects like isolated and non-isolated muons and EM candidates, jets, taus, and \MET are constructed from all the regional inputs and ranked.  Calorimeter isolation sums for muons are also sent from the RCT to the GMT.  The highest ranked global objects are sent to the global trigger (GT), which sits at the top of the L1 trigger.  The GT issues the final L1 accept or reject to all subdetectors based on a comparison of the GMT and GCT candidates with the requirements of its programmed trigger menu.  A block diagram of the L1 trigger is shown in Figure~\ref{fig:L1_trigger_diagram}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{L1_trigger_diagram}
+	\caption{Block diagram of the L1 trigger.  Reprinted from Fig. 8.1 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:L1_trigger_diagram}
+\end{figure}
+
+%get sFGVB threshold
+A region in the RCT consists of a matrix of $4\times4$ trigger towers.  A trigger tower in EB/HB is one HCAL tower + the $5\times5$ matrix of ECAL crystals in front of it; in EE/HE the idea is similar but the counting of crystals and HE towers is slightly more complicated.  An EM RCT candidate is built around a high $E_{T}$ seed tower.  The $E_{T}$ of the candidate is the sum of the tower $E_{T}$ and the $E_{T}$ of its highest-$E_{T}$ broad side neighbor (see Figure~\ref{fig:RCT_EG_candidate} for a definition of the broad side neighbors).  Two isolation criteria are defined: the ratio of the EM energy to the HCAL energy in the tower must be less than 5\%, and the ratio of the shower energy contained in a $2\times5$ matrix of crystals (in $\eta\times\phi$) to the total energy in the crystals must be less than \textcolor{red}{\textbf{XXX}}\%.  For a non-isolated EM candidate, the highest-$E_{T}$ broad side neighboring tower must pass these two isolation criteria; for an isolated EM candidate, all eight neighboring towers must the criteria.  The process is repeated until four isolated and four non-isolated EM candidates are found, starting with the highest-$E_{T}$ tower in the region and moving down in tower $E_{T}$.  An RCT region is flagged as consistent with tau decay only if the pattern of tower transverse energy sums defines at most a $2\times2$ matrix of energetic towers within the $4\times4$ RCT region.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{RCT_EG_candidate}
+	\caption{Geometry of an EM RCT candidate.  Reprinted from Fig. 8.2 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:RCT_EG_candidate}
+\end{figure}
+
+%insert reference to L1 jet finding algorithm
+%do L1 seeds for double-photon paths have to be isolated?
+From the tower transverse energy sums, eight EM candidates, and tau flag received from each RCT, the GCT computes the total $E_{T}$ in the calorimeter (and the total $E_{T}$ above some programmable threshold, called $H_{T}$), and the \MET.  It also classifies the towers into jets and determines the globally highest ranked isolated and non-isolated EM candidates.  The jet finding uses a clustering algorithm based on the energy of a sub-cluster with respect to its neighbors \textcolor{red}{\textbf{(insert reference to L1 jet finding algorithm)}}.  Jets are classified as tau decays if all of the RCT regions participating in the jet clustering had energy patterns consistent with tau decay.  Counts of jets above 12 different programmable $E_{T}$ thresholds are calculated.  The jet counts, energy sums, \MET, and highest ranked EM candidates are sent to the GT, where the final L1 decision is taken and transmitted to the sub-detectors.  The GT can execute a maximum of 128 trigger algorithms in parallel.  If any one of these algorithms yields an accept, the event is accepted, and all trigger information is sent on to the HLT for further filtering.  The double-photon HLT paths used in this analysis (see Sec.~\ref{sec:HLT}) require L1 seeds (i.e. EM candidates built by the RCT) with $E_{T} > 12$ or 20 GeV, depending on path.  \textcolor{red}{\textbf{Do they have to be isolated?}}
+
+No muon triggers are used in the two-photon analysis.  A description of the muon trigger system can be found in ref.\cite{CMS_detector_paper}.
+
 \subsection{Data Acquisition System}
 \subsection{Data Processing and Transfer to Computing Centers}
 \label{sec:Data Processing and Transfer to Computing Centers}
