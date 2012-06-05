@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  3 JUN 2012 17:40
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  5 JUN 2012 15:59
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -499,11 +499,11 @@ LaTeX Info: Redefining \nameref on input line 2.
 
 
 Chapter 1.
-LaTeX Font Info:    Try loading font information for U+msa on input line 10.
+LaTeX Font Info:    Try loading font information for U+msa on input line 7.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 10.
+LaTeX Font Info:    Try loading font information for U+msb on input line 7.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
@@ -511,21 +511,21 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<CMS_coordinate_system.pdf, id=54, 1027.84pt x 770.88pt>
+<CMS_coordinate_system.pdf, id=55, 1027.84pt x 770.88pt>
 File: CMS_coordinate_system.pdf Graphic file (type pdf)
 
 <use CMS_coordinate_system.pdf>
-Overfull \hbox (80.29874pt too wide) in paragraph at lines 16--17
+Overfull \hbox (80.29874pt too wide) in paragraph at lines 13--14
  [][] 
  []
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 2 undefined on input line 
-21.
+18.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 2 undefined on input line 
-21.
+18.
 
 [2 <./CMS_coordinate_system.pdf>]
 <CMS_cutaway.pdf, id=86, 394.78969pt x 293.29022pt>
@@ -533,63 +533,63 @@ File: CMS_cutaway.pdf Graphic file (type pdf)
  <use CMS_cutaway.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-26.
+23.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-26.
+23.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-30.
+27.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-32.
+29.
+
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
+29.
 
 [3 <./CMS_cutaway.pdf>]
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 4 undefined on input line 
-34.
+31.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 4 undefined on input line 
-36.
+33.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 4 undefined on input line 
-38.
+35.
+
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 4 undefined on input line 
+35.
 
 [4] <CMS_longitudinal_xsec.pdf, id=158, 650.43pt x 359.3425pt>
 File: CMS_longitudinal_xsec.pdf Graphic file (type pdf)
 
 <use CMS_longitudinal_xsec.pdf>
 
-LaTeX Warning: Citation `CMS_TDR' on page 5 undefined on input line 43.
+LaTeX Warning: Citation `CMS_TDR' on page 5 undefined on input line 40.
 
 
-LaTeX Warning: Citation `CMS_TDR' on page 5 undefined on input line 43.
-
-
-LaTeX Warning: Citation `CMS_detector_paper' on page 5 undefined on input line 
-53.
+LaTeX Warning: Citation `CMS_TDR' on page 5 undefined on input line 40.
 
 [5 <./CMS_longitudinal_xsec.pdf>]
-
-LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-55.
-
 <pixel_longitudinal_quarter_view.pdf, id=177, 208.35713pt x 104.1786pt>
 File: pixel_longitudinal_quarter_view.pdf Graphic file (type pdf)
 
 <use pixel_longitudinal_quarter_view.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-67.
+64.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-67.
+64.
 
 <BPix_mechanics.pdf, id=178, 335.0609pt x 240.26775pt>
 File: BPix_mechanics.pdf Graphic file (type pdf)
@@ -597,11 +597,11 @@ File: BPix_mechanics.pdf Graphic file (type pdf)
 <use BPix_mechanics.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-73.
+70.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-73.
+70.
 
 <FPix_mechanics.pdf, id=179, 223.37392pt x 255.28444pt>
 File: FPix_mechanics.pdf Graphic file (type pdf)
@@ -609,27 +609,30 @@ File: FPix_mechanics.pdf Graphic file (type pdf)
 <use FPix_mechanics.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-75.
+72.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-75.
+72.
 
 
-Underfull \hbox (badness 1655) in paragraph at lines 75--75
+Underfull \hbox (badness 1655) in paragraph at lines 72--72
 []\OT1/cmr/m/n/10 (b) |Half-disk of the foward
  []
 
 
-Underfull \hbox (badness 3364) in paragraph at lines 75--75
+Underfull \hbox (badness 3364) in paragraph at lines 72--72
 \OT1/cmr/m/n/10 pixel de-tec-tor, show-ing the
  []
+
+
+LaTeX Warning: Citation `Ivova' on page 6 undefined on input line 77.
 
 [6] [7 <./pixel_longitudinal_quarter_view.pdf> <./BPix_mechanics.pdf> <./FPix_m
 echanics.pdf>]
 
 LaTeX Warning: Citation `pixel_design_paper' on page 8 undefined on input line 
-85.
+81.
 
 [8] <pixel_readout.pdf, id=335, 326.61394pt x 268.42403pt>
 File: pixel_readout.pdf Graphic file (type pdf)
@@ -637,11 +640,11 @@ File: pixel_readout.pdf Graphic file (type pdf)
 <use pixel_readout.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 9 undefined on input line 
-92.
+88.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 9 undefined on input line 
-92.
+88.
 
 <pixel_results_rphi_res.png, id=337, 614.295pt x 795.4518pt>
 File: pixel_results_rphi_res.png Graphic file (type png)
@@ -649,11 +652,11 @@ File: pixel_results_rphi_res.png Graphic file (type png)
 <use pixel_results_rphi_res.png>
 
 LaTeX Warning: Citation `pixel_DPG_Twiki_rphi_res' on page 9 undefined on input
- line 100.
+ line 96.
 
 
 LaTeX Warning: Citation `pixel_DPG_Twiki_rphi_res' on page 9 undefined on input
- line 100.
+ line 96.
 
 <pixel_results_z_res.pdf, id=338, 614.295pt x 795.4518pt>
 File: pixel_results_z_res.pdf Graphic file (type pdf)
@@ -661,11 +664,11 @@ File: pixel_results_z_res.pdf Graphic file (type pdf)
 <use pixel_results_z_res.pdf>
 
 LaTeX Warning: Citation `pixel_DPG_Twiki_z_res' on page 9 undefined on input li
-ne 102.
+ne 98.
 
 
 LaTeX Warning: Citation `pixel_DPG_Twiki_z_res' on page 9 undefined on input li
-ne 102.
+ne 98.
 
 <pixel_results_eff.pdf, id=339, 648.4225pt x 576.1525pt>
 File: pixel_results_eff.pdf Graphic file (type pdf)
@@ -673,67 +676,67 @@ File: pixel_results_eff.pdf Graphic file (type pdf)
 <use pixel_results_eff.pdf>
 
 LaTeX Warning: Citation `pixel_DPG_Twiki_eff' on page 9 undefined on input line
- 104.
+ 100.
 
 
 LaTeX Warning: Citation `pixel_DPG_Twiki_eff' on page 9 undefined on input line
- 104.
+ 100.
 
-[9 <./pixel_readout.pdf>]
-<strip_longitudinal_xsec.pdf, id=389, 401.69754pt x 192.40181pt>
+[9 <./pixel_readout.pdf>] [10 <./pixel_results_rphi_res.png (PNG copy)> <./pixe
+l_results_z_res.pdf (PNG copy)> <./pixel_results_eff.pdf (PNG copy)>]
+<strip_longitudinal_xsec.pdf, id=396, 401.69754pt x 192.40181pt>
 File: strip_longitudinal_xsec.pdf Graphic file (type pdf)
 
 <use strip_longitudinal_xsec.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 10 undefined on input line
- 117.
+LaTeX Warning: Citation `CMS_detector_paper' on page 11 undefined on input line
+ 113.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 10 undefined on input line
- 117.
+LaTeX Warning: Citation `CMS_detector_paper' on page 11 undefined on input line
+ 113.
 
-<tracker_TEC.pdf, id=390, 209.29575pt x 191.4633pt>
+<tracker_TEC.pdf, id=397, 209.29575pt x 191.4633pt>
 File: tracker_TEC.pdf Graphic file (type pdf)
  <use tracker_TEC.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 10 undefined on input line
- 124.
+LaTeX Warning: Citation `CMS_detector_paper' on page 11 undefined on input line
+ 120.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 10 undefined on input line
- 124.
+LaTeX Warning: Citation `CMS_detector_paper' on page 11 undefined on input line
+ 120.
 
-[10 <./pixel_results_rphi_res.png (PNG copy)> <./pixel_results_z_res.pdf (PNG c
-opy)> <./pixel_results_eff.pdf (PNG copy)>] [11 <./strip_longitudinal_xsec.pdf>
- <./tracker_TEC.pdf>] <tracker_module.pdf, id=503, 178.32368pt x 117.31819pt>
+[11 <./strip_longitudinal_xsec.pdf>]
+<tracker_module.pdf, id=466, 178.32368pt x 117.31819pt>
 File: tracker_module.pdf Graphic file (type pdf)
 
 <use tracker_module.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 12 undefined on input line
- 137.
+ 133.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 12 undefined on input line
- 137.
+ 133.
 
-<tracker_readout.pdf, id=504, 220.55821pt x 251.53021pt>
+<tracker_readout.pdf, id=467, 220.55821pt x 251.53021pt>
 File: tracker_readout.pdf Graphic file (type pdf)
 
 <use tracker_readout.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 12 undefined on input line
- 144.
+ 140.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 12 undefined on input line
- 144.
+ 140.
 
 
 LaTeX Warning: Reference `sec:Particle Flow' on page 12 undefined on input line
- 148.
+ 144.
 
-[12 <./tracker_module.pdf>]
+[12 <./tracker_TEC.pdf>] [13 <./tracker_module.pdf> <./tracker_readout.pdf>]
 Package epstopdf Info: Source file: <tracker_results_TIB_SNR.gif>
 (epstopdf)                    date: 2012-05-31 15:48:19
 (epstopdf)                    size: 8272 bytes
@@ -743,19 +746,19 @@ ng>
 (epstopdf)                    size: 12303 bytes
 (epstopdf)             Command: <convert gif:tracker_results_TIB_SNR.gif png:tr
 acker_results_TIB_SNR-gif-converted-to.png>
-(epstopdf)             \includegraphics on input line 152.
+(epstopdf)             \includegraphics on input line 148.
 Package epstopdf Info: Output file is already uptodate.
 
-<tracker_results_TIB_SNR-gif-converted-to.png, id=556, 503.8825pt x 479.7925pt>
+<tracker_results_TIB_SNR-gif-converted-to.png, id=599, 503.8825pt x 479.7925pt>
 File: tracker_results_TIB_SNR-gif-converted-to.png Graphic file (type png)
 <use tracker_results_TIB_SNR-gif-converted-to.png>
 
-LaTeX Warning: Citation `tracker_DPG_Twiki_TIB_SNR' on page 13 undefined on inp
-ut line 152.
+LaTeX Warning: Citation `tracker_DPG_Twiki_TIB_SNR' on page 14 undefined on inp
+ut line 148.
 
 
-LaTeX Warning: Citation `tracker_DPG_Twiki_TIB_SNR' on page 13 undefined on inp
-ut line 152.
+LaTeX Warning: Citation `tracker_DPG_Twiki_TIB_SNR' on page 14 undefined on inp
+ut line 148.
 
 Package epstopdf Info: Source file: <tracker_results_res.gif>
 (epstopdf)                    date: 2012-05-31 15:55:49
@@ -765,369 +768,405 @@ Package epstopdf Info: Source file: <tracker_results_res.gif>
 (epstopdf)                    size: 21270 bytes
 (epstopdf)             Command: <convert gif:tracker_results_res.gif png:tracke
 r_results_res-gif-converted-to.png>
-(epstopdf)             \includegraphics on input line 154.
+(epstopdf)             \includegraphics on input line 150.
 Package epstopdf Info: Output file is already uptodate.
-<tracker_results_res-gif-converted-to.png, id=557, 999.735pt x 680.5425pt>
+<tracker_results_res-gif-converted-to.png, id=600, 999.735pt x 680.5425pt>
 File: tracker_results_res-gif-converted-to.png Graphic file (type png)
 
 <use tracker_results_res-gif-converted-to.png>
 
-LaTeX Warning: Citation `tracker_DPG_Twiki_res' on page 13 undefined on input l
-ine 154.
+LaTeX Warning: Citation `tracker_DPG_Twiki_res' on page 14 undefined on input l
+ine 150.
 
 
-LaTeX Warning: Citation `tracker_DPG_Twiki_res' on page 13 undefined on input l
-ine 154.
+LaTeX Warning: Citation `tracker_DPG_Twiki_res' on page 14 undefined on input l
+ine 150.
 
 
-Overfull \hbox (10.7881pt too wide) in paragraph at lines 162--163
+Overfull \hbox (10.7881pt too wide) in paragraph at lines 158--159
 \OT1/cmr/m/n/12 The elec-tro-mag-netic calorime-ter (ECAL) is com-posed of 68,5
 24 lead tungstate ($[][]$)
  []
 
-[13 <./tracker_readout.pdf>]
-<ECAL_layout.pdf, id=603, 391.37361pt x 267.48553pt>
+<ECAL_layout.pdf, id=602, 391.37361pt x 267.48553pt>
 File: ECAL_layout.pdf Graphic file (type pdf)
  <use ECAL_layout.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 14 undefined on input line
- 167.
+ 163.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 14 undefined on input line
- 167.
+ 163.
 
 
-Overfull \hbox (4.46817pt too wide) in paragraph at lines 171--172
+Overfull \hbox (4.46817pt too wide) in paragraph at lines 167--168
 []\OT1/cmr/m/n/12 The elec-tro-mag-netic en-ergy res-o-lu-tion can be parametri
 zed as $(\OML/cmm/m/it/12 ^^[=E\OT1/cmr/m/n/12 )[] = (\OML/cmm/m/it/12 S=[]\OT1
 /cmr/m/n/12 )[] +
  []
 
-[14 <./tracker_results_TIB_SNR-gif-converted-to.png (PNG copy)> <./tracker_resu
-lts_res-gif-converted-to.png (PNG copy)>]
-<ECAL_crystals.pdf, id=612, 422.34555pt x 141.72037pt>
+[14] [15 <./tracker_results_TIB_SNR-gif-converted-to.png (PNG copy)> <./tracker
+_results_res-gif-converted-to.png (PNG copy)>]
+<ECAL_crystals.pdf, id=616, 422.34555pt x 141.72037pt>
 File: ECAL_crystals.pdf Graphic file (type pdf)
  <use ECAL_crystals.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 15 undefined on input line
- 176.
+LaTeX Warning: Citation `CMS_detector_paper' on page 16 undefined on input line
+ 172.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 15 undefined on input line
- 176.
+LaTeX Warning: Citation `CMS_detector_paper' on page 16 undefined on input line
+ 172.
 
-[15 <./ECAL_layout.pdf>] <ECAL_readout.pdf, id=646, 436.42381pt x 196.15613pt>
+[16 <./ECAL_layout.pdf>] <ECAL_readout.pdf, id=650, 436.42381pt x 196.15613pt>
 File: ECAL_readout.pdf Graphic file (type pdf)
 
 <use ECAL_readout.pdf>
-Overfull \hbox (2.80273pt too wide) in paragraph at lines 184--185
+Overfull \hbox (2.80273pt too wide) in paragraph at lines 180--181
  [][] 
  []
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 16 undefined on input line
- 185.
+LaTeX Warning: Citation `CMS_detector_paper' on page 17 undefined on input line
+ 181.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 16 undefined on input line
- 185.
+LaTeX Warning: Citation `CMS_detector_paper' on page 17 undefined on input line
+ 181.
 
 
-LaTeX Warning: Reference `sec:Calibrated EB/EE Hits' on page 16 undefined on in
-put line 189.
+LaTeX Warning: Reference `sec:Calibrated EB/EE Hits' on page 17 undefined on in
+put line 185.
 
-[16 <./ECAL_crystals.pdf> <./ECAL_readout.pdf>]
-<ECAL_rad_damage.png, id=756, 361.35pt x 252.945pt>
+[17 <./ECAL_crystals.pdf> <./ECAL_readout.pdf>]
+<ECAL_rad_damage.png, id=760, 361.35pt x 252.945pt>
 File: ECAL_rad_damage.png Graphic file (type png)
  <use ECAL_rad_damage.png>
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_rad_damage' on page 17 undefined on inp
-ut line 196.
+LaTeX Warning: Citation `ECAL_DPG_Twiki_rad_damage' on page 18 undefined on inp
+ut line 192.
 
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_rad_damage' on page 17 undefined on inp
-ut line 196.
+LaTeX Warning: Citation `ECAL_DPG_Twiki_rad_damage' on page 18 undefined on inp
+ut line 192.
 
-<ECAL_laser_system.pdf, id=758, 212.11125pt x 284.37943pt>
+<ECAL_laser_system.pdf, id=762, 212.11125pt x 284.37943pt>
 File: ECAL_laser_system.pdf Graphic file (type pdf)
 
 <use ECAL_laser_system.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 17 undefined on input line
- 203.
+LaTeX Warning: Citation `CMS_detector_paper' on page 18 undefined on input line
+ 199.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 17 undefined on input line
- 203.
+LaTeX Warning: Citation `CMS_detector_paper' on page 18 undefined on input line
+ 199.
 
-<ECAL_res_vs_eta_EB.png, id=760, 849.1725pt x 574.145pt>
+<ECAL_res_vs_eta_EB.png, id=764, 849.1725pt x 574.145pt>
 File: ECAL_res_vs_eta_EB.png Graphic file (type png)
 
 <use ECAL_res_vs_eta_EB.png>
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 17 undefined on 
-input line 212.
+LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 18 undefined on 
+input line 207.
 
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 17 undefined on 
-input line 212.
+LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 18 undefined on 
+input line 207.
 
-<ECAL_res_vs_eta_EE.png, id=761, 849.1725pt x 574.145pt>
+<ECAL_res_vs_eta_EE.png, id=765, 849.1725pt x 574.145pt>
 File: ECAL_res_vs_eta_EE.png Graphic file (type png)
 
 <use ECAL_res_vs_eta_EE.png>
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 17 undefined on 
-input line 214.
+LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 18 undefined on 
+input line 209.
 
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 17 undefined on 
-input line 214.
+LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 18 undefined on 
+input line 209.
 
 
-LaTeX Warning: Citation `long-lived_GMSB_paper' on page 17 undefined on input l
-ine 219.
+LaTeX Warning: Citation `long-lived_GMSB_paper' on page 18 undefined on input l
+ine 214.
 
-<ECAL_timing_res.png, id=763, 698.61pt x 674.52pt>
+[18] <ECAL_timing_res.png, id=774, 698.61pt x 674.52pt>
 File: ECAL_timing_res.png Graphic file (type png)
- <use ECAL_timing_res.png>
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 17 undefined on inp
-ut line 224.
+<use ECAL_timing_res.png>
+
+LaTeX Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 19 undefined on inp
+ut line 219.
 
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 17 undefined on inp
-ut line 224.
+LaTeX Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 19 undefined on inp
+ut line 219.
 
-[17] [18 <./ECAL_rad_damage.png>] [19 <./ECAL_laser_system.pdf> <./ECAL_res_vs_
-eta_EB.png (PNG copy)> <./ECAL_res_vs_eta_EE.png (PNG copy)>]
-<HCAL_longitudinal_xsec.pdf, id=861, 385.74234pt x 233.69789pt>
+[19 <./ECAL_rad_damage.png>] [20 <./ECAL_laser_system.pdf> <./ECAL_res_vs_eta_E
+B.png (PNG copy)> <./ECAL_res_vs_eta_EE.png (PNG copy)>]
+<HCAL_longitudinal_xsec.pdf, id=865, 385.74234pt x 233.69789pt>
 File: HCAL_longitudinal_xsec.pdf Graphic file (type pdf)
 
 <use HCAL_longitudinal_xsec.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 20 undefined on input line
- 235.
+LaTeX Warning: Citation `CMS_detector_paper' on page 21 undefined on input line
+ 230.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 20 undefined on input line
- 235.
+LaTeX Warning: Citation `CMS_detector_paper' on page 21 undefined on input line
+ 230.
 
-<HCAL_HB_optics.pdf, id=864, 379.17247pt x 259.97707pt>
+[21 <./ECAL_timing_res.png (PNG copy)>]
+<HCAL_HB_optics.pdf, id=873, 379.17247pt x 259.97707pt>
 File: HCAL_HB_optics.pdf Graphic file (type pdf)
 
 <use HCAL_HB_optics.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 20 undefined on input line
- 245.
+LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
+ 239.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 20 undefined on input line
- 245.
+LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
+ 239.
 
 
-LaTeX Warning: Citation `Akchurin_Wigmans' on page 20 undefined on input line 2
-49.
+LaTeX Warning: Citation `Akchurin_Wigmans' on page 22 undefined on input line 2
+43.
 
-[20 <./ECAL_timing_res.png (PNG copy)>] [21 <./HCAL_longitudinal_xsec.pdf> <./H
-CAL_HB_optics.pdf>] <HCAL_HF_xsec.pdf, id=964, 418.59142pt x 254.34584pt>
+<HCAL_HF_xsec.pdf, id=875, 418.59142pt x 254.34584pt>
 File: HCAL_HF_xsec.pdf Graphic file (type pdf)
-
-<use HCAL_HF_xsec.pdf>
-
-LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
- 254.
-
+ <use HCAL_HF_xsec.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
- 254.
+ 248.
 
-[22 <./HCAL_HF_xsec.pdf>]
-<HCAL_performance_HB_response.pdf, id=1087, 230.88226pt x 239.32913pt>
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
+ 248.
+
+[22 <./HCAL_longitudinal_xsec.pdf>]
+<HCAL_performance_HB_response.pdf, id=941, 230.88226pt x 239.32913pt>
 File: HCAL_performance_HB_response.pdf Graphic file (type pdf)
 
 <use HCAL_performance_HB_response.pdf>
 
-LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 26
-5.
+LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 25
+8.
 
 
-LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 26
-5.
+LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 25
+8.
 
 
-Underfull \hbox (badness 1888) in paragraph at lines 265--265
-[]\OT1/cmr/m/n/10 (a) |Data/MC com-
+Underfull \hbox (badness 1622) in paragraph at lines 258--258
+\OT1/cmr/m/n/10 sponse to charged tracks of 9-11
  []
 
-
-Underfull \hbox (badness 3439) in paragraph at lines 265--265
-\OT1/cmr/m/n/10 par-i-son of HB re-
- []
-
-
-Underfull \hbox (badness 8113) in paragraph at lines 265--265
-\OT1/cmr/m/n/10 sponse to charged
- []
-
-<HCAL_performance_noise.pdf, id=1088, 275.9325pt x 258.10007pt>
+<HCAL_performance_noise.pdf, id=942, 275.9325pt x 258.10007pt>
 File: HCAL_performance_noise.pdf Graphic file (type pdf)
 
 <use HCAL_performance_noise.pdf>
 
 LaTeX Warning: Reference `sec:Event Quality' on page 23 undefined on input line
- 267.
+ 260.
 
 
 LaTeX Warning: Citation `HCAL_noise_CRAFT' on page 23 undefined on input line 2
-67.
+60.
 
 
 LaTeX Warning: Reference `sec:Event Quality' on page 23 undefined on input line
- 267.
+ 260.
 
 
 LaTeX Warning: Citation `HCAL_noise_CRAFT' on page 23 undefined on input line 2
-67.
+60.
 
-
-Underfull \hbox (badness 4832) in paragraph at lines 267--267
-\OT1/cmr/m/n/10 cor-re-spond-ing to noise
- []
-
-<HCAL_performance_timing.pdf, id=1089, 353.83171pt x 274.05536pt>
+<HCAL_performance_timing.pdf, id=943, 353.83171pt x 274.05536pt>
 File: HCAL_performance_timing.pdf Graphic file (type pdf)
 
 <use HCAL_performance_timing.pdf>
 
 LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 26
-9.
+2.
 
 
 LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 26
-9.
+2.
 
-[23 <./HCAL_performance_HB_response.pdf> <./HCAL_performance_noise.pdf> <./HCAL
-_performance_timing.pdf>]
-<muons_layout_MB.pdf, id=1188, 350.07748pt x 363.21727pt>
+
+LaTeX Warning: Float too large for page by 32.10545pt on input line 265.
+
+[23 <./HCAL_HB_optics.pdf>]
+<muons_layout_MB.pdf, id=980, 350.07748pt x 363.21727pt>
 File: muons_layout_MB.pdf Graphic file (type pdf)
 
 <use muons_layout_MB.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 24 undefined on input line
- 280.
+ 273.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 24 undefined on input line
- 280.
+ 273.
 
-<muons_layout_ME.pdf, id=1189, 379.17247pt x 221.49681pt>
+<muons_layout_ME.pdf, id=981, 379.17247pt x 221.49681pt>
 File: muons_layout_ME.pdf Graphic file (type pdf)
 
 <use muons_layout_ME.pdf>
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 24 undefined on input line
- 282.
+ 275.
 
 
 LaTeX Warning: Citation `CMS_detector_paper' on page 24 undefined on input line
- 282.
+ 275.
 
-[24 <./muons_layout_MB.pdf> <./muons_layout_ME.pdf>]
-<muons_DT.pdf, id=1310, 323.7983pt x 202.72589pt>
+[24 <./HCAL_HF_xsec.pdf>] [25 <./HCAL_performance_HB_response.pdf> <./HCAL_perf
+ormance_noise.pdf> <./HCAL_performance_timing.pdf>] [26 <./muons_layout_MB.pdf>
+ <./muons_layout_ME.pdf>] <muons_DT.pdf, id=1319, 323.7983pt x 202.72589pt>
 File: muons_DT.pdf Graphic file (type pdf)
- <use muons_DT.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 25 undefined on input line
- 292.
+<use muons_DT.pdf>
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 27 undefined on input line
+ 285.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 25 undefined on input line
- 292.
+LaTeX Warning: Citation `CMS_detector_paper' on page 27 undefined on input line
+ 285.
 
-<muons_CSC_wedge.pdf, id=1312, 137.02763pt x 200.84886pt>
+<muons_CSC_wedge.pdf, id=1321, 137.02763pt x 200.84886pt>
 File: muons_CSC_wedge.pdf Graphic file (type pdf)
 
 <use muons_CSC_wedge.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 25 undefined on input line
- 301.
+LaTeX Warning: Citation `CMS_detector_paper' on page 27 undefined on input line
+ 294.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 25 undefined on input line
- 301.
+LaTeX Warning: Citation `CMS_detector_paper' on page 27 undefined on input line
+ 294.
 
-<muon_pT_res.pdf, id=1315, 405.47395pt x 273.32423pt>
+[27 <./muons_DT.pdf>] <muon_pT_res.pdf, id=1380, 405.47395pt x 273.32423pt>
 File: muon_pT_res.pdf Graphic file (type pdf)
- <use muon_pT_res.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 25 undefined on input line
- 310.
+<use muon_pT_res.pdf>
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 28 undefined on input line
+ 303.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 25 undefined on input line
- 310.
+LaTeX Warning: Citation `CMS_detector_paper' on page 28 undefined on input line
+ 303.
 
-[25 <./muons_DT.pdf>] <muon_inv_mass.pdf, id=1374, 569.12625pt x 327.2225pt>
+<muon_inv_mass.pdf, id=1381, 569.12625pt x 327.2225pt>
 File: muon_inv_mass.pdf Graphic file (type pdf)
+ <use muon_inv_mass.pdf>
 
-<use muon_inv_mass.pdf>
-
-LaTeX Warning: Citation `MUO_POG_Twiki_inv_mass' on page 26 undefined on input 
-line 317.
+LaTeX Warning: Citation `MUO_POG_Twiki_inv_mass' on page 28 undefined on input 
+line 310.
 
 
-LaTeX Warning: Citation `CMS-BPH-11-020' on page 26 undefined on input line 317
+LaTeX Warning: Citation `CMS-BPH-11-020' on page 28 undefined on input line 310
 .
 
 
-LaTeX Warning: Citation `MUO_POG_Twiki_inv_mass' on page 26 undefined on input 
-line 317.
+LaTeX Warning: Citation `MUO_POG_Twiki_inv_mass' on page 28 undefined on input 
+line 310.
 
 
-LaTeX Warning: Citation `CMS-BPH-11-020' on page 26 undefined on input line 317
+LaTeX Warning: Citation `CMS-BPH-11-020' on page 28 undefined on input line 310
 .
 
-[26 <./muons_CSC_wedge.pdf>] [27 <./muon_pT_res.pdf> <./muon_inv_mass.pdf, page
+[28 <./muons_CSC_wedge.pdf>] [29 <./muon_pT_res.pdf> <./muon_inv_mass.pdf, page
  is rotated 90 degrees>]
-<L1_trigger_diagram.pdf, id=1551, 280.41524pt x 195.96834pt>
+<L1_trigger_diagram.pdf, id=1559, 280.41524pt x 195.96834pt>
 File: L1_trigger_diagram.pdf Graphic file (type pdf)
 
 <use L1_trigger_diagram.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 28 undefined on input line
- 335.
+LaTeX Warning: Citation `CMS_detector_paper' on page 30 undefined on input line
+ 327.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 28 undefined on input line
- 335.
+LaTeX Warning: Citation `CMS_detector_paper' on page 30 undefined on input line
+ 327.
 
-[28] <RCT_EG_candidate.pdf, id=1559, 223.68756pt x 159.22437pt>
+[30] <RCT_EG_candidate.pdf, id=1567, 223.68756pt x 159.22437pt>
 File: RCT_EG_candidate.pdf Graphic file (type pdf)
 
 <use RCT_EG_candidate.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 29 undefined on input line
- 345.
+LaTeX Warning: Citation `CMS_detector_paper' on page 31 undefined on input line
+ 336.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 29 undefined on input line
- 345.
+LaTeX Warning: Citation `CMS_detector_paper' on page 31 undefined on input line
+ 336.
 
 
-LaTeX Warning: Reference `sec:HLT' on page 29 undefined on input line 351.
+LaTeX Warning: Citation `Smith' on page 31 undefined on input line 340.
 
-[29 <./L1_trigger_diagram.pdf> <./RCT_EG_candidate.pdf>]
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 30 undefined on input line
- 353.
+LaTeX Warning: Reference `sec:HLT' on page 31 undefined on input line 340.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 362.
-[30]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 362.
+[31 <./L1_trigger_diagram.pdf>]
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 32 undefined on input line
+ 342.
+
+[32 <./RCT_EG_candidate.pdf>]
+<DAQ_overview.pdf, id=1683, 434.54668pt x 264.66989pt>
+File: DAQ_overview.pdf Graphic file (type pdf)
+ <use DAQ_overview.pdf>
+Overfull \hbox (0.9256pt too wide) in paragraph at lines 351--352
+ [][] 
+ []
+
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 33 undefined on input line
+ 352.
+
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 33 undefined on input line
+ 352.
+
+[33 <./DAQ_overview.pdf>]
+
+LaTeX Warning: Citation `ROOT' on page 34 undefined on input line 358.
+
+[34]
+
+LaTeX Warning: Citation `XDAQ' on page 35 undefined on input line 362.
+
+
+LaTeX Warning: Citation `SOAP' on page 35 undefined on input line 362.
+
+
+LaTeX Warning: Citation `HyperDAQ' on page 35 undefined on input line 362.
+
+[35]
+
+LaTeX Warning: Citation `WLCG' on page 36 undefined on input line 369.
+
+<WLCG_diagram.pdf, id=1734, 406.3903pt x 175.5081pt>
+File: WLCG_diagram.pdf Graphic file (type pdf)
+ <use WLCG_diagram.pdf>
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 36 undefined on input line
+ 374.
+
+
+LaTeX Warning: Citation `CMS_detector_paper' on page 36 undefined on input line
+ 374.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 378.
+[36] [37 <./WLCG_diagram.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 378.
  (./ch5.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 362.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 378.
 Package rerunfilecheck Info: File `ch5.out' has not changed.
 (rerunfilecheck)             Checksum: 4AC7114C972C7FF12EA1855B570C026D;809.
 
@@ -1136,13 +1175,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8260 strings out of 493747
- 127878 string characters out of 3143546
- 215949 words of memory out of 3000000
- 11270 multiletter control sequences out of 15000+200000
+ 8289 strings out of 493747
+ 128272 string characters out of 3143546
+ 216745 words of memory out of 3000000
+ 11288 multiletter control sequences out of 15000+200000
  13985 words of font info for 53 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,10n,49p,1525b,449s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,10n,49p,1598b,449s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -1162,10 +1201,10 @@ dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2010/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
 times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on ch5.pdf (30 pages, 5256561 bytes).
+Output written on ch5.pdf (37 pages, 5513037 bytes).
 PDF statistics:
- 1739 PDF objects out of 2073 (max. 8388607)
- 1354 compressed objects within 14 object streams
- 89 named destinations out of 1000 (max. 500000)
- 271 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1851 PDF objects out of 2073 (max. 8388607)
+ 1444 compressed objects within 15 object streams
+ 98 named destinations out of 1000 (max. 500000)
+ 281 words of extra memory for PDF output out of 10000 (max. 10000000)
 

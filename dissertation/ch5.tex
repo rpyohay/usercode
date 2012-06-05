@@ -4,9 +4,6 @@
 \chapter{The Compact Muon Solenoid Experiment}
 \label{chap:The Compact Muon Solenoid Experiment}
 
-%keep repeating references to the detector paper?
-\textcolor{red}{\textbf{Keep repeating references to the detector paper?}}
-
 The Compact Muon Solenoid (CMS) detector sits at point 5 of the LHC ring, diametrically opposite the ATLAS detector at point 1.  It is a 4$\pi$ hermetic general purpose detector, meaning that it has the capability to detect charged and neutral hadrons, photons, electrons, muons, taus, neutrinos, and non-Standard-Model particles predicted to escape the detector with good efficiency over a large range of rapidity.  Its main distinguishing feature is a superconducting solenoid that provides a 3.8T magnetic field parallel to the beam line.  This strong magnetic field allows precise determination of the momentum and charge of muons and electrons up to a momentum of $\sim$1 TeV.
 
 The origin of the CMS coordinate system is at the nominal interaction point.  The $y$-axis points skyward, the $x$-axis points towards the center of the LHC ring, and the $z$-axis points counterclockwise along the LHC ring.  $r$ denotes radial distances from the beam line, $\phi$ is the azimuthal angle measured with respect to the positive $x$-axis, and $\theta$ is the polar angle measured with respect to the positive $z$-axis.  The \textit{pseudorapidity} $\eta$ is defined as $\eta = -\ln\tan(\theta/2)$, and is a good approximation to rapidity $y = (1/2)\ln((E + p_{z}c)/(E - p_{z}c))$ for relativistic particles.  The transverse momentum and energy ($p_{T}$ and $E_{T}$) of a particle are defined as $p_{T} = p\cos\phi$ and $E_{T} = E\cos\phi$, where $p$ and $E$ are the magnitude of the particle's momentum vector and the particle's total energy, respectively.  A depiction of the CMS coordinate system is shown in Figure~\ref{fig:CMS_coordinate_system}.
@@ -29,13 +26,13 @@ The CMS sub-detectors are arranged in concentric cylindrical layers, plus ``endc
 
 The 10 next layers of CMS are comprised of silicon microstrip detectors, with the outermost layer at a radius of 1.3 m from the beam line \cite{CMS_detector_paper}.  As for the pixel detectors, the silicon strip endcaps extecnd tracking coverage to $\eta$ = 2.5.  The silicon microstrip layers are the workhorse of the CMS tracking system, and provide excellent charged particle momentum resolution and track finding efficiency.
 
-Outside the tracking detectors are the calorimeters, starting with the single-layer lead tungstate crystal electromagnetic calorimeter at a radius of 1.3 m from the beam line (location of crystal front faces) \cite{CMS_detector_paper}.  Each crystal is 23 cm long, corresponding to 25.8 radiation lengths ($\mbox{X}_{0}$).  The crystal dimensions are such that most of one electromagnetic shower, and no more, can be contained in a single crystal, leading to excellent energy resolution for photons and electrons.  The electromagnetic calorimeter radial and endcap layers cover a pseudorapidity range up to 3.0.  A lead/silicon sampling calorimeter sits in front of the crystal endcaps to provide better rejection of neutral pions.
+Outside the tracking detectors are the calorimeters, starting with the single-layer lead tungstate crystal electromagnetic calorimeter at a radius of 1.3 m from the beam line (location of crystal front faces) \cite{CMS_detector_paper}.  Each crystal is 23 cm long, corresponding to 25.8 radiation lengths ($\mbox{X}_{0}$)  \cite{CMS_detector_paper}.  The crystal dimensions are such that most of one electromagnetic shower, and no more, can be contained in a single crystal, leading to excellent energy resolution for photons and electrons.  The electromagnetic calorimeter radial and endcap layers cover a pseudorapidity range up to 3.0.  A lead/silicon sampling calorimeter sits in front of the crystal endcaps to provide better rejection of neutral pions.
 
 The last layer of calorimetry inside the solenoid is the brass/scintillator sampling hadronic calorimeter, which has a radial extent from 1.77-2.95 m \cite{CMS_detector_paper}.  The hadronic barrel and endcap calorimeters cover up to $|\eta|$ = 3.0, while the iron/quartz-fiber forward hadronic calorimeter covers the region $3.0 \leq |\eta| \leq 5.2$. \footnote{The Centauro and Strange Object Research (CASTOR) and Zero Degree Calorimeter (ZDC) detectors provide additional calorimetry beyond $|\eta| = 5.2$.  However, they are mainly used in the heavy ion and diffractive physics programs of CMS, and play no role in the detection of heavy SUSY particles.  Therefore, they will not be discussed here.}  There is one more layer of hadronic calorimetry outside the solenoid in $|\eta| < 1.3$ which, together with the layers inside the solenoid, provides approximately 12 hadronic interaction lengths of instrumented absorber.  Because of its large $|\eta|$ coverage and depth, the hadronic calorimeter provides good missing transverse energy resolution and accurate measurements of high energy jets.
 
 The iron return yoke of the solenoidal magnetic field is interleaved with muon detectors from 4.1-7.4 m in $r$ and 6.6-10.6 m in $z$, providing muon detection up to $|\eta| = 2.4$ \cite{CMS_detector_paper}.  In the barrel region of $|\eta| < 1.2$, drift tubes are used to read out the muon tracks, while in the endcaps cathode strip chambers are used.  Due to their speed, resistive plate chambers are used throughout the muon system to provide an independent trigger and timing measurement.  Combining the tracker and muon system hits, the momenta and charge of muons up to $p_{T} = 1$ TeV can be precisely reconstructed.
 
-A longitudinal quarter cross-sectional view of CMS is shown in Figure~\ref{fig:CMS_longitudinal_xsec}.  The remainder of this chapter is devoted to explaining the CMS subdetectors and readout systems.  Section~\ref{sec:The Detectors and Their Operating Principles} describes the subdetector technologies and performance benchmarks, while Section~\ref{sec:Triggering, Data Acquisition, and Data Transfer} details the CMS trigger and data acquisition systems and framework for promptly reconstructing and transferring data worldwide.  For a thorough description of CMS, see ref. \cite{CMS_detector_paper}, from which much of the information in the section was culled.
+A longitudinal quarter cross-sectional view of CMS is shown in Figure~\ref{fig:CMS_longitudinal_xsec}.  The remainder of this chapter is devoted to explaining the CMS subdetectors and readout systems.  Section~\ref{sec:The Detectors and Their Operating Principles} describes the subdetector technologies and performance benchmarks, while Section~\ref{sec:Triggering, Data Acquisition, and Data Transfer} details the CMS trigger and data acquisition systems and framework for promptly reconstructing and transferring data worldwide.  For a thorough description of CMS, see ref. \cite{CMS_detector_paper}.  Unless otherwise noted, all information in this chapter comes from ref. \cite{CMS_detector_paper}.
 
 \begin{figure}
 	\centering
@@ -50,9 +47,9 @@ A longitudinal quarter cross-sectional view of CMS is shown in Figure~\ref{fig:C
 \subsection{Tracking System}
 \label{sec:Tracking System}
 
-Given the LHC design instantaneous luminosity, efficient reconstruction of charged particle tracks from transverse momenta of 1 GeV up to 1 TeV can only be achieved with a low occupancy tracker.  For $r < 10$ cm, the hit rate density is highest, leading to the choice of $100\mbox{ }\mu\mbox{m} \times 150\mbox{ }\mu\mbox{m}$ silicon pixel sensors for hit detection.  For $20\mbox{ cm }< r < 110\mbox{ cm}$, the lower hit rate allows the use of silicon strips, with length along $z$ of order centimeters and length along the $r\cdot\phi$ curve of order hundreds of microns.  This design leads to a pixel hit occupancy of $\sim10^{-4}$/pixel/BX and a strip hit occupancy of $\sim10^{-2}$/pixel/BX, where BX refers to 1 LHC bunch crossing \cite{CMS_detector_paper}.
+Given the LHC design instantaneous luminosity, efficient reconstruction of charged particle tracks from transverse momenta of 1 GeV up to 1 TeV can only be achieved with a low occupancy tracker.  For $r < 10$ cm, the hit rate density is highest, leading to the choice of $100\mbox{ }\mu\mbox{m} \times 150\mbox{ }\mu\mbox{m}$ silicon pixel sensors for hit detection.  For $20\mbox{ cm }< r < 110\mbox{ cm}$, the lower hit rate allows the use of silicon strips, with length along $z$ of order centimeters and length along the $r\cdot\phi$ curve of order hundreds of microns.  This design leads to a pixel hit occupancy of $\sim10^{-4}$/pixel/BX and a strip hit occupancy of $\sim10^{-2}$/pixel/BX, where BX refers to 1 LHC bunch crossing.
 
-As radiation dose from hadrons accumulates over the lifetime of the tracker, silicon leakage current through the semiconductor junctions increases, heating up the sensors.  Since the leakage current itself depends on temperature, this can lead to \textit{thermal runaway} that damages the detector.  To avoid this, the tracker must be cooled to approximately $-10^{\circ}$C.  Operating at this temperature, the signal:noise ratio in the silicon sensors is 10:1, and should remain at that level over the 10-year lifetime of the tracker \cite{CMS_detector_paper}.
+As radiation dose from hadrons accumulates over the lifetime of the tracker, silicon leakage current through the semiconductor junctions increases, heating up the sensors.  Since the leakage current itself depends on temperature, this can lead to \textit{thermal runaway} that damages the detector.  To avoid this, the tracker must be cooled to approximately $-10^{\circ}$C.  Operating at this temperature, the signal:noise ratio in the silicon sensors is 10:1, and should remain at that level over the 10-year lifetime of the tracker.
 
 At its thickest ($|\eta|\sim1.5$), the tracker depth (including services) is $\sim1.8X_{0}$, and the depth falls off to $\sim1X_{0}$ in thinner areas.  Unfortunately, the large mass of the tracker degrades somewhat the performance of the electromagnetic calorimeter behind it, as $\sim50$\% of photons will convert to $e^{+}e^{-}$ pairs in the tracker.
 
@@ -77,12 +74,11 @@ A longitudinal quarter view of the three barrel pixel (BPix) layers and two forw
 	\label{fig:pixel_mechanics}
 \end{figure}
 
-%insert reference to BPix Lorentz angle
-Since the electric field in the depletion region of the BPix sensors is perpendicular (i.e. pointing along $r$) to the magnetic field of CMS (i.e. pointing along $z$), the charge carriers in the silicon experience a Lorentz drift along $\phi$.  The multi-pixel sensor pitch is such that this causes the charge from one particle hit to be shared among multiple pixels.  Particle hits are reconstructed reading out the analog pixel signal and interpolating between signals in multiple pixels.  This method achieves a 15-20 $\mu\mbox{m}$ spatial resolution, which is comparable to the sensor pitch.  To induce this effect in FPix, the sensor wedges are tilted by the BPix Lorentz angle of $20^{\circ}$ \textcolor{red}{\textbf{(insert reference to BPix Lorentz angle)}} with respect to the $y$-axis.
+Since the electric field in the depletion region of the BPix sensors is perpendicular (i.e. pointing along $r$) to the magnetic field of CMS (i.e. pointing along $z$), the charge carriers in the silicon experience a Lorentz drift along $\phi$.  The multi-pixel sensor pitch is such that this causes the charge from one particle hit to be shared among multiple pixels.  Particle hits are reconstructed reading out the analog pixel signal and interpolating between signals in multiple pixels.  This method achieves a 15-20 $\mu\mbox{m}$ spatial resolution, which is comparable to the sensor pitch.  To induce this effect in FPix, the sensor wedges are tilted by the approximate BPix Lorentz angle of $20^{\circ}$ \cite{Ivova} with respect to the $y$-axis.
 
 %bias voltage of the pixels?
 %explanantion of electrical isolation of pixels?
-Each multi-pixel sensor consists of an array of $52\times80$ n-type pixels implanted onto an n-type substrate with 320 $\mu\mbox{m}$ thickness.  The other face of the substrate is covered with a thin layer of p-type semiconductor.  Except for the outer edges, which are held at ground potential to prevent sparking between the sensor edges and the connected readout chip \cite{pixel_design_paper}, the p-side is reverse biased at \textcolor{red}{\textbf{a few hundred volts}}.  The pixels are held at ground potential.  A particle entering through the p-side will cause a burst of current to flow across the p-n junction.  The charge will be collected by the pixels, which are bump-bonded to the readout.  The BPix and FPix sensors employ slightly different technologies for electrically isolating the individual pixels, but both rely on the idea of surrounding the pixels with a p-type material to provide a p-n junction.  Since both pixel and surrounding p-type material are held at ground potential, the p-n junction acts as a barrier to current flow.  \textcolor{red}{\textbf{Is this right?}}
+Each multi-pixel sensor consists of an array of $52\times80$ n-type pixels implanted onto an n-type substrate with 320 $\mu\mbox{m}$ thickness.  The other face of the substrate is covered with a thin layer of p-type semiconductor.  Except for the outer edges, which are held at ground potential to prevent sparking between the sensor edges and the connected readout chip \cite{pixel_design_paper}, the p-side is reverse biased at a few hundred volts.  The pixels are held at ground potential.  A particle entering through the p-side will cause a burst of current to flow across the p-n junction.  The charge will be collected by the pixels, which are bump-bonded to the readout.  The BPix and FPix sensors employ slightly different technologies for electrically isolating the individual pixels, but both rely on the idea of surrounding the pixels with a p-type material to provide a p-n junction that acts as a barrier to current flow.
 
 Each $52\times80$ pixel sensor is bump bonded to a readout chip (ROC).  The ROCs provide zero suppression and amplify,  buffer, and communicate the signals from the sensors.  A single token bit manager (TBM) controls $\sim16$ ROCs in the barrel or $\sim24$ ROCs in the endcaps.  Its purpose is to distribute the clock and trigger to the ROCs (the latter initiates a transmission of the signal further upstream to be assembled into the full event readout of CMS).  The clock and trigger are supplied by the pixel front end controller (pFEC), which interfaces to the central clock and data acquisition systems.  Analog signals that are collected from the pixel front ends are digitized by the pixel front end digitizer (pxFED).  A diagram of the readout system is shown in Figure~\ref{fig:pixel_readout}.
 
@@ -97,11 +93,11 @@ Figure~\ref{fig:pixel_results} shows some results highlighting the performance o
 
 \begin{figure}
 	\centering
- 	\subfloat[BPix hit resolution in the $r\cdot\phi$ coordinate \cite{pixel_DPG_Twiki_rphi_res}.]{\label{fig:pixel_results_rphi_res}\includegraphics[scale=0.18]{pixel_results_rphi_res}}
+ 	\subfloat[BPix hit resolution in the $r\cdot\phi$ coordinate \cite{pixel_DPG_Twiki_rphi_res}.]{\label{fig:pixel_results_rphi_res}\includegraphics[scale=0.3]{pixel_results_rphi_res}}
 	\hspace{1cm}
-	\subfloat[BPix hit resolution in the $z$ coordinate vs. track dip angle, showing the effect of charge sharing on resolution \cite{pixel_DPG_Twiki_z_res}.]{\label{fig:pixel_results_z_res}\includegraphics[scale=0.18]{pixel_results_z_res}}
-	\hspace{1cm}
-	\subfloat[Pixel reconstruction efficiency vs. bias voltage for a group of three wedges in FPix \cite{pixel_DPG_Twiki_eff}.]{\label{fig:pixel_results_eff}\includegraphics[scale=0.18]{pixel_results_eff}}
+	\subfloat[BPix hit resolution in the $z$ coordinate vs. track dip angle, showing the effect of charge sharing on resolution \cite{pixel_DPG_Twiki_z_res}.]{\label{fig:pixel_results_z_res}\includegraphics[scale=0.3]{pixel_results_z_res}}
+	\\
+	\subfloat[Pixel reconstruction efficiency vs. bias voltage for a group of three wedges in FPix \cite{pixel_DPG_Twiki_eff}.]{\label{fig:pixel_results_eff}\includegraphics[scale=0.3]{pixel_results_eff}}
 	\caption{Pixel detector performance highlights.}
 	\label{fig:pixel_results}
 \end{figure}
@@ -133,7 +129,7 @@ Clock, trigger, and control signals are sent from the front end controllers (FEC
 
 \begin{figure}
 	\centering
-	\includegraphics[scale=1.0]{tracker_module}
+	\includegraphics[scale=1.5]{tracker_module}
 	\caption{Exploded view of a strip module with two sensors.  Reprinted from Fig. 3.22 of ref. \cite{CMS_detector_paper}.}
 	\label{fig:tracker_module}
 \end{figure}
@@ -149,9 +145,9 @@ As an example of the strip capabilities, strip hit resolution and signal:noise m
 
 \begin{figure}
 	\centering
- 	\subfloat[TIB signal:noise \cite{tracker_DPG_Twiki_TIB_SNR}.]{\label{fig:tracker_results_TIB_SNR}\includegraphics[scale=0.3]{tracker_results_TIB_SNR.gif}}
-	\hspace{1cm}
-	\subfloat[TIB and TOB hit resolution as a function of strip pitch \cite{tracker_DPG_Twiki_res}.]{\label{fig:tracker_results_res}\includegraphics[scale=0.2]{tracker_results_res.gif}}
+ 	\subfloat[TIB signal:noise \cite{tracker_DPG_Twiki_TIB_SNR}.]{\label{fig:tracker_results_TIB_SNR}\includegraphics[scale=0.5]{tracker_results_TIB_SNR.gif}}
+	\\
+	\subfloat[TIB and TOB hit resolution as a function of strip pitch \cite{tracker_DPG_Twiki_res}.]{\label{fig:tracker_results_res}\includegraphics[scale=0.3]{tracker_results_res.gif}}
 	\caption{Strip detector performance highlights.}
 	\label{fig:tracker_results}
 \end{figure}
@@ -204,15 +200,14 @@ Despite the radiation hardness of lead tungstate relative to other types of crys
 	\label{fig:ECAL_laser_system}
 \end{figure}
 
-%include the parts about tracker material?
-The current ECAL energy resolution is somewhat worse than the design goal of 0.5\%.  An incomplete understanding of (a) the transparency loss and (b) the photon conversion and electron bremsstrahlung processes in the $\sim1X_{0}$ of tracker material in front of the ECAL are the main limiting factors in improving the resolution.  However, as more data accumulate, more refined models of transparency loss and EM interactions in the tracker can be built, leading to better resolution.  \textcolor{red}{\textbf{Is it accurate/desirable to blame tracker material here for degraded EM resolution?}}  Energy resolution vs. $|\eta|$ can be seen in Figure~\ref{fig:ECAL_res_vs_eta}.
+The current ECAL energy resolution is somewhat worse than the design goal of 0.5\%.  An incomplete understanding of (a) the transparency loss and (b) the photon conversion and electron bremsstrahlung processes in the $\sim1X_{0}$ of tracker material in front of the ECAL are the main limiting factors in improving the resolution.  However, as more data accumulate, more refined models of transparency loss and EM interactions in the tracker can be built, leading to better resolution.  Energy resolution vs. $|\eta|$ can be seen in Figure~\ref{fig:ECAL_res_vs_eta}.
 
 \begin{figure}
 	\centering
  	\subfloat[EB \cite{ECAL_DPG_Twiki_res_vs_eta_EB}.]{\label{fig:ECAL_res_vs_eta_EB}\includegraphics[scale=0.2]{ECAL_res_vs_eta_EB}}
 	\hspace{1cm}
 	\subfloat[EE \cite{ECAL_DPG_Twiki_res_vs_eta_EE}.]{\label{fig:ECAL_res_vs_eta_EE}\includegraphics[scale=0.2]{ECAL_res_vs_eta_EE}}
-	\caption{Energy resolution vs. $|\eta|$ for $Z$ decay electrons for data (blue) and MC (red).  The dotted lines show the locations of module gaps (three per SM).}
+	\caption{Energy resolution vs. $|\eta|$ for $Z$ decay electrons for data (filled blue circles) and MC (empty red squares).  The dotted lines show the locations of module gaps (three per SM).}
 	\label{fig:ECAL_res_vs_eta}
 \end{figure}
 
@@ -236,8 +231,7 @@ The CMS hadronic calorimeter (HCAL) has four parts: HCAL barrel (HB), HCAL endca
 	\label{fig:HCAL_longitudinal_xsec}
 \end{figure}
 
-%are the scintillator layers right?
-HB, HE, and HO are all sampling calorimeters consisting of alternating layers of brass absorber and plastic scintillator.  The absorber initiates the hadronic shower, and as shower particles travel through the scintillator the scintillation light is read out by wavelength-shifting (WLS) fibers connected to the scintillator tiles.\footnote{By contrast, in the ECAL, the crystal material acts as both absorber and scintillator, greatly reducing the contribution to energy resolution from sampling fluctuations.}  The full development of the shower is sampled by the layers of instrumented scintillator \textcolor{red}{\textbf{(14 in HB, 18 in HE, and two in HO)}}.  Light output from all tiles in a single readout tower is collected via the WLS fibers and merged into a single signal that is amplified by a hybrid photodiode (HPD).  A diagram of the optical readout of HB (similar for HE and HO) is shown in Figure~\ref{fig:HCAL_HB_optics}.
+HB, HE, and HO are all sampling calorimeters consisting of alternating layers of brass absorber and plastic scintillator.  The absorber initiates the hadronic shower, and as shower particles travel through the scintillator the scintillation light is read out by wavelength-shifting (WLS) fibers connected to the scintillator tiles.\footnote{By contrast, in the ECAL, the crystal material acts as both absorber and scintillator, greatly reducing the contribution to energy resolution from sampling fluctuations.}  The full development of the shower is sampled by the layers of instrumented scintillator.  The scintillator tiles are staggered so that there are no cracks in coverage along the direction projected back to the beam spot.  Light output from all tiles in a single readout tower is collected via the WLS fibers and merged into a single signal that is amplified by a hybrid photodiode (HPD).  A diagram of the optical readout of HB (similar for HE and HO) is shown in Figure~\ref{fig:HCAL_HB_optics}.
 
 \begin{figure}
 	\centering
@@ -255,18 +249,17 @@ Due to the extremely harsh radiation environment near the beam line, HF is const
 	\label{fig:HCAL_HF_xsec}
 \end{figure}
 
-%get no. time slices per tower per trigger in 2011
-Electrical signals from either HPDs (HB/HE/HO) or PMTs (HF) are digitized on the front ends by means of a fast charge-integrating ADC.  The digitized signals are sent off-detector to the HCAL Trigger/Read-Out (HTR) boards, where they await a trigger decision.  If the trigger is accepted, the signals are sent on to the HCAL data concentrator cards (DCCs), which interface to the global DAQ system.  HCAL trigger primitives, consisting of transverse energy sums over an entire tower, are calculated in the HTR boards and sent to the global trigger system.  HCAL may send up to seven time samples per tower per trigger (compared to 10 for the ECAL), but only sent \textcolor{red}{\textbf{N}} in 2011 in order to mitigate the effect of overlapping signals from surrounding bunch crossings (\textit{out-of-time pileup}).
+Electrical signals from either HPDs (HB/HE/HO) or PMTs (HF) are digitized on the front ends by means of a fast charge-integrating ADC.  The digitized signals are sent off-detector to the HCAL Trigger/Read-Out (HTR) boards, where they await a trigger decision.  If the trigger is accepted, the signals are sent on to the HCAL data concentrator cards (DCCs), which interface to the global DAQ system.  HCAL trigger primitives, consisting of transverse energy sums over an entire tower, are calculated in the HTR boards and sent to the global trigger system.
 
 Selected HCAL performance results can be seen in Figure~\ref{fig:HCAL_performance}.
 
 \begin{figure}
 	\centering
- 	\subfloat[Data/MC comparison of HB response to charged tracks of 9-11 GeV/$c$ momentum \cite{CMS-DP-2010-025}.]{\label{fig:HCAL_performance_HB_response}\includegraphics[scale=0.4]{HCAL_performance_HB_response}}
-	\hspace{1cm}
-	\subfloat[Distribution of tower multiplicity, clearly showing three peaks in rate corresponding to noise sources (see Sec.~\ref{sec:Event Quality}) \cite{HCAL_noise_CRAFT}.]{\label{fig:HCAL_performance_noise}\includegraphics[scale=0.4]{HCAL_performance_noise}}
-	\hspace{1cm}
-	\subfloat[Timing resolution vs. tower energy \cite{CMS-DP-2010-025}.]{\label{fig:HCAL_performance_timing}\includegraphics[scale=0.4]{HCAL_performance_timing}}
+ 	\subfloat[Data/MC comparison of HB response to charged tracks of 9-11 GeV/$c$ momentum \cite{CMS-DP-2010-025}.]{\label{fig:HCAL_performance_HB_response}\includegraphics[scale=0.7]{HCAL_performance_HB_response}}
+	\\
+	\subfloat[Distribution of tower multiplicity, clearly showing three peaks in rate corresponding to noise sources (see Sec.~\ref{sec:Event Quality}) \cite{HCAL_noise_CRAFT}.]{\label{fig:HCAL_performance_noise}\includegraphics[scale=0.7]{HCAL_performance_noise}}
+	\\
+	\subfloat[Timing resolution vs. tower energy \cite{CMS-DP-2010-025}.]{\label{fig:HCAL_performance_timing}\includegraphics[scale=0.7]{HCAL_performance_timing}}
 	\caption{Selected HCAL performance results.}
 	\label{fig:HCAL_performance}
 \end{figure}
@@ -277,9 +270,9 @@ Beginning at a radius of $\sim10$ interaction lengths from the beam line, where 
 
 \begin{figure}
 	\centering
- 	\subfloat[One of the five wheels of MB, showing the four layers of muon stations.  The five wheels are spaced symmetrically in $z$ about $z = 0$.  As a muon traverses the muon detectors, its curvature in the transverse plane changes direction and magnitude due to the magnetic field in the return yoke, which is of opposite sign and reduced strength relative to the field within the solenoid volume.  Reprinted from Fig. 7.3 of ref. \cite{CMS_detector_paper}.]{\label{fig:muons_layout_MB}\includegraphics[scale=0.5]{muons_layout_MB}}
-	\hspace{1cm}
-	\subfloat[Quarter longitudinal cross section of CMS highlighting the location of the ME disks.  Reprinted from Fig. 7.47 of ref. \cite{CMS_detector_paper}.]{\label{fig:muons_layout_ME}\includegraphics[scale=0.5]{muons_layout_ME}}
+ 	\subfloat[One of the five wheels of MB, showing the four layers of muon stations.  The five wheels are spaced symmetrically in $z$ about $z = 0$.  As a muon traverses the muon detectors, its curvature in the transverse plane changes direction and magnitude due to the magnetic field in the return yoke, which is of opposite sign and reduced strength relative to the field within the solenoid volume.  Reprinted from Fig. 7.3 of ref. \cite{CMS_detector_paper}.]{\label{fig:muons_layout_MB}\includegraphics[scale=0.6]{muons_layout_MB}}
+	\\
+	\subfloat[Quarter longitudinal cross section of CMS highlighting the location of the ME disks.  Reprinted from Fig. 7.47 of ref. \cite{CMS_detector_paper}.]{\label{fig:muons_layout_ME}\includegraphics[scale=0.6]{muons_layout_ME}}
 	\caption{View of the MB and ME layout in CMS.}
 	\label{fig:muons_layout}
 \end{figure}
@@ -335,8 +328,7 @@ At the bottom, the L1 trigger consists of trigger primitive generators (TPGs) in
 	\label{fig:L1_trigger_diagram}
 \end{figure}
 
-%get sFGVB threshold
-A region in the RCT consists of a matrix of $4\times4$ trigger towers.  A trigger tower in EB/HB is one HCAL tower + the $5\times5$ matrix of ECAL crystals in front of it; in EE/HE the idea is similar but the counting of crystals and HE towers is slightly more complicated.  An EM RCT candidate is built around a high $E_{T}$ seed tower.  The $E_{T}$ of the candidate is the sum of the tower $E_{T}$ and the $E_{T}$ of its highest-$E_{T}$ broad side neighbor (see Figure~\ref{fig:RCT_EG_candidate} for a definition of the broad side neighbors).  Two isolation criteria are defined: the ratio of the EM energy to the HCAL energy in the tower must be less than 5\%, and the ratio of the shower energy contained in a $2\times5$ matrix of crystals (in $\eta\times\phi$) to the total energy in the crystals must be less than \textcolor{red}{\textbf{XXX}}\%.  For a non-isolated EM candidate, the highest-$E_{T}$ broad side neighboring tower must pass these two isolation criteria; for an isolated EM candidate, all eight neighboring towers must the criteria.  The process is repeated until four isolated and four non-isolated EM candidates are found, starting with the highest-$E_{T}$ tower in the region and moving down in tower $E_{T}$.  An RCT region is flagged as consistent with tau decay only if the pattern of tower transverse energy sums defines at most a $2\times2$ matrix of energetic towers within the $4\times4$ RCT region.
+A region in the RCT consists of a matrix of $4\times4$ trigger towers.  A trigger tower in EB/HB is one HCAL tower + the $5\times5$ matrix of ECAL crystals in front of it; in EE/HE the idea is similar but the counting of crystals and HE towers is slightly more complicated.  An EM RCT candidate is built around a high $E_{T}$ seed tower.  The $E_{T}$ of the candidate is the sum of the tower $E_{T}$ and the $E_{T}$ of its highest-$E_{T}$ broad side neighbor (see Figure~\ref{fig:RCT_EG_candidate} for a definition of the broad side neighbors).  Two isolation criteria are defined based on (a) the ratio of the EM energy to the HCAL energy in the tower and (b) the shower shape.  For a non-isolated EM candidate, the highest-$E_{T}$ broad side neighboring tower must pass these two isolation criteria; for an isolated EM candidate, all eight neighboring towers must the criteria, and there must also be at least one quiet corner with the $E_{T}$ of all five towers in the corner below some threshold (see Fig.~\ref{fig:RCT_EG_candidate}).  The process is repeated until four isolated and four non-isolated EM candidates are found, starting with the highest-$E_{T}$ tower in the region and moving down in tower $E_{T}$.  An RCT region is flagged as consistent with tau decay only if the pattern of tower transverse energy sums defines at most a $2\times2$ matrix of energetic towers within the $4\times4$ RCT region.
 
 \begin{figure}
 	\centering
@@ -345,17 +337,42 @@ A region in the RCT consists of a matrix of $4\times4$ trigger towers.  A trigge
 	\label{fig:RCT_EG_candidate}
 \end{figure}
 
-%insert reference to L1 jet finding algorithm
-%do L1 seeds for double-photon paths have to be isolated?
-From the tower transverse energy sums, eight EM candidates, and tau flag received from each RCT, the GCT computes the total $E_{T}$ in the calorimeter (and the total $E_{T}$ above some programmable threshold, called $H_{T}$), and the \MET.  It also classifies the towers into jets and determines the globally highest ranked isolated and non-isolated EM candidates.  The jet finding uses a clustering algorithm based on the energy of a sub-cluster with respect to its neighbors \textcolor{red}{\textbf{(insert reference to L1 jet finding algorithm)}}.  Jets are classified as tau decays if all of the RCT regions participating in the jet clustering had energy patterns consistent with tau decay.  Counts of jets above 12 different programmable $E_{T}$ thresholds are calculated.  The jet counts, energy sums, \MET, and highest ranked EM candidates are sent to the GT, where the final L1 decision is taken and transmitted to the sub-detectors.  The GT can execute a maximum of 128 trigger algorithms in parallel.  If any one of these algorithms yields an accept, the event is accepted, and all trigger information is sent on to the HLT for further filtering.  The double-photon HLT paths used in this analysis (see Sec.~\ref{sec:HLT}) require L1 seeds (i.e. EM candidates built by the RCT) with $E_{T} > 12$ or 20 GeV, depending on path.  \textcolor{red}{\textbf{Do they have to be isolated?}}
+From the tower transverse energy sums, eight EM candidates, and tau flag received from each RCT, the GCT computes the total $E_{T}$ in the calorimeter (and the total $E_{T}$ above some programmable threshold, called $H_{T}$), and the \MET.  It also classifies the towers into jets and determines the globally highest ranked isolated and non-isolated EM candidates.  The jet finding uses a clustering algorithm based on the energy of a sub-cluster with respect to its neighbors \cite{Smith}.  Jets are classified as tau decays if all of the RCT regions participating in the jet clustering had energy patterns consistent with tau decay.  Counts of jets above 12 different programmable $E_{T}$ thresholds are calculated.  The jet counts, energy sums, \MET, and highest ranked EM candidates are sent to the GT, where the final L1 decision is taken and transmitted to the sub-detectors.  The GT can execute a maximum of 128 trigger algorithms in parallel.  If any one of these algorithms yields an accept, the event is accepted, and all trigger information is sent on to the HLT for further filtering.  The double-photon HLT paths used in this analysis (see Sec.~\ref{sec:HLT}) require isolated L1 seeds (i.e. EM candidates built by the RCT) with $E_{T} > 12$ or 20 GeV, depending on path.
 
 No muon triggers are used in the two-photon analysis.  A description of the muon trigger system can be found in ref.\cite{CMS_detector_paper}.
 
 \subsection{Data Acquisition System}
+\label{sec:Data Acquisition System}
+
+The CMS data acquisition (DAQ) system takes event fragments (calorimeter hits, track hits, etc.) from each of the 626 subdetector front end drivers (FEDs), assembles them into a data structure representing the full event, and sends the event on to the HLT for further filtering.  The DAQ must operate at an input rate of $\sim100$ GB/s, corresponding to an input rate from the L1 trigger of $\sim100$ kHz.  To facilitate expansion of the system as the need arises, the DAQ is composed of eight nearly independent slices.  Each slice functions as a smaller version of the whole DAQ that can handle an input event rate up to $\sim12.5$ kHz.  A diagram of the DAQ system, showing schematically the eight slices, is given in Figure~\ref{fig:DAQ_overview}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{DAQ_overview}
+	\caption{Diagram of the DAQ system.  The identical event builder systems, shown as inputs and outputs to the boxes labeled ``Readout Builder 1", ``Readout Builder 2", etc., represent the eight slices.  Within one slice, data can flow from the detector front ends to the readout systems to the builder network (which assembles the event fragments) to the filter systems (HLT) independently of the other slices.  Reprinted from Fig. 9.8 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:DAQ_overview}
+\end{figure}
+
+Data from the front ends is collected by the FEDs and pushed to the front end readout links (FRLs), which may take inputs from up to two FEDs simultaneously.  The FRLs check for transmission errors, generate event fragments with size $\sim2$ kB, buffer the fragments in 64 kB memories, and finally send them to the FED builders.  The FEDs, FRLs, and FED builders are located in the underground control room.  The 72 FED builders each construct one $\sim16$ kB \textit{super-fragment} from the input event fragments, then send the super-fragment on to a readout unit (RU) located in the surface control room $\sim80$ m away.  Super-fragments belonging to the same event are sent to RUs in the same DAQ slice.  There are 72 RUs per readout builder, one for each super-fragment of an event, with each DAQ slice built around one readout builder (see Fig.~\ref{fig:DAQ_overview}).  Each readout builder hosts a number of builder units (BUs) that perform the final integration of super-fragments into complete events.
+
+Resource brokers (RBs) in the HLT filter farm request complete events from the BUs and distribute those events to the filter units (FUs) for HLT selection.  If an event passes any one of the HLT paths in the predefined menu, it is sent back to the RB for transfer to the storage manager (SM).  The SM nodes transfer accepted events to the CERN Tier-0 prompt reconstruction facility for unpacking of the raw data into ROOT \cite{ROOT} files that can be accessed by physicists wishing analyze the data.  The lag time between recording of an event in the DAQ and availability of the fully reconstructed event for analysis is typically 48 hours.
+
+If the buffers of the upstream DAQ elements (the filter farm, readout builders, FED builders, or FRLs) are full, those elements will not request new events from downstream.  This can lead to a buildup of events in the downstream element buffers, \textit{back-pressuring} all the way down to the FEDs themselves.  The CMS trigger throttling system (TTS) consists of dedicated lines between the FEDs and the GT for the purpose of sending predefined signals to the GT about the state of the FED buffers.  If the buffer of a particular FED is getting full, it can alert the GT to reduce the trigger rate so as to prevent FED buffer overflows and loss of time synchronization between event fragments.  The TTS latency is $\sim1 \mu\mbox{s}$.  Causes of back-pressure (hence dead time) include: problems with the FED electronics (in this case, the upstream elements request events but the FEDs have trouble sending them), increases in the L1 accept rate (perhaps due to a noisy detector channel) beyond what the upstream DAQ elements can handle, increases in the event size due to high pileup or a poor quality beam that scrapes against the beam pipe, failures of the DAQ transmission lines or DAQ hardware such that events are not requested from the FEDs fast enough, or bottlenecks at the SM nodes or filter farm due to hardware failures or large event sizes.
+
+All components of the DAQ, from the FEDs up to the SMs, are controlled by cross-platform DAQ (XDAQ) \cite{XDAQ} processes, or \textit{executives}.  The Simple Object Access Protocol (SOAP) \cite{SOAP} protocol is used to transmit control and monitoring data between XDAQ-enabled devices and to the end user, who can view the running of a XDAQ executive via a Web interface called HyperDAQ \cite{HyperDAQ}.  The Run Control and Monitoring System (RCMS) handles the configuration and control of all XDAQ executives via a hierarchical structure.  At the top of the hierarchy is the Level-0 \textit{function manager} (FM), controlling the Level-1 sub-detector FMs, which in turn control their Level-2 system-specific XDAQ executives.  The central DAQ and L1 trigger each have their own Level-1 FM.  A unit of data acquisition, called a \textit{run}, may be configured, started, and stopped by an end user interacting with the RCMS Web interface.
+
 \subsection{Data Processing and Transfer to Computing Centers}
 \label{sec:Data Processing and Transfer to Computing Centers}
-%define lumi section
 
-Lorum ipsum fuck Republicans.
+Data leaving the filter farm are grouped into datasets based on HLT path, i.e. there are different datasets for events passing diphoton triggers, jet triggers, muon + electron triggers, etc.  At the Tier-0 facility, the datasets are go through three levels of processing to create three \textit{data tiers}.  The first layer produces RAW data by unpacking the detector byte streams sent from the DAQ and L1 trigger into data structures holding the ADC counts recorded for each channel of the detector, digitized trigger primitives, and the L1 decision.  A single event has $\sim1.5$ MB of RAW data.  The next layer of processing is the reconstruction, which forms channel energies in GeV, applies calibrations, and creates high-level objects like photons, electrons, muons, taus, jets, \MET, and charged tracks.  The RECO data tier occupies $\sim0.5$ MB per event.  Finally, analysis object data (AOD) is a subset of the RECO data, comprising the high-level objects but usually excluding the individual channel hit information if it is not associated to a physics object.  This tier occupies $\sim0.1$ MB per event.  One copy of the RAW data is stored permanently at CERN and another copy is distributed amongst the Tier-1 facilities (see below) for permanent storage.  Changes in the reconstruction algorithms periodically require reprocessing of the RAW data to form a new RECO tier.  In general, only the AOD tier is available to physicists wishing to perform analyses due to the smaller size and faster replication and transfer time of AOD with respect to RAW or RECO.
+
+There are three tiers of computing and data storage sites within the Worldwide LHC Computing Grid (WLCG) \cite{WLCG}.  The tier closest to CMS is Tier-0, which is located at CERN and performs archiving of the RAW data, prompt reconstruction of the data within $\sim48$ hours of its being collected, and transferral of copies of the RECO datasets to Tier-1 facilities.  There are a few Tier-1 centers worldwide, hosted by national computing facilities and laboratories.  They store parts of the RAW dataset and copies of the RECO datasets, participate in subsequent reconstruction passes after the prompt reconstruction at Tier-0, and ship AOD datasets upon request to the Tier-2 centers.  Analysts interact primarily with the Tier-2 centers, which store AOD datasets and run batch processing queues for running analysis jobs over the datasets.  Different layers of WLCG software control data transfer between sites, data storage, and batch processing.  A diagram of the WLCG tier system is given in Figure~\ref{fig:WLCG_diagram}.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=1.0]{WLCG_diagram}
+	\caption{Diagram of the WLCG tier system showing data archival and reconstruction at each tier along with data transfer between tiers.  Reprinted from Fig. 11.2 of ref. \cite{CMS_detector_paper}.}
+	\label{fig:WLCG_diagram}
+\end{figure}
 
 \end{document}
