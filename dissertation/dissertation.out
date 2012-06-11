@@ -1,50 +1,55 @@
-\BOOKMARK [0][-]{chapter.1}{The Supersymmetric Extension to the Standard Model}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Supermultiplet Representation}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{The Unbroken SUSY Lagrangian}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.3}{Soft SUSY Breaking}{chapter.1}% 4
-\BOOKMARK [1][-]{section.1.4}{Gauge-Mediated SUSY Breaking}{chapter.1}% 5
-\BOOKMARK [1][-]{section.1.5}{Phenomenology of General Gauge Mediation}{chapter.1}% 6
-\BOOKMARK [1][-]{section.1.6}{Experimental Status of SUSY}{chapter.1}% 7
-\BOOKMARK [0][-]{chapter.2}{The Large Hadron Collider}{}% 8
-\BOOKMARK [1][-]{section.2.1}{Design Considerations and Performance Limitations}{chapter.2}% 9
-\BOOKMARK [1][-]{section.2.2}{Beam Injection}{chapter.2}% 10
-\BOOKMARK [1][-]{section.2.3}{Magnets and Cryogenics}{chapter.2}% 11
-\BOOKMARK [1][-]{section.2.4}{Radiofrequency Cavities}{chapter.2}% 12
-\BOOKMARK [0][-]{chapter.3}{The Compact Muon Solenoid Experiment}{}% 13
-\BOOKMARK [1][-]{section.3.1}{The Detectors and Their Operating Principles}{chapter.3}% 14
-\BOOKMARK [2][-]{subsection.3.1.1}{Tracking System}{section.3.1}% 15
-\BOOKMARK [2][-]{subsection.3.1.2}{Electromagnetic Calorimeter}{section.3.1}% 16
-\BOOKMARK [2][-]{subsection.3.1.3}{Hadronic Calorimeter}{section.3.1}% 17
-\BOOKMARK [2][-]{subsection.3.1.4}{Muon System}{section.3.1}% 18
-\BOOKMARK [1][-]{section.3.2}{Triggering, Data Acquisition, and Data Transfer}{chapter.3}% 19
-\BOOKMARK [2][-]{subsection.3.2.1}{Level 1 and High Level Trigger Systems}{section.3.2}% 20
-\BOOKMARK [2][-]{subsection.3.2.2}{Data Acquisition System}{section.3.2}% 21
-\BOOKMARK [2][-]{subsection.3.2.3}{Data Processing and Transfer to Computing Centers}{section.3.2}% 22
-\BOOKMARK [0][-]{chapter.4}{Event Selection}{}% 23
-\BOOKMARK [1][-]{section.4.1}{Object Reconstruction}{chapter.4}% 24
-\BOOKMARK [2][-]{subsection.4.1.1}{Photons}{section.4.1}% 25
-\BOOKMARK [2][-]{subsection.4.1.2}{Electrons}{section.4.1}% 26
-\BOOKMARK [2][-]{subsection.4.1.3}{Jets and Missing Transverse Energy}{section.4.1}% 27
-\BOOKMARK [1][-]{section.4.2}{HLT}{chapter.4}% 28
-\BOOKMARK [1][-]{section.4.3}{Event Quality}{chapter.4}% 29
-\BOOKMARK [1][-]{section.4.4}{Photon Identification Efficiency}{chapter.4}% 30
-\BOOKMARK [2][-]{subsection.4.4.1}{Tag and Probe Method}{section.4.4}% 31
-\BOOKMARK [2][-]{subsection.4.4.2}{Photon Efficiency Scale Factor edata/eMC}{section.4.4}% 32
-\BOOKMARK [0][-]{chapter.5}{Data Analysis}{}% 33
-\BOOKMARK [1][-]{section.5.1}{Modeling the QCD Background}{chapter.5}% 34
-\BOOKMARK [2][-]{subsection.5.1.1}{Outline of the Procedure}{section.5.1}% 35
-\BOOKMARK [2][-]{subsection.5.1.2}{Reweighting}{section.5.1}% 36
-\BOOKMARK [2][-]{subsection.5.1.3}{Normalization}{section.5.1}% 37
-\BOOKMARK [1][-]{section.5.2}{Modeling the Electroweak Background}{chapter.5}% 38
-\BOOKMARK [1][-]{section.5.3}{Errors on the Background Prediction}{chapter.5}% 39
-\BOOKMARK [1][-]{section.5.4}{Results}{chapter.5}% 40
-\BOOKMARK [0][-]{chapter.6}{Interpretation of Results in Terms of GMSB Models}{}% 41
-\BOOKMARK [1][-]{section.6.1}{Simplified Models}{chapter.6}% 42
-\BOOKMARK [1][-]{section.6.2}{Upper Limit Calculation and Model Exclusion}{chapter.6}% 43
-\BOOKMARK [2][-]{subsection.6.2.1}{Signal Acceptance \040Efficiency}{section.6.2}% 44
-\BOOKMARK [2][-]{subsection.6.2.2}{CLs and the Profile Likelihood Test Statistic}{section.6.2}% 45
-\BOOKMARK [1][-]{section.6.3}{Cross Section Upper Limits}{chapter.6}% 46
-\BOOKMARK [1][-]{section.6.4}{Exclusion Contours}{chapter.6}% 47
-\BOOKMARK [0][-]{appendix.A}{Monte Carlo Samples}{}% 48
-\BOOKMARK [1][-]{subsection.A.0.1}{List of Samples}{appendix.A}% 49
-\BOOKMARK [2][-]{subsection.A.0.2}{Explanation of Naming Conventions}{subsection.A.0.1}% 50
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Motivation for Physics Beyond the Standard Model}{}% 2
+\BOOKMARK [1][-]{section.2.1}{The Standard Model and Electroweak Symmetry Breaking}{chapter.2}% 3
+\BOOKMARK [1][-]{section.2.2}{Implications of the Higgs Mechanism}{chapter.2}% 4
+\BOOKMARK [1][-]{section.2.3}{Addressing Problems of the Standard Model with Supersymmetry}{chapter.2}% 5
+\BOOKMARK [0][-]{chapter.3}{The Supersymmetric Extension to the Standard Model}{}% 6
+\BOOKMARK [1][-]{section.3.1}{Supermultiplet Representation}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.2}{The Unbroken SUSY Lagrangian}{chapter.3}% 8
+\BOOKMARK [1][-]{section.3.3}{Soft SUSY Breaking}{chapter.3}% 9
+\BOOKMARK [1][-]{section.3.4}{Gauge-Mediated SUSY Breaking}{chapter.3}% 10
+\BOOKMARK [1][-]{section.3.5}{Phenomenology of General Gauge Mediation}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.6}{Experimental Status of SUSY}{chapter.3}% 12
+\BOOKMARK [0][-]{chapter.4}{The Large Hadron Collider}{}% 13
+\BOOKMARK [1][-]{section.4.1}{Design Considerations and Performance Limitations}{chapter.4}% 14
+\BOOKMARK [1][-]{section.4.2}{Beam Injection}{chapter.4}% 15
+\BOOKMARK [1][-]{section.4.3}{Magnets and Cryogenics}{chapter.4}% 16
+\BOOKMARK [1][-]{section.4.4}{Radiofrequency Cavities}{chapter.4}% 17
+\BOOKMARK [0][-]{chapter.5}{The Compact Muon Solenoid Experiment}{}% 18
+\BOOKMARK [1][-]{section.5.1}{The Detectors and Their Operating Principles}{chapter.5}% 19
+\BOOKMARK [2][-]{subsection.5.1.1}{Tracking System}{section.5.1}% 20
+\BOOKMARK [2][-]{subsection.5.1.2}{Electromagnetic Calorimeter}{section.5.1}% 21
+\BOOKMARK [2][-]{subsection.5.1.3}{Hadronic Calorimeter}{section.5.1}% 22
+\BOOKMARK [2][-]{subsection.5.1.4}{Muon System}{section.5.1}% 23
+\BOOKMARK [1][-]{section.5.2}{Triggering, Data Acquisition, and Data Transfer}{chapter.5}% 24
+\BOOKMARK [2][-]{subsection.5.2.1}{Level 1 and High Level Trigger Systems}{section.5.2}% 25
+\BOOKMARK [2][-]{subsection.5.2.2}{Data Acquisition System}{section.5.2}% 26
+\BOOKMARK [2][-]{subsection.5.2.3}{Data Processing and Transfer to Computing Centers}{section.5.2}% 27
+\BOOKMARK [0][-]{chapter.6}{Event Selection}{}% 28
+\BOOKMARK [1][-]{section.6.1}{Object Reconstruction}{chapter.6}% 29
+\BOOKMARK [2][-]{subsection.6.1.1}{Photons}{section.6.1}% 30
+\BOOKMARK [2][-]{subsection.6.1.2}{Electrons}{section.6.1}% 31
+\BOOKMARK [2][-]{subsection.6.1.3}{Jets and Missing Transverse Energy}{section.6.1}% 32
+\BOOKMARK [1][-]{section.6.2}{HLT}{chapter.6}% 33
+\BOOKMARK [1][-]{section.6.3}{Event Quality}{chapter.6}% 34
+\BOOKMARK [1][-]{section.6.4}{Photon Identification Efficiency}{chapter.6}% 35
+\BOOKMARK [2][-]{subsection.6.4.1}{Tag and Probe Method}{section.6.4}% 36
+\BOOKMARK [2][-]{subsection.6.4.2}{Photon Efficiency Scale Factor edata/eMC}{section.6.4}% 37
+\BOOKMARK [0][-]{chapter.7}{Data Analysis}{}% 38
+\BOOKMARK [1][-]{section.7.1}{Modeling the QCD Background}{chapter.7}% 39
+\BOOKMARK [2][-]{subsection.7.1.1}{Outline of the Procedure}{section.7.1}% 40
+\BOOKMARK [2][-]{subsection.7.1.2}{Reweighting}{section.7.1}% 41
+\BOOKMARK [2][-]{subsection.7.1.3}{Normalization}{section.7.1}% 42
+\BOOKMARK [1][-]{section.7.2}{Modeling the Electroweak Background}{chapter.7}% 43
+\BOOKMARK [1][-]{section.7.3}{Errors on the Background Prediction}{chapter.7}% 44
+\BOOKMARK [1][-]{section.7.4}{Results}{chapter.7}% 45
+\BOOKMARK [0][-]{chapter.8}{Interpretation of Results in Terms of GMSB Models}{}% 46
+\BOOKMARK [1][-]{section.8.1}{Simplified Models}{chapter.8}% 47
+\BOOKMARK [1][-]{section.8.2}{Upper Limit Calculation and Model Exclusion}{chapter.8}% 48
+\BOOKMARK [2][-]{subsection.8.2.1}{Signal Acceptance \040Efficiency}{section.8.2}% 49
+\BOOKMARK [2][-]{subsection.8.2.2}{CLs and the Profile Likelihood Test Statistic}{section.8.2}% 50
+\BOOKMARK [1][-]{section.8.3}{Cross Section Upper Limits}{chapter.8}% 51
+\BOOKMARK [1][-]{section.8.4}{Exclusion Contours}{chapter.8}% 52
+\BOOKMARK [0][-]{appendix.A}{Monte Carlo Samples}{}% 53
+\BOOKMARK [1][-]{subsection.A.0.1}{List of Samples}{appendix.A}% 54
+\BOOKMARK [2][-]{subsection.A.0.2}{Explanation of Naming Conventions}{subsection.A.0.1}% 55
