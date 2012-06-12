@@ -38,32 +38,34 @@ All of the elementary matter particles (fermions)---quarks, charged leptons, and
 
 \begin{table}[htbp]
 \caption{Fermion content of the Standard Model.}
+\begin{minipage}{\textwidth}
 \begin{tabular}{|l|c|m{5.5cm}|c|}
 \hline
 \multicolumn{1}{|c|}{Type} & Notation & Representation under $SU(3)_{C} \otimes SU(2)_{L} \otimes U(1)_{Y}$ & Couples to \\
 \hline
 \hline
-\multirow{5}{*}{\begin{tabular}{@{}l@{}}Left-handed\\quark doublet\end{tabular}} & $\left(\begin{array}{c}u_{L} \\d_{L}\end{array}\right)$ & \multicolumn{1}{c|}{\multirow{5}{*}{($\mathbf{3}$, $\mathbf{2}$, $\frac{1}{6}$)}} & \multirow{5}{*}{$g$, $W$, $\gamma$} \\
+\multirow{5}{*}{\begin{tabular}{@{}l@{}}Left-handed\\quark doublet\end{tabular}} & $\left(\begin{array}{c}u_{L} \\d_{L}\end{array}\right)$ & \multicolumn{1}{c|}{\multirow{5}{*}{($\mathbf{3}$, $\mathbf{2}$, $\frac{1}{6}$)}} & \multirow{5}{*}{$g$, $W$, $Z$, $\gamma$} \\
  & $\left(\begin{array}{c}c_{L} \\s_{L}\end{array}\right)$ & & \\
  & $\left(\begin{array}{c}b_{L} \\t_{L}\end{array}\right)$ & & \\
 \hline
-\multirow{3}{*}{\begin{tabular}{@{}l@{}}Right-handed\\up-type quark singlet\end{tabular}} & $u_{R}^{\dagger}$ & \multicolumn{1}{c|}{\multirow{3}{*}{($\mathbf{\bar{3}}$, $\mathbf{1}$, -$\frac{2}{3}$)}} & \multirow{3}{*}{$g$, $W$, $Z$, $\gamma$} \\
+\multirow{3}{*}{\begin{tabular}{@{}l@{}}Right-handed\\up-type quark singlet\end{tabular}} & $u_{R}^{\dagger}$ & \multicolumn{1}{c|}{\multirow{3}{*}{($\mathbf{\bar{3}}$, $\mathbf{1}$, -$\frac{2}{3}$)}} & \multirow{3}{*}{$g$, $\gamma$} \\
  & $c_{R}^{\dagger}$ & & \\
  & $b_{R}^{\dagger}$ & & \\
 \hline
-\multirow{3}{*}{\begin{tabular}{@{}l@{}}Right-handed\\down-type quark singlet\end{tabular}} & $d_{R}^{\dagger}$ & \multicolumn{1}{c|}{\multirow{3}{*}{($\mathbf{\bar{3}}$, $\mathbf{1}$, $\frac{1}{3}$)}} & \multirow{3}{*}{$g$, $W$, $Z$, $\gamma$} \\
+\multirow{3}{*}{\begin{tabular}{@{}l@{}}Right-handed\\down-type quark singlet\end{tabular}} & $d_{R}^{\dagger}$ & \multicolumn{1}{c|}{\multirow{3}{*}{($\mathbf{\bar{3}}$, $\mathbf{1}$, $\frac{1}{3}$)}} & \multirow{3}{*}{$g$, $\gamma$} \\
  & $s_{R}^{\dagger}$ & & \\
  & $t_{R}^{\dagger}$ & & \\
 \hline
-\multirow{5}{*}{\begin{tabular}{@{}l@{}}Left-handed\\lepton doublet\end{tabular}} & $\left(\begin{array}{c}\bar{\nu}_{eL} \\e_{L}\end{array}\right)$ & \multicolumn{1}{c|}{\multirow{5}{*}{($\mathbf{1}$, $\mathbf{2}$, -$\frac{1}{2}$)}} & \multirow{5}{*}{$W$, $\gamma$} \\
+\multirow{5}{*}{\begin{tabular}{@{}l@{}}Left-handed\\lepton doublet\end{tabular}} & $\left(\begin{array}{c}\bar{\nu}_{eL} \\e_{L}\end{array}\right)$ & \multicolumn{1}{c|}{\multirow{5}{*}{($\mathbf{1}$, $\mathbf{2}$, -$\frac{1}{2}$)}} & \multirow{5}{*}{$W$, $Z$, $\gamma$\footnote{Except for neutrinos, which have zero electric charge.}} \\
  & $\left(\begin{array}{c}\bar{\nu}_{\mu L} \\\mu_{L}\end{array}\right)$ & & \\
  & $\left(\begin{array}{c}\bar{\nu}_{\tau L} \\\tau_{L}\end{array}\right)$ & & \\
 \hline
-\multirow{3}{*}{\begin{tabular}{@{}l@{}}Right-handed\\charged lepton singlet\end{tabular}} & $e_{R}^{\dagger}$ & \multicolumn{1}{c|}{\multirow{3}{*}{($\mathbf{\bar{1}}$, $\mathbf{1}$, 1)}} & \multirow{3}{*}{$W$, $Z$, $\gamma$} \\
+\multirow{3}{*}{\begin{tabular}{@{}l@{}}Right-handed\\charged lepton singlet\end{tabular}} & $e_{R}^{\dagger}$ & \multicolumn{1}{c|}{\multirow{3}{*}{($\mathbf{\bar{1}}$, $\mathbf{1}$, 1)}} & \multirow{3}{*}{$\gamma$} \\
  & $\mu_{R}^{\dagger}$ & & \\
  & $\tau_{R}^{\dagger}$ & & \\
 \hline
 \end{tabular}
+\end{minipage}
 \label{tab:SM_particle_summary}
 \end{table}
 
@@ -103,7 +105,7 @@ Before the formulation of the Higgs mechanism, physicists suspected that a heavy
 
 The Higgs mechanism raises some interesting questions that cannot be immediately answered by SM physics.  First of all, why should $\mu^{2}$ be negative?  The form of the Higgs potential given in Eq.~\ref{eq:Higgs_potential} is about the simplest renormalizable form that can be written for a scalar field, but the choice of $\mu^{2} < 0$ is completely arbitrary.  Second, how can the hierarchy problem be avoided?
 
-The Higgs mass squared receives one-loop corrections from all the particles it couples to; namely, all particles with mass.  Because the Higgs is a scalar particle, one-loop corrections are proportional to $\Lambda_{\mathrm{UV}}^{2}$, where $\Lambda_{\mathrm{UV}}$ is the ultraviolet cutoff energy of the loop integral.  $\Lambda_{\mathrm{UV}}$ can be interpreted as the energy at which the SM can no longer describe particle physics and non-SM physics takes over.  Ideally, $\Lambda_{\mathrm{UV}}$ is something like the Planck scale.  However, taking $\Lambda_{\mathrm{UV}} = M_{\mathrm{Planck}}$ implies that in order to keep the Higgs mass of order a few hundred GeV, as required by experimental tests of EWSB, a very large and precise counterterm must be applied at all orders in perturbation theory to the bare $m_{H}^{2}$.  The quadratic sensitivity of the Higgs mass to the cutoff scale and the extremely fine-tuned counterterms it necessitates is called the hierarchy problem.
+The Higgs mass squared receives one-loop corrections from all the particles it couples to; namely, all particles with mass.  Because the Higgs is a scalar particle, one-loop corrections are proportional to $\Lambda_{\mathrm{UV}}^{2}$, where $\Lambda_{\mathrm{UV}}$ is the ultraviolet cutoff energy of the loop integral.  $\Lambda_{\mathrm{UV}}$ can be interpreted as the energy at which the SM can no longer describe particle physics and non-SM physics takes over.  Ideally, $\Lambda_{\mathrm{UV}}$ is something like the Planck scale.  However, taking $\Lambda_{\mathrm{UV}} = M_{\mathrm{Planck}}$ implies that in order to keep the Higgs mass of order a few hundred GeV, as required by experimental tests of EWSB, a very large and precise counterterm must be applied at all orders in perturbation theory to the bare $m_{H}^{2}$.  The quadratic sensitivity of the Higgs mass to the cutoff scale and the extremely fine-tuned counterterms it necessitates is called the hierarchy problem.  SM fermions do not experience this problem because chiral symmetry prevents explicit fermion mass terms at any order, so by dimensional analysis, fermion masses can only be sensitive to $\ln\frac{\Lambda_{\mathrm{UV}}}{\Lambda_{\mathrm{other}}}$.
 
 One of the most elegant ways to address these problems is to incorporate \textit{supersymmetry} (SUSY) into the SM.  Supersymmetry is new fundamental symmetry of nature between bosons and fermions, and will be discussed more thoroughly in Chapter~\ref{chap:The Supersymmetric Extension to the Standard Model}.  The next section just briefly describes how supersymmetry can mitigate some of the problems of the Higgs mechanism.
 
@@ -135,7 +137,7 @@ while the corrections from scalar loops would take the form \cite{SUSY_primer}
 %
 where the ellipsis indicates terms proportional to $\ln\Lambda_{\mathrm{UV}}$ that do not pose a problem for the validity of the SM up to the Planck scale.  Since the fermion and scalar contributions have opposite signs, if each SM fermion were accompanied by two as-yet-undiscovered scalar particles with $\lambda_{S} = |\lambda_{F}|^{2}$, then the problematic quadratic terms in Eqs.~\ref{eq:Higgs_mass_fermion_loop} and~\ref{eq:Higgs_mass_scalar_loop} would exactly cancel.  This is precisely the foundation of supersymmetry: for each fermion, there is a supersymmetric partner boson.  This would remove the hierarchy problem altogether, and is the main reason physicists are eager to find evidence for the existence of supersymmetry at the LHC.
 
-In addition to providing some rationale for the Higgs mechanism, SUSY makes two other very desirable predictions.  The first is that the strong, weak, and electromagnetic coupling constants will exactly unify at an energy scale of $10^{16}$ GeV/$c$, as shown in Figure~\ref{fig:SUSY_grand_unification}.  Unification of forces is not required by any experimental consideration, but is an elegant result nonetheless.  The second prediction of SUSY, explained in more detail in Sec.~\ref{sec:Phenomenology of General Gauge Mediation}, is the existence of a new stable particle, undiscovered as of yet because of its extremely feeble interactions with ordinary matter.  This particle might be what astronomers have observed as dark matter.
+In addition to providing some rationale for the Higgs mechanism, SUSY makes two other very desirable predictions.  The first is that the strong, weak, and electromagnetic coupling constants will exactly unify at an energy scale of $10^{16}$ GeV/$c$, as shown in Figure~\ref{fig:SUSY_grand_unification}.  Unification of forces is not required by any experimental consideration, but is an elegant result nonetheless.  The second prediction of SUSY, explained in more detail in Sec.~\ref{sec:Phenomenology of General Gauge Mediation}, is the existence of a new stable particle, undiscovered as of yet because of its extremely feeble interactions with ordinary matter.  This particle might be what astronomers have observed as dark matter.  In fact, regardless of any theory, searches for evidence of dark matter at colliders are well motivated by suggestions from astronomy that some or all of the dark matter should have a mass at the weak scale \cite{Jungman}.
 
 \begin{figure}
 	\centering

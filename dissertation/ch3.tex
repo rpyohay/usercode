@@ -9,7 +9,7 @@ The following introduction to SUSY focuses primarily on the aspects of the forma
 \section{Supermultiplet Representation}
 \label{sec:Supermultiplet Representation}
 
-The Standard Model is extended to include supersymmetry by the introduction of a supersymmetry transformation that takes fermionic states to bosonic states and vice versa.  The resulting model is called the \textit{minimal supersymmetric Standard Model} (MSSM).  In analogy with the known symmetries of the Standard Model, the SUSY transformation has associated generators that obey defining commutation and anticommutation relations, and a fundamental representation.  All SM particles and their \textit{superpartners} fall into one of two \textit{supermultiplet} representations.  Using the property that
+The Standard Model is extended to include supersymmetry by the introduction of a supersymmetry transformation that takes fermionic states to bosonic states and vice versa.  The resulting model is called the \textit{supersymmetric Standard Model}.  In analogy with the known symmetries of the Standard Model, the SUSY transformation has associated generators that obey defining commutation and anticommutation relations, and a fundamental representation.  All SM particles and their \textit{superpartners} fall into one of two \textit{supermultiplet} representations.  Using the property of SUSY that
 
 \begin{equation}
 n_{F} = n_{B},
@@ -18,15 +18,14 @@ n_{F} = n_{B},
 where $n_{F}$ is the number of fermionic degrees of freedom per supermultiplet and $n_{B}$ is the number of bosonic degrees of freedom, the two types of supermultiplets are
 
 \begin{enumerate}
-  \item \textit{Chiral supermultiplets}: one Weyl fermion (two helicity states $\Rightarrow n_{F} = 2$) and one complex scalar field (with two real components $\Rightarrow n_{B} = 2$)
-  \item \textit{Gauge supermultiplets}: One spin-1 vector boson (two helicity states $\Rightarrow n_{B} = 2$) and one Weyl fermion (two helicity states $\Rightarrow n_{F} = 2$)
+  \item \textit{Chiral supermultiplets}: Weyl fermions (two helicity states $\Rightarrow n_{F} = 2$) associated with complex scalar fields (with two real components $\Rightarrow n_{B} = 2$)
+  \item \textit{Gauge supermultiplets}: Spin-1 vector bosons (two helicity states $\Rightarrow n_{B} = 2$) associated with Weyl fermions (two helicity states $\Rightarrow n_{F} = 2$)
 \end{enumerate}
 
-%define EWSB in chapter 2
-In the gauge supermultiplet, the vector boson is assumed massless (i.e. before EWSB generates a mass for it).  Since the superpartners to the SM particles have not yet been discovered, they must be significantly heavier than their SM counterparts.  Unbroken SUSY predicts that the SM particles and their superpartners must have exactly the same mass, so ultimately a mechanism for SUSY breaking must be introduced to generate masses for the superpartners (see Sec.~\ref{sec:Soft SUSY Breaking}).  Tables~\ref{tab:chiral_supermultiplets} and~\ref{tab:gauge_supermultiplets} show the chiral and gauge supermultiplets of the MSSM, respectively.  Note that the scalar partners to the SM fermions are denoted by placing an ``s" in front of their names, while the chiral fermion partners to the SM gauge bosons are denoted by appending ``ino" to their names.
+In the gauge supermultiplet, the vector boson is assumed massless (i.e. before EWSB generates a mass for it).  Since the superpartners to the SM particles have not yet been discovered, they must be significantly heavier than their SM counterparts.  Unbroken SUSY predicts that the SM particles and their superpartners must have exactly the same mass, so ultimately a mechanism for SUSY breaking, in addition to EWSB, must be introduced to generate masses for the superpartners (see Sec.~\ref{sec:Soft SUSY Breaking}).  Tables~\ref{tab:chiral_supermultiplets} and~\ref{tab:gauge_supermultiplets} show the chiral and gauge supermultiplets of the supersymmetric Standard Model, respectively.  Note that the scalar partners to the SM fermions are denoted by placing an ``s" in front of their names, while the chiral fermion partners to the SM gauge bosons are denoted by appending ``ino" to their names.
 
 \begin{table}[htbp]
-\caption{Chiral supermultiplets of the supersymmetric Standard Model.  Adapted from Table 1.1 of ref. \cite{SUSY_primer}.}
+\caption{Chiral supermultiplets of the supersymmetric Standard Model.  In the last column, the first number refers to the supermultiplet representation under $SU(3)_{C}$ (e.g. $\mathbf{3}$ means it has color charge and feels QCD), the second number refers to the representation under $SU(2)_{L}$ (e.g. $\mathbf{2}$ means it has weak isospin and feels the weak interaction), and the third number is the value of the hypercharge.  A bar over a number refers to the adjoint representation.  $\mathbf{1}$ means that the supermultiplet is not charged under that group, and thus does not feel the associated force (for example, the right-handed fermion singlets do not feel the weak interaction).  Adapted from Table 1.1 of ref. \cite{SUSY_primer}.}
 \begin{tabular}{|m{3cm}|m{2cm}|m{2cm}|m{2cm}|m{4cm}|}
 \hline
 Type of \newline supermultiplet & Notation & Spin-0 component & Spin-1/2 component & Representation under $SU(3)_{C} \otimes SU(2)_{L} \otimes U(1)_{Y}$ \\
@@ -70,15 +69,15 @@ B/bino & $\widetilde{B}^{0}$ & $B^{0}$ & ($\mathbf{1}$, $\mathbf{1}$, 0) \\
 \section{The Unbroken SUSY Lagrangian}
 \label{sec:The Unbroken SUSY Lagrangian}
 
-The first piece of the full unbroken SUSY Lagrangian density consists of the kinetic and interacting terms related to the chiral supermultiplets.  As explained in Sec.~\ref{sec:Supermultiplet Representation}, a chiral supermultiplet consists of a Weyl fermion $\psi$ (the ordinary fermion) and a complex scalar $\phi$ (the sfermion).  For a collection of such chiral supermultiplets, the Lagrangian is
+The first piece of the full unbroken SUSY Lagrangian density consists of the kinetic and interacting terms related to the chiral supermultiplets.  As explained in Sec.~\ref{sec:Supermultiplet Representation}, a chiral supermultiplet consists of Weyl fermions $\psi$ (the ordinary fermion) and complex scalars $\phi$ (the sfermion).  For a collection of such chiral supermultiplets, the Lagrangian is
 
 \begin{eqnarray}
 \label{eq:L_chiral}
 \mathcal{L}_{\mathrm{chiral}} &=& -\partial^{\mu}\phi^{*i}\partial_{\mu}\phi_{i}\mbox{ }-\mbox{ }V_{\mathrm{chiral}}(\phi, \phi^{*})\mbox{ }-\mbox{ }i\psi^{\dag i}\overline{\sigma}^{\mu}\partial_{\mu}\psi_{i}\mbox{ }-\mbox{ }\frac{1}{2}M^{ij}\psi_{i}\psi_{j}\mbox{ }\nonumber \\
 &&-\mbox{ }\frac{1}{2}M_{ij}^{*}\psi^{\dag i}\psi^{\dag j}\mbox{ }-\mbox{ }\frac{1}{2}y^{ijk}\phi_{i}\psi_{j}\psi_{k}\mbox{ }-\mbox{ }\frac{1}{2}y_{ijk}^{*}\phi^{*i}\psi^{\dag j}\psi^{\dag k}
 \end{eqnarray}
-%put more horizontal space here
-where $i$ runs over all supermultiplets in Table~\ref{tab:chiral_supermultiplets}, $\overline{\sigma}^{\mu}$ are -1 $\times$ the Pauli matrices (except for $\sigma^{0}$ = $\overline{\sigma}^{0}$), $M^{ij}$ is a mass matrix for the fermions, $y^{ijk}$ are the Yukawa couplings between one scalar and two spinor fields, and $V_{\mathrm{chiral}}(\phi, \phi^{*})$ is the scalar potential
+%
+where $i$ runs over all supermultiplets in Table~\ref{tab:chiral_supermultiplets}, $\overline{\sigma}^{\mu}$ are the negative of the Pauli matrices (except for $\sigma^{0}$ = $\overline{\sigma}^{0}$), $M^{ij}$ is a mass matrix for the fermions, $y^{ijk}$ are the Yukawa couplings between one scalar and two spinor fields, and $V_{\mathrm{chiral}}(\phi, \phi^{*})$ is the scalar potential
 
 \begin{eqnarray}
 \label{eq:V_chiral}
@@ -122,7 +121,7 @@ F_{\mu\nu}^{a} &=& \partial_{\mu}A_{\nu}^{a}\mbox{ }-\mbox{ }\partial_{\nu}A_{\m
 D_{\mu}\lambda^{a} &=& \partial_{\mu}\lambda^{a}\mbox{ }+\mbox{ }gf^{abc}A_{\mu}^{b}\lambda^{c}, 
 \end{eqnarray}
 %
-and $D^{a}$ is an auxiliary field that does not propagate (in the literature, it is used as a bookkeeping tool and can be removed via its algebraic equation of motion).
+and $D^{a}$ is an auxiliary field that is introduced as a bookkeeping tool to keep the fermionic and bosonic degrees of freedom equal both on- and off-shell.  There is no kinetic term for $D^{a}$ in the Lagrangian, so therefore it does not propagate or represent any real particle.  Its equation of motion, from $\delta\mathcal{L}/\delta D^{a} = 0$, yields a simple algebraic expression for $D^{a}$ that can be used to eliminate it from the Lagrangian if desired.
 
 To build a fully supersymmetric and gauge-invariant Lagrangian, the ordinary derivatives in $\mathcal{L}_{\mathrm{chiral}}$ (Eq.~\ref{eq:L_chiral}) must be replaced by covariant derivatives
 
@@ -179,7 +178,6 @@ The following list gives a description of the terms in Eq.~\ref{eq:L_final}:
   \item $11^{\mathrm{th}}$ line: $\phi_{i}^{4}$ vertices (see Figs.~\subref*{fig:non-gauge_phi4_vertex} and~\subref*{fig:gauge_phi4_vertex})
 \end{itemize}
 
-%fix vertical spacing
 \begin{figure}
 	\centering
 	\subfloat[Fermion mass terms.  Reprinted from Figs. 3.2(c) and 3.2(d) of ref. \cite{SUSY_primer}.]{\label{fig:fermion_mass_terms}\includegraphics[scale=1.35]{fermion_mass_terms}}
@@ -214,7 +212,7 @@ The following list gives a description of the terms in Eq.~\ref{eq:L_final}:
 \section{Soft SUSY Breaking}
 \label{sec:Soft SUSY Breaking}
 
-Since quadratic divergences in sfermion masses vanish to all orders in perturbation theory in plain unbroken SUSY \cite{SUSY_primer} due to the presence of gauge and Yukawa interactions with the necessary relationships between coupling constants, it is desirable that the terms that break SUSY not disturb this property.  In addition, SUSY should be broken spontaneously, as electroweak symmetry is broken in the Standard Model, so that it is only made manifest at high energies.  To satisfy these constraints, SUSY-breaking terms are simply added to the unbroken SUSY Lagrangian in Eq.~\ref{eq:L_final} such that $\mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{unbroken}} + \mathcal{L}_{\mathrm{breaking}}$.  The coefficients of terms in $\mathcal{L}_{\mathrm{breaking}}$ must have positive mass dimension in order not to contribute quadratically divergent loop corrections to the scalar masses (like the Higgs mass).\footnote{This point can be argued via dimensional analysis.  Radiative corrections take the form $\Delta m_{S}^{2}$, where $m_{S}$ is the mass of the scalar particle in question.  The dimensions of $\Delta m_{S}^{2}$ are $\mbox{mass}^{2}$.  $\Delta m_{S}^{2}$ is proportional to some coupling constant or mass coefficient $k$ multiplied by a function of $\Lambda_{\mathrm{UV}}$, the high energy cutoff scale.  The function of $\Lambda_{\mathrm{UV}}$ is determined by a loop integral, and thus typically takes the form $\Lambda_{\mathrm{UV}}^{2}$ (quadratically divergent) or $\ln\frac{\Lambda_{\mathrm{UV}}}{m_{\mathrm{low}}}$ (logarithmically divergent, where $m_{\mathrm{low}}$ is some other lower-mass scale in the problem).  Now, if $k$ already contributes at least one power of mass to $\Delta m_{S}^{2}$, then the high-energy behavior---the function of $\Lambda_{\mathrm{UV}}$---can only contribute at most one power of the dimensionful parameter $\Lambda_{\mathrm{UV}}$.  However, there are typically no loop integrals that diverge linearly in $\Lambda_{\mathrm{UV}}$, so by forcing $k$ to have positive mass dimension, the form of the radiative corrections contributed by SUSY-breaking terms is limited to $\Delta m_{S}^{2} \sim m_{\mathrm{low}}^{2}\ln\frac{\Lambda_{\mathrm{UV}}}{m_{\mathrm{low}}}$.  In effect, the possibility of dangerous corrections proportional to $\Lambda_{\mathrm{UV}}^{2}$ is excluded by dimensional analysis if the requirement that $k$ contribute at least one power of mass is enforced.}  This form of SUSY breaking is called \textit{soft}, and all coefficients of soft SUSY breaking terms are expected to be of order $m_{\mathrm{soft}}$ or $m_{\mathrm{soft}}^{2}$.
+Since quadratic divergences in sfermion masses vanish to all orders in perturbation theory in plain unbroken SUSY \cite{SUSY_primer} due to the presence of gauge and Yukawa interactions with the necessary relationships between coupling constants (i.e. chiral symmetry inherited from the partner fermion protects the sfermion masses, as explained in Sec.~\ref{sec:Implications of the Higgs Mechanism}), it is desirable that the terms that break SUSY not disturb this property.  In addition, SUSY should be broken spontaneously, as electroweak symmetry is broken in the Standard Model, so that it is only made manifest at high energies.  To satisfy these constraints, SUSY-breaking terms are simply added to the unbroken SUSY Lagrangian in Eq.~\ref{eq:L_final} such that $\mathcal{L}_{\mathrm{total}} = \mathcal{L}_{\mathrm{unbroken}} + \mathcal{L}_{\mathrm{breaking}}$.  The coefficients of terms in $\mathcal{L}_{\mathrm{breaking}}$ must have positive mass dimension in order not to contribute quadratically divergent loop corrections to the scalar masses (like the Higgs mass); i.e. to not create a hierarchy problem (Sec.~\ref{sec:Implications of the Higgs Mechanism}) for the scalars.\footnote{This point can be argued via dimensional analysis.  Radiative corrections take the form $\Delta m_{S}^{2}$, where $m_{S}$ is the mass of the scalar particle in question.  The dimensions of $\Delta m_{S}^{2}$ are $\mbox{mass}^{2}$.  $\Delta m_{S}^{2}$ is proportional to some coupling constant or mass coefficient $k$ multiplied by a function of $\Lambda_{\mathrm{UV}}$, the high energy cutoff scale.  The function of $\Lambda_{\mathrm{UV}}$ is determined by a loop integral, and thus typically takes the form $\Lambda_{\mathrm{UV}}^{2}$ (quadratically divergent) or $\ln\frac{\Lambda_{\mathrm{UV}}}{m_{\mathrm{low}}}$ (logarithmically divergent, where $m_{\mathrm{low}}$ is some other lower-mass scale in the problem).  Now, if $k$ already contributes at least one power of mass to $\Delta m_{S}^{2}$, then the high-energy behavior---the function of $\Lambda_{\mathrm{UV}}$---can only contribute at most one power of the dimensionful parameter $\Lambda_{\mathrm{UV}}$.  However, there are typically no loop integrals that diverge linearly in $\Lambda_{\mathrm{UV}}$, so by forcing $k$ to have positive mass dimension, the form of the radiative corrections contributed by SUSY-breaking terms is limited to $\Delta m_{S}^{2} \sim m_{\mathrm{low}}^{2}\ln\frac{\Lambda_{\mathrm{UV}}}{m_{\mathrm{low}}}$.  In effect, the possibility of dangerous corrections proportional to $\Lambda_{\mathrm{UV}}^{2}$ is excluded by dimensional analysis if the requirement that $k$ contribute at least one power of mass is enforced.}  This form of SUSY breaking is called \textit{soft}, and all coefficients of soft SUSY breaking terms are expected to be of order $m_{\mathrm{soft}}$ or $m_{\mathrm{soft}}^{2}$.
 
 Soft SUSY breaking terms give masses to the sfermions and gauginos and introduce a cubic sfermion vertex.  The soft terms are given by
 
@@ -238,9 +236,7 @@ Many viable models of achieving soft SUSY breaking have been studied over the la
 \section{Gauge-Mediated SUSY Breaking}
 \label{sec:Gauge-Mediated SUSY Breaking}
 
-%how do the messengers interact with the ordinary particles?
-%include a diagram of the communication between the sectors?
-In gauge-mediated models \cite{GMSB}, ``hidden" fields spontaneously break the supersymmetry of very heavy chiral \textit{messenger} supermultiplets.  There are a number of competing models (see ref. \cite{GMSB}) that explain the precise mechanism of spontaneous SUSY breaking, but fortunately the details of those models mostly decouple from the phenomenology of GMSB.  The messengers then communicate the SUSY breaking to the sparticles via loop diagrams of gauge interaction strength (i.e. via vertices like those shown in Figs.~\subref*{fig:Aphiphi_vertex},~\subref*{fig:Apsipsi_vertex},~\subref*{fig:phipsilambda_vertices},~\subref*{fig:AAphiphi_vertex}, and~\subref*{fig:gauge_phi4_vertex}, which are proportional to the SM gauge couplings constants).  Feynman diagrams corresponding to gaugino and sfermion mass terms are shown in Figure~\ref{fig:gaugino_sfermion_GMSB_mass_terms}.
+In gauge-mediated models \cite{GMSB}, ``hidden" fields spontaneously break the supersymmetry of very heavy chiral \textit{messenger} supermultiplets.  There are a number of competing models (see ref. \cite{GMSB}) that attempt to explain the precise mechanism of spontaneous SUSY breaking, but fortunately the details of those models mostly decouple from the phenomenology of GMSB.  The messengers then communicate the SUSY breaking to the sparticles via self-energy loop diagrams of gauge interaction strength (i.e. via vertices like those shown in Figs.~\subref*{fig:Aphiphi_vertex},~\subref*{fig:Apsipsi_vertex},~\subref*{fig:phipsilambda_vertices},~\subref*{fig:AAphiphi_vertex}, and~\subref*{fig:gauge_phi4_vertex}, which are proportional to the SM gauge couplings constants).  The messengers are very heavy, so they cannot be detected in current collider experiments.  Feynman diagrams corresponding to gaugino and sfermion mass terms are shown in Figure~\ref{fig:gaugino_sfermion_GMSB_mass_terms}.
 
 \begin{figure}
 	\centering
@@ -259,7 +255,7 @@ Historically, GMSB and gravity-mediated SUSY breaking, or mSUGRA \cite{mSUGRA}, 
 \mathbf{m_{\widetilde{Q}}^{2}} = m_{\widetilde{Q}}^{2}\mathbf{1}\mbox{, }\mathbf{m_{\widetilde{L}}^{2}} = m_{\widetilde{L}}^{2}\mathbf{1}\mbox{, }\mathbf{m_{\widetilde{\overline{u}}}^{2}} = m_{\widetilde{\overline{u}}}^{2}\mathbf{1}\mbox{, }\mathbf{m_{\widetilde{\overline{d}}}^{2}} = m_{\widetilde{\overline{d}}}^{2}\mathbf{1}\mbox{, }\mathbf{m_{\widetilde{\overline{e}}}^{2}} = m_{\widetilde{\overline{e}}}^{2}\mathbf{1}
 \end{eqnarray}
 %
-i.e. all sfermion mass matrices arising from the soft terms are assumed to be proportional to the unit matrix $\mathbf{1}$, such that there can be no flavor mixing from these terms and contributions to flavor-changing processes are drastically reduced.\footnote{Universality also includes some assumptions about the form of $a_{uij}$, $a_{dij}$, and $a_{eij}$ and the stipulation that the soft terms not introduce any CP-violating phases.}  In mSUGRA models, universality is assumed from the beginning, while in GMSB it is a natural consequence of the fact that the sparticle-messenger vertices are flavor-blind.
+i.e. all sfermion mass matrices arising from the soft terms are assumed to be proportional to the unit matrix $\mathbf{1}$, such that there can be no flavor mixing from these terms and contributions to flavor-changing processes are drastically reduced.\footnote{Universality also includes some assumptions about the form of $a_{uij}$, $a_{dij}$, and $a_{eij}$ and the stipulation that the soft terms not introduce any CP-violating phases.}  In mSUGRA models, universality is assumed from the beginning, while in GMSB it is a natural consequence of the fact that the sparticle-messenger vertices are the ordinary flavor-blind gauge couplings that prevent things like flavor-changing neutral currents.
 
 \begin{figure}
 	\centering
@@ -284,7 +280,6 @@ m_{\phi_{i}}^{2} &=& 2\Lambda^{2}\sum_{a=1}^{3}(\frac{\alpha_{a}}{4\pi})^{2}C_{a
 %
 where $C_{a}(i)$ are group theory factors that are identical for all particles residing in the same type of supermultiplet (e.g. for all left-handed (s)quarks or left-handed (s)leptons).  As explained in the previous paragraph, the gaugino and sfermion masses do not depend on fermion family.
 
-%cite other GGM papers?
 In recent years, much theoretical progress has been made in unifying models of gauge mediation and developing less restrictive models than mGMSB.  \textit{General gauge mediation} (GGM) \cite{Meade_Seiberg_and_Shih} retains the essential features of mGMSB, such as flavor degeneracy and communication of SUSY breaking via messengers, but does not make assumptions about the specific messenger sector or SUSY breaking scale.  Many different collider final states can be interpreted in terms of GGM, and conversely, GGM implies a wealth of signatures, only a small fraction of which have been searched for at colliders \cite{ATLAS_GMSB_1fb-1, CDF_2010_GMSB_paper, CMS_GMSB_1fb-1}.  The following section discusses the aspects of GGM collider phenomenology relevant to this thesis.
 
 \section{Phenomenology of General Gauge Mediation}
@@ -293,26 +288,31 @@ In recent years, much theoretical progress has been made in unifying models of g
 The main distinguishing feature of all GMSB phenomenology is that the gravitino $\widetilde{G}$ is very light (eV-keV).  In general, the gravitino mass is proportional to $\langle F\rangle/M_{P}$, where $\langle F\rangle$ is the vacuum expectation value (VEV) of a field $F$ that spontaneously breaks SUSY in the vacuum state and $M_{P}$ is the Planck mass.  In GGM models, $\langle F\rangle \sim 10^{8}$ GeV, leading to a very light gravitino.  In contrast, mSUGRA predicts $\langle F\rangle \sim 10^{20}$ GeV.  The fact that the gravitino is so much lighter than any other particles in the supersymmetric Standard Model, and that it interacts only gravitationally (and thus extremely feebly), leads to two important phenomenological consequences:
 
 \begin{enumerate}
-  \item All sparticle decay chains end with the production of a gravitino.
+  \item All sparticle decay chains in GMSB end with the production of a gravitino.
   \item The gravitino escapes 4$\pi$, hermetic collider detectors without interacting, leaving a signature of ``missing" momentum transverse to the beam direction.
 \end{enumerate}
 
-Even if the gravitino were lighter than any other sparticle, but heavier than an ordinary SM particle, it still could not decay to the SM particle due to \textit{R-parity}.  R-parity is a conserved quantity of the supersymmetric Standard Model that enforces baryon and lepton number conservation, which would otherwise be generically allowed at levels in conflict with experiment (e.g. the non-observation of baryon- and lepton-number-violating proton decay).  All sparticles have R-parity -1, while all ordinary SM particles have R-parity +1, and R-parity conservation dictates that at any vertex, the product of the R-parities of each leg must be +1.  This leads to two more important consequences:
+Even if the gravitino were lighter than any other sparticle, but heavier than an ordinary SM particle, it still could not decay to the SM particle due to \textit{R-parity}.  R-parity is a conserved quantity of the supersymmetric Standard Model introduced to enforce baryon and lepton number conservation, which would otherwise be generically allowed at levels in conflict with experiment (e.g. the non-observation of baryon- and lepton-number-violating proton decay).  All sparticles have R-parity -1, while all ordinary SM particles have R-parity +1, and R-parity conservation dictates that at any vertex, the product of the R-parities of each leg must be +1.  This leads to two more important consequences:
 
 \begin{enumerate}
   \item Since conservation of energy only allows it to decay to ordinary SM particles, but R-parity prevents a sparticle-particle-particle vertex, the \textit{lightest supersymmetric particle} (LSP) must be absolutely stable.  All sparticle decays proceed through the \textit{next-to-lightest supersymmetric particle} (NLSP), which in turn decays to the LSP.  The fact that it is stable and only gravitationally interacting makes the gravitino a candidate dark matter particle (see Sec.~\ref{sec:Experimental Status of SUSY}).
   \item In colliders, sparticles are produced in pairs (particle + particle $\rightarrow$ sparticle + sparticle).
 \end{enumerate}
 
-In GMSB, then, the gravitino is the LSP.  If the NLSP is a gaugino,\footnote{In principle, the NLSP could be anything, but in most popular GGM models, it is either a gaugino or a stau.  The stau NLSP search is not the subject of this thesis, so it will not be considered in this section.} then the possible decays depend on mixing among the gauginos.  Due to the effects of EWSB, the four neutral gauginos $\widetilde{H}_{u}^{0}$, $\widetilde{H}_{d}^{0}$, $\widetilde{B}$, $\widetilde{W}^{0}$ mix into four \textit{neutralino} mass eigenstates $\NLSP, \widetilde{\chi}_{2}^{0}, \widetilde{\chi}_{3}^{0}, \widetilde{\chi}_{4}^{0}$, and the four charged gauginos $\widetilde{H}_{u}^{+}$, $\widetilde{H}_{d}^{-}$, $\widetilde{W}^{+}$, $\widetilde{W}^{-}$ mix into two \textit{chargino} mass eigenstates $\widetilde{\chi}_{1}^{\pm}, \widetilde{\chi}_{2}^{\pm}$ (two mass eigenstates each with two possible charges = four particles).  In the limit that EWSB effects are small, the neutralino and chargino masses can be written as the gauge eigenstate masses plus a small perturbation:
+In GMSB, then, the gravitino is the LSP.  If the NLSP is a gaugino,\footnote{In principle, the NLSP could be anything, but in most popular GGM models, it is either a gaugino or a stau.  The stau NLSP search is not the subject of this thesis, so it will not be considered in this section.} then the possible decays depend on mixing among the gauginos.  The four neutral gauginos $\widetilde{H}_{u}^{0}$, $\widetilde{H}_{d}^{0}$, $\widetilde{B}$, $\widetilde{W}^{0}$ mix into four \textit{neutralino} mass eigenstates $\NLSP, \widetilde{\chi}_{2}^{0}, \widetilde{\chi}_{3}^{0}, \widetilde{\chi}_{4}^{0}$, and the four charged gauginos $\widetilde{H}_{u}^{+}$, $\widetilde{H}_{d}^{-}$, $\widetilde{W}^{+}$, $\widetilde{W}^{-}$ mix into two \textit{chargino} mass eigenstates $\widetilde{\chi}_{1}^{\pm}, \widetilde{\chi}_{2}^{\pm}$ (two mass eigenstates each with two possible charges = four particles).  In the limit that EWSB effects are small, the neutralino and chargino masses can be written as the gauge eigenstate masses plus a small perturbation:
 
 \begin{eqnarray}
-\label{eq:neutralino_chargino_masses}
+\label{eq:neutralino_mass_1}
 m_{\NLSP} &=& M_{1}\mbox{ }-\mbox{ }\frac{m_{Z}^{2}\sin^{2}\theta_{W}(M_{1} + \mu\sin 2\beta)}{\mu^{2} - M_{1}^{2}}\mbox{ + }...\\
+\label{eq:neutralino_mass_2}
 m_{\widetilde{\chi}_{2}^{0}} &=& M_{2}\mbox{ }-\mbox{ }\frac{m_{W}^{2}(M_{2} + \mu\sin 2\beta)}{\mu^{2} - M_{2}^{2}}\mbox{ + }...\\
+\label{eq:neutralino_mass_3}
 m_{\widetilde{\chi}_{3}^{0}} &=& |\mu|\mbox{ + }\frac{m_{Z}^{2}(\sgn(\mu) - \sin 2\beta)(\mu + M_{1}\cos^{2}\theta_{W} + M_{2}\sin^{2}\theta_{W})}{2(\mu + M_{1})(\mu + M_{2})}\mbox{ + }...\\
+\label{eq:neutralino_mass_4}
 m_{\widetilde{\chi}_{4}^{0}} &=& |\mu|\mbox{ + }\frac{m_{Z}^{2}(\sgn(\mu) + \sin 2\beta)(\mu - M_{1}\cos^{2}\theta_{W} - M_{2}\sin^{2}\theta_{W})}{2(\mu - M_{1})(\mu - M_{2})}\mbox{ + }...\\
+\label{eq:chargino_mass_1}
 m_{\widetilde{\chi}_{1}^{\pm}} &=& M_{2}\mbox{ }-\mbox{ }\frac{m_{W}^{2}(M_{2} + \mu\sin 2\beta)}{\mu^{2} - M_{2}^{2}}\mbox{ + }...\\
+\label{eq:chargino_mass_2}
 m_{\widetilde{\chi}_{2}^{\pm}} &=& |\mu|\mbox{ + }\frac{m_{W}^{2}\sgn(\mu)(\mu + M_{2}\sin 2\beta)}{\mu^{2} - M_{2}^{2}}\mbox{ + }...
 \end{eqnarray}
 %
@@ -321,25 +321,25 @@ where $\tan\beta = \langle H_{u}^{0}\rangle/\langle H_{d}^{0}\rangle$.
 The two scenarios studied in ref. \cite{CMS_GMSB_1fb-1} are the following:
 
 \begin{itemize}
-  \item \textbf{Bino NLSP}: $M_{1} \sim$ few hundred GeV, $M_{2}, |\mu| \gg M_{1}$.  All but the lightest neutralino are effectively inaccessible at the LHC due to their large masses.  The NLSP can always decay to $\gamma + \widetilde{G}$, and if it is heavy enough, to $Z + \widetilde{G}$ or $H + \widetilde{G}$.
-  \item \textbf{Wino NLSP}: $M_{2} \sim$ few hundred GeV, $M_{1}, |\mu| \gg M_{2}$.  The lightest neutralino and the lightest chargino are nearly degenerate in mass, and are the only two particles to play a role at the LHC.  The decays described in the previous bullet point can happen, as well as chargino decays to $W + \widetilde{G}$.
+  \item \textbf{Bino NLSP}: $M_{1} \sim$ few hundred GeV, $M_{2}, |\mu| \gg M_{1}$.  All but the lightest neutralino (Eq.~\ref{eq:neutralino_mass_1}) are effectively inaccessible at the LHC due to their large masses.  The NLSP can always decay to $\gamma + \widetilde{G}$, and if it is heavy enough, to $Z + \widetilde{G}$ or $H + \widetilde{G}$.
+  \item \textbf{Wino NLSP}: $M_{2} \sim$ few hundred GeV, $M_{1}, |\mu| \gg M_{2}$.  The lightest neutralino (Eq.~\ref{eq:neutralino_mass_1}) and the lightest chargino (Eq.~\ref{eq:chargino_mass_1}) are nearly degenerate in mass, and are the only two particles to play a role at the LHC.  The decays described in the previous bullet point can happen, as well as chargino decays to $W + \widetilde{G}$.
 \end{itemize}
 %
-The subject of this thesis is the classic bino NLSP decay $\gamma + \widetilde{G}$.
+The search described in this thesis is optimized for the classic bino NLSP decay $\gamma + \widetilde{G}$, but sensitivity to the wino co-NLSP scenario is also studied (see Chapter~\ref{chap:Interpretation of Results in Terms of GMSB Models}).
 
-Since strong production of SUSY particles dominates over electroweak production at the LHC due to the enhanced $gg$ parton luminosity over the $q\overline{q}$ parton luminosity, early LHC searches are particularly sensitive to light squarks and gluinos.  General gauge mediation makes no a priori restrictions on the mass splitting between the strongly interacting sparticles and the weakly interacting sparticles, so models with light squarks and gluinos are viable.  In fact, such models could not be probed as well at the Tevatron\footnote{Located on the Fermilab site in Batavia, Illinois, the Tevatron was a proton-antiproton collider operating at 1.96 TeV center-of-mass energy.  The Tevatron ran from 1987 to 2011 \cite{Tevatron_lifetime}.} as they are at the LHC due to the aforementioned parton luminosities.
+Since strong production of SUSY particles, for instance via $gg\rightarrow\tilde{g}\tilde{g}$, dominates over electroweak production, for instance via $q\bar{q}\rightarrow\tilde{\chi}_{1}^{\pm}\tilde{\chi}_{1}^{\mp}$, at the LHC due to the enhanced $gg$ parton luminosity over the $q\overline{q}$ parton luminosity, early LHC searches are particularly sensitive to light squarks and gluinos.  General gauge mediation makes no a priori restrictions on the mass splitting between the strongly interacting sparticles and the weakly interacting sparticles, so models with light squarks and gluinos are viable.  In fact, such models could not be probed as well at the Tevatron\footnote{Located on the Fermilab site in Batavia, Illinois, the Tevatron was a proton-antiproton collider operating at 1.96 TeV center-of-mass energy.  The Tevatron ran from 1987 to 2011 \cite{Tevatron_lifetime}.} as they are at the LHC due to the aforementioned parton luminosities.
 
 Typical LHC signatures of the bino and wino NLSP scenarios are shown in Figure~\ref{fig:bino_wino_NLSP_signatures}.
 
 \begin{figure}
 	\centering
-	\subfloat[Two gluinos each decay via $\NLSP\rightarrow\gamma\widetilde{G}$.]{\label{fig:2photons_jets_MET}\includegraphics[scale=0.4]{2photons_jets_MET}}
-	\hspace{1cm}
-	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\NLSP\rightarrow Z(\rightarrow q\overline{q})\widetilde{G}$.]{\label{fig:bino_photon_jets_MET}\includegraphics[scale=0.4]{bino_photon_jets_MET}}
+	\subfloat[Two gluinos each decay via $\NLSP\rightarrow\gamma\widetilde{G}$.]{\label{fig:2photons_jets_MET}\includegraphics[scale=0.5]{2photons_jets_MET}}
 	\\
-	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\chi_{1}^{\pm}\rightarrow W^{\pm}(\rightarrow l^{\pm}\nu_{l})\widetilde{G}$.]{\label{fig:lepton_photon_jets_MET}\includegraphics[scale=0.4]{lepton_photon_jets_MET}}
-	\hspace{1cm}
-	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\chi_{1}^{\pm}\rightarrow W^{\pm}(\rightarrow q\overline{q}^{'})\widetilde{G}$.]{\label{fig:wino_photon_jets_MET}\includegraphics[scale=0.4]{wino_photon_jets_MET}}
+	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\NLSP\rightarrow Z(\rightarrow q\overline{q})\widetilde{G}$.]{\label{fig:bino_photon_jets_MET}\includegraphics[scale=0.5]{bino_photon_jets_MET}}
+	\\
+	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\chi_{1}^{\pm}\rightarrow W^{\pm}(\rightarrow l^{\pm}\nu_{l})\widetilde{G}$.]{\label{fig:lepton_photon_jets_MET}\includegraphics[scale=0.5]{lepton_photon_jets_MET}}
+	\\
+	\subfloat[One gluino decays via $\NLSP\rightarrow\gamma\widetilde{G}$, the other via $\chi_{1}^{\pm}\rightarrow W^{\pm}(\rightarrow q\overline{q}^{'})\widetilde{G}$.]{\label{fig:wino_photon_jets_MET}\includegraphics[scale=0.5]{wino_photon_jets_MET}}
 	\caption{Typical LHC signatures of the bino and wino NLSP scenarios.}
 	\label{fig:bino_wino_NLSP_signatures}
 \end{figure}
@@ -354,7 +354,7 @@ Figure~\ref{fig:CMS_SUSY_2011Limits_tanb10} shows the current limits set by the 
 \begin{figure}
 	\centering
 	\includegraphics[scale=0.6]{CMS_SUSY_2011Limits_tanb10}
-	\caption{CMS limits on mSUGRA with tan $\beta$ = 10.  The limits set by individual searches are shown as separate colored lines.  Solid lines refer to 2011 searches (i.e. using an integrated luminosity of $\sim$1 $\mbox{fb}^{-1}$), while dashed lines refer to 2010 searches ($\sim$36 $\mbox{pb}^{-1}$).  Reprinted from ref. \cite{CMS_mSUGRA}.}
+	\caption{CMS limits on mSUGRA with tan $\beta$ = 10, corresponding to a model with third- generation squarks and sfermions somewhat lighter than their first- and second-generation counterparts.  The limits set by individual searches are shown as separate colored lines.  Solid lines refer to 2011 searches (i.e. using an integrated luminosity of $\sim$1 $\mbox{fb}^{-1}$), while dashed lines refer to 2010 searches ($\sim$36 $\mbox{pb}^{-1}$).  Reprinted from ref. \cite{CMS_mSUGRA}.}
 	\label{fig:CMS_SUSY_2011Limits_tanb10}
 \end{figure}
 
@@ -376,7 +376,7 @@ Figure~\ref{fig:CMS_SUSY_2011Limits_tanb10} shows the current limits set by the 
 %	\label{fig:CMS_GGM_limit}
 %\end{figure}
 
-\marginpar{\textcolor{blue}{Removed CMS Moriond result}}Figure~\ref{fig:ATLAS_SPS8_limit} shows the most up-to-date limit (using 1 $\mbox{fb}^{-1}$ of integrated luminosity collected by the ATLAS experiment \cite{ATLAS} at the LHC) on the Snowmass Points and Slopes (SPS) model of mGMSB, dubbed SPS8 \cite{SPS}.  In general, the lifetime of the lightest neutralino in GMSB models can take on any value between hundreds of nanometers to a few kilometers depending on the mass of the lightest neutralino and the SUSY breaking scale \cite{SUSY_primer}.  The search published in ref. \cite{ATLAS_GMSB_1fb-1} (from which Figs.~\ref{fig:ATLAS_SPS8_limit} and~\ref{fig:ATLAS_GGM_limit} are culled) considers only \textit{prompt} neutralino variants, i.e. with neutralino lifetime short enough that the distance traveled by the neutralino before decay cannot be resolved by the detector.  The most recent limits on non-prompt SPS8-style neutralino models were set by the Collider Detector at Fermilab (CDF) collaboration with 570 $\mbox{pb}^{-1}$, and are shown in Figure~\ref{fig:CDF_lifetime_vs_mass} \cite{CDF_2010_GMSB_paper}.
+\marginpar{\textcolor{blue}{Removed CMS Moriond result}}Figure~\ref{fig:ATLAS_SPS8_limit} shows the most up-to-date limit (using 1 $\mbox{fb}^{-1}$ of integrated luminosity collected by the ATLAS experiment \cite{ATLAS} at the LHC) on the Snowmass Points and Slopes (SPS) model of mGMSB, dubbed SPS8 \cite{SPS}.  In general, the lifetime of the lightest neutralino in GMSB models can take on any value between hundreds of nanometers to a few kilometers depending on the mass of the lightest neutralino and the SUSY breaking scale \cite{SUSY_primer}.  The search published in ref. \cite{ATLAS_GMSB_1fb-1} (from which Fig.~\ref{fig:ATLAS_SPS8_limit} is culled) considers only \textit{prompt} neutralino variants, i.e. with neutralino lifetime short enough that the distance traveled by the neutralino before decay cannot be resolved by the detector.  The most recent limits on non-prompt SPS8-style neutralino models were set by the Collider Detector at Fermilab (CDF) collaboration with 570 $\mbox{pb}^{-1}$, and are shown in Figure~\ref{fig:CDF_lifetime_vs_mass} \cite{CDF_2010_GMSB_paper}.
 
 \begin{figure}
 	\centering
@@ -393,6 +393,8 @@ Finally, if the gravitino is to make up some or all of the dark matter, constrai
 %
 and applying the gravitino mass constraint $\sqrt{\langle F\rangle}$ $\lesssim$ 3000 TeV (cf. the first paragraph of Sec.~\ref{sec:Phenomenology of General Gauge Mediation} with $m_{\widetilde{G}} \sim$ keV) and $m_{\NLSP}$ = 100 GeV, the upper bound on the neutralino lifetime is 100 meters.  For $\sqrt{\langle F\rangle} \sim$ 100 TeV, the neutralino lifetime is detectable on collider time scales.
 
-Recently, a lower bound on the WDM particle mass in either pure warm or mixed warm and cold dark matter scenarios was set using observations of the Lyman-$\alpha$ forest.  For pure WDM, $m_{\mathrm{WDM}} >$ 8 keV, while for some mixed WDM-CDM scenarios, $m_{\mathrm{WDM}} >$ 1.1-1.5 keV \cite{Lyman_alpha_DM_limits, cosmo_constraints_on_GMSB}.  These bounds and others have motivated the development of more complicated gauge mediation models \cite{cosmo_constraints_on_GMSB}.  However, rather than focus on a specific GMSB model, of which there are many, the search detailed here is interpreted in a minimally model dependent way.  With this approach, the results can be applied to many competing models.  The remainder of this thesis is devoted to the experimental details of the search, analysis strategy, and presentation of the results.  The work described in this thesis forms the basis for the CMS public result ``Search for Supersymmetry in Events with Photons and Missing Energy" \cite{CMS_GMSB_5fb-1}, published in April 2012.
+Recently, a lower bound on the WDM particle mass in either pure warm or mixed warm and cold dark matter scenarios was set using observations of the Lyman-$\alpha$ forest.  For pure WDM, $m_{\mathrm{WDM}} >$ 8 keV, while for some mixed WDM-CDM scenarios, $m_{\mathrm{WDM}} >$ 1.1-1.5 keV \cite{Lyman_alpha_DM_limits, cosmo_constraints_on_GMSB}.  These bounds and others have motivated the development of more complicated gauge mediation models \cite{cosmo_constraints_on_GMSB}.
+
+However, rather than focus on a specific GMSB model, of which there are many, the search detailed in the following chapters is interpreted in a minimally model dependent way.  With this approach, the results can be applied to many competing models.  The remainder of this thesis is devoted to the experimental details of the search, analysis strategy, and presentation of the results.  The work described in this thesis forms the basis for the CMS public result ``Search for Supersymmetry in Events with Photons and Missing Energy" \cite{CMS_GMSB_5fb-1}, published in April 2012 (see Chapters~\ref{chap:Data Analysis} and~\ref{chap:Interpretation of Results in Terms of GMSB Models} for results).  Ref. \cite{CMS_GMSB_5fb-1} contains the best limits on bino-like NLSP and wino-like NLSP GGM models to date.
 
 \end{document}
