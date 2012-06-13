@@ -4,7 +4,7 @@
 \chapter{Data Analysis}
 \label{chap:Data Analysis}
 
-The signature of GGM SUSY particle production in this search is an excess of two-photon events with high \MET.  \MET is reconstructed using the particle flow algorithm as described in Sec.~\ref{sec:MET}.  Candidate two-photon events, as well as control events, are selected according to the offline object criteria presented in Secs.~\ref{sec:Photons} ,~\ref{sec:Electrons}, and~\ref{sec:Jets}; the event quality criteria in Sec.~\ref{sec:Event Quality}; and the trigger requirements in Sec.~\ref{sec:HLT}.  These are summarized in Table~\ref{tab:selection_summary}.
+The signature of GGM SUSY particle production in this search is an excess of two-photon events with high \MET above the Standard Model background.  \MET is reconstructed using the particle flow algorithm as described in Sec.~\ref{sec:MET}.  Candidate two-photon events, as well as control events, are selected according to the offline object criteria presented in Secs.~\ref{sec:Photons} ,~\ref{sec:Electrons}, and~\ref{sec:Jets}; the event quality criteria in Sec.~\ref{sec:Event Quality}; and the trigger requirements in Sec.~\ref{sec:HLT}.  These are summarized in Table~\ref{tab:selection_summary}.
 
 \begin{table}[hcbp]
 \caption{Selection criteria for $\gamma\gamma$, $e\gamma$, $ee$, and $\mathit{ff}$ events.}
@@ -51,7 +51,7 @@ This search utilizes 4.7 $\mbox{fb}^{-1}$ of CMS data collected during the perio
 \item \verb+/Photon/Run2011B-PromptReco-v1/AOD+
 \end{itemize}
 
-The search strategy is to model the backgrounds to the GGM SUSY signal using \MET shape templates derived from the control samples, and then to look for a high-\MET excess above the estimated background in the $\gamma\gamma$ sample.  There are two categories of backgrounds: QCD processes with no real \MET and electroweak processes with real \MET from neutrinos.  The relevant QCD background processes are multijet production with at least two jets faking photons, photon + jet production with at least one jet faking a photon, and diphoton production, and $Z$ production with a radiated photon where at least one of the $Z$ decay products (typically a jet) fakes a photon.  The relevant electroweak background processes, which are small compared to the QCD background, involve $W\rightarrow e\nu$ decay with a recoiling jet that fakes a photon or a real radiated photon (the $W$ may come from the decay of a top quark in $t\bar{t}$ events).  In both cases, the electron is misidentified as a photon due to a small inefficiency in reconstructing the electron pixel seed.  The main diagrams contributing to the QCD(electroweak) backgrounds are shown in Figure~\ref{fig:QCD_background_diagrams}(\ref{fig:EW_background_diagrams}).
+The search strategy is to model the backgrounds to the GGM SUSY signal using \MET shape templates derived from the control samples, and then to look for a high-\MET excess above the estimated background in the $\gamma\gamma$ sample.  There are two categories of backgrounds: QCD processes with no real \MET and electroweak processes with real \MET from neutrinos.  The relevant QCD background processes are multijet production with at least two jets faking photons, photon + jet production with at least one jet faking a photon, and diphoton production.  The relevant electroweak background processes, which are small compared to the QCD background, involve $W\rightarrow e\nu$ decay with a recoiling jet that fakes a photon or a real radiated photon (the $W$ may come from the decay of a top quark in $t\bar{t}$ events).  In both cases, the electron is misidentified as a photon due to a small inefficiency in reconstructing the electron pixel seed.  The main diagrams contributing to the QCD(electroweak) backgrounds are shown in Figure~\ref{fig:QCD_background_diagrams}(\ref{fig:EW_background_diagrams}).
 
 \begin{figure}
 	\centering
@@ -60,8 +60,8 @@ The search strategy is to model the backgrounds to the GGM SUSY signal using \ME
 	\subfloat[Photon + jet production via $qg$ interactions.]{\label{fig:qg_to_qa}\includegraphics[scale=1.0]{qg_to_qa}}
 	\hspace{1cm}
 	\subfloat[Diphoton production via $q\bar{q}$ and $gg$ interactions.]{\label{fig:diphoton}\includegraphics[scale=1.0]{diphoton_cropped}}
-	\hspace{1cm}
-	\subfloat[$Z\gamma$ production.]{\label{fig:Zgamma}\includegraphics[scale=1.0]{Zgamma_cropped}}
+%	\hspace{1cm}
+%	\subfloat[$Z\gamma$ production.]{\label{fig:Zgamma}\includegraphics[scale=1.0]{Zgamma_cropped}}
 	\caption{Representative Feynman diagrams of some QCD backgrounds to the GGM SUSY search.}
 	\label{fig:QCD_background_diagrams}
 \end{figure}
@@ -71,8 +71,8 @@ The search strategy is to model the backgrounds to the GGM SUSY signal using \ME
 	\subfloat[$W\gamma$ production.]{\label{fig:Wgamma}\includegraphics[scale=1.0]{qq_to_W_to_enu_to_enua}}
 	\hspace{1cm}
 	\subfloat[$W$ + jet production.]{\label{fig:W_jet}\includegraphics[scale=1.0]{qg_to_qW_to_qenu}}
-	\hspace{1cm}
-	\subfloat[$t\bar{t}$ production.]{\label{fig:ttbar}\includegraphics[scale=0.5]{gg_to_tt_to_WbWb_to_ffbenub_to_ffbenuba}}
+	\\
+	\subfloat[$t\bar{t}$ production.]{\label{fig:ttbar}\includegraphics[scale=1.0]{gg_to_tt_to_WbWb_to_ffbenub_to_ffbenuba}}
 	\caption{Representative Feynman diagrams of some electroweak backgrounds to the GGM SUSY search.}
 	\label{fig:EW_background_diagrams}
 \end{figure}
@@ -86,6 +86,9 @@ The search strategy is to model the backgrounds to the GGM SUSY signal using \ME
 %	\caption{\MET spectrum of the $\gamma\gamma$ search data sample overlaid on the \MET spectra of MC simulated background components.  The MC spectra are normalized to the integrated luminosity of the $\gamma\gamma$ data sample.  A description of the MC samples used may be found in Appendix~\ref{chap:Monte Carlo Samples}}.
 %	\label{fig:MET_data_vs_MC_backgrounds}
 %\end{figure}
+
+\section{Control Samples}
+\label{sec:Control Samples}
 
 Data control samples are used to model all of the backgrounds.  The primary control sample used to model the QCD background is the $\mathit{ff}$ sample, which is similar to the candidate $\gamma\gamma$ sample but with combined isolation or $\sigma_{i\eta i\eta}$ cuts inverted.  The cuts on these variables are used to distinguish between photons and jets, so by inverting those cuts, the resulting $\mathit{ff}$ sample becomes enriched with QCD dijets.  Because the fake photons are still required to pass a tight cut on $H/E$, they are guaranteed to be very electromagnetic jets, with an EM energy scale and resolution similar to that of the candidate photons.  This insures that the resulting estimate of the \MET shape does not have too long of a tail from severe HCAL mis-measurements that are actually rare in the $\gamma\gamma$ sample.
 
@@ -117,27 +120,52 @@ Due to the fact that the CMS ECAL energy resolution is much better than the HCAL
 
 \begin{description}
 \item[Choice of control sample] Since the underlying cause of \MET in the candidate sample is mis-measured hadronic activity, a control sample with similar hadronic activity to the candidate sample should be chosen.  Hadronic activity refers to number of jets, jet $E_{T}$, pileup, etc.
-\item[Reweighting] The control sample is reweighted so that its \MET spectrum appears as it would if the control sample had the same kinematic properties as the candidate sample (i.e. particle $p_{T}$ and $\eta$ distributions, etc.).  By choosing an appropriate control sample and reweighting it, the control \MET distribution should now match both the hadronic activity and the kinematics of the candidate sample.
+\item[Reweighting] The control sample is reweighted so that its \MET spectrum appears as it would if the control sample had the same kinematic properties as the candidate $\gamma\gamma$ sample (i.e. particle $p_{T}$ and $\eta$ distributions, etc.).  By choosing an appropriate control sample and reweighting it, the control \MET distribution should now match both the hadronic activity and the kinematics of the candidate sample.
 \item[Normalization] Finally, the control \MET distribution is normalized in a region of low \MET, where contamination from the expected GGM SUSY signal is small.  This implies an extrapolation of the low-\MET QCD background prediction to the high-\MET signal region.
 \end{description}
 
-As explained in the beginning of this chapter, the $\mathit{ff}$ sample is used as the primary QCD control sample, while the $ee$ sample is used as a cross-check.  Both samples have two well-measured EM objects per event, no real \MET, and similar hadronic activity to the $\gamma\gamma$ sample.  Figure~\ref{fig:hadronic_activity} shows a comparison of the shapes of some distributions relevant to hadronic activity between the $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples.  In general, the $ee$ sample has less hadronic activity than the $\gamma\gamma$ and $\mathit{ff}$ samples, as shown by the more steeply falling $ee$ distributions in Figs.~\ref{fig:hadronic_activity_HT},~\ref{fig:hadronic_activity_Nj},~\ref{fig:hadronic_activity_MHT}, and~\ref{fig:hadronic_activity_j1ET}.  In addition to the kinematic reweighting, there is also a reweighting by number of jets per event, which attempts to correct for this difference (see Sec.~\ref{sec:Reweighting}).
+As explained in the beginning of this chapter, the $\mathit{ff}$ sample is used as the primary QCD control sample, while the $ee$ sample is used as a cross-check.  Both samples have two well-measured EM objects per event, no real \MET, and similar hadronic activity to the $\gamma\gamma$ sample.  Figures~\ref{fig:hadronic_activity_HT}-~\ref{fig:hadronic_activity_nPV} show a comparison of the shapes of some distributions relevant to hadronic activity between the $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples.  In general, the $ee$ sample has less hadronic activity than the $\gamma\gamma$ and $\mathit{ff}$ samples, as shown by the more steeply falling $ee$ distributions in Figs.~\ref{fig:hadronic_activity_HT},~\ref{fig:hadronic_activity_Nj},~\ref{fig:hadronic_activity_MHT}, and~\ref{fig:hadronic_activity_j1ET}.  In addition to the kinematic reweighting, there is also a reweighting by number of jets per event, which attempts to correct for this difference (see Sec.~\ref{sec:Reweighting}).
 
 \begin{figure}
 	\centering
-	\subfloat[$H_{T}$, defined as the scalar sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_HT}\includegraphics[scale=0.25]{hadronic_activity_HT}}
-	\hspace{0.75cm}
-	\subfloat[Number of jets per event for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_Nj}\includegraphics[scale=0.25]{hadronic_activity_Nj}}
-	\hspace{0.75cm}
-	\subfloat[$\not\!\! H_{T}$, defined as the magnitude of the negative vectorial sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.]{\label{fig:hadronic_activity_MHT}\includegraphics[scale=0.25]{hadronic_activity_MHT}}
-	\\
-	\subfloat[Corrected $E_{T}$ for the jet with the largest corrected $E_{T}$ per event, for jets defined as in Table~\ref{tab:jet_definition} (excluding the $p_{T}$ requirement).]{\label{fig:hadronic_activity_j1ET}\includegraphics[scale=0.25]{hadronic_activity_j1ET}}
-	\hspace{0.75cm}
-	\subfloat[$\rho$ (average pileup energy density in the calorimeters per unit $\eta\cdot\phi$, cf. Sec.~\ref{sec:Photons}).]{\label{fig:hadronic_activity_rho}\includegraphics[scale=0.25]{hadronic_activity_rho}}
-	\hspace{0.75cm}
-	\subfloat[Number of good reconstructed primary vertices per event according to the criteria of Sec.~\ref{sec:Event Quality}.]{\label{fig:hadronic_activity_nPV}\includegraphics[scale=0.25]{hadronic_activity_nPV}}
-	\caption{Comparison of the shapes of some distributions relevant to hadronic activity between the $\gamma\gamma$, $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV), and $\mathit{ff}$ samples.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.  Errors are statistical only.}
-	\label{fig:hadronic_activity}
+	\includegraphics[scale=0.5]{hadronic_activity_HT}
+	\caption{$H_{T}$, defined as the scalar sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.  $\gamma\gamma$ is in black, $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) is in red, and $\mathit{ff}$ is in blue.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.  Errors are statistical only.}
+	\label{fig:hadronic_activity_HT}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{hadronic_activity_Nj}
+	\caption{Number of jets per event for jets defined as in Table~\ref{tab:jet_definition}.  $\gamma\gamma$ is in black, $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) is in red, and $\mathit{ff}$ is in blue.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.  Errors are statistical only.}
+	\label{fig:hadronic_activity_Nj}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{hadronic_activity_MHT}
+	\caption{$\not\!\! H_{T}$, defined as the magnitude of the negative vectorial sum of corrected jet $E_{T}$ for jets defined as in Table~\ref{tab:jet_definition}.  $\gamma\gamma$ is in black, $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) is in red, and $\mathit{ff}$ is in blue.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.  Errors are statistical only.}
+	\label{fig:hadronic_activity_MHT}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{hadronic_activity_j1ET}
+	\caption{Corrected $E_{T}$ for the jet with the largest corrected $E_{T}$ per event, for jets defined as in Table~\ref{tab:jet_definition} (excluding the $p_{T}$ requirement).  $\gamma\gamma$ is in black, $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) is in red, and $\mathit{ff}$ is in blue.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.  Errors are statistical only.}
+	\label{fig:hadronic_activity_j1ET}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{hadronic_activity_rho}
+	\caption{$\rho$ (average pileup energy density in the calorimeters per unit $\eta\cdot\phi$, cf. Sec.~\ref{sec:Photons}).  $\gamma\gamma$ is in black, $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) is in red, and $\mathit{ff}$ is in blue.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.  Errors are statistical only.}
+	\label{fig:hadronic_activity_rho}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.5]{hadronic_activity_nPV}
+	\caption{Number of good reconstructed primary vertices per event according to the criteria of Sec.~\ref{sec:Event Quality}.  $\gamma\gamma$ is in black, $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) is in red, and $\mathit{ff}$ is in blue.  The $ee$ and $\mathit{ff}$ distributions are normalized to the number of events in the $\gamma\gamma$ distribution.  Errors are statistical only.}
+	\label{fig:hadronic_activity_nPV}
 \end{figure}
 
 \begin{table}[hcbp]
@@ -189,16 +217,16 @@ To reweight the control sample events to match the kinematics of the candidate s
 
 \begin{figure}
 	\centering
-	\subfloat[$\gamma\gamma$.]{\label{fig:gg_MET_vs_di-EM_pT}\includegraphics[scale=0.2]{gg_MET_vs_di-EM_pT}}
-	\hspace{1cm}
-	\subfloat[$ee$.]{\label{fig:ee_MET_vs_di-EM_pT}\includegraphics[scale=0.2]{ee_MET_vs_di-EM_pT}}
-	\hspace{1cm}
-	\subfloat[$\mathit{ff}$.]{\label{fig:ff_MET_vs_di-EM_pT}\includegraphics[scale=0.2]{ff_MET_vs_di-EM_pT}}
+	\subfloat[$\gamma\gamma$.]{\label{fig:gg_MET_vs_di-EM_pT}\includegraphics[scale=0.4]{gg_MET_vs_di-EM_pT}}
+	\\
+	\subfloat[$ee$.]{\label{fig:ee_MET_vs_di-EM_pT}\includegraphics[scale=0.4]{ee_MET_vs_di-EM_pT}}
+	\\
+	\subfloat[$\mathit{ff}$.]{\label{fig:ff_MET_vs_di-EM_pT}\includegraphics[scale=0.4]{ff_MET_vs_di-EM_pT}}
 	\caption{\MET vs. di-EM $p_{T}$.}
 	\label{fig:MET_vs_di-EM_pT}
 \end{figure}
 
-Whereas the di-EM $p_{T}$ reweighting accounts for differences in production kinematics between the control and $\gamma\gamma$ samples, a simultaneous reweighting based on the number of jets in the event accounts for differences in hadronic activity between the samples, especially between $ee$ and $\gamma\gamma$ (cf. Fig.~\ref{fig:hadronic_activity}).  Jets are defined as in Table~\ref{tab:jet_definition_for_Nj_reweighting}.  Figure~\ref{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting} shows the effect of reweighting by number of jets per event, which is to increase(decrease) the tail of the $ee$($\mathit{ff}$) \MET spectrum.
+Whereas the di-EM $p_{T}$ reweighting accounts for differences in production kinematics between the control and $\gamma\gamma$ samples, a simultaneous reweighting based on the number of jets in the event accounts for differences in hadronic activity between the samples, especially between $ee$ and $\gamma\gamma$ (cf. Figs.~\ref{fig:hadronic_activity_HT}-~\ref{fig:hadronic_activity_nPV}).  Jets are defined as in Table~\ref{tab:jet_definition_for_Nj_reweighting}.  Figure~\ref{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting} shows the effect of reweighting by number of jets per event, which is to increase(decrease) the tail of the $ee$($\mathit{ff}$) \MET spectrum.
 
 %include ee/gg and ff/gg agreement?
 %include similar figures for MC?
@@ -215,22 +243,22 @@ Whereas the di-EM $p_{T}$ reweighting accounts for differences in production kin
 	\label{fig:dijet_pT_and_Nj_vs_dijet_pT_reweighting}
 \end{figure}
 
-Although the electron and photon energies are well measured by the ECAL, the ECAL-only measurement of the fake photon energy (cf. Sec~\ref{sec:Photons}) is biased slightly low due to the fact that fakes (which are really jets) tend to deposit some energy in the HCAL.  This can be seen in Figs.~\ref{fig:ET_bias_vs_EMF} and~\ref{fig:4684pb-1_single_ETBias}, which show the relative difference between the ECAL-only $E_{T}$ measurement and the PF $E_{T}$ measurement vs. EMF for electrons, photons, and fakes.  PF $E_{T}$ is defined as the \verb+L1Fast+-corrected $E_{T}$ of the nearest PF jet with $p_{T} \geq 20$ GeV (i.e., the $E_{T}$ of the PF jet object reconstructed from the same ECAL shower as the fake photon).  On average, the fakes tend to deposit a few percent more energy in the HCAL than the electrons or photons, which is recovered by the PF algorithm.  For this reason, the PF $p_{T}$ is used in the calculation of di-EM $p_{T}$ rather than the ECAL-only $p_{T}$.\footnote{In the few events ($\mathcal{O}(10^{-3})$) in which two PF jet objects, corresponding to the two electrons or fakes, are not found, the ECAL-only $p_{T}$ is used.}  This leads to a modest improvement in the agreement between the $ee$ and $\mathit{ff}$ \MET spectra, as shown in Figure~\ref{fig:ee_vs_ff_di-EM_vs_dijet_pT_reweighting}.
+Although the electron and photon energies are well measured by the ECAL, the ECAL-only measurement of the fake photon energy (cf. Sec~\ref{sec:Photons}) is biased slightly low due to the fact that fakes (which are really jets) tend to deposit some energy in the HCAL.  This can be seen in Figs.~\ref{fig:ET_bias_vs_EMF} and~\ref{fig:4684pb-1_single_ETBias}, which show the relative difference between the ECAL-only $E_{T}$ measurement and the PF $E_{T}$ measurement vs. EMF for electrons, photons, and fakes.  PF $E_{T}$ is defined as the \verb+L1Fast+-corrected $E_{T}$ of the nearest PF jet with $p_{T} \geq 20$ GeV (i.e., the $E_{T}$ of the PF jet object reconstructed from the same ECAL shower as the fake photon).  On average, the high-EMF fakes, which make up the bulk of the sample, tend to deposit a few percent more energy in the HCAL than the electrons or photons.  This energy is recovered by the PF algorithm.  For this reason, the PF $p_{T}$ is used in the calculation of di-EM $p_{T}$ rather than the ECAL-only $p_{T}$.\footnote{In the few events ($\mathcal{O}(10^{-3})$) in which two PF jet objects, corresponding to the two electrons or fakes, are not found, the ECAL-only $p_{T}$ is used.}  This leads to a modest improvement in the agreement between the $ee$ and $\mathit{ff}$ \MET spectra, as shown in Figure~\ref{fig:ee_vs_ff_di-EM_vs_dijet_pT_reweighting}.
 
 %include similar figures for MC?
 \begin{figure}
 	\centering
-	\subfloat[Leading electron in $ee$ events.]{\label{fig:4684pb-1_eLeading_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_eLeading_ETBias_log}}
+	\subfloat[Leading electron in $ee$ events.]{\label{fig:4684pb-1_eLeading_ETBias_log}\includegraphics[scale=0.3]{4684pb-1_eLeading_ETBias_log}}
 	\hspace{1cm}
-	\subfloat[Trailing electron in $ee$ events.]{\label{fig:4684pb-1_eTrailing_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_eTrailing_ETBias_log}}
+	\subfloat[Trailing electron in $ee$ events.]{\label{fig:4684pb-1_eTrailing_ETBias_log}\includegraphics[scale=0.3]{4684pb-1_eTrailing_ETBias_log}}
 	\\
-	\subfloat[Leading fake in $\mathit{ff}$ events.]{\label{fig:4684pb-1_fLeading_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_fLeading_ETBias_log}}
+	\subfloat[Leading fake in $\mathit{ff}$ events.]{\label{fig:4684pb-1_fLeading_ETBias_log}\includegraphics[scale=0.3]{4684pb-1_fLeading_ETBias_log}}
 	\hspace{1cm}
-	\subfloat[Trailing fake in $\mathit{ff}$ events.]{\label{fig:4684pb-1_fTrailing_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_fTrailing_ETBias_log}}
+	\subfloat[Trailing fake in $\mathit{ff}$ events.]{\label{fig:4684pb-1_fTrailing_ETBias_log}\includegraphics[scale=0.3]{4684pb-1_fTrailing_ETBias_log}}
 	\\
-	\subfloat[Leading photon in $\gamma\gamma$ events.]{\label{fig:4684pb-1_gLeading_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_gLeading_ETBias_log}}
+	\subfloat[Leading photon in $\gamma\gamma$ events.]{\label{fig:4684pb-1_gLeading_ETBias_log}\includegraphics[scale=0.3]{4684pb-1_gLeading_ETBias_log}}
 	\hspace{1cm}
-	\subfloat[Trailing photon in $\gamma\gamma$ events.]{\label{fig:4684pb-1_gTrailing_ETBias_log}\includegraphics[scale=0.25]{4684pb-1_gTrailing_ETBias_log}}
+	\subfloat[Trailing photon in $\gamma\gamma$ events.]{\label{fig:4684pb-1_gTrailing_ETBias_log}\includegraphics[scale=0.3]{4684pb-1_gTrailing_ETBias_log}}
 	\caption{Relative difference between the ECAL-only $E_{T}$ measurement and the PF $E_{T}$ measurement vs. EMF.  PF $E_{T}$ is defined in the text.}
 	\label{fig:ET_bias_vs_EMF}
 \end{figure}
@@ -318,11 +346,11 @@ The $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV), $\mathit{ff}$, and $\gamma\g
 %zoom out?
 \begin{figure}
 	\centering
-	\subfloat[0 jets.]{\label{fig:0_jet_dijet_pT}\includegraphics[scale=0.2]{0_jet_dijet_pT}}
-	\hspace{1cm}
-	\subfloat[1 jet.]{\label{fig:1_jet_dijet_pT}\includegraphics[scale=0.2]{1_jet_dijet_pT}}
-	\hspace{1cm}
-	\subfloat[$\geq$ 2 jets.]{\label{fig:2_jet_dijet_pT}\includegraphics[scale=0.2]{2_jet_dijet_pT}}
+	\subfloat[0 jets.]{\label{fig:0_jet_dijet_pT}\includegraphics[scale=0.3]{0_jet_dijet_pT}}
+	\\
+	\subfloat[1 jet.]{\label{fig:1_jet_dijet_pT}\includegraphics[scale=0.3]{1_jet_dijet_pT}}
+	\\
+	\subfloat[$\geq$ 2 jets.]{\label{fig:2_jet_dijet_pT}\includegraphics[scale=0.3]{2_jet_dijet_pT}}
 	\caption{$ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV) (red triangles), $\mathit{ff}$ (blue squares), and $\gamma\gamma$ (black circles) di-EM $p_{T}$ spectra for events with 0, 1, or $\geq 2$ jets (as in Table~\ref{tab:jet_definition_for_Nj_reweighting}).  Errors are statistical only.}
 	\label{fig:dijet_pT}
 \end{figure}
@@ -348,7 +376,7 @@ The $ee$ (81 GeV $\leq m_{\mathrm{ee}} <$ 101 GeV), $\mathit{ff}$, and $\gamma\g
 \subsection{Normalization}
 \label{sec:Normalization}
 
-After reweighting, the \MET distributions of the QCD control samples are normalized to the \MET $< 20$ GeV region of the candidate $\gamma\gamma$ \MET spectrum, where signal contamination is low.  The normalization factor is ($N_{\gamma\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}} - N_{e\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}})/N_{\mathrm{control}}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$, where $N_{e\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$ is the expected number of electroweak background events with \MET $< 20$ GeV (discussed in Section~\ref{sec:Modeling the Electroweak Background}).
+After reweighting, the \MET distributions of the QCD control samples are normalized to the \MET $< 20$ GeV region of the candidate $\gamma\gamma$ \MET spectrum, where signal contamination is low.  The normalization factor is ($N_{\gamma\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}} - N_{e\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}})/N_{\mathrm{control}}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$, where $N_{e\gamma}^{\not\!\! E_{T} < 20 \mathrm{GeV}}$ is the expected number of electroweak background events with \MET $< 20$ GeV (discussed in Section~\ref{sec:Modeling the Electroweak Background}).  The error on the QCD background prediction introduced by normalization is discussed in Sec.~\ref{sec:Errors on the Background Prediction}.
 
 \section{Modeling the Electroweak Background}
 \label{sec:Modeling the Electroweak Background}
@@ -403,7 +431,7 @@ $e\gamma$ background & N/A & N/A & N/A & N/A & 56 & 72.02 & 0.098 & 0.0375 \\
 \label{tab:feg_fit_parameters}
 \end{table}
 
-Fits to the $ee$ and $e\gamma$ invariant mass spectra are shown in Figure~\ref{fig:feg_fits}.  Figure~\ref{fig:feg_vs_pT_eta} indicates that the dependence of $f_{e\rightarrow\gamma}$ on the electron $p_{T}$ and $\eta$ is small.  (Note that all fit parameters are floating in the $p_{T}$-dependent fits.)  Therefore, a constant misidentification rate (derived from all $ee$ and $e\gamma$ events), rather than a $p_{T}$- and $\eta$-dependent misidentification rate, is used in the final electroweak background estimate, with the difference between the constant rate and the rate for electrons with $p_{T}$ between 25 and 40 GeV (the range in which the bulk of the trailing photons in the $\gamma\gamma$ sample lie) taken as a systematic error.
+Fits to the $ee$ and $e\gamma$ invariant mass spectra are shown in Figure~\ref{fig:feg_fits}.  Figure~\ref{fig:feg_vs_pT} indicates that there is some dependence of $f_{e\rightarrow\gamma}$ on the electron $p_{T}$, but since the the bulk of the electrons have $p_{T}\sim45$ GeV, applying a $p_{T}$-dependent mis-identification rate has a negligible effect on the final background estimate.  (Note that all fit parameters are floating in the $p_{T}$-dependent fits.)  The dependence on $\eta$ is small, as shown in Figure~\ref{fig:feg_vs_eta}.  Therefore, a constant misidentification rate (derived from all $ee$ and $e\gamma$ events), rather than a $p_{T}$- and $\eta$-dependent misidentification rate, is used in the final electroweak background estimate, with the difference between the constant rate and the rate for electrons with $p_{T}$ between 25 and 40 GeV (the range in which the bulk of the trailing photons in the $\gamma\gamma$ sample lie) taken as a systematic error.
 
 \begin{figure}
 	\centering
@@ -446,7 +474,7 @@ In the 36 $\mbox{pb}^{-1}$ version of this analysis \cite{CMS_GMSB_35pb-1}, it w
 
 The statistical error on the final background estimate in a particular \MET bin comes from three sources: the number of control sample events collected in that bin, the statistical error on the weights applied to events in that bin, and the statistics of the normalization region.  In the case of the $ee$ control sample, there are contributions from the statistics of the $m_{\mathrm{ee}}$ sidebands as well.
 
-In order to estimate the statistical error due to the reweighting procedure, 1000 toy sets of weights are generated.  Each set includes a weight for each (di-EM $p_{T}$, $N_{\mathrm{j}}$) bin, with the values picked from a Gaussian distribution with mean and standard deviation equal to the observed weight for that bin and its statistical error.  The effect of reweighting error is not correlated between \MET bins.  For each of the 1000 experiments, the control sample data are reweighted according to the generated weights, and the background estimates are calculated for each \MET bin.  Since the distribution of the toy background estimates follows a Gaussian distribution in each \MET bin, the RMS spread of the estimates is taken as the statistical error due to reweighting.  This procedure is carried out for the $\mathit{ff}$, $ee$, low sideband $ee$, and high sideband $ee$ samples.
+In order to propagate the statistical error due to the reweighting procedure to the shape of the final QCD \MET distribution, 1000 toy sets of weights are generated.  Each set includes a weight for each (di-EM $p_{T}$, $N_{\mathrm{j}}$) bin, with the values picked from a Gaussian distribution with mean and standard deviation equal to the observed weight for that bin and its statistical error.  The effect of reweighting error is not correlated between \MET bins.  For each of the 1000 experiments, the control sample data are reweighted according to the generated weights, and the background estimates are calculated for each \MET bin.  Since the distribution of the toy background estimates follows a Gaussian distribution in each \MET bin, the RMS spread of the estimates is taken as the statistical error due to reweighting.  This procedure is carried out for the $\mathit{ff}$, $ee$, low sideband $ee$, and high sideband $ee$ samples.
 
 The total statistical error on the background estimate per \MET bin is given by
 
@@ -484,7 +512,7 @@ where $N_{\mathrm{control}}$ is the number of reweighted, normalized events in t
 
 \end{itemize}
 
-The dominant source of systematic error on the background estimate is the slight difference in hadronic activity between the $ee$, $\mathit{ff}$, and $\gamma\gamma$ samples.  This results in a small bias ($\sim$1 GeV) of the $ee$ \MET distribution towards lower values with respect to the $\mathit{ff}$ and $\gamma\gamma$ samples, as shown in Figure~\ref{fig:avg_MET_vs_di-EM_pT}.  Therefore, the $\mathit{ff}$ sample is used as the primary QCD background estimator, and the difference between the $ee$ and $\mathit{ff}$ predictions is assigned as an error on the knowledge of the hadronic activity.  For \MET $>$ 100 GeV, this error amounts to 43\% of the total QCD + electroweak background estimate.
+The difference in hadronic activity between the $ee$, $\mathit{ff}$, and $\gamma\gamma$ samples results in a small bias ($\sim$1 GeV) of the $ee$ \MET distribution towards lower values with respect to the $\mathit{ff}$ and $\gamma\gamma$ samples, as shown in Figure~\ref{fig:avg_MET_vs_di-EM_pT}.  Therefore, the $\mathit{ff}$ sample is used as the primary QCD background estimator, and the difference between the $ee$ and $\mathit{ff}$ predictions is assigned as an error on the knowledge of the hadronic activity.  For \MET $>$ 100 GeV, this error amounts to 43\% of the total QCD + electroweak background estimate, and is the dominant source of systematic error.
 
 \begin{figure}
 	\centering
@@ -521,11 +549,11 @@ The use of uncorrected instead of corrected PF \MET (see Sec.~\ref{sec:MET}) mak
 
 \begin{figure}
 	\centering
-	\subfloat[Ratio of $\gamma\gamma$ to $ee$ \MET distributions.]{\label{fig:gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.3]{gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
-	\hspace{1cm}
-	\subfloat[Ratio of $\gamma\gamma$ to $\mathit{ff}$ \MET distributions.]{\label{fig:gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.3]{gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
-	\hspace{1cm}
-	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET distributions.]{\label{fig:ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.3]{ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
+	\subfloat[Ratio of $\gamma\gamma$ to $ee$ \MET distributions.]{\label{fig:gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.4]{gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
+	\\
+	\subfloat[Ratio of $\gamma\gamma$ to $\mathit{ff}$ \MET distributions.]{\label{fig:gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.4]{gg_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
+	\\
+	\subfloat[Ratio of $ee$ to $\mathit{ff}$ \MET distributions.]{\label{fig:ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}\includegraphics[scale=0.4]{ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom}}
 	\caption{Agreement between $\gamma\gamma$, $ee$, and $\mathit{ff}$ samples for uncorrected (red triangles) and corrected (blue squares) \MET.}
 	\label{fig:Type-I_MET_corrections_vs_uncorrected_MET_zoom}
 \end{figure}

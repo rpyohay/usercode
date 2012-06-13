@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  8 JUN 2012 10:02
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  13 JUN 2012 11:39
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1082,6 +1082,10 @@ LaTeX Warning: Citation `CMS-BPH-11-020' on page 28 undefined on input line 308
 
 [28 <./muons_CSC_wedge.pdf>] [29 <./muon_pT_res.pdf> <./muon_inv_mass.pdf, page
  is rotated 90 degrees>]
+
+LaTeX Warning: Reference `sec:Calibrated EB/EE Hits' on page 30 undefined on in
+put line 320.
+
 <L1_trigger_diagram.pdf, id=1559, 280.41524pt x 195.96834pt>
 File: L1_trigger_diagram.pdf Graphic file (type pdf)
 
@@ -1201,7 +1205,7 @@ dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2010/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
 times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on ch5.pdf (37 pages, 5513035 bytes).
+Output written on ch5.pdf (37 pages, 5513570 bytes).
 PDF statistics:
  1851 PDF objects out of 2073 (max. 8388607)
  1444 compressed objects within 15 object streams
