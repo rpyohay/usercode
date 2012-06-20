@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  11 JUN 2012 15:01
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  20 JUN 2012 16:37
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -383,18 +383,25 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip56
 )
+(/usr/local/texlive/2010/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip57
+\bibsep=\skip58
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count124
+)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count124
+\linenopenalty=\count125
 \output=\toks26
-\linenoprevgraf=\count125
+\linenoprevgraf=\count126
 \linenumbersep=\dimen138
 \linenumberwidth=\dimen139
-\c@linenumber=\count126
-\c@pagewiselinenumber=\count127
-\c@LN@truepage=\count128
-\c@internallinenumber=\count129
-\c@internallinenumbers=\count130
+\c@linenumber=\count127
+\c@pagewiselinenumber=\count128
+\c@LN@truepage=\count129
+\c@internallinenumber=\count130
+\c@internallinenumbers=\count131
 \quotelinenumbersep=\dimen140
 \bframerule=\dimen141
 \bframesep=\dimen142
@@ -404,7 +411,7 @@ LaTeX Info: Redefining \\ on input line 3056.
 Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps,.gif]
-(grfext)             \AppendGraphicsExtensions on input line 41.
+(grfext)             \AppendGraphicsExtensions on input line 42.
 )) (./ch4.aux)
 \openout1 = `ch4.aux'.
 
@@ -425,15 +432,15 @@ LaTeX Font Info:    ... okay on input line 2.
 
 (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count131
+\scratchcounter=\count132
 \scratchdimen=\dimen143
 \scratchbox=\box29
-\nofMPsegments=\count132
-\nofMParguments=\count133
+\nofMPsegments=\count133
+\nofMParguments=\count134
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count134
+\MPscratchCnt=\count135
 \MPscratchDim=\dimen144
-\MPnumerator=\count135
+\MPnumerator=\count136
 \everyMPtoPDFconversion=\toks28
 )
 Package caption Info: Begin \AtBeginDocument code.
@@ -487,7 +494,7 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
-\c@section@level=\count136
+\c@section@level=\count137
 )
 LaTeX Info: Redefining \ref on input line 2.
 LaTeX Info: Redefining \pageref on input line 2.
@@ -500,7 +507,8 @@ LaTeX Info: Redefining \nameref on input line 2.
 
 Chapter 1.
 
-LaTeX Warning: Citation `LHC_paper' on page 1 undefined on input line 7.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 1 undefined on
+ input line 7.
 
 LaTeX Font Info:    Try loading font information for U+msa on input line 7.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -512,73 +520,84 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 7.
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
-LaTeX Warning: Citation `CMS_2011_summary' on page 1 undefined on input line 7.
+Package natbib Warning: Citation `CMS_2011_summary' on page 1 undefined on inpu
+t line 7.
 
 
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 1 undefined on
+ input line 7.
 
-LaTeX Warning: Citation `LHC_paper' on page 1 undefined on input line 7.
 
-
-LaTeX Warning: Citation `LHC_paper' on page 1 undefined on input line 9.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 1 undefined on
+ input line 9.
 
 [1
 
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
-LaTeX Warning: Citation `LHC_public' on page 2 undefined on input line 14.
+Package natbib Warning: Citation `LHC_public' on page 2 undefined on input line
+ 14.
 
 <LHC_layout.pdf, id=40, 1027.84pt x 770.88pt>
 File: LHC_layout.pdf Graphic file (type pdf)
  <use LHC_layout.pdf>
 
-LaTeX Warning: Citation `LHC_paper' on page 2 undefined on input line 19.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 2 undefined on
+ input line 19.
 
 
-LaTeX Warning: Citation `CERN_Globe' on page 2 undefined on input line 19.
+Package natbib Warning: Citation `CERN_Globe' on page 2 undefined on input line
+ 19.
 
 
-LaTeX Warning: Citation `airplane' on page 2 undefined on input line 19.
+Package natbib Warning: Citation `airplane' on page 2 undefined on input line 1
+9.
 
 
-LaTeX Warning: Citation `LHC_paper' on page 2 undefined on input line 19.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 2 undefined on
+ input line 19.
 
 
-LaTeX Warning: Citation `CERN_Globe' on page 2 undefined on input line 19.
+Package natbib Warning: Citation `CERN_Globe' on page 2 undefined on input line
+ 19.
 
 
-LaTeX Warning: Citation `airplane' on page 2 undefined on input line 19.
+Package natbib Warning: Citation `airplane' on page 2 undefined on input line 1
+9.
 
 
-LaTeX Warning: Citation `Flukiger' on page 2 undefined on input line 23.
+Package natbib Warning: Citation `Flukiger' on page 2 undefined on input line 2
+3.
 
 [2] [3 <./LHC_layout.pdf>]
 
-LaTeX Warning: Citation `Sun' on page 4 undefined on input line 33.
+Package natbib Warning: Citation `Sun:1235160' on page 4 undefined on input lin
+e 33.
 
 
-LaTeX Warning: Citation `LHC_beam_parameters' on page 4 undefined on input line
- 35.
+Package natbib Warning: Citation `Bruning:782076' on page 4 undefined on input 
+line 35.
 
 
-LaTeX Warning: Citation `LHC_beam_parameters' on page 4 undefined on input line
- 37.
+Package natbib Warning: Citation `Bruning:782076' on page 4 undefined on input 
+line 37.
 
 
-LaTeX Warning: Citation `LHC_beam_parameters' on page 4 undefined on input line
- 37.
+Package natbib Warning: Citation `Bruning:782076' on page 4 undefined on input 
+line 37.
 
 [4] <LHC_injector_complex.pdf, id=107, 782.17218pt x 574.39594pt>
 File: LHC_injector_complex.pdf Graphic file (type pdf)
 
 <use LHC_injector_complex.pdf>
 
-LaTeX Warning: Citation `LHC_injector_complex_photo' on page 5 undefined on inp
-ut line 47.
+Package natbib Warning: Citation `LHC_injector_complex_photo' on page 5 undefin
+ed on input line 47.
 
 
-LaTeX Warning: Citation `LHC_injector_complex_photo' on page 5 undefined on inp
-ut line 47.
+Package natbib Warning: Citation `LHC_injector_complex_photo' on page 5 undefin
+ed on input line 47.
 
 [5 <./LHC_injector_complex.pdf>]
 <LHC_injection_scheme.pdf, id=122, 429.47993pt x 244.34848pt>
@@ -586,10 +605,12 @@ File: LHC_injection_scheme.pdf Graphic file (type pdf)
 
 <use LHC_injection_scheme.pdf>
 
-LaTeX Warning: Citation `LHC_paper' on page 6 undefined on input line 56.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 6 undefined on
+ input line 56.
 
 
-LaTeX Warning: Citation `LHC_paper' on page 6 undefined on input line 56.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 6 undefined on
+ input line 56.
 
 [6 <./LHC_injection_scheme.pdf>]
 <LHC_septum_cross_section.pdf, id=196, 244.34848pt x 192.6115pt>
@@ -597,19 +618,23 @@ File: LHC_septum_cross_section.pdf Graphic file (type pdf)
 
 <use LHC_septum_cross_section.pdf>
 
-LaTeX Warning: Citation `LHC_paper' on page 7 undefined on input line 65.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 7 undefined on
+ input line 65.
 
 
-LaTeX Warning: Citation `LHC_paper' on page 7 undefined on input line 65.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 7 undefined on
+ input line 65.
 
 <MKI_pulse.pdf, id=197, 258.06192pt x 135.88768pt>
 File: MKI_pulse.pdf Graphic file (type pdf)
  <use MKI_pulse.pdf>
 
-LaTeX Warning: Citation `LHC_paper' on page 7 undefined on input line 72.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 7 undefined on
+ input line 72.
 
 
-LaTeX Warning: Citation `LHC_paper' on page 7 undefined on input line 72.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 7 undefined on
+ input line 72.
 
 [7 <./LHC_septum_cross_section.pdf> <./MKI_pulse.pdf>]
 <LHC_dipole_cross_section.pdf, id=276, 384.59967pt x 324.13586pt>
@@ -617,30 +642,34 @@ File: LHC_dipole_cross_section.pdf Graphic file (type pdf)
 
 <use LHC_dipole_cross_section.pdf>
 
-LaTeX Warning: Citation `LHC_paper' on page 8 undefined on input line 84.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 8 undefined on
+ input line 84.
 
 
-LaTeX Warning: Citation `LHC_paper' on page 8 undefined on input line 84.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 8 undefined on
+ input line 84.
 
 <dipole_field.pdf, id=279, 173.65025pt x 177.40488pt>
 File: dipole_field.pdf Graphic file (type pdf)
  <use dipole_field.pdf>
 
-LaTeX Warning: Citation `Komorowski' on page 8 undefined on input line 93.
+Package natbib Warning: Citation `828202' on page 8 undefined on input line 93.
 
 
-LaTeX Warning: Citation `Komorowski' on page 8 undefined on input line 93.
+
+Package natbib Warning: Citation `828202' on page 8 undefined on input line 93.
+
 
 <coil_windings.pdf, id=280, 384.6872pt x 286.06876pt>
 File: coil_windings.pdf Graphic file (type pdf)
  <use coil_windings.pdf>
 
-LaTeX Warning: Citation `LHC_outreach_magnets' on page 8 undefined on input lin
-e 100.
+Package natbib Warning: Citation `LHC_outreach_magnets' on page 8 undefined on 
+input line 100.
 
 
-LaTeX Warning: Citation `LHC_outreach_magnets' on page 8 undefined on input lin
-e 100.
+Package natbib Warning: Citation `LHC_outreach_magnets' on page 8 undefined on 
+input line 100.
 
 [8 <./LHC_dipole_cross_section.pdf>] [9 <./dipole_field.pdf> <./coil_windings.p
 df>] <tunnel_cross_section.pdf, id=372, 356.1825pt x 252.19229pt>
@@ -648,14 +677,19 @@ File: tunnel_cross_section.pdf Graphic file (type pdf)
 
 <use tunnel_cross_section.pdf>
 
-LaTeX Warning: Citation `LHC_paper' on page 10 undefined on input line 113.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 10 undefined o
+n input line 113.
 
 
-LaTeX Warning: Citation `LHC_paper' on page 10 undefined on input line 113.
+Package natbib Warning: Citation `1748-0221-3-08-S08001' on page 10 undefined o
+n input line 113.
 
 [10]
+
+Package natbib Warning: There were undefined citations.
+
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 124.
- [11 <./tunnel_cross_section.pdf>]
+[11 <./tunnel_cross_section.pdf>]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 124.
  (./ch4.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 124.
@@ -663,17 +697,17 @@ Package rerunfilecheck Info: File `ch4.out' has not changed.
 (rerunfilecheck)             Checksum: C084B03EF09522135E6FAD076D68D6B6;352.
 
 
-LaTeX Warning: There were undefined references.
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 7959 strings out of 493747
- 121263 string characters out of 3143546
- 209629 words of memory out of 3000000
- 11067 multiletter control sequences out of 15000+200000
+ 8276 strings out of 493747
+ 125015 string characters out of 3143546
+ 215622 words of memory out of 3000000
+ 11380 multiletter control sequences out of 15000+200000
  10503 words of font info for 39 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,8n,44p,1433b,328s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,8n,44p,1433b,352s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
@@ -690,7 +724,7 @@ l/texlive/2010/texmf-dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2
 ist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/
 type1/urw/times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on ch4.pdf (11 pages, 1759753 bytes).
+Output written on ch4.pdf (11 pages, 1759799 bytes).
 PDF statistics:
  452 PDF objects out of 1000 (max. 8388607)
  356 compressed objects within 4 object streams

@@ -1,0 +1,292 @@
+\documentclass[12pt, letterpaper]{report}
+
+\usepackage{graphicx} %graphics
+\usepackage{epstopdf} %EPS files
+\usepackage{subfig} %figures with multiple parts
+\usepackage{array} %for aligning table text in the middle
+\usepackage{url} %properly formatted URLs
+\usepackage{color}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{subfiles} %to compile chapters individually in separate files
+%\usepackage[justification=justified]{caption}[2009/9/16]
+\usepackage[top=1in, bottom=1in, left=1.5in, right=1in]{geometry} %margins
+\usepackage{setspace} %line spacing
+\usepackage{multirow}
+\usepackage{hyperref} %bibliography
+\usepackage{lineno} %line numbers
+
+%to get the subfloat references in 1(a) format instead of 1a
+\DeclareSubrefFormat{myparens}{#1(#2)}
+\captionsetup[subfloat]{subrefformat=myparens}
+
+\frenchspacing %same spacing between words and sentences cf. http://en.wikibooks.org/wiki/LaTeX/Formatting#Space_between_Words_and_Sentences
+\doublespacing %double spacing cf. http://en.wikibooks.org/wiki/LaTeX/Customizing_LaTeX#Spacing
+
+%page numbering--needs to be top right, not yet working
+\pagestyle{myheadings}
+\markright{\hfill}
+
+%shortcuts
+\newcommand{\MET}{$\not\!\! E_{T}$ }
+\newcommand{\ET}{$\mbox{E}_{\mbox{T}}$ }
+\newcommand{\pT}{$\mbox{p}_{\mbox{T}}$ }
+\newcommand{\NLSP}{\widetilde{\chi}_{1}^{0}}
+\DeclareMathOperator{\sgn}{sgn}
+
+%read GIF as PDF
+\epstopdfDeclareGraphicsRule{.gif}{png}{.png}{%
+  convert gif:#1 png:\OutputFile
+}
+\AppendGraphicsExtensions{.gif}
+
+\begin{document}
+
+%show line numbers
+\linenumbers
+
+%make the title page compliant with UVa standards
+\title{A Search in the Two-Photon Final State for Evidence of New Particle Production in pp Collisions at $\sqrt{s}$ = 7 TeV}
+\author{Rachel P. Yohay \\
+	University of Virginia \\
+	\texttt{rpy3y@virginia.edu}}
+\date{\today}
+\maketitle
+
+\tableofcontents
+
+\subfile{ch1}
+
+\subfile{ch2}
+
+\subfile{ch3}
+
+\subfile{ch4}
+
+\subfile{ch5}
+
+\subfile{ch6}
+
+\subfile{ch7_bw}
+
+\subfile{ch8_bw}
+
+\subfile{ch9}
+
+\subfile{appA}
+
+\begin{thebibliography}{99}
+
+%ch. 1
+
+\bibitem{CMS_public} \url{http://cms.web.cern.ch/news/cms-detector-design} (2011).
+
+%ch. 2
+
+%\bibitem{Cottingham_and_Greenwood} dummy
+\bibitem{Glashow_Weinberg_and_Salam} S.L. Glashow, J. Iliopoulis, and L. Maiani, \textit{Phys. Rev. D} \textbf{2} (1970) 1285; S.L. Glashow, \textit{Nucl. Phys.} \textbf{22(4)} (1961) 579; J. Goldstone, A. Salam, and S. Weinberg, \textit{Phys. Rev.} \textbf{127} (1962) 965; S. Weinberg, \textit{Phys. Rev. Lett.} \textbf{19} (1967) 1264; A. Salam and J.C. Ward, \textit{Phys. Lett.} \textbf{13(2)} (1964) 168.
+\bibitem{Gell-Mann} M. Gell-Mann, \textit{Phys. Lett.} \textbf{8} (1964) 214; G. Zweig, \textit{CERN} \textbf{8419/TH. 412} (1964) (unpublished).
+\bibitem{Drees} J. Drees, \textit{Int. J. Mod. Phys.} \textbf{A17} (2002) 3259.
+\bibitem{Higgs} P.W. Higgs, \textit{Phys. Lett.} \textbf{12(2)} (1964) 132; P.W. Higgs, \textit{Phys. Rev. Lett.} \textbf{13} (1964) 508; P.W. Higgs, \textit{Phys. Rev.} \textbf{145} (1966) 1156.
+\bibitem{Aitchison} I. Aitchison, \textit{Supersymmetry in Particle Physics: An Elementary Introduction} (Cambridge University Press, Cambridge 2007), p. 4.
+\bibitem{Quigg} C. Quigg, in \textit{Flavor Physics for the Millennium: TASI 2000, Boulder, 2000}, edit by J. L. Rosner (World Scientific, Singapore, 2001), p. 3.
+\bibitem{Alvarez-Gaume} L. \'{A}lvarex-Gaum\'{e} and J. Ellis, \textit{Nature Phys.} \textbf{7} (2011) 2.
+\bibitem{UA1_W} G. Arnison et al. (UA1 Collaboration), \textit{Phys. Lett.} \textbf{B122} (1983) 103.
+\bibitem{UA1_Z} G. Arnison et al. (UA1 Collaboration), \textit{Phys. Lett.} \textbf{B126} (1983) 398.
+\bibitem{Gunion} J. Gunion, H.E. Haber, G. L. Kane, and S. Dawson, \textit{The Higgs Hunter's Guide}, (Addison-Wesley, Redwood City, 1990).
+%how to do this citation?
+\bibitem{SUSY_primer} S. P. Martin, \textit{A Supersymmetry Primer} \textbf{v4} (2006) 86.  \href{http://arxiv.org/abs/hep-ph/9709356}{\texttt{arXiv:hep-ph/9709356}}.
+\bibitem{PDG} K. Nakamura et al. (Particle Data Group), \textit{J. Phys.} \textbf{G37} (2010) 075021.
+\bibitem{Jungman} G. Jungman, M. Kamionkowski, and K. Griest, \textit{SU} \textbf{4240-605} (1995).
+\bibitem{CMS_Higgs} S. Chatrchyan et al. (CMS Collaboration), \textit{Phys. Lett.} \textbf{B710} (2012) 26.
+\bibitem{ATLAS_Higgs} G. Aad et al. (ATLAS Collaboration), \textit{Phys. Lett.} \textbf{B710} (2012) 49.
+
+%ch. 3
+
+%refs. [141] and [142] of the SUSY primer
+\bibitem{GMSB} M. Dine and W. Fischler, \textit{Phys. Lett.} \textbf{B110} (1982) 227; C.R. Nappi and B.A. Ovrut, \textit{Phys. Lett.} \textbf{B113} (1982) 175; L. Alvarez-Gaum\'e, M. Claudson, and M.B. Wise, \textit{Nucl. Phys.} \textbf{B207} (1982) 96; M. Dine and A.E. Nelson, \textit{Phys. Rev.} \textbf{D48} (1993) 1277; M. Dine, A.E. Nelson, and Y. Shirman, \textit{Phys. Rev.} \textbf{D51} (1995) 1362; M. Dine, A.E. Nelson, Y. Nir, and Y. Shirman, \textit{Phys. Rev.} \textbf{D53} (1996) 2658.
+%refs. [133] and [134] of the SUSY primer
+\bibitem{mSUGRA} A.H. Chamseddine, R. Arnowitt, and P. Nath, \textit{Phys. Rev. Lett.} \textbf{49} (1982) 970; R. Barbieri, S. Ferrara, and C.A. Savoy, \textit{Phys. Lett.} \textbf{B119} (1982) 343; L.E. Ib\'a\~{n}ez, \textit{Phys. Lett.} \textbf{B118} (1982) 73; L.J. Hall, J.D. Lykken, and S. Weinberg, \textit{Phys. Rev.} \textbf{D27} (1983) 2359; N. Ohta, \textit{Prog. Theor. Phys.} \textbf{70} (1983) 542; J. Ellis, D.V. Nanopoulos, and K. Tamvakis, \textit{Phys. Lett.} \textbf{B121} (1983) 123; L. Alvarez-Gaum\'e, J. Polchinski, and M. Wise, \textit{Nucl. Phys.} \textbf{B221} (1983) 495.
+\bibitem{Meade_Seiberg_and_Shih} P. Meade, N. Seiberg, and D. Shih, \textit{Progr. Theor. Phys. Suppl.} \textbf{177} (2009) 143.
+\bibitem{ATLAS_GMSB_1fb-1} G. Aad et al., \textit{CERN-PH-EP-2011-160} (2011).
+\bibitem{CDF_2010_GMSB_paper} T. Aaltonen et al., \textit{Phys. Rev. Lett.} \textbf{104} (2010) 011801.
+\bibitem{CMS_GMSB_1fb-1} CMS Collaboration, \textit{CMS-PAS-SUS-11-009} (2011).
+\bibitem{Tevatron_lifetime} \url{http://en.wikipedia.org/wiki/Tevatron}.
+\bibitem{SUSY_history} E. Fernandez et al., \textit{Phys. Rev. Lett.} \textbf{54} (1985) 1118; E. Fernandex et al., \textit{Phys. Rev.} \textbf{D35} (1987) 374; D. Decamp et al., \textit{Phys. Lett.} \textbf{B237(2)} (1990) 291; F. Abe et al., \textit{Phys. Rev. Lett.} \textbf{75} (1995) 613; S. Abachi et al., \textit{Phys. Rev. Lett.} \textbf{75} (1995) 618; G. Alexander et al., \textit{Phys. Lett.} \textbf{B377(4)} (1996) 273; S. Aid et al., \textit{Z. Phys.} \textbf{C71(2)} (1996) 211; S. Aid et al., \textit{Phys. Lett.} \textbf{B380(3-4} (1996) 461; B. Aubert et al., \textit{Phys. Rev. Lett.} \textbf{95} (2005) 041802.
+\bibitem{CMSSM_fits} O. Buchmueller et al., \textit{CERN-PH-TH/2011-220} (2011).
+\bibitem{CMS_mSUGRA} \url{https://twiki.cern.ch/twiki/bin/view/CMSPublic/PhysicsResultsSUS}.
+\bibitem{ATLAS} G. Aad et al., \textit{JINST} \textbf{3} (2008) S08003.
+\bibitem{SPS} B.C. Allanach et al., \textit{Eur. Phys. J.} \textbf{C25} (2002) 113.
+%citation?
+\bibitem{CMS_GMSB_5fb-1} CMS Collaboration, \textit{CMS-PAS-SUS-12-001} (2012).
+\bibitem{Lyman_alpha_DM_limits} A. Boyarsky, J. Lesgourgues, O. Ruchayskiy, and M. Viel, \textit{CERN-PH-TH/2008-234} (2009).
+\bibitem{WMAP} E. Komatsu et al., \textit{Astrophys. J. Suppl. Ser.} \textbf{180} (2009) 330.
+\bibitem{long_lived_neutralinos_at_the_Tevatron} C.-H. Chen and J.F. Gunion, \textit{Physical Review} \textbf{D58} (1998) 075005.
+\bibitem{cosmo_constraints_on_GMSB} F. Staub, W. Porod, J. Niemeyer, \textit{JHEP} \textbf{1001} (2010) 058.
+
+%ch. 4
+
+\bibitem{LHC_paper} L. Evans and P. Bryant (eds.), \textit{JINST} \textbf{3} (2008) S08001.
+\bibitem{CMS_2011_summary} \url{http://cms.web.cern.ch/news/summary-2011-p-p-running} (2011).
+\bibitem{LHC_public} \url{http://public.web.cern.ch/public/en/lhc/Facts-en.html} (2008).
+\bibitem{CERN_Globe} CERN, \url{http://cdsweb.cern.ch/record/833187} (2005).
+\bibitem{airplane} RGBStock.com, \url{http://www.rgbstock.com/photo/n7EsabW/Airplane} (2011).
+\bibitem{Flukiger} R. Fl\"{u}kiger, S. Y. Hariharan, R. K\"{u}ntzler, H. L. Luo, F. Weiss, T. Wolf, and J. Q. Xu, in \textit{Landolt-B\"{o}rnstein: Numerical Data and Functional Relationships in Science and Technology}, edited by R. Fl\"{u}kiger and W. Klose (Springer, 2012).
+\bibitem{Sun} Y.-P. Sun, F. Zimmermann, and R. Tom\'{a}s, in Proceedings of the $23^{\mathrm{rd}}$ Particle Accelerator Conference, Vancouver, 2009, \url{http://accnet.web.cern.ch/accnet/Literature/2009/TH5PFP016-Sunpdf.pdf} (unpublished).
+\bibitem{LHC_beam_parameters} O.S. Br\"{u}ning et al. (eds.), \textit{CERN-2004-003-V-1}, \url{http://lhc.web.cern.ch/lhc/LHC-DesignReport.html} (2004).
+\bibitem{LHC_injector_complex_photo} CERN, \url{http://cdsweb.cern.ch/record/841568/files/} (1993).
+\bibitem{Komorowski} P. Komorowski and D. Tommasini, in \textit{Proceedings of the 1998 International Computational Accelerator Physics Conference, Monterey, 1998}, edited by K. Ko and R. Ryne (SLAC, Stanford, 1998), p. 192, \url{http://www.slac.stanford.edu/econf/C980914/papers/ICAP98_eConf.pdf}.
+\bibitem{LHC_outreach_magnets} \url{http://lhc-machine-outreach.web.cern.ch/lhc-machine-outreach/components/magnets.htm} (2008).
+
+%ch. 5
+
+\bibitem{CMS_detector_paper} S. Chatrchyan et al. (CMS Collaboration), \textit{JINST} \textbf{3} (2008) S08004.
+%citation?
+\bibitem{CMS_TDR} G.L. Bayatian et al. (CMS Collaboration), \textit{CERN/LHCC} \textbf{2006-001}, edited by D. Acosta (2006).
+%citation?
+\bibitem{Ivova} M. Ivova, talk given at the Swiss Ph.D. School on Particle and Astroparticle Physics (CHIPP), Monte Verita' (2010).
+\bibitem{pixel_design_paper} G. Bolla et al., \textit{Nucl. Instr. Meth. Res.} \textbf{A461} (2001) 182.
+%citation?
+\bibitem{pixel_DPG_Twiki_rphi_res} \url{https://twiki.cern.ch/twiki/pub/CMSPublic/DPGResultsTRK/_imgf9e0ee48ebca770d7774454532b4b4ee.png} (2011).
+%citation?
+\bibitem{pixel_DPG_Twiki_z_res} \url{https://twiki.cern.ch/twiki/pub/CMSPublic/DPGResultsTRK/_img7569b7652b3f7c15030a11a4223e631c.png} (2011).
+%citation?
+\bibitem{pixel_DPG_Twiki_eff} \url{https://twiki.cern.ch/twiki/pub//CMSPublic/DPGResultsTRK/hv11_d1.png} (2011).
+%citation?
+\bibitem{tracker_DPG_Twiki_TIB_SNR} \url{https://twiki.cern.ch/twiki/pub/CMSPublic/DPGResultsTRK/_imga571742cbed3a14a9e2581ae95efa54c.gif} (2011).
+%citation?
+\bibitem{tracker_DPG_Twiki_res} \url{https://twiki.cern.ch/twiki/pub//CMSPublic/DPGResultsTRK/StripHitRes2.gif} (2011).
+%citation?
+\bibitem{ECAL_DPG_Twiki_rad_damage} \url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/histories2_laser.png} (2012).
+%citation?
+\bibitem{ECAL_DPG_Twiki_res_vs_eta_EB} \url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/electronres_eb_inclusive.png} (2012).
+%citation?
+\bibitem{ECAL_DPG_Twiki_res_vs_eta_EE} \url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/electronres_ee_inclusive.png} (2012).
+%citation?
+\bibitem{ECAL_DPG_Twiki_timing_res} \url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/seed-time.EEEE.png} (2012).
+\bibitem{Akchurin_Wigmans} N. Akchurin and R. Wigmans, \textit{Rev. Sci. Instrum.} \textbf{74} (2003) 2955.
+%citation?
+\bibitem{CMS-DP-2010-025} CMS Collaboration, \textit{CMS-DP} \textbf{2010-025} (2010).
+%citation?
+\bibitem{MUO_POG_Twiki_inv_mass} \url{https://twiki.cern.ch/twiki/pub/CMSPublic/PhysicsResultsMUO/dimuMass_2011Run_1fb_20July2011.pdf} (2011).
+\bibitem{CMS-BPH-11-020} S. Chatrchyan et al. (CMS Collaboration), \textit{JHEP} \textbf{4} (2012) 33.
+\bibitem{Smith} W.H. Smith, P. Chumney, S. Dasu, F. Di Lodovico, M. Jaworski, J.R. Lackey, and P. Robl in \textit{Proceedings of the $7^{\mathrm{th}}$ Workshop on Electronics for LHC Experiments, Stockholm, 2001}, edited by C. Isabella (CERN, Geneva, 2001), p. 238.
+\bibitem{Alemany} R. Alemany et al., \textit{IEEE Trans. Nucl. Sci.} \textbf{52(5)} (2005) 1918.
+\bibitem{ROOT} R. Brun and F. Rademakers, \textit{Nucl. Inst. Meth. Res.} \textbf{A389} (1997) 81.  See also \url{http://root.cern.ch/}.
+\bibitem{XDAQ} J. Gutleber and L. Orsini, \textit{Cluster Comput.} \textbf{5} (2002) 55.
+%citation?
+\bibitem{SOAP} D. Box, D. Ehnebuske, G. Kakivaya, A. Layman, N. Mendelsohn, H.F. Nielsen, S. Thatte, and D. Winer, \textit{W3C Note 08}, \url{http://www.w3.org/TR/2000/NOTE-SOAP-20000508/} (2000).
+%citation?
+\bibitem{HyperDAQ} R. Arcidiacono et al., talk given at the $10^{\mathrm{th}}$ ICALEPCS International Conference on Accelerator and Large Experiment Physics Control Systems, Geneva (2005).
+%citation?
+\bibitem{WLCG} J. Knobloch et al., \textit{CERN-LHCC-2005-024} (2005).
+
+%ch. 6
+
+\bibitem{Bruneliere} R. Bruneli\`ere, \textit{Nucl. Instr. Meth. Res.} \textbf{A572} (2007) 33.
+\bibitem{time_reco} S. Chatrchyan et al. (CMS Collaboration), \textit{JINST} \textbf{5} (2010) T03011.
+%citation?
+\bibitem{EGM_10_002} CMS Collaboration, \textit{CMS PAS} \textbf{EGM-10-002} (2010).
+%how to do this citation?
+\bibitem{calibration_IN} P. Meridiani and C. Seez, \textit{CMS IN-2011/002} (2011).
+\bibitem{EB_performance_2006} P. Adzic et al. (CMS Electromagnetic Calorimeter Group), \textit{Eur. Phys. J.} \textbf{C44S2} (2006) 1.
+\bibitem{EB_startup_intercalibration} P. Adzic et al. (CMS Electromagnetic Calorimeter Group), \textit{JINST} \textbf{3} (2008) P10007.
+%how to do this citation?
+\bibitem{CRAFT_calibration} M. Malberti, \textit{Nuc. Sci. Symposium Conference Record NSS/MIC IEEE} (2009) 2264.
+\bibitem{CRAFT_ECAL_performance} S. Chatrchyan et al. (CMS Collaboration), \textit{JINST} \textbf{5} (2010) T03010.
+\bibitem{CALOR_ECAL_calibration} R. Paramatti, \textit{J. Phys. Conf. Ser.} \textbf{293} (2011) 012045.
+%how to do this citation?
+\bibitem{Yang} Y. Yang, \url{http://www.hep.caltech.edu/cms/posters/Pi0Poster_CMSWeekDec2011.pdf} (2011).
+%how to do the next 2 citations?
+\bibitem{ECAL_SC_note} M. Anderson, A. Askew, A.F. Barfuss, D. Evans, F.Ferri, K. Kaadze, Y. 
+Maravin, P. Meridiani, and C. Seez, \textit{CMS IN-2010/008} (2010).
+%citation?
+\bibitem{ECALEnergyScaleCorrections_Twiki} \url{https://twiki.cern.ch/twiki/bin/view/CMS/ECALEnergyScaleCorrections}.
+\bibitem{Higgs_note} The H$\rightarrow\gamma\gamma$ working group, \textit{CMS AN-2011/426} (2011).
+%how to do the next 2 citations?
+\bibitem{Fastjet_conf_proceedings} M. Cacciari, \textit{LPTHE-P06-04} (2006).
+\bibitem{Fastjet_manual} M. Cacciari, G.P. Salam, and G. Soyez, \textit{CERN-PH-TH-2011-297} (2011).
+\bibitem{CMS-QCD-10-019} S. Chatrchyan et al. (CMS Collaboration), \textit{Phys. Rev. Lett.} \textbf{106} (2011) 082001.
+%citation?
+\bibitem{CMS_AN-2011-515} A. Askew, B. Cox, D. Elvira, Y. Gershtein, M. Hildreth, D. Jang, Y.-F. Liu, D. Mason, D. Morse, U. Nauenberg, M. Paulini, R. Stringer, R. Yohay, and S.L. Zang, \textit{CMS AN-2011/515} (2011).
+%citation?
+\bibitem{CMS_AN-2010/034} F. Beaudette, D. Benedetti, P. Janot, and M. Pioppi, \textit{CMS AN-2010/034} (2010).
+\bibitem{CMS_CR-2009/347} M. Konecki, in Proceedings of the European Physical Society  Europhysics Conference on High Energy Physics, Krakow, 2009, Eur. Phys.Soc. Mulhouse (ed.) (unpublished).
+%how to do this citation?
+\bibitem{GSF_reco} W. Adam, R. Fr\"uwirth, A. Strandlie, and T. Todorov, \textit{J. Phys.} \textbf{G31} No. 9 (2005).
+%put the following 2 citations in PRL format
+\bibitem{PF_algo} CMS Collaboration, \textit{CMS PAS} \textbf{PFT-09-001} (2009).
+\bibitem{PF_perf} CMS Collaboration, \textit{CMS PAS} \textbf{PFT-10-002} (2010).
+\bibitem{CMS_JES_paper} S. Chatrchyan et al., \textit{JINST} \textbf{6} (2011) P11002.
+%how to do the next citations?
+\bibitem{PF_note} CMS Collaboration, \textit{CERN-PH-EP} \textbf{2011-102} (2011).
+\bibitem{AK5} M. Cacciari, G.P. Salam, and G. Soyez, \textit{JHEP} \textbf{0804} (2008) 063.
+%citation?
+\bibitem{Salam_talk} G. Salam, talk given at CERN Theory Institute: SM and BSM Physics at the LHC (2009).
+\bibitem{Wigmans} C.W. Fabjan and R. Wigmans, \textit{Rep. Prog. Phys.} \textbf{52} (1989) 1519.
+%citation?
+\bibitem{CDF_JEC_website} \url{http://www-cdf.fnal.gov/physics/new/top/2004/jets/cdfpublic.html} (visited on 16 January 2011).
+\bibitem{CMS_MET_paper} S. Chatrchyan et al. (CMS Collaboration), \textit{JINST} \textbf{6} (2011) P09001.
+\bibitem{JPT} CMS Collaboration, \textit{CMS PAS} \textbf{JME-09-002} (2009).
+\bibitem{Pythia8} T. Sj\"ostrand, S. Mrenna, and P. Z. Skands, \textit{Comput. Phys. Commun.} \textbf{178} (2008) 852.
+\bibitem{HCAL_noise_CRAFT} S. Chatrchyan et al. (CMS Collaboration), \textit{JINST} \textbf{5} (2010) T03014.
+\bibitem{CMS_PVT} \url{https://twiki.cern.ch/twiki/bin/view/CMS/PVTMain} (2011).
+%following 2 citations?
+\bibitem{HCAL_noise_AN} J. P. Chou, S. Eno, S. Kunori, S. Sharma, and J. Wang, \textit{CMS IN-2010/006} (2010).
+\bibitem{Chen} Y. Chen, talk given at a meeting of the CMS JetMET group (2011).
+\bibitem{Korzekwa} R. Korzekwa et al., \textit{iEEE Trans. Elec. Dev.} \textbf{38} (1991) 745.
+%citation
+\bibitem{CMS_NOTE_2006/041} W. Adam, Th. Speer, B. Mangano, and T.Todorov, \textit{CMS NOTE} \textbf{2006/041} (2006).
+%citation?
+\bibitem{tag_and_probe_method_AN} G. Daskalakis, D. Evans, C.S. Hill, J. Jackson, P. Vanlaer, J. Berryhill, J. Haupt, D. Futyan, C. Seez, C. Timlin, and D. Wardrope, \textit{CMS AN-2007/019} (2007).
+\bibitem{MINUIT} F. James and M. Roos, \textit{Comput. Phys. Commun.} \textbf{10} (1975) 343.
+%citation?
+\bibitem{RooFit} W. Verkerke and D.P. Kirkby, \textit{CHEP-2003-MOLT007} (2003).
+\bibitem{Crystal_Ball} J.E. Gaiser, Ph.D. thesis, Stanford University (1982).
+%citation?
+\bibitem{CMS_AN-2010/271} A. Askew, S. Arora, Y. Gershtein, S. Thomas, G. Hanson, R. Stringer, W. Flanagan, B. Heyburn, U. Nauenberg, S.L. Zang, R. Nandi, D. Elvira, D. Mason, M. Balazs, B. Cox, B. Francis, A. Ledovskoy, and R. Yohay, \textit{CMS AN} \textbf{2010/271} (2010).
+
+%ch. 7
+
+\bibitem{DAS} Information about all CMS datasets is available from the CMS Data Aggregation System (DAS), located at the URL \url{https://cmsweb.cern.ch/das/}.
+\bibitem{CMS_GMSB_35pb-1} S. Chatrchyan et al., \textit{Phys. Rev. Lett.} \textbf{106} (2011) 211802.
+
+%ch. 8
+
+%citation?
+\bibitem{CMS-NOTE-2011/005} G. Aad et al. (ATLAS Collaboration), S. Chatrchyan et al. (CMS Collaboration), and LHC Higgs Combination Group, \textit{CMS-NOTE-2011/005} (2011).
+\bibitem{Read} A.L. Read, in \textit{Proceedings of the First Workshop on Confidence Limits, Geneva, 2000}, edited by L. Lyons, Y. Perrin, and F.E. James (CERN, Geneva, 2000), p. 81.
+\bibitem{Cowan_Cranmer_Gross_Vitells} G. Cowan, K. Cranmer, E. Gross, and O. Vitells, \textit{Eur. Phys. J.} \textbf{C71} (2011) 1554.
+\bibitem{Neyman_Pearson} J. Neyman and E.S. Pearson, \textit{Phil. Trans. R. Soc. Lond.} \textbf{A231} (1933) 289.
+%citation?
+\bibitem{CMS_PAS_EWK-11-001} CMS Collaboration, \textit{CMS PAS} \textbf{EWK-11-001} (2011).
+%citation?
+\bibitem{PDF4LHC} S. Alekhin et al. (The PDF4LHC Working Group), \href{http://arxiv.org/abs/1101.0536}{\texttt{arXiv:1101.0536[hep-ph]}}; M. Botje et al. (The PDF4LHC Working Group), \href{http://arxiv.org/abs/1101.0538}{\texttt{arXiv:1101.0538[hep-ph]}}; \url{http://www.hep.ucl.ac.uk/pdf4lhc/index.html}.
+\bibitem{MSTW08} A.D. Martin, W.J. Stirling, R.S. Thorne, and G. Watt, \textit{Eur. Phys. J.} \textbf{C63} (2009) 189.
+\bibitem{CTEQ6} P. M. Nadolsky, H.-L. Lai, Q.-H. Cao, J. Huston, J. Pumplin, D. Stump, W.-K. Tung, and C.-P. Yuan, \textit{Phys. Rev.} \textbf{D78} (2008) 013004.
+\bibitem{NNPDF2_0} R.D. Ball, L. Del Debbio, S. Forte, A. Guffanti, J.I. Latorre, J. Rojo, and M. Ubiali, \textit{Nucl. Phys.} \textbf{B838} (2010) 136.
+\bibitem{PDF_primer} J.M. Campbell, J.W. Huston, and W.J. Stirling, \textit{Rep. Prog. Phys.} \textbf{70} (2007) 89.
+%citation?
+\bibitem{SuSpect} A. Djouadi, J.-L. Kneur, G. Moultaka, \href{http://arxiv.org/abs/hep-ph/0211331}{\texttt{arXiv:hep-ph/0211331}} (2005).
+\bibitem{SDECAY} M. Muhlleitner, A. Djouadi, Y. Mambrini, \textit{Comput. Phys. Commun.} \textbf{168} (2005) 46.
+%citation?
+\bibitem{GEANT} J. Allison et al., \textit{IEEE Trans. Nucl. Sci.} \textbf{53(1)} (2006) 270.
+%citation?
+\bibitem{PROSPINO} W. Beenakker, R. Hoepker, M. Spira, \href{http://arxiv.org/abs/hep-ph/9611232}{\texttt{arXiv:hep-ph/9611232}} (1996).
+
+%ch. 9
+
+\bibitem{Carena} M. Carena, J.S. Conway, H.E. Haber, and J.D. Hobbs, \textit{FERMILAB-Conf-00} \textbf{279-T} (2000).  \href{http://arxiv.org/abs/hep-ph/0010338}{\texttt{arXiv:hep-ph/0010338}}
+\bibitem{ATLAS_GMSB_stop_search} ATLAS Collaboration, \textit{ATLAS-CONF} \textbf{2012-036} (2012).
+
+%app. A
+
+\bibitem{LPCC_MBUE_WG} R. Field, talk given at LHC Physics Centre at CERN Minimum Bias and Underlying Event Working Group Meeting (2011).
+\bibitem{Pythia6} T. Sj\"ostrand, S. Mrenna, and P. Z. Skands, \textit{JHEP} \textbf{0605} (2006) 026.
+\bibitem{MadGraph} J. Alwall, M. Herquet, F. Maltoni, O. Mattelaer, and T. Stelzer, \textit{JHEP} \textbf{1106} (2011) 128.
+\bibitem{Tauola} Z. Was, \textit{Nucl. Phys. Proc. Suppl.} \textbf{98} (2001) 96.
+\bibitem{PUS6} \url{http://cmslxr.fnal.gov/lxr/source/SimGeneral/MixingModule/python/mix_E7TeV_Fall2011_Reprocess_50ns_PoissonOOTPU_cfi.py} (2011).
+\bibitem{doubleEMEnriched_filter_cfg} \url{http://cmslxr.fnal.gov/lxr/source/GeneratorInterface/GenFilters/src/doubleEMEnrichingFilterAlgo.cc} (2011).
+\end{thebibliography}
+
+\end{document}

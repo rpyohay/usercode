@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  13 JUN 2012 11:39
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  20 JUN 2012 19:27
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -383,18 +383,25 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip56
 )
+(/usr/local/texlive/2010/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip57
+\bibsep=\skip58
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count124
+)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count124
+\linenopenalty=\count125
 \output=\toks26
-\linenoprevgraf=\count125
+\linenoprevgraf=\count126
 \linenumbersep=\dimen138
 \linenumberwidth=\dimen139
-\c@linenumber=\count126
-\c@pagewiselinenumber=\count127
-\c@LN@truepage=\count128
-\c@internallinenumber=\count129
-\c@internallinenumbers=\count130
+\c@linenumber=\count127
+\c@pagewiselinenumber=\count128
+\c@LN@truepage=\count129
+\c@internallinenumber=\count130
+\c@internallinenumbers=\count131
 \quotelinenumbersep=\dimen140
 \bframerule=\dimen141
 \bframesep=\dimen142
@@ -404,7 +411,7 @@ LaTeX Info: Redefining \\ on input line 3056.
 Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps,.gif]
-(grfext)             \AppendGraphicsExtensions on input line 41.
+(grfext)             \AppendGraphicsExtensions on input line 42.
 )) (./ch5.aux)
 \openout1 = `ch5.aux'.
 
@@ -425,15 +432,15 @@ LaTeX Font Info:    ... okay on input line 2.
 
 (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count131
+\scratchcounter=\count132
 \scratchdimen=\dimen143
 \scratchbox=\box29
-\nofMPsegments=\count132
-\nofMParguments=\count133
+\nofMPsegments=\count133
+\nofMParguments=\count134
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count134
+\MPscratchCnt=\count135
 \MPscratchDim=\dimen144
-\MPnumerator=\count135
+\MPnumerator=\count136
 \everyMPtoPDFconversion=\toks28
 )
 Package caption Info: Begin \AtBeginDocument code.
@@ -487,7 +494,7 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
-\c@section@level=\count136
+\c@section@level=\count137
 )
 LaTeX Info: Redefining \ref on input line 2.
 LaTeX Info: Redefining \pageref on input line 2.
@@ -520,63 +527,65 @@ Overfull \hbox (80.29874pt too wide) in paragraph at lines 13--14
  []
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 2 undefined on input line 
-18.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 2 undefined on
+ input line 18.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 2 undefined on input line 
-18.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 2 undefined on
+ input line 18.
 
 [2 <./CMS_coordinate_system.pdf>]
 <CMS_cutaway.pdf, id=86, 394.78969pt x 293.29022pt>
 File: CMS_cutaway.pdf Graphic file (type pdf)
  <use CMS_cutaway.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-23.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 3 undefined on
+ input line 23.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-23.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 3 undefined on
+ input line 23.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-27.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 3 undefined on
+ input line 27.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-29.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 3 undefined on
+ input line 29.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 3 undefined on input line 
-29.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 3 undefined on
+ input line 29.
 
 [3 <./CMS_cutaway.pdf>]
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 4 undefined on input line 
-31.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 4 undefined on
+ input line 31.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 4 undefined on input line 
-33.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 4 undefined on
+ input line 33.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 4 undefined on input line 
-35.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 4 undefined on
+ input line 35.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 4 undefined on input line 
-35.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 4 undefined on
+ input line 35.
 
 [4] <CMS_longitudinal_xsec.pdf, id=158, 650.43pt x 359.3425pt>
 File: CMS_longitudinal_xsec.pdf Graphic file (type pdf)
 
 <use CMS_longitudinal_xsec.pdf>
 
-LaTeX Warning: Citation `CMS_TDR' on page 5 undefined on input line 40.
+Package natbib Warning: Citation `Bayatian:922757' on page 5 undefined on input
+ line 40.
 
 
-LaTeX Warning: Citation `CMS_TDR' on page 5 undefined on input line 40.
+Package natbib Warning: Citation `Bayatian:922757' on page 5 undefined on input
+ line 40.
 
 [5 <./CMS_longitudinal_xsec.pdf>]
 <pixel_longitudinal_quarter_view.pdf, id=177, 208.35713pt x 104.1786pt>
@@ -584,36 +593,36 @@ File: pixel_longitudinal_quarter_view.pdf Graphic file (type pdf)
 
 <use pixel_longitudinal_quarter_view.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-64.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 6 undefined on
+ input line 64.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-64.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 6 undefined on
+ input line 64.
 
 <BPix_mechanics.pdf, id=178, 335.0609pt x 240.26775pt>
 File: BPix_mechanics.pdf Graphic file (type pdf)
 
 <use BPix_mechanics.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-70.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 6 undefined on
+ input line 70.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-70.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 6 undefined on
+ input line 70.
 
 <FPix_mechanics.pdf, id=179, 223.37392pt x 255.28444pt>
 File: FPix_mechanics.pdf Graphic file (type pdf)
 
 <use FPix_mechanics.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-72.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 6 undefined on
+ input line 72.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 6 undefined on input line 
-72.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 6 undefined on
+ input line 72.
 
 
 Underfull \hbox (badness 1655) in paragraph at lines 72--72
@@ -626,61 +635,61 @@ Underfull \hbox (badness 3364) in paragraph at lines 72--72
  []
 
 
-LaTeX Warning: Citation `Ivova' on page 6 undefined on input line 77.
+Package natbib Warning: Citation `Ivova' on page 6 undefined on input line 77.
 
 [6] [7 <./pixel_longitudinal_quarter_view.pdf> <./BPix_mechanics.pdf> <./FPix_m
 echanics.pdf>]
 
-LaTeX Warning: Citation `pixel_design_paper' on page 8 undefined on input line 
-79.
+Package natbib Warning: Citation `Bolla2001182' on page 8 undefined on input li
+ne 79.
 
 [8] <pixel_readout.pdf, id=335, 326.61394pt x 268.42403pt>
 File: pixel_readout.pdf Graphic file (type pdf)
 
 <use pixel_readout.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 9 undefined on input line 
-86.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 9 undefined on
+ input line 86.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 9 undefined on input line 
-86.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 9 undefined on
+ input line 86.
 
 <pixel_results_rphi_res.png, id=337, 614.295pt x 795.4518pt>
 File: pixel_results_rphi_res.png Graphic file (type png)
 
 <use pixel_results_rphi_res.png>
 
-LaTeX Warning: Citation `pixel_DPG_Twiki_rphi_res' on page 9 undefined on input
- line 94.
+Package natbib Warning: Citation `pixel_DPG_Twiki_rphi_res' on page 9 undefined
+ on input line 94.
 
 
-LaTeX Warning: Citation `pixel_DPG_Twiki_rphi_res' on page 9 undefined on input
- line 94.
+Package natbib Warning: Citation `pixel_DPG_Twiki_rphi_res' on page 9 undefined
+ on input line 94.
 
 <pixel_results_z_res.pdf, id=338, 614.295pt x 795.4518pt>
 File: pixel_results_z_res.pdf Graphic file (type pdf)
 
 <use pixel_results_z_res.pdf>
 
-LaTeX Warning: Citation `pixel_DPG_Twiki_z_res' on page 9 undefined on input li
-ne 96.
+Package natbib Warning: Citation `pixel_DPG_Twiki_z_res' on page 9 undefined on
+ input line 96.
 
 
-LaTeX Warning: Citation `pixel_DPG_Twiki_z_res' on page 9 undefined on input li
-ne 96.
+Package natbib Warning: Citation `pixel_DPG_Twiki_z_res' on page 9 undefined on
+ input line 96.
 
 <pixel_results_eff.pdf, id=339, 648.4225pt x 576.1525pt>
 File: pixel_results_eff.pdf Graphic file (type pdf)
 
 <use pixel_results_eff.pdf>
 
-LaTeX Warning: Citation `pixel_DPG_Twiki_eff' on page 9 undefined on input line
- 98.
+Package natbib Warning: Citation `pixel_DPG_Twiki_eff' on page 9 undefined on i
+nput line 98.
 
 
-LaTeX Warning: Citation `pixel_DPG_Twiki_eff' on page 9 undefined on input line
- 98.
+Package natbib Warning: Citation `pixel_DPG_Twiki_eff' on page 9 undefined on i
+nput line 98.
 
 [9 <./pixel_readout.pdf>] [10 <./pixel_results_rphi_res.png (PNG copy)> <./pixe
 l_results_z_res.pdf (PNG copy)> <./pixel_results_eff.pdf (PNG copy)>]
@@ -689,23 +698,23 @@ File: strip_longitudinal_xsec.pdf Graphic file (type pdf)
 
 <use strip_longitudinal_xsec.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 11 undefined on input line
- 111.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 11 undefined o
+n input line 111.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 11 undefined on input line
- 111.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 11 undefined o
+n input line 111.
 
 <tracker_TEC.pdf, id=397, 209.29575pt x 191.4633pt>
 File: tracker_TEC.pdf Graphic file (type pdf)
  <use tracker_TEC.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 11 undefined on input line
- 118.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 11 undefined o
+n input line 118.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 11 undefined on input line
- 118.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 11 undefined o
+n input line 118.
 
 [11 <./strip_longitudinal_xsec.pdf>]
 <tracker_module.pdf, id=466, 178.32368pt x 117.31819pt>
@@ -713,24 +722,24 @@ File: tracker_module.pdf Graphic file (type pdf)
 
 <use tracker_module.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 12 undefined on input line
- 131.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 12 undefined o
+n input line 131.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 12 undefined on input line
- 131.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 12 undefined o
+n input line 131.
 
 <tracker_readout.pdf, id=467, 220.55821pt x 251.53021pt>
 File: tracker_readout.pdf Graphic file (type pdf)
 
 <use tracker_readout.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 12 undefined on input line
- 138.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 12 undefined o
+n input line 138.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 12 undefined on input line
- 138.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 12 undefined o
+n input line 138.
 
 
 LaTeX Warning: Reference `sec:Particle Flow' on page 12 undefined on input line
@@ -753,12 +762,12 @@ Package epstopdf Info: Output file is already uptodate.
 File: tracker_results_TIB_SNR-gif-converted-to.png Graphic file (type png)
 <use tracker_results_TIB_SNR-gif-converted-to.png>
 
-LaTeX Warning: Citation `tracker_DPG_Twiki_TIB_SNR' on page 14 undefined on inp
-ut line 146.
+Package natbib Warning: Citation `tracker_DPG_Twiki_TIB_SNR' on page 14 undefin
+ed on input line 146.
 
 
-LaTeX Warning: Citation `tracker_DPG_Twiki_TIB_SNR' on page 14 undefined on inp
-ut line 146.
+Package natbib Warning: Citation `tracker_DPG_Twiki_TIB_SNR' on page 14 undefin
+ed on input line 146.
 
 Package epstopdf Info: Source file: <tracker_results_res.gif>
 (epstopdf)                    date: 2012-05-31 15:55:49
@@ -775,12 +784,12 @@ File: tracker_results_res-gif-converted-to.png Graphic file (type png)
 
 <use tracker_results_res-gif-converted-to.png>
 
-LaTeX Warning: Citation `tracker_DPG_Twiki_res' on page 14 undefined on input l
-ine 148.
+Package natbib Warning: Citation `tracker_DPG_Twiki_res' on page 14 undefined o
+n input line 148.
 
 
-LaTeX Warning: Citation `tracker_DPG_Twiki_res' on page 14 undefined on input l
-ine 148.
+Package natbib Warning: Citation `tracker_DPG_Twiki_res' on page 14 undefined o
+n input line 148.
 
 
 Overfull \hbox (10.7881pt too wide) in paragraph at lines 156--157
@@ -792,12 +801,12 @@ Overfull \hbox (10.7881pt too wide) in paragraph at lines 156--157
 File: ECAL_layout.pdf Graphic file (type pdf)
  <use ECAL_layout.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 14 undefined on input line
- 161.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 14 undefined o
+n input line 161.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 14 undefined on input line
- 161.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 14 undefined o
+n input line 161.
 
 
 Overfull \hbox (4.46817pt too wide) in paragraph at lines 165--166
@@ -812,12 +821,12 @@ _results_res-gif-converted-to.png (PNG copy)>]
 File: ECAL_crystals.pdf Graphic file (type pdf)
  <use ECAL_crystals.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 16 undefined on input line
- 170.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 16 undefined o
+n input line 170.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 16 undefined on input line
- 170.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 16 undefined o
+n input line 170.
 
 [16 <./ECAL_layout.pdf>] <ECAL_readout.pdf, id=650, 436.42381pt x 196.15613pt>
 File: ECAL_readout.pdf Graphic file (type pdf)
@@ -828,12 +837,12 @@ Overfull \hbox (2.80273pt too wide) in paragraph at lines 178--179
  []
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 17 undefined on input line
- 179.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 17 undefined o
+n input line 179.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 17 undefined on input line
- 179.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 17 undefined o
+n input line 179.
 
 
 LaTeX Warning: Reference `sec:Calibrated EB/EE Hits' on page 17 undefined on in
@@ -844,64 +853,64 @@ put line 183.
 File: ECAL_rad_damage.png Graphic file (type png)
  <use ECAL_rad_damage.png>
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_rad_damage' on page 18 undefined on inp
-ut line 190.
+Package natbib Warning: Citation `ECAL_DPG_Twiki_rad_damage' on page 18 undefin
+ed on input line 190.
 
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_rad_damage' on page 18 undefined on inp
-ut line 190.
+Package natbib Warning: Citation `ECAL_DPG_Twiki_rad_damage' on page 18 undefin
+ed on input line 190.
 
 <ECAL_laser_system.pdf, id=762, 212.11125pt x 284.37943pt>
 File: ECAL_laser_system.pdf Graphic file (type pdf)
 
 <use ECAL_laser_system.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 18 undefined on input line
- 197.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 18 undefined o
+n input line 197.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 18 undefined on input line
- 197.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 18 undefined o
+n input line 197.
 
 <ECAL_res_vs_eta_EB.png, id=764, 849.1725pt x 574.145pt>
 File: ECAL_res_vs_eta_EB.png Graphic file (type png)
 
 <use ECAL_res_vs_eta_EB.png>
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 18 undefined on 
-input line 205.
+Package natbib Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 18 unde
+fined on input line 205.
 
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 18 undefined on 
-input line 205.
+Package natbib Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 18 unde
+fined on input line 205.
 
 <ECAL_res_vs_eta_EE.png, id=765, 849.1725pt x 574.145pt>
 File: ECAL_res_vs_eta_EE.png Graphic file (type png)
 
 <use ECAL_res_vs_eta_EE.png>
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 18 undefined on 
-input line 207.
+Package natbib Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 18 unde
+fined on input line 207.
 
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 18 undefined on 
-input line 207.
+Package natbib Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 18 unde
+fined on input line 207.
 
 
-LaTeX Warning: Citation `long-lived_GMSB_paper' on page 18 undefined on input l
-ine 212.
+Package natbib Warning: Citation `CMS-PAS-EXO-11-067' on page 18 undefined on i
+nput line 212.
 
 [18] <ECAL_timing_res.png, id=774, 698.61pt x 674.52pt>
 File: ECAL_timing_res.png Graphic file (type png)
 
 <use ECAL_timing_res.png>
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 19 undefined on inp
-ut line 217.
+Package natbib Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 19 undefin
+ed on input line 217.
 
 
-LaTeX Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 19 undefined on inp
-ut line 217.
+Package natbib Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 19 undefin
+ed on input line 217.
 
 [19 <./ECAL_rad_damage.png>] [20 <./ECAL_laser_system.pdf> <./ECAL_res_vs_eta_E
 B.png (PNG copy)> <./ECAL_res_vs_eta_EE.png (PNG copy)>]
@@ -910,12 +919,12 @@ File: HCAL_longitudinal_xsec.pdf Graphic file (type pdf)
 
 <use HCAL_longitudinal_xsec.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 21 undefined on input line
- 228.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 21 undefined o
+n input line 228.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 21 undefined on input line
- 228.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 21 undefined o
+n input line 228.
 
 [21 <./ECAL_timing_res.png (PNG copy)>]
 <HCAL_HB_optics.pdf, id=873, 379.17247pt x 259.97707pt>
@@ -923,27 +932,27 @@ File: HCAL_HB_optics.pdf Graphic file (type pdf)
 
 <use HCAL_HB_optics.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
- 237.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 22 undefined o
+n input line 237.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
- 237.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 22 undefined o
+n input line 237.
 
 
-LaTeX Warning: Citation `Akchurin_Wigmans' on page 22 undefined on input line 2
-41.
+Package natbib Warning: Citation `Akchurin_Wigmans' on page 22 undefined on inp
+ut line 241.
 
 <HCAL_HF_xsec.pdf, id=875, 418.59142pt x 254.34584pt>
 File: HCAL_HF_xsec.pdf Graphic file (type pdf)
  <use HCAL_HF_xsec.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
- 246.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 22 undefined o
+n input line 246.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 22 undefined on input line
- 246.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 22 undefined o
+n input line 246.
 
 [22 <./HCAL_longitudinal_xsec.pdf>]
 <HCAL_performance_HB_response.pdf, id=941, 230.88226pt x 239.32913pt>
@@ -951,12 +960,12 @@ File: HCAL_performance_HB_response.pdf Graphic file (type pdf)
 
 <use HCAL_performance_HB_response.pdf>
 
-LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 25
-6.
+Package natbib Warning: Citation `CMS-DP-2010-025' on page 23 undefined on inpu
+t line 256.
 
 
-LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 25
-6.
+Package natbib Warning: Citation `CMS-DP-2010-025' on page 23 undefined on inpu
+t line 256.
 
 
 Underfull \hbox (badness 1622) in paragraph at lines 256--256
@@ -972,28 +981,28 @@ LaTeX Warning: Reference `sec:Event Quality' on page 23 undefined on input line
  258.
 
 
-LaTeX Warning: Citation `HCAL_noise_CRAFT' on page 23 undefined on input line 2
-58.
+Package natbib Warning: Citation `1748-0221-5-03-T03014' on page 23 undefined o
+n input line 258.
 
 
 LaTeX Warning: Reference `sec:Event Quality' on page 23 undefined on input line
  258.
 
 
-LaTeX Warning: Citation `HCAL_noise_CRAFT' on page 23 undefined on input line 2
-58.
+Package natbib Warning: Citation `1748-0221-5-03-T03014' on page 23 undefined o
+n input line 258.
 
 <HCAL_performance_timing.pdf, id=943, 353.83171pt x 274.05536pt>
 File: HCAL_performance_timing.pdf Graphic file (type pdf)
 
 <use HCAL_performance_timing.pdf>
 
-LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 26
-0.
+Package natbib Warning: Citation `CMS-DP-2010-025' on page 23 undefined on inpu
+t line 260.
 
 
-LaTeX Warning: Citation `CMS-DP-2010-025' on page 23 undefined on input line 26
-0.
+Package natbib Warning: Citation `CMS-DP-2010-025' on page 23 undefined on inpu
+t line 260.
 
 
 LaTeX Warning: Float too large for page by 32.10545pt on input line 263.
@@ -1004,24 +1013,24 @@ File: muons_layout_MB.pdf Graphic file (type pdf)
 
 <use muons_layout_MB.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 24 undefined on input line
- 271.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 24 undefined o
+n input line 271.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 24 undefined on input line
- 271.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 24 undefined o
+n input line 271.
 
 <muons_layout_ME.pdf, id=981, 379.17247pt x 221.49681pt>
 File: muons_layout_ME.pdf Graphic file (type pdf)
 
 <use muons_layout_ME.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 24 undefined on input line
- 273.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 24 undefined o
+n input line 273.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 24 undefined on input line
- 273.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 24 undefined o
+n input line 273.
 
 [24 <./HCAL_HF_xsec.pdf>] [25 <./HCAL_performance_HB_response.pdf> <./HCAL_perf
 ormance_noise.pdf> <./HCAL_performance_timing.pdf>] [26 <./muons_layout_MB.pdf>
@@ -1030,58 +1039,62 @@ File: muons_DT.pdf Graphic file (type pdf)
 
 <use muons_DT.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 27 undefined on input line
- 283.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 27 undefined o
+n input line 283.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 27 undefined on input line
- 283.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 27 undefined o
+n input line 283.
 
 <muons_CSC_wedge.pdf, id=1321, 137.02763pt x 200.84886pt>
 File: muons_CSC_wedge.pdf Graphic file (type pdf)
 
 <use muons_CSC_wedge.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 27 undefined on input line
- 292.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 27 undefined o
+n input line 292.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 27 undefined on input line
- 292.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 27 undefined o
+n input line 292.
 
 [27 <./muons_DT.pdf>] <muon_pT_res.pdf, id=1380, 405.47395pt x 273.32423pt>
 File: muon_pT_res.pdf Graphic file (type pdf)
 
 <use muon_pT_res.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 28 undefined on input line
- 301.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 28 undefined o
+n input line 301.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 28 undefined on input line
- 301.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 28 undefined o
+n input line 301.
 
 <muon_inv_mass.pdf, id=1381, 569.12625pt x 327.2225pt>
 File: muon_inv_mass.pdf Graphic file (type pdf)
  <use muon_inv_mass.pdf>
 
-LaTeX Warning: Citation `MUO_POG_Twiki_inv_mass' on page 28 undefined on input 
-line 308.
+Package natbib Warning: Citation `MUO_POG_Twiki_inv_mass' on page 28 undefined 
+on input line 308.
 
 
-LaTeX Warning: Citation `CMS-BPH-11-020' on page 28 undefined on input line 308
-.
+Package natbib Warning: Citation `springerlink:10.1007/JHEP04(2012)033' on page
+ 28 undefined on input line 308.
 
 
-LaTeX Warning: Citation `MUO_POG_Twiki_inv_mass' on page 28 undefined on input 
-line 308.
+Package natbib Warning: Citation `MUO_POG_Twiki_inv_mass' on page 28 undefined 
+on input line 308.
 
 
-LaTeX Warning: Citation `CMS-BPH-11-020' on page 28 undefined on input line 308
-.
+Package natbib Warning: Citation `springerlink:10.1007/JHEP04(2012)033' on page
+ 28 undefined on input line 308.
 
 [28 <./muons_CSC_wedge.pdf>] [29 <./muon_pT_res.pdf> <./muon_inv_mass.pdf, page
  is rotated 90 degrees>]
+
+Package natbib Warning: Citation `1546528' on page 30 undefined on input line 3
+20.
+
 
 LaTeX Warning: Reference `sec:Calibrated EB/EE Hits' on page 30 undefined on in
 put line 320.
@@ -1091,35 +1104,36 @@ File: L1_trigger_diagram.pdf Graphic file (type pdf)
 
 <use L1_trigger_diagram.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 30 undefined on input line
- 325.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 30 undefined o
+n input line 325.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 30 undefined on input line
- 325.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 30 undefined o
+n input line 325.
 
 [30] <RCT_EG_candidate.pdf, id=1567, 223.68756pt x 159.22437pt>
 File: RCT_EG_candidate.pdf Graphic file (type pdf)
 
 <use RCT_EG_candidate.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 31 undefined on input line
- 334.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 31 undefined o
+n input line 334.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 31 undefined on input line
- 334.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 31 undefined o
+n input line 334.
 
 
-LaTeX Warning: Citation `Smith' on page 31 undefined on input line 338.
+Package natbib Warning: Citation `Smith' on page 31 undefined on input line 338
+.
 
 
 LaTeX Warning: Reference `sec:HLT' on page 31 undefined on input line 338.
 
 [31 <./L1_trigger_diagram.pdf>]
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 32 undefined on input line
- 340.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 32 undefined o
+n input line 340.
 
 [32 <./RCT_EG_candidate.pdf>]
 <DAQ_overview.pdf, id=1683, 434.54668pt x 264.66989pt>
@@ -1130,41 +1144,49 @@ Overfull \hbox (0.9256pt too wide) in paragraph at lines 349--350
  []
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 33 undefined on input line
- 350.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 33 undefined o
+n input line 350.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 33 undefined on input line
- 350.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 33 undefined o
+n input line 350.
 
 [33 <./DAQ_overview.pdf>]
 
-LaTeX Warning: Citation `ROOT' on page 34 undefined on input line 356.
+Package natbib Warning: Citation `Brun199781' on page 34 undefined on input lin
+e 356.
 
 [34]
 
-LaTeX Warning: Citation `XDAQ' on page 35 undefined on input line 360.
+Package natbib Warning: Citation `springerlink:10.1023/A:1012744721976' on page
+ 35 undefined on input line 360.
 
 
-LaTeX Warning: Citation `SOAP' on page 35 undefined on input line 360.
+Package natbib Warning: Citation `SOAP' on page 35 undefined on input line 360.
 
 
-LaTeX Warning: Citation `HyperDAQ' on page 35 undefined on input line 360.
+
+Package natbib Warning: Citation `HyperDAQ' on page 35 undefined on input line 
+360.
 
 [35]
 
-LaTeX Warning: Citation `WLCG' on page 36 undefined on input line 367.
+Package natbib Warning: Citation `Eck:840543' on page 36 undefined on input lin
+e 367.
 
 <WLCG_diagram.pdf, id=1734, 406.3903pt x 175.5081pt>
 File: WLCG_diagram.pdf Graphic file (type pdf)
  <use WLCG_diagram.pdf>
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 36 undefined on input line
- 372.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 36 undefined o
+n input line 372.
 
 
-LaTeX Warning: Citation `CMS_detector_paper' on page 36 undefined on input line
- 372.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 36 undefined o
+n input line 372.
+
+
+Package natbib Warning: There were undefined citations.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 376.
 [36] [37 <./WLCG_diagram.pdf>]
@@ -1177,15 +1199,18 @@ Package rerunfilecheck Info: File `ch5.out' has not changed.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 8289 strings out of 493747
- 128272 string characters out of 3143546
- 216745 words of memory out of 3000000
- 11288 multiletter control sequences out of 15000+200000
+ 8607 strings out of 493747
+ 132095 string characters out of 3143546
+ 221504 words of memory out of 3000000
+ 11602 multiletter control sequences out of 15000+200000
  13985 words of font info for 53 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,10n,49p,1598b,449s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,10n,50p,1598b,473s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -1205,7 +1230,7 @@ dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2010/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
 times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on ch5.pdf (37 pages, 5513570 bytes).
+Output written on ch5.pdf (37 pages, 5513668 bytes).
 PDF statistics:
  1851 PDF objects out of 2073 (max. 8388607)
  1444 compressed objects within 15 object streams

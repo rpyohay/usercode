@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  12 JUN 2012 17:20
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  20 JUN 2012 14:07
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -383,18 +383,25 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip56
 )
+(/usr/local/texlive/2010/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip57
+\bibsep=\skip58
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count124
+)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count124
+\linenopenalty=\count125
 \output=\toks26
-\linenoprevgraf=\count125
+\linenoprevgraf=\count126
 \linenumbersep=\dimen138
 \linenumberwidth=\dimen139
-\c@linenumber=\count126
-\c@pagewiselinenumber=\count127
-\c@LN@truepage=\count128
-\c@internallinenumber=\count129
-\c@internallinenumbers=\count130
+\c@linenumber=\count127
+\c@pagewiselinenumber=\count128
+\c@LN@truepage=\count129
+\c@internallinenumber=\count130
+\c@internallinenumbers=\count131
 \quotelinenumbersep=\dimen140
 \bframerule=\dimen141
 \bframesep=\dimen142
@@ -404,7 +411,7 @@ LaTeX Info: Redefining \\ on input line 3056.
 Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps,.gif]
-(grfext)             \AppendGraphicsExtensions on input line 41.
+(grfext)             \AppendGraphicsExtensions on input line 42.
 )) (./ch3.aux)
 \openout1 = `ch3.aux'.
 
@@ -425,15 +432,15 @@ LaTeX Font Info:    ... okay on input line 2.
 
 (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count131
+\scratchcounter=\count132
 \scratchdimen=\dimen143
 \scratchbox=\box29
-\nofMPsegments=\count132
-\nofMParguments=\count133
+\nofMPsegments=\count133
+\nofMParguments=\count134
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count134
+\MPscratchCnt=\count135
 \MPscratchDim=\dimen144
-\MPnumerator=\count135
+\MPnumerator=\count136
 \everyMPtoPDFconversion=\toks28
 )
 Package caption Info: Begin \AtBeginDocument code.
@@ -487,7 +494,7 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
-\c@section@level=\count136
+\c@section@level=\count137
 )
 LaTeX Info: Redefining \ref on input line 2.
 LaTeX Info: Redefining \pageref on input line 2.
@@ -500,10 +507,12 @@ LaTeX Info: Redefining \nameref on input line 2.
 
 Chapter 1.
 
-LaTeX Warning: Citation `Aitchison' on page 1 undefined on input line 7.
+Package natbib Warning: Citation `Aitchison:1111394' on page 1 undefined on inp
+ut line 7.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 1 undefined on input line 7.
+Package natbib Warning: Citation `SUSY_primer' on page 1 undefined on input lin
+e 7.
 
 LaTeX Font Info:    Try loading font information for U+msa on input line 14.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -518,10 +527,12 @@ File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 
 {/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 
-LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 28.
+Package natbib Warning: Citation `SUSY_primer' on page 2 undefined on input lin
+e 28.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 28.
+Package natbib Warning: Citation `SUSY_primer' on page 2 undefined on input lin
+e 28.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 31--31
@@ -636,10 +647,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 29--50
  []
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 53.
+Package natbib Warning: Citation `SUSY_primer' on page 2 undefined on input lin
+e 53.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 2 undefined on input line 53.
+Package natbib Warning: Citation `SUSY_primer' on page 2 undefined on input lin
+e 53.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 56--56
@@ -678,20 +691,24 @@ File: fermion_mass_terms.pdf Graphic file (type pdf)
 
 <use fermion_mass_terms.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 183.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 183.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 183.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 183.
 
 <sfermion_mass_term.pdf, id=114, 96.35268pt x 39.10791pt>
 File: sfermion_mass_term.pdf Graphic file (type pdf)
 
 <use sfermion_mass_term.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 185.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 185.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 185.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 185.
 
 
 Underfull \hbox (badness 5985) in paragraph at lines 185--185
@@ -702,79 +719,95 @@ Underfull \hbox (badness 5985) in paragraph at lines 185--185
 File: Aphiphi_vertex.pdf Graphic file (type pdf)
  <use Aphiphi_vertex.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 187.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 187.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 187.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 187.
 
 <Apsipsi_vertex.pdf, id=116, 68.0137pt x 56.67805pt>
 File: Apsipsi_vertex.pdf Graphic file (type pdf)
  <use Apsipsi_vertex.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 189.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 189.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 189.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 189.
 
 <Alambdalambda_vertex.pdf, id=117, 68.0137pt x 56.11124pt>
 File: Alambdalambda_vertex.pdf Graphic file (type pdf)
 
 <use Alambdalambda_vertex.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 191.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 191.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 191.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 191.
 
 <triple_gauge_boson_vertex.pdf, id=118, 65.74654pt x 55.54451pt>
 File: triple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use triple_gauge_boson_vertex.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 193.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 193.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 193.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 193.
 
 <triple_sfermion_vertices.pdf, id=119, 181.36972pt x 61.77911pt>
 File: triple_sfermion_vertices.pdf Graphic file (type pdf)
 
 <use triple_sfermion_vertices.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 195.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 195.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 195.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 195.
 
 <phipsipsi_vertices.pdf, id=120, 213.10947pt x 62.34583pt>
 File: phipsipsi_vertices.pdf Graphic file (type pdf)
 
 <use phipsipsi_vertices.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 197.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 197.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 197.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 197.
 
 <phipsilambda_vertices.pdf, id=121, 159.26532pt x 54.9778pt>
 File: phipsilambda_vertices.pdf Graphic file (type pdf)
 
 <use phipsilambda_vertices.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 199.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 199.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 199.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 199.
 
 <AAphiphi_vertex.pdf, id=122, 67.44688pt x 65.74654pt>
 File: AAphiphi_vertex.pdf Graphic file (type pdf)
 
 <use AAphiphi_vertex.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 201.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 201.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 201.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 201.
 
 
 Underfull \hbox (badness 1442) in paragraph at lines 201--201
@@ -791,10 +824,12 @@ File: quadruple_gauge_boson_vertex.pdf Graphic file (type pdf)
 
 <use quadruple_gauge_boson_vertex.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 203.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 203.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 203.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 203.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 203--203
@@ -816,10 +851,12 @@ File: non-gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use non-gauge_phi4_vertex.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 205.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 205.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 205.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 205.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 205--205
@@ -836,10 +873,12 @@ File: gauge_phi4_vertex.pdf Graphic file (type pdf)
 
 <use gauge_phi4_vertex.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 207.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 207.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 207.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 207.
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 207--207
@@ -855,7 +894,8 @@ Underfull \hbox (badness 1259) in paragraph at lines 207--207
 LaTeX Warning: Float too large for page by 43.27156pt on input line 210.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 8 undefined on input line 215.
+Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
+e 215.
 
 
 LaTeX Warning: Reference `sec:Implications of the Higgs Mechanism' on page 8 un
@@ -871,75 +911,150 @@ vertex.pdf> <./triple_sfermion_vertices.pdf> <./phipsipsi_vertices.pdf> <./phip
 silambda_vertices.pdf> <./AAphiphi_vertex.pdf> <./quadruple_gauge_boson_vertex.
 pdf> <./non-gauge_phi4_vertex.pdf> <./gauge_phi4_vertex.pdf>]
 
-LaTeX Warning: Citation `SUSY_primer' on page 10 undefined on input line 234.
+Package natbib Warning: Citation `SUSY_primer' on page 10 undefined on input li
+ne 234.
 
 
-LaTeX Warning: Citation `GMSB' on page 10 undefined on input line 239.
+Package natbib Warning: Citation `Dine1982227' on page 10 undefined on input li
+ne 239.
 
 
-LaTeX Warning: Citation `GMSB' on page 10 undefined on input line 239.
+Package natbib Warning: Citation `Nappi1982175' on page 10 undefined on input l
+ine 239.
+
+
+Package natbib Warning: Citation `AlvarezGaume198296' on page 10 undefined on i
+nput line 239.
+
+
+Package natbib Warning: Citation `PhysRevD.48.1277' on page 10 undefined on inp
+ut line 239.
+
+
+Package natbib Warning: Citation `PhysRevD.51.1362' on page 10 undefined on inp
+ut line 239.
+
+
+Package natbib Warning: Citation `PhysRevD.53.2658' on page 10 undefined on inp
+ut line 239.
+
+
+Package natbib Warning: Citation `Dine1982227' on page 10 undefined on input li
+ne 239.
+
+
+Package natbib Warning: Citation `Nappi1982175' on page 10 undefined on input l
+ine 239.
+
+
+Package natbib Warning: Citation `AlvarezGaume198296' on page 10 undefined on i
+nput line 239.
+
+
+Package natbib Warning: Citation `PhysRevD.48.1277' on page 10 undefined on inp
+ut line 239.
+
+
+Package natbib Warning: Citation `PhysRevD.51.1362' on page 10 undefined on inp
+ut line 239.
+
+
+Package natbib Warning: Citation `PhysRevD.53.2658' on page 10 undefined on inp
+ut line 239.
 
 [10] <sfermion_GMSB_mass_terms.pdf, id=539, 370.56622pt x 128.991pt>
 File: sfermion_GMSB_mass_terms.pdf Graphic file (type pdf)
 
 <use sfermion_GMSB_mass_terms.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 11 undefined on input line 243.
+Package natbib Warning: Citation `SUSY_primer' on page 11 undefined on input li
+ne 243.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 11 undefined on input line 243.
+Package natbib Warning: Citation `SUSY_primer' on page 11 undefined on input li
+ne 243.
 
 <gaugino_GMSB_mass_term.pdf, id=540, 172.55376pt x 106.36096pt>
 File: gaugino_GMSB_mass_term.pdf Graphic file (type pdf)
 
 <use gaugino_GMSB_mass_term.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 11 undefined on input line 245.
+Package natbib Warning: Citation `SUSY_primer' on page 11 undefined on input li
+ne 245.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 11 undefined on input line 245.
+Package natbib Warning: Citation `SUSY_primer' on page 11 undefined on input li
+ne 245.
 
 
-LaTeX Warning: Citation `mSUGRA' on page 11 undefined on input line 250.
+Package natbib Warning: Citation `PhysRevLett.49.970' on page 11 undefined on i
+nput line 250.
+
+
+Package natbib Warning: Citation `Barbieri1982343' on page 11 undefined on inpu
+t line 250.
+
+
+Package natbib Warning: Citation `Ibanez198273' on page 11 undefined on input l
+ine 250.
+
+
+Package natbib Warning: Citation `PhysRevD.27.2359' on page 11 undefined on inp
+ut line 250.
+
+
+Package natbib Warning: Citation `PTP.70.542' on page 11 undefined on input lin
+e 250.
+
+
+Package natbib Warning: Citation `Ellis1983123' on page 11 undefined on input l
+ine 250.
+
+
+Package natbib Warning: Citation `AlvarezGaume1983495' on page 11 undefined on 
+input line 250.
 
 [11] [12 <./sfermion_GMSB_mass_terms.pdf> <./gaugino_GMSB_mass_term.pdf>]
 <muegamma.pdf, id=701, 155.01544pt x 68.45575pt>
 File: muegamma.pdf Graphic file (type pdf)
  <use muegamma.pdf>
 
-LaTeX Warning: Citation `SUSY_primer' on page 13 undefined on input line 263.
+Package natbib Warning: Citation `SUSY_primer' on page 13 undefined on input li
+ne 263.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 13 undefined on input line 263.
+Package natbib Warning: Citation `SUSY_primer' on page 13 undefined on input li
+ne 263.
+
+[13 <./muegamma.pdf>]
+
+Package natbib Warning: Citation `PTPS.177.143' on page 14 undefined on input l
+ine 283.
 
 
-LaTeX Warning: Citation `Meade_Seiberg_and_Shih' on page 13 undefined on input 
-line 283.
-
-
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 13 undefined on input line 2
-83.
-
-
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 13 undefined on input lin
+Package natbib Warning: Citation `Aad2012519' on page 14 undefined on input lin
 e 283.
 
 
-LaTeX Warning: Citation `CMS_GMSB_1fb-1' on page 13 undefined on input line 283
-.
+Package natbib Warning: Citation `PhysRevLett.104.011801' on page 14 undefined 
+on input line 283.
 
-[13 <./muegamma.pdf>] [14] [15]
 
-LaTeX Warning: Citation `CMS_GMSB_1fb-1' on page 16 undefined on input line 321
-.
+Package natbib Warning: Citation `CMS-PAS-SUS-11-009' on page 14 undefined on i
+nput line 283.
+
+[14] [15]
+
+Package natbib Warning: Citation `CMS-PAS-SUS-11-009' on page 16 undefined on i
+nput line 321.
 
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
 s' on page 16 undefined on input line 328.
 
 
-LaTeX Warning: Citation `Tevatron_lifetime' on page 16 undefined on input line 
-330.
+Package natbib Warning: Citation `Tevatron_lifetime' on page 16 undefined on in
+put line 330.
 
 [16] <2photons_jets_MET.pdf, id=840, 482.06343pt x 269.35129pt>
 File: 2photons_jets_MET.pdf Graphic file (type pdf)
@@ -961,38 +1076,76 @@ File: wino_photon_jets_MET.pdf Graphic file (type pdf)
 LaTeX Warning: Float too large for page by 3.3169pt on input line 345.
 
 
-LaTeX Warning: Citation `SUSY_history' on page 17 undefined on input line 350.
+Package natbib Warning: Citation `PhysRevLett.54.1118' on page 17 undefined on 
+input line 350.
 
 
-LaTeX Warning: Citation `CMSSM_fits' on page 17 undefined on input line 352.
+Package natbib Warning: Citation `PhysRevD.35.374' on page 17 undefined on inpu
+t line 350.
+
+
+Package natbib Warning: Citation `Decamp1990291' on page 17 undefined on input 
+line 350.
+
+
+Package natbib Warning: Citation `PhysRevLett.75.613' on page 17 undefined on i
+nput line 350.
+
+
+Package natbib Warning: Citation `PhysRevLett.75.618' on page 17 undefined on i
+nput line 350.
+
+
+Package natbib Warning: Citation `Alexander1996273' on page 17 undefined on inp
+ut line 350.
+
+
+Package natbib Warning: Citation `springerlink:10.1007/BF02906978' on page 17 u
+ndefined on input line 350.
+
+
+Package natbib Warning: Citation `Aid1996461' on page 17 undefined on input lin
+e 350.
+
+
+Package natbib Warning: Citation `PhysRevLett.95.041802' on page 17 undefined o
+n input line 350.
+
+
+Package natbib Warning: Citation `Buchmueller:1391061' on page 17 undefined on 
+input line 352.
 
 <CMS_SUSY_2011Limits_tanb10.pdf, id=845, 569.12625pt x 408.52625pt>
 File: CMS_SUSY_2011Limits_tanb10.pdf Graphic file (type pdf)
 
 <use CMS_SUSY_2011Limits_tanb10.pdf>
 
-LaTeX Warning: Citation `CMS_mSUGRA' on page 17 undefined on input line 357.
+Package natbib Warning: Citation `CMS_mSUGRA' on page 17 undefined on input lin
+e 357.
 
 
-LaTeX Warning: Citation `CMS_mSUGRA' on page 17 undefined on input line 357.
+Package natbib Warning: Citation `CMS_mSUGRA' on page 17 undefined on input lin
+e 357.
 
 <ATLAS_SPS8_limit.pdf, id=846, 237.8503pt x 228.18147pt>
 File: ATLAS_SPS8_limit.pdf Graphic file (type pdf)
 
 <use ATLAS_SPS8_limit.pdf>
 
-LaTeX Warning: Citation `SPS' on page 17 undefined on input line 366.
+Package natbib Warning: Citation `springerlink:10.1007/s10052-002-0949-3' on pa
+ge 17 undefined on input line 366.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 17 undefined on input line 3
-66.
+Package natbib Warning: Citation `Aad2012519' on page 17 undefined on input lin
+e 366.
 
 
-LaTeX Warning: Citation `SPS' on page 17 undefined on input line 366.
+Package natbib Warning: Citation `springerlink:10.1007/s10052-002-0949-3' on pa
+ge 17 undefined on input line 366.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 17 undefined on input line 3
-66.
+Package natbib Warning: Citation `Aad2012519' on page 17 undefined on input lin
+e 366.
 
 
 Overfull \hbox (2.83424pt too wide) in paragraph at lines 379--379
@@ -1010,21 +1163,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 379--379
  []
 
 
-LaTeX Warning: Citation `ATLAS' on page 17 undefined on input line 379.
+Package natbib Warning: Citation `1748-0221-3-08-S08003' on page 17 undefined o
+n input line 379.
 
 
-LaTeX Warning: Citation `SPS' on page 17 undefined on input line 379.
+Package natbib Warning: Citation `springerlink:10.1007/s10052-002-0949-3' on pa
+ge 17 undefined on input line 379.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 17 undefined on input line 379.
+Package natbib Warning: Citation `SUSY_primer' on page 17 undefined on input li
+ne 379.
 
 
-LaTeX Warning: Citation `ATLAS_GMSB_1fb-1' on page 17 undefined on input line 3
-79.
-
-
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 17 undefined on input lin
+Package natbib Warning: Citation `Aad2012519' on page 17 undefined on input lin
 e 379.
+
+
+Package natbib Warning: Citation `PhysRevLett.104.011801' on page 17 undefined 
+on input line 379.
 
 [17] [18 <./2photons_jets_MET.pdf> <./bino_photon_jets_MET.pdf> <./lepton_photo
 n_jets_MET.pdf> <./wino_photon_jets_MET.pdf>] [19 <./CMS_SUSY_2011Limits_tanb10
@@ -1033,48 +1189,50 @@ File: CDF_lifetime_vs_mass.pdf Graphic file (type pdf)
 
 <use CDF_lifetime_vs_mass.pdf>
 
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 20 undefined on input lin
-e 384.
+Package natbib Warning: Citation `PhysRevLett.104.011801' on page 20 undefined 
+on input line 384.
 
 
-LaTeX Warning: Citation `CDF_2010_GMSB_paper' on page 20 undefined on input lin
-e 384.
+Package natbib Warning: Citation `PhysRevLett.104.011801' on page 20 undefined 
+on input line 384.
 
 
-LaTeX Warning: Citation `SUSY_primer' on page 20 undefined on input line 388.
+Package natbib Warning: Citation `SUSY_primer' on page 20 undefined on input li
+ne 388.
 
 
-LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 20 undefined on input l
-ine 388.
+Package natbib Warning: Citation `1475-7516-2009-05-012' on page 20 undefined o
+n input line 388.
 
 
-LaTeX Warning: Citation `WMAP' on page 20 undefined on input line 388.
+Package natbib Warning: Citation `0067-0049-180-2-330' on page 20 undefined on 
+input line 388.
 
 
-LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 20 und
-efined on input line 388.
+Package natbib Warning: Citation `PhysRevD.58.075005' on page 20 undefined on i
+nput line 388.
 
 
-LaTeX Warning: Citation `long_lived_neutralinos_at_the_Tevatron' on page 20 und
-efined on input line 388.
+Package natbib Warning: Citation `PhysRevD.58.075005' on page 20 undefined on i
+nput line 388.
 
 [20 <./ATLAS_SPS8_limit.pdf>]
 
-LaTeX Warning: Citation `Lyman_alpha_DM_limits' on page 21 undefined on input l
-ine 396.
+Package natbib Warning: Citation `1475-7516-2009-05-012' on page 21 undefined o
+n input line 396.
 
 
-LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 21 undefined on inp
-ut line 396.
+Package natbib Warning: Citation `springerlink:10.1007/JHEP01(2010)058' on page
+ 21 undefined on input line 396.
 
 
-LaTeX Warning: Citation `cosmo_constraints_on_GMSB' on page 21 undefined on inp
-ut line 396.
+Package natbib Warning: Citation `springerlink:10.1007/JHEP01(2010)058' on page
+ 21 undefined on input line 396.
 
 [21 <./CDF_lifetime_vs_mass.pdf>]
 
-LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 22 undefined on input line 398
-.
+Package natbib Warning: Citation `CMS-PAS-SUS-12-001' on page 22 undefined on i
+nput line 398.
 
 
 LaTeX Warning: Reference `chap:Data Analysis' on page 22 undefined on input lin
@@ -1085,8 +1243,11 @@ LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
 s' on page 22 undefined on input line 398.
 
 
-LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 22 undefined on input line 398
-.
+Package natbib Warning: Citation `CMS-PAS-SUS-12-001' on page 22 undefined on i
+nput line 398.
+
+
+Package natbib Warning: There were undefined citations.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 400.
 [22]
@@ -1099,15 +1260,18 @@ Package rerunfilecheck Info: File `ch3.out' has not changed.
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
  ) 
 Here is how much of TeX's memory you used:
- 8203 strings out of 493747
- 126444 string characters out of 3143546
- 228270 words of memory out of 3000000
- 11229 multiletter control sequences out of 15000+200000
+ 8539 strings out of 493747
+ 130622 string characters out of 3143546
+ 234026 words of memory out of 3000000
+ 11561 multiletter control sequences out of 15000+200000
  13750 words of font info for 52 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,15n,49p,2939b,445s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,15n,50p,2939b,467s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
@@ -1135,7 +1299,7 @@ nts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf-dist/font
 s/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-dist/fonts/
 type1/public/amsfonts/symbols/msam10.pfb>
-Output written on ch3.pdf (22 pages, 1725698 bytes).
+Output written on ch3.pdf (22 pages, 1725856 bytes).
 PDF statistics:
  2427 PDF objects out of 2487 (max. 8388607)
  2051 compressed objects within 21 object streams

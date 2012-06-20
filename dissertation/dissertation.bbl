@@ -1,0 +1,756 @@
+\begin{thebibliography}{96}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\expandafter\ifx\csname bibnamefont\endcsname\relax
+  \def\bibnamefont#1{#1}\fi
+\expandafter\ifx\csname bibfnamefont\endcsname\relax
+  \def\bibfnamefont#1{#1}\fi
+\expandafter\ifx\csname citenamefont\endcsname\relax
+  \def\citenamefont#1{#1}\fi
+\expandafter\ifx\csname url\endcsname\relax
+  \def\url#1{\texttt{#1}}\fi
+\expandafter\ifx\csname urlprefix\endcsname\relax\def\urlprefix{URL }\fi
+\providecommand{\bibinfo}[2]{#2}
+\providecommand{\eprint}[2][]{\texttt{#2}}
+
+\bibitem[{CMS({\natexlab{a}})}]{CMS_public}
+\urlprefix\url{http://cms.web.cern.ch/news/cms-detector-design}.
+
+\bibitem[{\citenamefont{Glashow}(1961)}]{Glashow1961579}
+\bibinfo{author}{\bibfnamefont{S.~L.} \bibnamefont{Glashow}},
+  \bibinfo{journal}{Nucl. Phys.} \textbf{\bibinfo{volume}{22}},
+  \bibinfo{pages}{579} (\bibinfo{year}{1961}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0029558261904692}.
+
+\bibitem[{\citenamefont{Glashow et~al.}(1970)\citenamefont{Glashow, Iliopoulos,
+  and Maiani}}]{PhysRevD.2.1285}
+\bibinfo{author}{\bibfnamefont{S.~L.} \bibnamefont{Glashow}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Iliopoulos}},
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{Maiani}},
+  \bibinfo{journal}{Phys. Rev. D} \textbf{\bibinfo{volume}{2}},
+  \bibinfo{pages}{1285} (\bibinfo{year}{1970}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevD.2.1285}.
+
+\bibitem[{\citenamefont{Goldstone et~al.}(1962)\citenamefont{Goldstone, Salam,
+  and Weinberg}}]{PhysRev.127.965}
+\bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Goldstone}},
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{Salam}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Weinberg}},
+  \bibinfo{journal}{Phys. Rev.} \textbf{\bibinfo{volume}{127}},
+  \bibinfo{pages}{965} (\bibinfo{year}{1962}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRev.127.965}.
+
+\bibitem[{\citenamefont{Weinberg}(1967)}]{PhysRevLett.19.1264}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Weinberg}},
+  \bibinfo{journal}{Phys. Rev. Lett.} \textbf{\bibinfo{volume}{19}},
+  \bibinfo{pages}{1264} (\bibinfo{year}{1967}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.19.1264}.
+
+\bibitem[{\citenamefont{Salam and Ward}(1964)}]{Salam1964168}
+\bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{Salam}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Ward}},
+  \bibinfo{journal}{Phys. Lett.} \textbf{\bibinfo{volume}{13}},
+  \bibinfo{pages}{168} (\bibinfo{year}{1964}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0031916364907115}.
+
+\bibitem[{\citenamefont{Gell-Mann}(1964)}]{GellMann1964214}
+\bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Gell-Mann}},
+  \bibinfo{journal}{Phys. Lett.} \textbf{\bibinfo{volume}{8}},
+  \bibinfo{pages}{214} (\bibinfo{year}{1964}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0031916364920013}.
+
+\bibitem[{\citenamefont{Zweig}(1980)}]{Lichtenberg:784713}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Zweig}}, in
+  \emph{\bibinfo{booktitle}{Developments in the Quark Theory of Hadrons}},
+  edited by \bibinfo{editor}{\bibfnamefont{D.~B.} \bibnamefont{Lichtenberg}}
+  \bibnamefont{and} \bibinfo{editor}{\bibfnamefont{S.~P.} \bibnamefont{Rosen}}
+  (\bibinfo{publisher}{Hadronic Press}, \bibinfo{address}{Nonantum, MA},
+  \bibinfo{year}{1980}), pp. \bibinfo{pages}{22--101}.
+
+\bibitem[{\citenamefont{Drees}(2002)}]{Drees}
+\bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Drees}}, \bibinfo{journal}{Int.
+  J. Mod. Phys. A} \textbf{\bibinfo{volume}{17}}, \bibinfo{pages}{3259}
+  (\bibinfo{year}{2002}),
+  \urlprefix\url{http://www.worldscinet.com/ijmpa/17/1723/S0217751X02012727.html}.
+
+\bibitem[{\citenamefont{Higgs}(1964{\natexlab{a}})}]{Higgs1964132}
+\bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Higgs}},
+  \bibinfo{journal}{Physics Letters} \textbf{\bibinfo{volume}{12}},
+  \bibinfo{pages}{132} (\bibinfo{year}{1964}{\natexlab{a}}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0031916364911369}.
+
+\bibitem[{\citenamefont{Higgs}(1964{\natexlab{b}})}]{PhysRevLett.13.508}
+\bibinfo{author}{\bibfnamefont{P.~W.} \bibnamefont{Higgs}},
+  \bibinfo{journal}{Phys. Rev. Lett.} \textbf{\bibinfo{volume}{13}},
+  \bibinfo{pages}{508} (\bibinfo{year}{1964}{\natexlab{b}}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.13.508}.
+
+\bibitem[{\citenamefont{Higgs}(1966)}]{PhysRev.145.1156}
+\bibinfo{author}{\bibfnamefont{P.~W.} \bibnamefont{Higgs}},
+  \bibinfo{journal}{Phys. Rev.} \textbf{\bibinfo{volume}{145}},
+  \bibinfo{pages}{1156} (\bibinfo{year}{1966}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRev.145.1156}.
+
+\bibitem[{\citenamefont{Aitchison}(2007)}]{Aitchison:1111394}
+\bibinfo{author}{\bibfnamefont{I.}~\bibnamefont{Aitchison}},
+  \emph{\bibinfo{title}{Supersymmetry in Particle Physics: An Elementary
+  Introduction}} (\bibinfo{publisher}{Cambridge Univ. Press},
+  \bibinfo{address}{Cambridge}, \bibinfo{year}{2007}).
+
+\bibitem[{\citenamefont{Quigg}(2001)}]{rosner2001flavor}
+\bibinfo{author}{\bibfnamefont{C.}~\bibnamefont{Quigg}}, in
+  \emph{\bibinfo{booktitle}{Flavor Physics for the Millennium: TASI 2000 :
+  Boulder, Colorado, US, 2000}}, edited by
+  \bibinfo{editor}{\bibfnamefont{J.~L.} \bibnamefont{Rosner}}
+  (\bibinfo{publisher}{World Scientific}, \bibinfo{address}{Singapore},
+  \bibinfo{year}{2001}), p.~\bibinfo{pages}{3},
+  \urlprefix\url{http://arxiv.org/abs/hep-ph/0204104}.
+
+\bibitem[{\citenamefont{\'{A}lvarez Gaum\'{e} and Ellis}(2011)}]{Alvarez-Gaume}
+\bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{\'{A}lvarez Gaum\'{e}}}
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Ellis}},
+  \bibinfo{journal}{Nat. Phys.} \textbf{\bibinfo{volume}{7}},
+  \bibinfo{pages}{2} (\bibinfo{year}{2011}),
+  \urlprefix\url{http://dx.doi.org/10.1038/nphys1874}.
+
+\bibitem[{\citenamefont{Arnison et~al.}(1983{\natexlab{a}})}]{Arnison:1983rp}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Arnison}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{UA1 Collaboration}), \bibinfo{journal}{Phys. Lett.
+  B} \textbf{\bibinfo{volume}{122}}, \bibinfo{pages}{103}
+  (\bibinfo{year}{1983}{\natexlab{a}}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370269383911772}.
+
+\bibitem[{\citenamefont{Arnison et~al.}(1983{\natexlab{b}})}]{Arnison1983398}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Arnison}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{UA1 Collaboration}), \bibinfo{journal}{Phys. Lett.
+  B} \textbf{\bibinfo{volume}{126}}, \bibinfo{pages}{398}
+  (\bibinfo{year}{1983}{\natexlab{b}}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370269383901880}.
+
+\bibitem[{\citenamefont{Gunion et~al.}(1990)\citenamefont{Gunion, Dawson,
+  Haber, and Kane}}]{Gunion:425736}
+\bibinfo{author}{\bibfnamefont{J.~F.} \bibnamefont{Gunion}},
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Dawson}},
+  \bibinfo{author}{\bibfnamefont{H.~E.} \bibnamefont{Haber}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{G.~L.} \bibnamefont{Kane}},
+  \emph{\bibinfo{title}{The Higgs Hunter's Guide}}
+  (\bibinfo{publisher}{Westview}, \bibinfo{address}{Boulder, CO},
+  \bibinfo{year}{1990}).
+
+\bibitem[{\citenamefont{Nakamura et~al.}(2010)}]{0954-3899-37-7A-075021}
+\bibinfo{author}{\bibfnamefont{K.}~\bibnamefont{Nakamura}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{Particle Data Group}), \bibinfo{journal}{J. Phys. G}
+  \textbf{\bibinfo{volume}{37}}, \bibinfo{pages}{075021}
+  (\bibinfo{year}{2010}),
+  \urlprefix\url{http://stacks.iop.org/0954-3899/37/i=7A/a=075021}.
+
+\bibitem[{\citenamefont{Martin}(2006)}]{SUSY_primer}
+\bibinfo{author}{\bibfnamefont{S.~P.} \bibnamefont{Martin}}
+  (\bibinfo{year}{2006}), \bibinfo{note}{unpublished}, \eprint{hep-ph/9709356},
+  \urlprefix\url{http://arxiv.org/abs/hep-ph/9709356v6}.
+
+\bibitem[{\citenamefont{Jungman et~al.}(1996)\citenamefont{Jungman,
+  Kamionkowski, and Griest}}]{Jungman1996195}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Jungman}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Kamionkowski}},
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{K.}~\bibnamefont{Griest}},
+  \bibinfo{journal}{Phys. Rept.} \textbf{\bibinfo{volume}{267}},
+  \bibinfo{pages}{195} (\bibinfo{year}{1996}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370157395000585}.
+
+\bibitem[{\citenamefont{Chatrchyan
+  et~al.}(2012{\natexlab{a}})}]{Chatrchyan201226}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Chatrchyan}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration}),
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{710}},
+  \bibinfo{pages}{26} (\bibinfo{year}{2012}{\natexlab{a}}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0370269312002055}.
+
+\bibitem[{\citenamefont{Aad et~al.}(2012{\natexlab{a}})}]{Aad201249}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Aad}} \bibnamefont{et~al.},
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{710}},
+  \bibinfo{pages}{49} (\bibinfo{year}{2012}{\natexlab{a}}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0370269312001852}.
+
+\bibitem[{\citenamefont{Dine and Fischler}(1982)}]{Dine1982227}
+\bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Dine}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{W.}~\bibnamefont{Fischler}},
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{110}},
+  \bibinfo{pages}{227} (\bibinfo{year}{1982}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370269382912412}.
+
+\bibitem[{\citenamefont{Nappi and Ovrut}(1982)}]{Nappi1982175}
+\bibinfo{author}{\bibfnamefont{C.~R.} \bibnamefont{Nappi}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{B.~A.} \bibnamefont{Ovrut}},
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{113}},
+  \bibinfo{pages}{175} (\bibinfo{year}{1982}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/037026938290418X}.
+
+\bibitem[{\citenamefont{Alvarez-Gaum\'{e}
+  et~al.}(1982)\citenamefont{Alvarez-Gaum\'{e}, Claudson, and
+  Wise}}]{AlvarezGaume198296}
+\bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{Alvarez-Gaum\'{e}}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Claudson}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{M.~B.} \bibnamefont{Wise}},
+  \bibinfo{journal}{Nucl. Phys. B} \textbf{\bibinfo{volume}{207}},
+  \bibinfo{pages}{96} (\bibinfo{year}{1982}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0550321382901389}.
+
+\bibitem[{\citenamefont{Dine and Nelson}(1993)}]{PhysRevD.48.1277}
+\bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Dine}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{A.~E.} \bibnamefont{Nelson}},
+  \bibinfo{journal}{Phys. Rev. D} \textbf{\bibinfo{volume}{48}},
+  \bibinfo{pages}{1277} (\bibinfo{year}{1993}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevD.48.1277}.
+
+\bibitem[{\citenamefont{Dine et~al.}(1995)\citenamefont{Dine, Nelson, and
+  Shirman}}]{PhysRevD.51.1362}
+\bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Dine}},
+  \bibinfo{author}{\bibfnamefont{A.~E.} \bibnamefont{Nelson}},
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{Y.}~\bibnamefont{Shirman}},
+  \bibinfo{journal}{Phys. Rev. D} \textbf{\bibinfo{volume}{51}},
+  \bibinfo{pages}{1362} (\bibinfo{year}{1995}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevD.51.1362}.
+
+\bibitem[{\citenamefont{Dine et~al.}(1996)\citenamefont{Dine, Nelson, Nir, and
+  Shirman}}]{PhysRevD.53.2658}
+\bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Dine}},
+  \bibinfo{author}{\bibfnamefont{A.~E.} \bibnamefont{Nelson}},
+  \bibinfo{author}{\bibfnamefont{Y.}~\bibnamefont{Nir}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{Y.}~\bibnamefont{Shirman}},
+  \bibinfo{journal}{Phys. Rev. D} \textbf{\bibinfo{volume}{53}},
+  \bibinfo{pages}{2658} (\bibinfo{year}{1996}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevD.53.2658}.
+
+\bibitem[{\citenamefont{Chamseddine et~al.}(1982)\citenamefont{Chamseddine,
+  Arnowitt, and Nath}}]{PhysRevLett.49.970}
+\bibinfo{author}{\bibfnamefont{A.~H.} \bibnamefont{Chamseddine}},
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Arnowitt}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Nath}},
+  \bibinfo{journal}{Phys. Rev. Lett.} \textbf{\bibinfo{volume}{49}},
+  \bibinfo{pages}{970} (\bibinfo{year}{1982}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.49.970}.
+
+\bibitem[{\citenamefont{Barbieri et~al.}(1982)\citenamefont{Barbieri, Ferrara,
+  and Savoy}}]{Barbieri1982343}
+\bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Barbieri}},
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Ferrara}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{C.}~\bibnamefont{Savoy}},
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{119}},
+  \bibinfo{pages}{343} (\bibinfo{year}{1982}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370269382906852}.
+
+\bibitem[{\citenamefont{{n}ez}(1982)}]{Ibanez198273}
+\bibinfo{author}{\bibfnamefont{L.~I.} \bibnamefont{{n}ez}},
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{118}},
+  \bibinfo{pages}{73} (\bibinfo{year}{1982}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370269382906049}.
+
+\bibitem[{\citenamefont{Hall et~al.}(1983)\citenamefont{Hall, Lykken, and
+  Weinberg}}]{PhysRevD.27.2359}
+\bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{Hall}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Lykken}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Weinberg}},
+  \bibinfo{journal}{Phys. Rev. D} \textbf{\bibinfo{volume}{27}},
+  \bibinfo{pages}{2359} (\bibinfo{year}{1983}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevD.27.2359}.
+
+\bibitem[{\citenamefont{Ohta}(1983)}]{PTP.70.542}
+\bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Ohta}}, \bibinfo{journal}{Prog.
+  Theor. Phys.} \textbf{\bibinfo{volume}{70}}, \bibinfo{pages}{542}
+  (\bibinfo{year}{1983}), \urlprefix\url{http://ptp.ipap.jp/link?PTP/70/542/}.
+
+\bibitem[{\citenamefont{Ellis et~al.}(1983)\citenamefont{Ellis, Nanopoulos, and
+  Tamvakis}}]{Ellis1983123}
+\bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Ellis}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Nanopoulos}},
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{K.}~\bibnamefont{Tamvakis}},
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{121}},
+  \bibinfo{pages}{123} (\bibinfo{year}{1983}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370269383909000}.
+
+\bibitem[{\citenamefont{Alvarez-Gaum\'{e}
+  et~al.}(1983)\citenamefont{Alvarez-Gaum\'{e}, Polchinski, and
+  Wise}}]{AlvarezGaume1983495}
+\bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{Alvarez-Gaum\'{e}}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Polchinski}},
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{M.~B.} \bibnamefont{Wise}},
+  \bibinfo{journal}{Nucl. Phys. B} \textbf{\bibinfo{volume}{221}},
+  \bibinfo{pages}{495} (\bibinfo{year}{1983}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0550321383905916}.
+
+\bibitem[{\citenamefont{Meade et~al.}(2009)\citenamefont{Meade, Seiberg, and
+  Shih}}]{PTPS.177.143}
+\bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Meade}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Seiberg}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Shih}},
+  \bibinfo{journal}{Prog. Theor. Phys. Suppl.} \textbf{\bibinfo{volume}{177}},
+  \bibinfo{pages}{143} (\bibinfo{year}{2009}),
+  \urlprefix\url{http://ptp.ipap.jp/link?PTPS/177/143/}.
+
+\bibitem[{\citenamefont{Aad et~al.}(2012{\natexlab{b}})}]{Aad2012519}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Aad}} \bibnamefont{et~al.},
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{710}},
+  \bibinfo{pages}{519} (\bibinfo{year}{2012}{\natexlab{b}}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0370269312001955}.
+
+\bibitem[{\citenamefont{Aaltonen et~al.}(2010)}]{PhysRevLett.104.011801}
+\bibinfo{author}{\bibfnamefont{T.}~\bibnamefont{Aaltonen}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{CDF Collaboration}), \bibinfo{journal}{Phys. Rev.
+  Lett.} \textbf{\bibinfo{volume}{104}}, \bibinfo{pages}{011801}
+  (\bibinfo{year}{2010}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.104.011801}.
+
+\bibitem[{\citenamefont{Chatrchyan
+  et~al.}(2011{\natexlab{a}})}]{CMS-PAS-SUS-11-009}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Chatrchyan}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration})
+  (\bibinfo{year}{2011}{\natexlab{a}}), \bibinfo{note}{unpublished},
+  \eprint{CMS-PAS-SUS-11-009},
+  \urlprefix\url{https://cdsweb.cern.ch/record/1377324}.
+
+\bibitem[{Tev()}]{Tevatron_lifetime}
+\urlprefix\url{http://en.wikipedia.org/wiki/Tevatron}.
+
+\bibitem[{\citenamefont{Fernandez et~al.}(1985)\citenamefont{Fernandez, Ford,
+  Qi, Read, Smith, Camporesi, De~Sangro, Marini, Peruzzi, Piccolo
+  et~al.}}]{PhysRevLett.54.1118}
+\bibinfo{author}{\bibfnamefont{E.}~\bibnamefont{Fernandez}},
+  \bibinfo{author}{\bibfnamefont{W.~T.} \bibnamefont{Ford}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Qi}},
+  \bibinfo{author}{\bibfnamefont{A.~L.} \bibnamefont{Read}},
+  \bibinfo{author}{\bibfnamefont{J.~G.} \bibnamefont{Smith}},
+  \bibinfo{author}{\bibfnamefont{T.}~\bibnamefont{Camporesi}},
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{De~Sangro}},
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{Marini}},
+  \bibinfo{author}{\bibfnamefont{I.}~\bibnamefont{Peruzzi}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Piccolo}},
+  \bibnamefont{et~al.}, \bibinfo{journal}{Phys. Rev. Lett.}
+  \textbf{\bibinfo{volume}{54}}, \bibinfo{pages}{1118} (\bibinfo{year}{1985}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.54.1118}.
+
+\bibitem[{\citenamefont{Fernandez et~al.}(1987)\citenamefont{Fernandez, Ford,
+  Qi, Read, Smith, Camporesi, Peruzzi, Piccolo, Hurst, Lau
+  et~al.}}]{PhysRevD.35.374}
+\bibinfo{author}{\bibfnamefont{E.~W.} \bibnamefont{Fernandez}},
+  \bibinfo{author}{\bibfnamefont{W.~T.} \bibnamefont{Ford}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Qi}},
+  \bibinfo{author}{\bibfnamefont{A.~L.} \bibnamefont{Read}},
+  \bibinfo{author}{\bibfnamefont{J.~G.} \bibnamefont{Smith}},
+  \bibinfo{author}{\bibfnamefont{T.}~\bibnamefont{Camporesi}},
+  \bibinfo{author}{\bibfnamefont{I.}~\bibnamefont{Peruzzi}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Piccolo}},
+  \bibinfo{author}{\bibfnamefont{R.~B.} \bibnamefont{Hurst}},
+  \bibinfo{author}{\bibfnamefont{K.~H.} \bibnamefont{Lau}},
+  \bibnamefont{et~al.}, \bibinfo{journal}{Phys. Rev. D}
+  \textbf{\bibinfo{volume}{35}}, \bibinfo{pages}{374} (\bibinfo{year}{1987}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevD.35.374}.
+
+\bibitem[{\citenamefont{Decamp et~al.}(1990)}]{Decamp1990291}
+\bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Decamp}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{ALEPH Collaboration}), \bibinfo{journal}{Phys. Lett.
+  B} \textbf{\bibinfo{volume}{237}}, \bibinfo{pages}{291}
+  (\bibinfo{year}{1990}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/037026939091447J}.
+
+\bibitem[{\citenamefont{Abe et~al.}(1995)}]{PhysRevLett.75.613}
+\bibinfo{author}{\bibfnamefont{F.}~\bibnamefont{Abe}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{CDF Collaboration}), \bibinfo{journal}{Phys. Rev.
+  Lett.} \textbf{\bibinfo{volume}{75}}, \bibinfo{pages}{613}
+  (\bibinfo{year}{1995}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.75.613}.
+
+\bibitem[{\citenamefont{Abachi et~al.}(1995)}]{PhysRevLett.75.618}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Abachi}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{D0 Collaboration}), \bibinfo{journal}{Phys. Rev.
+  Lett.} \textbf{\bibinfo{volume}{75}}, \bibinfo{pages}{618}
+  (\bibinfo{year}{1995}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.75.618}.
+
+\bibitem[{\citenamefont{Alexander et~al.}(1996)}]{Alexander1996273}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Alexander}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{OPAL Collaboration}),
+  \bibinfo{journal}{Phys. Lett. B} \textbf{\bibinfo{volume}{377}},
+  \bibinfo{pages}{273} (\bibinfo{year}{1996}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370269396005023}.
+
+\bibitem[{\citenamefont{Aid
+  et~al.}(1996{\natexlab{a}})}]{springerlink:10.1007/BF02906978}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Aid}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{H1 Collaboration}), \bibinfo{journal}{Z. Phys. C}
+  \textbf{\bibinfo{volume}{71}}, \bibinfo{pages}{211}
+  (\bibinfo{year}{1996}{\natexlab{a}}), \bibinfo{note}{10.1007/BF02906978},
+  \urlprefix\url{http://dx.doi.org/10.1007/BF02906978}.
+
+\bibitem[{\citenamefont{Aid et~al.}(1996{\natexlab{b}})}]{Aid1996461}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Aid}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{H1 Collaboration}), \bibinfo{journal}{Phys. Lett. B}
+  \textbf{\bibinfo{volume}{380}}, \bibinfo{pages}{461}
+  (\bibinfo{year}{1996}{\natexlab{b}}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0370269396006405}.
+
+\bibitem[{\citenamefont{Aubert et~al.}(2005)}]{PhysRevLett.95.041802}
+\bibinfo{author}{\bibfnamefont{B.}~\bibnamefont{Aubert}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{BABAR Collaboration}), \bibinfo{journal}{Phys. Rev.
+  Lett.} \textbf{\bibinfo{volume}{95}}, \bibinfo{pages}{041802}
+  (\bibinfo{year}{2005}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.95.041802}.
+
+\bibitem[{\citenamefont{Buchmueller et~al.}(2011)\citenamefont{Buchmueller,
+  Cavanaugh, De~Roeck, Dolan, Ellis, Flacher, Heinemeyer, Isidori,
+  Martinez~Santos, Olive et~al.}}]{Buchmueller:1391061}
+\bibinfo{author}{\bibfnamefont{O.}~\bibnamefont{Buchmueller}},
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Cavanaugh}},
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{De~Roeck}},
+  \bibinfo{author}{\bibfnamefont{M.~J.} \bibnamefont{Dolan}},
+  \bibinfo{author}{\bibfnamefont{J.~R.} \bibnamefont{Ellis}},
+  \bibinfo{author}{\bibfnamefont{H.}~\bibnamefont{Flacher}},
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Heinemeyer}},
+  \bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Isidori}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Martinez~Santos}},
+  \bibinfo{author}{\bibfnamefont{K.~A.} \bibnamefont{Olive}},
+  \bibnamefont{et~al.}, \bibinfo{type}{Report No.}
+  \bibinfo{number}{CERN-PH-TH-2011-220}, \bibinfo{institution}{CERN}
+  (\bibinfo{year}{2011}),
+  \urlprefix\url{https://cdsweb.cern.ch/record/1391061}.
+
+\bibitem[{CMS({\natexlab{b}})}]{CMS_mSUGRA}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub/CMSPublic/PhysicsResultsSUS/CMS_SUSY_2011Limits_tanb10.pdf}.
+
+\bibitem[{\citenamefont{Allanach et~al.}(2002)\citenamefont{Allanach,
+  Battaglia, Blair, Carena, De~Roeck, Dedes, Djouadi, Gerdes, Ghodbane, Gunion
+  et~al.}}]{springerlink:10.1007/s10052-002-0949-3}
+\bibinfo{author}{\bibfnamefont{B.}~\bibnamefont{Allanach}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Battaglia}},
+  \bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Blair}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Carena}},
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{De~Roeck}},
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{Dedes}},
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{Djouadi}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Gerdes}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Ghodbane}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Gunion}},
+  \bibnamefont{et~al.}, \bibinfo{journal}{Eur. Phys. J. C}
+  \textbf{\bibinfo{volume}{25}}, \bibinfo{pages}{113} (\bibinfo{year}{2002}),
+  \urlprefix\url{http://dx.doi.org/10.1007/s10052-002-0949-3}.
+
+\bibitem[{\citenamefont{Aad et~al.}(2008)}]{1748-0221-3-08-S08003}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Aad}} \bibnamefont{et~al.}
+  (\bibinfo{collaboration}{ATLAS Collaboration}), \bibinfo{journal}{JINST}
+  \textbf{\bibinfo{volume}{3}}, \bibinfo{pages}{S08003} (\bibinfo{year}{2008}),
+  \urlprefix\url{http://stacks.iop.org/1748-0221/3/i=08/a=S08003}.
+
+\bibitem[{\citenamefont{Boyarsky et~al.}(2009)\citenamefont{Boyarsky,
+  Lesgourgues, Ruchayskiy, and Viel}}]{1475-7516-2009-05-012}
+\bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{Boyarsky}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Lesgourgues}},
+  \bibinfo{author}{\bibfnamefont{O.}~\bibnamefont{Ruchayskiy}},
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Viel}},
+  \bibinfo{journal}{J. Cosmol. Astropart. Phys.}
+  \textbf{\bibinfo{volume}{2009}}, \bibinfo{pages}{012} (\bibinfo{year}{2009}),
+  \urlprefix\url{http://stacks.iop.org/1475-7516/2009/i=05/a=012}.
+
+\bibitem[{\citenamefont{Komatsu et~al.}(2009)\citenamefont{Komatsu, Dunkley,
+  Nolta, Bennett, Gold, Hinshaw, Jarosik, Larson, Limon, Page
+  et~al.}}]{0067-0049-180-2-330}
+\bibinfo{author}{\bibfnamefont{E.}~\bibnamefont{Komatsu}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Dunkley}},
+  \bibinfo{author}{\bibfnamefont{M.~R.} \bibnamefont{Nolta}},
+  \bibinfo{author}{\bibfnamefont{C.~L.} \bibnamefont{Bennett}},
+  \bibinfo{author}{\bibfnamefont{B.}~\bibnamefont{Gold}},
+  \bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Hinshaw}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Jarosik}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Larson}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Limon}},
+  \bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{Page}}, \bibnamefont{et~al.},
+  \bibinfo{journal}{Astrophys. J. Suppl. Ser.} \textbf{\bibinfo{volume}{180}},
+  \bibinfo{pages}{330} (\bibinfo{year}{2009}),
+  \urlprefix\url{http://stacks.iop.org/0067-0049/180/i=2/a=330}.
+
+\bibitem[{\citenamefont{Chen and Gunion}(1998)}]{PhysRevD.58.075005}
+\bibinfo{author}{\bibfnamefont{C.-H.} \bibnamefont{Chen}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{J.~F.} \bibnamefont{Gunion}},
+  \bibinfo{journal}{Phys. Rev. D} \textbf{\bibinfo{volume}{58}},
+  \bibinfo{pages}{075005} (\bibinfo{year}{1998}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevD.58.075005}.
+
+\bibitem[{\citenamefont{Staub et~al.}(2010)\citenamefont{Staub, Niemeyer, and
+  Porod}}]{springerlink:10.1007/JHEP01(2010)058}
+\bibinfo{author}{\bibfnamefont{F.}~\bibnamefont{Staub}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Niemeyer}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{W.}~\bibnamefont{Porod}},
+  \bibinfo{journal}{JHEP} \textbf{\bibinfo{volume}{2010}}, \bibinfo{pages}{1}
+  (\bibinfo{year}{2010}),
+  \urlprefix\url{http://dx.doi.org/10.1007/JHEP01(2010)058}.
+
+\bibitem[{\citenamefont{Chatrchyan
+  et~al.}(2012{\natexlab{b}})}]{CMS-PAS-SUS-12-001}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Chatrchyan}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration})
+  (\bibinfo{year}{2012}{\natexlab{b}}), \bibinfo{note}{unpublished},
+  \eprint{CMS-PAS-SUS-12-001},
+  \urlprefix\url{https://cdsweb.cern.ch/record/1436111}.
+
+\bibitem[{\citenamefont{Evans and Bryant}(2008)}]{1748-0221-3-08-S08001}
+\bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{Evans}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Bryant}},
+  \bibinfo{journal}{JINST} \textbf{\bibinfo{volume}{3}},
+  \bibinfo{pages}{S08001} (\bibinfo{year}{2008}),
+  \urlprefix\url{http://stacks.iop.org/1748-0221/3/i=08/a=S08001}.
+
+\bibitem[{CMS({\natexlab{c}})}]{CMS_2011_summary}
+\urlprefix\url{http://cms.web.cern.ch/news/summary-2011-p-p-running}.
+
+\bibitem[{LHC({\natexlab{a}})}]{LHC_public}
+\urlprefix\url{http://public.web.cern.ch/public/en/lhc/Facts-en.html}.
+
+\bibitem[{CER()}]{CERN_Globe}
+\urlprefix\url{http://cdsweb.cern.ch/record/833187}.
+
+\bibitem[{air()}]{airplane}
+\urlprefix\url{http://www.rgbstock.com/photo/n7EsabW/Airplane}.
+
+\bibitem[{\citenamefont{Fl\"{u}kiger et~al.}(2012)\citenamefont{Fl\"{u}kiger,
+  Hariharan, K\"{u}ntzler, Luo, Weiss, Wolf, and Xu}}]{Flukiger}
+\bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Fl\"{u}kiger}},
+  \bibinfo{author}{\bibfnamefont{S.~Y.} \bibnamefont{Hariharan}},
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{K\"{u}ntzler}},
+  \bibinfo{author}{\bibfnamefont{H.~L.} \bibnamefont{Luo}},
+  \bibinfo{author}{\bibfnamefont{F.}~\bibnamefont{Weiss}},
+  \bibinfo{author}{\bibfnamefont{T.}~\bibnamefont{Wolf}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{J.~Q.} \bibnamefont{Xu}}, in
+  \emph{\bibinfo{booktitle}{SpringerMaterials - The Landolt-B\"{o}rnstein
+  Database: Nb-Ti}}, edited by
+  \bibinfo{editor}{\bibfnamefont{R.}~\bibnamefont{Fl\"{u}kiger}}
+  \bibnamefont{and} \bibinfo{editor}{\bibfnamefont{W.}~\bibnamefont{Klose}}
+  (\bibinfo{publisher}{http://www.springermaterials.com},
+  \bibinfo{year}{2012}),
+  \urlprefix\url{http://www.springermaterials.com/docs/info/10423690_53.html}.
+
+\bibitem[{\citenamefont{Sun et~al.}(2009)\citenamefont{Sun, Zimmermann, and
+  Tom\'{a}s}}]{Sun:1235160}
+\bibinfo{author}{\bibfnamefont{Y.}~\bibnamefont{Sun}},
+  \bibinfo{author}{\bibfnamefont{F.}~\bibnamefont{Zimmermann}},
+  \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Tom\'{a}s}}, in
+  \emph{\bibinfo{booktitle}{Proceedings of the $23^{\mathrm{rd}}$ Particle
+  Accelerator Conference, Vancouver, 2009}} (\bibinfo{year}{2009}),
+  \urlprefix\url{https://cdsweb.cern.ch/record/1235160}.
+
+\bibitem[{\citenamefont{Br\"{u}ning et~al.}(2004)\citenamefont{Br\"{u}ning,
+  Collier, Lebrun, Myers, Ostojic, Poole, and Proudlock}}]{Bruning:782076}
+\bibinfo{author}{\bibfnamefont{O.~S.} \bibnamefont{Br\"{u}ning}},
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Collier}},
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Lebrun}},
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Myers}},
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Ostojic}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Poole}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Proudlock}},
+  \emph{\bibinfo{title}{LHC Design Report}} (\bibinfo{publisher}{CERN},
+  \bibinfo{address}{Geneva}, \bibinfo{year}{2004}).
+
+\bibitem[{LHC({\natexlab{b}})}]{LHC_injector_complex_photo}
+\urlprefix\url{http://cdsweb.cern.ch/record/841568/files/}.
+
+\bibitem[{\citenamefont{Komorowski and Tommasini}(2000)}]{828202}
+\bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Komorowski}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Tommasini}},
+  \bibinfo{journal}{IEEE Trans. Appl. Supercond.}
+  \textbf{\bibinfo{volume}{10}}, \bibinfo{pages}{166} (\bibinfo{year}{2000}),
+  \urlprefix\url{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=828202}.
+
+\bibitem[{LHC({\natexlab{c}})}]{LHC_outreach_magnets}
+\urlprefix\url{http://lhc-machine-outreach.web.cern.ch/lhc-machine-outreach/components/magnets.htm}.
+
+\bibitem[{\citenamefont{Chatrchyan et~al.}(2008)}]{1748-0221-3-08-S08004}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Chatrchyan}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration}),
+  \bibinfo{journal}{JINST} \textbf{\bibinfo{volume}{3}},
+  \bibinfo{pages}{S08004} (\bibinfo{year}{2008}),
+  \urlprefix\url{http://stacks.iop.org/1748-0221/3/i=08/a=S08004}.
+
+\bibitem[{\citenamefont{Bayatian et~al.}(2006)}]{Bayatian:922757}
+\bibinfo{author}{\bibfnamefont{G.~L.} \bibnamefont{Bayatian}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration}),
+  \emph{\bibinfo{title}{CMS Physics Technical Design Report Volume I: Detector
+  Performance and Software}}, Technical Design Report CMS
+  (\bibinfo{publisher}{CERN}, \bibinfo{address}{Geneva}, \bibinfo{year}{2006}).
+
+\bibitem[{\citenamefont{Ivova}(2010)}]{Ivova}
+\bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Ivova}} (\bibinfo{year}{2010}),
+  \bibinfo{note}{talk given at the Swiss Ph.D. School on Particle and
+  Astroparticle Physics (CHIPP), Monte Verita'},
+  \urlprefix\url{https://indico.cern.ch/getFile.py/access?contribId=11&sessionId=14&resId=0&materialId=0&confId=80223}.
+
+\bibitem[{\citenamefont{Bolla et~al.}(2001)\citenamefont{Bolla, Bortoletto,
+  Rott, Roy, Kwan, Chien, Cho, Gobbi, Horisberger, and
+  Kaufmann}}]{Bolla2001182}
+\bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Bolla}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Bortoletto}},
+  \bibinfo{author}{\bibfnamefont{C.}~\bibnamefont{Rott}},
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{Roy}},
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Kwan}},
+  \bibinfo{author}{\bibfnamefont{C.}~\bibnamefont{Chien}},
+  \bibinfo{author}{\bibfnamefont{H.}~\bibnamefont{Cho}},
+  \bibinfo{author}{\bibfnamefont{B.}~\bibnamefont{Gobbi}},
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Horisberger}},
+  \bibnamefont{and} \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Kaufmann}},
+  \bibinfo{journal}{NIM A} \textbf{\bibinfo{volume}{461}}, \bibinfo{pages}{182}
+  (\bibinfo{year}{2001}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S0168900200012018}.
+
+\bibitem[{pix({\natexlab{a}})}]{pixel_DPG_Twiki_rphi_res}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub/CMSPublic/DPGResultsTRK/_imgf9e0ee48ebca770d7774454532b4b4ee.png}.
+
+\bibitem[{pix({\natexlab{b}})}]{pixel_DPG_Twiki_z_res}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub/CMSPublic/DPGResultsTRK/_img7569b7652b3f7c15030a11a4223e631c.png}.
+
+\bibitem[{pix({\natexlab{c}})}]{pixel_DPG_Twiki_eff}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub//CMSPublic/DPGResultsTRK/hv11_d1.png}.
+
+\bibitem[{tra({\natexlab{a}})}]{tracker_DPG_Twiki_TIB_SNR}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub/CMSPublic/DPGResultsTRK/_imga571742cbed3a14a9e2581ae95efa54c.gif}.
+
+\bibitem[{tra({\natexlab{b}})}]{tracker_DPG_Twiki_res}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub//CMSPublic/DPGResultsTRK/StripHitRes2.gif}.
+
+\bibitem[{ECA({\natexlab{a}})}]{ECAL_DPG_Twiki_rad_damage}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/histories2_laser.png}.
+
+\bibitem[{ECA({\natexlab{b}})}]{ECAL_DPG_Twiki_res_vs_eta_EB}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/electronres_eb_inclusive.png}.
+
+\bibitem[{ECA({\natexlab{c}})}]{ECAL_DPG_Twiki_res_vs_eta_EE}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/electronres_ee_inclusive.png}.
+
+\bibitem[{\citenamefont{Chatrchyan
+  et~al.}(2011{\natexlab{b}})}]{CMS-PAS-EXO-11-067}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Chatrchyan}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration})
+  (\bibinfo{year}{2011}{\natexlab{b}}), \bibinfo{note}{unpublished},
+  \eprint{CMS-PAS-EXO-11-067},
+  \urlprefix\url{https://cdsweb.cern.ch/record/1394286}.
+
+\bibitem[{ECA({\natexlab{d}})}]{ECAL_DPG_Twiki_timing_res}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/seed-time.EEEE.png}.
+
+\bibitem[{\citenamefont{Akchurin and Wigmans}(2003)}]{Akchurin_Wigmans}
+\bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Akchurin}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Wigmans}},
+  \bibinfo{journal}{Rev. Sci. Instr.} \textbf{\bibinfo{volume}{74}},
+  \bibinfo{pages}{2955} (\bibinfo{year}{2003}),
+  \urlprefix\url{http://rsi.aip.org/resource/1/rsinak/v74/i6/p2955_s1}.
+
+\bibitem[{\citenamefont{Chatrchyan
+  et~al.}(2010{\natexlab{a}})}]{CMS-DP-2010-025}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Chatrchyan}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration})
+  (\bibinfo{year}{2010}{\natexlab{a}}), \bibinfo{note}{unpublished},
+  \eprint{CMS-DP-2010-025},
+  \urlprefix\url{https://cdsweb.cern.ch/record/1364222}.
+
+\bibitem[{\citenamefont{Chatrchyan
+  et~al.}(2010{\natexlab{b}})}]{1748-0221-5-03-T03014}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Chatrchyan}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration}),
+  \bibinfo{journal}{JINST} \textbf{\bibinfo{volume}{5}},
+  \bibinfo{pages}{T03014} (\bibinfo{year}{2010}{\natexlab{b}}),
+  \urlprefix\url{http://stacks.iop.org/1748-0221/5/i=03/a=T03014}.
+
+\bibitem[{MUO()}]{MUO_POG_Twiki_inv_mass}
+\urlprefix\url{https://twiki.cern.ch/twiki/pub/CMSPublic/PhysicsResultsMUO/dimuMass_2011Run_1fb_20July2011.pdf}.
+
+\bibitem[{\citenamefont{Chatrchyan
+  et~al.}(2012{\natexlab{c}})}]{springerlink:10.1007/JHEP04(2012)033}
+\bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Chatrchyan}}
+  \bibnamefont{et~al.}, \bibinfo{journal}{JHEP}
+  \textbf{\bibinfo{volume}{2012}}, \bibinfo{pages}{1}
+  (\bibinfo{year}{2012}{\natexlab{c}}),
+  \urlprefix\url{http://dx.doi.org/10.1007/JHEP04(2012)033}.
+
+\bibitem[{\citenamefont{Alemany et~al.}(2005)\citenamefont{Alemany, Almeida,
+  Almeida, Bercher, Benetta, Bexiga, Bourotte, Busson, Cardoso, Cerrutti
+  et~al.}}]{1546528}
+\bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Alemany}},
+  \bibinfo{author}{\bibfnamefont{C.}~\bibnamefont{Almeida}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Almeida}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Bercher}},
+  \bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Benetta}},
+  \bibinfo{author}{\bibfnamefont{V.}~\bibnamefont{Bexiga}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Bourotte}},
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Busson}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Cardoso}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Cerrutti}},
+  \bibnamefont{et~al.}, \bibinfo{journal}{IEEE Trans. Nucl. Sci.}
+  \textbf{\bibinfo{volume}{52}}, \bibinfo{pages}{1918} (\bibinfo{year}{2005}),
+  \urlprefix\url{http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=1546528}.
+
+\bibitem[{\citenamefont{Smith et~al.}(2001)\citenamefont{Smith, Chumney, Dasu,
+  Lodovico, Jaworski, Lackey, and Robl}}]{Smith}
+\bibinfo{author}{\bibfnamefont{W.}~\bibnamefont{Smith}},
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Chumney}},
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Dasu}},
+  \bibinfo{author}{\bibfnamefont{F.~D.} \bibnamefont{Lodovico}},
+  \bibinfo{author}{\bibfnamefont{M.}~\bibnamefont{Jaworski}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Lackey}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Robl}}, in
+  \emph{\bibinfo{booktitle}{Proceedings of the $7^{\mathrm{th}}$ Workshop on
+  Electronics for LHC Experiments, Stockholm, 2001}}, edited by
+  \bibinfo{editor}{\bibfnamefont{C.}~\bibnamefont{Isabella}}
+  (\bibinfo{publisher}{CERN}, \bibinfo{address}{Geneva}, \bibinfo{year}{2001}),
+  pp. \bibinfo{pages}{238--242},
+  \urlprefix\url{https://cdsweb.cern.ch/record/529417}.
+
+\bibitem[{\citenamefont{Brun and Rademakers}(1997)}]{Brun199781}
+\bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Brun}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{F.}~\bibnamefont{Rademakers}},
+  \bibinfo{journal}{NIM A} \textbf{\bibinfo{volume}{389}}, \bibinfo{pages}{81}
+  (\bibinfo{year}{1997}),
+  \urlprefix\url{http://www.sciencedirect.com/science/article/pii/S016890029700048X}.
+
+\bibitem[{\citenamefont{Gutleber and
+  Orsini}(2002)}]{springerlink:10.1023/A:1012744721976}
+\bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Gutleber}} \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{Orsini}},
+  \bibinfo{journal}{Clus. Comput.} \textbf{\bibinfo{volume}{5}},
+  \bibinfo{pages}{55} (\bibinfo{year}{2002}),
+  \urlprefix\url{http://dx.doi.org/10.1023/A:1012744721976}.
+
+\bibitem[{\citenamefont{Box et~al.}(2000)\citenamefont{Box, Ehnebuske,
+  Kakivaya, Layman, Mendelsohn, Nielsen, Thatte, and Winer}}]{SOAP}
+\bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Box}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Ehnebuske}},
+  \bibinfo{author}{\bibfnamefont{G.}~\bibnamefont{Kakivaya}},
+  \bibinfo{author}{\bibfnamefont{A.}~\bibnamefont{Layman}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Mendelsohn}},
+  \bibinfo{author}{\bibfnamefont{H.}~\bibnamefont{Nielsen}},
+  \bibinfo{author}{\bibfnamefont{S.}~\bibnamefont{Thatte}}, \bibnamefont{and}
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Winer}},
+  \bibinfo{type}{Report No.} \bibinfo{number}{W3C Note 08},
+  \bibinfo{institution}{W3C} (\bibinfo{year}{2000}),
+  \urlprefix\url{http://www.w3.org/TR/2000/NOTE-SOAP-20000508/}.
+
+\bibitem[{\citenamefont{Arcidiacono et~al.}(2005)}]{HyperDAQ}
+\bibinfo{author}{\bibfnamefont{R.}~\bibnamefont{Arcidiacono}}
+  \bibnamefont{et~al.} (\bibinfo{year}{2005}), \bibinfo{note}{talk given at the
+  $10^{\mathrm{th}}$ ICALEPCS International Conference on Accelerator and Large
+  Experiment Physics Control Systems, Geneva},
+  \urlprefix\url{http://accelconf.web.cern.ch/accelconf/ica05/proceedings/pdf/o5_004.pdf}.
+
+\bibitem[{\citenamefont{Eck et~al.}(2005)\citenamefont{Eck, Knobloch,
+  Robertson, Bird, Bos, Brook, DŸllmann, Fisk, Foster, Gibbard
+  et~al.}}]{Eck:840543}
+\bibinfo{author}{\bibfnamefont{C.}~\bibnamefont{Eck}},
+  \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Knobloch}},
+  \bibinfo{author}{\bibfnamefont{L.}~\bibnamefont{Robertson}},
+  \bibinfo{author}{\bibfnamefont{I.}~\bibnamefont{Bird}},
+  \bibinfo{author}{\bibfnamefont{K.}~\bibnamefont{Bos}},
+  \bibinfo{author}{\bibfnamefont{N.}~\bibnamefont{Brook}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{DŸllmann}},
+  \bibinfo{author}{\bibfnamefont{I.}~\bibnamefont{Fisk}},
+  \bibinfo{author}{\bibfnamefont{D.}~\bibnamefont{Foster}},
+  \bibinfo{author}{\bibfnamefont{B.}~\bibnamefont{Gibbard}},
+  \bibnamefont{et~al.}, \emph{\bibinfo{title}{LHC computing Grid: Technical
+  Design Report. Version 1.06 (20 Jun 2005)}}, Technical Design Report LCG
+  (\bibinfo{publisher}{CERN}, \bibinfo{address}{Geneva}, \bibinfo{year}{2005}).
+
+\end{thebibliography}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  29 MAY 2012 15:24
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  14 JUN 2012 14:38
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -400,7 +400,12 @@ Package: lineno 2005/11/02 line numbers on paragraphs v4.41
 \bframesep=\dimen142
 \bframebox=\box28
 LaTeX Info: Redefining \\ on input line 3056.
-))) (./ch8.aux)
+)
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps,.gif]
+(grfext)             \AppendGraphicsExtensions on input line 41.
+)) (./ch8.aux)
 \openout1 = `ch8.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
@@ -533,22 +538,23 @@ LaTeX Warning: Reference `sec:Phenomenology of General Gauge Mediation' on page
 
 LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 2 undefined on input line 14.
 
+[2]
 
-LaTeX Warning: Citation `SuSpect' on page 2 undefined on input line 18.
-
-
-LaTeX Warning: Citation `SDECAY' on page 2 undefined on input line 18.
+LaTeX Warning: Citation `SuSpect' on page 3 undefined on input line 18.
 
 
-LaTeX Warning: Citation `Pythia6' on page 2 undefined on input line 18.
+LaTeX Warning: Citation `SDECAY' on page 3 undefined on input line 18.
 
 
-LaTeX Warning: Citation `GEANT' on page 2 undefined on input line 18.
+LaTeX Warning: Citation `Pythia6' on page 3 undefined on input line 18.
 
 
-LaTeX Warning: Citation `PROSPINO' on page 2 undefined on input line 18.
+LaTeX Warning: Citation `GEANT' on page 3 undefined on input line 18.
 
-[2] <can_xsec_bino_mN375_met100_nojet.pdf, id=52, 569.12625pt x 440.64626pt>
+
+LaTeX Warning: Citation `PROSPINO' on page 3 undefined on input line 18.
+
+<can_xsec_bino_mN375_met100_nojet.pdf, id=52, 569.12625pt x 440.64626pt>
 File: can_xsec_bino_mN375_met100_nojet.pdf Graphic file (type pdf)
 
 <use can_xsec_bino_mN375_met100_nojet.pdf>
@@ -583,39 +589,39 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 36.
 
-<mgluino_vs_msquark_METGeq50GeV_bino_old.pdf, id=59, 569.12625pt x 546.04pt>
+[3] [4 <./can_xsec_bino_mN375_met100_nojet.pdf, page is rotated 90 degrees> <./
+can_xsec_wino_mN375_met100_nojet.pdf, page is rotated 90 degrees> <./can_xsec_b
+ino_mNScan_met100_nojet.pdf, page is rotated 90 degrees>]
+<mgluino_vs_msquark_METGeq50GeV_bino_old.pdf, id=205, 569.12625pt x 546.04pt>
 File: mgluino_vs_msquark_METGeq50GeV_bino_old.pdf Graphic file (type pdf)
 
 <use mgluino_vs_msquark_METGeq50GeV_bino_old.pdf>
-<mgluino_vs_msquark_METGeq50GeV_bino_old_1jet.pdf, id=60, 569.12625pt x 546.04p
-t>
+<mgluino_vs_msquark_METGeq50GeV_bino_old_1jet.pdf, id=206, 569.12625pt x 546.04
+pt>
 File: mgluino_vs_msquark_METGeq50GeV_bino_old_1jet.pdf Graphic file (type pdf)
  <use mgluino_vs_msquark_METGeq50GeV_bino_old_1jet.pdf>
-<mgluino_vs_msquark_METGeq50GeV_wino_old.pdf, id=61, 569.12625pt x 546.04pt>
+<mgluino_vs_msquark_METGeq50GeV_wino_old.pdf, id=207, 569.12625pt x 546.04pt>
 File: mgluino_vs_msquark_METGeq50GeV_wino_old.pdf Graphic file (type pdf)
 
 <use mgluino_vs_msquark_METGeq50GeV_wino_old.pdf>
-<mgluino_vs_msquark_METGeq50GeV_wino_old_1jet.pdf, id=62, 569.12625pt x 546.04p
-t>
+<mgluino_vs_msquark_METGeq50GeV_wino_old_1jet.pdf, id=208, 569.12625pt x 546.04
+pt>
 File: mgluino_vs_msquark_METGeq50GeV_wino_old_1jet.pdf Graphic file (type pdf)
  <use mgluino_vs_msquark_METGeq50GeV_wino_old_1jet.pdf>
-<mgluino_vs_mbino_METGeq50GeV_old.pdf, id=63, 569.12625pt x 546.04pt>
+<mgluino_vs_mbino_METGeq50GeV_old.pdf, id=209, 569.12625pt x 546.04pt>
 File: mgluino_vs_mbino_METGeq50GeV_old.pdf Graphic file (type pdf)
 
 <use mgluino_vs_mbino_METGeq50GeV_old.pdf>
-<mgluino_vs_mbino_METGeq50GeV_old_1jet.pdf, id=64, 569.12625pt x 546.04pt>
+<mgluino_vs_mbino_METGeq50GeV_old_1jet.pdf, id=210, 569.12625pt x 546.04pt>
 File: mgluino_vs_mbino_METGeq50GeV_old_1jet.pdf Graphic file (type pdf)
 
-<use mgluino_vs_mbino_METGeq50GeV_old_1jet.pdf> [3] [4 <./can_xsec_bino_mN375_m
-et100_nojet.pdf, page is rotated 90 degrees> <./can_xsec_wino_mN375_met100_noje
-t.pdf, page is rotated 90 degrees> <./can_xsec_bino_mNScan_met100_nojet.pdf, pa
-ge is rotated 90 degrees>] [5 <./mgluino_vs_msquark_METGeq50GeV_bino_old.pdf, p
-age is rotated 90 degrees> <./mgluino_vs_msquark_METGeq50GeV_bino_old_1jet.pdf,
- page is rotated 90 degrees> <./mgluino_vs_msquark_METGeq50GeV_wino_old.pdf, pa
-ge is rotated 90 degrees> <./mgluino_vs_msquark_METGeq50GeV_wino_old_1jet.pdf, 
-page is rotated 90 degrees> <./mgluino_vs_mbino_METGeq50GeV_old.pdf, page is ro
-tated 90 degrees> <./mgluino_vs_mbino_METGeq50GeV_old_1jet.pdf, page is rotated
- 90 degrees>] [6]
+<use mgluino_vs_mbino_METGeq50GeV_old_1jet.pdf> [5] [6 <./mgluino_vs_msquark_ME
+TGeq50GeV_bino_old.pdf, page is rotated 90 degrees> <./mgluino_vs_msquark_METGe
+q50GeV_bino_old_1jet.pdf, page is rotated 90 degrees> <./mgluino_vs_msquark_MET
+Geq50GeV_wino_old.pdf, page is rotated 90 degrees> <./mgluino_vs_msquark_METGeq
+50GeV_wino_old_1jet.pdf, page is rotated 90 degrees> <./mgluino_vs_mbino_METGeq
+50GeV_old.pdf, page is rotated 90 degrees> <./mgluino_vs_mbino_METGeq50GeV_old_
+1jet.pdf, page is rotated 90 degrees>]
 Underfull \hbox (badness 10000) in paragraph at lines 78--78
 [][]\OT1/cmr/m/n/12 Added
  []
@@ -647,18 +653,19 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 80.
 
+[7]
 
-LaTeX Warning: Citation `CMS-NOTE-2011/005' on page 7 undefined on input line 8
+LaTeX Warning: Citation `CMS-NOTE-2011/005' on page 8 undefined on input line 8
 5.
 
 
-LaTeX Warning: Reference `chap:Data Analysis' on page 7 undefined on input line
+LaTeX Warning: Reference `chap:Data Analysis' on page 8 undefined on input line
  90.
 
 
-LaTeX Warning: Citation `Neyman_Pearson' on page 7 undefined on input line 90.
+LaTeX Warning: Citation `Neyman_Pearson' on page 8 undefined on input line 90.
 
-[7]
+[8]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 102.
 
  (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
@@ -668,39 +675,39 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 102.
 
 
-LaTeX Warning: Citation `CMS_PAS_EWK-11-001' on page 8 undefined on input line 
+LaTeX Warning: Citation `CMS_PAS_EWK-11-001' on page 9 undefined on input line 
 102.
 
 
-LaTeX Warning: Reference `sec:Photon_Efficiency_Scale_Factor' on page 8 undefin
+LaTeX Warning: Reference `sec:Photon_Efficiency_Scale_Factor' on page 9 undefin
 ed on input line 103.
 
-[8]
+[9]
 
-LaTeX Warning: Reference `fig:eff_vs_NPV' on page 9 undefined on input line 115
-.
-
-
-LaTeX Warning: Reference `fig:eff_vs_NPV' on page 9 undefined on input line 115
-.
+LaTeX Warning: Reference `fig:eff_vs_NPV' on page 10 undefined on input line 11
+5.
 
 
-LaTeX Warning: Reference `fig:eff_vs_NPV' on page 9 undefined on input line 115
-.
+LaTeX Warning: Reference `fig:eff_vs_NPV' on page 10 undefined on input line 11
+5.
 
-[9] [10] [11]
+
+LaTeX Warning: Reference `fig:eff_vs_NPV' on page 10 undefined on input line 11
+5.
+
+[10] [11]
 
 LaTeX Warning: Citation `CMS-NOTE-2011/005' on page 12 undefined on input line 
 168.
 
-[12]
+[12] [13]
 Overfull \hbox (0.39236pt too wide) in paragraph at lines 188--189
 \OT1/cmr/m/n/12 pected $[][]$ lim-its us-ing 100 toy MC pseudo-experiments to g
 en-er-ate $\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 ([]\OMS/cmsy/m/n/12 j\OML/cmm/m/it
 /12 ^^V; []\OT1/cmr/m/n/12 )$
  []
 
-[13]
+
 Overfull \hbox (10.25073pt too wide) in paragraph at lines 197--198
 []\OT1/cmr/m/n/12 Determine the ob-served ($\OML/cmm/m/it/12 ^^V[]$\OT1/cmr/m/n
 /12 ), me-dian ex-pected ($\OML/cmm/m/it/12 ^^V[]$\OT1/cmr/m/n/12 ), and $\OMS/
@@ -708,55 +715,56 @@ cmsy/m/n/12 ^^F\OT1/cmr/m/n/12 1\OML/cmm/m/it/12 ^^[$ \OT1/cmr/m/n/12 ($\OML/cm
 m/m/it/12 ^^V[]$\OT1/cmr/m/n/12 )
  []
 
-<can_limit_bino_mN375_met100_nojet.pdf, id=553, 569.12625pt x 440.64626pt>
+[14]
+<can_limit_bino_mN375_met100_nojet.pdf, id=562, 569.12625pt x 440.64626pt>
 File: can_limit_bino_mN375_met100_nojet.pdf Graphic file (type pdf)
 
 <use can_limit_bino_mN375_met100_nojet.pdf>
-<can_limit_bino_mN375_met100_1jet.pdf, id=554, 569.12625pt x 440.64626pt>
+<can_limit_bino_mN375_met100_1jet.pdf, id=563, 569.12625pt x 440.64626pt>
 File: can_limit_bino_mN375_met100_1jet.pdf Graphic file (type pdf)
 
 <use can_limit_bino_mN375_met100_1jet.pdf>
-<can_limit_wino_mN375_met100_nojet.pdf, id=555, 569.12625pt x 440.64626pt>
+<can_limit_wino_mN375_met100_nojet.pdf, id=564, 569.12625pt x 440.64626pt>
 File: can_limit_wino_mN375_met100_nojet.pdf Graphic file (type pdf)
 
 <use can_limit_wino_mN375_met100_nojet.pdf>
-<can_limit_wino_mN375_met100_1jet.pdf, id=556, 569.12625pt x 440.64626pt>
+<can_limit_wino_mN375_met100_1jet.pdf, id=565, 569.12625pt x 440.64626pt>
 File: can_limit_wino_mN375_met100_1jet.pdf Graphic file (type pdf)
 
 <use can_limit_wino_mN375_met100_1jet.pdf>
-<can_limit_bino_mNScan_met100_nojet.pdf, id=557, 569.12625pt x 440.64626pt>
+<can_limit_bino_mNScan_met100_nojet.pdf, id=566, 569.12625pt x 440.64626pt>
 File: can_limit_bino_mNScan_met100_nojet.pdf Graphic file (type pdf)
 
 <use can_limit_bino_mNScan_met100_nojet.pdf>
-<can_limit_bino_mNScan_met100_1jet.pdf, id=558, 569.12625pt x 440.64626pt>
+<can_limit_bino_mNScan_met100_1jet.pdf, id=567, 569.12625pt x 440.64626pt>
 File: can_limit_bino_mNScan_met100_1jet.pdf Graphic file (type pdf)
 
-<use can_limit_bino_mNScan_met100_1jet.pdf> [14]
-<UL_estimation_points.pdf, id=572, 1027.84pt x 770.88pt>
+<use can_limit_bino_mNScan_met100_1jet.pdf>
+<UL_estimation_points.pdf, id=570, 1027.84pt x 770.88pt>
 File: UL_estimation_points.pdf Graphic file (type pdf)
 
 <use UL_estimation_points.pdf>
-<can_excl02_bino_mN375_met100_nojet.pdf, id=575, 569.12625pt x 440.64626pt>
+<can_excl02_bino_mN375_met100_nojet.pdf, id=573, 569.12625pt x 440.64626pt>
 File: can_excl02_bino_mN375_met100_nojet.pdf Graphic file (type pdf)
 
 <use can_excl02_bino_mN375_met100_nojet.pdf>
-<can_excl02_bino_mN375_met100_1jet.pdf, id=576, 569.12625pt x 440.64626pt>
+<can_excl02_bino_mN375_met100_1jet.pdf, id=574, 569.12625pt x 440.64626pt>
 File: can_excl02_bino_mN375_met100_1jet.pdf Graphic file (type pdf)
 
 <use can_excl02_bino_mN375_met100_1jet.pdf>
-<can_excl02_wino_mN375_met100_nojet.pdf, id=577, 569.12625pt x 440.64626pt>
+<can_excl02_wino_mN375_met100_nojet.pdf, id=575, 569.12625pt x 440.64626pt>
 File: can_excl02_wino_mN375_met100_nojet.pdf Graphic file (type pdf)
 
 <use can_excl02_wino_mN375_met100_nojet.pdf>
-<can_excl02_wino_mN375_met100_1jet.pdf, id=578, 569.12625pt x 440.64626pt>
+<can_excl02_wino_mN375_met100_1jet.pdf, id=576, 569.12625pt x 440.64626pt>
 File: can_excl02_wino_mN375_met100_1jet.pdf Graphic file (type pdf)
 
 <use can_excl02_wino_mN375_met100_1jet.pdf>
-<can_excl02_bino_mNScan_met100_nojet.pdf, id=579, 569.12625pt x 440.64626pt>
+<can_excl02_bino_mNScan_met100_nojet.pdf, id=577, 569.12625pt x 440.64626pt>
 File: can_excl02_bino_mNScan_met100_nojet.pdf Graphic file (type pdf)
 
 <use can_excl02_bino_mNScan_met100_nojet.pdf>
-<can_excl02_bino_mNScan_met100_1jet.pdf, id=580, 569.12625pt x 440.64626pt>
+<can_excl02_bino_mNScan_met100_1jet.pdf, id=578, 569.12625pt x 440.64626pt>
 File: can_excl02_bino_mNScan_met100_1jet.pdf Graphic file (type pdf)
 
 <use can_excl02_bino_mNScan_met100_1jet.pdf> [15] [16 <./can_limit_bino_mN375_m
@@ -780,12 +788,6 @@ LaTeX Warning: Citation `NNPDF2_0' on page 17 undefined on input line 274.
 
 LaTeX Warning: Citation `HERA' on page 17 undefined on input line 274.
 
-
-LaTeX Warning: Citation `Hessian' on page 17 undefined on input line 276.
-
-
-LaTeX Warning: Citation `PDF_primer' on page 17 undefined on input line 276.
-
 [17 <./UL_estimation_points.pdf>] [18 <./can_excl02_bino_mN375_met100_nojet.pdf
 , page is rotated 90 degrees> <./can_excl02_bino_mN375_met100_1jet.pdf, page is
  rotated 90 degrees> <./can_excl02_wino_mN375_met100_nojet.pdf, page is rotated
@@ -793,13 +795,20 @@ LaTeX Warning: Citation `PDF_primer' on page 17 undefined on input line 276.
 es> <./can_excl02_bino_mNScan_met100_nojet.pdf, page is rotated 90 degrees> <./
 can_excl02_bino_mNScan_met100_1jet.pdf, page is rotated 90 degrees>]
 
+LaTeX Warning: Citation `Hessian' on page 19 undefined on input line 276.
+
+
+LaTeX Warning: Citation `PDF_primer' on page 19 undefined on input line 276.
+
+
 LaTeX Warning: Citation `PDF_primer' on page 19 undefined on input line 278.
 
 
 LaTeX Warning: Citation `PDF4LHC' on page 19 undefined on input line 279.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 285.
 [19]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 285.
+ [20]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 285.
  (./ch8.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 285.
@@ -811,13 +820,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8179 strings out of 493747
- 128205 string characters out of 3143546
- 217638 words of memory out of 3000000
- 11223 multiletter control sequences out of 15000+200000
+ 8181 strings out of 493747
+ 128225 string characters out of 3143546
+ 218686 words of memory out of 3000000
+ 11224 multiletter control sequences out of 15000+200000
  16146 words of font info for 60 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,13n,45p,1435b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,13n,45p,1680b,438s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
@@ -835,10 +844,10 @@ e/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/te
 xmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on ch8.pdf (19 pages, 572925 bytes).
+Output written on ch8.pdf (20 pages, 574468 bytes).
 PDF statistics:
- 1227 PDF objects out of 1440 (max. 8388607)
- 629 compressed objects within 7 object streams
- 70 named destinations out of 1000 (max. 500000)
+ 1231 PDF objects out of 1440 (max. 8388607)
+ 632 compressed objects within 7 object streams
+ 71 named destinations out of 1000 (max. 500000)
  167 words of extra memory for PDF output out of 10000 (max. 10000000)
 
