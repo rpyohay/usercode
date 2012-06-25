@@ -5,6 +5,9 @@
 \chapter{Monte Carlo Samples}
 \label{chap:Monte Carlo Samples}
 
+\thispagestyle{myheadings} % put headers/footers back on
+\markright{\hfill}
+
 A number of MC samples are utilized in this analysis and referred to throughout the text.  Below is a list of the MC samples used and an explanation of what the sample names mean.
 
 \section{List of Samples}
@@ -30,18 +33,18 @@ A number of MC samples are utilized in this analysis and referred to throughout 
 \item \verb+W+: $W$ boson
 \item \verb+Nu+: neutrino
 \item \verb+T+: top quark
-\item \verb+TuneZ2+: Pythia tune incorporating 2010 LHC data with CTEQ6L1 \cite{CTEQ6} PDFs \cite{LPCC_MBUE_WG}
+\item \verb+TuneZ2+: Pythia tune incorporating 2010 LHC data with CTEQ6L1 \cite{PhysRevD.78.013004} PDFs \cite{LPCC_MBUE_WG}
 \item \verb+M-50+: Generated $l^{+}l^{-}$ invariant mass threshold of 50 GeV
 \item \verb+7TeV+: Generated center-of-mass energy 7 TeV
-\item \verb+pythia6+: Parton showering and hadronization simulated with Pythia v6.424 \cite{Pythia6}
-\item \verb+madgraph+: Hard interaction generated with MadGraph 5 \cite{MadGraph}
-\item \verb+tauola+: $\tau$ decays generated with Tauola \cite{Tauola}
+\item \verb+pythia6+: Parton showering and hadronization simulated with Pythia v6.424 \cite{1126-6708-2006-05-026}
+\item \verb+madgraph+: Hard interaction generated with MadGraph 5 \cite{springerlink:10.1007/JHEP06(2011)128}
+\item \verb+tauola+: $\tau$ decays generated with Tauola \cite{Was200196}
 \item \verb+PU_S6+: Generated with S6 pileup scenario, which has a mean between 6 and 7 interactions per crossing, and includes pileup from the neighboring bunch crossings according to a Poisson distribution with mean equal to the number of interactions in the in-time crossing \cite{PUS6}
 \item \verb+START42_V14B+: Reconstructed with best alignment and calibration constants and magnetic field conditions as of August 3, 2011
 \item \verb+Pt_XtoY+: \verb+X+ $\leq$ generated $\hat{p}_{T}$ $<$ \verb+Y+
 \item \verb+BCToE+: Only keeps events if they contain at least one electron with $E_{T} > 10$ GeV in $|\eta| < 2.5$ that came from a $b$ or $c$ quark
 \item \verb+doubleEMEnriched+: Enriched in photons, electrons, electrons from $b/c$ decay, and electromagnetic jets \cite{doubleEMEnriched_filter_cfg}
-\item \verb+AODSIM+: Run through full CMS reconstruction algorithm based on a GEANT 4 \cite{GEANT} detector simulation; AOD data tier, including generator-level information
+\item \verb+AODSIM+: Run through full CMS reconstruction algorithm based on a GEANT 4 \cite{1610988} detector simulation; AOD data tier, including generator-level information
 \end{itemize}
 
 \end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  14 JUN 2012 16:18
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  25 JUN 2012 12:31
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -383,18 +383,28 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip56
 )
+(/usr/local/texlive/2010/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip57
+\bibsep=\skip58
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count124
+)
+(/usr/local/texlive/2010/texmf-dist/tex/latex/notoccite/notoccite.sty
+Package: notoccite 2000/07/20
+)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count124
+\linenopenalty=\count125
 \output=\toks26
-\linenoprevgraf=\count125
+\linenoprevgraf=\count126
 \linenumbersep=\dimen138
 \linenumberwidth=\dimen139
-\c@linenumber=\count126
-\c@pagewiselinenumber=\count127
-\c@LN@truepage=\count128
-\c@internallinenumber=\count129
-\c@internallinenumbers=\count130
+\c@linenumber=\count127
+\c@pagewiselinenumber=\count128
+\c@LN@truepage=\count129
+\c@internallinenumber=\count130
+\c@internallinenumbers=\count131
 \quotelinenumbersep=\dimen140
 \bframerule=\dimen141
 \bframesep=\dimen142
@@ -404,7 +414,7 @@ LaTeX Info: Redefining \\ on input line 3056.
 Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps,.gif]
-(grfext)             \AppendGraphicsExtensions on input line 41.
+(grfext)             \AppendGraphicsExtensions on input line 43.
 )) (./ch7.aux)
 \openout1 = `ch7.aux'.
 
@@ -425,15 +435,15 @@ LaTeX Font Info:    ... okay on input line 2.
 
 (/usr/local/texlive/2010/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count131
+\scratchcounter=\count132
 \scratchdimen=\dimen143
 \scratchbox=\box29
-\nofMPsegments=\count132
-\nofMParguments=\count133
+\nofMPsegments=\count133
+\nofMParguments=\count134
 \everyMPshowfont=\toks27
-\MPscratchCnt=\count134
+\MPscratchCnt=\count135
 \MPscratchDim=\dimen144
-\MPnumerator=\count135
+\MPnumerator=\count136
 \everyMPtoPDFconversion=\toks28
 )
 Package caption Info: Begin \AtBeginDocument code.
@@ -487,7 +497,7 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 (/usr/local/texlive/2010/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
-\c@section@level=\count136
+\c@section@level=\count137
 )
 LaTeX Info: Redefining \ref on input line 2.
 LaTeX Info: Redefining \pageref on input line 2.
@@ -499,48 +509,48 @@ LaTeX Info: Redefining \nameref on input line 2.
 
 
 Chapter 1.
-LaTeX Font Info:    Try loading font information for U+msa on input line 7.
+LaTeX Font Info:    Try loading font information for U+msa on input line 10.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 7.
+LaTeX Font Info:    Try loading font information for U+msb on input line 10.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
-LaTeX Warning: Reference `sec:MET' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:MET' on page 1 undefined on input line 10.
 
 
-LaTeX Warning: Reference `sec:Photons' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:Photons' on page 1 undefined on input line 10.
 
 
-LaTeX Warning: Reference `sec:Electrons' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:Electrons' on page 1 undefined on input line 10.
 
 
-LaTeX Warning: Reference `sec:Jets' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:Jets' on page 1 undefined on input line 10.
 
 
 LaTeX Warning: Reference `sec:Event Quality' on page 1 undefined on input line 
-7.
+10.
 
 
-LaTeX Warning: Reference `sec:HLT' on page 1 undefined on input line 7.
+LaTeX Warning: Reference `sec:HLT' on page 1 undefined on input line 10.
 
 
-LaTeX Warning: Citation `DAS' on page 1 undefined on input line 45.
+Package natbib Warning: Citation `DAS' on page 1 undefined on input line 48.
 
-[1
+[1{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
-{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 48.
+]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 51.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 48.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 51.
 
 <dijet_cropped.pdf, id=56, 428.03201pt x 109.824pt>
 File: dijet_cropped.pdf Graphic file (type pdf)
@@ -587,10 +597,10 @@ File: hadronic_activity_rho.pdf Graphic file (type pdf)
 
 <use hadronic_activity_rho.pdf>
 
-LaTeX Warning: Reference `sec:Photons' on page 6 undefined on input line 160.
+LaTeX Warning: Reference `sec:Photons' on page 6 undefined on input line 163.
 
 
-LaTeX Warning: Reference `sec:Photons' on page 6 undefined on input line 160.
+LaTeX Warning: Reference `sec:Photons' on page 6 undefined on input line 163.
 
 <hadronic_activity_nPV.pdf, id=357, 511.9125pt x 739.76375pt>
 File: hadronic_activity_nPV.pdf Graphic file (type pdf)
@@ -598,26 +608,26 @@ File: hadronic_activity_nPV.pdf Graphic file (type pdf)
 <use hadronic_activity_nPV.pdf>
 
 LaTeX Warning: Reference `sec:Event Quality' on page 6 undefined on input line 
-167.
+170.
 
 
 LaTeX Warning: Reference `sec:Event Quality' on page 6 undefined on input line 
-167.
+170.
 
 
 LaTeX Warning: Reference `sec:Jets and Missing Transverse Energy' on page 6 und
-efined on input line 181.
+efined on input line 184.
 
 
-LaTeX Warning: Citation `CMS_AN-2010/034' on page 6 undefined on input line 199
-.
+Package natbib Warning: Citation `CMS_AN-2010/034' on page 6 undefined on input
+ line 202.
 
 
-LaTeX Warning: Citation `CMS_CR-2009/347' on page 6 undefined on input line 199
-.
+Package natbib Warning: Citation `CMS_CR-2009/347' on page 6 undefined on input
+ line 202.
 
 
-Overfull \hbox (25.05408pt too wide) in paragraph at lines 176--202
+Overfull \hbox (25.05408pt too wide) in paragraph at lines 179--205
  [][] 
  []
 
@@ -641,11 +651,11 @@ File: ff_MET_vs_di-EM_pT.pdf Graphic file (type pdf)
 
 <use ff_MET_vs_di-EM_pT.pdf>
 
-LaTeX Warning: Float too large for page by 47.51378pt on input line 227.
+LaTeX Warning: Float too large for page by 47.51378pt on input line 230.
 
 
 LaTeX Warning: Reference `tab:jet_definition_for_Nj_reweighting' on page 14 und
-efined on input line 229.
+efined on input line 232.
 
 
 <ee_dijet_pT_and_Nj_vs_dijet_pT_reweighting.pdf, id=678, 569.12625pt x 546.04pt
@@ -668,7 +678,7 @@ File: ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom.pdf Graphic file
 
 <use ee_over_ff_dijet_pT_and_Nj_vs_dijet_pT_reweighting_zoom.pdf>
 
-LaTeX Warning: Reference `sec:Photons' on page 14 undefined on input line 246.
+LaTeX Warning: Reference `sec:Photons' on page 14 undefined on input line 249.
 
 [14 <./di-EM_pT_cartoon.pdf>] [15 <./gg_MET_vs_di-EM_pT.pdf, page is rotated 90
  degrees> <./ee_MET_vs_di-EM_pT.pdf, page is rotated 90 degrees> <./ff_MET_vs_d
@@ -779,11 +789,11 @@ File: eeHighSideband_2_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 <use eeHighSideband_2_jet_dijet_pT_weights.pdf>
 
 LaTeX Warning: Reference `tab:jet_definition_for_Nj_reweighting' on page 22 und
-efined on input line 333.
+efined on input line 336.
 
 
 LaTeX Warning: Reference `tab:jet_definition_for_Nj_reweighting' on page 22 und
-efined on input line 333.
+efined on input line 336.
 
 <all_ee_MET_spectra.pdf, id=1777, 569.12625pt x 546.04pt>
 File: all_ee_MET_spectra.pdf Graphic file (type pdf)
@@ -791,7 +801,7 @@ File: all_ee_MET_spectra.pdf Graphic file (type pdf)
 <use all_ee_MET_spectra.pdf>
 
 LaTeX Warning: Reference `tab:jet_definition_for_Nj_reweighting' on page 22 und
-efined on input line 344.
+efined on input line 347.
 
 <0_jet_dijet_pT.pdf, id=1780, 569.12625pt x 546.04pt>
 File: 0_jet_dijet_pT.pdf Graphic file (type pdf)
@@ -804,11 +814,11 @@ File: 2_jet_dijet_pT.pdf Graphic file (type pdf)
  <use 2_jet_dijet_pT.pdf>
 
 LaTeX Warning: Reference `tab:jet_definition_for_Nj_reweighting' on page 22 und
-efined on input line 354.
+efined on input line 357.
 
 
 LaTeX Warning: Reference `tab:jet_definition_for_Nj_reweighting' on page 22 und
-efined on input line 354.
+efined on input line 357.
 
 <ee_0_jet_dijet_pT_weights.pdf, id=1783, 569.12625pt x 546.04pt>
 File: ee_0_jet_dijet_pT_weights.pdf Graphic file (type pdf)
@@ -836,11 +846,11 @@ File: ff_2_jet_dijet_pT_weights.pdf Graphic file (type pdf)
 <use ff_2_jet_dijet_pT_weights.pdf>
 
 LaTeX Warning: Reference `tab:jet_definition_for_Nj_reweighting' on page 22 und
-efined on input line 372.
+efined on input line 375.
 
 
 LaTeX Warning: Reference `tab:jet_definition_for_Nj_reweighting' on page 22 und
-efined on input line 372.
+efined on input line 375.
 
 [22] [23 <./eeLowSideband_0_jet_dijet_pT_weights.pdf, page is rotated 90 degree
 s> <./eeLowSideband_1_jet_dijet_pT_weights.pdf, page is rotated 90 degrees> <./
@@ -858,45 +868,45 @@ et_pT_weights.pdf, page is rotated 90 degrees> <./ff_1_jet_dijet_pT_weights.pdf
  90 degrees>]
 
 LaTeX Warning: Reference `sec:Tag_and_Probe_Method' on page 26 undefined on inp
-ut line 411.
+ut line 414.
 
 [26]
-Underfull \hbox (badness 10000) in paragraph at lines 422--422
+Underfull \hbox (badness 10000) in paragraph at lines 425--425
 []|\OT1/cmr/m/n/12 [86.2,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 422--422
+Underfull \hbox (badness 10000) in paragraph at lines 425--425
 []|\OT1/cmr/m/n/12 [1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 424--424
+Underfull \hbox (badness 10000) in paragraph at lines 427--427
 []|\OT1/cmr/m/n/12 [86.2,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 424--424
+Underfull \hbox (badness 10000) in paragraph at lines 427--427
 []|\OT1/cmr/m/n/12 [1.0,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 426--426
+Underfull \hbox (badness 10000) in paragraph at lines 429--429
 []|$\OML/cmm/m/it/12 ee$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 426--426
+Underfull \hbox (badness 10000) in paragraph at lines 429--429
 \OT1/cmr/m/n/12 back-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--428
+Underfull \hbox (badness 10000) in paragraph at lines 431--431
 []|$\OML/cmm/m/it/12 e^^M$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--428
+Underfull \hbox (badness 10000) in paragraph at lines 431--431
 \OT1/cmr/m/n/12 back-
  []
 
@@ -919,43 +929,29 @@ File: eg_MET.pdf Graphic file (type pdf)
 
 <use eg_MET.pdf>
 
-LaTeX Warning: Citation `CMS_GMSB_35pb-1' on page 29 undefined on input line 46
-3.
+Package natbib Warning: Citation `PhysRevLett.106.211802' on page 29 undefined 
+on input line 466.
 
 <35pb-1_eg_closure_test.pdf, id=2732, 569.12625pt x 408.52625pt>
 File: 35pb-1_eg_closure_test.pdf Graphic file (type pdf)
 
 <use 35pb-1_eg_closure_test.pdf>
 
-LaTeX Warning: Citation `CMS_GMSB_35pb-1' on page 29 undefined on input line 46
-8.
+Package natbib Warning: Citation `PhysRevLett.106.211802' on page 29 undefined 
+on input line 471.
 
 
-LaTeX Warning: Citation `CMS_GMSB_35pb-1' on page 29 undefined on input line 46
-8.
+Package natbib Warning: Citation `PhysRevLett.106.211802' on page 29 undefined 
+on input line 471.
 
 [29 <./eg_MET.pdf, page is rotated 90 degrees>] [30 <./35pb-1_eg_closure_test.p
 df>] [31] <avg_MET_vs_di-EM_pT.pdf, id=2806, 569.12625pt x 546.04pt>
 File: avg_MET_vs_di-EM_pT.pdf Graphic file (type pdf)
 
 <use avg_MET_vs_di-EM_pT.pdf> [32]
-Underfull \hbox (badness 10000) in paragraph at lines 528--528
-[][]\OT1/cmr/m/n/12 Added
- []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 528--528
-\OT1/cmr/m/n/12 this
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 528--528
-\OT1/cmr/m/n/12 para-
- []
-
-
-LaTeX Warning: Citation `CMS_JES_paper' on page 33 undefined on input line 528.
-
+Package natbib Warning: Citation `1748-0221-6-11-P11002' on page 33 undefined o
+n input line 531.
 
 [33 <./avg_MET_vs_di-EM_pT.pdf, page is rotated 90 degrees>]
 <mee_bkg_shape_error.pdf, id=2864, 511.9125pt x 739.76375pt>
@@ -971,15 +967,15 @@ File: ff_di-EM_pT_bin_size_comparison.pdf Graphic file (type pdf)
 
 <use ff_di-EM_pT_bin_size_comparison.pdf>
 
-LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 35 undefined on input line 544
-.
+Package natbib Warning: Citation `CMS-PAS-SUS-12-001' on page 35 undefined on i
+nput line 547.
 
 
-LaTeX Warning: Citation `CMS_GMSB_5fb-1' on page 35 undefined on input line 544
-.
+Package natbib Warning: Citation `CMS-PAS-SUS-12-001' on page 35 undefined on i
+nput line 547.
 
 
-LaTeX Warning: Reference `sec:MET' on page 35 undefined on input line 548.
+LaTeX Warning: Reference `sec:MET' on page 35 undefined on input line 551.
 
 
 <gg_over_ee_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, id=2918, 569.12
@@ -1008,7 +1004,7 @@ rees> <./ee_over_ff_Type-I_MET_corrections_vs_uncorrected_MET_zoom.pdf, page is
  rotated 90 degrees>]
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 37 undefined on input line 783.
+s' on page 37 undefined on input line 786.
 
 <MET_final_ee_ff_eg.pdf, id=3163, 511.9125pt x 739.76375pt>
 File: MET_final_ee_ff_eg.pdf Graphic file (type pdf)
@@ -1028,36 +1024,39 @@ File: MET_final_ff_eg_geq1.pdf Graphic file (type pdf)
 <use MET_final_ff_eg_geq1.pdf>
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 37 undefined on input line 804.
+s' on page 37 undefined on input line 807.
 
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 37 undefined on input line 804.
+s' on page 37 undefined on input line 807.
 
 
-Overfull \hbox (1.8265pt too wide) in paragraph at lines 806--825
+Overfull \hbox (1.8265pt too wide) in paragraph at lines 809--828
  [][] 
  []
 
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 37 undefined on input line 828.
+s' on page 37 undefined on input line 831.
 
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 37 undefined on input line 828.
+s' on page 37 undefined on input line 831.
 
 
-Overfull \hbox (1.8265pt too wide) in paragraph at lines 830--849
+Overfull \hbox (1.8265pt too wide) in paragraph at lines 833--852
  [][] 
  []
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 853.
+
+Package natbib Warning: There were undefined citations.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 856.
 [37] [38] [39] [40 <./MET_final_ee_ff_eg.pdf> <./MET_final_ff_eg.pdf>] [41 <./M
 ET_final_ee_ff_eg_geq1.pdf> <./MET_final_ff_eg_geq1.pdf>] [42]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 853.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 856.
  (./ch7.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 853.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 856.
 Package rerunfilecheck Info: File `ch7.out' has not changed.
 (rerunfilecheck)             Checksum: BB9F1CEF9880F14F0E4F718D5DED52EE;604.
 
@@ -1066,13 +1065,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8586 strings out of 493747
- 139603 string characters out of 3143546
- 264412 words of memory out of 3000000
- 11496 multiletter control sequences out of 15000+200000
+ 8910 strings out of 493747
+ 143615 string characters out of 3143546
+ 269985 words of memory out of 3000000
+ 11812 multiletter control sequences out of 15000+200000
  15029 words of font info for 56 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,24n,45p,1620b,463s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,24n,45p,1586b,493s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -1095,7 +1094,7 @@ f-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2010/texmf
 dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2010/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local/texlive/2010/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on ch7.pdf (42 pages, 1617752 bytes).
+Output written on ch7.pdf (42 pages, 1617779 bytes).
 PDF statistics:
  3497 PDF objects out of 3580 (max. 8388607)
  1778 compressed objects within 18 object streams

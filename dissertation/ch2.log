@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  19 JUN 2012 18:01
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  25 JUN 2012 12:29
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -390,6 +390,9 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count124
 )
+(/usr/local/texlive/2010/texmf-dist/tex/latex/notoccite/notoccite.sty
+Package: notoccite 2000/07/20
+)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
 \linenopenalty=\count125
@@ -411,7 +414,7 @@ LaTeX Info: Redefining \\ on input line 3056.
 Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps,.gif]
-(grfext)             \AppendGraphicsExtensions on input line 42.
+(grfext)             \AppendGraphicsExtensions on input line 43.
 )) (./ch2.aux)
 \openout1 = `ch2.aux'.
 
@@ -508,219 +511,207 @@ LaTeX Info: Redefining \nameref on input line 2.
 Chapter 1.
 
 Package natbib Warning: Citation `Glashow1961579' on page 1 undefined on input 
-line 7.
+line 10.
 
 
 Package natbib Warning: Citation `PhysRevD.2.1285' on page 1 undefined on input
- line 7.
+ line 10.
 
 
 Package natbib Warning: Citation `PhysRev.127.965' on page 1 undefined on input
- line 7.
+ line 10.
 
 
 Package natbib Warning: Citation `PhysRevLett.19.1264' on page 1 undefined on i
-nput line 7.
+nput line 10.
 
 
 Package natbib Warning: Citation `Salam1964168' on page 1 undefined on input li
-ne 7.
+ne 10.
 
 
 Package natbib Warning: Citation `GellMann1964214' on page 1 undefined on input
- line 7.
+ line 10.
 
 
 Package natbib Warning: Citation `Lichtenberg:784713' on page 1 undefined on in
-put line 7.
+put line 10.
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 9.
+LaTeX Font Info:    Try loading font information for U+msa on input line 12.
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 9.
+LaTeX Font Info:    Try loading font information for U+msb on input line 12.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
-Package natbib Warning: Citation `Drees' on page 1 undefined on input line 15.
+Package natbib Warning: Citation `Drees' on page 1 undefined on input line 18.
 
-[1
+[1{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
-{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<LEP_hadronic_xsec.pdf, id=32, 214.10559pt x 206.36688pt>
+]
+<LEP_hadronic_xsec.pdf, id=36, 214.10559pt x 206.36688pt>
 File: LEP_hadronic_xsec.pdf Graphic file (type pdf)
 
 <use LEP_hadronic_xsec.pdf>
-Underfull \hbox (badness 1097) in paragraph at lines 19--19
-\OT1/cmr/m/n/10 a func-tion of col-lider center-of-
- []
-
-<LEP_pair_production_xsecs.pdf, id=33, 199.91791pt x 265.69736pt>
+<LEP_pair_production_xsecs.pdf, id=37, 199.91791pt x 265.69736pt>
 File: LEP_pair_production_xsecs.pdf Graphic file (type pdf)
 
 <use LEP_pair_production_xsecs.pdf>
-<LEP_W_pair_production_xsec.pdf, id=34, 211.52596pt x 213.46068pt>
+<LEP_W_pair_production_xsec.pdf, id=38, 211.52596pt x 213.46068pt>
 File: LEP_W_pair_production_xsec.pdf Graphic file (type pdf)
 
 <use LEP_W_pair_production_xsec.pdf>
-Underfull \hbox (badness 2781) in paragraph at lines 23--23
-\OT1/cmr/m/n/10 pen-dence of the $\OML/cmm/m/it/10 W[]W[]$ \OT1/cmr/m/n/10 pair
-
- []
-
-<LEP_alphaS_running.pdf, id=35, 182.50565pt x 219.90968pt>
+<LEP_alphaS_running.pdf, id=39, 182.50565pt x 219.90968pt>
 File: LEP_alphaS_running.pdf Graphic file (type pdf)
 
 <use LEP_alphaS_running.pdf>
-Underfull \hbox (badness 1062) in paragraph at lines 25--25
-\OT1/cmr/m/n/10 pling con-stant $\OML/cmm/m/it/10 []$ \OT1/cmr/m/n/10 on LEP
- []
+
+Package natbib Warning: Citation `Drees' on page 2 undefined on input line 29.
 
 
-Package natbib Warning: Citation `Drees' on page 2 undefined on input line 26.
-
-
-Package natbib Warning: Citation `Drees' on page 2 undefined on input line 26.
+Package natbib Warning: Citation `Drees' on page 2 undefined on input line 29.
 
 
 Package natbib Warning: Citation `Higgs1964132' on page 2 undefined on input li
-ne 30.
+ne 33.
 
 
 Package natbib Warning: Citation `PhysRevLett.13.508' on page 2 undefined on in
-put line 30.
+put line 33.
 
 
 Package natbib Warning: Citation `PhysRev.145.1156' on page 2 undefined on inpu
-t line 30.
+t line 33.
 
 
 Package natbib Warning: Citation `Aitchison:1111394' on page 2 undefined on inp
-ut line 30.
+ut line 33.
 
-
-Overfull \hbox (26.90839pt too wide) in paragraph at lines 37--38
+[2] [3 <./LEP_hadronic_xsec.pdf> <./LEP_pair_production_xsecs.pdf> <./LEP_W_pai
+r_production_xsec.pdf> <./LEP_alphaS_running.pdf>]
+Overfull \hbox (26.90839pt too wide) in paragraph at lines 40--41
 \OT1/cmr/m/n/12 All of the el-e-men-tary mat-ter par-ti-cles (fermions)---quark
 s, charged lep-tons, and neutrinos---
  []
 
-[2] [3 <./LEP_hadronic_xsec.pdf> <./LEP_pair_production_xsecs.pdf> <./LEP_W_pai
-r_production_xsec.pdf> <./LEP_alphaS_running.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 44--44
+
+Underfull \hbox (badness 10000) in paragraph at lines 47--47
 []|\OT1/cmr/m/n/12 Representation un-der
  []
 
 
 Package natbib Warning: Citation `rosner2001flavor' on page 4 undefined on inpu
-t line 72.
+t line 75.
 
 
 Package natbib Warning: Citation `rosner2001flavor' on page 4 undefined on inpu
-t line 72.
-
-[4]
-
-Package natbib Warning: Citation `rosner2001flavor' on page 5 undefined on inpu
-t line 74.
+t line 75.
 
 
-Package natbib Warning: Citation `rosner2001flavor' on page 5 undefined on inpu
-t line 83.
+Package natbib Warning: Citation `rosner2001flavor' on page 4 undefined on inpu
+t line 77.
 
-[5] <Higgs_potential.jpg, id=722, 949.5475pt x 586.19pt>
+[4] [5]
+
+Package natbib Warning: Citation `rosner2001flavor' on page 6 undefined on inpu
+t line 86.
+
+<Higgs_potential.jpg, id=723, 949.5475pt x 586.19pt>
 File: Higgs_potential.jpg Graphic file (type jpg)
-
-<use Higgs_potential.jpg>
-
-Package natbib Warning: Citation `Alvarez-Gaume' on page 6 undefined on input l
-ine 95.
-
+ <use Higgs_potential.jpg>
 
 Package natbib Warning: Citation `Alvarez-Gaume' on page 6 undefined on input l
-ine 95.
+ine 98.
 
 
-Package natbib Warning: Citation `Arnison:1983rp' on page 6 undefined on input 
-line 104.
+Package natbib Warning: Citation `Alvarez-Gaume' on page 6 undefined on input l
+ine 98.
+
+[6]
+
+Package natbib Warning: Citation `Arnison:1983rp' on page 7 undefined on input 
+line 107.
 
 
-Package natbib Warning: Citation `Arnison1983398' on page 6 undefined on input 
-line 104.
+Package natbib Warning: Citation `Arnison1983398' on page 7 undefined on input 
+line 107.
 
 
-Package natbib Warning: Citation `Gunion:425736' on page 6 undefined on input l
-ine 104.
+Package natbib Warning: Citation `Gunion:425736' on page 7 undefined on input l
+ine 107.
 
-[6 <./Higgs_potential.jpg>] [7]
+[7 <./Higgs_potential.jpg>]
 
 LaTeX Warning: Reference `chap:The Supersymmetric Extension to the Standard Mod
-el' on page 8 undefined on input line 110.
+el' on page 8 undefined on input line 113.
 
+[8]
 
-Package natbib Warning: Citation `0954-3899-37-7A-075021' on page 8 undefined o
-n input line 115.
+Package natbib Warning: Citation `0954-3899-37-7A-075021' on page 9 undefined o
+n input line 118.
 
-<SUSY_RG_evolution.pdf, id=734, 347.65685pt x 269.54611pt>
+<SUSY_RG_evolution.pdf, id=744, 347.65685pt x 269.54611pt>
 File: SUSY_RG_evolution.pdf Graphic file (type pdf)
 
 <use SUSY_RG_evolution.pdf>
 
-Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
-e 120.
+Package natbib Warning: Citation `SUSY_primer' on page 9 undefined on input lin
+e 123.
 
 
-Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
-e 120.
+Package natbib Warning: Citation `SUSY_primer' on page 9 undefined on input lin
+e 123.
 
 
-Package natbib Warning: Citation `SUSY_primer' on page 8 undefined on input lin
-e 124.
+Package natbib Warning: Citation `SUSY_primer' on page 9 undefined on input lin
+e 127.
 
-[8] [9 <./SUSY_RG_evolution.pdf>]
 
-Package natbib Warning: Citation `SUSY_primer' on page 10 undefined on input li
-ne 131.
+Package natbib Warning: Citation `SUSY_primer' on page 9 undefined on input lin
+e 134.
 
+[9] [10 <./SUSY_RG_evolution.pdf>]
 
 LaTeX Warning: Reference `sec:Phenomenology of General Gauge Mediation' on page
- 10 undefined on input line 140.
+ 11 undefined on input line 143.
 
 
-Package natbib Warning: Citation `Jungman1996195' on page 10 undefined on input
- line 140.
+Package natbib Warning: Citation `Jungman1996195' on page 11 undefined on input
+ line 143.
 
-<SUSY_grand_unification.pdf, id=816, 282.35115pt x 242.01526pt>
+<SUSY_grand_unification.pdf, id=827, 282.35115pt x 242.01526pt>
 File: SUSY_grand_unification.pdf Graphic file (type pdf)
 
 <use SUSY_grand_unification.pdf>
 
-Package natbib Warning: Citation `SUSY_primer' on page 10 undefined on input li
-ne 145.
+Package natbib Warning: Citation `SUSY_primer' on page 11 undefined on input li
+ne 148.
 
 
-Package natbib Warning: Citation `SUSY_primer' on page 10 undefined on input li
-ne 145.
+Package natbib Warning: Citation `SUSY_primer' on page 11 undefined on input li
+ne 148.
 
 
-Package natbib Warning: Citation `Chatrchyan201226' on page 10 undefined on inp
-ut line 149.
+Package natbib Warning: Citation `Chatrchyan201226' on page 11 undefined on inp
+ut line 152.
 
 
-Package natbib Warning: Citation `Aad201249' on page 10 undefined on input line
- 149.
+Package natbib Warning: Citation `Aad201249' on page 11 undefined on input line
+ 152.
 
-[10]
+[11]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 151.
-[11 <./SUSY_grand_unification.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 151.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 154.
+[12 <./SUSY_grand_unification.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 154.
  (./ch2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 151.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 154.
 Package rerunfilecheck Info: File `ch2.out' has not changed.
 (rerunfilecheck)             Checksum: 31A090050C177E18D0B6ABD19C18C130;368.
 
@@ -729,13 +720,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8318 strings out of 493747
- 125819 string characters out of 3143546
- 228622 words of memory out of 3000000
- 11410 multiletter control sequences out of 15000+200000
+ 8327 strings out of 493747
+ 126089 string characters out of 3143546
+ 228651 words of memory out of 3000000
+ 11413 multiletter control sequences out of 15000+200000
  14451 words of font info for 54 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,20n,45p,1252b,457s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,20n,45p,1765b,457s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -758,10 +749,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2010/texmf
 dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2010/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2010/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmti8.pfb>
-Output written on ch2.pdf (11 pages, 1139703 bytes).
+Output written on ch2.pdf (12 pages, 1142305 bytes).
 PDF statistics:
- 958 PDF objects out of 1000 (max. 8388607)
- 699 compressed objects within 7 object streams
- 31 named destinations out of 1000 (max. 500000)
+ 969 PDF objects out of 1000 (max. 8388607)
+ 708 compressed objects within 8 object streams
+ 33 named destinations out of 1000 (max. 500000)
  68 words of extra memory for PDF output out of 10000 (max. 10000000)
 

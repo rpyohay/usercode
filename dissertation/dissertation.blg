@@ -3,120 +3,50 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: dissertation.aux
 The style file: apsrev-rpy.bst
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated field_info (elt_size=4) to 10177 items from 5000.
+Reallocated field_info (elt_size=4) to 10146 items from 5000.
 Database file #1: dissertation.bib
-Warning--I didn't find a database entry for "Bruneliere"
-Warning--I didn't find a database entry for "time_reco"
-Warning--I didn't find a database entry for "EGM_10_002"
-Warning--I didn't find a database entry for "calibration_IN"
-Warning--I didn't find a database entry for "EB_performance_2006"
-Warning--I didn't find a database entry for "EB_startup_intercalibration"
-Warning--I didn't find a database entry for "CRAFT_calibration"
-Warning--I didn't find a database entry for "CRAFT_ECAL_performance"
-Warning--I didn't find a database entry for "CALOR_ECAL_calibration"
-Warning--I didn't find a database entry for "Yang"
-Warning--I didn't find a database entry for "ECAL_SC_note"
-Warning--I didn't find a database entry for "Higgs_AN"
-Warning--I didn't find a database entry for "ECALEnergyScaleCorrections_Twiki"
-Warning--I didn't find a database entry for "Higgs_note"
-Warning--I didn't find a database entry for "Fastjet_conf_proceedings"
-Warning--I didn't find a database entry for "Fastjet_manual"
-Warning--I didn't find a database entry for "CMS-QCD-10-019"
-Warning--I didn't find a database entry for "CMS_AN-2011-515"
-Warning--I didn't find a database entry for "GSF_reco"
-Warning--I didn't find a database entry for "PF_algo"
-Warning--I didn't find a database entry for "PF_perf"
-Warning--I didn't find a database entry for "CMS_JES_paper"
-Warning--I didn't find a database entry for "PF_note"
-Warning--I didn't find a database entry for "AK5"
-Warning--I didn't find a database entry for "Salam_talk"
-Warning--I didn't find a database entry for "Wigmans"
-Warning--I didn't find a database entry for "CDF_JEC_website"
-Warning--I didn't find a database entry for "CMS_MET_paper"
-Warning--I didn't find a database entry for "JPT"
-Warning--I didn't find a database entry for "CMS_AN-2010/034"
-Warning--I didn't find a database entry for "CMS_CR-2009/347"
-Warning--I didn't find a database entry for "Pythia8"
-Warning--I didn't find a database entry for "CMS_PVT"
-Warning--I didn't find a database entry for "HCAL_noise_AN"
-Warning--I didn't find a database entry for "Korzekwa"
-Warning--I didn't find a database entry for "Chen"
-Warning--I didn't find a database entry for "CMS_NOTE_2006/041"
-Warning--I didn't find a database entry for "tag_and_probe_method_AN"
-Warning--I didn't find a database entry for "MINUIT"
-Warning--I didn't find a database entry for "RooFit"
-Warning--I didn't find a database entry for "Crystal_Ball"
-Warning--I didn't find a database entry for "CMS_AN-2010/271"
-Warning--I didn't find a database entry for "DAS"
-Warning--I didn't find a database entry for "CMS_GMSB_35pb-1"
-Warning--I didn't find a database entry for "CMS_GMSB_5fb-1"
-Warning--I didn't find a database entry for "SuSpect"
-Warning--I didn't find a database entry for "SDECAY"
-Warning--I didn't find a database entry for "Pythia6"
-Warning--I didn't find a database entry for "GEANT"
-Warning--I didn't find a database entry for "PROSPINO"
-Warning--I didn't find a database entry for "CMS-NOTE-2011/005"
-Warning--I didn't find a database entry for "Read"
-Warning--I didn't find a database entry for "Cowan_Cranmer_Gross_Vitells"
-Warning--I didn't find a database entry for "Neyman_Pearson"
-Warning--I didn't find a database entry for "CMS_PAS_EWK-11-001"
-Warning--I didn't find a database entry for "PDF4LHC"
-Warning--I didn't find a database entry for "MSTW08"
-Warning--I didn't find a database entry for "CTEQ6"
-Warning--I didn't find a database entry for "NNPDF2_0"
-Warning--I didn't find a database entry for "HERA"
-Warning--I didn't find a database entry for "Hessian"
-Warning--I didn't find a database entry for "PDF_primer"
-Warning--I didn't find a database entry for "Carena"
-Warning--I didn't find a database entry for "ATLAS_GMSB_stop_search"
-Warning--I didn't find a database entry for "CMS_Higgs"
-Warning--I didn't find a database entry for "ATLAS_Higgs"
-Warning--I didn't find a database entry for "LPCC_MBUE_WG"
-Warning--I didn't find a database entry for "MadGraph"
-Warning--I didn't find a database entry for "Tauola"
-Warning--I didn't find a database entry for "PUS6"
-Warning--I didn't find a database entry for "doubleEMEnriched_filter_cfg"
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-You've used 96 entries,
-            3411 wiz_defined-function locations,
-            1926 strings with 32615 characters,
-and the built_in function-call counts, 60689 in all, are:
-= -- 3491
-> -- 2048
-< -- 287
-+ -- 1788
-- -- 508
-* -- 8207
-:= -- 6656
-add.period$ -- 96
-call.type$ -- 96
-change.case$ -- 392
-chr.to.int$ -- 78
-cite$ -- 134
-duplicate$ -- 5475
-empty$ -- 5133
-format.name$ -- 1273
-if$ -- 11386
-int.to.chr$ -- 19
-int.to.str$ -- 97
-missing$ -- 817
-newline$ -- 303
-num.names$ -- 235
-pop$ -- 1438
+Warning--empty author in ATLAS:1379837
+You've used 166 entries,
+            3445 wiz_defined-function locations,
+            2211 strings with 46341 characters,
+and the built_in function-call counts, 105307 in all, are:
+= -- 6064
+> -- 3649
+< -- 521
++ -- 3166
+- -- 905
+* -- 14410
+:= -- 11607
+add.period$ -- 166
+call.type$ -- 166
+change.case$ -- 691
+chr.to.int$ -- 136
+cite$ -- 221
+duplicate$ -- 9491
+empty$ -- 8733
+format.name$ -- 2258
+if$ -- 19616
+int.to.chr$ -- 31
+int.to.str$ -- 167
+missing$ -- 1397
+newline$ -- 515
+num.names$ -- 423
+pop$ -- 2402
 preamble$ -- 1
-purify$ -- 384
+purify$ -- 664
 quote$ -- 0
-skip$ -- 2332
+skip$ -- 4010
 stack$ -- 0
-substring$ -- 1840
-swap$ -- 4166
-text.length$ -- 238
+substring$ -- 3035
+swap$ -- 7335
+text.length$ -- 437
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 566
-warning$ -- 0
-while$ -- 223
+type$ -- 986
+warning$ -- 1
+while$ -- 381
 width$ -- 0
-write$ -- 982
-(There were 71 warnings)
+write$ -- 1722
+(There was 1 warning)

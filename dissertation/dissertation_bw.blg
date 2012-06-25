@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2010)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: dissertation_bw.aux
+The style file: apsrev-rpy.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated field_info (elt_size=4) to 10146 items from 5000.
+Database file #1: dissertation.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty author in ATLAS:1379837
+You've used 166 entries,
+            3445 wiz_defined-function locations,
+            2212 strings with 46359 characters,
+and the built_in function-call counts, 105307 in all, are:
+= -- 6064
+> -- 3649
+< -- 521
++ -- 3166
+- -- 905
+* -- 14410
+:= -- 11607
+add.period$ -- 166
+call.type$ -- 166
+change.case$ -- 691
+chr.to.int$ -- 136
+cite$ -- 221
+duplicate$ -- 9491
+empty$ -- 8733
+format.name$ -- 2258
+if$ -- 19616
+int.to.chr$ -- 31
+int.to.str$ -- 167
+missing$ -- 1397
+newline$ -- 515
+num.names$ -- 423
+pop$ -- 2402
+preamble$ -- 1
+purify$ -- 664
+quote$ -- 0
+skip$ -- 4010
+stack$ -- 0
+substring$ -- 3035
+swap$ -- 7335
+text.length$ -- 437
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 986
+warning$ -- 1
+while$ -- 381
+width$ -- 0
+write$ -- 1722
+(There was 1 warning)

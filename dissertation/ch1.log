@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  19 JUN 2012 18:12
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  25 JUN 2012 12:18
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -390,6 +390,9 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count124
 )
+(/usr/local/texlive/2010/texmf-dist/tex/latex/notoccite/notoccite.sty
+Package: notoccite 2000/07/20
+)
 (/usr/local/texlive/2010/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
 \linenopenalty=\count125
@@ -411,7 +414,7 @@ LaTeX Info: Redefining \\ on input line 3056.
 Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps,.gif]
-(grfext)             \AppendGraphicsExtensions on input line 42.
+(grfext)             \AppendGraphicsExtensions on input line 43.
 )) (./ch1.aux)
 \openout1 = `ch1.aux'.
 
@@ -506,73 +509,73 @@ LaTeX Info: Redefining \nameref on input line 2.
 
 
 Chapter 1.
-[1
+[1{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
-{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for U+msa on input line 13.
+]
+LaTeX Font Info:    Try loading font information for U+msa on input line 16.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2009/06/22 v3.00 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 13.
+LaTeX Font Info:    Try loading font information for U+msb on input line 16.
 
 (/usr/local/texlive/2010/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2009/06/22 v3.00 AMS symbols B
 )
 
 Package natbib Warning: Citation `CMS_public' on page 2 undefined on input line
- 13.
+ 16.
 
 
 LaTeX Warning: Reference `chap:Motivation for Physics Beyond the Standard Model
-' on page 2 undefined on input line 15.
+' on page 2 undefined on input line 18.
 
 
 LaTeX Warning: Reference `chap:The Supersymmetric Extension to the Standard Mod
-el' on page 2 undefined on input line 15.
+el' on page 2 undefined on input line 18.
 
 
 LaTeX Warning: Reference `chap:The Large Hadron Collider' on page 2 undefined o
-n input line 15.
+n input line 18.
 
 
 LaTeX Warning: Reference `chap:The Compact Muon Solenoid Experiment' on page 2 
-undefined on input line 15.
+undefined on input line 18.
 
 
 LaTeX Warning: Reference `chap:Event Selection' on page 2 undefined on input li
-ne 15.
+ne 18.
 
 
 LaTeX Warning: Reference `chap:Data Analysis' on page 2 undefined on input line
- 15.
+ 18.
 
 
 LaTeX Warning: Reference `chap:Event Selection' on page 2 undefined on input li
-ne 15.
+ne 18.
 
 
 LaTeX Warning: Reference `chap:Data Analysis' on page 2 undefined on input line
- 15.
+ 18.
 
 
 LaTeX Warning: Reference `chap:Interpretation of Results in Terms of GMSB Model
-s' on page 2 undefined on input line 15.
+s' on page 2 undefined on input line 18.
 
 
-LaTeX Warning: Reference `chap:Conclusion' on page 2 undefined on input line 15
+LaTeX Warning: Reference `chap:Conclusion' on page 2 undefined on input line 18
 .
 
 [2]
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 17.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 20.
 [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 17.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 20.
  (./ch1.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 17.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 20.
 Package rerunfilecheck Info: File `ch1.out' has not changed.
 (rerunfilecheck)             Checksum: 801D62DD1A15D68C626BAEEC19C65BEA;47.
 
@@ -581,17 +584,17 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 8183 strings out of 493747
- 123293 string characters out of 3143546
- 214622 words of memory out of 3000000
- 11320 multiletter control sequences out of 15000+200000
+ 8190 strings out of 493747
+ 123545 string characters out of 3143546
+ 214651 words of memory out of 3000000
+ 11323 multiletter control sequences out of 15000+200000
  9550 words of font info for 36 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  53i,5n,44p,1241b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on ch1.pdf (3 pages, 40588 bytes).
+Output written on ch1.pdf (3 pages, 40800 bytes).
 PDF statistics:
  38 PDF objects out of 1000 (max. 8388607)
  29 compressed objects within 1 object stream
