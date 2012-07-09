@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  25 JUN 2012 18:12
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  26 JUN 2012 16:25
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -899,7 +899,7 @@ nput line 204.
 File: on_off-1_graph.pdf Graphic file (type pdf)
 
 <use on_off-1_graph.pdf> [19 <./ECAL_rad_damage.png>] [20 <./ECAL_laser_system.
-pdf> <./on_off-1_graph.pdf>] <VPT_aging.pdf, id=873, 945.5325pt x 607.26875pt>
+pdf> <./on_off-1_graph.pdf>] <VPT_aging.pdf, id=872, 945.5325pt x 607.26875pt>
 File: VPT_aging.pdf Graphic file (type pdf)
 
 <use VPT_aging.pdf>
@@ -928,344 +928,347 @@ n input line 227.
 File: LED_control_and_monitoring.pdf Graphic file (type pdf)
 
 <use LED_control_and_monitoring.pdf> [23 <./LED_control_and_monitoring.pdf>]
-<LED_software.pdf, id=1102, 1025.90952pt x 683.6824pt>
+
+LaTeX Warning: Reference `sec:Beam Injection' on page 24 undefined on input lin
+e 242.
+
+
+Package natbib Warning: Citation `PhysRevLett.106.011801' on page 24 undefined 
+on input line 242.
+
+[24] <LED_software.pdf, id=1106, 1025.90952pt x 683.6824pt>
 File: LED_software.pdf Graphic file (type pdf)
- <use LED_software.pdf>
-[24 <./LED_software.pdf>]
-<ECAL_res_vs_eta_EB.png, id=1144, 849.1725pt x 574.145pt>
+
+<use LED_software.pdf>
+<ECAL_res_vs_eta_EB.png, id=1108, 849.1725pt x 574.145pt>
 File: ECAL_res_vs_eta_EB.png Graphic file (type png)
 
 <use ECAL_res_vs_eta_EB.png>
 
 Package natbib Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 25 unde
-fined on input line 255.
+fined on input line 257.
 
 
 Package natbib Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EB' on page 25 unde
-fined on input line 255.
+fined on input line 257.
 
-<ECAL_res_vs_eta_EE.png, id=1145, 849.1725pt x 574.145pt>
+<ECAL_res_vs_eta_EE.png, id=1109, 849.1725pt x 574.145pt>
 File: ECAL_res_vs_eta_EE.png Graphic file (type png)
 
 <use ECAL_res_vs_eta_EE.png>
 
 Package natbib Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 25 unde
-fined on input line 257.
+fined on input line 259.
 
 
 Package natbib Warning: Citation `ECAL_DPG_Twiki_res_vs_eta_EE' on page 25 unde
-fined on input line 257.
+fined on input line 259.
 
 
 Package natbib Warning: Citation `CMS-PAS-EXO-11-067' on page 25 undefined on i
-nput line 262.
+nput line 264.
 
-<ECAL_timing_res.png, id=1147, 698.61pt x 674.52pt>
+<ECAL_timing_res.png, id=1111, 698.61pt x 674.52pt>
 File: ECAL_timing_res.png Graphic file (type png)
  <use ECAL_timing_res.png>
 
 Package natbib Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 25 undefin
-ed on input line 267.
+ed on input line 269.
 
 
 Package natbib Warning: Citation `ECAL_DPG_Twiki_timing_res' on page 25 undefin
-ed on input line 267.
+ed on input line 269.
 
-[25 <./ECAL_res_vs_eta_EB.png (PNG copy)> <./ECAL_res_vs_eta_EE.png (PNG copy)>
-] <HCAL_longitudinal_xsec.pdf, id=1159, 385.74234pt x 233.69789pt>
+[25 <./LED_software.pdf>] [26 <./ECAL_res_vs_eta_EB.png (PNG copy)> <./ECAL_res
+_vs_eta_EE.png (PNG copy)> <./ECAL_timing_res.png (PNG copy)>]
+<HCAL_longitudinal_xsec.pdf, id=1162, 385.74234pt x 233.69789pt>
 File: HCAL_longitudinal_xsec.pdf Graphic file (type pdf)
 
 <use HCAL_longitudinal_xsec.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 26 undefined o
-n input line 278.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 27 undefined o
+n input line 280.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 26 undefined o
-n input line 278.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 27 undefined o
+n input line 280.
 
-[26 <./ECAL_timing_res.png (PNG copy)>]
-<HCAL_HB_optics.pdf, id=1167, 379.17247pt x 259.97707pt>
+[27] <HCAL_HB_optics.pdf, id=1171, 379.17247pt x 259.97707pt>
 File: HCAL_HB_optics.pdf Graphic file (type pdf)
 
 <use HCAL_HB_optics.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 27 undefined o
-n input line 287.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 28 undefined o
+n input line 289.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 27 undefined o
-n input line 287.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 28 undefined o
+n input line 289.
 
 
-Package natbib Warning: Citation `Akchurin_Wigmans' on page 27 undefined on inp
-ut line 291.
+Package natbib Warning: Citation `Akchurin_Wigmans' on page 28 undefined on inp
+ut line 293.
 
-[27 <./HCAL_longitudinal_xsec.pdf>]
-<HCAL_HF_xsec.pdf, id=1232, 418.59142pt x 254.34584pt>
+<HCAL_HF_xsec.pdf, id=1173, 418.59142pt x 254.34584pt>
 File: HCAL_HF_xsec.pdf Graphic file (type pdf)
  <use HCAL_HF_xsec.pdf>
 
 Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 28 undefined o
-n input line 296.
+n input line 298.
 
 
 Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 28 undefined o
-n input line 296.
+n input line 298.
 
-<HCAL_performance_HB_response.pdf, id=1234, 230.88226pt x 239.32913pt>
+[28 <./HCAL_longitudinal_xsec.pdf>] [29 <./HCAL_HB_optics.pdf> <./HCAL_HF_xsec.
+pdf>] <HCAL_performance_HB_response.pdf, id=1389, 230.88226pt x 239.32913pt>
 File: HCAL_performance_HB_response.pdf Graphic file (type pdf)
 
 <use HCAL_performance_HB_response.pdf>
 
-Package natbib Warning: Citation `CMS-DP-2010-025' on page 28 undefined on inpu
-t line 306.
+Package natbib Warning: Citation `CMS-DP-2010-025' on page 30 undefined on inpu
+t line 308.
 
 
-Package natbib Warning: Citation `CMS-DP-2010-025' on page 28 undefined on inpu
-t line 306.
+Package natbib Warning: Citation `CMS-DP-2010-025' on page 30 undefined on inpu
+t line 308.
 
 
-Underfull \hbox (badness 1622) in paragraph at lines 306--306
+Underfull \hbox (badness 1622) in paragraph at lines 308--308
 \OT1/cmr/m/n/10 sponse to charged tracks of 9-11
  []
 
-<HCAL_performance_noise.pdf, id=1235, 275.9325pt x 258.10007pt>
+<HCAL_performance_noise.pdf, id=1390, 275.9325pt x 258.10007pt>
 File: HCAL_performance_noise.pdf Graphic file (type pdf)
 
 <use HCAL_performance_noise.pdf>
 
-LaTeX Warning: Reference `sec:Event Quality' on page 28 undefined on input line
- 308.
+LaTeX Warning: Reference `sec:Event Quality' on page 30 undefined on input line
+ 310.
 
 
-Package natbib Warning: Citation `1748-0221-5-03-T03014' on page 28 undefined o
-n input line 308.
+Package natbib Warning: Citation `1748-0221-5-03-T03014' on page 30 undefined o
+n input line 310.
 
 
-LaTeX Warning: Reference `sec:Event Quality' on page 28 undefined on input line
- 308.
+LaTeX Warning: Reference `sec:Event Quality' on page 30 undefined on input line
+ 310.
 
 
-Package natbib Warning: Citation `1748-0221-5-03-T03014' on page 28 undefined o
-n input line 308.
+Package natbib Warning: Citation `1748-0221-5-03-T03014' on page 30 undefined o
+n input line 310.
 
-<HCAL_performance_timing.pdf, id=1236, 353.83171pt x 274.05536pt>
+<HCAL_performance_timing.pdf, id=1391, 353.83171pt x 274.05536pt>
 File: HCAL_performance_timing.pdf Graphic file (type pdf)
 
 <use HCAL_performance_timing.pdf>
 
-Package natbib Warning: Citation `CMS-DP-2010-025' on page 28 undefined on inpu
-t line 310.
+Package natbib Warning: Citation `CMS-DP-2010-025' on page 30 undefined on inpu
+t line 312.
 
 
-Package natbib Warning: Citation `CMS-DP-2010-025' on page 28 undefined on inpu
-t line 310.
+Package natbib Warning: Citation `CMS-DP-2010-025' on page 30 undefined on inpu
+t line 312.
 
 
-LaTeX Warning: Float too large for page by 32.10545pt on input line 313.
+LaTeX Warning: Float too large for page by 32.10545pt on input line 315.
 
-[28 <./HCAL_HB_optics.pdf>]
-<muons_layout_MB.pdf, id=1274, 350.07748pt x 363.21727pt>
+<muons_layout_MB.pdf, id=1393, 350.07748pt x 363.21727pt>
 File: muons_layout_MB.pdf Graphic file (type pdf)
 
 <use muons_layout_MB.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 29 undefined o
-n input line 321.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 30 undefined o
+n input line 323.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 29 undefined o
-n input line 321.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 30 undefined o
+n input line 323.
 
-<muons_layout_ME.pdf, id=1275, 379.17247pt x 221.49681pt>
+<muons_layout_ME.pdf, id=1394, 379.17247pt x 221.49681pt>
 File: muons_layout_ME.pdf Graphic file (type pdf)
 
 <use muons_layout_ME.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 29 undefined o
-n input line 323.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 30 undefined o
+n input line 325.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 29 undefined o
-n input line 323.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 30 undefined o
+n input line 325.
 
-[29 <./HCAL_HF_xsec.pdf>] [30 <./HCAL_performance_HB_response.pdf> <./HCAL_perf
-ormance_noise.pdf> <./HCAL_performance_timing.pdf>] [31 <./muons_layout_MB.pdf>
- <./muons_layout_ME.pdf>] <muons_DT.pdf, id=1614, 323.7983pt x 202.72589pt>
+[30] [31 <./HCAL_performance_HB_response.pdf> <./HCAL_performance_noise.pdf> <.
+/HCAL_performance_timing.pdf>] [32 <./muons_layout_MB.pdf> <./muons_layout_ME.p
+df>] <muons_DT.pdf, id=1618, 323.7983pt x 202.72589pt>
 File: muons_DT.pdf Graphic file (type pdf)
+ <use muons_DT.pdf>
 
-<use muons_DT.pdf>
-
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 32 undefined o
-n input line 333.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 33 undefined o
+n input line 335.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 32 undefined o
-n input line 333.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 33 undefined o
+n input line 335.
 
-<muons_CSC_wedge.pdf, id=1616, 137.02763pt x 200.84886pt>
+<muons_CSC_wedge.pdf, id=1620, 137.02763pt x 200.84886pt>
 File: muons_CSC_wedge.pdf Graphic file (type pdf)
 
 <use muons_CSC_wedge.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 32 undefined o
-n input line 342.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 33 undefined o
+n input line 344.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 32 undefined o
-n input line 342.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 33 undefined o
+n input line 344.
 
-[32 <./muons_DT.pdf>] <muon_pT_res.pdf, id=1673, 405.47395pt x 273.32423pt>
+[33 <./muons_DT.pdf>] <muon_pT_res.pdf, id=1678, 405.47395pt x 273.32423pt>
 File: muon_pT_res.pdf Graphic file (type pdf)
 
 <use muon_pT_res.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 33 undefined o
-n input line 351.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 34 undefined o
+n input line 353.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 33 undefined o
-n input line 351.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 34 undefined o
+n input line 353.
 
-<muon_inv_mass.pdf, id=1674, 569.12625pt x 327.2225pt>
+<muon_inv_mass.pdf, id=1679, 569.12625pt x 327.2225pt>
 File: muon_inv_mass.pdf Graphic file (type pdf)
  <use muon_inv_mass.pdf>
 
-Package natbib Warning: Citation `MUO_POG_Twiki_inv_mass' on page 33 undefined 
-on input line 358.
+Package natbib Warning: Citation `MUO_POG_Twiki_inv_mass' on page 34 undefined 
+on input line 360.
 
 
 Package natbib Warning: Citation `springerlink:10.1007/JHEP04(2012)033' on page
- 33 undefined on input line 358.
+ 34 undefined on input line 360.
 
 
-Package natbib Warning: Citation `MUO_POG_Twiki_inv_mass' on page 33 undefined 
-on input line 358.
+Package natbib Warning: Citation `MUO_POG_Twiki_inv_mass' on page 34 undefined 
+on input line 360.
 
 
 Package natbib Warning: Citation `springerlink:10.1007/JHEP04(2012)033' on page
- 33 undefined on input line 358.
+ 34 undefined on input line 360.
 
-[33 <./muons_CSC_wedge.pdf>] [34 <./muon_pT_res.pdf> <./muon_inv_mass.pdf, page
+[34 <./muons_CSC_wedge.pdf>] [35 <./muon_pT_res.pdf> <./muon_inv_mass.pdf, page
  is rotated 90 degrees>]
 
-Package natbib Warning: Citation `1546528' on page 35 undefined on input line 3
-70.
+Package natbib Warning: Citation `1546528' on page 36 undefined on input line 3
+72.
 
 
-LaTeX Warning: Reference `sec:Calibrated EB/EE Hits' on page 35 undefined on in
-put line 370.
+LaTeX Warning: Reference `sec:Calibrated EB/EE Hits' on page 36 undefined on in
+put line 372.
 
-<L1_trigger_diagram.pdf, id=1853, 280.41524pt x 195.96834pt>
+<L1_trigger_diagram.pdf, id=1857, 280.41524pt x 195.96834pt>
 File: L1_trigger_diagram.pdf Graphic file (type pdf)
 
 <use L1_trigger_diagram.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 35 undefined o
-n input line 375.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 36 undefined o
+n input line 377.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 35 undefined o
-n input line 375.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 36 undefined o
+n input line 377.
 
-[35] <RCT_EG_candidate.pdf, id=1861, 223.68756pt x 159.22437pt>
+[36] <RCT_EG_candidate.pdf, id=1865, 223.68756pt x 159.22437pt>
 File: RCT_EG_candidate.pdf Graphic file (type pdf)
 
 <use RCT_EG_candidate.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 36 undefined o
-n input line 384.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 37 undefined o
+n input line 386.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 36 undefined o
-n input line 384.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 37 undefined o
+n input line 386.
 
 
-Package natbib Warning: Citation `Smith' on page 36 undefined on input line 388
+Package natbib Warning: Citation `Smith' on page 37 undefined on input line 390
 .
 
 
-LaTeX Warning: Reference `sec:HLT' on page 36 undefined on input line 388.
+LaTeX Warning: Reference `sec:HLT' on page 37 undefined on input line 390.
 
-[36 <./L1_trigger_diagram.pdf>]
+[37 <./L1_trigger_diagram.pdf>]
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 37 undefined o
-n input line 390.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 38 undefined o
+n input line 392.
 
-[37 <./RCT_EG_candidate.pdf>]
-<DAQ_overview.pdf, id=1977, 434.54668pt x 264.66989pt>
+[38 <./RCT_EG_candidate.pdf>]
+<DAQ_overview.pdf, id=1981, 434.54668pt x 264.66989pt>
 File: DAQ_overview.pdf Graphic file (type pdf)
  <use DAQ_overview.pdf>
-Overfull \hbox (0.9256pt too wide) in paragraph at lines 399--400
+Overfull \hbox (0.9256pt too wide) in paragraph at lines 401--402
  [][] 
  []
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 38 undefined o
-n input line 400.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 39 undefined o
+n input line 402.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 38 undefined o
-n input line 400.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 39 undefined o
+n input line 402.
 
-[38 <./DAQ_overview.pdf>]
+[39 <./DAQ_overview.pdf>]
 
-Package natbib Warning: Citation `Brun199781' on page 39 undefined on input lin
-e 406.
-
-[39]
-
-Package natbib Warning: Citation `springerlink:10.1023/A:1012744721976' on page
- 40 undefined on input line 410.
-
-
-Package natbib Warning: Citation `SOAP' on page 40 undefined on input line 410.
-
-
-
-Package natbib Warning: Citation `HyperDAQ' on page 40 undefined on input line 
-410.
+Package natbib Warning: Citation `Brun199781' on page 40 undefined on input lin
+e 408.
 
 [40]
 
-Package natbib Warning: Citation `Eck:840543' on page 41 undefined on input lin
-e 417.
+Package natbib Warning: Citation `springerlink:10.1023/A:1012744721976' on page
+ 41 undefined on input line 412.
 
-<WLCG_diagram.pdf, id=2028, 406.3903pt x 175.5081pt>
+
+Package natbib Warning: Citation `SOAP' on page 41 undefined on input line 412.
+
+
+
+Package natbib Warning: Citation `HyperDAQ' on page 41 undefined on input line 
+412.
+
+[41]
+
+Package natbib Warning: Citation `Eck:840543' on page 42 undefined on input lin
+e 419.
+
+<WLCG_diagram.pdf, id=2032, 406.3903pt x 175.5081pt>
 File: WLCG_diagram.pdf Graphic file (type pdf)
  <use WLCG_diagram.pdf>
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 41 undefined o
-n input line 422.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 42 undefined o
+n input line 424.
 
 
-Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 41 undefined o
-n input line 422.
+Package natbib Warning: Citation `1748-0221-3-08-S08004' on page 42 undefined o
+n input line 424.
 
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 426.
-[41] [42 <./WLCG_diagram.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 426.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 428.
+[42] [43 <./WLCG_diagram.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 428.
  (./ch5.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 426.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 428.
 Package rerunfilecheck Info: File `ch5.out' has not changed.
 (rerunfilecheck)             Checksum: 4AC7114C972C7FF12EA1855B570C026D;809.
 
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 9255 strings out of 493747
- 142657 string characters out of 3143546
- 236297 words of memory out of 3000000
- 12216 multiletter control sequences out of 15000+200000
+ 9258 strings out of 493747
+ 142708 string characters out of 3143546
+ 237297 words of memory out of 3000000
+ 12218 multiletter control sequences out of 15000+200000
  13985 words of font info for 53 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  53i,10n,50p,1598b,473s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1288,10 +1291,10 @@ dist/fonts/type1/urw/symbol/usyr.pfb></usr/local/texlive/2010/texmf-dist/fonts/
 type1/urw/times/utmb8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/
 times/utmr8a.pfb></usr/local/texlive/2010/texmf-dist/fonts/type1/urw/times/utmr
 i8a.pfb>
-Output written on ch5.pdf (42 pages, 5955165 bytes).
+Output written on ch5.pdf (43 pages, 5956133 bytes).
 PDF statistics:
- 2145 PDF objects out of 2487 (max. 8388607)
- 1661 compressed objects within 17 object streams
- 108 named destinations out of 1000 (max. 500000)
+ 2152 PDF objects out of 2487 (max. 8388607)
+ 1667 compressed objects within 17 object streams
+ 109 named destinations out of 1000 (max. 500000)
  306 words of extra memory for PDF output out of 10000 (max. 10000000)
 

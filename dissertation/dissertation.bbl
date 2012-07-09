@@ -1,4 +1,4 @@
-\begin{thebibliography}{166}
+\begin{thebibliography}{167}
 \thispagestyle{myheadings}
 \markright{\hfill}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
@@ -76,7 +76,7 @@
 
 \bibitem[{\citenamefont{Higgs}(1964{\natexlab{a}})}]{Higgs1964132}
 \bibinfo{author}{\bibfnamefont{P.}~\bibnamefont{Higgs}},
-  \bibinfo{journal}{Physics Letters} \textbf{\bibinfo{volume}{12}},
+  \bibinfo{journal}{Phys. Lett.} \textbf{\bibinfo{volume}{12}},
   \bibinfo{pages}{132} (\bibinfo{year}{1964}{\natexlab{a}}),
   \urlprefix\url{http://www.sciencedirect.com/science/article/pii/0031916364911369}.
 
@@ -632,6 +632,14 @@
 \bibinfo{author}{\bibfnamefont{J.}~\bibnamefont{Wood}}, \bibinfo{note}{work in
   progress at the University of Virginia high energy physics laboratory}.
 
+\bibitem[{\citenamefont{Khachatryan
+  et~al.}(2011{\natexlab{a}})}]{PhysRevLett.106.011801}
+\bibinfo{author}{\bibfnamefont{V.}~\bibnamefont{Khachatryan}}
+  \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration}),
+  \bibinfo{journal}{Phys. Rev. Lett.} \textbf{\bibinfo{volume}{106}},
+  \bibinfo{pages}{011801} (\bibinfo{year}{2011}{\natexlab{a}}),
+  \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.106.011801}.
+
 \bibitem[{ECA({\natexlab{b}})}]{ECAL_DPG_Twiki_res_vs_eta_EB}
 \urlprefix\url{https://twiki.cern.ch/twiki/pub//CMSPublic/EcalDPGResults/electronres_eb_inclusive.png}.
 
@@ -883,11 +891,12 @@
   \bibinfo{institution}{CERN} (\bibinfo{year}{2011}),
   \urlprefix\url{https://cdsweb.cern.ch/record/1402449}.
 
-\bibitem[{\citenamefont{Khachatryan et~al.}(2011)}]{PhysRevLett.106.082001}
+\bibitem[{\citenamefont{Khachatryan
+  et~al.}(2011{\natexlab{b}})}]{PhysRevLett.106.082001}
 \bibinfo{author}{\bibfnamefont{V.}~\bibnamefont{Khachatryan}}
   \bibnamefont{et~al.} (\bibinfo{collaboration}{CMS Collaboration}),
   \bibinfo{journal}{Phys. Rev. Lett.} \textbf{\bibinfo{volume}{106}},
-  \bibinfo{pages}{082001} (\bibinfo{year}{2011}),
+  \bibinfo{pages}{082001} (\bibinfo{year}{2011}{\natexlab{b}}),
   \urlprefix\url{http://link.aps.org/doi/10.1103/PhysRevLett.106.082001}.
 
 \bibitem[{\citenamefont{Askew et~al.}(2011)\citenamefont{Askew, Cox, Elvira,

@@ -59,7 +59,7 @@
 \subfile{./abstract.tex}
 
 %show line numbers
-\linenumbers
+%\linenumbers
 
 \thispagestyle{empty} %get rid of header/footer for toc page
 \setcounter{page}{2} %reset the page counter
@@ -75,6 +75,9 @@
 \cleardoublepage %start new page
 \thispagestyle{myheadings} % put headers/footers back on
 \markright{\hfill}
+\newpage
+\phantomsection \label{ack}
+\addcontentsline{toc}{chapter}{Acknowledgements}
 \subfile{./acknowledgements.tex}
 \setcounter{page}{1} %reset the page counter
 

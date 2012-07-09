@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  25 JUN 2012 18:35
+This is pdfTeX, Version 3.1415926-1.40.11 (TeX Live 2010) (format=pdflatex 2010.7.21)  3 JUL 2012 18:40
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -527,28 +527,28 @@ LaTeX Info: Redefining \nameref on input line 2.
 
  [1{/usr/local/texlive/2010/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 14.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 14.
+] [2]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
  (./acknowledgements.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 14.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
 Package rerunfilecheck Info: File `acknowledgements.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 8728 strings out of 493747
- 132165 string characters out of 3143546
- 221842 words of memory out of 3000000
+ 8729 strings out of 493747
+ 132171 string characters out of 3143546
+ 227842 words of memory out of 3000000
  11869 multiletter control sequences out of 15000+200000
  4597 words of font info for 17 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
- 53i,6n,44p,362b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 53i,6n,44p,802b,317s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2010/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on acknowledgements.pdf (1 page, 18113 bytes).
+Output written on acknowledgements.pdf (2 pages, 34335 bytes).
 PDF statistics:
- 21 PDF objects out of 1000 (max. 8388607)
- 15 compressed objects within 1 object stream
- 2 named destinations out of 1000 (max. 500000)
+ 25 PDF objects out of 1000 (max. 8388607)
+ 18 compressed objects within 1 object stream
+ 3 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

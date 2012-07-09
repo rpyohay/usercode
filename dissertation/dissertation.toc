@@ -1,6 +1,7 @@
 \thispagestyle {myheadings}
 \contentsline {chapter}{List of Figures}{v}{section*.2}
 \contentsline {chapter}{List of Tables}{xix}{section*.4}
+\contentsline {chapter}{Acknowledgements}{xxii}{section*.6}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {chapter}{\numberline {2}Motivation for Physics Beyond the Standard Model}{4}{chapter.2}
 \contentsline {section}{\numberline {2.1}The Standard Model and Electroweak Symmetry Breaking}{7}{section.2.1}
@@ -24,51 +25,51 @@
 \contentsline {subsubsection}{Pixel Detector}{55}{section*.33}
 \contentsline {subsubsection}{Silicon Strip Tracker}{58}{section*.38}
 \contentsline {subsection}{\numberline {5.1.2}Electromagnetic Calorimeter}{63}{subsection.5.1.2}
-\contentsline {subsection}{\numberline {5.1.3}Hadronic Calorimeter}{74}{subsection.5.1.3}
-\contentsline {subsection}{\numberline {5.1.4}Muon System}{77}{subsection.5.1.4}
-\contentsline {section}{\numberline {5.2}Triggering, Data Acquisition, and Data Transfer}{82}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Level 1 and High Level Trigger Systems}{82}{subsection.5.2.1}
-\contentsline {subsection}{\numberline {5.2.2}Data Acquisition System}{86}{subsection.5.2.2}
-\contentsline {subsection}{\numberline {5.2.3}Data Processing and Transfer to Computing Centers}{89}{subsection.5.2.3}
-\contentsline {chapter}{\numberline {6}Event Selection}{92}{chapter.6}
-\contentsline {section}{\numberline {6.1}Object Reconstruction}{93}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Photons}{93}{subsection.6.1.1}
-\contentsline {subsubsection}{Uncalibrated EB/EE Hits}{93}{section*.70}
-\contentsline {subsubsection}{Calibrated EB/EE Hits}{94}{section*.72}
-\contentsline {subsubsection}{Calibrated ES Hits}{96}{section*.74}
-\contentsline {subsubsection}{Clustering}{97}{section*.75}
-\contentsline {subsubsection}{Supercluster Corrections}{98}{section*.78}
-\contentsline {subsubsection}{From Supercluster to Photon}{101}{section*.79}
-\contentsline {subsection}{\numberline {6.1.2}Electrons}{106}{subsection.6.1.2}
-\contentsline {subsection}{\numberline {6.1.3}Jets and Missing Transverse Energy}{106}{subsection.6.1.3}
-\contentsline {subsubsection}{Particle Flow}{106}{section*.85}
-\contentsline {subsubsection}{Jets}{108}{section*.86}
-\contentsline {subsubsection}{Missing Transverse Energy}{110}{section*.90}
-\contentsline {section}{\numberline {6.2}HLT}{113}{section.6.2}
-\contentsline {section}{\numberline {6.3}Event Quality}{116}{section.6.3}
-\contentsline {section}{\numberline {6.4}Photon Identification Efficiency}{118}{section.6.4}
-\contentsline {subsection}{\numberline {6.4.1}Tag and Probe Method}{119}{subsection.6.4.1}
-\contentsline {subsection}{\numberline {6.4.2}Photon Efficiency Scale Factor $\epsilon _{e}^{\mathrm {data}}/\epsilon _{e}^{\mathrm {MC}}$}{126}{subsection.6.4.2}
-\contentsline {chapter}{\numberline {7}Data Analysis}{129}{chapter.7}
-\contentsline {section}{\numberline {7.1}Control Samples}{130}{section.7.1}
-\contentsline {section}{\numberline {7.2}Modeling the QCD Background}{133}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}Outline of the Procedure}{133}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}Reweighting}{134}{subsection.7.2.2}
-\contentsline {subsection}{\numberline {7.2.3}Normalization}{150}{subsection.7.2.3}
-\contentsline {section}{\numberline {7.3}Modeling the Electroweak Background}{153}{section.7.3}
-\contentsline {section}{\numberline {7.4}Errors on the Background Prediction}{157}{section.7.4}
-\contentsline {section}{\numberline {7.5}Results}{165}{section.7.5}
-\contentsline {chapter}{\numberline {8}Interpretation of Results in Terms of GMSB Models}{171}{chapter.8}
-\contentsline {section}{\numberline {8.1}Simplified Models}{171}{section.8.1}
-\contentsline {section}{\numberline {8.2}Upper Limit Calculation and Model Exclusion}{173}{section.8.2}
-\contentsline {subsection}{\numberline {8.2.1}Signal Acceptance $\times $ Efficiency}{173}{subsection.8.2.1}
-\contentsline {subsection}{\numberline {8.2.2}$\unhbox \voidb@x \hbox {CL}_{s}$ and the Profile Likelihood Test Statistic}{177}{subsection.8.2.2}
-\contentsline {subsubsection}{Profile Likelihood}{178}{section*.142}
-\contentsline {subsubsection}{$\unhbox \voidb@x \hbox {CL}_{s}$}{181}{section*.143}
-\contentsline {section}{\numberline {8.3}Cross Section Upper Limits}{185}{section.8.3}
-\contentsline {section}{\numberline {8.4}Exclusion Contours}{185}{section.8.4}
-\contentsline {chapter}{\numberline {9}Conclusion}{191}{chapter.9}
-\contentsline {chapter}{\numberline {A}Monte Carlo Samples}{193}{appendix.A}
-\contentsline {section}{\numberline {A.1}List of Samples}{193}{section.A.1}
-\contentsline {section}{\numberline {A.2}Explanation of Naming Conventions}{194}{section.A.2}
-\contentsline {chapter}{Bibliography}{196}{section*.147}
+\contentsline {subsection}{\numberline {5.1.3}Hadronic Calorimeter}{76}{subsection.5.1.3}
+\contentsline {subsection}{\numberline {5.1.4}Muon System}{79}{subsection.5.1.4}
+\contentsline {section}{\numberline {5.2}Triggering, Data Acquisition, and Data Transfer}{83}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Level 1 and High Level Trigger Systems}{83}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Data Acquisition System}{87}{subsection.5.2.2}
+\contentsline {subsection}{\numberline {5.2.3}Data Processing and Transfer to Computing Centers}{90}{subsection.5.2.3}
+\contentsline {chapter}{\numberline {6}Event Selection}{93}{chapter.6}
+\contentsline {section}{\numberline {6.1}Object Reconstruction}{94}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Photons}{94}{subsection.6.1.1}
+\contentsline {subsubsection}{Uncalibrated EB/EE Hits}{94}{section*.70}
+\contentsline {subsubsection}{Calibrated EB/EE Hits}{95}{section*.72}
+\contentsline {subsubsection}{Calibrated ES Hits}{97}{section*.74}
+\contentsline {subsubsection}{Clustering}{98}{section*.75}
+\contentsline {subsubsection}{Supercluster Corrections}{99}{section*.78}
+\contentsline {subsubsection}{From Supercluster to Photon}{102}{section*.79}
+\contentsline {subsection}{\numberline {6.1.2}Electrons}{107}{subsection.6.1.2}
+\contentsline {subsection}{\numberline {6.1.3}Jets and Missing Transverse Energy}{107}{subsection.6.1.3}
+\contentsline {subsubsection}{Particle Flow}{107}{section*.85}
+\contentsline {subsubsection}{Jets}{109}{section*.86}
+\contentsline {subsubsection}{Missing Transverse Energy}{111}{section*.90}
+\contentsline {section}{\numberline {6.2}HLT}{114}{section.6.2}
+\contentsline {section}{\numberline {6.3}Event Quality}{117}{section.6.3}
+\contentsline {section}{\numberline {6.4}Photon Identification Efficiency}{119}{section.6.4}
+\contentsline {subsection}{\numberline {6.4.1}Tag and Probe Method}{120}{subsection.6.4.1}
+\contentsline {subsection}{\numberline {6.4.2}Photon Efficiency Scale Factor $\epsilon _{e}^{\mathrm {data}}/\epsilon _{e}^{\mathrm {MC}}$}{127}{subsection.6.4.2}
+\contentsline {chapter}{\numberline {7}Data Analysis}{130}{chapter.7}
+\contentsline {section}{\numberline {7.1}Control Samples}{131}{section.7.1}
+\contentsline {section}{\numberline {7.2}Modeling the QCD Background}{134}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Outline of the Procedure}{134}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}Reweighting}{135}{subsection.7.2.2}
+\contentsline {subsection}{\numberline {7.2.3}Normalization}{151}{subsection.7.2.3}
+\contentsline {section}{\numberline {7.3}Modeling the Electroweak Background}{154}{section.7.3}
+\contentsline {section}{\numberline {7.4}Errors on the Background Prediction}{158}{section.7.4}
+\contentsline {section}{\numberline {7.5}Results}{166}{section.7.5}
+\contentsline {chapter}{\numberline {8}Interpretation of Results in Terms of GMSB Models}{172}{chapter.8}
+\contentsline {section}{\numberline {8.1}Simplified Models}{172}{section.8.1}
+\contentsline {section}{\numberline {8.2}Upper Limit Calculation and Model Exclusion}{174}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}Signal Acceptance $\times $ Efficiency}{174}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}$\unhbox \voidb@x \hbox {CL}_{s}$ and the Profile Likelihood Test Statistic}{178}{subsection.8.2.2}
+\contentsline {subsubsection}{Profile Likelihood}{179}{section*.142}
+\contentsline {subsubsection}{$\unhbox \voidb@x \hbox {CL}_{s}$}{182}{section*.143}
+\contentsline {section}{\numberline {8.3}Cross Section Upper Limits}{186}{section.8.3}
+\contentsline {section}{\numberline {8.4}Exclusion Contours}{186}{section.8.4}
+\contentsline {chapter}{\numberline {9}Conclusion}{192}{chapter.9}
+\contentsline {chapter}{\numberline {A}Monte Carlo Samples}{194}{appendix.A}
+\contentsline {section}{\numberline {A.1}List of Samples}{194}{section.A.1}
+\contentsline {section}{\numberline {A.2}Explanation of Naming Conventions}{195}{section.A.2}
+\contentsline {chapter}{Bibliography}{197}{section*.147}
