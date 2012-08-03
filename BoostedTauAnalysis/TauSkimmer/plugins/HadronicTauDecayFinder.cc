@@ -71,6 +71,7 @@ class HadronicTauDecayFinder : public edm::EDFilter {
       //input
       edm::InputTag genParticleTag_;
       unsigned int momPDGID_;
+      double maxAbsEta_;
 
 };
 
@@ -87,7 +88,8 @@ class HadronicTauDecayFinder : public edm::EDFilter {
 //
 HadronicTauDecayFinder::HadronicTauDecayFinder(const edm::ParameterSet& iConfig) :
   genParticleTag_(iConfig.getParameter<edm::InputTag>("genParticleTag")),
-  momPDGID_(iConfig.getParameter<unsigned int>("momPDGID"))
+  momPDGID_(iConfig.getParameter<unsigned int>("momPDGID")),
+  maxAbsEta_(iConfig.getParameter<double>("maxAbsEta"))
 {
    //now do what ever initialization is needed
 
@@ -120,46 +122,57 @@ HadronicTauDecayFinder::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
 
    //loop over gen particles
    bool foundHadronicDecay = false;
+   bool foundGenTauOutsideEtaAcceptance = false;
    reco::GenParticleCollection::const_iterator iGenParticle = pGenParticles->begin();
-   while ((iGenParticle != pGenParticles->end()) && !foundHadronicDecay) {
+   while ((iGenParticle != pGenParticles->end()) && !foundGenTauOutsideEtaAcceptance) {
 
      //look for a status 3 tau from boson decay
      if ((fabs(iGenParticle->pdgId()) == TAUPDGID) && (iGenParticle->status() == 3) && 
 	 (iGenParticle->numberOfMothers() == 1) && 
 	 (iGenParticle->mother(0)->pdgId() == (int)momPDGID_)) {
 
+       //found a gen tau outside eta acceptance, so quit
+       if (fabs(iGenParticle->eta()) >= maxAbsEta_) foundGenTauOutsideEtaAcceptance = true;
+
        //search for a leptonic decay (stop searching when an e-nu or mu-nu pair is found)
-       unsigned int leptonPDGID = 0;
-       unsigned int neutrinoPDGID = 0;
-       const size_t numDaughters = iGenParticle->numberOfDaughters();
-       if (numDaughters == 1) {
-	 const reco::Candidate* daughter = iGenParticle->daughter(0);
-	 reco::Candidate::const_iterator iDaughter = daughter->begin();
-	 while ((iDaughter != daughter->end()) && ((leptonPDGID == 0) || (neutrinoPDGID == 0))) {
-	   if (leptonPDGID == 0) {
-	     if (((neutrinoPDGID == 0) || (neutrinoPDGID == ENEUTRINOPDGID)) && 
-		 (fabs(iDaughter->pdgId()) == EPDGID)) leptonPDGID = EPDGID;
-	     if (((neutrinoPDGID == 0) || (neutrinoPDGID == MUNEUTRINOPDGID)) && 
-		 (fabs(iDaughter->pdgId()) == MUPDGID)) leptonPDGID = MUPDGID;
+       else {
+	 if (!foundHadronicDecay) {
+	   unsigned int leptonPDGID = 0;
+	   unsigned int neutrinoPDGID = 0;
+	   const size_t numDaughters = iGenParticle->numberOfDaughters();
+	   if (numDaughters == 1) {
+	     const reco::Candidate* daughter = iGenParticle->daughter(0);
+	     reco::Candidate::const_iterator iDaughter = daughter->begin();
+	     while ((iDaughter != daughter->end()) && 
+		    ((leptonPDGID == 0) || (neutrinoPDGID == 0))) {
+	       if (leptonPDGID == 0) {
+		 if (((neutrinoPDGID == 0) || (neutrinoPDGID == ENEUTRINOPDGID)) && 
+		     (fabs(iDaughter->pdgId()) == EPDGID)) leptonPDGID = EPDGID;
+		 if (((neutrinoPDGID == 0) || (neutrinoPDGID == MUNEUTRINOPDGID)) && 
+		     (fabs(iDaughter->pdgId()) == MUPDGID)) leptonPDGID = MUPDGID;
+	       }
+	       if (neutrinoPDGID == 0) {
+		 if (((leptonPDGID == 0) || (leptonPDGID == EPDGID)) && 
+		     (fabs(iDaughter->pdgId()) == ENEUTRINOPDGID)) neutrinoPDGID = ENEUTRINOPDGID;
+		 if (((leptonPDGID == 0) || (leptonPDGID == MUPDGID)) && 
+		     (fabs(iDaughter->pdgId()) == MUNEUTRINOPDGID)) {
+		   neutrinoPDGID = MUNEUTRINOPDGID;
+		 }
+	       }
+	       ++iDaughter;
+	     }
 	   }
-	   if (neutrinoPDGID == 0) {
-	     if (((leptonPDGID == 0) || (leptonPDGID == EPDGID)) && 
-		 (fabs(iDaughter->pdgId()) == ENEUTRINOPDGID)) neutrinoPDGID = ENEUTRINOPDGID;
-	     if (((leptonPDGID == 0) || (leptonPDGID == MUPDGID)) && 
-		 (fabs(iDaughter->pdgId()) == MUNEUTRINOPDGID)) neutrinoPDGID = MUNEUTRINOPDGID;
+	   else {
+	     std::stringstream err;
+	     err << "Gen particle " << iGenParticle - pGenParticles->begin() << " has ";
+	     err << numDaughters << " daughters.\n";
+	     throw cms::Exception("HadronicTauDecayFinder") << err.str();
 	   }
-	   ++iDaughter;
+
+	   //leptonic decay not found ==> found a hadronic decay ==> stop searching, event passes
+	   if ((leptonPDGID == 0) || (neutrinoPDGID == 0)) foundHadronicDecay = true;
 	 }
        }
-       else {
-	 std::stringstream err;
-	 err << "Gen particle " << iGenParticle - pGenParticles->begin() << " has ";
-	 err << numDaughters << " daughters.\n";
-	 throw cms::Exception("HadronicTauDecayFinder") << err.str();
-       }
-
-       //leptonic decay not found ==> found a hadronic decay ==> stop searching, this event passes
-       if ((leptonPDGID == 0) || (neutrinoPDGID == 0)) foundHadronicDecay = true;
      }
 
      //advance to the next gen particle
@@ -175,7 +188,7 @@ HadronicTauDecayFinder::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
    ESHandle<SetupData> pSetup;
    iSetup.get<SetupRecord>().get(pSetup);
 #endif
-   return foundHadronicDecay;
+   return (foundHadronicDecay && !foundGenTauOutsideEtaAcceptance);
 }
 
 // ------------ method called once each job just before starting event loop  ------------
@@ -227,6 +240,10 @@ HadronicTauDecayFinder::fillDescriptions(edm::ConfigurationDescriptions& descrip
   descriptions.addDefault(desc);
 }
 
-void HadronicTauDecayFinder::reset() { momPDGID_ = 0; }
+void HadronicTauDecayFinder::reset()
+{
+  momPDGID_ = 0;
+  maxAbsEta_ = 0.0;
+}
 //define this as a plug-in
 DEFINE_FWK_MODULE(HadronicTauDecayFinder);
