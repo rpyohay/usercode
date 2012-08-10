@@ -134,9 +134,12 @@ process.generator = cms.EDFilter(
 ## 	'PMAS(1000045,1)=100.0 !chi5 mass',
 
 	#h/H1 (h/H2) couplings (these play little role for ZH production, mH > mh)
-	'PARU(161)=10. !h/H1 (h/H2) coupling to d-type quarks',
-	'PARU(162)=0.1 !h/H1 (h/H2) coupling to u-type quarks',
-	'PARU(163)=10. !h/H1 (h/H2) coupling to leptons',
+## 	'PARU(161)=10. !h/H1 (h/H2) coupling to d-type quarks',
+## 	'PARU(162)=0.1 !h/H1 (h/H2) coupling to u-type quarks',
+## 	'PARU(163)=10. !h/H1 (h/H2) coupling to leptons',
+	'PARU(161)=1. !h/H1 (h/H2) coupling to d-type quarks', #=1 to be more SM-like
+	'PARU(162)=1. !h/H1 (h/H2) coupling to u-type quarks', #=1 to be more SM-like
+	'PARU(163)=1. !h/H1 (h/H2) coupling to leptons', #=1 to be more SM-like
 	'PARU(164)=0.71 !h/H1 (h/H2) coupling to Z', #set to 1/sqrt(2) so PARU(164)^2 + PARU(174)^2 = 1
 	'PARU(165)=0.71 !h/H1 (h/H2) coupling to W', #set to 1/sqrt(2) so PARU(165)^2 + PARU(175)^2 = 1
 	'PARU(168)=0.0 !h/H1 (h/H2) coupling to H+/- in AA-->h/H1 (h/H2) loops',
@@ -145,13 +148,16 @@ process.generator = cms.EDFilter(
 ## 	'PARU(171)=10. !H/H2 (H/H1) coupling to d-type quarks',
 ## 	'PARU(172)=0.1 !H/H2 (H/H1) coupling to u-type quarks',
 ## 	'PARU(173)=10. !H/H2 (H/H1) coupling to leptons',
-	'PARU(171)=0. !H/H2 (H/H1) coupling to d-type quarks', #force H-->aa
-	'PARU(172)=0. !H/H2 (H/H1) coupling to u-type quarks', #force H-->aa
-	'PARU(173)=0. !H/H2 (H/H1) coupling to leptons', #force H-->aa
+## 	'PARU(171)=0. !H/H2 (H/H1) coupling to d-type quarks', #force H-->aa
+## 	'PARU(172)=0. !H/H2 (H/H1) coupling to u-type quarks', #force H-->aa
+## 	'PARU(173)=0. !H/H2 (H/H1) coupling to leptons', #force H-->aa
+	'PARU(171)=0.25 !H/H2 (H/H1) coupling to d-type quarks', #prefer H-->aa
+	'PARU(172)=0.25 !H/H2 (H/H1) coupling to u-type quarks', #prefer H-->aa
+	'PARU(173)=0.25 !H/H2 (H/H1) coupling to leptons', #prefer H-->aa
 	'PARU(174)=0.71 !H/H2 (H/H1) coupling to Z', #set to 1/sqrt(2) so PARU(164)^2 + PARU(174)^2 = 1
 	'PARU(175)=0.71 !H/H2 (H/H1) coupling to W', #set to 1/sqrt(2) so PARU(165)^2 + PARU(175)^2 = 1
 	'PARU(176)=0.0 !H/H2 (H/H1) coupling to (h/H1 (h/H2))(h/H1 (h/H2))',
-## 	'PARU(177)=0.0 !H/H2 (H/H1) coupling to aa', #what should this be?
+	'PARU(177)=4.0 !H/H2 (H/H1) coupling to aa', #what should this be?  want it dominant
 	'PARU(178)=0.0 !H/H2 (H/H1) coupling to H+/- in AA-->H/H2 (H/H1) loops',
 
 	#H3 couplings?
