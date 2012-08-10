@@ -1,6 +1,8 @@
 <use name="FWCore/Framework"/>
 <use name="FWCore/PluginManager"/>
 <use name="FWCore/ParameterSet"/>
+<use name="DataFormats/MuonReco"/>
 <use name="BoostedTauAnalysis/Common"/>
 <use name="root"/>
+<use name="rootgraphics"/>
 <flags EDM_PLUGIN="1"/>

@@ -17,6 +17,66 @@
 //
 //
 
+/* understand triggerability of signal
+   - ZH: fraction of events passing Z-->ee/mumu triggers
+   - gg fusion: fraction of events passing mu + had trigger
+   - first plot raw number, then vs. offline trigger object pT/eta cut and NPV/rho
+
+   nice triggers in use:
+   - HLT_Mu17_Mu8
+   - HLT_Mu8_DiJet30
+   - HLT_IsoMu12_DoubleCentralJet65
+   - HLT_IsoMu17_eta2p1_CentralPFNoPUJet30
+   - HLT_IsoMu17_eta2p1_DiCentralPFNoPUJet30
+   - HLT_IsoMu17_eta2p1_TriCentralPFNoPUJet30
+   - HLT_IsoMu24
+   - HLT_Mu40
+   - HLT_IsoMu17_eta2p1_LooseIsoPFTau20
+   - HLT_LooseIsoPFTau35_Trk20_Prong1
+   - HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Prong1
+
+   make nice plotting code
+
+   identify a-->tautau-->muhadX decays, and plot:
+   - gen mu pT
+
+   identify a-->tautau-->muhadX decays and plot:
+   do same for matched HPS taus
+   do same for matched HPS taus that were rerun with pT sorting, not isolation sorting
+   do same for matched HPS taus that were rerun with isolation sorting excluding high energy muons 
+   (how high is high?  get it from the mu pT plot)
+   do same for matched HPS taus that were rerun with sorting that prefers high energy muons in 
+   isolation cone (how high is high?  get it from the mu pT plot)
+
+   identify a-->tautau-->muhadX decays, and for PF jets matched to the had part, plot:
+   - fraction of time it's also matched to the mu part
+   - visible pT
+   - eta
+   - MET
+   - pT of the muon matched to the gen mu in the decay
+   - energy fractions (esp. of muons and charged tracks)
+   - multiplicities (esp. of muons and charged tracks)
+   - dR to the PF jet matched to the other a
+   - dR between jet and highest energy constituent muon
+   - had+mu invariant mass
+   - had+mu pT
+   do same for matched PF taus
+   do same for matched HPS taus
+   do same for matched HPS taus that were rerun with pT sorting, not isolation sorting
+   do same for matched HPS taus that were rerun with isolation sorting excluding high energy muons 
+   (how high is high?  get it from the mu pT plot)
+   do same for matched HPS taus that were rerun with sorting that prefers high energy muons in 
+   isolation cone (how high is high?  get it from the mu pT plot)
+   compare to same for PF jets matched to Z-->tau-->had decays
+
+   backgrounds to the gg fusion search:
+   - big one is mu-enriched QCD
+
+   repeat for jets in mu-enriched QCD that have a real muon from heavy flavor decay
+   repeat for jets in regular QCD
+
+   try to develop an ID that can at least cut out some QCD
+ */
 
 // system include files
 #include <memory>
@@ -35,10 +95,18 @@
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
 #include "DataFormats/TauReco/interface/PFTauFwd.h"
 #include "DataFormats/TauReco/interface/PFTauDiscriminator.h"
+#include "DataFormats/MuonReco/interface/MuonFwd.h"
+#include "DataFormats/MuonReco/interface/Muon.h"
+#include "DataFormats/MuonReco/interface/MuonSelectors.h"
+#include "DataFormats/VertexReco/interface/VertexFwd.h"
+#include "DataFormats/VertexReco/interface/Vertex.h"
 #include "BoostedTauAnalysis/Common/interface/Common.h"
+#include "BoostedTauAnalysis/Common/interface/GenTauDecayID.h"
 #include "TFile.h"
 #include "TH1F.h"
 #include "TH2F.h"
+#include "TCanvas.h"
+#include "TGraphAsymmErrors.h"
 //
 // class declaration
 //
@@ -68,6 +136,18 @@ class TauAnalyzer : public edm::EDAnalyzer {
       void fillDRHistogramLeadTrail(const bool, const unsigned int, 
 				    const std::vector<double>&) const;
       void fillDRHistogramHighLowPT(const bool, const std::vector<double>&) const;
+      template<typename T, typename U>
+        const unsigned int numMatchingObjects(const std::vector<T*>& objectsToMatch, 
+					      const U& referenceObject) const
+        {
+          std::vector<double> dR2Min = 
+          Common::sortByProximity(objectsToMatch, referenceObject);
+          std::vector<double>::const_iterator iDR2 = dR2Min.begin();
+          while ((iDR2 != dR2Min.end()) && (dR(dR2Min, iDR2 - dR2Min.begin()) < 0.3)) {
+	    ++iDR2;
+          }
+          return (iDR2 - dR2Min.begin());
+        }
 
       // ----------member data ---------------------------
 
@@ -78,13 +158,18 @@ class TauAnalyzer : public edm::EDAnalyzer {
       std::string outFileName_;
       edm::InputTag genParticleTag_;
       edm::InputTag tauTag_;
+      edm::InputTag muonTag_;
+      edm::InputTag vtxTag_;
       std::vector<edm::InputTag> HPSDiscriminatorTags_;
       std::map<std::string, edm::Handle<reco::PFTauDiscriminator> > HPSDiscriminators_;
       unsigned int momPDGID_;
+      double genMuTauPTMin_;
+      double genMuPTMin_;
+      double effVsEtaPTMin_;
+      edm::ParameterSet* cfg_;
 
       //histograms
       TH1F* status3TauMultiplicity_;
-      TH1F* ZTauTauDecayMultiplicity_;
       TH1F* HPSTauMultiplicity_;
       TH1F* HPSTausPassingEtaCutMultiplicity_;
       TH1F* HPSIsoTausPassingEtaCutMultiplicity_;
@@ -105,6 +190,31 @@ class TauAnalyzer : public edm::EDAnalyzer {
       TH1F* genTauPT_;
       TH1F* dRToHPSTau0GenPTGe30_;
       TH1F* dRToHPSIsoTau0GenPTGe30_;
+      TH1F* HPSTauEta_;
+      TH1F* genTauEta_;
+      TH1F* muHadPFTauMatchMultiplicity_;
+      TH1F* muHadMuonMatchMultiplicity_;
+      TH1F* muHadPFTauMatchMuonMatchMultiplicity_;
+      TH1F* muHadVisibleGenPT_;
+      TH1F* muHadPFTauMatchVisibleGenPT_;
+      TH1F* muHadMuMatchVisibleGenPT_;
+      TH1F* muHadPFTauMatchMuMatchVisibleGenPT_;
+      TH1F* muHadVisibleGenEta_;
+      TH1F* muHadPFTauMatchVisibleGenEta_;
+      TH1F* muHadMuMatchVisibleGenEta_;
+      TH1F* muHadPFTauMatchMuMatchVisibleGenEta_;
+      TH1F* muHadGenMuPT_;
+      TH1F* muHadPFTauMatchGenMuPT_;
+      TH1F* muHadMuMatchGenMuPT_;
+      TH1F* muHadPFTauMatchMuMatchGenMuPT_;
+      TH1F* muHadGenMuEta_;
+      TH1F* muHadPFTauMatchGenMuEta_;
+      TH1F* muHadMuMatchGenMuEta_;
+      TH1F* muHadPFTauMatchMuMatchGenMuEta_;
+      TH1F* muHadGenDR_;
+      TH1F* muHadPFTauMatchGenDR_;
+      TH1F* muHadMuMatchGenDR_;
+      TH1F* muHadPFTauMatchMuMatchGenDR_;
 
 };
 
@@ -123,8 +233,14 @@ TauAnalyzer::TauAnalyzer(const edm::ParameterSet& iConfig) :
   outFileName_(iConfig.getParameter<std::string>("outFileName")),
   genParticleTag_(iConfig.getParameter<edm::InputTag>("genParticleTag")),
   tauTag_(iConfig.getParameter<edm::InputTag>("tauTag")),
+  muonTag_(iConfig.getParameter<edm::InputTag>("muonTag")),
+  vtxTag_(iConfig.getParameter<edm::InputTag>("vtxTag")),
   HPSDiscriminatorTags_(iConfig.getParameter<std::vector<edm::InputTag> >("HPSDiscriminatorTags")),
-  momPDGID_(iConfig.getParameter<unsigned int>("momPDGID"))
+  momPDGID_(iConfig.getParameter<unsigned int>("momPDGID")),
+  genMuTauPTMin_(iConfig.getParameter<double>("genMuTauPTMin")),
+  genMuPTMin_(iConfig.getParameter<double>("genMuPTMin")),
+  effVsEtaPTMin_(iConfig.getParameter<double>("effVsEtaPTMin")),
+  cfg_(const_cast<edm::ParameterSet*>(&iConfig))
 {
    //now do what ever initialization is needed
 
@@ -165,14 +281,24 @@ TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     HPSDiscriminators_[iHPSDiscriminatorTag->label()] = pHPSDiscriminator;
   }
 
+  //get muons
+  edm::Handle<reco::MuonCollection> pMuons;
+  iEvent.getByLabel(muonTag_, pMuons);
+
+  //get vertices
+  edm::Handle<reco::VertexCollection> pVertices;
+  iEvent.getByLabel(vtxTag_, pVertices);
+
   //HPS tau multiplicity
   unsigned int nHPSTaus = 0;
   unsigned int nHPSTausPassingEtaCut = 0;
   unsigned int nHPSIsoTausPassingEtaCut = 0;
+  std::vector<reco::PFTau*> PFTaus;
   std::vector<reco::PFTau*> HPSIsoTaus;
   std::vector<reco::PFTau*> HPSTaus;
   for (reco::PFTauCollection::const_iterator iTau = pTaus->begin(); iTau != pTaus->end(); 
        ++iTau) {
+    PFTaus.push_back(const_cast<reco::PFTau*>(&*iTau));
     reco::PFTauRef tauRef(pTaus, iTau - pTaus->begin());
     std::map<std::string, edm::Handle<reco::PFTauDiscriminator> >::const_iterator 
       decayModeFinding = HPSDiscriminators_.find("hpsPFTauDiscriminationByDecayModeFinding");
@@ -204,8 +330,9 @@ TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
       //save non-isolated HPS tau
       HPSTaus.push_back(const_cast<reco::PFTau*>(&*iTau));
 
-      //fill pT distribution of all HPS taus
+      //fill kinematic distributions of all HPS taus
       HPSTauPT_->Fill(iTau->pt());
+      HPSTauEta_->Fill(iTau->eta());
     }
 
     //fill pT distribution of all PF taus
@@ -219,20 +346,20 @@ TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
   //get multiplicity of status 3 taus and Z-->tautau decays
   unsigned int nStatus3TausPerEvt = 0;
-  unsigned int nZTauTauDecaysPerEvt = 0;
-  reco::Candidate* pMother = NULL;
   std::vector<reco::Candidate*> ZDecayTaus;
+  std::vector<GenTauDecayID> tauDecays;
   for (reco::GenParticleCollection::const_iterator iGenParticle = pGenParticles->begin(); 
        iGenParticle != pGenParticles->end(); ++iGenParticle) {
-    if ((fabs(iGenParticle->pdgId()) == 15) && (iGenParticle->status() == 3)) {
-      ++nStatus3TausPerEvt;
-      size_t numMoms = iGenParticle->numberOfMothers();
-      if ((numMoms == 1) && (iGenParticle->mother(0)->pdgId() == (int)momPDGID_)) {
 
+    //instantiate GenTauDecayID object
+    try {
+      GenTauDecayID tauDecay(*cfg_, pGenParticles, iGenParticle - pGenParticles->begin());
+
+      //look for a status 3 tau from boson decay
+      if (tauDecay.tauIsStatus3DecayProduct()) {
+	++nStatus3TausPerEvt;
 	const reco::Candidate* pZDecayTau = dynamic_cast<const reco::Candidate*>(&*iGenParticle);
 	ZDecayTaus.push_back(const_cast<reco::Candidate*>(pZDecayTau));
-	if ((pMother == NULL) || 
-	    (&*(iGenParticle->mother(0)) != &*pMother)) ++nZTauTauDecaysPerEvt;
 
 	//sort non-isolated HPS taus by proximity to GEN tau
 	std::vector<double> dR2MinHPSTau = Common::sortByProximity(HPSTaus, *iGenParticle);
@@ -250,14 +377,17 @@ TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	  fillDRHistogramHighLowPT(true, dR2MinHPSIsoTau);
 	}
 
-	//fill pT distribution of all GEN taus from desired resonance decay (Z or a)
+	//fill kinematic distributions of all GEN taus from desired resonance decay (Z or a)
 	genTauPT_->Fill(iGenParticle->pt());
+	genTauEta_->Fill(iGenParticle->eta());
+
+	//save the boson-matched taus for later use
+	tauDecays.push_back(tauDecay);
       }
-      if (numMoms > 0) pMother = const_cast<reco::Candidate*>(iGenParticle->mother(0));
     }
+    catch (std::string& ex) { throw cms::Exception("TauAnalyzer") << ex; }
   }
   status3TauMultiplicity_->Fill(nStatus3TausPerEvt);
-  ZTauTauDecayMultiplicity_->Fill(nZTauTauDecaysPerEvt);
 
   //dR MC matching plots split by leading and trailing GEN tau
   Common::sortByPT(ZDecayTaus);
@@ -276,11 +406,147 @@ TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     fillDRHistogramLeadTrail(true, 2, dR2MinTrailingGenTauHPSIsoTau);
   }
 
-  //keep events with >=1 tau above 20 GeV vs. keep only taus above 20 GeV
+  //identify the first good vertex (the "primary" (?))
+  reco::VertexCollection::const_iterator iVtx = pVertices->begin();
+  reco::Vertex* pPV = NULL;
+  while ((iVtx != pVertices->end()) && (pPV == NULL)) {
+    if (!iVtx->isFake() && 
+	(iVtx->ndof() > 4) && 
+	(fabs(iVtx->x()) <= 24.0/*cm*/) && 
+	(fabs(iVtx->position().Rho()) <= 2.0/*cm*/)) pPV = const_cast<reco::Vertex*>(&*iVtx);
+    ++iVtx;
+  }
 
-  //look at tau hadronic decays only, forget about prompt e/mu fakes for the moment
-  //apply loose isolation as done by Higgs group
-  //how does HPS with/without isolation do for signal MC?
+  /*create a collection of muons passing the 2012 tight selection (cf. 
+    https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId)*/
+  std::vector<reco::Muon*> tightMuons;
+  for (reco::MuonCollection::const_iterator iMuon = pMuons->begin(); iMuon != pMuons->end(); 
+       ++iMuon) {
+    if (muon::isTightMuon(*iMuon, *pPV) && 
+	iMuon->isPFMuon() && 
+	(fabs(iMuon->innerTrack()->dz(pPV->position())) < 0.5) && 
+	(iMuon->track()->hitPattern().trackerLayersWithMeasurement() > 5)) {
+      tightMuons.push_back(const_cast<reco::Muon*>(&*iMuon));
+    }
+  }
+
+  //loop over taus from boson decay
+  std::vector<unsigned int> keysToIgnore;
+  for (std::vector<GenTauDecayID>::iterator iTau = tauDecays.begin(); 
+       iTau != tauDecays.end(); ++iTau) {
+
+    //try for exceptions
+    try {
+
+      //look for a hadronic tau decay from the signal sample
+      if ((iTau->tauDecayType() == GenTauDecayID::HAD) && (momPDGID_ == GenTauDecayID::APDGID)) {
+
+	//look for the other tau decay product of the a: is it a tau-->mu decay?
+	iTau->findSister();
+	const unsigned int iSister = iTau->getSisterIndex();
+	if ((std::find(keysToIgnore.begin(), keysToIgnore.end(), iSister) == 
+	     keysToIgnore.end()) && (iTau->sisterDecayType() == GenTauDecayID::MU)) {
+
+	  //does the sister decay mu pass the pT threshold?
+	  reco::GenParticleRef sisterRef(pGenParticles, iSister);
+	  if (sisterRef->pt() > genMuTauPTMin_) {
+
+	    //get the visible had 4-vector
+	    reco::GenParticleRef tauRef(pGenParticles, iTau->getTauIndex());
+	    reco::GenParticleRef status2HadTauRef = tauRef->daughterRef(0);
+	    reco::LeafCandidate::LorentzVector visibleHadTauP4;
+	    for (unsigned int iDaughter = 0; iDaughter < status2HadTauRef->numberOfDaughters(); 
+		 ++iDaughter) {
+	      reco::GenParticleRef hadTauDaughterRef = status2HadTauRef->daughterRef(iDaughter);
+	      if ((fabs(hadTauDaughterRef->pdgId()) != GenTauDecayID::ENEUTRINOPDGID) && 
+		  (fabs(hadTauDaughterRef->pdgId()) != GenTauDecayID::MUNEUTRINOPDGID) && 
+		  (fabs(hadTauDaughterRef->pdgId()) != GenTauDecayID::TAUNEUTRINOPDGID)) {
+		visibleHadTauP4+=hadTauDaughterRef->p4();
+	      }
+	    }
+	    const double visibleHadTauPT = visibleHadTauP4.Pt();
+	    const double visibleHadTauEta = visibleHadTauP4.Eta();
+
+	    //get the muon 4-vector
+	    int iGenMu = -1;
+	    unsigned int iDaughter = 0;
+	    reco::GenParticleRef status2MuTauRef = sisterRef->daughterRef(0);
+	    while ((iDaughter < status2MuTauRef->numberOfDaughters()) && (iGenMu == -1)) {
+	      reco::GenParticleRef muTauDaughter = status2MuTauRef->daughterRef(iDaughter);
+	      if (fabs(muTauDaughter->pdgId()) == GenTauDecayID::MUPDGID) {
+		iGenMu = muTauDaughter.key();
+	      }
+	      ++iDaughter;
+	    }
+	    if (iGenMu == -1) throw cms::Exception("TauAnalyzer") << "Muon not found.\n";
+	    reco::GenParticleRef muRef(pGenParticles, iGenMu);
+	    const double genMuPT = muRef->pt();
+	    const double genMuEta = muRef->eta();
+
+	    //get dR between visible parts of hadronic tau and muonic tau
+	    const double muHadDR = 
+	      reco::deltaR(visibleHadTauEta, visibleHadTauP4.Phi(), genMuEta, muRef->phi());
+
+	    //fill denominator histograms
+	    if (genMuPT > genMuPTMin_) {
+	      muHadVisibleGenPT_->Fill(visibleHadTauPT);
+	      if (visibleHadTauPT > effVsEtaPTMin_) muHadVisibleGenEta_->Fill(visibleHadTauEta);
+	      muHadGenMuPT_->Fill(genMuPT);
+	      if (genMuPT > effVsEtaPTMin_) muHadGenMuEta_->Fill(genMuEta);
+	      muHadGenDR_->Fill(muHadDR);
+	    }
+
+	    //how many matching PF taus?
+	    const unsigned int nMatchingTaus = numMatchingObjects(PFTaus, *tauRef);
+	    muHadPFTauMatchMultiplicity_->Fill(nMatchingTaus);
+
+	    //how many matching PF muons?
+	    const unsigned int nMatchingMuons = numMatchingObjects(tightMuons, *muRef);
+	    muHadMuonMatchMultiplicity_->Fill(nMatchingMuons);
+
+	    //how many with >1 PF tau match and >1 muon match?
+	    if (nMatchingTaus > 0) muHadPFTauMatchMuonMatchMultiplicity_->Fill(nMatchingMuons);
+
+	    //fill numerator histograms
+	    if (genMuPT > genMuPTMin_) {
+	      if (nMatchingTaus > 0) {
+		muHadPFTauMatchVisibleGenPT_->Fill(visibleHadTauPT);
+		if (visibleHadTauPT > effVsEtaPTMin_) {
+		  muHadPFTauMatchVisibleGenEta_->Fill(visibleHadTauEta);
+		}
+		muHadPFTauMatchGenMuPT_->Fill(genMuPT);
+		if (genMuPT > effVsEtaPTMin_) muHadPFTauMatchGenMuEta_->Fill(genMuEta);
+		muHadPFTauMatchGenDR_->Fill(muHadDR);
+	      }
+	      if (nMatchingMuons > 0) {
+		muHadMuMatchVisibleGenPT_->Fill(visibleHadTauPT);
+		if (visibleHadTauPT > effVsEtaPTMin_) {
+		  muHadMuMatchVisibleGenEta_->Fill(visibleHadTauEta);
+		}
+		muHadMuMatchGenMuPT_->Fill(genMuPT);
+		if (genMuPT > effVsEtaPTMin_) muHadMuMatchGenMuEta_->Fill(genMuEta);
+		muHadMuMatchGenDR_->Fill(muHadDR);
+	      }
+	      if ((nMatchingTaus > 0) && (nMatchingMuons > 0)) {
+		muHadPFTauMatchMuMatchVisibleGenPT_->Fill(visibleHadTauPT);
+		if (visibleHadTauPT > effVsEtaPTMin_) {
+		  muHadPFTauMatchMuMatchVisibleGenEta_->Fill(visibleHadTauEta);
+		}
+		muHadPFTauMatchMuMatchGenMuPT_->Fill(genMuPT);
+		if (genMuPT > effVsEtaPTMin_) muHadPFTauMatchMuMatchGenMuEta_->Fill(genMuEta);
+		muHadPFTauMatchMuMatchGenDR_->Fill(muHadDR);
+	      }
+	    }
+	  }
+
+	  /*add this tau's key to the list of keys to ignore when we get to its sister so the 
+	    histograms don't get filled twice*/
+	  keysToIgnore.push_back(iTau->getTauIndex());
+	}
+      }
+    }
+    catch (std::string& ex) { throw cms::Exception("TauAnalyzer") << ex; }
+  }
 
   //check distribution of min dR between gen jet and nearest reco tau
   //check distribution of min dR between gen jet and 2nd nearest reco tau
@@ -297,7 +563,6 @@ TauAnalyzer::beginJob()
 
   //book histograms
   status3TauMultiplicity_ = new TH1F("status3TauMultiplicity", "", 7, -0.5, 6.5);
-  ZTauTauDecayMultiplicity_ = new TH1F("ZTauTauDecayMultiplicity_", "", 3, -0.5, 2.5);
   HPSTauMultiplicity_ = new TH1F("HPSTauMultiplicity", "", 30, -0.5, 29.5);
   HPSTausPassingEtaCutMultiplicity_ = 
     new TH1F("HPSTausPassingEtaCutMultiplicity", "", 30, -0.5, 29.5);
@@ -322,16 +587,118 @@ TauAnalyzer::beginJob()
   genTauPT_ = new TH1F("genTauPT", "", 50, 0.0, 100.0);
   dRToHPSTau0GenPTGe30_ = new TH1F("dRToHPSTau0GenPTGe30", "", 500, 0.0, 10.0);
   dRToHPSIsoTau0GenPTGe30_ = new TH1F("dRToHPSIsoTau0GenPTGe30", "", 500, 0.0, 10.0);
+  HPSTauEta_ = new TH1F("HPSTauEta", "", 100, -5.0, 5.0);
+  genTauEta_ = new TH1F("genTauEta", "", 100, -5.0, 5.0);
+  muHadPFTauMatchMultiplicity_ = new TH1F("muHadPFTauMatchMultiplicity", "", 4, -0.5, 3.5);
+  muHadMuonMatchMultiplicity_ = new TH1F("muHadMuonMatchMultiplicity", "", 4, -0.5, 3.5);
+  muHadPFTauMatchMuonMatchMultiplicity_ = 
+    new TH1F("muHadPFTauMatchMuonMatchMultiplicity", "", 4, -0.5, 3.5);
+  muHadVisibleGenPT_ = new TH1F("muHadVisibleGenPT", "", 10, 0.0, 100.0);
+  muHadPFTauMatchVisibleGenPT_ = new TH1F("muHadPFTauMatchVisibleGenPT", "", 10, 0.0, 100.0);
+  muHadMuMatchVisibleGenPT_ = new TH1F("muHadMuMatchVisibleGenPT", "", 10, 0.0, 100.0);
+  muHadPFTauMatchMuMatchVisibleGenPT_ = 
+    new TH1F("muHadPFTauMatchMuMatchVisibleGenPT", "", 10, 0.0, 100.0);
+  muHadVisibleGenEta_ = new TH1F("muHadVisibleGenEta", "", 10, -2.5, 2.5);
+  muHadPFTauMatchVisibleGenEta_ = new TH1F("muHadPFTauMatchVisibleGenEta", "", 10, -2.5, 2.5);
+  muHadMuMatchVisibleGenEta_ = new TH1F("muHadMuMatchVisibleGenEta", "", 10, -2.5, 2.5);
+  muHadPFTauMatchMuMatchVisibleGenEta_ = 
+    new TH1F("muHadPFTauMatchMuMatchVisibleGenEta", "", 10, -2.5, 2.5);
+  muHadGenMuPT_ = new TH1F("muHadGenMuPT", "", 10, 0.0, 100.0);
+  muHadPFTauMatchGenMuPT_ = new TH1F("muHadPFTauMatchGenMuPT", "", 10, 0.0, 100.0);
+  muHadMuMatchGenMuPT_ = new TH1F("muHadMuMatchGenMuPT", "", 10, 0.0, 100.0);
+  muHadPFTauMatchMuMatchGenMuPT_ = new TH1F("muHadPFTauMatchMuMatchGenMuPT", "", 10, 0.0, 100.0);
+  muHadGenMuEta_ = new TH1F("muHadGenMuEta", "", 10, -2.5, 2.5);
+  muHadPFTauMatchGenMuEta_ = new TH1F("muHadPFTauMatchGenMuEta", "", 10, -2.5, 2.5);
+  muHadMuMatchGenMuEta_ = new TH1F("muHadMuMatchGenMuEta", "", 10, -2.5, 2.5);
+  muHadPFTauMatchMuMatchGenMuEta_ = new TH1F("muHadPFTauMatchMuMatchGenMuEta", "", 10, -2.5, 2.5);
+  muHadGenDR_ = new TH1F("muHadGenDR", "", 15, 0.0, 3.0);
+  muHadPFTauMatchGenDR_ = new TH1F("muHadPFTauMatchGenDR", "", 15, 0.0, 3.0);
+  muHadMuMatchGenDR_ = new TH1F("muHadMuMatchGenDR", "", 15, 0.0, 3.0);
+  muHadPFTauMatchMuMatchGenDR_ = new TH1F("muHadPFTauMatchMuMatchGenDR", "", 15, 0.0, 3.0);
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
 void 
 TauAnalyzer::endJob() 
 {
+  //make efficiency plots
+  TGraphAsymmErrors effPFTauMatchVsVisibleGenPT(muHadPFTauMatchVisibleGenPT_, muHadVisibleGenPT_);
+  TGraphAsymmErrors 
+    effPFTauMatchVsVisibleGenEta(muHadPFTauMatchVisibleGenEta_, muHadVisibleGenEta_);
+  TGraphAsymmErrors effMuMatchVsVisibleGenPT(muHadMuMatchVisibleGenPT_, muHadVisibleGenPT_);
+  TGraphAsymmErrors 
+    effMuMatchVsVisibleGenEta(muHadMuMatchVisibleGenEta_, muHadVisibleGenEta_);
+  TGraphAsymmErrors 
+    effPFTauMatchMuMatchVsVisibleGenPT(muHadPFTauMatchMuMatchVisibleGenPT_, muHadVisibleGenPT_);
+  TGraphAsymmErrors 
+    effPFTauMatchMuMatchVsVisibleGenEta(muHadPFTauMatchMuMatchVisibleGenEta_, muHadVisibleGenEta_);
+  TGraphAsymmErrors effPFTauMatchVsGenMuPT(muHadPFTauMatchGenMuPT_, muHadGenMuPT_);
+  TGraphAsymmErrors effPFTauMatchVsGenMuEta(muHadPFTauMatchGenMuEta_, muHadGenMuEta_);
+  TGraphAsymmErrors effMuMatchVsGenMuPT(muHadMuMatchGenMuPT_, muHadGenMuPT_);
+  TGraphAsymmErrors effMuMatchVsGenMuEta(muHadMuMatchGenMuEta_, muHadGenMuEta_);
+  TGraphAsymmErrors effPFTauMatchMuMatchVsGenMuPT(muHadPFTauMatchMuMatchGenMuPT_, muHadGenMuPT_);
+  TGraphAsymmErrors 
+    effPFTauMatchMuMatchVsGenMuEta(muHadPFTauMatchMuMatchGenMuEta_, muHadGenMuEta_);
+  TGraphAsymmErrors effPFTauMatchVsGenMuHadDR(muHadPFTauMatchGenDR_, muHadGenDR_);
+  TGraphAsymmErrors effMuMatchVsGenMuHadDR(muHadMuMatchGenDR_, muHadGenDR_);
+  TGraphAsymmErrors effPFTauMatchMuMatchVsGenMuHadDR(muHadPFTauMatchMuMatchGenDR_, muHadGenDR_);
+
+  //make efficiency canvases
+  TCanvas effPFTauMatchVsVisibleGenPTCanvas("effPFTauMatchVsVisibleGenPTCanvas", "", 600, 600);
+  TCanvas effPFTauMatchVsVisibleGenEtaCanvas("effPFTauMatchVsVisibleGenEtaCanvas", "", 600, 600);
+  TCanvas effMuMatchVsVisibleGenPTCanvas("effMuMatchVsVisibleGenPTCanvas", "", 600, 600);
+  TCanvas effMuMatchVsVisibleGenEtaCanvas("effMuMatchVsVisibleGenEtaCanvas", "", 600, 600);
+  TCanvas effPFTauMatchMuMatchVsVisibleGenPTCanvas("effPFTauMatchMuMatchVsVisibleGenPTCanvas", 
+						   "", 600, 600);
+  TCanvas effPFTauMatchMuMatchVsVisibleGenEtaCanvas("effPFTauMatchMuMatchVsVisibleGenEtaCanvas", 
+						    "", 600, 600);
+  TCanvas effPFTauMatchVsGenMuPTCanvas("effPFTauMatchVsGenMuPTCanvas", "", 600, 600);
+  TCanvas effPFTauMatchVsGenMuEtaCanvas("effPFTauMatchVsGenMuEtaCanvas", "", 600, 600);
+  TCanvas effMuMatchVsGenMuPTCanvas("effMuMatchVsGenMuPTCanvas", "", 600, 600);
+  TCanvas effMuMatchVsGenMuEtaCanvas("effMuMatchVsGenMuEtaCanvas", "", 600, 600);
+  TCanvas effPFTauMatchMuMatchVsGenMuPTCanvas("effPFTauMatchMuMatchVsGenMuPTCanvas", "", 600, 600);
+  TCanvas 
+    effPFTauMatchMuMatchVsGenMuEtaCanvas("effPFTauMatchMuMatchVsGenMuEtaCanvas", "", 600, 600);
+  TCanvas effPFTauMatchVsGenMuHadDRCanvas("effPFTauMatchVsGenMuHadDRCanvas", "", 600, 600);
+  TCanvas effMuMatchVsGenMuHadDRCanvas("effMuMatchVsGenMuHadDRCanvas", "", 600, 600);
+  TCanvas 
+    effPFTauMatchMuMatchVsGenMuHadDRCanvas("effPFTauMatchMuMatchVsGenMuHadDRCanvas", "", 600, 600);
+
+  //draw efficiency plots
+  effPFTauMatchVsVisibleGenPTCanvas.cd();
+  effPFTauMatchVsVisibleGenPT.Draw("AP");
+  effPFTauMatchVsVisibleGenEtaCanvas.cd();
+  effPFTauMatchVsVisibleGenEta.Draw("AP");
+  effMuMatchVsVisibleGenPTCanvas.cd();
+  effMuMatchVsVisibleGenPT.Draw("AP");
+  effMuMatchVsVisibleGenEtaCanvas.cd();
+  effMuMatchVsVisibleGenEta.Draw("AP");
+  effPFTauMatchMuMatchVsVisibleGenPTCanvas.cd();
+  effPFTauMatchMuMatchVsVisibleGenPT.Draw("AP");
+  effPFTauMatchMuMatchVsVisibleGenEtaCanvas.cd();
+  effPFTauMatchMuMatchVsVisibleGenEta.Draw("AP");
+  effPFTauMatchVsGenMuPTCanvas.cd();
+  effPFTauMatchVsGenMuPT.Draw("AP");
+  effPFTauMatchVsGenMuEtaCanvas.cd();
+  effPFTauMatchVsGenMuEta.Draw("AP");
+  effMuMatchVsGenMuPTCanvas.cd();
+  effMuMatchVsGenMuPT.Draw("AP");
+  effMuMatchVsGenMuEtaCanvas.cd();
+  effMuMatchVsGenMuEta.Draw("AP");
+  effPFTauMatchMuMatchVsGenMuPTCanvas.cd();
+  effPFTauMatchMuMatchVsGenMuPT.Draw("AP");
+  effPFTauMatchMuMatchVsGenMuEtaCanvas.cd();
+  effPFTauMatchMuMatchVsGenMuEta.Draw("AP");
+  effPFTauMatchVsGenMuHadDRCanvas.cd();
+  effPFTauMatchVsGenMuHadDR.Draw("AP");
+  effMuMatchVsGenMuHadDRCanvas.cd();
+  effMuMatchVsGenMuHadDR.Draw("AP");
+  effPFTauMatchMuMatchVsGenMuHadDRCanvas.cd();
+  effPFTauMatchMuMatchVsGenMuHadDR.Draw("AP");
+
   //write output file
   out_->cd();
   status3TauMultiplicity_->Write();
-//   ZTauTauDecayMultiplicity_->Write();
   HPSTauMultiplicity_->Write();
   HPSTausPassingEtaCutMultiplicity_->Write();
   HPSIsoTausPassingEtaCutMultiplicity_->Write();
@@ -352,6 +719,61 @@ TauAnalyzer::endJob()
   genTauPT_->Write();
   dRToHPSTau0GenPTGe30_->Write();
   dRToHPSIsoTau0GenPTGe30_->Write();
+  HPSTauEta_->Write();
+  genTauEta_->Write();
+  muHadPFTauMatchMultiplicity_->Write();
+  muHadMuonMatchMultiplicity_->Write();
+  muHadPFTauMatchMuonMatchMultiplicity_->Write();
+  muHadVisibleGenPT_->Write();
+  muHadPFTauMatchVisibleGenPT_->Write();
+  muHadMuMatchVisibleGenPT_->Write();
+  muHadPFTauMatchMuMatchVisibleGenPT_->Write();
+  muHadVisibleGenEta_->Write();
+  muHadPFTauMatchVisibleGenEta_->Write();
+  muHadMuMatchVisibleGenEta_->Write();
+  muHadPFTauMatchMuMatchVisibleGenEta_->Write();
+  muHadGenMuPT_->Write();
+  muHadPFTauMatchGenMuPT_->Write();
+  muHadMuMatchGenMuPT_->Write();
+  muHadPFTauMatchMuMatchGenMuPT_->Write();
+  muHadGenMuEta_->Write();
+  muHadPFTauMatchGenMuEta_->Write();
+  muHadMuMatchGenMuEta_->Write();
+  muHadPFTauMatchMuMatchGenMuEta_->Write();
+  muHadGenDR_->Write();
+  muHadPFTauMatchGenDR_->Write();
+  muHadMuMatchGenDR_->Write();
+  muHadPFTauMatchMuMatchGenDR_->Write();
+  effPFTauMatchVsVisibleGenPT.Write();
+  effPFTauMatchVsVisibleGenEta.Write();
+  effMuMatchVsVisibleGenPT.Write();
+  effMuMatchVsVisibleGenEta.Write();
+  effPFTauMatchMuMatchVsVisibleGenPT.Write();
+  effPFTauMatchMuMatchVsVisibleGenEta.Write();
+  effPFTauMatchVsGenMuPT.Write();
+  effPFTauMatchVsGenMuEta.Write();
+  effMuMatchVsGenMuPT.Write();
+  effMuMatchVsGenMuEta.Write();
+  effPFTauMatchMuMatchVsGenMuPT.Write();
+  effPFTauMatchMuMatchVsGenMuEta.Write();
+  effPFTauMatchVsGenMuHadDR.Write();
+  effMuMatchVsGenMuHadDR.Write();
+  effPFTauMatchMuMatchVsGenMuHadDR.Write();
+  effPFTauMatchVsVisibleGenPTCanvas.Write();
+  effPFTauMatchVsVisibleGenEtaCanvas.Write();
+  effMuMatchVsVisibleGenPTCanvas.Write();
+  effMuMatchVsVisibleGenEtaCanvas.Write();
+  effPFTauMatchMuMatchVsVisibleGenPTCanvas.Write();
+  effPFTauMatchMuMatchVsVisibleGenEtaCanvas.Write();
+  effPFTauMatchVsGenMuPTCanvas.Write();
+  effPFTauMatchVsGenMuEtaCanvas.Write();
+  effMuMatchVsGenMuPTCanvas.Write();
+  effMuMatchVsGenMuEtaCanvas.Write();
+  effPFTauMatchMuMatchVsGenMuPTCanvas.Write();
+  effPFTauMatchMuMatchVsGenMuEtaCanvas.Write();
+  effPFTauMatchVsGenMuHadDRCanvas.Write();
+  effMuMatchVsGenMuHadDRCanvas.Write();
+  effPFTauMatchMuMatchVsGenMuHadDRCanvas.Write();
   out_->Write();
   out_->Close();
 }
@@ -398,10 +820,12 @@ void TauAnalyzer::reset()
   HPSDiscriminatorTags_.clear();
   HPSDiscriminators_.clear();
   momPDGID_ = 0;
+  genMuTauPTMin_ = 0.0;
+  genMuPTMin_ = 0.0;
+  effVsEtaPTMin_ = 0.0;
+  cfg_ = NULL;
   if (status3TauMultiplicity_ != NULL) delete status3TauMultiplicity_;
   status3TauMultiplicity_ = NULL;
-  if (ZTauTauDecayMultiplicity_ != NULL) delete ZTauTauDecayMultiplicity_;
-  ZTauTauDecayMultiplicity_ = NULL;
   if (HPSTauMultiplicity_ != NULL) delete HPSTauMultiplicity_;
   HPSTauMultiplicity_ = NULL;
   if (HPSTausPassingEtaCutMultiplicity_ != NULL) delete HPSTausPassingEtaCutMultiplicity_;
@@ -444,6 +868,56 @@ void TauAnalyzer::reset()
   dRToHPSTau0GenPTGe30_ = NULL;
   if (dRToHPSIsoTau0GenPTGe30_ != NULL) delete dRToHPSIsoTau0GenPTGe30_;
   dRToHPSIsoTau0GenPTGe30_ = NULL;
+  if (HPSTauEta_ != NULL) delete HPSTauEta_;
+  HPSTauEta_ = NULL;
+  if (genTauEta_ != NULL) delete genTauEta_;
+  genTauEta_ = NULL;
+  if (muHadPFTauMatchMultiplicity_ != NULL) delete muHadPFTauMatchMultiplicity_;
+  muHadPFTauMatchMultiplicity_ = NULL;
+  if (muHadMuonMatchMultiplicity_ != NULL) delete muHadMuonMatchMultiplicity_;
+  muHadMuonMatchMultiplicity_ = NULL;
+  if (muHadPFTauMatchMuonMatchMultiplicity_ != NULL) delete muHadPFTauMatchMuonMatchMultiplicity_;
+  muHadPFTauMatchMuonMatchMultiplicity_ = NULL;
+  if (muHadVisibleGenPT_ != NULL) delete muHadVisibleGenPT_;
+  muHadVisibleGenPT_ = NULL;
+  if (muHadPFTauMatchVisibleGenPT_ != NULL) delete muHadPFTauMatchVisibleGenPT_;
+  muHadPFTauMatchVisibleGenPT_ = NULL;
+  if (muHadMuMatchVisibleGenPT_ != NULL) delete muHadMuMatchVisibleGenPT_;
+  muHadMuMatchVisibleGenPT_ = NULL;
+  if (muHadPFTauMatchMuMatchVisibleGenPT_ != NULL) delete muHadPFTauMatchMuMatchVisibleGenPT_;
+  muHadPFTauMatchMuMatchVisibleGenPT_ = NULL;
+  if (muHadVisibleGenEta_ != NULL) delete muHadVisibleGenEta_;
+  muHadVisibleGenEta_ = NULL;
+  if (muHadPFTauMatchVisibleGenEta_ != NULL) delete muHadPFTauMatchVisibleGenEta_;
+  muHadPFTauMatchVisibleGenEta_ = NULL;
+  if (muHadMuMatchVisibleGenEta_ != NULL) delete muHadMuMatchVisibleGenEta_;
+  muHadMuMatchVisibleGenEta_ = NULL;
+  if (muHadPFTauMatchMuMatchVisibleGenEta_ != NULL) delete muHadPFTauMatchMuMatchVisibleGenEta_;
+  muHadPFTauMatchMuMatchVisibleGenEta_ = NULL;
+  if (muHadGenMuPT_ != NULL) delete muHadGenMuPT_;
+  muHadGenMuPT_ = NULL;
+  if (muHadPFTauMatchGenMuPT_ != NULL) delete muHadPFTauMatchGenMuPT_;
+  muHadPFTauMatchGenMuPT_ = NULL;
+  if (muHadMuMatchGenMuPT_ != NULL) delete muHadMuMatchGenMuPT_;
+  muHadMuMatchGenMuPT_ = NULL;
+  if (muHadPFTauMatchMuMatchGenMuPT_ != NULL) delete muHadPFTauMatchMuMatchGenMuPT_;
+  muHadPFTauMatchMuMatchGenMuPT_ = NULL;
+  if (muHadGenMuEta_ != NULL) delete muHadGenMuEta_;
+  muHadGenMuEta_ = NULL;
+  if (muHadPFTauMatchGenMuEta_ != NULL) delete muHadPFTauMatchGenMuEta_;
+  muHadPFTauMatchGenMuEta_ = NULL;
+  if (muHadMuMatchGenMuEta_ != NULL) delete muHadMuMatchGenMuEta_;
+  muHadMuMatchGenMuEta_ = NULL;
+  if (muHadPFTauMatchMuMatchGenMuEta_ != NULL) delete muHadPFTauMatchMuMatchGenMuEta_;
+  muHadPFTauMatchMuMatchGenMuEta_ = NULL;
+  if (muHadGenDR_ != NULL) delete muHadGenDR_;
+  muHadGenDR_ = NULL;
+  if (muHadPFTauMatchGenDR_ != NULL) delete muHadPFTauMatchGenDR_;
+  muHadPFTauMatchGenDR_ = NULL;
+  if (muHadMuMatchGenDR_ != NULL) delete muHadMuMatchGenDR_;
+  muHadMuMatchGenDR_ = NULL;
+  if (muHadPFTauMatchMuMatchGenDR_ != NULL) delete muHadPFTauMatchMuMatchGenDR_;
+  muHadPFTauMatchMuMatchGenDR_ = NULL;
 }
 
 double TauAnalyzer::dR(const std::vector<double>& dR2, const unsigned int pos) const
