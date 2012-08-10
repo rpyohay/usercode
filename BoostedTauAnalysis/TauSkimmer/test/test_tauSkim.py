@@ -1,10 +1,10 @@
 import FWCore.ParameterSet.Config as cms
 
-## process = cms.Process("SKIM")
-process = cms.Process("HADTAUSKIM")
+process = cms.Process("SKIM")
+## process = cms.Process("HADTAUSKIM")
 
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(100)
+process.MessageLogger.cerr.FwkReport.reportEvery = cms.untracked.int32(1000)
 
 process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(-1)
@@ -23,10 +23,6 @@ process.GlobalTag.globaltag = "START52_V9::All"
 process.source = cms.Source(
     "PoolSource",
     fileNames = cms.untracked.vstring(
-##     "file:/data1/yohay/044C78B0-BD95-E111-973C-0026189438D2.root"
-##     'file:/data1/yohay/DYToTauTauSkim_latestTauID.root'
-##     'file:/data1/yohay/DYToTauTauSkim_latestTauID_someClustersDropped.root'
-    'file:/data1/yohay/DYToTauTauSkim_latestTauID_nearlyAllClustersDropped.root'
     )
     )
 
@@ -34,7 +30,8 @@ process.source.inputCommands = cms.untracked.vstring("keep *", "drop *_MEtoEDMCo
 
 process.HadronicTauDecayFinder = cms.EDFilter('HadronicTauDecayFinder',
                                               genParticleTag = cms.InputTag('genParticles'),
-                                              momPDGID = cms.uint32(23)
+                                              momPDGID = cms.uint32(23),
+                                              maxAbsEta = cms.double(2.3)
                                               )
 
 process.output = cms.OutputModule(
@@ -53,7 +50,7 @@ process.output = cms.OutputModule(
     "drop recoPFJets_kt6PFJets_*_*",
     "drop *_fixedGridRho*_*_*",
     "drop *_hfEMClusters_*_*",
-    "drop *_tevMuons_*_*",
+##     "drop *_tevMuons_*_*",
     "drop *_eid*_*_*",
     "drop *_muonMETValueMapProducer_muCorrData_*",
     "drop *_muons_muonShowerInformation_*",
@@ -65,7 +62,7 @@ process.output = cms.OutputModule(
     "drop recoCaloClusters_*_*_*",
     "drop recoPreshowerCluster*_*_*_*",
     "drop *_hfRecoEcalCandidate_*_*",
-    "drop *_regionalCosmicTracks_*_*",
+##     "drop *_regionalCosmicTracks_*_*",
     "drop *_generalV0Candidates_*_*",
     "drop *_selectDigi_*_*",
     "drop *_*BJetTags*_*_*",
@@ -93,8 +90,8 @@ process.output = cms.OutputModule(
     "drop recoMETs_*_*_*",
     "drop *_photons_*_*",
     "drop *_photonCore_*_*",
-    "drop *_*osmicMuons*_*_*",
-    "drop *_uncleanedOnly*_*_*",
+##     "drop *_*osmicMuons*_*_*",
+##     "drop *_uncleanedOnly*_*_*",
     "drop *_TriggerResults_*_RECO",
     "drop *_ak5PFJetsRecoTauPiZeros_*_RECO",
     "drop *_hpsPFTauDiscriminationByDecayModeFinding_*_RECO",
@@ -143,11 +140,11 @@ process.output = cms.OutputModule(
     "drop *_correctedMulti5x5SuperClustersWithPreshower_*_*",
     ),
     fileName = cms.untracked.string(
-    '/data1/yohay/DYToTauTauSkim_latestTauID_fastHadTauFinder.root'
+    'Summer12_DYToTauTau_skim.root'
     )
     )
 
-## process.p = cms.Path(process.PFTau*process.HadronicTauDecayFinder)
-process.p = cms.Path(process.HadronicTauDecayFinder)
+process.p = cms.Path(process.PFTau*process.HadronicTauDecayFinder)
+## process.p = cms.Path(process.HadronicTauDecayFinder)
 
 process.end = cms.EndPath(process.output)
