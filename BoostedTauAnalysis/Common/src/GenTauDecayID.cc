@@ -8,24 +8,44 @@ GenTauDecayID::GenTauDecayID() :
   iTau_(0),
   iSister_(0),
   momPDGID_(0),
+  tauDecayType_(UNKNOWN),
+  tauSisterDecayType_(UNKNOWN),
+  tauHadronicDecayType_(reco::PFTau::kNull),
+  tauSisterHadronicDecayType_(reco::PFTau::kNull),
+  chargedHadronPTMin_(0.0),
+  neutralHadronPTMin_(0.0),
+  chargedLeptonPTMin_(0.0),
+  totalPTMin_(0.0),
   unpacked_(false),
   validHandle_(false),
-  foundSister_(false) {}
+  foundSister_(false),
+  foundVisibleDecayProducts_(false),
+  foundSisterVisibleDecayProducts_(false) {}
 
 //constructor that takes a parameter set of arguments
 GenTauDecayID::GenTauDecayID(edm::ParameterSet& parSet, 
 			     const edm::Handle<reco::GenParticleCollection>& pGenParticles, 
-			     const unsigned int iTau) :
+			     const unsigned int iTau, const bool warn) :
   pParSet_(&parSet),
   pGenParticles_(pGenParticles),
   iTau_(iTau),
   iSister_(0),
   momPDGID_(0),
+  tauDecayType_(UNKNOWN),
+  tauSisterDecayType_(UNKNOWN),
+  tauHadronicDecayType_(reco::PFTau::kNull),
+  tauSisterHadronicDecayType_(reco::PFTau::kNull),
+  chargedHadronPTMin_(0.0),
+  neutralHadronPTMin_(0.0),
+  chargedLeptonPTMin_(0.0),
+  totalPTMin_(0.0),
   unpacked_(false),
   validHandle_(pGenParticles_.isValid()),
-  foundSister_(false)
+  foundSister_(false),
+  foundVisibleDecayProducts_(false),
+  foundSisterVisibleDecayProducts_(false)
 {
-  try { unpackParSet(); }
+  try { unpackParSet(warn); }
   catch (std::string& ex) { throw; }
 }
 
@@ -36,9 +56,21 @@ GenTauDecayID::GenTauDecayID(const GenTauDecayID& other) :
   iTau_(other.getTauIndex()),
   iSister_(other.getSisterIndex(false)),
   momPDGID_(0),
-  unpacked_(false),
+  visibleTauP4_(other.getVisibleTauP4(false)),
+  visibleTauSisterP4_(other.getVisibleTauSisterP4(false)),
+  tauDecayType_(other.getTauDecayType(false)),
+  tauSisterDecayType_(other.getTauSisterDecayType(false)),
+  tauHadronicDecayType_(other.getTauHadronicDecayType(false)),
+  tauSisterHadronicDecayType_(other.getTauSisterHadronicDecayType(false)),
+  chargedHadronPTMin_(0.0),
+  neutralHadronPTMin_(0.0),
+  chargedLeptonPTMin_(0.0),
+  totalPTMin_(0.0),
+  unpacked_(other.unpacked()),
   validHandle_(pGenParticles_.isValid()),
-  foundSister_(false)
+  foundSister_(other.foundSister()),
+  foundVisibleDecayProducts_(other.foundVisibleDecayProducts()),
+  foundSisterVisibleDecayProducts_(other.foundSisterVisibleDecayProducts())
 {
   try { unpackParSet(); }
   catch (std::string& ex) { throw; }
@@ -52,9 +84,21 @@ GenTauDecayID::~GenTauDecayID()
   iTau_ = 0;
   iSister_ = 0;
   momPDGID_ = 0;
+  visibleTauP4_ = reco::LeafCandidate::LorentzVector();
+  visibleTauSisterP4_ = reco::LeafCandidate::LorentzVector();
+  tauDecayType_ = UNKNOWN;
+  tauSisterDecayType_ = UNKNOWN;
+  tauHadronicDecayType_ = reco::PFTau::kNull;
+  tauSisterHadronicDecayType_ = reco::PFTau::kNull;
+  chargedHadronPTMin_ = 0.0;
+  neutralHadronPTMin_ = 0.0;
+  chargedLeptonPTMin_ = 0.0;
+  totalPTMin_ = 0.0;
   unpacked_ = false;
   validHandle_ = false;
   foundSister_ = false;
+  foundVisibleDecayProducts_ = false;
+  foundSisterVisibleDecayProducts_ = false;
 }
 
 //assignment operator
@@ -66,9 +110,21 @@ GenTauDecayID& GenTauDecayID::operator=(const GenTauDecayID& rhs)
     iTau_ = rhs.getTauIndex();
     iSister_ = rhs.getSisterIndex(false);
     momPDGID_ = 0;
-    unpacked_ = false;
+    visibleTauP4_ = rhs.getVisibleTauP4(false);
+    visibleTauSisterP4_ = rhs.getVisibleTauSisterP4(false);
+    tauDecayType_ = rhs.getTauDecayType(false);
+    tauSisterDecayType_ = rhs.getTauSisterDecayType(false);
+    tauHadronicDecayType_ = rhs.getTauHadronicDecayType(false);
+    tauSisterHadronicDecayType_ = rhs.getTauSisterHadronicDecayType(false);
+    chargedHadronPTMin_ = 0.0;
+    neutralHadronPTMin_ = 0.0;
+    chargedLeptonPTMin_ = 0.0;
+    totalPTMin_ = 0.0;
+    unpacked_ = rhs.unpacked();
     validHandle_ = pGenParticles_.isValid();
-    foundSister_ = false;
+    foundSister_ = rhs.foundSister();
+    foundVisibleDecayProducts_ = rhs.foundVisibleDecayProducts();
+    foundSisterVisibleDecayProducts_ = rhs.foundSisterVisibleDecayProducts();
     try { unpackParSet(); }
     catch (std::string& ex) { throw; }
   }
@@ -85,22 +141,99 @@ edm::Handle<reco::GenParticleCollection> GenTauDecayID::getGenParticleHandle() c
 }
 
 //getter for tau index
-const unsigned int GenTauDecayID::getTauIndex() const { return iTau_; }
+unsigned int GenTauDecayID::getTauIndex() const { return iTau_; }
 
 //getter for tau sister index
-const unsigned int GenTauDecayID::getSisterIndex(const bool warn) const
+unsigned int GenTauDecayID::getSisterIndex(const bool warn) const
 {
-  if (warn && !foundSister_) {
-    std::cerr << warnSisterNeverFound("const unsigned int GenTauDecayID::getSisterIndex() const");
-  }
+  std::string fnName("const unsigned int GenTauDecayID::getSisterIndex(const bool warn) const");
+  if (warn && !foundSister_) std::cerr << warnSisterNeverFound(fnName);
   return iSister_;
 }
+
+//getter for visible tau 4-vector
+reco::LeafCandidate::LorentzVector GenTauDecayID::getVisibleTauP4(const bool warn) const
+{
+  std::string fnName("reco::LeafCandidate::LorentzVector ");
+  fnName+="GenTauDecayID::getVisibleTauP4(const bool warn) const";
+  if (warn && !foundVisibleDecayProducts_) std::cerr << warnVisibleDecayProductsNeverFound(fnName);
+  return visibleTauP4_;
+}
+
+//getter for visible tau sister 4-vector
+reco::LeafCandidate::LorentzVector GenTauDecayID::getVisibleTauSisterP4(const bool warn) const
+{
+  std::string fnName("reco::LeafCandidate::LorentzVector ");
+  fnName+="GenTauDecayID::getVisibleTauSisterP4(const bool warn) const";
+  if (warn && !foundSister_) std::cerr << warnSisterNeverFound(fnName);
+  if (warn && !foundVisibleDecayProducts_) std::cerr << warnVisibleDecayProductsNeverFound(fnName);
+  return visibleTauSisterP4_;
+}
+
+//getter for overall tau decay type
+GenTauDecayID::DecayType GenTauDecayID::getTauDecayType(const bool warn) const
+{
+  std::string fnName("GenTauDecayID::DecayType ");
+  fnName+="GenTauDecayID::getTauDecayType(const bool warn) const";
+  if (warn && !foundVisibleDecayProducts_) std::cerr << warnVisibleDecayProductsNeverFound(fnName);
+  return tauDecayType_;
+}
+
+//getter for overall tau sister decay type
+GenTauDecayID::DecayType GenTauDecayID::getTauSisterDecayType(const bool warn) const
+{
+  std::string fnName("GenTauDecayID::DecayType ");
+  fnName+="GenTauDecayID::getTauSisterDecayType(const bool warn) const";
+  if (warn && !foundSister_) std::cerr << warnSisterNeverFound(fnName);
+  if (warn && !foundVisibleDecayProducts_) std::cerr << warnVisibleDecayProductsNeverFound(fnName);
+  return tauSisterDecayType_;
+}
+
+//getter for hadronic tau decay type
+reco::PFTau::hadronicDecayMode GenTauDecayID::getTauHadronicDecayType(const bool warn) const
+{
+  std::string fnName("reco::PFTau::hadronicDecayMode ");
+  fnName+="GenTauDecayID::getTauHadronicDecayType(const bool warn) const";
+  if (warn && !foundVisibleDecayProducts_) std::cerr << warnVisibleDecayProductsNeverFound(fnName);
+  return tauHadronicDecayType_;
+}
+
+//getter for hadronic tau sister decay type
+reco::PFTau::hadronicDecayMode GenTauDecayID::getTauSisterHadronicDecayType(const bool warn) const
+{
+  std::string fnName("reco::PFTau::hadronicDecayMode ");
+  fnName+="GenTauDecayID::getTauSisterHadronicDecayType(const bool warn) const";
+  if (warn && !foundSister_) std::cerr << warnSisterNeverFound(fnName);
+  if (warn && !foundVisibleDecayProducts_) std::cerr << warnVisibleDecayProductsNeverFound(fnName);
+  return tauSisterHadronicDecayType_;
+}
+
+//getter for charged hadron min pT
+double GenTauDecayID::getChargedHadronPTMin() const { return chargedHadronPTMin_; }
+
+//getter for neutral hadron min pT
+double GenTauDecayID::getNeutralHadronPTMin() const { return neutralHadronPTMin_; }
+
+//getter for charged lepton min pT
+double GenTauDecayID::getChargedLeptonPTMin() const { return chargedLeptonPTMin_; }
+
+//getter for total min pT of visible decay products
+double GenTauDecayID::getTotalPTMin() const { return totalPTMin_; }
 
 //true if parameter set has been unpacked
 bool GenTauDecayID::unpacked() const { return unpacked_; }
 
-//true if pGenParticles_ points to a valid handle
-bool GenTauDecayID::validHandle() const { return validHandle_; }
+//true if sister has been found
+bool GenTauDecayID::foundSister() const { return foundSister_; }
+
+//true if visible decay products have been found
+bool GenTauDecayID::foundVisibleDecayProducts() const { return foundVisibleDecayProducts_; }
+
+//true if sister visible decay products have been found
+bool GenTauDecayID::foundSisterVisibleDecayProducts() const
+{
+  return foundSisterVisibleDecayProducts_;
+}
 
 //find sister
 void GenTauDecayID::findSister()
@@ -126,7 +259,7 @@ bool GenTauDecayID::tauIsStatus3DecayProduct() const
     if (validHandle_) {
       reco::GenParticleRef tauRef(pGenParticles_, iTau_);
       ret = ((fabs(tauRef->pdgId()) == TAUPDGID) && (tauRef->status() == 3) && 
-	     (tauRef->numberOfMothers() == 1) && (tauRef->mother(0)->pdgId() == (int)momPDGID_)); 
+	     (tauRef->numberOfMothers() == 1) && (tauRef->mother(0)->pdgId() == momPDGID_)); 
     }
     else throw errorInvalidGenParticleHandle(fnName);
   }
@@ -135,39 +268,134 @@ bool GenTauDecayID::tauIsStatus3DecayProduct() const
 }
 
 //get tau decay type
-unsigned int GenTauDecayID::tauDecayType() const
+GenTauDecayID::DecayType GenTauDecayID::tauDecayType() const
 {
-  unsigned int decayTypeCode = 0;
+  DecayType decayTypeCode = UNKNOWN;
   try { decayTypeCode = decayType(iTau_); }
   catch (std::string& ex) { throw; }
   return decayTypeCode;
 }
 
 //get tau sister decay type
-unsigned int GenTauDecayID::sisterDecayType() const
+GenTauDecayID::DecayType GenTauDecayID::sisterDecayType() const
 {
-  if (!foundSister_) {
-    std::cerr << warnSisterNeverFound("unsigned int GenTauDecayID::sisterDecayType() const");
-  }
-  unsigned int decayTypeCode = 0;
+  std::string fnName("GenTauDecayID::DecayType GenTauDecayID::sisterDecayType() const");
+  if (!foundSister_) std::cerr << warnSisterNeverFound(fnName);
+  DecayType decayTypeCode = UNKNOWN;
   try { decayTypeCode = decayType(iSister_); }
   catch (std::string& ex) { throw; }
   return decayTypeCode;
 }
 
+//get tau hadronic decay type
+reco::PFTau::hadronicDecayMode GenTauDecayID::tauHadronicDecayType(const bool countKShort) const
+{
+  reco::PFTau::hadronicDecayMode hadronicDecayTypeCode = reco::PFTau::kNull;
+  try { hadronicDecayTypeCode = hadronicDecayType(iTau_, countKShort); }
+  catch (std::string& ex) { throw; }
+  return hadronicDecayTypeCode;
+}
+
+//get tau hadronic sister decay type
+reco::PFTau::hadronicDecayMode GenTauDecayID::sisterHadronicDecayType(const bool countKShort) const
+{
+  std::string fnName("reco::PFTau::hadronicDecayMode GenTauDecayID::sisterHadronicDecayType(");
+  fnName+="const bool countKShort) const";
+  if (!foundSister_) std::cerr << warnSisterNeverFound(fnName);
+  reco::PFTau::hadronicDecayMode hadronicDecayTypeCode = reco::PFTau::kNull;
+  try { hadronicDecayTypeCode = hadronicDecayType(iSister_, countKShort); }
+  catch (std::string& ex) { throw; }
+  return hadronicDecayTypeCode;
+}
+
+/*get fully specified tau decay type, with option to only consider a decay type as valid if pT 
+  cuts on the decay products and on the total visible pT are passed*/
+std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType>
+GenTauDecayID::tauDecayType(const bool applyPTCuts, const bool countKShort)
+{
+  std::pair<reco::PFTau::hadronicDecayMode, DecayType> decayTypeCode(reco::PFTau::kNull, UNKNOWN);
+  if (foundVisibleDecayProducts_) {
+    decayTypeCode = 
+      std::pair<reco::PFTau::hadronicDecayMode, DecayType>(tauHadronicDecayType_, tauDecayType_);
+  }
+  else {
+    try { decayTypeCode = decayTypeWithPTCuts(iTau_, countKShort, applyPTCuts, visibleTauP4_); }
+    catch (std::string& ex) { throw; }
+    tauDecayType_ = decayTypeCode.second;
+    tauHadronicDecayType_ = decayTypeCode.first;
+    foundVisibleDecayProducts_ = true;
+  }
+  return decayTypeCode;
+}
+
+/*get fully specified tau sister decay type, with option to only consider a decay type as valid if 
+  pT cuts on the decay products and on the total visible pT are passed*/
+std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType>
+GenTauDecayID::sisterDecayType(const bool applyPTCuts, const bool countKShort)
+{
+  std::string fnName("std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType>");
+  fnName+="GenTauDecayID::sisterDecayType(const bool applyPTCuts, ";
+  fnName+="const bool countKShort) const";
+  if (!foundSister_) std::cerr << warnSisterNeverFound(fnName);
+  std::pair<reco::PFTau::hadronicDecayMode, DecayType> decayTypeCode(reco::PFTau::kNull, UNKNOWN);
+  if (foundSisterVisibleDecayProducts_) {
+    decayTypeCode = 
+      std::pair<reco::PFTau::hadronicDecayMode, DecayType>(tauSisterHadronicDecayType_, 
+							   tauSisterDecayType_);
+  }
+  else {
+    try {
+      decayTypeCode = decayTypeWithPTCuts(iSister_, countKShort, applyPTCuts, visibleTauSisterP4_);
+    }
+    catch (std::string& ex) { throw; }
+    tauSisterDecayType_ = decayTypeCode.second;
+    tauSisterHadronicDecayType_ = decayTypeCode.first;
+    foundSisterVisibleDecayProducts_ = true;
+  }
+  return decayTypeCode;
+}
+
 //unpack parameter set
-void GenTauDecayID::unpackParSet()
+void GenTauDecayID::unpackParSet(const bool warn)
 {
   std::string fnName("void GenTauDecayID::unpackParSet()");
   if (pParSet_ == NULL) {
     throw errorNullParameterSetPointer(fnName);
   }
-  if (pParSet_->existsAs<unsigned int>("momPDGID")) {
-    momPDGID_ = pParSet_->getParameter<unsigned int>("momPDGID");
+  if (pParSet_->existsAs<int>("momPDGID")) {
+    momPDGID_ = pParSet_->getParameter<int>("momPDGID");
   }
   else {
-    std::cerr << warnMomPDGIDNotFound(fnName);
+    std::cerr << warnParameterNotFound(fnName, "momPDGID");
     momPDGID_ = 0;
+  }
+  if (pParSet_->existsAs<double>("chargedHadronPTMin")) {
+    chargedHadronPTMin_ = pParSet_->getParameter<double>("chargedHadronPTMin");
+  }
+  else {
+    if (warn) std::cerr << warnParameterNotFound(fnName, "chargedHadronPTMin");
+    chargedHadronPTMin_ = 0.0;
+  }
+  if (pParSet_->existsAs<double>("neutralHadronPTMin")) {
+    neutralHadronPTMin_ = pParSet_->getParameter<double>("neutralHadronPTMin");
+  }
+  else {
+    if (warn) std::cerr << warnParameterNotFound(fnName, "neutralHadronPTMin");
+    neutralHadronPTMin_ = 0.0;
+  }
+  if (pParSet_->existsAs<double>("chargedLeptonPTMin")) {
+    chargedLeptonPTMin_ = pParSet_->getParameter<double>("chargedLeptonPTMin");
+  }
+  else {
+    if (warn) std::cerr << warnParameterNotFound(fnName, "chargedLeptonPTMin");
+    chargedLeptonPTMin_ = 0.0;
+  }
+  if (pParSet_->existsAs<double>("totalPTMin")) {
+    totalPTMin_ = pParSet_->getParameter<double>("totalPTMin");
+  }
+  else {
+    if (warn) std::cerr << warnParameterNotFound(fnName, "totalPTMin");
+    totalPTMin_ = 0.0;
   }
   unpacked_ = true;
 }
@@ -194,10 +422,10 @@ int GenTauDecayID::sister() const
 }
 
 //classify decay
-unsigned int GenTauDecayID::decayType(const unsigned int iParticle) const
+GenTauDecayID::DecayType GenTauDecayID::decayType(const unsigned int iParticle) const
 {
   std::string fnName("unsigned int GenTauDecayID::decayType() const");
-  unsigned int ret = UNKNOWN;
+  DecayType ret = UNKNOWN;
   unsigned int leptonPDGID = 0;
   unsigned int neutrinoPDGID = 0;
   if (validHandle_) {
@@ -234,6 +462,204 @@ unsigned int GenTauDecayID::decayType(const unsigned int iParticle) const
   return ret;
 }
 
+/*recursively find the total number of charged and neutral hadrons in a tau decay, optionally 
+  counting Kshorts*/
+void GenTauDecayID::numChargedAndNeutralHadronsInTauDecay(const reco::GenParticleRef& momRef, 
+							  unsigned int& nChargedHadrons, 
+							  unsigned int& nNeutralHadrons, 
+							  const bool countKShort) const
+{
+  for (unsigned int iDaughter = 0; iDaughter < momRef->numberOfDaughters(); 
+       ++iDaughter) {
+    reco::GenParticleRef kidRef = momRef->daughterRef(iDaughter);
+    const unsigned int absDaughterPDGID = fabs(kidRef->pdgId());
+    if ((absDaughterPDGID == 111) || (countKShort && (absDaughterPDGID == 310))) ++nNeutralHadrons;
+    else if ((absDaughterPDGID == 211) || (absDaughterPDGID == 321)) ++nChargedHadrons;
+    else if (kidRef->status() != 1) {
+      numChargedAndNeutralHadronsInTauDecay(kidRef, nChargedHadrons, nNeutralHadrons, countKShort);
+    }
+  }
+}
+
+//classify hadronic decay
+reco::PFTau::hadronicDecayMode GenTauDecayID::hadronicDecayType(const unsigned int iParticle, 
+								const bool countKShort) const
+{
+  std::string fnName("reco::PFTau::hadronicDecayMode GenTauDecayID::hadronicDecayType(const ");
+  fnName+="unsigned int iParticle, const bool countKShort) const";
+  reco::PFTau::hadronicDecayMode type = reco::PFTau::kNull;
+  unsigned int nChargedHadrons = 0;
+  unsigned int nPi0s = 0;
+  if (validHandle_) {
+    numChargedAndNeutralHadronsInTauDecay(reco::GenParticleRef(pGenParticles_, 
+							       iParticle)->daughterRef(0), 
+					  nChargedHadrons, nPi0s, countKShort);
+  }
+  else throw errorInvalidGenParticleHandle(fnName);
+  if (nChargedHadrons > 0) {
+    const unsigned int maxPiZeros = reco::PFTau::kOneProngNPiZero;
+    unsigned int trackIndex = (nChargedHadrons - 1)*(maxPiZeros + 1);
+    if (trackIndex >= reco::PFTau::kRareDecayMode) type = reco::PFTau::kRareDecayMode;
+    else {
+      nPi0s = (nPi0s <= maxPiZeros) ? nPi0s : maxPiZeros;
+      type = static_cast<reco::PFTau::hadronicDecayMode>(trackIndex + nPi0s);
+    }
+  }
+  return type;
+}
+
+/*recursively find the total number of charged and neutral hadrons and charged leptons in a tau 
+  decay, optionally counting Kshorts as neutral hadrons and applying pT cuts, and return a 
+  4-vector sum of the visible decay products*/
+reco::LeafCandidate::LorentzVector
+GenTauDecayID::numAndP4VisibleDecayProducts(const reco::GenParticleRef& momRef, 
+					    unsigned int& nChargedHadrons, 
+					    unsigned int& nNeutralHadrons, 
+					    unsigned int& nElectrons, unsigned int& nMuons, 
+					    const bool countKShort, const bool applyPTCuts) const
+{
+  std::string fnName("reco::LeafCandidate::LorentzVector ");
+  fnName+="GenTauDecayID::numAndP4VisibleDecayProducts(const reco::GenParticleRef& momRef, ";
+  fnName+="unsigned int& nChargedHadrons, unsigned int& nNeutralHadrons, ";
+  fnName+="unsigned int& nElectrons, unsigned int& nMuons, const bool countKShort, ";
+  fnName+="const bool applyPTCuts) const)";
+  reco::LeafCandidate::LorentzVector p4;
+  for (unsigned int iDaughter = 0; iDaughter < momRef->numberOfDaughters(); 
+       ++iDaughter) {
+    const reco::GenParticleRef kidRef = momRef->daughterRef(iDaughter);
+    const unsigned int absDaughterPDGID = fabs(kidRef->pdgId());
+    const reco::LeafCandidate::LorentzVector daughterP4 = kidRef->p4();
+    const double daughterPT = kidRef->pt();
+    if (unpacked_) {
+      if (((absDaughterPDGID == 111) || (countKShort && (absDaughterPDGID == 310))) && 
+	  (!applyPTCuts || (daughterPT > neutralHadronPTMin_))) {
+	++nNeutralHadrons;
+	p4+=daughterP4;
+      }
+      else if (((absDaughterPDGID == 211) || (absDaughterPDGID == 321)) && 
+	       (!applyPTCuts || (daughterPT > chargedHadronPTMin_))) {
+	++nChargedHadrons;
+	p4+=daughterP4;
+      }
+      else if ((absDaughterPDGID == EPDGID) && 
+	       (!applyPTCuts || (daughterPT > chargedLeptonPTMin_))) {
+	++nElectrons;
+	p4+=daughterP4;
+      }
+      else if ((absDaughterPDGID == MUPDGID) && 
+	       (!applyPTCuts || (daughterPT > chargedLeptonPTMin_))) {
+	++nMuons;
+	p4+=daughterP4;
+      }
+      else if (kidRef->status() != 1) {
+	p4+=numAndP4VisibleDecayProducts(kidRef, nChargedHadrons, nNeutralHadrons, nElectrons, 
+					 nMuons, countKShort, applyPTCuts);
+      }
+    }
+    else throw errorParameterSetNotUnpacked(fnName);
+  }
+  return p4;
+}
+
+//get decay type and p4 of visible decay products
+void GenTauDecayID::decayTypeAndVisibleP4(const unsigned int iParticle, 
+					  reco::LeafCandidate::LorentzVector& visibleP4, 
+					  std::pair<reco::PFTau::hadronicDecayMode, 
+					  DecayType>& decayTypePair, const bool countKShort, 
+					  const bool applyPTCuts) const
+{
+  std::string fnName("void ");
+  fnName+="GenTauDecayID::decayTypeAndVisibleP4(const unsigned int iParticle, ";
+  fnName+="reco::LeafCandidate::LorentzVector& visibleP4, ";
+  fnName+="std::pair<reco::PFTau::hadronicDecayMode, DecayType>& decayTypePair, ";
+  fnName+="const bool countKShort, const bool applyPTCuts) const";
+  unsigned int nChargedHadrons = 0;
+  unsigned int nNeutralHadrons = 0;
+  unsigned int nElectrons = 0;
+  unsigned int nMuons = 0;
+  if (validHandle_) {
+    try {
+      //does the daughterRef(0) cut apply only to taus?
+      visibleP4 = numAndP4VisibleDecayProducts(reco::GenParticleRef(pGenParticles_, 
+								    iParticle)->daughterRef(0), 
+					       nChargedHadrons, nNeutralHadrons, nElectrons, 
+					       nMuons, countKShort, applyPTCuts);
+      decayTypePair = decayType(nChargedHadrons, nNeutralHadrons, nElectrons, nMuons);
+    }
+    catch (std::string& ex) { throw; }
+  }
+  else throw errorInvalidGenParticleHandle(fnName);
+}
+
+//classify decay with pT cuts on visible decay products
+//need to add a flag to indicate when iParticle does not refer to a tau
+std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType>
+GenTauDecayID::decayTypeWithPTCuts(const unsigned int iParticle, const bool countKShort, 
+				   const bool applyPTCuts, 
+				   reco::LeafCandidate::LorentzVector& visibleP4)
+{
+  std::string fnName("std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType> ");
+  fnName+="GenTauDecayID::decayTypeWithPTCuts(const unsigned int iParticle, ";
+  fnName+="const bool countKShort, const bool applyPTCuts) const";
+  reco::LeafCandidate::LorentzVector visibleP4NoPTCuts;
+  std::pair<reco::PFTau::hadronicDecayMode, DecayType> 
+    decayTypePairNoPTCuts(reco::PFTau::kNull, UNKNOWN);
+  reco::LeafCandidate::LorentzVector visibleP4PTCuts;
+  std::pair<reco::PFTau::hadronicDecayMode, DecayType> 
+    decayTypePairPTCuts(reco::PFTau::kNull, UNKNOWN);
+  try {
+    decayTypeAndVisibleP4(iParticle, visibleP4NoPTCuts, decayTypePairNoPTCuts, countKShort, false);
+    if (applyPTCuts) {
+      decayTypeAndVisibleP4(iParticle, visibleP4PTCuts, decayTypePairPTCuts, countKShort, true);
+    }
+  }
+  catch (std::string& ex) { throw; }
+  const double visiblePTNoPTCuts = visibleP4NoPTCuts.Pt();
+  const double visiblePTPTCuts = visibleP4PTCuts.Pt();
+  if ((applyPTCuts && ((decayTypePairNoPTCuts != decayTypePairPTCuts) || 
+		       (visiblePTPTCuts < totalPTMin_))) || (visiblePTNoPTCuts < totalPTMin_)) {
+    decayTypePairNoPTCuts = 
+      std::pair<reco::PFTau::hadronicDecayMode, DecayType>(reco::PFTau::kNull, UNKNOWN);
+  }
+  else if (applyPTCuts && (visibleP4NoPTCuts != visibleP4PTCuts)) throw errorUnequalP4(fnName);
+  visibleP4 = visibleP4NoPTCuts;
+  return decayTypePairNoPTCuts;
+}
+
+//uniquely classify tau decay
+std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType>
+GenTauDecayID::decayType(const unsigned int nChargedHadrons, const unsigned int nNeutralHadrons, 
+			 const unsigned int nElectrons, const unsigned int nMuons) const
+{
+  std::string fnName("std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType> ");
+  fnName+="GenTauDecayID::decayType(const unsigned int nChargedHadrons, ";
+  fnName+="const unsigned int nNeutralHadrons, const unsigned int nElectrons, ";
+  fnName+="const unsigned int nMuons) const";
+  reco::PFTau::hadronicDecayMode hadronicDecayType = reco::PFTau::kNull;
+  DecayType overallDecayType = UNKNOWN;
+  if (((nChargedHadrons > 0) && ((nElectrons + nMuons) > 0)) || 
+      ((nElectrons > 1) || (nMuons > 1)) || 
+      ((nChargedHadrons == 0) && (nElectrons == 1) && (nMuons == 1))) {
+    throw errorInvalidTauDecay(fnName, nChargedHadrons, nNeutralHadrons, nElectrons, nMuons);
+  }
+  if (nChargedHadrons > 0) {
+    overallDecayType = HAD;
+    const unsigned int maxPiZeros = reco::PFTau::kOneProngNPiZero;
+    unsigned int trackIndex = (nChargedHadrons - 1)*(maxPiZeros + 1);
+    if (trackIndex >= reco::PFTau::kRareDecayMode) hadronicDecayType = reco::PFTau::kRareDecayMode;
+    else {
+      unsigned int validNNeutralHadrons = 
+	(nNeutralHadrons <= maxPiZeros) ? nNeutralHadrons : maxPiZeros;
+      hadronicDecayType = 
+	static_cast<reco::PFTau::hadronicDecayMode>(trackIndex + validNNeutralHadrons);
+    }
+  }
+  else if (nElectrons == 1) overallDecayType = E;
+  else if (nMuons == 1) overallDecayType = MU;
+  return std::pair<reco::PFTau::hadronicDecayMode, DecayType>
+    (hadronicDecayType, overallDecayType);
+}
+
 //warning that sister was never found
 std::string GenTauDecayID::warnSisterNeverFound(const std::string& fnName) const
 {
@@ -241,10 +667,17 @@ std::string GenTauDecayID::warnSisterNeverFound(const std::string& fnName) const
 	  ":\nSister index should not be trusted because sister was never found.\n");
 }
 
-//warning that mother PDG ID could not be found
-std::string GenTauDecayID::warnMomPDGIDNotFound(const std::string& fnName) const
+//warning that parameter could not be found
+std::string GenTauDecayID::warnParameterNotFound(const std::string& fnName, 
+						 const std::string& par) const
 {
-  return ("Warning in " + fnName + ":\nint momPDGID not found.\n");
+  return ("Warning in " + fnName + ":\n" + par + " not found.\n");
+}
+
+//warning that tau visible decay products were never found
+std::string GenTauDecayID::warnVisibleDecayProductsNeverFound(const std::string& fnName) const
+{
+  return ("Warning in " + fnName + ":\nTau visible decay products never found.\n");
 }
 
 //error that sister could not be found
@@ -281,4 +714,24 @@ std::string GenTauDecayID::errorUnexpectedNumDaughters(const std::string& fnName
   std::stringstream err;
   err << "Error in " << fnName << ":\npTau_ has " << numDaughters << " daughters.\n";
   return err.str();
+}
+
+//error that numbers of types of decay particles are inconsistent with a tau decay
+std::string GenTauDecayID::errorInvalidTauDecay(const std::string& fnName, 
+						const unsigned int nChargedHadrons, 
+						const unsigned int nNeutralHadrons, 
+						const unsigned int nElectrons, 
+						const unsigned int nMuons) const
+{
+  std::stringstream err;
+  err << "Error in " << fnName << ":\n" << nChargedHadrons << " charged hadrons, ";
+  err << nNeutralHadrons << " neutral hadrons, " << nElectrons << " electrons, and " << nMuons;
+  err << " muons do not constitute a valid tau decay.\n";
+  return err.str();
+}
+
+//error that 2 4-vectors that are supposed to be equal aren't
+std::string GenTauDecayID::errorUnequalP4(const std::string& fnName) const
+{
+  return ("Error in " + fnName + ":\nUnequal 4-vectors.\n");
 }

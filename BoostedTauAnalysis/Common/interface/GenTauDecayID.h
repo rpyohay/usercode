@@ -3,25 +3,27 @@
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "DataFormats/HepMCCandidate/interface/GenParticle.h"
+#include "DataFormats/TauReco/interface/PFTau.h"
 
 class GenTauDecayID {
 
  public:
 
   //PDG IDs
-  enum PDGIDs {        EPDGID = 11,         MUPDGID = 13,         TAUPDGID = 15, 
-	       ENEUTRINOPDGID = 12, MUNEUTRINOPDGID = 14, TAUNEUTRINOPDGID = 16, 
-		       ZPDGID = 23,          APDGID = 36};
+  enum PDGID {        EPDGID = 11,         MUPDGID = 13,         TAUPDGID = 15, 
+	      ENEUTRINOPDGID = 12, MUNEUTRINOPDGID = 14, TAUNEUTRINOPDGID = 16, 
+		      ZPDGID = 23,          APDGID = 36};
 
   //decay types
-  enum decayType {HAD = 0, MU, E, UNKNOWN};
+  enum DecayType {HAD = 0, MU, E, UNKNOWN};
 
   //default constructor
   GenTauDecayID();
 
   //constructor that takes a parameter set of arguments
-  GenTauDecayID(edm::ParameterSet&, const edm::Handle<reco::GenParticleCollection>&, 
-		const unsigned int);
+  GenTauDecayID(edm::ParameterSet& parSet, 
+		const edm::Handle<reco::GenParticleCollection>& pGenParticles, 
+		const unsigned int iTau, const bool warn = true);
 
   //copy constructor
   GenTauDecayID(const GenTauDecayID&);
@@ -39,16 +41,52 @@ class GenTauDecayID {
   edm::Handle<reco::GenParticleCollection> getGenParticleHandle() const;
 
   //getter for tau index
-  const unsigned int getTauIndex() const;
+  unsigned int getTauIndex() const;
 
   //getter for tau sister index; warning suppressed for copy constructor and assignment operator
-  const unsigned int getSisterIndex(const bool warn = true) const;
+  unsigned int getSisterIndex(const bool warn = true) const;
+
+  //getter for visible tau 4-vector
+  reco::LeafCandidate::LorentzVector getVisibleTauP4(const bool warn = true) const;
+
+  //getter for visible tau sister 4-vector
+  reco::LeafCandidate::LorentzVector getVisibleTauSisterP4(const bool warn = true) const;
+
+  //getter for overall tau decay type
+  DecayType getTauDecayType(const bool warn = true) const;
+
+  //getter for overall tau sister decay type
+  DecayType getTauSisterDecayType(const bool warn = true) const;
+
+  //getter for hadronic tau decay type
+  reco::PFTau::hadronicDecayMode getTauHadronicDecayType(const bool warn = true) const;
+
+  //getter for hadronic tau sister decay type
+  reco::PFTau::hadronicDecayMode getTauSisterHadronicDecayType(const bool warn = true) const;
+
+  //getter for charged hadron min pT
+  double getChargedHadronPTMin() const;
+
+  //getter for neutral hadron min pT
+  double getNeutralHadronPTMin() const;
+
+  //getter for charged lepton min pT
+  double getChargedLeptonPTMin() const;
+
+  //getter for total min pT of visible decay products
+  double getTotalPTMin() const;
 
   //true if parameter set has been unpacked
   bool unpacked() const;
 
-  //true if pGenParticles_ points to a valid handle
-  bool validHandle() const;
+  //true if sister has been found
+  bool foundSister() const;
+
+  //true if visible decay products have been found
+  bool foundVisibleDecayProducts() const;
+
+  //true if sister visible decay products have been found
+  bool foundSisterVisibleDecayProducts() const;
 
   //find sister
   void findSister();
@@ -57,10 +95,24 @@ class GenTauDecayID {
   bool tauIsStatus3DecayProduct() const;
 
   //get tau decay type
-  unsigned int tauDecayType() const;
+  DecayType tauDecayType() const;
 
   //get tau sister decay type
-  unsigned int sisterDecayType() const;
+  DecayType sisterDecayType() const;
+
+  //get tau hadronic decay type
+  reco::PFTau::hadronicDecayMode tauHadronicDecayType(const bool countKShort = false) const;
+
+  //get tau sister hadronic decay type
+  reco::PFTau::hadronicDecayMode sisterHadronicDecayType(const bool countKShort = false) const;
+
+  /*get fully specified tau decay type, with option to only consider a decay type as valid if pT 
+    cuts on the decay products and on the total visible pT are passed*/
+  std::pair<reco::PFTau::hadronicDecayMode, DecayType> tauDecayType(const bool, const bool);
+
+  /*get fully specified tau sister decay type, with option to only consider a decay type as valid 
+    if pT cuts on the decay products and on the total visible pT are passed*/
+  std::pair<reco::PFTau::hadronicDecayMode, DecayType> sisterDecayType(const bool, const bool);
 
  private:
 
@@ -77,7 +129,37 @@ class GenTauDecayID {
   unsigned int iSister_;
 
   //PDG ID of tau mother
-  unsigned int momPDGID_;
+  int momPDGID_;
+
+  //visible 4-vector of tau
+  reco::LeafCandidate::LorentzVector visibleTauP4_;
+
+  //visible 4-vector of tau sister
+  reco::LeafCandidate::LorentzVector visibleTauSisterP4_;
+
+  //overall decay type of tau
+  DecayType tauDecayType_;
+
+  //overall decay type of tau sister
+  DecayType tauSisterDecayType_;
+
+  //hadronic decay type of tau
+  reco::PFTau::hadronicDecayMode tauHadronicDecayType_;
+
+  //hadronic decay type of tau sister
+  reco::PFTau::hadronicDecayMode tauSisterHadronicDecayType_;
+
+  //minimum pT to be counted as a charged hadron in hadronic tau decay
+  double chargedHadronPTMin_;
+
+  //minimum pT to be counted as a neutral hadron in hadronic tau decay
+  double neutralHadronPTMin_;
+
+  //minimum pT to be counted as a charged lepton in leptonic tau decay or mother decay
+  double chargedLeptonPTMin_;
+
+  //minimum pT of the visible tau decay products or gen lepton from mother decay
+  double totalPTMin_;
 
   //true if parameter set has been unpacked
   bool unpacked_;
@@ -88,20 +170,62 @@ class GenTauDecayID {
   //true if tau sister has been found
   bool foundSister_;
 
+  //true if visible decay products have been found
+  bool foundVisibleDecayProducts_;
+
+  //true if sister visible decay products have been found
+  bool foundSisterVisibleDecayProducts_;
+
   //unpack parameter set
-  void unpackParSet();
+  void unpackParSet(const bool warn = true);
 
   //find sister decay product
   int sister() const;
 
   //classify decay for given particle index
-  unsigned int decayType(const unsigned int) const;
+  DecayType decayType(const unsigned int) const;
+
+  /*recursively find the total number of charged and neutral hadrons in a tau decay, optionally 
+    counting Kshorts*/
+  void numChargedAndNeutralHadronsInTauDecay(const reco::GenParticleRef&, unsigned int&, 
+					     unsigned int&, const bool) const;
+
+  //classify hadronic decay
+  reco::PFTau::hadronicDecayMode hadronicDecayType(const unsigned int, const bool) const;
+
+  /*recursively find the total number of charged and neutral hadrons and charged leptons in a tau 
+    decay, optionally counting Kshorts as neutral hadrons and applying pT cuts, and return a 
+    4-vector sum of the visible decay products*/
+  reco::LeafCandidate::LorentzVector numAndP4VisibleDecayProducts(const reco::GenParticleRef&, 
+								  unsigned int&, unsigned int&, 
+								  unsigned int&, unsigned int&, 
+								  const bool, const bool) const;
+
+  //get decay type and p4 of visible decay products
+  void decayTypeAndVisibleP4(const unsigned int, reco::LeafCandidate::LorentzVector&, 
+			     std::pair<reco::PFTau::hadronicDecayMode, DecayType>&, const bool, 
+			     const bool) const;
+
+  //classify decay with pT cuts on visible decay products
+  //need to add a flag to indicate when iParticle does not refer to a tau
+  std::pair<reco::PFTau::hadronicDecayMode, DecayType>
+    decayTypeWithPTCuts(const unsigned int, const bool, const bool, 
+			reco::LeafCandidate::LorentzVector&);
+
+  //uniquely classify tau decay
+  std::pair<reco::PFTau::hadronicDecayMode, DecayType> decayType(const unsigned int, 
+							    const unsigned int, 
+							    const unsigned int, 
+							    const unsigned int) const;
 
   //warning that sister was never found
   std::string warnSisterNeverFound(const std::string&) const;
 
-  //warning that mother PDG ID could not be found
-  std::string warnMomPDGIDNotFound(const std::string&) const;
+  //warning that parameter could not be found
+  std::string warnParameterNotFound(const std::string&, const std::string&) const;
+
+  //warning that tau visible decay products were never found
+  std::string warnVisibleDecayProductsNeverFound(const std::string&) const;
 
   //error that sister could not be found
   std::string errorSisterNotFound(const std::string&, const unsigned int) const;
@@ -118,6 +242,12 @@ class GenTauDecayID {
   //error that number of daughters is unexpected
   std::string errorUnexpectedNumDaughters(const std::string&, const unsigned int) const;
 
+  //error that numbers of types of decay particles are inconsistent with a tau decay
+  std::string errorInvalidTauDecay(const std::string&, const unsigned int, const unsigned int, 
+				   const unsigned int, const unsigned int) const;
+
+  //error that 2 4-vectors that are supposed to be equal aren't
+  std::string errorUnequalP4(const std::string&) const;
 };
 
 #endif
