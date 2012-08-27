@@ -63,7 +63,7 @@ class HadronicTauDecayFinder : public edm::EDFilter {
 
       //input
       edm::InputTag genParticleTag_;
-      unsigned int momPDGID_;
+      int momPDGID_;
       double maxAbsEta_;
       edm::ParameterSet* cfg_;
 
@@ -82,7 +82,7 @@ class HadronicTauDecayFinder : public edm::EDFilter {
 //
 HadronicTauDecayFinder::HadronicTauDecayFinder(const edm::ParameterSet& iConfig) :
   genParticleTag_(iConfig.getParameter<edm::InputTag>("genParticleTag")),
-  momPDGID_(iConfig.getParameter<unsigned int>("momPDGID")),
+  momPDGID_(iConfig.getParameter<int>("momPDGID")),
   maxAbsEta_(iConfig.getParameter<double>("maxAbsEta")),
   cfg_(const_cast<edm::ParameterSet*>(&iConfig))
 {
@@ -121,9 +121,9 @@ HadronicTauDecayFinder::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
    reco::GenParticleCollection::const_iterator iGenParticle = pGenParticles->begin();
    while ((iGenParticle != pGenParticles->end()) && !foundGenTauOutsideEtaAcceptance) {
 
-     //instantiate GenTauDecayID object
+     //instantiate GenTauDecayID object, turning off warnings for missing pT cut parameters
      try {
-       GenTauDecayID tauDecay(*cfg_, pGenParticles, iGenParticle - pGenParticles->begin());
+       GenTauDecayID tauDecay(*cfg_, pGenParticles, iGenParticle - pGenParticles->begin(), false);
 
        //look for a status 3 tau from boson decay
        if (tauDecay.tauIsStatus3DecayProduct()) {
