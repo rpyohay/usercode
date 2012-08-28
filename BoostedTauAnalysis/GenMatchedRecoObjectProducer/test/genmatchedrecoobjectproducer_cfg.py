@@ -47,19 +47,22 @@ process.genMuTauMatchedMuonSelector = cms.EDFilter('GenMatchedMuonProducer',
                                                    countKShort = cms.bool(True)
                                                    )
 
-#add a collection of tight muons matched to gen muonic tau decays matched to trigger objects
+#add a collection of tight muons matched to gen muonic tau decays matched to 8 GeV trigger muons
 process.triggerMatchedMuonSelector = cms.EDProducer(
     'trgMatchedMuonProducer',
     InputProducer = cms.InputTag('genMuTauMatchedMuonSelector'),
     hltTags = cms.VInputTag(cms.InputTag('HLT_Mu17_Mu8_v16', '', 'HLT')),
+    isTriggerFilter = cms.untracked.bool(True),
+    HLTSubFilters = cms.untracked.VInputTag("hltL3pfL1DoubleMu10MuOpenL1f0L2pf0L3PreFiltered8")
+    )
     
-
 process.out = cms.OutputModule("PoolOutputModule",
                                fileName = cms.untracked.string('/data1/yohay/debug.root'),
                                SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring('p'))
                                )
 
   
-process.p = cms.Path(process.tightMuonSelector*process.genMuTauMatchedMuonSelector)
+process.p = cms.Path(process.tightMuonSelector*process.genMuTauMatchedMuonSelector*
+                     process.triggerMatchedMuonSelector)
 
 process.e = cms.EndPath(process.out)
