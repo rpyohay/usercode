@@ -2,6 +2,7 @@
 <use name="FWCore/PluginManager"/>
 <use name="FWCore/ParameterSet"/>
 <use name="DataFormats/MuonReco"/>
+<use name="DataFormats/TauReco"/>
 <use name="BoostedTauAnalysis/Common"/>
 <use name="root"/>
 <use name="rootgraphics"/>
