@@ -274,7 +274,7 @@ ErrorCode plotMultiple1DHistogramsDifferentFiles(TFile& out, map<pair<string, st
       TH1F* hist = NULL;
       in->GetObject(canvas1DName.c_str(), hist);
       if (hist == NULL) {
-	cerr << errorCannotRetrieveObject(fnName, in.GetName(), canvas1DName);
+	cerr << errorCannotRetrieveObject(fnName, in->GetName(), canvas1DName);
 	return CANNOT_RETRIEVE_OBJECT;
       }
 
@@ -364,7 +364,6 @@ void plotNiceDifferentFiles(map<pair<string, string>, vector<pair<pair<TFile*, O
   TFile out(outputFileName.c_str(), "RECREATE");
   if (!out.IsOpen()) {
     cerr << errorCannotOpenFile(fnName, outputFileName);
-    in.Close();
     return;
   }
 
