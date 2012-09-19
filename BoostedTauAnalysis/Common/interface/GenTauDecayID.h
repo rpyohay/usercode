@@ -15,7 +15,10 @@ class GenTauDecayID {
 		      ZPDGID = 23,          APDGID = 36};
 
   //decay types
-  enum DecayType {HAD = 0, MU, E, UNKNOWN};
+  enum DecayType {HAD = 0, MU, E, UNKNOWN, NOT_TAU};
+
+  //pT rank
+  enum PTRank {ANY_PT_RANK = -1};
 
   //default constructor
   GenTauDecayID();
@@ -88,11 +91,17 @@ class GenTauDecayID {
   //true if sister visible decay products have been found
   bool foundSisterVisibleDecayProducts() const;
 
+  //true if pT rank has been set
+  bool pTRankSet() const;
+
   //find sister
   void findSister();
 
   //is tau a status 3 decay product?
   bool tauIsStatus3DecayProduct() const;
+
+  //is particle a status 3 decay product, optionally only consider particles with given PDG ID
+  bool isStatus3DecayProduct(const int PDGID = 0) const;
 
   //get tau decay type
   DecayType tauDecayType() const;
@@ -113,6 +122,14 @@ class GenTauDecayID {
   /*get fully specified tau sister decay type, with option to only consider a decay type as valid 
     if pT cuts on the decay products and on the total visible pT are passed*/
   std::pair<reco::PFTau::hadronicDecayMode, DecayType> sisterDecayType(const bool, const bool);
+
+  /*get pT rank (i.e. 0 means highest pT object with specified mother, 1 means 2nd highest pT 
+    object with specified mother, etc.)*/
+  unsigned int getPTRank(const bool warn = true) const;
+
+  /*set pT rank (i.e. 0 means highest pT object with specified mother, 1 means 2nd highest pT 
+    object with specified mother, etc.)*/
+  void setPTRank(const unsigned int);
 
  private:
 
@@ -161,6 +178,9 @@ class GenTauDecayID {
   //minimum pT of the visible tau decay products or gen lepton from mother decay
   double totalPTMin_;
 
+  //pT rank of this object in the event
+  unsigned int pTRank_;
+
   //true if parameter set has been unpacked
   bool unpacked_;
 
@@ -175,6 +195,9 @@ class GenTauDecayID {
 
   //true if sister visible decay products have been found
   bool foundSisterVisibleDecayProducts_;
+
+  //true if pT rank was set
+  bool pTRankSet_;
 
   //unpack parameter set
   void unpackParSet(const bool warn = true);
@@ -218,6 +241,10 @@ class GenTauDecayID {
 							    const unsigned int, 
 							    const unsigned int) const;
 
+  //if particle is not a tau, set visible 4-vector to its 4-vector and set the necessary flags true
+  void checkIfTau(const unsigned int, reco::LeafCandidate::LorentzVector&, DecayType&, 
+		  reco::PFTau::hadronicDecayMode&, bool&);
+
   //warning that sister was never found
   std::string warnSisterNeverFound(const std::string&) const;
 
@@ -226,6 +253,9 @@ class GenTauDecayID {
 
   //warning that tau visible decay products were never found
   std::string warnVisibleDecayProductsNeverFound(const std::string&) const;
+
+  //warning that pT rank was not set
+  std::string warnPTRankNotSet(const std::string&) const;
 
   //error that sister could not be found
   std::string errorSisterNotFound(const std::string&, const unsigned int) const;
