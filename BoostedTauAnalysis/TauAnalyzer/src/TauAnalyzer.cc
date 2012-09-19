@@ -13,7 +13,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id$
+// $Id: TauAnalyzer.cc,v 1.3 2012/08/27 14:55:29 yohay Exp $
 //
 //
 
@@ -425,7 +425,8 @@ TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
   /*create a collection of muons passing the 2012 tight selection (cf. 
     https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId)*/
-  std::vector<reco::Muon*> tightMuons = Common::getTightRecoMuons(pMuons, pPV);
+  std::vector<reco::Muon*> tightMuons = 
+    Common::getTightPFIsolatedRecoMuons(pMuons, pPV, 0.5, -1.0, -1.0, true);
 
   //create an STL container of jets
   std::vector<reco::PFJet*> jets;

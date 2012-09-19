@@ -3,6 +3,7 @@
 <use name="FWCore/ParameterSet"/>
 <use name="DataFormats/MuonReco"/>
 <use name="DataFormats/TauReco"/>
+<use name="DataFormats/METReco"/>
 <use name="BoostedTauAnalysis/Common"/>
 <use name="root"/>
 <use name="rootgraphics"/>
