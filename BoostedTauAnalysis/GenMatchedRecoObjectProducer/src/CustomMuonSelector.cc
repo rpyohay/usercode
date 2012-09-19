@@ -15,7 +15,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Fri Aug 24 17:10:12 CEST 2012
-// $Id$
+// $Id: CustomMuonSelector.cc,v 1.1 2012/08/27 14:45:48 yohay Exp $
 //
 //
 
@@ -63,6 +63,26 @@ private:
   //input tag for reco vertex collection
   edm::InputTag vtxTag_;
 
+  //PF isolation cut
+  double PFIsoMax_;
+
+  //detector isolation cut
+  double detectorIsoMax_;
+
+  //PU subtraction coefficient for PF isolation
+  double PUSubtractionCoeff_;
+
+  //flag indicating whether PF isolation or detector isolation should be used
+  bool usePFIso_;
+
+  //flag indicating whether the selected muons should pass the isolation cut
+  bool passIso_;
+
+  //|eta| cut
+  double etaMax_;
+
+  //minimum number of objects that must be found to pass the filter
+  unsigned int minNumObjsToPassFilter_;
 };
 
 //
@@ -78,7 +98,14 @@ private:
 //
 CustomMuonSelector::CustomMuonSelector(const edm::ParameterSet& iConfig) :
   muonTag_(iConfig.getParameter<edm::InputTag>("muonTag")),
-  vtxTag_(iConfig.getParameter<edm::InputTag>("vtxTag"))
+  vtxTag_(iConfig.getParameter<edm::InputTag>("vtxTag")),
+  PFIsoMax_(iConfig.getParameter<double>("PFIsoMax")),
+  detectorIsoMax_(iConfig.getParameter<double>("detectorIsoMax")),
+  PUSubtractionCoeff_(iConfig.getParameter<double>("PUSubtractionCoeff")),
+  usePFIso_(iConfig.getParameter<bool>("usePFIso")),
+  passIso_(iConfig.getParameter<bool>("passIso")),
+  etaMax_(iConfig.getParameter<double>("etaMax")),
+  minNumObjsToPassFilter_(iConfig.getParameter<unsigned int>("minNumObjsToPassFilter"))
 {
   produces<reco::MuonCollection>();
 }
@@ -114,17 +141,30 @@ bool CustomMuonSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetu
   //identify the first good vertex (the "primary" (?))
   reco::Vertex* pPV = Common::getPrimaryVertex(pVertices);
 
-  /*fill STL container with muons passing the 2012 tight selection 
-    (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId)*/
-  std::vector<reco::Muon*> tightMuons = Common::getTightRecoMuons(pMuons, pPV);
+  /*fill STL container with muons passing the 2012 tight selection, PF isolation, and |eta| 
+    (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId and 
+    https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Muon_Isolation_AN1)*/
+  std::vector<reco::Muon*> tightMuons;
+  if (usePFIso_) {
+    tightMuons = Common::getTightPFIsolatedRecoMuons(pMuons, pPV, PUSubtractionCoeff_, PFIsoMax_, 
+						     etaMax_, passIso_);
+  }
+
+  /*fill STL container with muons passing the 2012 tight selection, detector isolation, and |eta| 
+    (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId and 
+    https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Muon_Isolation_AN1)*/
+  else {
+    tightMuons = 
+      Common::getTightDetectorIsolatedRecoMuons(pMuons, pPV, detectorIsoMax_, etaMax_, passIso_);
+  }
 
   //fill output collection
   for (std::vector<reco::Muon*>::const_iterator iMuon = tightMuons.begin(); 
        iMuon != tightMuons.end(); ++iMuon) { muonColl->push_back(**iMuon); }
   iEvent.put(muonColl);
 
-  //if no muons passing cuts were found in this event, stop processing
-  return (tightMuons.size() > 0);
+  //if not enough muons passing cuts were found in this event, stop processing
+  return (tightMuons.size() >= minNumObjsToPassFilter_);
 }
 
 // ------------ method called once each job just before starting event loop  ------------

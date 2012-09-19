@@ -9,13 +9,12 @@
 Description: produce a collection of reco objects matched to gen boosted di-tau objects
 
 Implementation:
-this module is designed to only match the primary object of the boosted di-tau pair, so it 
-has to be run again with the sister designated as the primary to do sister matching
+
 */
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Thu Aug 23 11:23:58 CEST 2012
-// $Id$
+// $Id: GenMatchedRecoObjectProducer.cc,v 1.1 2012/08/27 14:45:48 yohay Exp $
 //
 //
 
@@ -35,7 +34,6 @@ has to be run again with the sister designated as the primary to do sister match
 #include "DataFormats/Math/interface/deltaR.h"
 #include "BoostedTauAnalysis/Common/interface/Common.h"
 #include "DataFormats/MuonReco/interface/Muon.h"
-
 
 //
 // class declaration
@@ -61,41 +59,45 @@ private:
 
   // ----------member data ---------------------------
 
-  //input tag for gen particle collection
+  //input tag for base gen particle collection
   edm::InputTag genParticleTag_;
+
+  /*input tag for gen particle collection to match
+    count on the user to pass in a collection that will not lead to the same reco object being 
+    matched to multiple different gen objects
+    for example, if the input object is a boosted di-tau pair, only 1 member of the pair should be 
+    in the input collection*/
+  edm::InputTag selectedGenParticleTag_;
 
   //input tag reco object collection
   edm::InputTag recoObjTag_;
 
-  //PDG ID of mother of gen matching object
-  int momPDGID_;
-
-  //decay type of one member of the tau pair, arbitrarily designated the primary
-  GenTauDecayID::DecayType primaryTauDecayType_;
-
-  //decay type of the second member of the tau pair, arbitrarily designated the sister
-  GenTauDecayID::DecayType sisterTauDecayType_;
-
-  //minimum pT to be counted as a charged hadron in hadronic tau decay
-  double chargedHadronPTMin_;
-
-  //minimum pT to be counted as a neutral hadron in hadronic tau decay
-  double neutralHadronPTMin_;
-
-  //minimum pT to be counted as a charged lepton in leptonic tau decay or mother decay
-  double chargedLeptonPTMin_;
-
-  //minimum pT of the visible tau decay products or gen lepton from mother decay
-  double totalPTMin_;
+  //set of parameters for GenTauDecayID class
+  edm::ParameterSet genTauDecayIDPSet_;
 
   //flag indicating whether pT cuts should be applied in determining valid gen objects
   bool applyPTCuts_;
 
   //flag indicating whether KShorts should be counted as neutral hadrons
-  double countKShort_;
+  bool countKShort_;
 
-  //pointer to the parameter set supplied to this module
-  edm::ParameterSet* cfg_;
+  //pT rank of the matched reco object in the event
+  int pTRank_;
+
+  //flag indicating whether all collections should be produced or just 1
+  bool makeAllCollections_;
+
+  //flag indicating whether pT rank should be assessed against reco object or matching gen object
+  bool useGenObjPTRank_;
+
+  //number of output collections in the makeAllCollections_ = true case
+  unsigned int nOutputColls_;
+
+  //dR matching cut
+  double dR_;
+
+  //minimum number of gen objects passing cuts that must be found for event to pass filter
+  unsigned int minNumGenObjectsToPassFilter_;
 };
 
 //
@@ -113,22 +115,28 @@ private:
 template<class T>
 GenMatchedRecoObjectProducer<T>::GenMatchedRecoObjectProducer(const edm::ParameterSet& iConfig) :
   genParticleTag_(iConfig.getParameter<edm::InputTag>("genParticleTag")),
+  selectedGenParticleTag_(iConfig.getParameter<edm::InputTag>("selectedGenParticleTag")),
   recoObjTag_(iConfig.getParameter<edm::InputTag>("recoObjTag")),
-  momPDGID_(iConfig.getParameter<int>("momPDGID")),
-  primaryTauDecayType_(static_cast<GenTauDecayID::DecayType>
-		       (iConfig.getParameter<unsigned int>("primaryTauDecayType"))),
-  sisterTauDecayType_(static_cast<GenTauDecayID::DecayType>
-		      (iConfig.getParameter<unsigned int>("sisterTauDecayType"))),
-  chargedHadronPTMin_(iConfig.getParameter<double>("chargedHadronPTMin")),
-  neutralHadronPTMin_(iConfig.getParameter<double>("neutralHadronPTMin")),
-  chargedLeptonPTMin_(iConfig.getParameter<double>("chargedLeptonPTMin")),
-  totalPTMin_(iConfig.getParameter<double>("totalPTMin")),
+  genTauDecayIDPSet_(iConfig.getParameter<edm::ParameterSet>("genTauDecayIDPSet")),
   applyPTCuts_(iConfig.getParameter<bool>("applyPTCuts")),
   countKShort_(iConfig.getParameter<bool>("countKShort")),
-  cfg_(const_cast<edm::ParameterSet*>(&iConfig))
+  pTRank_(iConfig.getParameter<int>("pTRank")),
+  makeAllCollections_(iConfig.getParameter<bool>("makeAllCollections")),
+  useGenObjPTRank_(iConfig.getParameter<bool>("useGenObjPTRank")),
+  nOutputColls_(iConfig.getParameter<unsigned int>("nOutputColls")),
+  dR_(iConfig.getParameter<double>("dR")),
+  minNumGenObjectsToPassFilter_
+  (iConfig.getParameter<unsigned int>("minNumGenObjectsToPassFilter"))
 {
   //register your products
-  produces<std::vector<T> >();
+  if (makeAllCollections_) {
+    for (unsigned int i = 0; i < nOutputColls_; ++i) {
+      std::stringstream instance;
+      instance << "coll" << i;
+      produces<edm::RefVector<std::vector<T> > >(instance.str());
+    }
+  }
+  else produces<edm::RefVector<std::vector<T> > >();
 
   //now do what ever other initialization is needed
   
@@ -153,110 +161,177 @@ GenMatchedRecoObjectProducer<T>::~GenMatchedRecoObjectProducer()
 template<class T>
 bool GenMatchedRecoObjectProducer<T>::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
-  //get GEN particles
+  //get base gen particles
   edm::Handle<reco::GenParticleCollection> pGenParticles;
   iEvent.getByLabel(genParticleTag_, pGenParticles);
+
+  //get selected gen particles
+  edm::Handle<reco::GenParticleRefVector> pSelectedGenParticles;
+  iEvent.getByLabel(selectedGenParticleTag_, pSelectedGenParticles);
 
   //get reco object collection
   edm::Handle<std::vector<T> > pRecoObjs;
   iEvent.getByLabel(recoObjTag_, pRecoObjs);
 
-//   //get HPS discriminators
-//   for (std::vector<InputTag>::const_iterator 
-// 	 iHPSDiscriminatorTag = HPSDiscriminatorTags_.begin(); 
-//        iHPSDiscriminatorTag != HPSDiscriminatorTags_.end(); ++iHPSDiscriminatorTag) {
-//     edm::Handle<reco::PFTauDiscriminator> pHPSDiscriminator;
-//     iEvent.getByLabel(*iHPSDiscriminatorTag, pHPSDiscriminator);
-//     HPSDiscriminators_[iHPSDiscriminatorTag->label()] = pHPSDiscriminator;
-//   }
-
-//   //fill STL container with HPS taus passing desired discriminators
-//   std::vector<reco::PFTau*> HPSTaus;
-//   for (reco::PFTauCollection::const_iterator iTau = pTaus->begin(); iTau != pTaus->end(); 
-//        ++iTau) {
-//     reco::PFTauRef tauRef(pTaus, iTau - pTaus->begin());
-//     bool passFlag = true;
-//     std::map<std::string, edm::Handle<reco::PFTauDiscriminator> >::const_iterator iHPSDiscriminator = 
-//       HPSDiscriminators_.begin();
-//     while ((iHPSDiscriminator != HPSDiscriminators_.end()) && passFlag) {
-//       if ((*(iHPSDiscriminator->second))[tauRef] != 1.0) passFlag = false;
-//       ++iHPSDiscriminator;
-//     }
-//     if (passFlag) HPSTaus.push_back(const_cast<reco::PFTau>(&*iTau));
-//   }
-
-//fill STL container of pointers to reco objects
+  //fill STL container of pointers to reco objects
   std::vector<T*> recoObjPtrs;
   for (typename std::vector<T>::const_iterator iRecoObj = pRecoObjs->begin(); 
        iRecoObj != pRecoObjs->end(); ++iRecoObj) {
     recoObjPtrs.push_back(const_cast<T*>(&*iRecoObj));
   }
 
-  //fill STL container of gen tau decays
-  std::vector<GenTauDecayID> tauDecays;
-  for (reco::GenParticleCollection::const_iterator iGenParticle = pGenParticles->begin(); 
-       iGenParticle != pGenParticles->end(); ++iGenParticle) {
+  //make a copy of the reco object vector
+  std::vector<T*> recoObjPtrsCopy = recoObjPtrs;
+
+  //sort the reco objects in the copied vector by ascending order by pT in the copied vector
+  Common::sortByPT(recoObjPtrsCopy);
+
+  //fill STL container of selected gen objects
+  std::vector<GenTauDecayID> selectedGenObjs;
+  for (unsigned int iGenParticle = 0; iGenParticle < pSelectedGenParticles->size(); 
+       ++iGenParticle) {
     try {
-      GenTauDecayID tauDecay(*cfg_, pGenParticles, iGenParticle - pGenParticles->begin());
-      if (tauDecay.tauIsStatus3DecayProduct()) tauDecays.push_back(tauDecay);
+
+      //status 2 gen particles in the selected gen particle collection are not supported
+      GenTauDecayID tauDecay(genTauDecayIDPSet_, pGenParticles, 
+			     Common::getStatus3Key(pSelectedGenParticles, pGenParticles, 
+						   iGenParticle));
+      if (tauDecay.isStatus3DecayProduct()) selectedGenObjs.push_back(tauDecay);
     }
     catch (std::string& ex) { throw cms::Exception("GenMatchedRecoObjectProducer") << ex; }
   }
 
-  //fill STL container of gen muons (i.e. from a-->mumu)
+  /*find the decay type of each gen object if it's a tau (needed to get the visible 
+    4-vector), otherwise use the status 3 4-vector*/
+  for (std::vector<GenTauDecayID>::iterator iGenObj = selectedGenObjs.begin(); 
+       iGenObj != selectedGenObjs.end(); ++iGenObj) {
+    try { iGenObj->tauDecayType(applyPTCuts_, countKShort_); }
+    catch (std::string& ex) { throw cms::Exception("GenObjectProducer") << ex; }
+  }
+
+  //sort the gen objects in ascending order by visible pT
+  Common::sortByPT(selectedGenObjs);
+
+  //set the pT rank of the a decay product (highest rank is 0, next highest is 1, etc.)
+  for (std::vector<GenTauDecayID>::iterator iGenObj = selectedGenObjs.begin(); 
+       iGenObj != selectedGenObjs.end(); ++iGenObj) {
+    iGenObj->setPTRank(selectedGenObjs.end() - iGenObj - 1);
+  }
 
   //declare pointers to output collection to produce
-  std::auto_ptr<std::vector<T> > genMatchedRecoObjs(new std::vector<T>);
-
-  //loop over gen tau decays
-  std::vector<unsigned int> keysToIgnore;
-  for (std::vector<GenTauDecayID>::iterator iTau = tauDecays.begin(); iTau != tauDecays.end(); 
-       ++iTau) {
-    try {
-
-      /*select gen tau decays of the desired type, passing desired pT cut, with the desired sister 
-	decay type*/
-      if (iTau->tauDecayType(applyPTCuts_, countKShort_).second == primaryTauDecayType_) {
-	iTau->findSister();
-	const unsigned int iSister = iTau->getSisterIndex();
-	if ((std::find(keysToIgnore.begin(), keysToIgnore.end(), iSister) == 
-	     keysToIgnore.end()) && /*keysToIgnore keeps track of whether you've looped over the 
-				      other half of the boosted di-tau pair before*/
-	    (iTau->sisterDecayType(applyPTCuts_, countKShort_).second == sisterTauDecayType_)) {
-
-	  //will the following work if the gen object to match is not a tau?
-
-	  //get the 4-vector of the visible decay products of the tau
-	  reco::LeafCandidate::LorentzVector visibleGenP4 = iTau->getVisibleTauP4();
-
-	  //make a dummy LeafCandidate and ref out of the visible 4-vector
-	  std::vector<reco::LeafCandidate> 
-	    visibleGenTau(1, reco::LeafCandidate(0.0, visibleGenP4));
-	  edm::Ref<std::vector<reco::LeafCandidate> > visibleGenTauRef(&visibleGenTau, 0);
-
-	  //find the nearest reco object to the gen tau
-	  unsigned int nearestRecoObjKey = 0;
-	  const T* nearestRecoObj = 
-	    Common::nearestObject(visibleGenTauRef, recoObjPtrs, nearestRecoObjKey);
-
-	  //if nearest reco object is within 0.3 of the gen tau, save this reco object
-	  if (reco::deltaR(*nearestRecoObj, *visibleGenTauRef) < 0.3) {
-	    genMatchedRecoObjs->push_back(*nearestRecoObj);
-	  }
-	}
-
-	//add this tau's key to the list of keys to ignore when we get to its sister
-	keysToIgnore.push_back(iTau->getTauIndex());
-      }
-    }
-    catch (std::string& ex) { throw cms::Exception("GenMatchedRecoObjectProducer") << ex; }
+  std::vector<std::auto_ptr<edm::RefVector<std::vector<T> > > > genMatchedRecoObjs;
+  for (unsigned int i = 0; i < nOutputColls_; ++i) {
+    genMatchedRecoObjs.push_back(std::auto_ptr<edm::RefVector<std::vector<T> > >
+				 (new edm::RefVector<std::vector<T> >));
   }
 
-  //flag indicating whether >0 gen-matched reco objects were found
-  const bool foundGenMatchedRecoObject = genMatchedRecoObjs->size() > 0;
+  //debug
+  std::vector<edm::Ref<std::vector<T> > > recoObjsToSave;
+
+  //loop over selected gen particles
+  for (std::vector<GenTauDecayID>::iterator iGenObj = selectedGenObjs.begin(); 
+       iGenObj != selectedGenObjs.end(); ++iGenObj) {
+
+    //make a dummy LeafCandidate and ref out of the visible 4-vector
+    reco::LeafCandidate::LorentzVector visibleGenP4 = iGenObj->getVisibleTauP4();
+    std::vector<reco::LeafCandidate> 
+      visibleGenParticle(1, reco::LeafCandidate(0.0, visibleGenP4));
+    edm::Ref<std::vector<reco::LeafCandidate> > visibleGenParticleRef(&visibleGenParticle, 0);
+
+    //find the nearest reco object to the gen particle
+    int nearestRecoObjPTRank = -1; /*this is the index into recoObjPtrsCopy of the nearest object
+				     since recoObjPtrsCopy is sorted in ascending order by pT, the 
+				     pT rank of the nearest object is recoObjPtrsCopy.size() - 
+				     nearestRecoObjPTRank - 1*/
+    const T* nearestRecoObj = 
+      Common::nearestObject(visibleGenParticleRef, recoObjPtrsCopy, nearestRecoObjPTRank);
+    if (nearestRecoObjPTRank != -1) {
+      nearestRecoObjPTRank = recoObjPtrsCopy.size() - nearestRecoObjPTRank - 1;
+    }
+
+    /*still need the index into the original collection pRecoObjs of the nearest object, so repeat 
+      call to nearestObject, but with original recoObjPtrs vector
+      ideally when sorting the vector in the first place we'd save the original object keys*/
+    int nearestRecoObjKey = -1;
+    nearestRecoObj = Common::nearestObject(visibleGenParticleRef, recoObjPtrs, nearestRecoObjKey);
+
+    //if nearest reco object is within dR_ of the gen object... 
+    bool save = false;
+    if ((nearestRecoObj != NULL) && 
+	(reco::deltaR(*nearestRecoObj, *visibleGenParticleRef) < dR_)) {
+      int matchedGenObjPTRank = (int)iGenObj->getPTRank();
+
+      /*...and in the case of makeAllCollections_ = true has a pT rank higher than or equal to the 
+	max supported, ...*/
+      if (makeAllCollections_) {
+
+	if ((useGenObjPTRank_ && /*debug*//*(matchedGenObjPTRank < nOutputColls_)*/true) || 
+	    (!useGenObjPTRank_ && 
+	     /*debug*//*(nearestRecoObjPTRank < nOutputColls_)*/true)) save = true;
+
+	//debug
+	recoObjsToSave.push_back(edm::Ref<std::vector<T> >(pRecoObjs, nearestRecoObjKey));
+      }
+
+      //or in the case of makeAllCollections_ = false, the pTRank is the one wanted, ...
+      else if ((pTRank_ == GenTauDecayID::ANY_PT_RANK) || 
+	       (useGenObjPTRank_ && (matchedGenObjPTRank == pTRank_)) || 
+	       (!useGenObjPTRank_ && (nearestRecoObjPTRank == pTRank_))) {
+	save = true;
+	nearestRecoObjPTRank = 0; /*since only 1 output collection is produced in this case, the 
+				    index into genMatchedRecoObjs should be 0*/
+
+	//debug
+	genMatchedRecoObjs[nearestRecoObjPTRank]->
+	  push_back(edm::Ref<std::vector<T> >(pRecoObjs, nearestRecoObjKey));
+      }
+    }
+
+//     //comment out following when debugging
+//     //...save this reco object
+//     if (save) {
+//       genMatchedRecoObjs[nearestRecoObjPTRank]->
+// 	push_back(edm::Ref<std::vector<T> >(pRecoObjs, nearestRecoObjKey));
+//     }
+  }
+
+  /*debug - here we pay no attention to the pT rank of the reco object among other reco object or 
+    the gen object among other gen objects, and just sort the passing reco objects by pT to 
+    determine their pT rank
+    for instance, if 2 reco objects passed and the leading one had pT rank 0 by the normal measure 
+    and the trailing one had pT rank 10 by the normal measure, the trailing one would be saved 
+    here as pT rank 1, instead of normally being discarded*/
+  Common::sortByPT(recoObjsToSave);
+  if (makeAllCollections_) {
+    for (unsigned int i = 0; i < nOutputColls_; ++i) {
+      if ((recoObjsToSave.size() - i - 1) < genMatchedRecoObjs.size()) {
+	genMatchedRecoObjs[i]->push_back(edm::Ref<std::vector<T> >
+					 (pRecoObjs, 
+					  recoObjsToSave[recoObjsToSave.size() - i - 1].key()));
+      }
+    }
+  }
+
+  //flag indicating whether right number of gen-matched reco objects were found
+  bool foundGenMatchedRecoObject = genMatchedRecoObjs[0]->size() >= minNumGenObjectsToPassFilter_;
+  if (makeAllCollections_) {
+    unsigned int iColl = 0;
+    while ((iColl < nOutputColls_) && foundGenMatchedRecoObject) {
+      foundGenMatchedRecoObject = 
+	genMatchedRecoObjs[iColl]->size() >= minNumGenObjectsToPassFilter_;
+      ++iColl;
+    }
+  }
 
   //put output collection into event
-  iEvent.put(genMatchedRecoObjs); //this function frees the auto_ptr argument
+  if (makeAllCollections_) {
+    for (unsigned int i = 0; i < nOutputColls_; ++i) {
+      std::stringstream instance;
+      instance << "coll" << i;
+      iEvent.put(genMatchedRecoObjs[i], instance.str());
+    }
+  }
+  else iEvent.put(genMatchedRecoObjs[0]); //this function frees the auto_ptr argument
 
   //stop processing if no gen-matched objects were found
   return foundGenMatchedRecoObject;
@@ -316,4 +391,8 @@ GenMatchedRecoObjectProducer<T>::fillDescriptions(edm::ConfigurationDescriptions
 
 //define this as a plug-in
 typedef GenMatchedRecoObjectProducer<reco::Muon> GenMatchedMuonProducer;
+typedef GenMatchedRecoObjectProducer<reco::PFJet> GenMatchedJetProducer;
+typedef GenMatchedRecoObjectProducer<reco::PFTau> GenMatchedTauProducer;
 DEFINE_FWK_MODULE(GenMatchedMuonProducer);
+DEFINE_FWK_MODULE(GenMatchedJetProducer);
+DEFINE_FWK_MODULE(GenMatchedTauProducer);
