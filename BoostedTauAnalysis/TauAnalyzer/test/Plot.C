@@ -135,6 +135,11 @@ ErrorCode plotEfficiency(TFile& in, TFile& out, const map<string, pair<string, s
     numeratorHist->GetYaxis()->SetRangeUser(0.0, 1.1);
     denominatorHist->GetYaxis()->SetRangeUser(0.0, 1.1);
 
+    //rebin
+    cerr << "Rebinning\n";
+    numeratorHist->Rebin(2);
+    denominatorHist->Rebin(2);
+
     //make efficiency histogram
     TGraphAsymmErrors effGraph(numeratorHist, denominatorHist);
     setGraphOptions(effGraph, kBlack, 0.7, 20, iEffHist->second.second.c_str(), "#epsilon");
@@ -384,5 +389,53 @@ void plotNiceDifferentFiles(map<pair<string, string>, vector<pair<pair<TFile*, O
       iHist->first.first->Close();
       delete iHist->first.first;
     }
+  }
+}
+
+//merge efficiency graphs from different files into one canvas
+void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName, 
+					   const vector<string>& inputFiles, 
+					   const vector<string>& canvasNames, 
+					   const vector<string>& graphNames, 
+					   const Color_t* colors, const Style_t* styles)
+{
+  TFile outStream(outputFileName.c_str(), "RECREATE");
+  vector<TFile*> inputStreams;
+  vector<TCanvas*> outputCanvases;
+  for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+       iCanvasName != canvasNames.end(); ++iCanvasName) {
+    outputCanvases.push_back(new TCanvas((*iCanvasName + "new").c_str(), "", 600, 600));
+    setCanvasOptions(*outputCanvases[outputCanvases.size() - 1], 1, 0, 0);
+  }
+  for (vector<string>::const_iterator iInputFile = inputFiles.begin(); 
+       iInputFile != inputFiles.end(); ++iInputFile) {
+    const unsigned int fileIndex = iInputFile - inputFiles.begin();
+    inputStreams.push_back(new TFile(iInputFile->c_str()));
+    for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+	 iCanvasName != canvasNames.end(); ++iCanvasName) {
+      const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
+      TCanvas* pCanvas;
+      inputStreams[inputStreams.size() - 1]->GetObject(iCanvasName->c_str(), pCanvas);
+      TGraphAsymmErrors* pGraph = 
+	(TGraphAsymmErrors*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
+      setGraphOptions(*pGraph, colors[fileIndex], 0.7, styles[fileIndex], 
+		      pGraph->GetXaxis()->GetTitle(), pGraph->GetYaxis()->GetTitle());
+      outStream.cd();
+      outputCanvases[canvasIndex]->cd();
+      if (fileIndex == 0) pGraph->Draw("AP");
+      else pGraph->Draw("PSAME");
+    }
+  }
+  outStream.cd();
+  for (vector<TCanvas*>::iterator iOutputCanvas = outputCanvases.begin(); 
+       iOutputCanvas != outputCanvases.end(); ++iOutputCanvas) { (*iOutputCanvas)->Write(); }
+  outStream.Write();
+  outStream.Close();
+  for (vector<TCanvas*>::iterator iOutputCanvas = outputCanvases.begin(); 
+       iOutputCanvas != outputCanvases.end(); ++iOutputCanvas) { delete *iOutputCanvas; }
+  for (vector<TFile*>::const_iterator iInputStream = inputStreams.begin(); 
+       iInputStream != inputStreams.end(); ++iInputStream) {
+    (*iInputStream)->Close();
+    delete *iInputStream;
   }
 }
