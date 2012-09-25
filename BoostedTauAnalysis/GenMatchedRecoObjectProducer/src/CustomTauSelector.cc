@@ -15,7 +15,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Fri Aug 24 17:10:12 CEST 2012
-// $Id: CustomTauSelector.cc,v 1.1 2012/08/27 14:45:48 yohay Exp $
+// $Id: CustomTauSelector.cc,v 1.1 2012/09/19 09:42:49 yohay Exp $
 //
 //
 
@@ -57,6 +57,9 @@ private:
   //input tag for reco tau collection
   edm::InputTag tauTag_;
 
+  //input tag for base tau collection
+  edm::InputTag baseTauTag_;
+
   //vector of input tags, 1 for each discriminator the tau should pass
   std::vector<edm::InputTag> tauDiscriminatorTags_;
 
@@ -79,12 +82,14 @@ private:
 // constructors and destructor
 //
 CustomTauSelector::CustomTauSelector(const edm::ParameterSet& iConfig) :
-  tauTag_(iConfig.getParameter<edm::InputTag>("tauTag")),
+  tauTag_(iConfig.existsAs<edm::InputTag>("tauTag") ? 
+	  iConfig.getParameter<edm::InputTag>("tauTag") : edm::InputTag()),
+  baseTauTag_(iConfig.getParameter<edm::InputTag>("baseTauTag")),
   tauDiscriminatorTags_(iConfig.getParameter<std::vector<edm::InputTag> >("tauDiscriminatorTags")),
   etaMax_(iConfig.getParameter<double>("etaMax")),
   minNumObjsToPassFilter_(iConfig.getParameter<unsigned int>("minNumObjsToPassFilter"))
 {
-  produces<reco::PFTauCollection>();
+  produces<reco::PFTauRefVector>();
 }
 
 
@@ -105,11 +110,16 @@ CustomTauSelector::~CustomTauSelector()
 bool CustomTauSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
   //create pointer to output collection
-  std::auto_ptr<reco::PFTauCollection> tauColl(new reco::PFTauCollection);
+  std::auto_ptr<reco::PFTauRefVector> tauColl(new reco::PFTauRefVector);
 
   //get taus
-  edm::Handle<reco::PFTauCollection> pTaus;
-  iEvent.getByLabel(tauTag_, pTaus);
+  edm::Handle<reco::PFTauRefVector> pTaus;
+  if (tauTag_ == edm::InputTag()) {}
+  else iEvent.getByLabel(tauTag_, pTaus);
+
+  //get base tau collection
+  edm::Handle<reco::PFTauCollection> pBaseTaus;
+  iEvent.getByLabel(baseTauTag_, pBaseTaus);
 
   //get tau discriminators
   std::vector<edm::Handle<reco::PFTauDiscriminator> > 
@@ -120,11 +130,13 @@ bool CustomTauSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
   }
 
   //fill STL container with taus passing specified discriminators in specified eta range
-  std::vector<reco::PFTau*> taus = Common::getRecoTaus(pTaus, pTauDiscriminators, etaMax_);
+  std::vector<reco::PFTauRef> taus = pTaus.isValid() ? 
+    Common::getRecoTaus(pTaus, pBaseTaus, pTauDiscriminators, etaMax_) : 
+    Common::getRecoTaus(pBaseTaus, pTauDiscriminators, etaMax_);
 
   //fill output collection
-  for (std::vector<reco::PFTau*>::const_iterator iTau = taus.begin(); iTau != taus.end(); 
-       ++iTau) { tauColl->push_back(**iTau); }
+  for (std::vector<reco::PFTauRef>::const_iterator iTau = taus.begin(); iTau != taus.end(); 
+       ++iTau) { tauColl->push_back(*iTau); }
   iEvent.put(tauColl);
 
   //if not enough taus passing cuts were found in this event, stop processing

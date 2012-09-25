@@ -14,7 +14,7 @@ Implementation:
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Thu Aug 23 11:23:58 CEST 2012
-// $Id: GenMatchedRecoObjectProducer.cc,v 1.1 2012/08/27 14:45:48 yohay Exp $
+// $Id: GenMatchedRecoObjectProducer.cc,v 1.2 2012/09/19 09:42:50 yohay Exp $
 //
 //
 
@@ -69,8 +69,11 @@ private:
     in the input collection*/
   edm::InputTag selectedGenParticleTag_;
 
-  //input tag reco object collection
+  //input tag for reco object collection
   edm::InputTag recoObjTag_;
+
+  //input tag for base reco object collection
+  edm::InputTag baseRecoObjTag_;
 
   //set of parameters for GenTauDecayID class
   edm::ParameterSet genTauDecayIDPSet_;
@@ -117,6 +120,7 @@ GenMatchedRecoObjectProducer<T>::GenMatchedRecoObjectProducer(const edm::Paramet
   genParticleTag_(iConfig.getParameter<edm::InputTag>("genParticleTag")),
   selectedGenParticleTag_(iConfig.getParameter<edm::InputTag>("selectedGenParticleTag")),
   recoObjTag_(iConfig.getParameter<edm::InputTag>("recoObjTag")),
+  baseRecoObjTag_(iConfig.getParameter<edm::InputTag>("baseRecoObjTag")),
   genTauDecayIDPSet_(iConfig.getParameter<edm::ParameterSet>("genTauDecayIDPSet")),
   applyPTCuts_(iConfig.getParameter<bool>("applyPTCuts")),
   countKShort_(iConfig.getParameter<bool>("countKShort")),
@@ -170,14 +174,18 @@ bool GenMatchedRecoObjectProducer<T>::filter(edm::Event& iEvent, const edm::Even
   iEvent.getByLabel(selectedGenParticleTag_, pSelectedGenParticles);
 
   //get reco object collection
-  edm::Handle<std::vector<T> > pRecoObjs;
+  edm::Handle<edm::RefVector<std::vector<T> > > pRecoObjs;
   iEvent.getByLabel(recoObjTag_, pRecoObjs);
+
+  //get base reco object collection
+  edm::Handle<std::vector<T> > pBaseRecoObjs;
+  iEvent.getByLabel(baseRecoObjTag_, pBaseRecoObjs);
 
   //fill STL container of pointers to reco objects
   std::vector<T*> recoObjPtrs;
-  for (typename std::vector<T>::const_iterator iRecoObj = pRecoObjs->begin(); 
+  for (typename edm::RefVector<std::vector<T> >::const_iterator iRecoObj = pRecoObjs->begin(); 
        iRecoObj != pRecoObjs->end(); ++iRecoObj) {
-    recoObjPtrs.push_back(const_cast<T*>(&*iRecoObj));
+    recoObjPtrs.push_back(const_cast<T*>(iRecoObj->get()));
   }
 
   //make a copy of the reco object vector
@@ -257,7 +265,7 @@ bool GenMatchedRecoObjectProducer<T>::filter(edm::Event& iEvent, const edm::Even
 
     //if nearest reco object is within dR_ of the gen object... 
     bool save = false;
-    if ((nearestRecoObj != NULL) && 
+    if ((nearestRecoObj != NULL) && (nearestRecoObjPTRank >= 0) && 
 	(reco::deltaR(*nearestRecoObj, *visibleGenParticleRef) < dR_)) {
       int matchedGenObjPTRank = (int)iGenObj->getPTRank();
 
@@ -267,10 +275,17 @@ bool GenMatchedRecoObjectProducer<T>::filter(edm::Event& iEvent, const edm::Even
 
 	if ((useGenObjPTRank_ && /*debug*//*(matchedGenObjPTRank < nOutputColls_)*/true) || 
 	    (!useGenObjPTRank_ && 
-	     /*debug*//*(nearestRecoObjPTRank < nOutputColls_)*/true)) save = true;
+	     /*debug*//*(nearestRecoObjPTRank < (int)nOutputColls_)*/true)) save = true;
 
 	//debug
-	recoObjsToSave.push_back(edm::Ref<std::vector<T> >(pRecoObjs, nearestRecoObjKey));
+	/*nearestRecoObjKey is the index into recoObjPtrs of the matched object
+	  recoObjPtrs is in the same order as pRecoObjs
+	  the element of pRecoObjs with index nearestRecoObjKey is the ref of the matched object
+	  its key MUST BE the index into the original collection pBaseRecoObjs (or this fails)
+	  so, a ref to the original collection is saved*/
+	recoObjsToSave.
+	  push_back(edm::Ref<std::vector<T> >(pBaseRecoObjs, 
+					      pRecoObjs->at(nearestRecoObjKey).key()));
       }
 
       //or in the case of makeAllCollections_ = false, the pTRank is the one wanted, ...
@@ -283,7 +298,8 @@ bool GenMatchedRecoObjectProducer<T>::filter(edm::Event& iEvent, const edm::Even
 
 	//debug
 	genMatchedRecoObjs[nearestRecoObjPTRank]->
-	  push_back(edm::Ref<std::vector<T> >(pRecoObjs, nearestRecoObjKey));
+	  push_back(edm::Ref<std::vector<T> >(pBaseRecoObjs, 
+					      pRecoObjs->at(nearestRecoObjKey).key()));
       }
     }
 
@@ -291,7 +307,8 @@ bool GenMatchedRecoObjectProducer<T>::filter(edm::Event& iEvent, const edm::Even
 //     //...save this reco object
 //     if (save) {
 //       genMatchedRecoObjs[nearestRecoObjPTRank]->
-// 	push_back(edm::Ref<std::vector<T> >(pRecoObjs, nearestRecoObjKey));
+// 	push_back(edm::Ref<std::vector<T> >(pBaseRecoObjs, 
+// 					    pRecoObjs->at(nearestRecoObjKey).key()));
 //     }
   }
 
@@ -306,7 +323,7 @@ bool GenMatchedRecoObjectProducer<T>::filter(edm::Event& iEvent, const edm::Even
     for (unsigned int i = 0; i < nOutputColls_; ++i) {
       if ((recoObjsToSave.size() - i - 1) < genMatchedRecoObjs.size()) {
 	genMatchedRecoObjs[i]->push_back(edm::Ref<std::vector<T> >
-					 (pRecoObjs, 
+					 (pBaseRecoObjs, 
 					  recoObjsToSave[recoObjsToSave.size() - i - 1].key()));
       }
     }
