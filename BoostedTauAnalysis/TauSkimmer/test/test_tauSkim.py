@@ -26,11 +26,11 @@ process.source = cms.Source(
 
 process.source.inputCommands = cms.untracked.vstring("keep *", "drop *_MEtoEDMConverter_*_*")
 
-process.HadronicTauDecayFinder = cms.EDFilter('HadronicTauDecayFinder',
-                                              genParticleTag = cms.InputTag('genParticles'),
-                                              momPDGID = cms.int32(23),
-                                              maxAbsEta = cms.double(2.3)
-                                              )
+## process.HadronicTauDecayFinder = cms.EDFilter('HadronicTauDecayFinder',
+##                                               genParticleTag = cms.InputTag('genParticles'),
+##                                               momPDGID = cms.int32(23),
+##                                               maxAbsEta = cms.double(2.3)
+##                                               )
 
 process.output = cms.OutputModule(
     "PoolOutputModule",
@@ -80,7 +80,6 @@ process.output = cms.OutputModule(
     "drop recoCaloMETs_*_*_*",
     "drop recoConversions_*_*_*",
     "drop *_CastorTowerReco_*_*",
-    "drop *_gsfElectron*_*_*",
     "drop *_uncleanedOnlyGsfElectron*_*_*",
     "drop recoJPTJets_*_*_*",
     "drop recoMETs_*_*_*",
@@ -111,10 +110,11 @@ process.output = cms.OutputModule(
     "drop *_*Voronoi*_*_*"
     ),
     fileName = cms.untracked.string(
-    'Summer12_DYToTauTau_skim.root'
+    'Summer12_WJetsToLNu_WMuNuSkim.root'
     )
     )
 
-process.p = cms.Path(process.PFTau*process.HadronicTauDecayFinder)
+## process.p = cms.Path(process.PFTau*process.HadronicTauDecayFinder)
+process.p = cms.Path(process.PFTau)
 
 process.end = cms.EndPath(process.output)
