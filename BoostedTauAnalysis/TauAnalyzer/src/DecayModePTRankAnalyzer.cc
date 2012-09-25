@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: DecayModePTRankAnalyzer.cc,v 1.1 2012/08/29 11:37:32 yohay Exp $
+// $Id: DecayModePTRankAnalyzer.cc,v 1.1 2012/09/19 10:57:14 yohay Exp $
 //
 //
 
@@ -288,6 +288,7 @@ void DecayModePTRankAnalyzer::beginJob()
 void DecayModePTRankAnalyzer::endJob() 
 {
   //make the gen particle pT canvases, 1 per decay mode
+  out_->cd();
   TCanvas tauMuPTRankCanvas("tauMuPTRankCanvas", "", 600, 600);
   TCanvas tau1ProngPTRankCanvas("tau1ProngPTRankCanvas", "", 600, 600);
   TCanvas tau1Prong1Pi0PTRankCanvas("tau1Prong1Pi0PTRankCanvas", "", 600, 600);
@@ -445,10 +446,11 @@ void DecayModePTRankAnalyzer::drawMultiplePTHistograms(TCanvas& canvas,
     const unsigned int i = iHist - hists.begin();
     Common::setHistogramOptions(*iHist, colors[i], 0.7, styles[i], 1.0, 
 				"p_{T} (GeV)", "", 0.04);
+    (*iHist)->SetLineWidth(2);
     legend.AddEntry(*iHist, entries[i].c_str(), "l");
     Int_t histMaxBin = (*iHist)->GetMaximumBin();
     Double_t histMaxBinContent = (*iHist)->GetBinContent(histMaxBin);
-    if (histMaxBinContent > maxBinContent) {
+    if (histMaxBinContent >= maxBinContent) {
       maxBinContent = histMaxBinContent;
       pHistWithMaxMaxBin = *iHist;
     }
