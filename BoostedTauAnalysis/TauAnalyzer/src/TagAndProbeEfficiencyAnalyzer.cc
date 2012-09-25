@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: TagAndProbeEfficiencyAnalyzer.cc,v 1.1 2012/08/29 11:37:32 yohay Exp $
+// $Id: TagAndProbeEfficiencyAnalyzer.cc,v 1.1 2012/09/19 10:57:14 yohay Exp $
 //
 //
 
@@ -239,8 +239,8 @@ void TagAndProbeEfficiencyAnalyzer<T>::beginJob()
 
   //book pT histograms
   const Double_t bins[11] = {0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 100.0};
-  denominatorPT_ = new TH1F("denominatorPT", "", /*20, 0.0, 100.0*/10, bins);
-  numeratorPT_ = new TH1F("numeratorPT", "", /*20, 0.0, 100.0*/10, bins);
+  denominatorPT_ = new TH1F("denominatorPT", "", 20, 0.0, 100.0/*10, bins*/);
+  numeratorPT_ = new TH1F("numeratorPT", "", 20, 0.0, 100.0/*10, bins*/);
 
   //book eta histograms
   denominatorEta_ = new TH1F("denominatorEta", "", 20, -5.0, 5.0);
