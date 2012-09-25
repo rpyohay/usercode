@@ -14,7 +14,7 @@ Implementation:
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Thu Aug 23 11:23:58 CEST 2012
-// $Id: GenObjectProducer.cc,v 1.1 2012/08/27 14:45:48 yohay Exp $
+// $Id: GenObjectProducer.cc,v 1.1 2012/09/19 09:42:50 yohay Exp $
 //
 //
 
@@ -102,6 +102,9 @@ private:
   //max |eta| of the primary tau
   double primaryTauAbsEtaMax_;
 
+  //min pT of the primary tau
+  double primaryTauPTMin_;
+
   //flag indicating whether sister should be counted
   bool countSister_;
 
@@ -146,6 +149,7 @@ GenObjectProducer::GenObjectProducer(const edm::ParameterSet& iConfig) :
   sisterHadronicDecayType_(static_cast<reco::PFTau::hadronicDecayMode>
 			   (iConfig.getParameter<int>("sisterHadronicDecayType"))),
   primaryTauAbsEtaMax_(iConfig.getParameter<double>("primaryTauAbsEtaMax")),
+  primaryTauPTMin_(iConfig.getParameter<double>("primaryTauPTMin")),
   countSister_(iConfig.getParameter<bool>("countSister")),
   applyPTCuts_(iConfig.getParameter<bool>("applyPTCuts")),
   countKShort_(iConfig.getParameter<bool>("countKShort")),
@@ -255,8 +259,11 @@ bool GenObjectProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
 	    iTau->tauDecayType(applyPTCuts_, countKShort_);
 
 	  //choose taus in the allowed fiducial region
-	  bool passEtaCut = (primaryTauAbsEtaMax_ == -1.0) || 
-	    (fabs(iTau->getVisibleTauP4().Eta()) < primaryTauAbsEtaMax_);
+	  bool passAcceptanceCut = 
+	    ((primaryTauAbsEtaMax_ == -1.0) || 
+	     (fabs(iTau->getVisibleTauP4().Eta()) < primaryTauAbsEtaMax_)) && 
+	    ((primaryTauPTMin_ == -1.0) || 
+	     (fabs(iTau->getVisibleTauP4().Pt()) > primaryTauPTMin_));
 
 	  //if making all collections, get hashed index to access proper collection
 	  unsigned int hashedIndex = 0;
@@ -299,7 +306,7 @@ bool GenObjectProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
 	      (decayType.first == primaryTauHadronicDecayType_)));
 
 	  //get the key of the gen object to store
-	  if (right && passEtaCut) {
+	  if (right && passAcceptanceCut) {
 	    int genObjKey = keyToStore(tauKey, pGenParticles, decayType.second);
 
 	    //store
