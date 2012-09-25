@@ -111,8 +111,14 @@ class Common {
 				      const double, const double, const bool);
 
   //fill STL container with taus passing specified discriminators in specified eta range
-  static std::vector<reco::PFTau*> 
-    getRecoTaus(const edm::Handle<reco::PFTauCollection>&, 
+  static std::vector<reco::PFTauRef>
+    getRecoTaus(const edm::Handle<reco::PFTauCollection>&,
+		const std::vector<edm::Handle<reco::PFTauDiscriminator> >&, const double);
+
+  //fill STL container with taus passing specified discriminators in specified eta range
+  static std::vector<reco::PFTauRef>
+    getRecoTaus(const edm::Handle<reco::PFTauRefVector>&, 
+		const edm::Handle<reco::PFTauCollection>&,
 		const std::vector<edm::Handle<reco::PFTauDiscriminator> >&, const double);
 
   //set canvas drawing options
