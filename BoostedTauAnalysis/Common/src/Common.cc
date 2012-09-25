@@ -132,14 +132,13 @@ Common::getTightDetectorIsolatedRecoMuons(edm::Handle<reco::MuonCollection>& pMu
   return getTightIsolatedRecoMuons(pMuons, pPV, false, 0.0, detectorIsoMax, etaMax, passIso);
 }
 
-std::vector<reco::PFTau*>
+std::vector<reco::PFTauRef> 
 Common::getRecoTaus(const edm::Handle<reco::PFTauCollection>& pTaus, 
 		    const std::vector<edm::Handle<reco::PFTauDiscriminator> >& pTauDiscriminators, 
 		    const double etaMax)
 {
-  std::vector<reco::PFTau*> taus;
-  for (reco::PFTauCollection::const_iterator iTau = pTaus->begin(); iTau != pTaus->end(); 
-       ++iTau) {
+  std::vector<reco::PFTauRef> taus;
+  for (reco::PFTauCollection::const_iterator iTau = pTaus->begin(); iTau != pTaus->end(); ++iTau) {
     reco::PFTauRef tauRef(pTaus, iTau - pTaus->begin());
     bool passTauDiscriminators = true;
     std::vector<edm::Handle<reco::PFTauDiscriminator> >::const_iterator iDiscriminator = 
@@ -149,7 +148,30 @@ Common::getRecoTaus(const edm::Handle<reco::PFTauCollection>& pTaus,
       ++iDiscriminator;
     }
     if (passTauDiscriminators && ((etaMax == -1.0) || (fabs(iTau->eta()) < etaMax))) {
-      taus.push_back(const_cast<reco::PFTau*>(&*iTau));
+      taus.push_back(tauRef);
+    }
+  }
+  return taus;
+}
+
+std::vector<reco::PFTauRef> 
+Common::getRecoTaus(const edm::Handle<reco::PFTauRefVector>& pTaus, 
+		    const edm::Handle<reco::PFTauCollection>& pBaseTaus, 
+		    const std::vector<edm::Handle<reco::PFTauDiscriminator> >& pTauDiscriminators, 
+		    const double etaMax)
+{
+  std::vector<reco::PFTauRef> taus;
+  for (reco::PFTauRefVector::const_iterator iTau = pTaus->begin(); iTau != pTaus->end(); ++iTau) {
+    reco::PFTauRef tauRef(pBaseTaus, iTau->key());
+    bool passTauDiscriminators = true;
+    std::vector<edm::Handle<reco::PFTauDiscriminator> >::const_iterator iDiscriminator = 
+      pTauDiscriminators.begin();
+    while ((iDiscriminator != pTauDiscriminators.end()) && passTauDiscriminators) {
+      if ((**iDiscriminator)[tauRef] != 1.0) passTauDiscriminators = false;
+      ++iDiscriminator;
+    }
+    if (passTauDiscriminators && ((etaMax == -1.0) || (fabs((*iTau)->eta()) < etaMax))) {
+      taus.push_back(tauRef);
     }
   }
   return taus;
