@@ -284,7 +284,7 @@ bool GenTauDecayID::isStatus3DecayProduct(const int PDGID) const
       bool rightParticleType = ((PDGID == 0) || (fabs(particleRef->pdgId()) == PDGID));
       ret = (rightParticleType && (particleRef->status() == 3) && 
 	     (particleRef->numberOfMothers() == 1) && 
-	     (particleRef->mother(0)->pdgId() == momPDGID_)); 
+	     (fabs(particleRef->mother(0)->pdgId()) == momPDGID_)); 
     }
     else throw errorInvalidGenParticleHandle(fnName);
   }
