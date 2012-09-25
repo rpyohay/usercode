@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: JetAnalyzer.cc,v 1.1 2012/08/29 11:37:32 yohay Exp $
+// $Id: JetAnalyzer.cc,v 1.1 2012/09/19 10:57:14 yohay Exp $
 //
 //
 
@@ -120,6 +120,9 @@ private:
   //MET tag
   edm::InputTag METTag_;
 
+  //selected gen object tag
+  edm::InputTag selectedGenObjTag_;
+
   //marker colors for histograms with different pT rank
   std::vector<unsigned int> pTRankColors_;
 
@@ -140,6 +143,18 @@ private:
 
   //histogram of HT
   TH1F* HT_;
+
+  //histogram of muon energy fraction
+  TH1F* muEnergyFraction_;
+
+  //selected gen object counter
+  unsigned int nSelectedGenObjs_;
+
+  //vector of reco jet counters
+  std::vector<unsigned int> nRecoJets_;
+
+  //counter of events with all jet collections filled once
+  unsigned int nEvts1RecoJetPerType_;
 };
 
 //
@@ -157,9 +172,13 @@ JetAnalyzer::JetAnalyzer(const edm::ParameterSet& iConfig) :
   outFileName_(iConfig.getParameter<std::string>("outFileName")),
   jetTags_(iConfig.getParameter<std::vector<edm::InputTag> >("jetTags")),
   METTag_(iConfig.getParameter<edm::InputTag>("METTag")),
+  selectedGenObjTag_(iConfig.getParameter<edm::InputTag>("selectedGenObjTag")),
   pTRankColors_(iConfig.getParameter<std::vector<unsigned int> >("pTRankColors")),
   pTRankStyles_(iConfig.getParameter<std::vector<unsigned int> >("pTRankStyles")),
-  pTRankEntries_(iConfig.getParameter<std::vector<std::string> >("pTRankEntries"))
+  pTRankEntries_(iConfig.getParameter<std::vector<std::string> >("pTRankEntries")),
+  nSelectedGenObjs_(0),
+  nRecoJets_(std::vector<unsigned int>(jetTags_.size(), 0)),
+  nEvts1RecoJetPerType_(0)
 {
   //now do what ever initialization is needed
   reset(false);
@@ -189,21 +208,46 @@ void JetAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
     iEvent.getByLabel(*iTag, pView);
     jetCollMap[jetPTHists_[iTag - jetTags_.begin()]] = pView;
   }
-
+  
   //get MET tag
   edm::Handle<edm::View<reco::PFMET> > pMET;
   iEvent.getByLabel(METTag_, pMET);
 
+  //get selected gen object tag
+  edm::Handle<edm::View<reco::GenParticle> > pSelectedGenObjs;
+  iEvent.getByLabel(selectedGenObjTag_, pSelectedGenObjs);
+  
   //fill pT histograms for jets, 1 per pT rank
   for (std::map<TH1F*, edm::Handle<edm::View<reco::PFJet> > >::iterator i = jetCollMap.begin(); 
        i != jetCollMap.end(); ++i) { fillPTHistogramArbitrary(i->second, i->first); }
-
+  
   //plot MET distribution
   fillETHistogram(pMET, MET_);
-
+  
   /*plot HT distribution (sum ET of jets matched to di-tau objects in the case where there are 2 
     di-tau objects with jet matches)*/
   fillHTHistogram(jetCollMap, 2);
+  
+  //plot muon energy fraction of jets
+  for (unsigned int iJet = 0; iJet < jetCollMap.begin()->second->size(); ++iJet) {
+    muEnergyFraction_->Fill(jetCollMap.begin()->second->refAt(iJet)->muonEnergyFraction());
+  }
+
+  //count selected gen objects
+  nSelectedGenObjs_+=pSelectedGenObjs->size();
+
+  //count reco jets
+  unsigned int count = 0;
+  bool oneRecoJetPerType = true;
+  for (std::map<TH1F*, edm::Handle<edm::View<reco::PFJet> > >::iterator i = jetCollMap.begin(); 
+       i != jetCollMap.end(); ++i) {
+    nRecoJets_[count]+=i->second->size();
+    ++count;
+    if (i->second->size() != 1) oneRecoJetPerType = false;
+  }
+
+  //count events with 1 reco jet per type
+  if (oneRecoJetPerType) ++nEvts1RecoJetPerType_;
 }
 
 
@@ -213,37 +257,58 @@ void JetAnalyzer::beginJob()
   //open output file
   out_ = new TFile(outFileName_.c_str(), "RECREATE");
 
-  //book jet pT histograms split by pT rank
+  //book jet histograms
   for (std::vector<edm::InputTag>::const_iterator iTag = jetTags_.begin(); 
        iTag != jetTags_.end(); ++iTag) {
     jetPTHists_.push_back(new TH1F((iTag->label() + "_" + iTag->instance() + "_pT")
 				   .c_str(), "", 20, 0.0, 100.0));
   }
-
-  //book reco MET histogram
   MET_ = new TH1F("MET", "", 20, 0.0, 100.0);
-
-  //book reco HT histogram
   HT_ = new TH1F("HT", "", 100, 0.0, 500.0);
+  muEnergyFraction_ = new TH1F("muEnergyFraction", "", 50, 0.0, 1.0);
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
 void JetAnalyzer::endJob() 
 {
-  //make the jet pT canvas
+  //make the jet canvases
+  out_->cd();
   TCanvas jetPTRankCanvas("jetPTRankCanvas", "", 600, 600);
+  TCanvas muEnergyFractionCanvas("muEnergyFractionCanvas", "", 600, 600);
   TLegend jetPTRankLegend(0.4, 0.6, 0.8, 0.8);
   makePTRankCanvas(jetPTRankCanvas, jetPTRankLegend, 
 		   "gg fusion NMSSM Higgs-matched AK5 jets", jetPTHists_);
+  Common::setCanvasOptions(muEnergyFractionCanvas, 1, 0, 0);
+
+  //format the plots
+  Common::setHistogramOptions(muEnergyFraction_, kBlack, 0.7, 20, 1.0, "Muon energy fraction", "", 
+			      0.05);
+  muEnergyFraction_->SetLineWidth(2);
+
+  //draw plots
+  muEnergyFractionCanvas.cd();
+  muEnergyFraction_->Draw();
 
   //write output file
   out_->cd();
   for (std::vector<TH1F*>::iterator iHist = jetPTHists_.begin(); 
        iHist != jetPTHists_.end(); ++iHist) { (*iHist)->Write(); }
+  muEnergyFractionCanvas.Write();
   MET_->Write();
   HT_->Write();
   out_->Write();
   out_->Close();
+
+  //print counters
+  std::cout << "No. selected gen objects: " << nSelectedGenObjs_ << std::endl;
+  std::cout << "No. reco jets:\n";
+  for (std::vector<unsigned int>::const_iterator iCounter = nRecoJets_.begin(); 
+       iCounter != nRecoJets_.end(); ++iCounter) {
+    std::cout << " In collection " << iCounter - nRecoJets_.begin() << ": " << *iCounter;
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
+  std::cout << "No. events with 1 reco jet per type: " << nEvts1RecoJetPerType_ << std::endl;
 }
 
 // ------------ method called when starting to processes a run  ------------
@@ -333,6 +398,8 @@ void JetAnalyzer::reset(const bool doDelete)
   MET_ = NULL;
   if ((doDelete) && (HT_ != NULL)) delete HT_;
   HT_ = NULL;
+  if ((doDelete) && (muEnergyFraction_ != NULL)) delete muEnergyFraction_;
+  muEnergyFraction_ = NULL;
 }
 
 //define this as a plug-in
