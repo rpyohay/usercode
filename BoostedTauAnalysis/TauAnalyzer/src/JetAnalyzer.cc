@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: JetAnalyzer.cc,v 1.1 2012/09/19 10:57:14 yohay Exp $
+// $Id: JetAnalyzer.cc,v 1.2 2012/09/25 11:51:14 yohay Exp $
 //
 //
 
@@ -238,16 +238,16 @@ void JetAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
   //count reco jets
   unsigned int count = 0;
-  bool oneRecoJetPerType = true;
+  unsigned int nRecoJets = 0;
   for (std::map<TH1F*, edm::Handle<edm::View<reco::PFJet> > >::iterator i = jetCollMap.begin(); 
        i != jetCollMap.end(); ++i) {
     nRecoJets_[count]+=i->second->size();
     ++count;
-    if (i->second->size() != 1) oneRecoJetPerType = false;
+    nRecoJets+=i->second->size();
   }
 
   //count events with 1 reco jet per type
-  if (oneRecoJetPerType) ++nEvts1RecoJetPerType_;
+  if (nRecoJets == pSelectedGenObjs->size()) ++nEvts1RecoJetPerType_;
 }
 
 

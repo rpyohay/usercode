@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: EfficiencyAnalyzer.cc,v 1.1 2012/09/19 10:57:14 yohay Exp $
+// $Id: EfficiencyAnalyzer.cc,v 1.2 2012/09/25 11:49:57 yohay Exp $
 //
 //
 
@@ -41,6 +41,7 @@
 #include "BoostedTauAnalysis/Common/interface/Common.h"
 #include "TFile.h"
 #include "TH1F.h"
+#include "TH2F.h"
 #include "TCanvas.h"
 #include "TLegend.h"
 
@@ -70,8 +71,11 @@ private:
   //delete memory
   void reset(const bool);
 
-  //fill pT histogram
+  //fill 1D pT histogram
   void fillPTHistogram(edm::Handle<edm::View<T> >&, TH1F*);
+
+  //fill 2D pT histogram
+  void fillPTHistogram(edm::Handle<edm::View<T> >&, TH2F*);
 
   //fill eta histogram
   void fillEtaHistogram(edm::Handle<edm::View<T> >&, TH1F*);
@@ -113,6 +117,12 @@ private:
 
   //histogram of numerator pT
   TH1F* numeratorPT_;
+
+  //2D histogram of denominator (pT1, pT2)
+  TH2F* denominatorPT1PT2_;
+
+  //2D histogram of numerator (pT1, pT2)
+  TH2F* numeratorPT1PT2_;
 
   //histogram of denominator eta
   TH1F* denominatorEta_;
@@ -177,6 +187,8 @@ void EfficiencyAnalyzer<T>::analyze(const edm::Event& iEvent, const edm::EventSe
   //plot pT distributions
   fillPTHistogram(pDenominatorView, denominatorPT_);
   fillPTHistogram(pNumeratorView, numeratorPT_);
+  fillPTHistogram(pDenominatorView, denominatorPT1PT2_);
+  fillPTHistogram(pNumeratorView, numeratorPT1PT2_);
 
   //plot eta distributions
   fillEtaHistogram(pDenominatorView, denominatorEta_);
@@ -195,6 +207,8 @@ void EfficiencyAnalyzer<T>::beginJob()
   const Double_t bins[11] = {0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 100.0};
   denominatorPT_ = new TH1F("denominatorPT", "", 20, 0.0, 100.0/*10, bins*/);
   numeratorPT_ = new TH1F("numeratorPT", "", 20, 0.0, 100.0/*10, bins*/);
+  denominatorPT1PT2_ = new TH2F("denominatorPT1PT2", "", 20, 0.0, 100.0, 20, 0.0, 100.0);
+  numeratorPT1PT2_ = new TH2F("numeratorPT1PT2", "", 20, 0.0, 100.0, 20, 0.0, 100.0);
 
   //book eta histograms
   denominatorEta_ = new TH1F("denominatorEta", "", 20, -5.0, 5.0);
@@ -209,6 +223,8 @@ void EfficiencyAnalyzer<T>::endJob()
   out_->cd();
   denominatorPT_->Write();
   numeratorPT_->Write();
+  denominatorPT1PT2_->Write();
+  numeratorPT1PT2_->Write();
   denominatorEta_->Write();
   numeratorEta_->Write();
   out_->Write();
@@ -255,6 +271,13 @@ template<class T>
 void EfficiencyAnalyzer<T>::fillPTHistogram(edm::Handle<edm::View<T> >& pView, TH1F* hist)
 {
   for (unsigned int i = 0; i < pView->size(); ++i) hist->Fill(pView->refAt(i)->pt());
+}
+
+template<class T>
+void EfficiencyAnalyzer<T>::fillPTHistogram(edm::Handle<edm::View<T> >& pView, TH2F* hist)
+{
+  if (pView->size() == 2) hist->Fill(pView->refAt(0)->pt(), pView->refAt(1)->pt());
+  if (pView->size() == 1) hist->Fill(pView->refAt(0)->pt(), -1.0);
 }
 
 template<class T>

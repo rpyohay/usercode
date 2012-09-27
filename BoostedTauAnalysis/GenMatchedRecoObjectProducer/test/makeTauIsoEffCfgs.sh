@@ -1,27 +1,20 @@
 #!/bin/bash
 
 #input files
-inputFiles="NMSSMHiggs_gg_skim_1000Files Summer12DrellYan"
+inputFileHeader="file:/data1/yohay/"
+inputFileTrailer=".root"
+inputFiles=( "'${inputFileHeader}NMSSMHiggs_gg_files1-250_24Sep12${inputFileTrailer}',\n    '${inputFileHeader}NMSSMHiggs_gg_files251-500_24Sep12${inputFileTrailer}',\n    '${inputFileHeader}NMSSMHiggs_gg_files501-750_24Sep12${inputFileTrailer}',\n    '${inputFileHeader}NMSSMHiggs_gg_files751-1000_24Sep12${inputFileTrailer}'" "'${inputFileHeader}Summer12DrellYan_PFTauReReco${inputFileTrailer}'" )
 
 #sequences
 sequences=( signalSequence ZTauTauSequence )
 medIsoSequences=( medIsoSignalSequence medIsoZTauTauSequence )
 
 #generate a cfg file for each input file
-i=0
-for iFile in $inputFiles
+iLastFile=`expr ${#inputFiles[@]} - 1`
+for iFile in `seq 0 $iLastFile`
   do
-  tauRecoSeq=""
-  process="SKIM"
-  if [ -n "`echo ${sequences[${i}]} | grep ZTauTau`" ]
-      then
-      #tauRecoSeq="process.PFTau*"
-      #process="OWNPARTICLES"
-      process="RECO"
-  fi
-  #sed -e "s%FILE_NAME%$iFile%" -e "s%PROCESS%${process}%g" -e "s%TAURECOSEQUENCE%${tauRecoSeq}%" -e "s%SEQUENCE%${sequences[${i}]}%" tauIsoEff.py > tauIsoEff_${sequences[${i}]}.py
-  sed -e "s%FILE_NAME%$iFile%" -e "s%PROCESS%${process}%g" -e "s%TAURECOSEQUENCE%${tauRecoSeq}%" -e "s%SEQUENCE%${medIsoSequences[${i}]}%" tauIsoEff.py > tauIsoEff_${medIsoSequences[${i}]}.py
-  i=`expr $i + 1`
+  #sed -e "s%INPUT_FILES%${inputFiles[${iFile}]}%" -e "s%SEQUENCE%${sequences[${iFile}]}%" tauIsoEff.py > tauIsoEff_${sequences[${iFile}]}.py
+  sed -e "s%INPUT_FILES%${inputFiles[${iFile}]}%" -e "s%SEQUENCE%${medIsoSequences[${iFile}]}%" tauIsoEff.py > tauIsoEff_${medIsoSequences[${iFile}]}.py
 done
 
 exit 0

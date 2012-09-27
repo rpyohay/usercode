@@ -46,7 +46,7 @@ process.maxEvents = cms.untracked.PSet( input = cms.untracked.int32(-1) )
 process.source = cms.Source(
     "PoolSource",
     fileNames = cms.untracked.vstring(
-    'file:/data1/yohay/FILE_NAME.root'
+    INPUT_FILES
     ),
     skipEvents = cms.untracked.uint32(0)
     )
@@ -84,9 +84,11 @@ process.genTauHadXSelectorSignal = cms.EDFilter(
     primaryTauDecayType = cms.uint32(TAU_HAD),
     sisterTauDecayType = cms.uint32(TAU_ALL),
     primaryTauPTRank = cms.int32(ANY_PT_RANK),
-    primaryTauHadronicDecayType = cms.int32(TAU_ALL_HAD),
+##     primaryTauHadronicDecayType = cms.int32(TAU_ALL_HAD),
+    primaryTauHadronicDecayType = cms.int32(TAU_1PRONG_0NEUTRAL),
     sisterHadronicDecayType = cms.int32(TAU_ALL_HAD),
     primaryTauAbsEtaMax = cms.double(-1.0),
+    primaryTauPTMin = cms.double(-1.0),
     countSister = cms.bool(False),
     applyPTCuts = cms.bool(False),
     countKShort = cms.bool(True),
@@ -97,8 +99,9 @@ process.genTauHadXSelectorSignal = cms.EDFilter(
 #produce gen Z-->tau(-->had)tau(-->had) collection, saving both taus
 process.genTauHadTauHadSelectorZTauTau = process.genTauHadXSelectorSignal.clone()
 process.genTauHadTauHadSelectorZTauTau.genTauDecayIDPSet = commonGenTauDecayIDPSetZTauTau
-## process.genTauHadTauHadSelectorZTauTau.sisterTauDecayType = cms.uint32(TAU_HAD)
-process.genTauHadTauHadSelectorZTauTau.primaryTauDecayType = cms.uint32(TAU_ALL)
+process.genTauHadTauHadSelectorZTauTau.sisterTauDecayType = cms.uint32(TAU_HAD)
+## process.genTauHadTauHadSelectorZTauTau.primaryTauDecayType = cms.uint32(TAU_ALL)
+process.genTauHadTauHadSelectorZTauTau.sisterHadronicDecayType = cms.int32(TAU_1PRONG_0NEUTRAL)
 process.genTauHadTauHadSelectorZTauTau.countSister = cms.bool(True)
 process.genTauHadTauHadSelectorZTauTau.minNumGenObjectsToPassFilter = cms.uint32(2)
 
@@ -107,13 +110,11 @@ process.genTauHadTauHadSelectorZTauTau.minNumGenObjectsToPassFilter = cms.uint32
 #https://twiki.cern.ch/twiki/bin/viewauth/CMS/HiggsToTauTauWorking2012#Object_ID)
 process.medIsoTauHadSelector = cms.EDFilter(
     'CustomTauSelector',
-    tauTag = cms.InputTag('hpsPFTauProducer'),
+##     tauTag = cms.InputTag('hpsPFTauProducer'),
+    baseTauTag = cms.InputTag('hpsPFTauProducer'),
     tauDiscriminatorTags = cms.VInputTag(
-    cms.InputTag('hpsPFTauDiscriminationByDecayModeFinding', '', 'PROCESS'),
-    cms.InputTag('hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr', '', 'PROCESS'),
-    cms.InputTag('hpsPFTauDiscriminationByLooseMuonRejection', '', 'PROCESS'),
-##     cms.InputTag('hpsPFTauDiscriminationByMVA2TightElectronRejection', '', 'PROCESS')
-    cms.InputTag('hpsPFTauDiscriminationByTightElectronRejection', '', 'PROCESS')
+    'hpsPFTauDiscriminationByDecayModeFinding',
+    'hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr'
     ),
     etaMax = cms.double(2.1),
 ##     minNumObjsToPassFilter = cms.uint32(0)
@@ -123,10 +124,7 @@ process.medIsoTauHadSelector = cms.EDFilter(
 #add a collection of HPS taus passing anti-e/mu discriminators in |eta| < 2.1
 process.tauHadSelector = process.medIsoTauHadSelector.clone()
 process.tauHadSelector.tauDiscriminatorTags = cms.VInputTag(
-    cms.InputTag('hpsPFTauDiscriminationByDecayModeFinding', '', 'PROCESS'),
-    cms.InputTag('hpsPFTauDiscriminationByLooseMuonRejection', '', 'PROCESS'),
-##     cms.InputTag('hpsPFTauDiscriminationByMVA2TightElectronRejection', '', 'PROCESS')
-    cms.InputTag('hpsPFTauDiscriminationByTightElectronRejection', '', 'PROCESS')
+    'hpsPFTauDiscriminationByDecayModeFinding'
     )
 
 #add a collection of HPS taus in |eta| < 2.1 passing medium isolation discriminator and anti-e/mu
@@ -136,6 +134,7 @@ process.genTauHadXMatchedMedIsoTauHadSelectorSignal = cms.EDFilter(
     genParticleTag = cms.InputTag('genParticles'),
     selectedGenParticleTag = cms.InputTag('genTauHadXSelectorSignal'),
     recoObjTag = cms.InputTag('medIsoTauHadSelector'),
+    baseRecoObjTag = cms.InputTag('hpsPFTauProducer'),
     genTauDecayIDPSet = commonGenTauDecayIDPSetSignal,
     applyPTCuts = cms.bool(False),
     countKShort = cms.bool(True),
@@ -145,7 +144,7 @@ process.genTauHadXMatchedMedIsoTauHadSelectorSignal = cms.EDFilter(
     nOutputColls = cms.uint32(1),
     dR = cms.double(0.3),
 ##     minNumGenObjectsToPassFilter = cms.uint32(0)
-    minNumGenObjectsToPassFilter = cms.uint32(2)
+    minNumGenObjectsToPassFilter = cms.uint32(1)
     )
 
 #add a collection of HPS taus in |eta| < 2.1 passing medium isolation discriminator and anti-e/mu
@@ -170,7 +169,8 @@ process.genTauHadTauHadMatchedTauHadSelectorZTauTau.recoObjTag = cms.InputTag('t
 #discriminators matched to gen tau-->had decays matched to 
 #DoubleMediumIsoPFTau35_Trk5_eta2p1_Prong1 trigger objects from tau-->had + tau-->anything A1
 #decays
-process.DoubleMediumIsoPFTau35Trk5eta2p1Prong1MedIsoTauHadMatchedGenTauHadXSelectorSignal = cms.EDProducer('trgMatchedTauProducer', InputProducer = cms.InputTag('genTauHadXMatchedMedIsoTauHadSelectorSignal'), hltTags = cms.VInputTag(cms.InputTag('HLT_DoubleMediumIsoPFTau35_Trk5_eta2p1_Prong1_v2', '', 'HLT')), isTriggerFilter = cms.untracked.bool(True), HLTSubFilters = cms.untracked.VInputTag('hltDoublePFTau35TrackPt5MediumIsolationProng2Dz02'))
+## process.DoubleMediumIsoPFTau35Trk5eta2p1Prong1MedIsoTauHadMatchedGenTauHadXSelectorSignal = cms.EDProducer('trgMatchedTauProducer', InputProducer = cms.InputTag('genTauHadXMatchedMedIsoTauHadSelectorSignal'), hltTags = cms.VInputTag(cms.InputTag('HLT_DoubleMediumIsoPFTau35_Trk5_eta2p1_Prong1_v2', '', 'HLT')), isTriggerFilter = cms.untracked.bool(True), HLTSubFilters = cms.untracked.VInputTag('hltDoublePFTau35TrackPt5MediumIsolationProng2Dz02'))
+process.DoubleMediumIsoPFTau35Trk5eta2p1Prong1MedIsoTauHadMatchedGenTauHadXSelectorSignal = cms.EDProducer('trgMatchedTauProducer', InputProducer = cms.InputTag('genTauHadXMatchedMedIsoTauHadSelectorSignal'), hltTags = cms.VInputTag(cms.InputTag('HLT_DoubleMediumIsoPFTau35_Trk5_eta2p1_Prong1_v2', '', 'HLT')), isTriggerFilter = cms.untracked.bool(False), HLTSubFilters = cms.untracked.VInputTag('hltDoublePFTau35TrackPt5MediumIsolationProng2Dz02'), checkObjMatching = cms.bool(False))
 
 #produce HPS taus in |eta| < 2.1 passing medium isolation discriminator and anti-e/mu
 #discriminators matched to gen tau-->had decays matched to 
@@ -322,4 +322,4 @@ process.ZTauTauSequence = cms.Sequence(
 ##     )
 
 #path
-process.p = cms.Path(TAURECOSEQUENCEprocess.SEQUENCE)
+process.p = cms.Path(process.SEQUENCE)
