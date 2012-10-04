@@ -14,7 +14,7 @@ Implementation:
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Thu Aug 23 11:23:58 CEST 2012
-// $Id: GenObjectProducer.cc,v 1.1 2012/09/19 09:42:50 yohay Exp $
+// $Id: GenObjectProducer.cc,v 1.2 2012/09/25 11:44:46 yohay Exp $
 //
 //
 
@@ -36,6 +36,9 @@ Implementation:
 
 //code for any tau decay
 #define TAU_ALL 3
+
+//code for any PDG ID
+#define ANY_PDGID 0
 
 //
 // class declaration
@@ -78,8 +81,11 @@ private:
   //input tag for gen particle collection
   edm::InputTag genParticleTag_;
 
-  //fabs(PDG ID) to match
-  unsigned int absMatchPDGID_;
+  //list of fabs(PDG ID) to match
+  std::vector<unsigned int> absMatchPDGIDs_;
+
+  //sister fabs(PDG ID) to match
+  unsigned int sisterAbsMatchPDGID_;
 
   //set of parameters for GenTauDecayID class
   edm::ParameterSet genTauDecayIDPSet_;
@@ -137,7 +143,8 @@ private:
 //
 GenObjectProducer::GenObjectProducer(const edm::ParameterSet& iConfig) :
   genParticleTag_(iConfig.getParameter<edm::InputTag>("genParticleTag")),
-  absMatchPDGID_(iConfig.getParameter<unsigned int>("absMatchPDGID")),
+  absMatchPDGIDs_(iConfig.getParameter<std::vector<unsigned int> >("absMatchPDGIDs")),
+  sisterAbsMatchPDGID_(iConfig.getParameter<unsigned int>("sisterAbsMatchPDGID")),
   genTauDecayIDPSet_(iConfig.getParameter<edm::ParameterSet>("genTauDecayIDPSet")),
   primaryTauDecayType_(static_cast<GenTauDecayID::DecayType>
 		       (iConfig.getParameter<unsigned int>("primaryTauDecayType"))),
@@ -245,7 +252,13 @@ bool GenObjectProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
     try {
 
       //select gen tau decays or light leptons...
-      if (iTau->isStatus3DecayProduct(absMatchPDGID_)) {
+      bool isStatus3 = false;
+      std::vector<unsigned int>::const_iterator iPDGID = absMatchPDGIDs_.begin();
+      while ((iPDGID != absMatchPDGIDs_.end()) && !isStatus3) {
+	isStatus3 = iTau->isStatus3DecayProduct(*iPDGID);
+	++iPDGID;
+      }
+      if (isStatus3) {
 	const unsigned int tauKey = iTau->getTauIndex();
 
 	//...with the right sister
@@ -411,18 +424,28 @@ bool GenObjectProducer::goodSister(GenTauDecayID& tau,
 				   const std::vector<unsigned int>& keysToIgnore) const
 {
   bool goodSister = false;
-  tau.findSister();
-  const unsigned int iSister = tau.getSisterIndex();
-  if (countSister_ || (std::find(keysToIgnore.begin(), keysToIgnore.end(), iSister) == 
-		       keysToIgnore.end())) { /*keysToIgnore keeps track of whether you've looped 
-						over the other half of the boosted di-tau pair 
-						before*/
-    std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType> decayType = 
-      tau.sisterDecayType(applyPTCuts_, countKShort_);
-    if (((sisterTauDecayType_ == TAU_ALL) || (decayType.second == sisterTauDecayType_)) && 
-	((sisterHadronicDecayType_ == reco::PFTau::kNull) || /*using kNull to mean don't select on 
-							       hadronic tau decay type*/
-	 (decayType.first == sisterHadronicDecayType_))) goodSister = true;
+  try {
+    tau.findSister();
+    const unsigned int iSister = tau.getSisterIndex();
+    if (countSister_ || (std::find(keysToIgnore.begin(), keysToIgnore.end(), iSister) == 
+			 keysToIgnore.end())) { /*keysToIgnore keeps track of whether you've 
+						  looped over the other half of the boosted di-tau 
+						  pair before*/
+      std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType> decayType = 
+	tau.sisterDecayType(applyPTCuts_, countKShort_);
+      if (((sisterTauDecayType_ == TAU_ALL) || (decayType.second == sisterTauDecayType_)) && 
+	  ((sisterHadronicDecayType_ == reco::PFTau::kNull) || /*using kNull to mean don't select 
+								 on hadronic tau decay type*/
+	   (decayType.first == sisterHadronicDecayType_)) && 
+	  ((sisterAbsMatchPDGID_ == ANY_PDGID) || 
+	   (fabs(reco::GenParticleRef(tau.getGenParticleHandle(), iSister)->pdgId()) == 
+	    sisterAbsMatchPDGID_))) goodSister = true;
+    }
+  }
+  catch (std::string& ex) {
+    if (sisterAbsMatchPDGID_ != ANY_PDGID) throw ex; /*assuming you wanted a sister, so if one 
+						       isn't found an exception should be thrown*/
+    //else assume particle really didn't have sister and you knew that, so just move on
   }
   return goodSister;
 }
