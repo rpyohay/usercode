@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: JetAnalyzer.cc,v 1.2 2012/09/25 11:51:14 yohay Exp $
+// $Id: JetAnalyzer.cc,v 1.3 2012/09/27 11:50:50 yohay Exp $
 //
 //
 
@@ -371,7 +371,7 @@ void JetAnalyzer::drawMultiplePTHistograms(TCanvas& canvas,
     legend.AddEntry(*iHist, entries[i].c_str(), "l");
     Int_t histMaxBin = (*iHist)->GetMaximumBin();
     Double_t histMaxBinContent = (*iHist)->GetBinContent(histMaxBin);
-    if (histMaxBinContent > maxBinContent) {
+    if (histMaxBinContent >= maxBinContent) {
       maxBinContent = histMaxBinContent;
       pHistWithMaxMaxBin = *iHist;
     }
