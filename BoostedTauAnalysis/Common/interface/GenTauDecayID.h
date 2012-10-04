@@ -145,8 +145,8 @@ class GenTauDecayID {
   //index of the tau sister
   unsigned int iSister_;
 
-  //PDG ID of tau mother
-  int momPDGID_;
+  //vector of PDG IDs of tau mothers
+  std::vector<int> momPDGID_;
 
   //visible 4-vector of tau
   reco::LeafCandidate::LorentzVector visibleTauP4_;

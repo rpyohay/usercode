@@ -7,7 +7,6 @@ GenTauDecayID::GenTauDecayID() :
   pParSet_(NULL),
   iTau_(0),
   iSister_(0),
-  momPDGID_(0),
   tauDecayType_(UNKNOWN),
   tauSisterDecayType_(UNKNOWN),
   tauHadronicDecayType_(reco::PFTau::kNull),
@@ -32,7 +31,6 @@ GenTauDecayID::GenTauDecayID(edm::ParameterSet& parSet,
   pGenParticles_(pGenParticles),
   iTau_(iTau),
   iSister_(0),
-  momPDGID_(0),
   tauDecayType_(UNKNOWN),
   tauSisterDecayType_(UNKNOWN),
   tauHadronicDecayType_(reco::PFTau::kNull),
@@ -59,7 +57,6 @@ GenTauDecayID::GenTauDecayID(const GenTauDecayID& other) :
   pGenParticles_(other.getGenParticleHandle()),
   iTau_(other.getTauIndex()),
   iSister_(other.getSisterIndex(false)),
-  momPDGID_(0),
   visibleTauP4_(other.getVisibleTauP4(false)),
   visibleTauSisterP4_(other.getVisibleTauSisterP4(false)),
   tauDecayType_(other.getTauDecayType(false)),
@@ -89,7 +86,7 @@ GenTauDecayID::~GenTauDecayID()
   pGenParticles_.clear();
   iTau_ = 0;
   iSister_ = 0;
-  momPDGID_ = 0;
+  momPDGID_.clear();
   visibleTauP4_ = reco::LeafCandidate::LorentzVector();
   visibleTauSisterP4_ = reco::LeafCandidate::LorentzVector();
   tauDecayType_ = UNKNOWN;
@@ -117,7 +114,6 @@ GenTauDecayID& GenTauDecayID::operator=(const GenTauDecayID& rhs)
     pGenParticles_ = rhs.getGenParticleHandle();
     iTau_ = rhs.getTauIndex();
     iSister_ = rhs.getSisterIndex(false);
-    momPDGID_ = 0;
     visibleTauP4_ = rhs.getVisibleTauP4(false);
     visibleTauSisterP4_ = rhs.getVisibleTauSisterP4(false);
     tauDecayType_ = rhs.getTauDecayType(false);
@@ -281,10 +277,23 @@ bool GenTauDecayID::isStatus3DecayProduct(const int PDGID) const
   if (unpacked_) {
     if (validHandle_) {
       reco::GenParticleRef particleRef(pGenParticles_, iTau_);
-      bool rightParticleType = ((PDGID == 0) || (fabs(particleRef->pdgId()) == PDGID));
-      ret = (rightParticleType && (particleRef->status() == 3) && 
-	     (particleRef->numberOfMothers() == 1) && 
-	     (fabs(particleRef->mother(0)->pdgId()) == momPDGID_)); 
+      ret = (((PDGID == 0) || (fabs(particleRef->pdgId()) == PDGID)) && 
+	     (particleRef->status() == 3)); 
+      bool rightMom = false;
+      std::vector<int>::const_iterator iPDGID = momPDGID_.begin();
+      while ((iPDGID != momPDGID_.end()) && !rightMom) {
+	rightMom = (*iPDGID == 0) || //don't consider mother PDG ID in selection
+	  ((particleRef->numberOfMothers() > 0) && /*insure that the mothers of particles with 0 
+						     mothers (i.e. the protons) are not accessed*/
+	   (fabs(particleRef->mother()->pdgId()) == fabs(*iPDGID))); /*require that the 0th mother 
+								     match 1 of these PDG IDs
+								     in the case of >1 mother, the 
+								     sister should share both 
+								     mothers anyway so it's enough 
+								     to just check one of them*/
+	++iPDGID;
+      }
+      ret = ret && rightMom;
     }
     else throw errorInvalidGenParticleHandle(fnName);
   }
@@ -407,12 +416,12 @@ void GenTauDecayID::unpackParSet(const bool warn)
   if (pParSet_ == NULL) {
     throw errorNullParameterSetPointer(fnName);
   }
-  if (pParSet_->existsAs<int>("momPDGID")) {
-    momPDGID_ = pParSet_->getParameter<int>("momPDGID");
+  if (pParSet_->existsAs<std::vector<int> >("momPDGID")) {
+    momPDGID_ = pParSet_->getParameter<std::vector<int> >("momPDGID");
   }
   else {
     std::cerr << warnParameterNotFound(fnName, "momPDGID");
-    momPDGID_ = 0;
+    momPDGID_.clear();
   }
   if (pParSet_->existsAs<double>("chargedHadronPTMin")) {
     chargedHadronPTMin_ = pParSet_->getParameter<double>("chargedHadronPTMin");
