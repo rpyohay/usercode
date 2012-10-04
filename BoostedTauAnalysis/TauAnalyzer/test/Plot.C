@@ -416,14 +416,31 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
       const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
       TCanvas* pCanvas;
       inputStreams[inputStreams.size() - 1]->GetObject(iCanvasName->c_str(), pCanvas);
-      TGraphAsymmErrors* pGraph = 
-	(TGraphAsymmErrors*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
-      setGraphOptions(*pGraph, colors[fileIndex], 0.7, styles[fileIndex], 
-		      pGraph->GetXaxis()->GetTitle(), pGraph->GetYaxis()->GetTitle());
+      TGraphAsymmErrors* pGraph = NULL;
+      TH1F* pHist = NULL;
+      if (graphNames[canvasIndex].find("divide") != string::npos) {
+	pGraph = (TGraphAsymmErrors*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
+	setGraphOptions(*pGraph, colors[fileIndex], 0.7, styles[fileIndex], 
+			pGraph->GetXaxis()->GetTitle(), pGraph->GetYaxis()->GetTitle());
+      }
+      else {
+	std::cerr << "error0\n";
+	pHist = (TH1F*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
+	std::cerr << "error1\n";
+	setHistogramOptions(pHist, colors[fileIndex], 0.7, styles[fileIndex], 
+			    1.0/pHist->Integral(0, -1), pHist->GetXaxis()->GetTitle(), 
+			    pHist->GetYaxis()->GetTitle());
+      }
       outStream.cd();
       outputCanvases[canvasIndex]->cd();
-      if (fileIndex == 0) pGraph->Draw("AP");
-      else pGraph->Draw("PSAME");
+      if (fileIndex == 0) {
+	if (pGraph != NULL) pGraph->Draw("AP");
+	if (pHist != NULL) pHist->Draw();
+      }
+      else {
+	if (pGraph != NULL) pGraph->Draw("PSAME");
+	if (pHist != NULL) pHist->Draw("SAME");
+      }
     }
   }
   outStream.cd();

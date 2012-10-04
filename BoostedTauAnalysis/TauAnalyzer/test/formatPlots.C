@@ -9,10 +9,10 @@
 //   gSystem->Load((macroPath + "Plot_C.so").c_str());
 
   //unit strings
-  string unitPTTau("Visible p_{T}^{#tau} (GeV)");
-  string unitPTMu("Gen p_{T}^{#mu} (GeV)");
-  string unitEtaTau("Visible #eta^{#tau}");
-  string unitEtaMu("Gen #eta^{#mu}");
+  string unitPTTau("Reco #tau p_{T} (GeV)");
+  string unitPTMu("Reco #mu p_{T} (GeV)");
+  string unitEtaTau("Reco #tau #eta");
+  string unitEtaMu("Reco #mu #eta");
   string unitDR("#DeltaR(visible gen #tau, gen #mu)");
   string noUnit("");
 
@@ -77,123 +77,18 @@
 //   canvasMap[make_pair(string("muHadGen1Prong1Pi0RecoDecayMode"), noUnit)] = ;
 //   canvasMap[make_pair(string("muHadGen3ProngRecoDecayMode"), noUnit)] = ;
 
-  //plot
-//   string path("/data1/yohay/efficiency_files/combined/NMSSMHiggs_gg_");
-//   string path("/afs/cern.ch/user/y/yohay/CMSSW_5_2_4_patch3_clone/src/NMSSMHiggs_gg_");
-//   string path("/data1/yohay/DYMuMu_nonIso_");
-//   string path("/data1/yohay/NMSSMHiggs_gg_");
-//   string suffixIn("_combined.root");
-//   string suffixIn("_JOBNUM.root");
-//   string suffixOut("_eff.root");
-//   plotNice(path + "muLeg_tauMuX_Mu40eta2p1" + suffixIn, effHistMapMu, binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_tauMuX_Mu40eta2p1" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_tauMuX_IsoMu24eta2p1" + suffixIn, effHistMapMu, binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_tauMuX_IsoMu24eta2p1" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_tauMuX_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixIn, 
-// 	   effHistMapMu, binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_tauMuX_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "muLeg_tauMuX_IsoMu18eta2p1LooseIsoPFTau20" + suffixIn, effHistMapMu, 
-// 	   binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_tauMuX_IsoMu18eta2p1LooseIsoPFTau20" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_tauMuX_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixIn, 
-// 	   effHistMapMu, binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_tauMuX_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "muLeg_tauMuX_IsoMu15eta2p1L1ETM20" + suffixIn, effHistMapMu, binLabelMap, 
-// 	   hist1DMapMu, path + "muLeg_tauMuX_IsoMu15eta2p1L1ETM20" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_diTauMu_Mu40eta2p1" + suffixIn, effHistMapMu, binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_diTauMu_Mu40eta2p1" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_diTauMu_IsoMu24eta2p1" + suffixIn, effHistMapMu, binLabelMap, 
-// 	   hist1DMapMu, path + "muLeg_diTauMu_IsoMu24eta2p1" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_diTauMu_IsoMu18eta2p1LooseIsoPFTau20" + suffixIn, effHistMapMu, 
-// 	   binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_diTauMu_IsoMu18eta2p1LooseIsoPFTau20" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_diTauMu_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixIn, 
-// 	   effHistMapMu, binLabelMap, hist1DMapMu, path + 
-// 	   "muLeg_diTauMu_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "muLeg_diTauMu_IsoMu15eta2p1L1ETM20" + suffixIn, effHistMapMu, binLabelMap, 
-// 	   hist1DMapMu, path + "muLeg_diTauMu_IsoMu15eta2p1L1ETM20" + suffixOut, "noPDF");
-//   plotNice(path + "tauLeg_tau1ProngX_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixIn, 
-// 	   effHistMapTau, binLabelMap, hist1DMapTau, 
-// 	   path + "tauLeg_tau1ProngX_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "tauLeg_tau1ProngX_IsoMu18eta2p1LooseIsoPFTau20" + suffixIn, effHistMapTau, 
-// 	   binLabelMap, hist1DMapTau, 
-// 	   path + "tauLeg_tau1ProngX_IsoMu18eta2p1LooseIsoPFTau20" + suffixOut, "noPDF");
-//   plotNice(path + 
-// 	   "tauLeg_tau1ProngX_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixIn, 
-// 	   effHistMapTau, binLabelMap, hist1DMapTau, path + 
-// 	   "tauLeg_tau1ProngX_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "tauLeg_tau1ProngX_LooseIsoPFTau35Trk20Prong1" + suffixIn, effHistMapTau, 
-// 	   binLabelMap, hist1DMapTau, 
-// 	   path + "tauLeg_tau1ProngX_LooseIsoPFTau35Trk20Prong1" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_tauMutau1Prong_Mu40eta2p1" + suffixIn, effHistMapMu, binLabelMap, 
-// 	   hist1DMapMu, path + "muLeg_tauMutau1Prong_Mu40eta2p1" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_tauMutau1Prong_IsoMu24eta2p1" + suffixIn, effHistMapMu, binLabelMap, 
-// 	   hist1DMapMu, path + "muLeg_tauMutau1Prong_IsoMu24eta2p1" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_tauMutau1Prong_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixIn, 
-// 	   effHistMapMu, binLabelMap, hist1DMapMu, path + 
-// 	   "muLeg_tauMutau1Prong_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "muLeg_tauMutau1Prong_IsoMu18eta2p1LooseIsoPFTau20" + suffixIn, effHistMapMu, 
-// 	   binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_tauMutau1Prong_IsoMu18eta2p1LooseIsoPFTau20" + suffixOut, "noPDF");
-//   plotNice(path + 
-// 	   "muLeg_tauMutau1Prong_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixIn, 
-// 	   effHistMapMu, binLabelMap, hist1DMapMu, path + 
-// 	   "muLeg_tauMutau1Prong_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "muLeg_tauMutau1Prong_IsoMu15eta2p1L1ETM20" + suffixIn, effHistMapMu, 
-// 	   binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_tauMutau1Prong_IsoMu15eta2p1L1ETM20" + suffixOut, "noPDF");
-//   plotNice(path + "muLeg_diTauMu_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixIn, 
-// 	   effHistMapMu, binLabelMap, hist1DMapMu, 
-// 	   path + "muLeg_diTauMu_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "tauLeg_tauXX_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixIn, 
-// 	   effHistMapTau, binLabelMap, hist1DMapTau, 
-// 	   path + "tauLeg_tauXX_IsoMu18eta2p1MediumIsoPFTau25Trk5eta2p1" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "tauLeg_tauXX_IsoMu18eta2p1LooseIsoPFTau20" + suffixIn, effHistMapTau, 
-// 	   binLabelMap, hist1DMapTau, 
-// 	   path + "tauLeg_tauXX_IsoMu18eta2p1LooseIsoPFTau20" + suffixOut, "noPDF");
-//   plotNice(path + "tauLeg_tauXX_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixIn, 
-// 	   effHistMapTau, binLabelMap, hist1DMapTau, 
-// 	   path + "tauLeg_tauXX_IsoMu15eta2p1LooseIsoPFTau35Trk20Prong1L1ETM20" + suffixOut, 
-// 	   "noPDF");
-//   plotNice(path + "tauLeg_tauXX_LooseIsoPFTau35Trk20Prong1" + suffixIn, effHistMapTau, 
-// 	   binLabelMap, hist1DMapTau, 
-// 	   path + "tauLeg_tauXX_LooseIsoPFTau35Trk20Prong1" + suffixOut, "noPDF");
-  //   string beginSignal("/data1/yohay/NMSSMHiggs_gg_trigger_");
-  //   string endSignal(".root");
-//   string beginDY("/data1/yohay/Summer12_DYToTauTau_");
-//   string endDY("_genMuPTGt20GeV_genTauPTGt15GeV.root");
-//   plotNice(beginSignal + "analysis" + endSignal, effHistMap, binLabelMap, hist1DMap, 
-// 	   beginSignal + "plots" + endSignal, "noPDF");
-//   plotNice(beginDY + "analysis" + endDY, effHistMap, binLabelMap, hist1DMap, 
-// 	   beginDY + "plots" + endDY, "noPDF");
-
-// plotNiceDifferentFiles(map<pair<string, string>, vector<pair<pair<TFile*, Option_t*>, 
-// 			    pair<Color_t, Style_t> > > >& canvasMap, 
-// 			    const map<string, vector<string> >& binLabelMap, 
-// 			    const string& outputFileName, const string& savePath)
-
-
 //space-saving constant definitions
   const string analysisFilePath("/data1/yohay/");
-  const string objTag("_");
+  const string objTag("");
   const string suffix(".root");
   const string effTag("_eff");
-  const string controlSample("NMSSMHiggs_WH");
-  const string signalSample("NMSSMHiggs_WH");
+  const string controlSample("WJetsToLNu_");
+  const string signalSample("Wh_");
   const string leg("");
-  const string trigger("LooseCombinedIsolationDBSumPtCorr");
-  const string signalGenSel("muHad_MCTruthMuonRemoval_");
-  const string controlGenSel("muHad_");
-  const string outputTag("MCTruthMuonRemoval_" + trigger);
+  const string trigger("jet_analysis");
+  const string signalGenSel("muHad_");
+  const string controlGenSel("");
+  const string outputTag("_" + trigger);
 
   //make individual efficiency plots for signal and Z-->mumu samples
   vector<string> effInputFiles;
@@ -202,21 +97,24 @@
   effInputFiles.push_back(analysisFilePath + signalSample + objTag + leg + signalGenSel + trigger);
   for (vector<string>::const_iterator iFile = effInputFiles.begin(); iFile != effInputFiles.end(); 
        ++iFile) {
-    comparisonInputFiles.push_back(*iFile + effTag + suffix);
-    plotNice(*iFile + suffix, effHistMapTau, binLabelMap, hist1DMapTau, *iFile + effTag + suffix, 
-	     "noPDF");
+//     comparisonInputFiles.push_back(*iFile + effTag + suffix);
+    comparisonInputFiles.push_back(*iFile + suffix);
+//     plotNice(*iFile + suffix, jetAnalysisEffMap, binLabelMap, jetAnalysisMap, 
+// 	     *iFile + effTag + suffix, "noPDF");
   }
 
   //compare Z-->mumu and signal muon efficiency
   vector<string> canvasNames;
-  canvasNames.push_back("eff_numeratorPT_over_denominatorPT");
-  canvasNames.push_back("eff_numeratorEta_over_denominatorEta");
+//   canvasNames.push_back("eff_numeratorPT_over_denominatorPT");
+//   canvasNames.push_back("eff_numeratorEta_over_denominatorEta");
+  canvasNames.push_back("muEnergyFractionCanvas");
   vector<string> graphNames;
-  graphNames.push_back("divide_numeratorPT_by_denominatorPT");
-  graphNames.push_back("divide_numeratorEta_by_denominatorEta");
+//   graphNames.push_back("divide_numeratorPT_by_denominatorPT");
+//   graphNames.push_back("divide_numeratorEta_by_denominatorEta");
+  graphNames.push_back("muEnergyFraction");
   Color_t colors[2] = {kBlack, kRed};
   Style_t styles[2] = {20, 21};
-  drawMultipleEfficiencyGraphsOn1Canvas(analysisFilePath + "effVsPT" + objTag + outputTag + 
+  drawMultipleEfficiencyGraphsOn1Canvas(analysisFilePath + "eff" + objTag + outputTag + 
 					suffix, comparisonInputFiles, canvasNames, graphNames, 
 					colors, styles);
 }
