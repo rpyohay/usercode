@@ -177,7 +177,6 @@ Common::getRecoTaus(const edm::Handle<reco::PFTauRefVector>& pTaus,
   return taus;
 }
 
-//set canvas drawing options
 void Common::setCanvasOptions(TCanvas& canvas, const Int_t grid, const Int_t logY, 
 			      const Int_t logZ)
 {
@@ -188,7 +187,6 @@ void Common::setCanvasOptions(TCanvas& canvas, const Int_t grid, const Int_t log
   canvas.SetLogz(logZ);
 }
 
-//set canvas margins
 void Common::setCanvasMargins(TCanvas& canvas, const float left, const float top, 
 			      const float right, const float bottom)
 {
@@ -198,7 +196,24 @@ void Common::setCanvasMargins(TCanvas& canvas, const float left, const float top
   canvas.cd()->SetBottomMargin(bottom);
 }
 
-//set axis drawing options
+void Common::draw1DHistograms(TCanvas& canvas, TH1F* hist)
+{
+  setCanvasOptions(canvas, 1, 0, 0);
+  setHistogramOptions(hist, kBlack, 0.7, 20, 1.0, 0.05);
+  hist->SetLineWidth(2);
+  canvas.cd();
+  hist->Draw();
+}
+
+void Common::draw2DHistograms(TCanvas& canvas, TH2F* hist)
+{
+  setCanvasOptions(canvas, 0, 0, 0);
+  setCanvasMargins(canvas, 0.2, 0.2, 0.2, 0.2);
+  setHistogramOptions(hist, kBlack, 0.7, 20, 1.6, 1.0);
+  canvas.cd();
+  hist->Draw("COLZ");
+}
+
 void Common::setAxisOptions(TAxis* axis, const Float_t labelSize, const Float_t titleSize, 
 			    const Float_t titleOffset, const char* title)
 {
@@ -211,7 +226,17 @@ void Common::setAxisOptions(TAxis* axis, const Float_t labelSize, const Float_t 
   axis->SetTitle(title);
 }
 
-//set axis labels
+void Common::setAxisOptions(TAxis* axis, const Float_t labelSize, const Float_t titleSize, 
+			    const Float_t titleOffset)
+{
+  axis->SetLabelFont(42);
+  axis->SetLabelOffset(0.007);
+  axis->SetLabelSize(labelSize);
+  axis->SetTitleFont(42);
+  axis->SetTitleSize(titleSize);
+  axis->SetTitleOffset(titleOffset);
+}
+
 void Common::setAxisLabels(TAxis* axis, const std::vector<std::string>& binLabels)
 {
   for (Int_t iBin = 1; iBin <= axis->GetNbins(); ++iBin) {
@@ -219,7 +244,6 @@ void Common::setAxisLabels(TAxis* axis, const std::vector<std::string>& binLabel
   }
 }
 
-//set graph drawing options
 void Common::setGraphOptions(TGraphAsymmErrors& graph, const Color_t color, const Size_t size, 
 			     const Style_t style, const char* xAxisTitle, const char* yAxisTitle)
 {
@@ -232,7 +256,6 @@ void Common::setGraphOptions(TGraphAsymmErrors& graph, const Color_t color, cons
   setAxisOptions(graph.GetYaxis(), 0.05, 0.05, 1.05, yAxisTitle);
 }
 
-//set histogram drawing options
 void Common::setHistogramOptions(TH1F* histogram, const Color_t color, const Size_t size, 
 				 const Style_t style, const Double_t scale, 
 				 const char* xAxisTitle, const char* yAxisTitle, 
@@ -249,6 +272,21 @@ void Common::setHistogramOptions(TH1F* histogram, const Color_t color, const Siz
   histogram->Scale(scale);
 }
 
+void Common::setHistogramOptions(TH1F* histogram, const Color_t color, const Size_t size, 
+				 const Style_t style, const Double_t scale, 
+				 const Double_t xAxisLabelSize)
+{
+  histogram->SetMarkerColor(color);
+  histogram->SetMarkerSize(size);
+  histogram->SetMarkerStyle(style);
+  histogram->SetLineColor(color);
+  histogram->SetLineWidth(1);
+  histogram->SetFillStyle(0);
+  setAxisOptions(histogram->GetXaxis(), xAxisLabelSize, 0.05, 0.9);
+  setAxisOptions(histogram->GetYaxis(), 0.05, 0.05, 1.05);
+  histogram->Scale(scale);
+}
+
 void Common::setHistogramOptions(TH2F* histogram, const Color_t color, const Size_t size, 
 				 const Style_t style, const Float_t yAxisTitleOffset, 
 				 const Double_t scale, const char* xAxisTitle, 
@@ -262,6 +300,22 @@ void Common::setHistogramOptions(TH2F* histogram, const Color_t color, const Siz
   histogram->SetFillStyle(0);
   setAxisOptions(histogram->GetXaxis(), 0.04, 0.04, 1.1, xAxisTitle);
   setAxisOptions(histogram->GetYaxis(), 0.04, 0.04, yAxisTitleOffset, yAxisTitle);
+  setAxisOptions(histogram->GetZaxis(), 0.04, 0.04, histogram->GetZaxis()->GetTitleOffset(), "");
+  histogram->Scale(scale);
+}
+
+void Common::setHistogramOptions(TH2F* histogram, const Color_t color, const Size_t size, 
+				 const Style_t style, const Float_t yAxisTitleOffset, 
+				 const Double_t scale)
+{
+  histogram->SetMarkerColor(color);
+  histogram->SetMarkerSize(size);
+  histogram->SetMarkerStyle(style);
+  histogram->SetLineColor(color);
+  histogram->SetLineWidth(1);
+  histogram->SetFillStyle(0);
+  setAxisOptions(histogram->GetXaxis(), 0.04, 0.04, 1.1);
+  setAxisOptions(histogram->GetYaxis(), 0.04, 0.04, yAxisTitleOffset);
   setAxisOptions(histogram->GetZaxis(), 0.04, 0.04, histogram->GetZaxis()->GetTitleOffset(), "");
   histogram->Scale(scale);
 }

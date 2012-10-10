@@ -127,8 +127,17 @@ class Common {
   //set canvas margins
   static void setCanvasMargins(TCanvas&, const float, const float, const float, const float);
 
+  //draw 1D histograms
+  static void draw1DHistograms(TCanvas&, TH1F*);
+
+  //draw 2D histograms
+  static void draw2DHistograms(TCanvas&, TH2F*);
+
   //set axis drawing options
   static void setAxisOptions(TAxis*, const Float_t, const Float_t, const Float_t, const char*);
+
+  //set axis drawing options excluding title
+  static void setAxisOptions(TAxis*, const Float_t, const Float_t, const Float_t);
 
   //set axis labels
   static void setAxisLabels(TAxis*, const std::vector<std::string>&);
@@ -141,9 +150,17 @@ class Common {
   static void setHistogramOptions(TH1F*, const Color_t, const Size_t, const Style_t, 
 				  const Double_t, const char*, const char*, const Double_t);
 
+  //set 1D histogram drawing options, excluding axis titles
+  static void setHistogramOptions(TH1F*, const Color_t, const Size_t, const Style_t, 
+				  const Double_t, const Double_t);
+
   //set 2D histogram drawing options
   static void setHistogramOptions(TH2F*, const Color_t, const Size_t, const Style_t, 
 				  const Float_t, const Double_t, const char*, const char*);
+
+  //set 2D histogram drawing options, excluding axis titles
+  static void setHistogramOptions(TH2F*, const Color_t, const Size_t, const Style_t, 
+				  const Float_t, const Double_t);
 
   //set legend options
   static void setLegendOptions(TLegend&, const char*);
