@@ -14,7 +14,7 @@ Implementation:
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Thu Aug 23 11:23:58 CEST 2012
-// $Id: GenObjectProducer.cc,v 1.2 2012/09/25 11:44:46 yohay Exp $
+// $Id: GenObjectProducer.cc,v 1.3 2012/10/04 15:13:38 yohay Exp $
 //
 //
 
@@ -36,9 +36,6 @@ Implementation:
 
 //code for any tau decay
 #define TAU_ALL 3
-
-//code for any PDG ID
-#define ANY_PDGID 0
 
 //
 // class declaration
@@ -437,14 +434,16 @@ bool GenObjectProducer::goodSister(GenTauDecayID& tau,
 	  ((sisterHadronicDecayType_ == reco::PFTau::kNull) || /*using kNull to mean don't select 
 								 on hadronic tau decay type*/
 	   (decayType.first == sisterHadronicDecayType_)) && 
-	  ((sisterAbsMatchPDGID_ == ANY_PDGID) || 
+	  ((sisterAbsMatchPDGID_ == GenTauDecayID::ANY_PDGID) || 
 	   (fabs(reco::GenParticleRef(tau.getGenParticleHandle(), iSister)->pdgId()) == 
 	    sisterAbsMatchPDGID_))) goodSister = true;
     }
   }
   catch (std::string& ex) {
-    if (sisterAbsMatchPDGID_ != ANY_PDGID) throw ex; /*assuming you wanted a sister, so if one 
-						       isn't found an exception should be thrown*/
+    if (sisterAbsMatchPDGID_ != GenTauDecayID::ANY_PDGID) throw ex; /*assuming you wanted a 
+								      sister, so if one isn't 
+								      found an exception should be 
+								      thrown*/
     //else assume particle really didn't have sister and you knew that, so just move on
   }
   return goodSister;
