@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: JetAnalyzer.cc,v 1.3 2012/09/27 11:50:50 yohay Exp $
+// $Id: JetAnalyzer.cc,v 1.4 2012/10/04 15:10:13 yohay Exp $
 //
 //
 
@@ -41,6 +41,7 @@
 #include "BoostedTauAnalysis/Common/interface/Common.h"
 #include "TFile.h"
 #include "TH1F.h"
+#include "TH2F.h"
 #include "TCanvas.h"
 #include "TLegend.h"
 
@@ -114,14 +115,32 @@ private:
   //name of output file
   std::string outFileName_;
 
+  //set of parameters for GenTauDecayID class
+  edm::ParameterSet genTauDecayIDPSet_;
+
+  //flag indicating whether pT cuts should be applied in determining valid gen objects
+  bool applyPTCuts_;
+
+  //flag indicating whether KShorts should be counted as neutral hadrons
+  bool countKShort_;
+
+  //sister fabs(PDG ID) to match
+  unsigned int sisterAbsMatchPDGID_;
+
   //vector of jet tags
   std::vector<edm::InputTag> jetTags_;
 
   //MET tag
   edm::InputTag METTag_;
 
+  //input tag for base gen particle collection
+  edm::InputTag genParticleTag_;
+
   //selected gen object tag
   edm::InputTag selectedGenObjTag_;
+
+  //dR matching cut
+  double dR_;
 
   //marker colors for histograms with different pT rank
   std::vector<unsigned int> pTRankColors_;
@@ -147,6 +166,21 @@ private:
   //histogram of muon energy fraction
   TH1F* muEnergyFraction_;
 
+  //histogram of muon energy fraction, zoomed in on [0, 0.02)
+  TH1F* muEnergyFractionZoom_;
+
+  //histogram of gen muon pT in mu+had objects matched to jets with 0 muons
+  TH1F* muHadGenMuPT_;
+
+  //histogram of DR(gen muon, jet) in mu+had objects matched to jets with 0 muons
+  TH1F* muHadDRMuJet_;
+
+  //histogram of muon multiplicity vs. energy fraction
+  TH2F* muMultiplicityVsEnergyFraction_;
+
+  //histogram of gen muon pT vs. DR(gen muon, jet) in mu+had objects matched to jets with 0 muons
+  TH2F* muHadGenMuPTVsDRMuJet_;
+
   //selected gen object counter
   unsigned int nSelectedGenObjs_;
 
@@ -170,9 +204,15 @@ private:
 //
 JetAnalyzer::JetAnalyzer(const edm::ParameterSet& iConfig) :
   outFileName_(iConfig.getParameter<std::string>("outFileName")),
+  genTauDecayIDPSet_(iConfig.getParameter<edm::ParameterSet>("genTauDecayIDPSet")),
+  applyPTCuts_(iConfig.getParameter<bool>("applyPTCuts")),
+  countKShort_(iConfig.getParameter<bool>("countKShort")),
+  sisterAbsMatchPDGID_(iConfig.getParameter<unsigned int>("sisterAbsMatchPDGID")),
   jetTags_(iConfig.getParameter<std::vector<edm::InputTag> >("jetTags")),
   METTag_(iConfig.getParameter<edm::InputTag>("METTag")),
+  genParticleTag_(iConfig.getParameter<edm::InputTag>("genParticleTag")),
   selectedGenObjTag_(iConfig.getParameter<edm::InputTag>("selectedGenObjTag")),
+  dR_(iConfig.getParameter<double>("dR")),
   pTRankColors_(iConfig.getParameter<std::vector<unsigned int> >("pTRankColors")),
   pTRankStyles_(iConfig.getParameter<std::vector<unsigned int> >("pTRankStyles")),
   pTRankEntries_(iConfig.getParameter<std::vector<std::string> >("pTRankEntries")),
@@ -213,8 +253,12 @@ void JetAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   edm::Handle<edm::View<reco::PFMET> > pMET;
   iEvent.getByLabel(METTag_, pMET);
 
+  //get base gen particles
+  edm::Handle<reco::GenParticleCollection> pGenParticles;
+  iEvent.getByLabel(genParticleTag_, pGenParticles);
+
   //get selected gen object tag
-  edm::Handle<edm::View<reco::GenParticle> > pSelectedGenObjs;
+  edm::Handle<reco::GenParticleRefVector> pSelectedGenObjs;
   iEvent.getByLabel(selectedGenObjTag_, pSelectedGenObjs);
   
   //fill pT histograms for jets, 1 per pT rank
@@ -227,14 +271,85 @@ void JetAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   /*plot HT distribution (sum ET of jets matched to di-tau objects in the case where there are 2 
     di-tau objects with jet matches)*/
   fillHTHistogram(jetCollMap, 2);
+
+  const unsigned int nSelectedGenObjs = pSelectedGenObjs->size();
   
   //plot muon energy fraction of jets
   for (unsigned int iJet = 0; iJet < jetCollMap.begin()->second->size(); ++iJet) {
-    muEnergyFraction_->Fill(jetCollMap.begin()->second->refAt(iJet)->muonEnergyFraction());
+    edm::RefToBase<reco::PFJet> jetRefToBase(jetCollMap.begin()->second->refAt(iJet));
+    float muEnergyFraction = jetRefToBase->muonEnergyFraction();
+    muEnergyFraction_->Fill(muEnergyFraction);
+
+    //zoom in on jets with muon energy fraction < 0.02
+    if (muEnergyFraction < 0.02) muEnergyFractionZoom_->Fill(muEnergyFraction);
+
+    //plot muon multiplicity in jets with muon energy fraction =0.0
+    int muMultiplicity = jetRefToBase->muonMultiplicity();
+    if (muEnergyFraction == 0.0) {
+      muMultiplicityVsEnergyFraction_->Fill(0.0, muMultiplicity);
+
+      //find the matching gen tau (1st within dR_ of jet)
+      GenTauDecayID genHadTau;
+      std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType> genHadTauDecayType;
+      bool foundMatch = false;
+      unsigned int iSelectedGenObj = 0;
+      try {
+	while ((iSelectedGenObj < nSelectedGenObjs) && !foundMatch) {
+	  GenTauDecayID tauDecay(genTauDecayIDPSet_, pGenParticles, 
+				 Common::getStatus3Key(pSelectedGenObjs, pGenParticles, 
+						       iSelectedGenObj));
+	  std::pair<reco::PFTau::hadronicDecayMode, GenTauDecayID::DecayType> decayType = 
+	    tauDecay.tauDecayType(applyPTCuts_, countKShort_);
+	  reco::LeafCandidate::LorentzVector visibleGenP4 = tauDecay.getVisibleTauP4();
+	  std::vector<reco::LeafCandidate> 
+	    visibleGenParticle(1, reco::LeafCandidate(0.0, visibleGenP4));
+	  edm::Ref<std::vector<reco::LeafCandidate> > 
+	    visibleGenParticleRef(&visibleGenParticle, 0);
+	  if (reco::deltaR(*jetRefToBase, *visibleGenParticleRef) < dR_) {
+	    foundMatch = true;
+	    genHadTau = tauDecay;
+	    genHadTauDecayType = decayType;
+	  }
+	  ++iSelectedGenObj;
+	}
+      }
+      catch (std::string& ex) { throw cms::Exception("JetAnalyzer") << ex; }
+
+      //if the matched tau decayed hadronically...
+      if ((foundMatch == true) && (genHadTauDecayType.second == GenTauDecayID::HAD)) {
+
+	//...and its sister decayed muonically...
+	try {
+	  genHadTau.findSister();
+	  if (genHadTau.sisterDecayType(applyPTCuts_, countKShort_).second == GenTauDecayID::MU) {
+	    reco::LeafCandidate::LorentzVector genMuP4 = genHadTau.getVisibleTauSisterP4();
+	    const double genMuPT = genMuP4.Pt();
+	    const double dRMuJet = 
+	      reco::deltaR(jetRefToBase->eta(), jetRefToBase->phi(), genMuP4.Eta(), genMuP4.Phi());
+
+	    //plot the matched mu+had gen muon pT and DR(muon, jet)
+	    muHadGenMuPT_->Fill(genMuPT);
+	    muHadDRMuJet_->Fill(dRMuJet);
+	    muHadGenMuPTVsDRMuJet_->Fill(dRMuJet, genMuPT);
+	  }
+	}
+	catch (std::string& ex) {
+	  if (sisterAbsMatchPDGID_ != GenTauDecayID::ANY_PDGID) throw ex; /*assuming you wanted a 
+									    sister, so if one 
+									    isn't found an 
+									    exception should be 
+									    thrown*/
+	  //else assume particle really didn't have sister and you knew that, so just move on
+	}
+      }
+    }
+
+    //plot muon multiplicity in jets with muon energy fraction >0.0
+    else if (muEnergyFraction > 0.0) muMultiplicityVsEnergyFraction_->Fill(1.0, muMultiplicity);
   }
 
   //count selected gen objects
-  nSelectedGenObjs_+=pSelectedGenObjs->size();
+  nSelectedGenObjs_+=nSelectedGenObjs;
 
   //count reco jets
   unsigned int count = 0;
@@ -247,7 +362,7 @@ void JetAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
   }
 
   //count events with 1 reco jet per type
-  if (nRecoJets == pSelectedGenObjs->size()) ++nEvts1RecoJetPerType_;
+  if (nRecoJets == nSelectedGenObjs) ++nEvts1RecoJetPerType_;
 }
 
 
@@ -265,7 +380,20 @@ void JetAnalyzer::beginJob()
   }
   MET_ = new TH1F("MET", "", 20, 0.0, 100.0);
   HT_ = new TH1F("HT", "", 100, 0.0, 500.0);
-  muEnergyFraction_ = new TH1F("muEnergyFraction", "", 50, 0.0, 1.0);
+  muEnergyFraction_ = new TH1F("muEnergyFraction", ";Muon energy fraction;", 50, 0.0, 1.0);
+  muEnergyFractionZoom_ = 
+    new TH1F("muEnergyFractionZoom", ";Muon energy fraction;", 50, 0.0, 0.02);
+  muHadGenMuPT_ = new TH1F("muHadGenMuPT", ";p_{T} (GeV);", 20, 0.0, 100.0);
+  muHadDRMuJet_ = new TH1F("muHadDRMuJet", ";#DeltaR_{#muj};", 50, 0.0, 5.0);
+  muMultiplicityVsEnergyFraction_ = 
+    new TH2F("muMultiplicityVsEnergyFraction", ";Muon energy fraction;Muon multiplicity", 
+	     2, -0.5, 1.5, 4, -0.5, 3.5);
+  muHadGenMuPTVsDRMuJet_ = 
+    new TH2F("muHadGenMuPTVsDRMuJet", ";#DeltaR_{#muj};p_{T} (GeV)", 50, 0.0, 5.0, 20, 0.0, 100.0);
+
+  //set bin labels
+  muMultiplicityVsEnergyFraction_->GetXaxis()->SetBinLabel(1, "0.0");
+  muMultiplicityVsEnergyFraction_->GetXaxis()->SetBinLabel(2, ">0.0");
 }
 
 // ------------ method called once each job just after ending the event loop  ------------
@@ -275,25 +403,40 @@ void JetAnalyzer::endJob()
   out_->cd();
   TCanvas jetPTRankCanvas("jetPTRankCanvas", "", 600, 600);
   TCanvas muEnergyFractionCanvas("muEnergyFractionCanvas", "", 600, 600);
+  TCanvas muEnergyFractionZoomCanvas("muEnergyFractionZoomCanvas", "", 600, 600);
+  TCanvas muHadGenMuPTCanvas("muHadGenMuPTCanvas", "", 600, 600);
+  TCanvas muHadDRMuJetCanvas("muHadDRMuJetCanvas", "", 600, 600);
+  TCanvas muMultiplicityVsEnergyFractionCanvas("muMultiplicityVsEnergyFractionCanvas", "", 600, 
+					       600);
+  TCanvas muHadGenMuPTVsDRMuJetCanvas("muHadGenMuPTVsDRMuJetCanvas", "", 600, 600);
+
+  //make legends
   TLegend jetPTRankLegend(0.4, 0.6, 0.8, 0.8);
+
+  //make jet pT rank canvases
   makePTRankCanvas(jetPTRankCanvas, jetPTRankLegend, 
 		   "gg fusion NMSSM Higgs-matched AK5 jets", jetPTHists_);
-  Common::setCanvasOptions(muEnergyFractionCanvas, 1, 0, 0);
 
-  //format the plots
-  Common::setHistogramOptions(muEnergyFraction_, kBlack, 0.7, 20, 1.0, "Muon energy fraction", "", 
-			      0.05);
-  muEnergyFraction_->SetLineWidth(2);
+  //format and draw 1D plots
+  Common::draw1DHistograms(muEnergyFractionCanvas, muEnergyFraction_);
+  Common::draw1DHistograms(muEnergyFractionZoomCanvas, muEnergyFractionZoom_);
+  Common::draw1DHistograms(muHadGenMuPTCanvas, muHadGenMuPT_);
+  Common::draw1DHistograms(muHadDRMuJetCanvas, muHadDRMuJet_);
 
-  //draw plots
-  muEnergyFractionCanvas.cd();
-  muEnergyFraction_->Draw();
+  //format and draw 2D plots
+  Common::draw2DHistograms(muMultiplicityVsEnergyFractionCanvas, muMultiplicityVsEnergyFraction_);
+  Common::draw2DHistograms(muHadGenMuPTVsDRMuJetCanvas, muHadGenMuPTVsDRMuJet_);
 
   //write output file
   out_->cd();
   for (std::vector<TH1F*>::iterator iHist = jetPTHists_.begin(); 
        iHist != jetPTHists_.end(); ++iHist) { (*iHist)->Write(); }
   muEnergyFractionCanvas.Write();
+  muEnergyFractionZoomCanvas.Write();
+  muHadGenMuPTCanvas.Write();
+  muHadDRMuJetCanvas.Write();
+  muMultiplicityVsEnergyFractionCanvas.Write();
+  muHadGenMuPTVsDRMuJetCanvas.Write();
   MET_->Write();
   HT_->Write();
   out_->Write();
@@ -400,6 +543,20 @@ void JetAnalyzer::reset(const bool doDelete)
   HT_ = NULL;
   if ((doDelete) && (muEnergyFraction_ != NULL)) delete muEnergyFraction_;
   muEnergyFraction_ = NULL;
+  if ((doDelete) && (muEnergyFractionZoom_ != NULL)) delete muEnergyFractionZoom_;
+  muEnergyFractionZoom_ = NULL;
+  if ((doDelete) && (muHadGenMuPT_ != NULL)) delete muHadGenMuPT_;
+  muHadGenMuPT_ = NULL;
+  if ((doDelete) && (muHadDRMuJet_ != NULL)) delete muHadDRMuJet_;
+  muHadDRMuJet_ = NULL;
+  if ((doDelete) && (muMultiplicityVsEnergyFraction_ != NULL)) {
+    delete muMultiplicityVsEnergyFraction_;
+  }
+  muMultiplicityVsEnergyFraction_ = NULL;
+  if ((doDelete) && (muHadGenMuPTVsDRMuJet_ != NULL)) {
+    delete muHadGenMuPTVsDRMuJet_;
+  }
+  muHadGenMuPTVsDRMuJet_ = NULL;
 }
 
 //define this as a plug-in
