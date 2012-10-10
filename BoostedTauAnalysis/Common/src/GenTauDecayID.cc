@@ -277,12 +277,12 @@ bool GenTauDecayID::isStatus3DecayProduct(const int PDGID) const
   if (unpacked_) {
     if (validHandle_) {
       reco::GenParticleRef particleRef(pGenParticles_, iTau_);
-      ret = (((PDGID == 0) || (fabs(particleRef->pdgId()) == PDGID)) && 
+      ret = (((PDGID == ANY_PDGID) || (fabs(particleRef->pdgId()) == PDGID)) && 
 	     (particleRef->status() == 3)); 
       bool rightMom = false;
       std::vector<int>::const_iterator iPDGID = momPDGID_.begin();
       while ((iPDGID != momPDGID_.end()) && !rightMom) {
-	rightMom = (*iPDGID == 0) || //don't consider mother PDG ID in selection
+	rightMom = (*iPDGID == ANY_PDGID) || //don't consider mother PDG ID in selection
 	  ((particleRef->numberOfMothers() > 0) && /*insure that the mothers of particles with 0 
 						     mothers (i.e. the protons) are not accessed*/
 	   (fabs(particleRef->mother()->pdgId()) == fabs(*iPDGID))); /*require that the 0th mother 
