@@ -15,7 +15,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Fri Aug 24 17:10:12 CEST 2012
-// $Id: CustomTauSelector.cc,v 1.1 2012/09/19 09:42:49 yohay Exp $
+// $Id: CustomTauSelector.cc,v 1.2 2012/09/25 11:44:34 yohay Exp $
 //
 //
 
@@ -60,6 +60,12 @@ private:
   //input tag for base tau collection
   edm::InputTag baseTauTag_;
 
+  //input tag for clean jet collection
+  edm::InputTag jetTag_;
+
+  //input tag for map jet muon removal decisions
+  edm::InputTag muonRemovalDecisionTag_;
+
   //vector of input tags, 1 for each discriminator the tau should pass
   std::vector<edm::InputTag> tauDiscriminatorTags_;
 
@@ -85,10 +91,20 @@ CustomTauSelector::CustomTauSelector(const edm::ParameterSet& iConfig) :
   tauTag_(iConfig.existsAs<edm::InputTag>("tauTag") ? 
 	  iConfig.getParameter<edm::InputTag>("tauTag") : edm::InputTag()),
   baseTauTag_(iConfig.getParameter<edm::InputTag>("baseTauTag")),
+  jetTag_(iConfig.existsAs<edm::InputTag>("jetTag") ? 
+	  iConfig.getParameter<edm::InputTag>("jetTag") : edm::InputTag()),
+  muonRemovalDecisionTag_(iConfig.existsAs<edm::InputTag>("muonRemovalDecisionTag") ? 
+			  iConfig.getParameter<edm::InputTag>("muonRemovalDecisionTag") : 
+			  edm::InputTag()),
   tauDiscriminatorTags_(iConfig.getParameter<std::vector<edm::InputTag> >("tauDiscriminatorTags")),
   etaMax_(iConfig.getParameter<double>("etaMax")),
   minNumObjsToPassFilter_(iConfig.getParameter<unsigned int>("minNumObjsToPassFilter"))
 {
+  if (((jetTag_ == edm::InputTag()) && !(muonRemovalDecisionTag_ == edm::InputTag())) || 
+      (!(jetTag_ == edm::InputTag()) && (muonRemovalDecisionTag_ == edm::InputTag()))) {
+    std::cerr << "Warning: only one of jetTag or muonRemovalDecisionTag was supplied.  No ";
+    std::cerr << "decision on tau seed jet will be made.\n";
+  }
   produces<reco::PFTauRefVector>();
 }
 
@@ -129,18 +145,59 @@ bool CustomTauSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
     iEvent.getByLabel(*iTag, pTauDiscriminators[iTag - tauDiscriminatorTags_.begin()]);
   }
 
+  //get jet collection
+  edm::Handle<reco::PFJetCollection> pJets;
+  if (jetTag_ == edm::InputTag()) {}
+  else iEvent.getByLabel(jetTag_, pJets);
+
+  //get map of jet muon removal decisions
+  edm::Handle<edm::ValueMap<bool> > pMuonRemovalDecisions;
+  if (muonRemovalDecisionTag_ == edm::InputTag()) {}
+  else iEvent.getByLabel(muonRemovalDecisionTag_, pMuonRemovalDecisions);
+
+  //debug
+  std::cerr << "Jets " << pJets.isValid() << std::endl;
+  std::cerr << "Value map " << pMuonRemovalDecisions.isValid() << std::endl;
+  std::cerr << "Taus " << pTaus.isValid() << std::endl;
+  std::cerr << "Base taus " << pBaseTaus.isValid() << std::endl;
+
   //fill STL container with taus passing specified discriminators in specified eta range
   std::vector<reco::PFTauRef> taus = pTaus.isValid() ? 
     Common::getRecoTaus(pTaus, pBaseTaus, pTauDiscriminators, etaMax_) : 
     Common::getRecoTaus(pBaseTaus, pTauDiscriminators, etaMax_);
 
-  //fill output collection
+  //loop over selected taus
+  unsigned int nPassingTaus = 0;
   for (std::vector<reco::PFTauRef>::const_iterator iTau = taus.begin(); iTau != taus.end(); 
-       ++iTau) { tauColl->push_back(*iTau); }
+       ++iTau) {
+
+    /*if jet collection and muon removal decision map exist, fill output collection if tau is 
+      matched to jet tagged for muon removal*/
+    if (pJets.isValid() && pMuonRemovalDecisions.isValid()) {
+      if ((*pMuonRemovalDecisions)[(*iTau)->jetRef()]) {
+	tauColl->push_back(*iTau);
+	++nPassingTaus;
+
+	//debug
+	std::cerr << "Selected tau pT: " << (*iTau)->pt() << " GeV\n";
+	std::cerr << "Selected tau eta: " << (*iTau)->eta() << std::endl;
+	std::cerr << "Selected tau phi: " << (*iTau)->phi() << std::endl;
+	std::cerr << "Selected tau ref key: " << iTau->key() << std::endl;
+	std::cerr << "Selected tau jet ref key: " << (*iTau)->jetRef().key() << std::endl;
+      }
+    }
+
+    /*if jet collection and muon removal decision map do not exist, assume no selection on tau 
+      seed jet is desired and fill output collection*/
+    else {
+      tauColl->push_back(*iTau);
+      ++nPassingTaus;
+    }
+  }
   iEvent.put(tauColl);
 
   //if not enough taus passing cuts were found in this event, stop processing
-  return (taus.size() >= minNumObjsToPassFilter_);
+  return (nPassingTaus >= minNumObjsToPassFilter_);
 }
 
 // ------------ method called once each job just before starting event loop  ------------
