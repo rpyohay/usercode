@@ -115,8 +115,8 @@ float Common::getMuonCombPFIso(const reco::Muon& muon, const double PUSubtractio
 				 PUSubtractionCoeff*isoBlock.sumPUPt)));
 }
 
-std::vector<reco::Muon*>
-Common::getTightPFIsolatedRecoMuons(edm::Handle<reco::MuonCollection>& pMuons, 
+std::vector<reco::MuonRef>
+Common::getTightPFIsolatedRecoMuons(const edm::Handle<reco::MuonCollection>& pMuons, 
 				    const reco::Vertex* pPV, const double PUSubtractionCoeff, 
 				    const double PFIsoMax, const double etaMax, const bool passIso)
 {
@@ -124,12 +124,77 @@ Common::getTightPFIsolatedRecoMuons(edm::Handle<reco::MuonCollection>& pMuons,
 				   passIso);
 }
 
-std::vector<reco::Muon*>
-Common::getTightDetectorIsolatedRecoMuons(edm::Handle<reco::MuonCollection>& pMuons, 
+std::vector<reco::MuonRef>
+Common::getTightPFIsolatedRecoMuons(const edm::Handle<reco::MuonRefVector>& pMuons, 
+				    const edm::Handle<reco::MuonCollection>& pBaseMuons, 
+				    const reco::Vertex* pPV, const double PUSubtractionCoeff, 
+				    const double PFIsoMax, const double etaMax, const bool passIso)
+{
+  return getTightIsolatedRecoMuons(pMuons, pBaseMuons, pPV, true, PUSubtractionCoeff, PFIsoMax, 
+				   etaMax, passIso);
+}
+
+std::vector<reco::MuonRef>
+Common::getTightDetectorIsolatedRecoMuons(const edm::Handle<reco::MuonCollection>& pMuons, 
 					  const reco::Vertex* pPV, const double detectorIsoMax, 
 					  const double etaMax, const bool passIso)
 {
   return getTightIsolatedRecoMuons(pMuons, pPV, false, 0.0, detectorIsoMax, etaMax, passIso);
+}
+
+std::vector<reco::MuonRef>
+Common::getTightDetectorIsolatedRecoMuons(const edm::Handle<reco::MuonRefVector>& pMuons, 
+					  const edm::Handle<reco::MuonCollection>& pBaseMuons, 
+					  const reco::Vertex* pPV, const double detectorIsoMax, 
+					  const double etaMax, const bool passIso)
+{
+  return getTightIsolatedRecoMuons(pMuons, pBaseMuons, pPV, false, 0.0, detectorIsoMax, etaMax, 
+				   passIso);
+}
+
+std::vector<reco::MuonRef>
+Common::getSoftRecoMuons(const edm::Handle<reco::MuonCollection>& pMuons, const reco::Vertex* pPV, 
+			 const double etaMax)
+{
+  std::vector<reco::MuonRef> softMuons;
+  for (reco::MuonCollection::const_iterator iMuon = pMuons->begin(); iMuon != pMuons->end(); 
+       ++iMuon) {
+    const reco::TrackRef innerTrack = iMuon->innerTrack();
+    const reco::Vertex::Point PVPos = pPV->position();
+    if (muon::isGoodMuon(*iMuon, muon::TMOneStationTight) && 
+	(iMuon->track()->hitPattern().trackerLayersWithMeasurement() > 5) && 
+	(innerTrack->hitPattern().pixelLayersWithMeasurement() > 1) && 
+	(innerTrack->normalizedChi2() < 1.8) && 
+	(fabs(innerTrack->dxy(PVPos)) < 3.0) && 
+	(fabs(innerTrack->dz(PVPos)) < 30.0) && 
+	((etaMax == -1.0) || (fabs(iMuon->eta()) < etaMax))) {
+      softMuons.push_back(reco::MuonRef(pMuons, iMuon - pMuons->begin()));
+    }
+  }
+  return softMuons;
+}
+
+std::vector<reco::MuonRef>
+Common::getSoftRecoMuons(const edm::Handle<reco::MuonRefVector>& pMuons, 
+			 const edm::Handle<reco::MuonCollection>& pBaseMuons, 
+			 const reco::Vertex* pPV, const double etaMax)
+{
+  std::vector<reco::MuonRef> softMuons;
+  for (reco::MuonRefVector::const_iterator iMuon = pMuons->begin(); iMuon != pMuons->end(); 
+       ++iMuon) {
+    const reco::TrackRef innerTrack = (*iMuon)->innerTrack();
+    const reco::Vertex::Point PVPos = pPV->position();
+    if (muon::isGoodMuon(**iMuon, muon::TMOneStationTight) && 
+	((*iMuon)->track()->hitPattern().trackerLayersWithMeasurement() > 5) && 
+	(innerTrack->hitPattern().pixelLayersWithMeasurement() > 1) && 
+	(innerTrack->normalizedChi2() < 1.8) && 
+	(fabs(innerTrack->dxy(PVPos)) < 3.0) && 
+	(fabs(innerTrack->dz(PVPos)) < 30.0) && 
+	((etaMax == -1.0) || (fabs((*iMuon)->eta()) < etaMax))) {
+      softMuons.push_back(reco::MuonRef(pBaseMuons, iMuon->key()));
+    }
+  }
+  return softMuons;
 }
 
 std::vector<reco::PFTauRef> 
@@ -209,9 +274,9 @@ void Common::draw2DHistograms(TCanvas& canvas, TH2F* hist)
 {
   setCanvasOptions(canvas, 0, 0, 0);
   setCanvasMargins(canvas, 0.2, 0.2, 0.2, 0.2);
-  setHistogramOptions(hist, kBlack, 0.7, 20, 1.6, 1.0);
+  setHistogramOptions(hist, kBlack, /*0.7*/4.2, 20, 1.6, 1.0);
   canvas.cd();
-  hist->Draw("COLZ");
+  hist->Draw(/*"COLZ"*/"TEXT");
 }
 
 void Common::setAxisOptions(TAxis* axis, const Float_t labelSize, const Float_t titleSize, 
@@ -340,13 +405,13 @@ Common::getStatus3Key(const edm::Handle<reco::GenParticleRefVector>& pSelectedGe
   return key;
 }
 
-std::vector<reco::Muon*>
-Common::getTightIsolatedRecoMuons(edm::Handle<reco::MuonCollection>& pMuons, 
+std::vector<reco::MuonRef>
+Common::getTightIsolatedRecoMuons(const edm::Handle<reco::MuonCollection>& pMuons, 
 				  const reco::Vertex* pPV, const bool usePFIso, 
 				  const double PUSubtractionCoeff, const double isoMax, 
 				  const double etaMax, const bool passIso)
 {
-  std::vector<reco::Muon*> tightMuons;
+  std::vector<reco::MuonRef> tightMuons;
   for (reco::MuonCollection::const_iterator iMuon = pMuons->begin(); iMuon != pMuons->end(); 
        ++iMuon) {
     if (muon::isTightMuon(*iMuon, *pPV) && 
@@ -363,7 +428,38 @@ Common::getTightIsolatedRecoMuons(edm::Handle<reco::MuonCollection>& pMuons,
 	iso = (isoBlock.sumPt + isoBlock.emEt + isoBlock.hadEt)/iMuon->pt();
       }
       if ((isoMax == -1.0) || (passIso && (iso < isoMax)) || (!passIso && (iso >= isoMax))) {
-	tightMuons.push_back(const_cast<reco::Muon*>(&*iMuon));
+	tightMuons.push_back(reco::MuonRef(pMuons, iMuon - pMuons->begin()));
+      }
+    }
+  }
+  return tightMuons;
+}
+
+std::vector<reco::MuonRef>
+Common::getTightIsolatedRecoMuons(const edm::Handle<reco::MuonRefVector>& pMuons, 
+				  const edm::Handle<reco::MuonCollection>& pBaseMuons, 
+				  const reco::Vertex* pPV, const bool usePFIso, 
+				  const double PUSubtractionCoeff, const double isoMax, 
+				  const double etaMax, const bool passIso)
+{
+  std::vector<reco::MuonRef> tightMuons;
+  for (reco::MuonRefVector::const_iterator iMuon = pMuons->begin(); iMuon != pMuons->end(); 
+       ++iMuon) {
+    if (muon::isTightMuon(**iMuon, *pPV) && 
+	(*iMuon)->isPFMuon() && 
+	(fabs((*iMuon)->innerTrack()->dz(pPV->position())) < 0.5) && 
+	((*iMuon)->track()->hitPattern().trackerLayersWithMeasurement() > 5) && 
+	((etaMax == -1.0) || (fabs((*iMuon)->eta()) < etaMax))) {
+      float iso = 0.0;
+      if (usePFIso) {
+	iso = getMuonCombPFIso(**iMuon, PUSubtractionCoeff)/(*iMuon)->pt();
+      }
+      else {
+	const reco::MuonIsolation isoBlock = (*iMuon)->isolationR03();
+	iso = (isoBlock.sumPt + isoBlock.emEt + isoBlock.hadEt)/(*iMuon)->pt();
+      }
+      if ((isoMax == -1.0) || (passIso && (iso < isoMax)) || (!passIso && (iso >= isoMax))) {
+	tightMuons.push_back(reco::MuonRef(pBaseMuons, iMuon->key()));
       }
     }
   }

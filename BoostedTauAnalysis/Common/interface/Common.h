@@ -98,17 +98,43 @@ class Common {
   /*fill STL container with muons passing the 2012 tight selection, PF isolation, and |eta|
     (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId and 
     https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Muon_Isolation_AN1)*/
-  static std::vector<reco::Muon*> getTightPFIsolatedRecoMuons(edm::Handle<reco::MuonCollection>&, 
-							      const reco::Vertex*, const double, 
-							      const double, const double, 
-							      const bool);
+  static std::vector<reco::MuonRef> 
+    getTightPFIsolatedRecoMuons(const edm::Handle<reco::MuonCollection>&, const reco::Vertex*, 
+				const double, const double, const double, const bool);
+
+  /*fill STL container with muons passing the 2012 tight selection, PF isolation, and |eta|
+    (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId and 
+    https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Muon_Isolation_AN1)*/
+  static std::vector<reco::MuonRef> 
+    getTightPFIsolatedRecoMuons(const edm::Handle<reco::MuonRefVector>&, 
+				const edm::Handle<reco::MuonCollection>&, const reco::Vertex*, 
+				const double, const double, const double, const bool);
 
   /*fill STL container with muons passing the 2012 tight selection, detector isolation, and |eta|
     (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId and 
     https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Muon_Isolation_AN1)*/
-  static std::vector<reco::Muon*>
-    getTightDetectorIsolatedRecoMuons(edm::Handle<reco::MuonCollection>&, const reco::Vertex*, 
-				      const double, const double, const bool);
+  static std::vector<reco::MuonRef>
+    getTightDetectorIsolatedRecoMuons(const edm::Handle<reco::MuonCollection>&, 
+				      const reco::Vertex*, const double, const double, const bool);
+
+  /*fill STL container with muons passing the 2012 tight selection, detector isolation, and |eta|
+    (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId and 
+    https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Muon_Isolation_AN1)*/
+  static std::vector<reco::MuonRef>
+    getTightDetectorIsolatedRecoMuons(const edm::Handle<reco::MuonRefVector>&, 
+				      const edm::Handle<reco::MuonCollection>&, 
+				      const reco::Vertex*, const double, const double, const bool);
+
+  /*fill STL container with muons passing the 2012 soft selection and |eta|
+    (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId)*/
+  static std::vector<reco::MuonRef> getSoftRecoMuons(const edm::Handle<reco::MuonCollection>&, 
+						     const reco::Vertex*, const double);
+
+  /*fill STL container with muons passing the 2012 soft selection and |eta|
+    (cf. https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId)*/
+  static std::vector<reco::MuonRef> getSoftRecoMuons(const edm::Handle<reco::MuonRefVector>&, 
+						     const edm::Handle<reco::MuonCollection>&, 
+						     const reco::Vertex*, const double);
 
   //fill STL container with taus passing specified discriminators in specified eta range
   static std::vector<reco::PFTauRef>
@@ -189,10 +215,14 @@ class Common {
 
   static bool comparePFTauRefPT(reco::PFTauRef, reco::PFTauRef);
 
-  static std::vector<reco::Muon*> getTightIsolatedRecoMuons(edm::Handle<reco::MuonCollection>&, 
-							    const reco::Vertex*, const bool, 
-							    const double, const double, 
-							    const double, const bool);
+  static std::vector<reco::MuonRef> 
+    getTightIsolatedRecoMuons(const edm::Handle<reco::MuonCollection>&, const reco::Vertex*, 
+			      const bool, const double, const double, const double, const bool);
+
+  static std::vector<reco::MuonRef> 
+    getTightIsolatedRecoMuons(const edm::Handle<reco::MuonRefVector>&, 
+			      const edm::Handle<reco::MuonCollection>&, const reco::Vertex*, 
+			      const bool, const double, const double, const double, const bool);
 
 };
 
