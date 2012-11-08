@@ -5,6 +5,7 @@
 <use name="DataFormats/TauReco"/>
 <use name="DataFormats/METReco"/>
 <use name="BoostedTauAnalysis/Common"/>
+<use name="JetMETCorrections/Objects"/>
 <use name="root"/>
 <use name="rootgraphics"/>
 <flags EDM_PLUGIN="1"/>
