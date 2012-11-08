@@ -14,7 +14,7 @@ Implementation:
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Thu Aug 23 11:23:58 CEST 2012
-// $Id: GenPartonProducer.cc,v 1.2 2012/09/25 11:44:46 yohay Exp $
+// $Id: GenPartonProducer.cc,v 1.1 2012/10/04 15:17:52 yohay Exp $
 //
 //
 
@@ -44,9 +44,6 @@ public:
   ~GenPartonProducer();
 
   static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
-
-  //parton PDG ID codes
-  enum PartonPDGID {D = 1, U = 2, S = 3, C = 4, B = 5, T = 6, G = 21};
 
 private:
   virtual void beginJob() ;
@@ -126,20 +123,22 @@ bool GenPartonProducer::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
   for (reco::GenParticleCollection::const_iterator iGenParticle = pGenParticles->begin(); 
        iGenParticle != pGenParticles->end(); ++iGenParticle) {
 
-    //save any status 3 parton passing pT and |eta| cuts...
+    //save any parton passing pT and |eta| cuts with status 3 or with status 3 mother...
     const unsigned int absPDGID = fabs(iGenParticle->pdgId());
-    if ((iGenParticle->status() == 3) && 
-	(((absPDGID >= D) && (absPDGID <= T)) || (absPDGID == G)) && 
+    if ((((absPDGID >= GenTauDecayID::D) && (absPDGID <= GenTauDecayID::T)) || 
+	 (absPDGID == GenTauDecayID::G)) && 
 	((partonAbsEtaMax_ == -1.0) || (fabs(iGenParticle->eta()) < partonAbsEtaMax_)) && 
-	((partonPTMin_ == -1.0) || (iGenParticle->pt() > partonPTMin_))) {
+	((partonPTMin_ == -1.0) || (iGenParticle->pt() > partonPTMin_)) && 
+	((iGenParticle->status() == 3) || 
+	 ((iGenParticle->numberOfMothers() > 0) && (iGenParticle->mother()->status() == 3)))) {
 
       //...with no status 3 daughters
       bool foundStatus3Daughter = false;
-      reco::Candidate::const_iterator iDaughter = iGenParticle->begin();
-      while ((iDaughter != iGenParticle->end()) && (!foundStatus3Daughter)) {
-	if (iDaughter->status() == 3) foundStatus3Daughter = true;
-	++iDaughter;
-      }
+//       reco::Candidate::const_iterator iDaughter = iGenParticle->begin();
+//       while ((iDaughter != iGenParticle->end()) && (!foundStatus3Daughter)) {
+// 	if (iDaughter->status() == 3) foundStatus3Daughter = true;
+// 	++iDaughter;
+//       }
       if (!foundStatus3Daughter) genObjs->
 	push_back(reco::GenParticleRef(pGenParticles, iGenParticle - pGenParticles->begin()));
     }
