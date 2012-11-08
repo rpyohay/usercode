@@ -206,36 +206,16 @@ process.muHadIsoTauSelector = cms.EDFilter(
     cms.InputTag('hpsPFTauDiscriminationByXXXCombinedIsolationDBSumPtCorr', '', 'ANALYSIS')
     ),
     jetTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'ANALYSIS'),
-##     muonRemovalDecisionTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'ANALYSIS'),
     muonRemovalDecisionTag = cms.InputTag('CleanJets'),
     etaMax = cms.double(2.4),
     minNumObjsToPassFilter = cms.uint32(1)
     )
 
-#analyze gen-matched AK5 PF jets
-process.analyzeJets = cms.EDAnalyzer(
-    'JetAnalyzer',
-##     outFileName = cms.string('/data1/yohay/WJetsToLNu_jet_analysis.root'),
-##     outFileName = cms.string('/data1/yohay/debug.root'),
-##     outFileName = cms.string('/data1/yohay/debug_signal.root'),
-    outFileName = cms.string('/data1/yohay/Wh1_muon_jet_analysis.root'),
-    textOutFileName = cms.string('/data1/yohay/Wh1_muon_jet_analysis.txt'),
-    genTauDecayIDPSet = commonGenTauDecayIDPSet,
-    applyPTCuts = cms.bool(False),
-    countKShort = cms.bool(True),
-    sisterAbsMatchPDGID = cms.uint32(TAU_PDGID),
-##     jetTags = cms.VInputTag(cms.InputTag('genMatchedRecoTauSelector', 'coll0', 'ANALYSIS')),
-    jetTags = cms.VInputTag('genMatchedRecoTauSelector'),
-    METTag = cms.InputTag('pfMet'),
-    genParticleTag = cms.InputTag('genParticles'),
-##     selectedGenObjTag = cms.InputTag('genPartonSelector'),
-    selectedGenObjTag = cms.InputTag('genTauSelector'),
-    muonTag = cms.InputTag('muons'),
-    dR = cms.double(0.3),
-    pTRankColors = cms.vuint32(1, 2, 4, 6),
-    pTRankStyles = cms.vuint32(20, 21, 22, 23),
-    pTRankEntries = cms.vstring('Highest p_{T}', 'Second highest p_{T}', 'Third highest p_{T}',
-                                'Lowest p_{T}')
+#output
+process.output = cms.OutputModule(
+    "PoolOutputModule",
+    SelectEvents = cms.untracked.PSet(SelectEvents = cms.vstring('p')),
+    fileName = cms.untracked.string('EDMFILE')
     )
 
 #path
@@ -243,3 +223,6 @@ process.p = cms.Path(process.genWMuNuSelector*process.IsoMu24eta2p1Selector*
                      process.WMuonPTSelector*process.WIsoMuonSelector*process.jetSelector*
                      process.tauMuonPTSelector*process.tauMuonSelector*process.PFTau*
                      process.muHadIsoTauSelector)
+
+#end path
+process.e = cms.EndPath(process.output)
