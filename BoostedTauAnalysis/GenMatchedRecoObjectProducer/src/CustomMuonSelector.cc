@@ -15,7 +15,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Fri Aug 24 17:10:12 CEST 2012
-// $Id: CustomMuonSelector.cc,v 1.2 2012/09/19 09:42:49 yohay Exp $
+// $Id: CustomMuonSelector.cc,v 1.3 2012/10/24 14:03:06 yohay Exp $
 //
 //
 
@@ -219,11 +219,11 @@ bool CustomMuonSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetu
       muonColl->push_back(*iMuon);
       ++nPassingMuons;
 
-      //debug
-      std::cerr << "Selected muon pT: " << (*iMuon)->pt() << " GeV\n";
-      std::cerr << "Selected muon eta: " << (*iMuon)->eta() << std::endl;
-      std::cerr << "Selected muon phi: " << (*iMuon)->phi() << std::endl;
-      std::cerr << "Selected muon ref key: " << iMuon->key() << std::endl;
+//       //debug
+//       std::cerr << "Selected muon pT: " << (*iMuon)->pt() << " GeV\n";
+//       std::cerr << "Selected muon eta: " << (*iMuon)->eta() << std::endl;
+//       std::cerr << "Selected muon phi: " << (*iMuon)->phi() << std::endl;
+//       std::cerr << "Selected muon ref key: " << iMuon->key() << std::endl;
     }
   }
   iEvent.put(muonColl);
