@@ -15,7 +15,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Fri Aug 24 17:10:12 CEST 2012
-// $Id: CustomTauSelector.cc,v 1.2 2012/09/25 11:44:34 yohay Exp $
+// $Id: CustomTauSelector.cc,v 1.3 2012/10/24 14:03:41 yohay Exp $
 //
 //
 
@@ -69,6 +69,9 @@ private:
   //vector of input tags, 1 for each discriminator the tau should pass
   std::vector<edm::InputTag> tauDiscriminatorTags_;
 
+  //flag indicating whether the selected taus should pass or fail the discriminator
+  bool passDiscriminator_;
+
   //|eta| cut
   double etaMax_;
 
@@ -97,6 +100,7 @@ CustomTauSelector::CustomTauSelector(const edm::ParameterSet& iConfig) :
 			  iConfig.getParameter<edm::InputTag>("muonRemovalDecisionTag") : 
 			  edm::InputTag()),
   tauDiscriminatorTags_(iConfig.getParameter<std::vector<edm::InputTag> >("tauDiscriminatorTags")),
+  passDiscriminator_(iConfig.getParameter<bool>("passDiscriminator")),
   etaMax_(iConfig.getParameter<double>("etaMax")),
   minNumObjsToPassFilter_(iConfig.getParameter<unsigned int>("minNumObjsToPassFilter"))
 {
@@ -155,16 +159,16 @@ bool CustomTauSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
   if (muonRemovalDecisionTag_ == edm::InputTag()) {}
   else iEvent.getByLabel(muonRemovalDecisionTag_, pMuonRemovalDecisions);
 
-  //debug
-  std::cerr << "Jets " << pJets.isValid() << std::endl;
-  std::cerr << "Value map " << pMuonRemovalDecisions.isValid() << std::endl;
-  std::cerr << "Taus " << pTaus.isValid() << std::endl;
-  std::cerr << "Base taus " << pBaseTaus.isValid() << std::endl;
+//   //debug
+//   std::cerr << "Jets " << pJets.isValid() << std::endl;
+//   std::cerr << "Value map " << pMuonRemovalDecisions.isValid() << std::endl;
+//   std::cerr << "Taus " << pTaus.isValid() << std::endl;
+//   std::cerr << "Base taus " << pBaseTaus.isValid() << std::endl;
 
   //fill STL container with taus passing specified discriminators in specified eta range
   std::vector<reco::PFTauRef> taus = pTaus.isValid() ? 
-    Common::getRecoTaus(pTaus, pBaseTaus, pTauDiscriminators, etaMax_) : 
-    Common::getRecoTaus(pBaseTaus, pTauDiscriminators, etaMax_);
+    Common::getRecoTaus(pTaus, pBaseTaus, pTauDiscriminators, etaMax_, passDiscriminator_) : 
+    Common::getRecoTaus(pBaseTaus, pTauDiscriminators, etaMax_, passDiscriminator_);
 
   //loop over selected taus
   unsigned int nPassingTaus = 0;
@@ -178,12 +182,12 @@ bool CustomTauSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
 	tauColl->push_back(*iTau);
 	++nPassingTaus;
 
-	//debug
-	std::cerr << "Selected tau pT: " << (*iTau)->pt() << " GeV\n";
-	std::cerr << "Selected tau eta: " << (*iTau)->eta() << std::endl;
-	std::cerr << "Selected tau phi: " << (*iTau)->phi() << std::endl;
-	std::cerr << "Selected tau ref key: " << iTau->key() << std::endl;
-	std::cerr << "Selected tau jet ref key: " << (*iTau)->jetRef().key() << std::endl;
+// 	//debug
+// 	std::cerr << "Selected tau pT: " << (*iTau)->pt() << " GeV\n";
+// 	std::cerr << "Selected tau eta: " << (*iTau)->eta() << std::endl;
+// 	std::cerr << "Selected tau phi: " << (*iTau)->phi() << std::endl;
+// 	std::cerr << "Selected tau ref key: " << iTau->key() << std::endl;
+// 	std::cerr << "Selected tau jet ref key: " << (*iTau)->jetRef().key() << std::endl;
       }
     }
 
