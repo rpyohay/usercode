@@ -20,6 +20,9 @@ class GenTauDecayID {
   //pT rank
   enum PTRank {ANY_PT_RANK = -1};
 
+  //parton PDG ID codes
+  enum PartonPDGID {D = 1, U = 2, S = 3, C = 4, B = 5, T = 6, G = 21};
+
   //default constructor
   GenTauDecayID();
 
