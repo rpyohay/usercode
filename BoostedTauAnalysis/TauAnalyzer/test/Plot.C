@@ -5,6 +5,7 @@
 #include "TH1F.h"
 #include "TGraphAsymmErrors.h"
 #include "TCanvas.h"
+#include "TLegend.h"
 
 //default drawing options
 const Double_t defaultXAxisLabelSize = 0.05;
@@ -88,11 +89,20 @@ void setHistogramOptions(TH1F* histogram, const Color_t color, const Size_t size
   histogram->SetMarkerSize(size);
   histogram->SetMarkerStyle(style);
   histogram->SetLineColor(color);
-  histogram->SetLineWidth(1);
+  histogram->SetLineWidth(2);
   histogram->SetFillStyle(0);
   setAxisOptions(histogram->GetXaxis(), xAxisLabelSize, 0.9, xAxisTitle);
   setAxisOptions(histogram->GetYaxis(), defaultXAxisLabelSize, 1.05, yAxisTitle);
   histogram->Scale(scale);
+}
+
+//set legend drawing options
+void setLegendOptions(TLegend& legend, const char* header)
+{
+  legend.SetBorderSize(0);
+  legend.SetFillStyle(0);
+  legend.SetTextFont(42);
+  legend.SetHeader(header);
 }
 
 //make efficiency plots from input TH1s and save them to the output file
@@ -397,15 +407,28 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
 					   const vector<string>& inputFiles, 
 					   const vector<string>& canvasNames, 
 					   const vector<string>& graphNames, 
-					   const Color_t* colors, const Style_t* styles)
+					   const vector<string>& legendHeaders, 
+					   const Color_t* colors, const Style_t* styles, 
+					   const char** legendEntries, const float* weights, 
+					   const bool setLogY)
 {
   TFile outStream(outputFileName.c_str(), "RECREATE");
   vector<TFile*> inputStreams;
   vector<TCanvas*> outputCanvases;
+  vector<TLegend*> legends;
+  vector<TH1F*> pHistWithMaxMaxBin;
+  vector<Double_t> maxBinContent;
+  vector<vector<TH1F*> > hists;
   for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
        iCanvasName != canvasNames.end(); ++iCanvasName) {
-    outputCanvases.push_back(new TCanvas((*iCanvasName + "new").c_str(), "", 600, 600));
-    setCanvasOptions(*outputCanvases[outputCanvases.size() - 1], 1, 0, 0);
+    outputCanvases.push_back(new TCanvas(iCanvasName->c_str(), "", 600, 600));
+    setCanvasOptions(*outputCanvases[outputCanvases.size() - 1], 1, setLogY, 0);
+    legends.push_back(new TLegend(0.5, 0.6, 0.9, 0.8));
+    setLegendOptions(*legends[legends.size() - 1], 
+		     legendHeaders[iCanvasName - canvasNames.begin()].c_str());
+    pHistWithMaxMaxBin.push_back(NULL);
+    maxBinContent.push_back(0.0);
+    hists.push_back(vector<TH1F*>(inputFiles.size(), NULL));
   }
   for (vector<string>::const_iterator iInputFile = inputFiles.begin(); 
        iInputFile != inputFiles.end(); ++iInputFile) {
@@ -422,26 +445,100 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
 	pGraph = (TGraphAsymmErrors*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
 	setGraphOptions(*pGraph, colors[fileIndex], 0.7, styles[fileIndex], 
 			pGraph->GetXaxis()->GetTitle(), pGraph->GetYaxis()->GetTitle());
+	legends[canvasIndex]->AddEntry(pGraph, legendEntries[fileIndex], "l");
       }
       else {
-	std::cerr << "error0\n";
 	pHist = (TH1F*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
-	std::cerr << "error1\n";
+	float weight = weights[fileIndex] == 0.0 ? 1.0/pHist->Integral(0, -1) : weights[fileIndex];
 	setHistogramOptions(pHist, colors[fileIndex], 0.7, styles[fileIndex], 
-			    1.0/pHist->Integral(0, -1), pHist->GetXaxis()->GetTitle(), 
+			    weight, pHist->GetXaxis()->GetTitle(), 
 			    pHist->GetYaxis()->GetTitle());
+	if (setLogY) pHist->GetYaxis()->SetRangeUser(0.1, 50000.0);
+	Int_t histMaxBin = pHist->GetMaximumBin();
+	Double_t histMaxBinContent = pHist->GetBinContent(histMaxBin);
+	if (histMaxBinContent >= maxBinContent[canvasIndex]) {
+	  maxBinContent[canvasIndex] = histMaxBinContent;
+	  pHistWithMaxMaxBin[canvasIndex] = pHist;
+	}
+	hists[canvasIndex][fileIndex] = pHist;
+	legends[canvasIndex]->AddEntry(pHist, legendEntries[fileIndex], "l");
       }
       outStream.cd();
       outputCanvases[canvasIndex]->cd();
-      if (fileIndex == 0) {
-	if (pGraph != NULL) pGraph->Draw("AP");
-	if (pHist != NULL) pHist->Draw();
-      }
-      else {
-	if (pGraph != NULL) pGraph->Draw("PSAME");
-	if (pHist != NULL) pHist->Draw("SAME");
-      }
+      if (fileIndex == 0) { if (pGraph != NULL) pGraph->Draw("AP"); }
+      else if (pGraph != NULL) pGraph->Draw("PSAME");
     }
+  }
+  for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+       iCanvasName != canvasNames.end(); ++iCanvasName) {
+    const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
+    outStream.cd();
+    outputCanvases[canvasIndex]->cd();
+    pHistWithMaxMaxBin[canvasIndex]->Draw();
+  }
+  for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+       iCanvasName != canvasNames.end(); ++iCanvasName) {
+    const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
+    outStream.cd();
+    outputCanvases[canvasIndex]->cd();
+    for (vector<string>::const_iterator iInputFile = inputFiles.begin(); 
+	 iInputFile != inputFiles.end(); ++iInputFile) {
+      const unsigned int fileIndex = iInputFile - inputFiles.begin();
+      if (hists[canvasIndex][fileIndex] != NULL) hists[canvasIndex][fileIndex]->Draw("SAME");
+    }
+    legends[canvasIndex]->Draw();
+  }
+  outStream.cd();
+  for (vector<TCanvas*>::iterator iOutputCanvas = outputCanvases.begin(); 
+       iOutputCanvas != outputCanvases.end(); ++iOutputCanvas) { (*iOutputCanvas)->Write(); }
+  outStream.Write();
+  outStream.Close();
+  for (vector<TLegend*>::iterator iLegend = legends.begin(); 
+       iLegend != legends.end(); ++iLegend) { delete *iLegend; }
+  for (vector<TCanvas*>::iterator iOutputCanvas = outputCanvases.begin(); 
+       iOutputCanvas != outputCanvases.end(); ++iOutputCanvas) { delete *iOutputCanvas; }
+  for (vector<TFile*>::const_iterator iInputStream = inputStreams.begin(); 
+       iInputStream != inputStreams.end(); ++iInputStream) {
+    (*iInputStream)->Close();
+    delete *iInputStream;
+  }
+}
+
+//hadd histograms drawn on canvases
+void haddCanvases(const string& outputFileName, const vector<string>& inputFiles, 
+		  const vector<string>& canvasNames, const vector<string>& graphNames)
+{
+  TFile outStream(outputFileName.c_str(), "RECREATE");
+  vector<TFile*> inputStreams;
+  vector<TCanvas*> outputCanvases;
+  vector<TH1F*> hists;
+  for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+       iCanvasName != canvasNames.end(); ++iCanvasName) {
+    outputCanvases.push_back(new TCanvas(iCanvasName->c_str(), "", 600, 600));
+    setCanvasOptions(*outputCanvases[outputCanvases.size() - 1], 1, 0, 0);
+    hists.push_back(NULL);
+  }
+  for (vector<string>::const_iterator iInputFile = inputFiles.begin(); 
+       iInputFile != inputFiles.end(); ++iInputFile) {
+    const unsigned int fileIndex = iInputFile - inputFiles.begin();
+    inputStreams.push_back(new TFile(iInputFile->c_str()));
+    for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+	 iCanvasName != canvasNames.end(); ++iCanvasName) {
+      const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
+      TCanvas* pCanvas;
+      inputStreams[inputStreams.size() - 1]->GetObject(iCanvasName->c_str(), pCanvas);
+      TH1F* pHist = NULL;
+      pHist = (TH1F*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
+      if (fileIndex == 0) hists[canvasIndex] = pHist;
+      else hists[canvasIndex]->Add(pHist);
+    }
+  }
+  for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+       iCanvasName != canvasNames.end(); ++iCanvasName) {
+    const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
+    outStream.cd();
+    outputCanvases[canvasIndex]->cd();
+    if (hists[canvasIndex] != NULL) hists[canvasIndex]->Draw();
   }
   outStream.cd();
   for (vector<TCanvas*>::iterator iOutputCanvas = outputCanvases.begin(); 
