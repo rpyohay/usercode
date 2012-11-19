@@ -276,9 +276,9 @@ void Common::draw2DHistograms(TCanvas& canvas, TH2F* hist)
 {
   setCanvasOptions(canvas, 0, 0, 0);
   setCanvasMargins(canvas, 0.2, 0.2, 0.2, 0.2);
-  setHistogramOptions(hist, kBlack, /*0.7*/4.2, 20, 1.6, 1.0);
+  setHistogramOptions(hist, kBlack, 0.7/*4.2*/, 20, 1.6, 1.0);
   canvas.cd();
-  hist->Draw(/*"COLZ"*/"TEXT");
+  hist->Draw("COLZ");
 }
 
 void Common::setAxisOptions(TAxis* axis, const Float_t labelSize, const Float_t titleSize, 
