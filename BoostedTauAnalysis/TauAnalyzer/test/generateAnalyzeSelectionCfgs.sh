@@ -3,6 +3,7 @@
 #arguments
 discriminator=$1
 sample=$2
+selection=$3
 
 #macros
 dir="${sample}_${discriminator}"
@@ -26,15 +27,15 @@ if [ "$sample" = "WJets" ]
     #EOSDir="/store/user/friccita/WToMuNu_skim/"
     #file_list=`cmsLs $EOSDir | grep root | awk '{ print $5 }'`
     #identifier="${EOSDir}Summer12_WJetsToLNu_WMuNuSkim"
-    nFilesPerJob=$3
-    first_file=$4
-    last_file=$5
+    nFilesPerJob=$4
+    first_file=$5
+    last_file=$6
     prefix="'root://eoscms//eos/cms"
-    EOSDir=$6
-    filePrefix=$7
+    EOSDir=$7
+    filePrefix=$8
     file_list=`cmsLs $EOSDir | grep root | awk '{ print $5 }'`
     identifier="${EOSDir}${filePrefix}"
-    queue=$8
+    #queue=$9
     startJob=$9
 
     #loop over number of input files
@@ -62,11 +63,11 @@ if [ "$sample" = "WJets" ]
           #create cfg and sh files if you're at the max number of files per job
 	  else
 	      input_file_list="${input_file_list}${file_name}"
-	      EDMFile="${dir}_selected_events_${nJobs}.root"
-	      sed -e "s%XXX%$discriminator%" -e "s%FILES%$input_file_list%" -e "s%JOB%$nJobs%g" -e "s%DIR%$dir%g" -e "s%EDMFILE%$EDMFile%" ../analyzeSelectionTemplate.py > analyzeSelectionTemplate_${discriminator}_${nJobs}.py
-	      sed -e "s%DIR%$dir%" -e "s%TAUISOWORKINGPOINT%$discriminator%" -e "s%JOB%$nJobs%g" ../analyzeSelectionTemplate.sh > analyzeSelectionTemplate_${discriminator}_${nJobs}.sh
-	      chmod a+x analyzeSelectionTemplate_${discriminator}_${nJobs}.sh
-	      bsub -q $queue -J analyzeSelectionTemplate_${discriminator}_${nJobs} < analyzeSelectionTemplate_${discriminator}_${nJobs}.sh
+	      EDMFile="${dir}_${selection}_events_${nJobs}.root"
+	      sed -e "s%XXX%$discriminator%" -e "s%FILES%$input_file_list%" -e "s%JOB%$nJobs%g" -e "s%DIR%$dir%g" -e "s%EDMFILE%$EDMFile%" -e "s%SELECTION%$selection%g" ../analyzeSelectionTemplate.py > analyzeSelectionTemplate_${discriminator}_${selection}_${nJobs}.py
+	      sed -e "s%DIR%$dir%" -e "s%TAUISOWORKINGPOINT%$discriminator%" -e "s%SELECTION%$selection%g" -e "s%JOB%$nJobs%g" ../analyzeSelectionTemplate.sh > analyzeSelectionTemplate_${discriminator}_${selection}_${nJobs}.sh
+	      chmod a+x analyzeSelectionTemplate_${discriminator}_${selection}_${nJobs}.sh
+	      bsub -q 1nh -J analyzeSelectionTemplate_${discriminator}_${selection}_${nJobs} < analyzeSelectionTemplate_${discriminator}_${selection}_${nJobs}.sh
 	      input_file_list=""
 	      nJobs=`expr $nJobs + 1`
 	  fi
@@ -80,8 +81,8 @@ if [ "$sample" = "Wh1" ]
     input_file_list="'file:/data1/yohay/NMSSMHiggs_WH_files1-250_24Sep12.root',\n    'file:/data1/yohay/NMSSMHiggs_WH_files251-500_24Sep12.root',\n    'file:/data1/yohay/NMSSMHiggs_WH_files501-750_24Sep12.root',\n    'file:/data1/yohay/NMSSMHiggs_WH_files751-1000_24Sep12.root'"
     input_file_list=`echo $input_file_list | sed -e "s%/%\/%g" | sed -e "s%\.%\.%g"`
     nJobs=0
-    EDMFile="/data1/yohay/${dir}/${dir}_selected_events_${nJobs}.root"
-    sed -e "s%FILES%$input_file_list%" -e "s%JOB%$nJobs%g" -e "s%XXX%$discriminator%" -e "s%DIR%$dir%g" -e "s%EDMFILE%$EDMFile%" ../analyzeSelectionTemplate.py > analyzeSelectionTemplate_${discriminator}_${nJobs}.py
+    EDMFile="/data1/yohay/${dir}/${dir}_${selection}_events_${nJobs}.root"
+    sed -e "s%FILES%$input_file_list%" -e "s%JOB%$nJobs%g" -e "s%XXX%$discriminator%" -e "s%DIR%$dir%g" -e "s%EDMFILE%$EDMFile%" ../analyzeSelectionTemplate.py > analyzeSelectionTemplate_${discriminator}_${selection}_${nJobs}.py
 fi
 
 exit 0
