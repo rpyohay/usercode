@@ -402,6 +402,22 @@ void plotNiceDifferentFiles(map<pair<string, string>, vector<pair<pair<TFile*, O
   }
 }
 
+//return the histogram with the largest bin content
+TH1F* histWithLargestBinContent(const vector<TH1F*>& hists)
+{
+  TH1F* pHistWithMaxMaxBin = NULL;
+  Double_t maxBinContent = 0.0;
+  for (vector<TH1F*>::const_iterator iHist = hists.begin(); iHist != hists.end(); ++iHist) {
+    Int_t histMaxBin = (*iHist)->GetMaximumBin();
+    Double_t histMaxBinContent = (*iHist)->GetBinContent(histMaxBin);
+    if (histMaxBinContent >= maxBinContent) {
+      maxBinContent = histMaxBinContent;
+      pHistWithMaxMaxBin = *iHist;
+    }
+  }
+  return pHistWithMaxMaxBin;
+}
+
 //merge efficiency graphs from different files into one canvas
 void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName, 
 					   const vector<string>& inputFiles, 
@@ -416,8 +432,8 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
   vector<TFile*> inputStreams;
   vector<TCanvas*> outputCanvases;
   vector<TLegend*> legends;
-  vector<TH1F*> pHistWithMaxMaxBin;
-  vector<Double_t> maxBinContent;
+//   vector<TH1F*> pHistWithMaxMaxBin;
+//   vector<Double_t> maxBinContent;
   vector<vector<TH1F*> > hists;
   for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
        iCanvasName != canvasNames.end(); ++iCanvasName) {
@@ -426,8 +442,8 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
     legends.push_back(new TLegend(0.5, 0.6, 0.9, 0.8));
     setLegendOptions(*legends[legends.size() - 1], 
 		     legendHeaders[iCanvasName - canvasNames.begin()].c_str());
-    pHistWithMaxMaxBin.push_back(NULL);
-    maxBinContent.push_back(0.0);
+//     pHistWithMaxMaxBin.push_back(NULL);
+//     maxBinContent.push_back(0.0);
     hists.push_back(vector<TH1F*>(inputFiles.size(), NULL));
   }
   for (vector<string>::const_iterator iInputFile = inputFiles.begin(); 
@@ -454,12 +470,12 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
 			    weight, pHist->GetXaxis()->GetTitle(), 
 			    pHist->GetYaxis()->GetTitle());
 	if (setLogY) pHist->GetYaxis()->SetRangeUser(0.1, 50000.0);
-	Int_t histMaxBin = pHist->GetMaximumBin();
-	Double_t histMaxBinContent = pHist->GetBinContent(histMaxBin);
-	if (histMaxBinContent >= maxBinContent[canvasIndex]) {
-	  maxBinContent[canvasIndex] = histMaxBinContent;
-	  pHistWithMaxMaxBin[canvasIndex] = pHist;
-	}
+// 	Int_t histMaxBin = pHist->GetMaximumBin();
+// 	Double_t histMaxBinContent = pHist->GetBinContent(histMaxBin);
+// 	if (histMaxBinContent >= maxBinContent[canvasIndex]) {
+// 	  maxBinContent[canvasIndex] = histMaxBinContent;
+// 	  pHistWithMaxMaxBin[canvasIndex] = pHist;
+// 	}
 	hists[canvasIndex][fileIndex] = pHist;
 	legends[canvasIndex]->AddEntry(pHist, legendEntries[fileIndex], "l");
       }
@@ -474,7 +490,9 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
     const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
     outStream.cd();
     outputCanvases[canvasIndex]->cd();
-    pHistWithMaxMaxBin[canvasIndex]->Draw();
+//     pHistWithMaxMaxBin[canvasIndex]->Draw();
+    TH1F* pHistWithMaxMaxBin = histWithLargestBinContent(hists[canvasIndex]);
+    if (pHistWithMaxMaxBin != NULL) pHistWithMaxMaxBin->Draw();
   }
   for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
        iCanvasName != canvasNames.end(); ++iCanvasName) {
@@ -552,4 +570,66 @@ void haddCanvases(const string& outputFileName, const vector<string>& inputFiles
     (*iInputStream)->Close();
     delete *iInputStream;
   }
+}
+
+//plot histograms with different names in the same file on the same canvas
+void mergePlotsIn1File(TFile& in, TFile& out, const vector<string>& canvasNames, 
+		       const vector<string>& histNames, const float* weights, 
+		       const Color_t* colors, const Style_t* styles, const char* canvasName, 
+		       const char* legendHeader, const char** legendEntries, const bool setLogY)
+{
+  TCanvas canvas(canvasName, "", 600, 600);
+  TLegend legend(0.5, 0.6, 0.9, 0.8);
+  vector<TH1F*> hists(canvasNames.size(), NULL);
+  setCanvasOptions(canvas, 1, setLogY, 0);
+  setLegendOptions(legend, legendHeader);
+  for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+       iCanvasName != canvasNames.end(); ++iCanvasName) {
+    const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
+    TCanvas* pCanvas = NULL;
+    in.GetObject(iCanvasName->c_str(), pCanvas);
+    TH1F* pHist = NULL;
+    if (pCanvas != NULL) {
+      pHist = (TH1F*)pCanvas->GetPrimitive(histNames[canvasIndex].c_str());
+      float weight = 
+	weights[canvasIndex] == 0.0 ? 1.0/pHist->Integral(0, -1) : weights[canvasIndex];
+      setHistogramOptions(pHist, colors[canvasIndex], 0.7, styles[canvasIndex], 
+			  weight, pHist->GetXaxis()->GetTitle(), 
+			  pHist->GetYaxis()->GetTitle());
+      if (setLogY) pHist->GetYaxis()->SetRangeUser(0.1, 50000.0);
+      hists[canvasIndex] = pHist;
+      legend.AddEntry(pHist, legendEntries[canvasIndex], "l");
+    }
+  }
+  out.cd();
+  canvas.cd();
+  TH1F* pHistWithMaxMaxBin = histWithLargestBinContent(hists);
+  if (pHistWithMaxMaxBin != NULL) pHistWithMaxMaxBin->Draw();
+  for (vector<TH1F*>::const_iterator iHist = hists.begin(); 
+       iHist != hists.end(); ++iHist) {
+    if (*iHist != NULL) (*iHist)->Draw("SAME");
+  }
+  legend.Draw();
+  canvas.Write();
+}
+
+//plot histograms with different names in the same file on the same canvas
+void mergePlotsIn1File(const char* inputFileName, const char* outputFileName)
+{
+  TFile in(inputFileName);
+  TFile out(outputFileName, "RECREATE");
+  vector<string> canvasNames;
+  canvasNames.push_back("dRWMuSoftMuCanvas");
+  canvasNames.push_back("dRWMuSoftMuMuHadMassGe2Canvas");
+  vector<string> histNames;
+  histNames.push_back("dRWMuSoftMu");
+  histNames.push_back("dRWMuSoftMuMuHadMassGe2");
+  const float weights[2] = {0.0, 0.0};
+  const Color_t colors[2] = {kBlack, kRed};
+  const Style_t styles[2] = {20, 21};
+  const char* legendEntries[2] = {"m_{#mu+had} > 0 GeV", "m_{#mu+had} > 2 GeV"};
+  mergePlotsIn1File(in, out, canvasNames, histNames, weights, colors, styles, "dRWMuSoftMu", 
+		    "Normalized to 1", legendEntries, false);
+  in.Close();
+  out.Close();
 }
