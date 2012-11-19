@@ -180,7 +180,7 @@ process.tauMuonSelector = cms.EDFilter('CustomMuonSelector',
 #clean the jets of soft muons, then rebuild the taus
 process.CleanJets.muonSrc = cms.InputTag('tauMuonSelector')
 process.CleanJets.cutOnGenMatches = cms.bool(False)
-process.CleanJets.outFileName = cms.string('NMSSMSignal_MuProperties_JOB.root')
+process.CleanJets.outFileName = cms.string('NMSSMSignal_MuProperties_SELECTION_JOB.root')
 process.recoTauAK5PFJets08Region.src = cms.InputTag("CleanJets", "ak5PFJetsNoMu", "ANALYSIS")
 process.ak5PFJetsRecoTauPiZeros.jetSrc = cms.InputTag("CleanJets", "ak5PFJetsNoMu", "ANALYSIS")
 process.combinatoricRecoTaus.jetSrc = cms.InputTag("CleanJets", "ak5PFJetsNoMu", "ANALYSIS")
@@ -195,7 +195,7 @@ process.recoTauCommonSequence = cms.Sequence(process.CleanJets*
                                              )
 process.PFTau = cms.Sequence(process.recoTauCommonSequence*process.recoTauClassicHPSSequence)
 
-#find taus in |eta| < 2.4 matched to muon-tagged cleaned jets that pass the loose isolation
+#find taus in |eta| < 2.4 matched to muon-tagged cleaned jets that pass the isolation
 #discriminator
 #this will produce a ref to the cleaned tau collection
 process.muHadIsoTauSelector = cms.EDFilter(
@@ -207,7 +207,46 @@ process.muHadIsoTauSelector = cms.EDFilter(
     ),
     jetTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'ANALYSIS'),
     muonRemovalDecisionTag = cms.InputTag('CleanJets'),
+    muonTag = cms.InputTag('WIsoMuonSelector'),
+    passDiscriminator = cms.bool(True),
     etaMax = cms.double(2.4),
+    dR = cms.double(0.5),
+    minNumObjsToPassFilter = cms.uint32(1)
+    )
+
+#find taus in |eta| < 2.4 matched to muon-tagged cleaned jets
+#this will produce a ref to the cleaned tau collection
+process.muHadTauSelector = cms.EDFilter(
+    'CustomTauSelector',
+    baseTauTag = cms.InputTag('hpsPFTauProducer', '', 'ANALYSIS'),
+    tauDiscriminatorTags = cms.VInputTag(
+    cms.InputTag('hpsPFTauDiscriminationByDecayModeFinding', '', 'ANALYSIS')
+    ),
+    jetTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'ANALYSIS'),
+    muonRemovalDecisionTag = cms.InputTag('CleanJets'),
+    muonTag = cms.InputTag('WIsoMuonSelector'),
+    passDiscriminator = cms.bool(True),
+    etaMax = cms.double(2.4),
+    dR = cms.double(0.5),
+    minNumObjsToPassFilter = cms.uint32(1)
+    )
+
+#find taus in |eta| < 2.4 matched to muon-tagged cleaned jets that fail the isolation
+#discriminator
+#this will produce a ref to the cleaned tau collection
+process.muHadNonIsoTauSelector = cms.EDFilter(
+    'CustomTauSelector',
+    tauTag = cms.InputTag('muHadTauSelector'),
+    baseTauTag = cms.InputTag('hpsPFTauProducer', '', 'ANALYSIS'),
+    tauDiscriminatorTags = cms.VInputTag(
+    cms.InputTag('hpsPFTauDiscriminationByXXXCombinedIsolationDBSumPtCorr', '', 'ANALYSIS')
+    ),
+    jetTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'ANALYSIS'),
+    muonRemovalDecisionTag = cms.InputTag('CleanJets'),
+    muonTag = cms.InputTag('WIsoMuonSelector'),
+    passDiscriminator = cms.bool(False),
+    etaMax = cms.double(2.4),
+    dR = cms.double(0.5),
     minNumObjsToPassFilter = cms.uint32(1)
     )
 
@@ -222,7 +261,11 @@ process.output = cms.OutputModule(
 process.p = cms.Path(process.genWMuNuSelector*process.IsoMu24eta2p1Selector*
                      process.WMuonPTSelector*process.WIsoMuonSelector*process.jetSelector*
                      process.tauMuonPTSelector*process.tauMuonSelector*process.PFTau*
-                     process.muHadIsoTauSelector)
+                     process.muHadTauSelector*process.muHadNonIsoTauSelector)
+## process.p = cms.Path(process.genWMuNuSelector*process.IsoMu24eta2p1Selector*
+##                      process.WMuonPTSelector*process.WIsoMuonSelector*process.jetSelector*
+##                      process.tauMuonPTSelector*process.tauMuonSelector*process.PFTau*
+##                      process.muHadIsoTauSelector)
 
 #end path
 process.e = cms.EndPath(process.output)
