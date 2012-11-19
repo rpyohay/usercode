@@ -15,7 +15,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Fri Aug 24 17:10:12 CEST 2012
-// $Id: CustomTauSelector.cc,v 1.3 2012/10/24 14:03:41 yohay Exp $
+// $Id: CustomTauSelector.cc,v 1.4 2012/11/08 16:40:59 yohay Exp $
 //
 //
 
@@ -32,6 +32,7 @@
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "BoostedTauAnalysis/Common/interface/Common.h"
+#include "DataFormats/MuonReco/interface/Muon.h"
 
 //
 // class declaration
@@ -66,6 +67,9 @@ private:
   //input tag for map jet muon removal decisions
   edm::InputTag muonRemovalDecisionTag_;
 
+  //input tag for W muon collection
+  edm::InputTag muonTag_;
+
   //vector of input tags, 1 for each discriminator the tau should pass
   std::vector<edm::InputTag> tauDiscriminatorTags_;
 
@@ -74,6 +78,9 @@ private:
 
   //|eta| cut
   double etaMax_;
+
+  //W muon matching cut
+  double dR_;
 
   //minimum number of objects that must be found to pass the filter
   unsigned int minNumObjsToPassFilter_;
@@ -99,9 +106,11 @@ CustomTauSelector::CustomTauSelector(const edm::ParameterSet& iConfig) :
   muonRemovalDecisionTag_(iConfig.existsAs<edm::InputTag>("muonRemovalDecisionTag") ? 
 			  iConfig.getParameter<edm::InputTag>("muonRemovalDecisionTag") : 
 			  edm::InputTag()),
+  muonTag_(iConfig.getParameter<edm::InputTag>("muonTag")),
   tauDiscriminatorTags_(iConfig.getParameter<std::vector<edm::InputTag> >("tauDiscriminatorTags")),
   passDiscriminator_(iConfig.getParameter<bool>("passDiscriminator")),
   etaMax_(iConfig.getParameter<double>("etaMax")),
+  dR_(iConfig.getParameter<double>("dR")),
   minNumObjsToPassFilter_(iConfig.getParameter<unsigned int>("minNumObjsToPassFilter"))
 {
   if (((jetTag_ == edm::InputTag()) && !(muonRemovalDecisionTag_ == edm::InputTag())) || 
@@ -159,6 +168,15 @@ bool CustomTauSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
   if (muonRemovalDecisionTag_ == edm::InputTag()) {}
   else iEvent.getByLabel(muonRemovalDecisionTag_, pMuonRemovalDecisions);
 
+  //get W muons
+  edm::Handle<reco::MuonRefVector> pMuons;
+  iEvent.getByLabel(muonTag_, pMuons);
+
+  //fill STL container of pointers to W muons
+  std::vector<reco::Muon*> muonPtrs;
+  for (reco::MuonRefVector::const_iterator iMuon = pMuons->begin(); iMuon != pMuons->end(); 
+       ++iMuon) { muonPtrs.push_back(const_cast<reco::Muon*>(iMuon->get())); }
+
 //   //debug
 //   std::cerr << "Jets " << pJets.isValid() << std::endl;
 //   std::cerr << "Value map " << pMuonRemovalDecisions.isValid() << std::endl;
@@ -175,27 +193,36 @@ bool CustomTauSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
   for (std::vector<reco::PFTauRef>::const_iterator iTau = taus.begin(); iTau != taus.end(); 
        ++iTau) {
 
-    /*if jet collection and muon removal decision map exist, fill output collection if tau is 
-      matched to jet tagged for muon removal*/
-    if (pJets.isValid() && pMuonRemovalDecisions.isValid()) {
-      if ((*pMuonRemovalDecisions)[(*iTau)->jetRef()]) {
+    //find the nearest W muon to the tau
+    int nearestMuonIndex = -1;
+    const reco::Muon* nearestMuon = 
+      Common::nearestObject(*iTau, muonPtrs, nearestMuonIndex);
+
+    //if tau doesn't overlap with W muon...
+    if ((nearestMuon != NULL) && (reco::deltaR(**iTau, *nearestMuon) > dR_)) {
+
+      /*...if jet collection and muon removal decision map exist, fill output collection if tau is 
+	matched to jet tagged for muon removal*/
+      if (pJets.isValid() && pMuonRemovalDecisions.isValid()) {
+	if ((*pMuonRemovalDecisions)[(*iTau)->jetRef()]) {
+	  tauColl->push_back(*iTau);
+	  ++nPassingTaus;
+
+	  // 	//debug
+	  // 	std::cerr << "Selected tau pT: " << (*iTau)->pt() << " GeV\n";
+	  // 	std::cerr << "Selected tau eta: " << (*iTau)->eta() << std::endl;
+	  // 	std::cerr << "Selected tau phi: " << (*iTau)->phi() << std::endl;
+	  // 	std::cerr << "Selected tau ref key: " << iTau->key() << std::endl;
+	  // 	std::cerr << "Selected tau jet ref key: " << (*iTau)->jetRef().key() << std::endl;
+	}
+      }
+
+      /*...if jet collection and muon removal decision map do not exist, assume no selection on 
+	tau seed jet is desired and fill output collection*/
+      else {
 	tauColl->push_back(*iTau);
 	++nPassingTaus;
-
-// 	//debug
-// 	std::cerr << "Selected tau pT: " << (*iTau)->pt() << " GeV\n";
-// 	std::cerr << "Selected tau eta: " << (*iTau)->eta() << std::endl;
-// 	std::cerr << "Selected tau phi: " << (*iTau)->phi() << std::endl;
-// 	std::cerr << "Selected tau ref key: " << iTau->key() << std::endl;
-// 	std::cerr << "Selected tau jet ref key: " << (*iTau)->jetRef().key() << std::endl;
       }
-    }
-
-    /*if jet collection and muon removal decision map do not exist, assume no selection on tau 
-      seed jet is desired and fill output collection*/
-    else {
-      tauColl->push_back(*iTau);
-      ++nPassingTaus;
     }
   }
   iEvent.put(tauColl);
