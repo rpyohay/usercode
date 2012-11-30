@@ -13,7 +13,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Tue Mar 22 17:13:40 CET 2011
-// $Id$
+// $Id: TriggerAnalyzer.cc,v 1.1 2011/05/31 10:53:44 yohay Exp $
 //
 //
 
@@ -156,7 +156,7 @@ void
 TriggerAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 {
   ++evt_;
-  //printTriggerMenu(iEvent, iSetup);
+  printTriggerMenu(iEvent, iSetup);
 
   //get the trigger collections
   edm::Handle<edm::TriggerResults> pTrgResults;
