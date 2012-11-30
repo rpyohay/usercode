@@ -416,7 +416,8 @@ Common::getTightIsolatedRecoMuons(const edm::Handle<reco::MuonCollection>& pMuon
   std::vector<reco::MuonRef> tightMuons;
   for (reco::MuonCollection::const_iterator iMuon = pMuons->begin(); iMuon != pMuons->end(); 
        ++iMuon) {
-    if (muon::isTightMuon(*iMuon, *pPV) && 
+    if ((pPV != NULL) && 
+	muon::isTightMuon(*iMuon, *pPV) && 
 	iMuon->isPFMuon() && 
 	(fabs(iMuon->innerTrack()->dz(pPV->position())) < 0.5) && 
 	(iMuon->track()->hitPattern().trackerLayersWithMeasurement() > 5) && 
@@ -447,7 +448,8 @@ Common::getTightIsolatedRecoMuons(const edm::Handle<reco::MuonRefVector>& pMuons
   std::vector<reco::MuonRef> tightMuons;
   for (reco::MuonRefVector::const_iterator iMuon = pMuons->begin(); iMuon != pMuons->end(); 
        ++iMuon) {
-    if (muon::isTightMuon(**iMuon, *pPV) && 
+    if ((pPV != NULL) && 
+	muon::isTightMuon(**iMuon, *pPV) && 
 	(*iMuon)->isPFMuon() && 
 	(fabs((*iMuon)->innerTrack()->dz(pPV->position())) < 0.5) && 
 	((*iMuon)->track()->hitPattern().trackerLayersWithMeasurement() > 5) && 
