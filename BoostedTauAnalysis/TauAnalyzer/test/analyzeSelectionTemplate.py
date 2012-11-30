@@ -113,6 +113,15 @@ process.genWMuNuSelector = cms.EDFilter(
     makeAllCollections = cms.bool(False)
     )
 
+#produce gen parton collection
+process.genPartonSelector = cms.EDFilter(
+    'GenPartonProducer',
+    genParticleTag = cms.InputTag('genParticles'),
+    partonAbsEtaMax = cms.double(-1.0),
+    partonPTMin = cms.double(-1.0),
+    minNumGenObjectsToPassFilter = cms.uint32(0)
+    )
+
 #require event to fire IsoMu24_eta2p1
 process.IsoMu24eta2p1Selector = process.hltHighLevel.clone()
 process.IsoMu24eta2p1Selector.HLTPaths = cms.vstring('HLT_IsoMu24_eta2p1_v11')
@@ -258,14 +267,18 @@ process.output = cms.OutputModule(
     )
 
 #path
-process.p = cms.Path(process.genWMuNuSelector*process.IsoMu24eta2p1Selector*
-                     process.WMuonPTSelector*process.WIsoMuonSelector*process.jetSelector*
-                     process.tauMuonPTSelector*process.tauMuonSelector*process.PFTau*
-                     process.muHadTauSelector*process.muHadNonIsoTauSelector)
+## process.p = cms.Path(process.genWMuNuSelector*process.IsoMu24eta2p1Selector*
+##                      process.WMuonPTSelector*process.WIsoMuonSelector*process.jetSelector*
+##                      process.tauMuonPTSelector*process.tauMuonSelector*process.PFTau*
+##                      process.muHadTauSelector*process.muHadNonIsoTauSelector)
 ## process.p = cms.Path(process.genWMuNuSelector*process.IsoMu24eta2p1Selector*
 ##                      process.WMuonPTSelector*process.WIsoMuonSelector*process.jetSelector*
 ##                      process.tauMuonPTSelector*process.tauMuonSelector*process.PFTau*
 ##                      process.muHadIsoTauSelector)
+process.p = cms.Path(process.genWMuNuSelector*process.genPartonSelector*
+                     process.IsoMu24eta2p1Selector*process.WMuonPTSelector*
+                     process.WIsoMuonSelector*process.jetSelector*process.tauMuonPTSelector*
+                     process.tauMuonSelector*process.PFTau*process.muHadTauSelector)
 
 #end path
 process.e = cms.EndPath(process.output)

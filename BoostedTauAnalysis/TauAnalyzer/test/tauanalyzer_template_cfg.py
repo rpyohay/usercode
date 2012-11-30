@@ -99,12 +99,97 @@ process.genPartonSelector = cms.EDFilter(
     minNumGenObjectsToPassFilter = cms.uint32(1)
     )
 
-#produce AK5 PF jets
-process.recoJetSelector = cms.EDFilter(
-    'PFJetRefSelector',
-    src = cms.InputTag('ak5PFJets'),
-    cut = cms.string('abs(eta) < 2.4'),
-    filter = cms.bool(True)
+#produce AK5 PF jets in |eta| < 2.4
+process.jetSelector = cms.EDFilter('PFJetRefSelector',
+                                   src = cms.InputTag('ak5PFJets'),
+                                   cut = cms.string('abs(eta) < 2.4'),
+                                   filter = cms.bool(True)
+                                   )
+
+#search for a muon with pT > 5 GeV as in HZZ4l analysis and proceed if one can be found
+#this will produce a ref to the original muon collection
+process.tauMuonPTSelector = cms.EDFilter('MuonRefSelector',
+                                         src = cms.InputTag('muons'),
+                                         cut = cms.string('pt > 5.0'),
+                                         filter = cms.bool(True)
+                                         )
+
+#search for soft muons
+#(see https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Soft_Muon) not overlapping with
+#the W muon in |eta| < 2.4
+#this will produce a ref to the original muon collection
+process.tauMuonSelector = cms.EDFilter('CustomMuonSelector',
+                                       baseMuonTag = cms.InputTag('muons'),
+                                       muonTag = cms.InputTag('tauMuonPTSelector'),
+                                       vtxTag = cms.InputTag('offlinePrimaryVertices'),
+                                       vetoMuonTag = cms.InputTag('WIsoMuonSelector'),
+                                       muonID = cms.string('soft'),
+                                       PFIsoMax = cms.double(0.2),
+                                       detectorIsoMax = cms.double(-1.0),
+                                       PUSubtractionCoeff = cms.double(0.5),
+                                       usePFIso = cms.bool(True),
+                                       passIso = cms.bool(True),
+                                       etaMax = cms.double(2.4),
+                                       minNumObjsToPassFilter = cms.uint32(1)
+                                       )
+
+#clean the jets of soft muons, then rebuild the taus
+process.CleanJets.muonSrc = cms.InputTag('tauMuonSelector')
+process.CleanJets.cutOnGenMatches = cms.bool(False)
+process.CleanJets.outFileName = cms.string('NMSSMSignal_MuProperties_SELECTION_JOB.root')
+process.recoTauAK5PFJets08Region.src = cms.InputTag("CleanJets", "ak5PFJetsNoMu", "MUHADANALYSIS")
+process.ak5PFJetsRecoTauPiZeros.jetSrc = cms.InputTag("CleanJets", "ak5PFJetsNoMu",
+                                                      "MUHADANALYSIS")
+process.combinatoricRecoTaus.jetSrc = cms.InputTag("CleanJets", "ak5PFJetsNoMu", "MUHADANALYSIS")
+process.ak5PFJetTracksAssociatorAtVertex.jets = cms.InputTag("CleanJets", "ak5PFJetsNoMu",
+                                                             "MUHADANALYSIS")
+process.ak5PFJetsLegacyHPSPiZeros.jetSrc = cms.InputTag("CleanJets", "ak5PFJetsNoMu",
+                                                        "MUHADANALYSIS")
+process.recoTauCommonSequence = cms.Sequence(process.CleanJets*
+                                             process.ak5PFJetTracksAssociatorAtVertex*
+                                             process.recoTauAK5PFJets08Region*
+                                             process.recoTauPileUpVertices*
+                                             process.pfRecoTauTagInfoProducer
+                                             )
+process.PFTau = cms.Sequence(process.recoTauCommonSequence*process.recoTauClassicHPSSequence)
+
+#find taus in |eta| < 2.4 matched to muon-tagged cleaned jets
+#this will produce a ref to the cleaned tau collection
+process.muHadTauSelector = cms.EDFilter(
+    'CustomTauSelector',
+    baseTauTag = cms.InputTag('hpsPFTauProducer', '', 'MUHADANALYSIS'),
+    tauDiscriminatorTags = cms.VInputTag(
+    cms.InputTag('hpsPFTauDiscriminationByDecayModeFinding', '', 'MUHADANALYSIS')
+    ),
+    jetTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'MUHADANALYSIS'),
+    muonRemovalDecisionTag = cms.InputTag('CleanJets'),
+    muonTag = cms.InputTag('WIsoMuonSelector'),
+    passDiscriminator = cms.bool(True),
+    etaMax = cms.double(2.4),
+    dR = cms.double(0.5),
+    minNumObjsToPassFilter = cms.uint32(1)
+    )
+
+#analyze selected taus
+process.muHadTauAnalyzer = cms.EDAnalyzer(
+    'TauAnalyzer',
+    outFileName = cms.string('OUTPUTROOTFILE'),
+    tauTag = cms.InputTag('muHadTauSelector'),
+    METTag = cms.InputTag('pfMet'),
+    muonTag = cms.InputTag('WIsoMuonSelector'),
+    genMatchedMuonTag = cms.InputTag('WIsoMuonSelector'),
+    oldJetTag = cms.InputTag('ak5PFJets'),
+    newJetTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'MUHADANALYSIS'),
+    jetMuonMapTag = cms.InputTag('CleanJets'),
+    oldNewJetMapTag = cms.InputTag('CleanJets'),
+    genParticleTag = cms.InputTag('genPartonSelector'),
+    dR = cms.double(0.3),
+    tauPTMin = cms.double(5.0), #GeV
+    tauDecayMode = cms.int32(TAU_ALL_HAD),
+    pTRankColors = cms.vuint32(1, 2, 4, 6),
+    pTRankStyles = cms.vuint32(20, 21, 22, 23),
+    pTRankEntries = cms.vstring('Highest p_{T}', 'Second highest p_{T}', 'Third highest p_{T}',
+                                'Lowest p_{T}')
     )
 
 #analyze gen-matched AK5 PF jets
@@ -130,4 +215,7 @@ process.analyzeJets = cms.EDAnalyzer(
     )
 
 #path
-process.p = cms.Path(process.genPartonSelector*process.recoJetSelector*process.analyzeJets)
+## process.p = cms.Path(process.genPartonSelector*process.recoJetSelector*process.analyzeJets)
+process.p = cms.Path(process.genPartonSelector*process.jetSelector*process.tauMuonPTSelector*
+                     process.tauMuonSelector*process.PFTau*process.muHadTauSelector*
+                     process.muHadTauAnalyzer)
