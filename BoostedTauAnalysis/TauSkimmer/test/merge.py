@@ -16,14 +16,15 @@ process.load("Configuration.StandardSequences.GeometryExtended_cff")
 process.load("Configuration.StandardSequences.FrontierConditions_GlobalTag_cff")
 process.load('Configuration.EventContent.EventContent_cff')
 process.load("RecoTauTag.Configuration.RecoPFTauTag_cff")
-process.GlobalTag.globaltag = "START52_V9::All"
+process.GlobalTag.globaltag = "START53_V7F::All"
 
 readFiles = cms.untracked.vstring()
 process.source = cms.Source(
     "PoolSource",
-    fileNames = readFiles
+    fileNames = cms.untracked.vstring(
+    FILES
     )
-FILES
+    )
 
 process.source.inputCommands = cms.untracked.vstring("keep *", "drop *_MEtoEDMConverter_*_*")
 
@@ -108,6 +109,6 @@ process.output = cms.OutputModule(
     )
     )
 
-process.p = cms.Path(process.PFTau)
+## process.p = cms.Path(process.PFTau)
 
 process.end = cms.EndPath(process.output)
