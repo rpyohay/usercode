@@ -5,8 +5,8 @@
   string macroPath("/afs/cern.ch/user/y/yohay/CMSSW_5_2_4_patch3_20Sep12/src/BoostedTauAnalysis/");
   macroPath+="TauAnalyzer/test/";
   gSystem->Load((macroPath + "STLDictionary.so").c_str());
-  gROOT->LoadMacro((macroPath + "Plot.C++").c_str());
-//   gSystem->Load((macroPath + "Plot_C.so").c_str());
+//   gROOT->LoadMacro((macroPath + "Plot.C++").c_str());
+  gSystem->Load((macroPath + "Plot_C.so").c_str());
 
   //unit strings
   string unitPTTau("Reco #tau p_{T} (GeV)");
@@ -77,33 +77,7 @@
 //   canvasMap[make_pair(string("muHadGen1Prong1Pi0RecoDecayMode"), noUnit)] = ;
 //   canvasMap[make_pair(string("muHadGen3ProngRecoDecayMode"), noUnit)] = ;
 
-//space-saving constant definitions
-  const string analysisFilePath("/data1/yohay/");
-  const string objTag("");
-  const string suffix(".root");
-  const string effTag("_eff");
-  vector<string> samples;
-  samples.push_back("Wh1");
-  samples.push_back("WJets");
-  const string leg("");
-  const string trigger("jet_analysis");
-  const string signalGenSel("muHad_");
-  const string controlGenSel("");
-  const string outputTag("_" + trigger);
-  const string tauIsoWP("Medium");
-  const string analysis("muHadAnalysisV9");
-  const string tag("_20fb-1"/*"_normalizedTo1"*/);
-
-  //compare signal to background
-  string outputFile(analysisFilePath);
-  vector<string> inputFiles;
-  for (vector<string>::const_iterator iSample = samples.begin(); iSample != samples.end(); 
-       ++iSample) {
-    outputFile+=*iSample;
-    if ((iSample - samples.begin()) < (samples.size() - 1)) outputFile+="Vs";
-    inputFiles.push_back(analysisFilePath + *iSample + "_" + tauIsoWP + "/" + analysis + suffix);
-  }
-  outputFile+=("_" + tauIsoWP + "_" + analysis + tag + suffix);
+  //set up canvas and graph names
   vector<string> canvasNames;
   canvasNames.push_back("hadTauAssociatedMuMultiplicityCanvas");
   canvasNames.push_back("muHadMassCanvas");
@@ -119,6 +93,10 @@
   canvasNames.push_back("tauMuTauHadJetWMuHTCanvas");
   canvasNames.push_back("diJetWMuHTCanvas");
   canvasNames.push_back("jetTauJetWMuHTCanvas");
+  canvasNames.push_back("tauMuPTCanvas");
+  canvasNames.push_back("tauHadPTCanvas");
+  canvasNames.push_back("tauHadIsoCanvas");
+  canvasNames.push_back("softMuIsoCandMultiplicityCanvas");
   vector<string> graphNames;
   graphNames.push_back("hadTauAssociatedMuMultiplicity");
   graphNames.push_back("muHadMass");
@@ -134,71 +112,74 @@
   graphNames.push_back("tauMuTauHadJetWMuHT");
   graphNames.push_back("diJetWMuHT");
   graphNames.push_back("jetTauJetWMuHT");
+  graphNames.push_back("tauMuPT");
+  graphNames.push_back("tauHadPT");
+  graphNames.push_back("tauHadIso");
+  graphNames.push_back("softMuIsoCandMultiplicity");
+
+  //set up plot style options
   vector<string> legendHeaders(canvasNames.size(), 
-			       "Normalized to 20 fb^{-1}"/*"Normalized to 1"*/);
-  Color_t colors[2] = {kBlack, kRed};
-  Style_t styles[2] = {20, 21};
-  float weights[2] = {0.0681, 10.4/*0.0, 0.0*/};
-  const char* legendEntries[2] = {"Wh_{1}", "W+jets"};
-  const bool setLogY = true/*false*/;
+			       /*"Normalized to 20 fb^{-1}"*/"Normalized to 1");
+  Color_t colors[3] = {kBlack, kRed, kBlue};
+  Style_t styles[3] = {20, 21, 22};
+  float weights[3] = {/*0.0681, 10.4*/0.0, 0.0, 0.0};
+  const bool setLogY = /*true*/false;
+
+//   //space-saving constant definitions for signal vs. background and HLT analyses
+//   const string analysisFilePath("/data1/yohay/");
+//   const string objTag("");
+//   const string suffix(".root");
+//   const string effTag("_eff");
+//   vector<string> samples;
+//   samples.push_back("Wh1");
+//   samples.push_back("WJets");
+//   const string leg("");
+//   const string trigger("jet_analysis");
+//   const string signalGenSel("muHad_");
+//   const string controlGenSel("");
+//   const string outputTag("_" + trigger);
+//   const string tauIsoWP("Medium");
+//   const string analysis("muHadAnalysisV20_passMediumIso_tauHadPTGt0_noMuIsoCands");
+//   const string tag(/*"_20fb-1"*/"_normalizedTo1");
+
+//   //compare signal to background
+//   string outputFile(analysisFilePath);
+//   vector<string> inputFiles;
+//   for (vector<string>::const_iterator iSample = samples.begin(); iSample != samples.end(); 
+//        ++iSample) {
+//     outputFile+=*iSample;
+//     if ((iSample - samples.begin()) < (samples.size() - 1)) outputFile+="Vs";
+//     inputFiles.push_back(analysisFilePath + *iSample + "_" + tauIsoWP + "/" + analysis + suffix);
+//   }
+//   outputFile+=("_" + tauIsoWP + "_" + analysis + tag + suffix);
+//   const char* legendEntries[2] = {"Wh_{1}", "W+jets"};
 //   drawMultipleEfficiencyGraphsOn1Canvas(outputFile, inputFiles, canvasNames, graphNames, 
 // 					legendHeaders, colors, styles, legendEntries, weights, 
 // 					setLogY);
 
-//   //compare dR(W muon, soft muon) for events with mu+had mass > 0 and > 2
-//   mergePlotsIn1File("/data1/yohay/Wh1_Medium/muHadAnalysisV8.root", 
-// 		    "/data1/yohay/Wh1_Medium/dRWMuSoftMu_muHadMassGt0VsGt2_WMuonExcluded.root");
-
-//space-saving constant definitions
+//space-saving constant definitions for search vs. control sample analysis
   const string analysisFilePath("/data1/yohay/WJets_Medium/");
   const string suffix(".root");
   const string tag(/*"_20fb-1"*/"_normalizedTo1");
 
-  //compare all jets to selected jets
-  string outputFile(analysisFilePath + "isoVsNonIsoTaus" + suffix);
+  //compare search sample to control sample
+  string outputFile(analysisFilePath + 
+		    "isoVsNonIsoTaus_V20_passMediumIso_tauHadPTGt15_noMuIsoCands" + suffix);
   vector<string> inputFiles;
-  inputFiles.push_back(analysisFilePath + "muHadAnalysisV10" + suffix);
-  inputFiles.push_back(analysisFilePath + "muHadAntiSelectedAnalysisV10" + suffix);
-  vector<string> canvasNames;
-  canvasNames.push_back("hadTauAssociatedMuMultiplicityCanvas");
-  canvasNames.push_back("muHadMassCanvas");
-  canvasNames.push_back("muHadChargeCanvas");
-  canvasNames.push_back("METCanvas");
-  canvasNames.push_back("WMuMTCanvas");
-  canvasNames.push_back("tauMuMTCanvas");
-  canvasNames.push_back("dPhiWMuMETCanvas");
-  canvasNames.push_back("dPhiTauMuMETCanvas");
-  canvasNames.push_back("tauMuTauHadJetHTCanvas");
-  canvasNames.push_back("diJetHTCanvas");
-  canvasNames.push_back("jetTauJetHTCanvas");
-  canvasNames.push_back("tauMuTauHadJetWMuHTCanvas");
-  canvasNames.push_back("diJetWMuHTCanvas");
-  canvasNames.push_back("jetTauJetWMuHTCanvas");
-  vector<string> graphNames;
-  graphNames.push_back("hadTauAssociatedMuMultiplicity");
-  graphNames.push_back("muHadMass");
-  graphNames.push_back("muHadCharge");
-  graphNames.push_back("MET");
-  graphNames.push_back("WMuMT");
-  graphNames.push_back("tauMuMT");
-  graphNames.push_back("dPhiWMuMET");
-  graphNames.push_back("dPhiTauMuMET");
-  graphNames.push_back("tauMuTauHadJetHT");
-  graphNames.push_back("diJetHT");
-  graphNames.push_back("jetTauJetHT");
-  graphNames.push_back("tauMuTauHadJetWMuHT");
-  graphNames.push_back("diJetWMuHT");
-  graphNames.push_back("jetTauJetWMuHT");
-  vector<string> legendHeaders(canvasNames.size(), 
-			       /*"Normalized to 20 fb^{-1}"*/"Normalized to 1");
-  Color_t colors[2] = {kBlack, kRed};
-  Style_t styles[2] = {20, 21};
-  float weights[2] = {/*0.0681, 10.4*/0.0, 0.0};
-  const char* legendEntries[2] = {"Isolated #tau leptons", "Non-isolated #tau leptons"};
-  const bool setLogY = /*true*/false;
+  inputFiles.push_back(analysisFilePath + 
+		       "muHadAnalysisV20_passMediumIso_tauHadPTGt15_noMuIsoCands" + suffix);
+  inputFiles.push_back(analysisFilePath + 
+		       "muHadAntiSelectedAnalysisV20_passMediumIso_tauHadPTGt15_noMuIsoCands" + 
+		       suffix);
+  const char* legendEntries[3] = {"Isolated #tau leptons", "Non-isolated #tau leptons", 
+				  "Loosely isolated #tau leptons"};
   drawMultipleEfficiencyGraphsOn1Canvas(outputFile, inputFiles, canvasNames, graphNames, 
 					legendHeaders, colors, styles, legendEntries, weights, 
 					setLogY);
+
+//   //compare dR(W muon, soft muon) for events with mu+had mass > 0 and > 2
+//   mergePlotsIn1File("/data1/yohay/Wh1_Medium/muHadAnalysisV8.root", 
+// 		    "/data1/yohay/Wh1_Medium/dRWMuSoftMu_muHadMassGt0VsGt2_WMuonExcluded.root");
 
 // //space-saving constant definitions
 //   const string analysisFilePath("/data1/yohay/WJets/WJets_tau_analysis");
