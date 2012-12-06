@@ -6,6 +6,7 @@
 #include "TGraphAsymmErrors.h"
 #include "TCanvas.h"
 #include "TLegend.h"
+#include "THStack.h"
 
 //default drawing options
 const Double_t defaultXAxisLabelSize = 0.05;
@@ -424,26 +425,32 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
 					   const vector<string>& canvasNames, 
 					   const vector<string>& graphNames, 
 					   const vector<string>& legendHeaders, 
-					   const Color_t* colors, const Style_t* styles, 
-					   const char** legendEntries, const float* weights, 
-					   const bool setLogY)
+					   const vector<Color_t>& colors, 
+					   const vector<Style_t>& styles, 
+					   const vector<string>& legendEntries, 
+					   const vector<float>& weights, const bool setLogY, 
+					   const bool drawStack)
 {
+  if ((inputFiles.size() > colors.size()) || (inputFiles.size() > styles.size()) || 
+      (inputFiles.size() > legendEntries.size()) || (inputFiles.size() > weights.size()) || 
+      (canvasNames.size() > graphNames.size()) || (canvasNames.size() > legendHeaders.size())) {
+    cerr << "Error: vector size mismatch.\n";
+    return;
+  }
   TFile outStream(outputFileName.c_str(), "RECREATE");
   vector<TFile*> inputStreams;
   vector<TCanvas*> outputCanvases;
   vector<TLegend*> legends;
-//   vector<TH1F*> pHistWithMaxMaxBin;
-//   vector<Double_t> maxBinContent;
+  vector<THStack*> stacks;
   vector<vector<TH1F*> > hists;
   for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
        iCanvasName != canvasNames.end(); ++iCanvasName) {
+    const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
     outputCanvases.push_back(new TCanvas(iCanvasName->c_str(), "", 600, 600));
     setCanvasOptions(*outputCanvases[outputCanvases.size() - 1], 1, setLogY, 0);
     legends.push_back(new TLegend(0.5, 0.6, 0.9, 0.8));
-    setLegendOptions(*legends[legends.size() - 1], 
-		     legendHeaders[iCanvasName - canvasNames.begin()].c_str());
-//     pHistWithMaxMaxBin.push_back(NULL);
-//     maxBinContent.push_back(0.0);
+    stacks.push_back(new THStack((graphNames[canvasIndex] + "Stack").c_str(), ""));
+    setLegendOptions(*legends[legends.size() - 1], legendHeaders[canvasIndex].c_str());
     hists.push_back(vector<TH1F*>(inputFiles.size(), NULL));
   }
   for (vector<string>::const_iterator iInputFile = inputFiles.begin(); 
@@ -461,7 +468,7 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
 	pGraph = (TGraphAsymmErrors*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
 	setGraphOptions(*pGraph, colors[fileIndex], 0.7, styles[fileIndex], 
 			pGraph->GetXaxis()->GetTitle(), pGraph->GetYaxis()->GetTitle());
-	legends[canvasIndex]->AddEntry(pGraph, legendEntries[fileIndex], "l");
+	legends[canvasIndex]->AddEntry(pGraph, legendEntries[fileIndex].c_str(), "l");
       }
       else {
 	pHist = (TH1F*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
@@ -469,15 +476,16 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
 	setHistogramOptions(pHist, colors[fileIndex], 0.7, styles[fileIndex], 
 			    weight, pHist->GetXaxis()->GetTitle(), 
 			    pHist->GetYaxis()->GetTitle());
-	if (setLogY) pHist->GetYaxis()->SetRangeUser(0.1, 50000.0);
-// 	Int_t histMaxBin = pHist->GetMaximumBin();
-// 	Double_t histMaxBinContent = pHist->GetBinContent(histMaxBin);
-// 	if (histMaxBinContent >= maxBinContent[canvasIndex]) {
-// 	  maxBinContent[canvasIndex] = histMaxBinContent;
-// 	  pHistWithMaxMaxBin[canvasIndex] = pHist;
-// 	}
+	if (setLogY) pHist->GetYaxis()->SetRangeUser(0.1, 10000.0);
+	if (drawStack) {
+// 	  pHist->SetFillStyle(1001);
+	  pHist->SetFillStyle(0);
+	  pHist->SetFillColor(0);
+	}
 	hists[canvasIndex][fileIndex] = pHist;
-	legends[canvasIndex]->AddEntry(pHist, legendEntries[fileIndex], "l");
+	legends[canvasIndex]->AddEntry(pHist, legendEntries[fileIndex].c_str(), "l");
+	if (fileIndex == (inputFiles.size() - 1)) stacks[canvasIndex]->Add(pHist, "HIST");
+	else stacks[canvasIndex]->Add(pHist, "HISTE");
       }
       outStream.cd();
       outputCanvases[canvasIndex]->cd();
@@ -485,24 +493,34 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
       else if (pGraph != NULL) pGraph->Draw("PSAME");
     }
   }
-  for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
-       iCanvasName != canvasNames.end(); ++iCanvasName) {
-    const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
-    outStream.cd();
-    outputCanvases[canvasIndex]->cd();
-//     pHistWithMaxMaxBin[canvasIndex]->Draw();
-    TH1F* pHistWithMaxMaxBin = histWithLargestBinContent(hists[canvasIndex]);
-    if (pHistWithMaxMaxBin != NULL) pHistWithMaxMaxBin->Draw();
+  if (!drawStack) {
+    for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
+	 iCanvasName != canvasNames.end(); ++iCanvasName) {
+      const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
+      outStream.cd();
+      outputCanvases[canvasIndex]->cd();
+      TH1F* pHistWithMaxMaxBin = histWithLargestBinContent(hists[canvasIndex]);
+      if (pHistWithMaxMaxBin != NULL) pHistWithMaxMaxBin->Draw();
+    }
   }
   for (vector<string>::const_iterator iCanvasName = canvasNames.begin(); 
        iCanvasName != canvasNames.end(); ++iCanvasName) {
     const unsigned int canvasIndex = iCanvasName - canvasNames.begin();
     outStream.cd();
     outputCanvases[canvasIndex]->cd();
-    for (vector<string>::const_iterator iInputFile = inputFiles.begin(); 
-	 iInputFile != inputFiles.end(); ++iInputFile) {
-      const unsigned int fileIndex = iInputFile - inputFiles.begin();
-      if (hists[canvasIndex][fileIndex] != NULL) hists[canvasIndex][fileIndex]->Draw("SAME");
+    if (!drawStack) {
+      for (vector<string>::const_iterator iInputFile = inputFiles.begin(); 
+	   iInputFile != inputFiles.end(); ++iInputFile) {
+	const unsigned int fileIndex = iInputFile - inputFiles.begin();
+	if (hists[canvasIndex][fileIndex] != NULL) hists[canvasIndex][fileIndex]->Draw("SAME");
+      }
+    }
+    else {
+      if (setLogY) {
+	stacks[canvasIndex]->SetMinimum(0.1);
+	stacks[canvasIndex]->SetMaximum(10000.0);
+      }
+      stacks[canvasIndex]->Draw();
     }
     legends[canvasIndex]->Draw();
   }
@@ -513,6 +531,8 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
   outStream.Close();
   for (vector<TLegend*>::iterator iLegend = legends.begin(); 
        iLegend != legends.end(); ++iLegend) { delete *iLegend; }
+  for (vector<THStack*>::iterator iStack = stacks.begin(); 
+       iStack != stacks.end(); ++iStack) { delete *iStack; }
   for (vector<TCanvas*>::iterator iOutputCanvas = outputCanvases.begin(); 
        iOutputCanvas != outputCanvases.end(); ++iOutputCanvas) { delete *iOutputCanvas; }
   for (vector<TFile*>::const_iterator iInputStream = inputStreams.begin(); 
@@ -524,8 +544,13 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
 
 //hadd histograms drawn on canvases
 void haddCanvases(const string& outputFileName, const vector<string>& inputFiles, 
-		  const vector<string>& canvasNames, const vector<string>& graphNames)
+		  const vector<float>& weights, const vector<string>& canvasNames, 
+		  const vector<string>& graphNames)
 {
+  if ((inputFiles.size() != weights.size()) || (canvasNames.size() != graphNames.size())) {
+    cerr << "Error: vector size mismatch.\n";
+    return;
+  }
   TFile outStream(outputFileName.c_str(), "RECREATE");
   vector<TFile*> inputStreams;
   vector<TCanvas*> outputCanvases;
@@ -547,6 +572,7 @@ void haddCanvases(const string& outputFileName, const vector<string>& inputFiles
       inputStreams[inputStreams.size() - 1]->GetObject(iCanvasName->c_str(), pCanvas);
       TH1F* pHist = NULL;
       pHist = (TH1F*)pCanvas->GetPrimitive(graphNames[canvasIndex].c_str());
+      pHist->Scale(weights[fileIndex]);
       if (fileIndex == 0) hists[canvasIndex] = pHist;
       else hists[canvasIndex]->Add(pHist);
     }

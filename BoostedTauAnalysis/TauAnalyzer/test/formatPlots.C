@@ -2,11 +2,14 @@
   //load
   gROOT->Reset();
   gROOT->ProcessLine("#include <utility>");
-  string macroPath("/afs/cern.ch/user/y/yohay/CMSSW_5_2_4_patch3_20Sep12/src/BoostedTauAnalysis/");
+  string macroPath("/afs/cern.ch/user/y/yohay/CMSSW_5_3_2_patch4/src/BoostedTauAnalysis/");
   macroPath+="TauAnalyzer/test/";
   gSystem->Load((macroPath + "STLDictionary.so").c_str());
-//   gROOT->LoadMacro((macroPath + "Plot.C++").c_str());
-  gSystem->Load((macroPath + "Plot_C.so").c_str());
+  gROOT->LoadMacro((macroPath + "Plot.C++").c_str());
+//   gSystem->Load((macroPath + "Plot_C.so").c_str());
+
+  //needed so vector<Color_t> and vector<Style_t> work
+  vector<short> dummy;
 
   //unit strings
   string unitPTTau("Reco #tau p_{T} (GeV)");
@@ -118,64 +121,121 @@
   graphNames.push_back("softMuIsoCandMultiplicity");
 
   //set up plot style options
-  vector<string> legendHeaders(canvasNames.size(), 
-			       /*"Normalized to 20 fb^{-1}"*/"Normalized to 1");
-  Color_t colors[3] = {kBlack, kRed, kBlue};
-  Style_t styles[3] = {20, 21, 22};
-  float weights[3] = {/*0.0681, 10.4*/0.0, 0.0, 0.0};
-  const bool setLogY = /*true*/false;
+  vector<string> legendHeaders20InvFb(canvasNames.size(), "Normalized to 20 fb^{-1}");
+  vector<string> legendHeaders1(canvasNames.size(), "Normalized to 1");
+  vector<Color_t> colors;
+  colors.push_back(kBlack);
+  colors.push_back(kRed);
+  colors.push_back(kBlue);
+  colors.push_back(kMagenta);
+  colors.push_back(kGreen);
+  vector<Style_t> styles;
+  styles.push_back(20);
+  styles.push_back(21);
+  styles.push_back(22);
+  styles.push_back(23);
+  styles.push_back(24);
+  vector<string> legendEntriesWNJetsToLNuInd;
+  legendEntriesWNJetsToLNuInd.push_back("Wh_{1}");
+  legendEntriesWNJetsToLNuInd.push_back("W + 1 jet");
+  legendEntriesWNJetsToLNuInd.push_back("W + 2 jets");
+  legendEntriesWNJetsToLNuInd.push_back("W + 3 jets");
+  legendEntriesWNJetsToLNuInd.push_back("W + 4 jets");
+  vector<string> legendEntriesWNJetsToLNu;
+  legendEntriesWNJetsToLNu.push_back("Wh_{1}");
+  legendEntriesWNJetsToLNu.push_back("W + jets");
+  vector<string> legendEntriesSearchVsControl;
+  legendEntriesSearchVsControl.push_back("Isolated #tau leptons");
+  legendEntriesSearchVsControl.push_back("Non-isolated #tau leptons");
+  const bool setLogY = true;
+  const bool setLinY = false;
+  const bool drawStack = true;
+  const bool drawSame = false;
 
-//   //space-saving constant definitions for signal vs. background and HLT analyses
-//   const string analysisFilePath("/data1/yohay/");
-//   const string objTag("");
-//   const string suffix(".root");
-//   const string effTag("_eff");
-//   vector<string> samples;
-//   samples.push_back("Wh1");
-//   samples.push_back("WJets");
-//   const string leg("");
-//   const string trigger("jet_analysis");
-//   const string signalGenSel("muHad_");
-//   const string controlGenSel("");
-//   const string outputTag("_" + trigger);
-//   const string tauIsoWP("Medium");
-//   const string analysis("muHadAnalysisV20_passMediumIso_tauHadPTGt0_noMuIsoCands");
-//   const string tag(/*"_20fb-1"*/"_normalizedTo1");
+  //weights (sig. figs are probably wrong)
+  const float Wh1Weight = 0.0681;
+  vector<float> weightsWJetsToLNu;
+  weightsWJetsToLNu.push_back(Wh1Weight);
+  weightsWJetsToLNu.push_back(10.4);
+  vector<float> weights1(5, 0.0);
+  vector<float> weightsWNJetsToLNuInd;
+  weightsWNJetsToLNuInd.push_back(Wh1Weight);
+  weightsWNJetsToLNuInd.push_back(4.57);
+  weightsWNJetsToLNuInd.push_back(1.01);
+  weightsWNJetsToLNuInd.push_back(0.654);
+  weightsWNJetsToLNuInd.push_back(0.313);
+  vector<float> weightsWNJetsToLNu;
+  weightsWNJetsToLNu.push_back(Wh1Weight);
+  weightsWNJetsToLNu.push_back(6524.691358);
+  vector<float> WNJetsToLNuRelXSecWeights;
+  WNJetsToLNuRelXSecWeights.push_back(0.00070041554);
+  WNJetsToLNuRelXSecWeights.push_back(0.00015423878);
+  WNJetsToLNuRelXSecWeights.push_back(0.00010017824);
+  WNJetsToLNuRelXSecWeights.push_back(0.000047972683);
 
-//   //compare signal to background
-//   string outputFile(analysisFilePath);
-//   vector<string> inputFiles;
-//   for (vector<string>::const_iterator iSample = samples.begin(); iSample != samples.end(); 
-//        ++iSample) {
-//     outputFile+=*iSample;
-//     if ((iSample - samples.begin()) < (samples.size() - 1)) outputFile+="Vs";
-//     inputFiles.push_back(analysisFilePath + *iSample + "_" + tauIsoWP + "/" + analysis + suffix);
-//   }
-//   outputFile+=("_" + tauIsoWP + "_" + analysis + tag + suffix);
-//   const char* legendEntries[2] = {"Wh_{1}", "W+jets"};
-//   drawMultipleEfficiencyGraphsOn1Canvas(outputFile, inputFiles, canvasNames, graphNames, 
-// 					legendHeaders, colors, styles, legendEntries, weights, 
-// 					setLogY);
+  //space-saving constant definitions
+  const string analysisFilePath("/data1/yohay/");
+  const string fileExt(".root");
+  const string tag20InvFb("_20fb-1");
+  const string tag1("_normalizedTo1");
+  const string vTag("_v3");
 
-//space-saving constant definitions for search vs. control sample analysis
-  const string analysisFilePath("/data1/yohay/WJets_Medium/");
-  const string suffix(".root");
-  const string tag(/*"_20fb-1"*/"_normalizedTo1");
+  //hadd
+  string isoPrefix(analysisFilePath + "WNJetsToLNu/analysis/muHadIsoAnalysis_W");
+  string nonIsoPrefix(analysisFilePath + "WNJetsToLNu/analysis/muHadNonIsoAnalysis_W");
+  string suffix("JetsToLNu_v3" + fileExt);
+  string isoHaddOutputFile(isoPrefix + "N" + suffix);
+  string nonIsoHaddOutputFile(nonIsoPrefix + "N" + suffix);
+  vector<string> isoHaddInputFiles;
+  vector<string> nonIsoHaddInputFiles;
+  for (unsigned int iNJets = 1; iNJets <= 4; ++iNJets) {
+    stringstream isoName;
+    isoName << isoPrefix << iNJets << suffix;
+    isoHaddInputFiles.push_back(isoName.str());
+    stringstream nonIsoName;
+    nonIsoName << nonIsoPrefix << iNJets << suffix;
+    nonIsoHaddInputFiles.push_back(nonIsoName.str());
+  }
+  haddCanvases(isoHaddOutputFile, isoHaddInputFiles, WNJetsToLNuRelXSecWeights, canvasNames, 
+	       graphNames);
+  haddCanvases(nonIsoHaddOutputFile, nonIsoHaddInputFiles, WNJetsToLNuRelXSecWeights, canvasNames, 
+	       graphNames);
+
+  //compare signal to background
+  string sigVsBkgOutputFile20InvFb(analysisFilePath + "Wh1VsWNJets_muHadIsoAnalysis" + 
+				   tag20InvFb + vTag + fileExt);
+  string sigVsBkgOutputFile1(analysisFilePath + "Wh1VsWNJets_muHadIsoAnalysis" + tag1 + vTag + 
+			     fileExt);
+  vector<string> sigVsBkgInputFiles;
+  sigVsBkgInputFiles.push_back(isoHaddOutputFile);
+  sigVsBkgInputFiles.push_back(analysisFilePath + 
+			       "Wh1_Medium/muHadAnalysisV20_passMediumIso_tauHadPTGt0" + fileExt);
+//   colors[1] = kBlack;
+//   colors[0] = kRed;
+//   styles[1] = 20;
+//   styles[0] = 21;
+//   legendEntriesWNJetsToLNu[1] = "Wh_{1}";
+//   legendEntriesWNJetsToLNu[0] = "W + jets";
+//   weightsWNJetsToLNu[1] = Wh1Weight;
+//   weightsWNJetsToLNu[0] = 6524.691358;
+//   drawMultipleEfficiencyGraphsOn1Canvas(sigVsBkgOutputFile20InvFb, sigVsBkgInputFiles, 
+// 					canvasNames, graphNames, legendHeaders20InvFb, colors, 
+// 					styles, legendEntriesWNJetsToLNu, weightsWNJetsToLNu, 
+// 					setLogY, drawStack);
+//   drawMultipleEfficiencyGraphsOn1Canvas(sigVsBkgOutputFile1, sigVsBkgInputFiles, 
+// 					canvasNames, graphNames, legendHeaders1, colors, 
+// 					styles, legendEntriesWNJetsToLNu, weights1, setLinY, 
+// 					drawSame);
 
   //compare search sample to control sample
-  string outputFile(analysisFilePath + 
-		    "isoVsNonIsoTaus_V20_passMediumIso_tauHadPTGt15_noMuIsoCands" + suffix);
-  vector<string> inputFiles;
-  inputFiles.push_back(analysisFilePath + 
-		       "muHadAnalysisV20_passMediumIso_tauHadPTGt15_noMuIsoCands" + suffix);
-  inputFiles.push_back(analysisFilePath + 
-		       "muHadAntiSelectedAnalysisV20_passMediumIso_tauHadPTGt15_noMuIsoCands" + 
-		       suffix);
-  const char* legendEntries[3] = {"Isolated #tau leptons", "Non-isolated #tau leptons", 
-				  "Loosely isolated #tau leptons"};
-  drawMultipleEfficiencyGraphsOn1Canvas(outputFile, inputFiles, canvasNames, graphNames, 
-					legendHeaders, colors, styles, legendEntries, weights, 
-					setLogY);
+  string searchVsControlOutputFile(analysisFilePath + "WNJetsToLNu/analysis/isoVsNonIsoTaus" + 
+				   tag1 + vTag + fileExt);
+  vector<string> searchVsControlInputFiles;
+  searchVsControlInputFiles.push_back(isoHaddOutputFile);
+  searchVsControlInputFiles.push_back(nonIsoHaddOutputFile);
+  drawMultipleEfficiencyGraphsOn1Canvas(searchVsControlOutputFile, searchVsControlInputFiles, 
+					canvasNames, graphNames, legendHeaders1, colors, styles, 
+					legendEntriesSearchVsControl, weights1, setLinY, drawSame);
 
 //   //compare dR(W muon, soft muon) for events with mu+had mass > 0 and > 2
 //   mergePlotsIn1File("/data1/yohay/Wh1_Medium/muHadAnalysisV8.root", 
@@ -183,19 +243,7 @@
 
 // //space-saving constant definitions
 //   const string analysisFilePath("/data1/yohay/WJets/WJets_tau_analysis");
-//   const string suffix(".root");
-
-//   //hadd
-//   string outputFile(analysisFilePath + suffix);
-//   vector<string> inputFiles;
-//   for (unsigned int iJob = 1; iJob <= 229; ++iJob) {
-//     stringstream name;
-//     name << analysisFilePath << "_" << iJob << suffix;
-//     inputFiles.push_back(name.str());
-//   }
-//   vector<string> canvasNames(1, "jetParentPartonCanvas");
-//   vector<string> graphNames(1, "jetParentParton");
-//   haddCanvases(outputFile, inputFiles, canvasNames,  graphNames);
+//   const string fileExt(".root");
 
 //   //make individual efficiency plots for signal and Z-->mumu samples
 //   vector<string> effInputFiles;
@@ -204,10 +252,10 @@
 //   effInputFiles.push_back(analysisFilePath + signalSample + objTag + leg + signalGenSel + trigger);
 //   for (vector<string>::const_iterator iFile = effInputFiles.begin(); iFile != effInputFiles.end(); 
 //        ++iFile) {
-// //     comparisonInputFiles.push_back(*iFile + effTag + suffix);
-//     comparisonInputFiles.push_back(*iFile + suffix);
-// //     plotNice(*iFile + suffix, jetAnalysisEffMap, binLabelMap, jetAnalysisMap, 
-// // 	     *iFile + effTag + suffix, "noPDF");
+// //     comparisonInputFiles.push_back(*iFile + effTag + fileExt);
+//     comparisonInputFiles.push_back(*iFile + fileExt);
+// //     plotNice(*iFile + fileExt, jetAnalysisEffMap, binLabelMap, jetAnalysisMap, 
+// // 	     *iFile + effTag + fileExt, "noPDF");
 //   }
 
 //   //compare Z-->mumu and signal muon efficiency
@@ -222,6 +270,6 @@
 //   Color_t colors[2] = {kBlack, kRed};
 //   Style_t styles[2] = {20, 21};
 // //   drawMultipleEfficiencyGraphsOn1Canvas(analysisFilePath + "eff" + objTag + outputTag + 
-// // 					suffix, comparisonInputFiles, canvasNames, graphNames, 
+// // 					fileExt, comparisonInputFiles, canvasNames, graphNames, 
 // // 					colors, styles);
 }
