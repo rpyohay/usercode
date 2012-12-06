@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: TauAnalyzer.cc,v 1.7 2012/11/19 17:56:25 yohay Exp $
+// $Id: TauAnalyzer.cc,v 1.8 2012/11/30 10:08:57 yohay Exp $
 //
 //
 
@@ -365,6 +365,26 @@ void TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
     genParticlePtrs.push_back(const_cast<reco::GenParticle*>((*iGenParticle).get()));
   }
 
+  /*fill collection of all corrected jets
+    N.B. "corrected jets" automatically excludes the jet associated to the W muon*/
+  std::vector<reco::PFJet> correctedOldJets;
+  for (reco::PFJetCollection::const_iterator iJet = pOldJets->begin(); iJet != pOldJets->end(); 
+       ++iJet) {
+    reco::PFJet correctedJet = *iJet;
+    double JEC = corrector->correction(*iJet, iEvent, iSetup);
+    correctedJet.scaleEnergy(JEC);
+    if (reco::deltaR(*WMuonRefs[WMuonRefs.size() - 1], *iJet) >= dR_) { /*technically you should 
+									  check that the W muon 
+									  ref key is not 
+									  identical to the ref 
+									  key of any jet 
+									  constituent, but that 
+									  would take a much 
+									  longer time*/
+      correctedOldJets.push_back(correctedJet);
+    }
+  }
+
   //loop over selected taus
   for (reco::PFTauRefVector::const_iterator iTau = pTaus->begin(); iTau != pTaus->end(); 
        ++iTau) {
@@ -380,32 +400,17 @@ void TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
     /*fill collections of
       - corrected jets excluding the jet associated to the hadronic tau
-      - all corrected jets
       - the corrected jet associated to the hadronic tau
       N.B. "corrected jets" automatically excludes the jet associated to the W muon*/
     std::vector<reco::PFJet> correctedOldJetsExcludingTau;
-    std::vector<reco::PFJet> correctedOldJets;
     reco::PFJet correctedTauJet;
-    for (reco::PFJetCollection::const_iterator iJet = pOldJets->begin(); iJet != pOldJets->end(); 
-	 ++iJet) {
+    for (reco::PFJetCollection::const_iterator iJet = correctedOldJets.begin(); 
+	 iJet != correctedOldJets.end(); ++iJet) {
       const unsigned int jetIndex = iJet - pOldJets->begin();
-      reco::PFJet correctedJet = *iJet;
-      double JEC = corrector->correction(*iJet, iEvent, iSetup);
-      correctedJet.scaleEnergy(JEC);
-      if (reco::deltaR(*WMuonRefs[WMuonRefs.size() - 1], *iJet) >= dR_) { /*technically you should 
-									    check that the W muon 
-									    ref key is not 
-									    identical to the ref 
-									    key of any jet 
-									    constituent, but that 
-									    would take a much 
-									    longer time*/
-	if (tauOldJetRef.key() != jetIndex) {
-	  correctedOldJetsExcludingTau.push_back(correctedJet);
-	}
-	else correctedTauJet = correctedJet;
+      if (tauOldJetRef.key() != jetIndex) {
+	correctedOldJetsExcludingTau.push_back(*iJet);
       }
-      correctedOldJets.push_back(correctedJet);
+      else correctedTauJet = *iJet;
     }
 
     //find the highest pT corrected jet in the original collection distinct from this tau
@@ -445,9 +450,10 @@ void TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
     //impose pT and decay mode cut on tau
     if (((*iTau)->pt() > tauPTMin_) && 
-	((tauDecayMode_ == reco::PFTau::kNull) || ((*iTau)->decayMode() == tauDecayMode_)) && 
-	!((sortedPFChargedHadronIsoCands.size() > 0) && 
-	  (sortedPFChargedHadronIsoCands[0] < dR_))) {
+	((tauDecayMode_ == reco::PFTau::kNull) || ((*iTau)->decayMode() == tauDecayMode_))//  && 
+// 	!((sortedPFChargedHadronIsoCands.size() > 0) && 
+// 	  (sortedPFChargedHadronIsoCands[0] < dR_))
+	) {
 
       //plot multiplicity of muons associated to this tau
       hadTauAssociatedMuMultiplicity_->Fill(removedMuons.size());
@@ -485,13 +491,15 @@ void TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 			       (const_cast<reco::Muon*>(WMuonRefs[WMuonRefs.size() - 1].get())));
       plotHT(tauMuTauHadJet, tauMuTauHadJetWMuHT_);
 
-      //plot HT (two leading corrected jets)
+      //plot HT (two leading corrected jets if both exist)
       std::vector<reco::Candidate*> diJet;
       diJet.push_back(dynamic_cast<reco::Candidate*>
 		      (const_cast<reco::PFJet*>(oldJetRefs[oldJetRefs.size() - 1].get())));
-      diJet.push_back(dynamic_cast<reco::Candidate*>
-		      (const_cast<reco::PFJet*>(oldJetRefs[oldJetRefs.size() - 2].get())));
-      plotHT(diJet, diJetHT_);
+      if (oldJetRefs.size() > 1) {
+	diJet.push_back(dynamic_cast<reco::Candidate*>
+			(const_cast<reco::PFJet*>(oldJetRefs[oldJetRefs.size() - 2].get())));
+	plotHT(diJet, diJetHT_);
+      }
 
       //plot HT (two leading corrected jets + W muon)
       diJet.push_back(dynamic_cast<reco::Candidate*>
