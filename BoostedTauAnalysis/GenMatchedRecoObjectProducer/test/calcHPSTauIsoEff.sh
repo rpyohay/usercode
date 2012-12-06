@@ -2,14 +2,14 @@
 
 #input files
 inputFileHeader="file:/data1/yohay/"
-inputFileTrailer=".root"
-inputFiles=( "'${inputFileHeader}NMSSMHiggs_WH_files1-500${inputFileTrailer}',\n    '${inputFileHeader}NMSSMHiggs_WH_files501-1000${inputFileTrailer}'" "'${inputFileHeader}Summer12DrellYan_PFTauReReco${inputFileTrailer}'" )
+inputFileTrailer="_24Sep12.root"
+inputFiles=( "'${inputFileHeader}NMSSMHiggs_WH_files1-250${inputFileTrailer}',\n    '${inputFileHeader}NMSSMHiggs_WH_files251-500${inputFileTrailer}',\n    '${inputFileHeader}NMSSMHiggs_WH_files501-750${inputFileTrailer}',\n    '${inputFileHeader}NMSSMHiggs_WH_files751-1000${inputFileTrailer}'" "'${inputFileHeader}Summer12DrellYan_PFTauReReco${inputFileTrailer}'" )
 
 #mom PDG IDs (MOM_PDGID)
 momPDGIDs=( A_PDGID Z_PDGID )
 
 #sister tau decay types (SISTER_TAU_DECAY_TYPE)
-sisterTauDecayTypes=( TAU_MU TAU_HAD )
+sisterTauDecayTypes=( TAU_HAD TAU_MU )
 
 #count sister (COUNT_SISTER)
 countSister=( False True )
