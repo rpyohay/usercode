@@ -200,7 +200,7 @@ Common::getSoftRecoMuons(const edm::Handle<reco::MuonRefVector>& pMuons,
 std::vector<reco::PFTauRef> 
 Common::getRecoTaus(const edm::Handle<reco::PFTauCollection>& pTaus, 
 		    const std::vector<edm::Handle<reco::PFTauDiscriminator> >& pTauDiscriminators, 
-		    const double etaMax, const bool passIso)
+		    const double pTMin, const double etaMax, const bool passIso)
 {
   std::vector<reco::PFTauRef> taus;
   for (reco::PFTauCollection::const_iterator iTau = pTaus->begin(); iTau != pTaus->end(); ++iTau) {
@@ -213,7 +213,8 @@ Common::getRecoTaus(const edm::Handle<reco::PFTauCollection>& pTaus,
       ++iDiscriminator;
     }
     if (((passIso && passTauDiscriminators) || (!passIso && !passTauDiscriminators)) && 
-	((etaMax == -1.0) || (fabs(iTau->eta()) < etaMax))) {
+	((etaMax == -1.0) || (fabs(iTau->eta()) < etaMax)) && 
+	((pTMin == -1.0) || (iTau->pt() > pTMin))) {
       taus.push_back(tauRef);
     }
   }
@@ -224,7 +225,7 @@ std::vector<reco::PFTauRef>
 Common::getRecoTaus(const edm::Handle<reco::PFTauRefVector>& pTaus, 
 		    const edm::Handle<reco::PFTauCollection>& pBaseTaus, 
 		    const std::vector<edm::Handle<reco::PFTauDiscriminator> >& pTauDiscriminators, 
-		    const double etaMax, const bool passIso)
+		    const double pTMin, const double etaMax, const bool passIso)
 {
   std::vector<reco::PFTauRef> taus;
   for (reco::PFTauRefVector::const_iterator iTau = pTaus->begin(); iTau != pTaus->end(); ++iTau) {
@@ -237,7 +238,8 @@ Common::getRecoTaus(const edm::Handle<reco::PFTauRefVector>& pTaus,
       ++iDiscriminator;
     }
     if (((passIso && passTauDiscriminators) || (!passIso && !passTauDiscriminators)) && 
-	((etaMax == -1.0) || (fabs((*iTau)->eta()) < etaMax))) {
+	((etaMax == -1.0) || (fabs((*iTau)->eta()) < etaMax)) && 
+	((pTMin == -1.0) || ((*iTau)->pt() > pTMin))) {
       taus.push_back(tauRef);
     }
   }

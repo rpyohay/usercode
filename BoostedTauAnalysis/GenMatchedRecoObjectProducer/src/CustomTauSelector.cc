@@ -15,7 +15,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Fri Aug 24 17:10:12 CEST 2012
-// $Id: CustomTauSelector.cc,v 1.4 2012/11/08 16:40:59 yohay Exp $
+// $Id: CustomTauSelector.cc,v 1.5 2012/11/19 17:57:05 yohay Exp $
 //
 //
 
@@ -76,6 +76,9 @@ private:
   //flag indicating whether the selected taus should pass or fail the discriminator
   bool passDiscriminator_;
 
+  //pT cut
+  double pTMin_;
+
   //|eta| cut
   double etaMax_;
 
@@ -109,6 +112,7 @@ CustomTauSelector::CustomTauSelector(const edm::ParameterSet& iConfig) :
   muonTag_(iConfig.getParameter<edm::InputTag>("muonTag")),
   tauDiscriminatorTags_(iConfig.getParameter<std::vector<edm::InputTag> >("tauDiscriminatorTags")),
   passDiscriminator_(iConfig.getParameter<bool>("passDiscriminator")),
+  pTMin_(iConfig.getParameter<double>("pTMin")),
   etaMax_(iConfig.getParameter<double>("etaMax")),
   dR_(iConfig.getParameter<double>("dR")),
   minNumObjsToPassFilter_(iConfig.getParameter<unsigned int>("minNumObjsToPassFilter"))
@@ -185,8 +189,9 @@ bool CustomTauSelector::filter(edm::Event& iEvent, const edm::EventSetup& iSetup
 
   //fill STL container with taus passing specified discriminators in specified eta range
   std::vector<reco::PFTauRef> taus = pTaus.isValid() ? 
-    Common::getRecoTaus(pTaus, pBaseTaus, pTauDiscriminators, etaMax_, passDiscriminator_) : 
-    Common::getRecoTaus(pBaseTaus, pTauDiscriminators, etaMax_, passDiscriminator_);
+    Common::getRecoTaus(pTaus, pBaseTaus, pTauDiscriminators, pTMin_, etaMax_, 
+			passDiscriminator_) : 
+    Common::getRecoTaus(pBaseTaus, pTauDiscriminators, pTMin_, etaMax_, passDiscriminator_);
 
   //loop over selected taus
   unsigned int nPassingTaus = 0;
