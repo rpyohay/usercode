@@ -66,10 +66,9 @@ readFiles.extend([
 #for L1GtStableParametersRcd and jet corrections
 #START52_V9B is recommended for JEC in Summer12 CMSSWv5.2 MC
 #START52_V9 is what the Summer12 CMSSWv5.2 MC was produced with
-#START52_V9B = START52_V9 + latest JEC
-#START52_V9B is what is also recommended for CMSSWv5.3 MC as of 30-Nov-12
+#START53_V15 is the latest recommended JEC tag
 process.load('Configuration/StandardSequences/FrontierConditions_GlobalTag_cff')
-process.GlobalTag.globaltag = cms.string('START52_V9B::All')
+process.GlobalTag.globaltag = cms.string('START53_V15::All')
 
 #for HLT selection
 process.load('HLTrigger/HLTfilters/hltHighLevel_cfi')
