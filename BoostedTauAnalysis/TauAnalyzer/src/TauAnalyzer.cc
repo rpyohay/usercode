@@ -14,7 +14,7 @@
 //
 // Original Author:  Rachel Yohay,512 1-010,+41227670495,
 //         Created:  Wed Jul 18 16:40:51 CEST 2012
-// $Id: TauAnalyzer.cc,v 1.8 2012/11/30 10:08:57 yohay Exp $
+// $Id: TauAnalyzer.cc,v 1.9 2012/12/06 17:44:24 yohay Exp $
 //
 //
 
@@ -232,6 +232,12 @@ private:
 
   //histogram of cleaned jet pT vs. cleaned tau pT
   TH2F* cleanedJetPTVsCleanedTauPT_;
+
+  //histogram of mu+had mass vs. dR(tagged soft muon, tau axis)
+  TH2F* muHadMassVsDRSoftMuTau_;
+
+  //histogram of mu+had mass vs. tagged soft muon pT for dR(tagged soft muon, tau axis) < 0.5
+  TH2F* muHadMassVsSoftMuPTDRSoftMuTauLt05_;
 };
 
 //
@@ -542,7 +548,8 @@ void TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
       }
 
       //plot tau muon pT
-      tauMuPT_->Fill(removedMuonRefs[removedMuonRefs.size() - 1]->pt());
+      const double tauMuPT = removedMuonRefs[removedMuonRefs.size() - 1]->pt();
+      tauMuPT_->Fill(tauMuPT);
 
       //plot hadronic tau pT
       tauHadPT_->Fill((*iTau)->pt());
@@ -550,12 +557,19 @@ void TauAnalyzer::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
       //plot hadronic tau deltaBeta-corrected isolation energy
       tauHadIso_->Fill((*pTauHadIso)[*iTau]);
 
-      //plot cleaned jet pT vs. cleaned tau pT
-      cleanedJetPTVsCleanedTauPT_->Fill((*iTau)->pt(), tauJetRef->pt());
-
       //plot soft muon isolation candidate multiplicity per removed muon
       softMuIsoCandMultiplicity_->Fill((sortedPFChargedHadronIsoCands.size() > 0) && 
 				       (sortedPFChargedHadronIsoCands[0] < dR_));
+
+      //plot cleaned jet pT vs. cleaned tau pT
+      cleanedJetPTVsCleanedTauPT_->Fill((*iTau)->pt(), tauJetRef->pt());
+
+      //plot mu+had mass vs. dR(tagged soft muon, tau axis)
+      const double dRSoftMuTau = reco::deltaR(*removedMuonRefs[removedMuonRefs.size() - 1], **iTau);
+      muHadMassVsDRSoftMuTau_->Fill(dRSoftMuTau, muHadMass);
+
+      //plot mu+had mass vs. tagged soft muon pT for dR(tagged soft muon, tau axis) < 0.5
+      if (dRSoftMuTau < 0.5) muHadMassVsSoftMuPTDRSoftMuTauLt05_->Fill(tauMuPT, muHadMass);
 
       //     //plot type of gen tau match
       //     if (std::find(genMatchedMuonRefs.begin(), genMatchedMuonRefs.end(), 
@@ -638,6 +652,12 @@ void TauAnalyzer::beginJob()
   cleanedJetPTVsCleanedTauPT_ = 
     new TH2F("cleanedJetPTVsCleanedTauPT", ";#tau p_{T} (GeV);Jet p_{T} (GeV)", 
 	     50, 0.0, 100.0, 50, 0.0, 100.0);
+  muHadMassVsDRSoftMuTau_ = 
+    new TH2F("muHadMassVsDRSoftMuTau", ";#DeltaR(soft muon, #tau_{had});m_{#mu+had} (GeV)", 
+	     30, 0.0, 3.0, 20, 0.0, 20.0);
+  muHadMassVsSoftMuPTDRSoftMuTauLt05_ = 
+    new TH2F("muHadMassVsSoftMuPTDRSoftMuTauLt05", ";p_{T} (GeV);m_{#mu+had} (GeV)", 
+	     20, 0.0, 100.0, 20, 0.0, 20.0);
 
   //set bin labels
   jetParentParton_->GetXaxis()->SetBinLabel(1, "g");
@@ -682,6 +702,8 @@ void TauAnalyzer::endJob()
   TCanvas tauHadIsoCanvas("tauHadIsoCanvas", "", 600, 600);
   TCanvas softMuIsoCandMultiplicityCanvas("softMuIsoCandMultiplicityCanvas", "", 600, 600);
   TCanvas cleanedJetPTVsCleanedTauPTCanvas("cleanedJetPTVsCleanedTauPTCanvas", "", 600, 600);
+  TCanvas muHadMassVsDRSoftMuTauCanvas("muHadMassVsDRSoftMuTauCanvas", "", 600, 600);
+  TCanvas muHadMassVsSoftMuPTDRSoftMuTauLt05Canvas("muHadMassVsSoftMuPTDRSoftMuTauLt05Canvas", "", 600, 600);
 
   //format and draw 1D plots
   Common::draw1DHistograms(METCanvas, MET_);
@@ -710,6 +732,8 @@ void TauAnalyzer::endJob()
 
   //format and draw 2D plots
   Common::draw2DHistograms(cleanedJetPTVsCleanedTauPTCanvas, cleanedJetPTVsCleanedTauPT_);
+  Common::draw2DHistograms(muHadMassVsDRSoftMuTauCanvas, muHadMassVsDRSoftMuTau_);
+  Common::draw2DHistograms(muHadMassVsSoftMuPTDRSoftMuTauLt05Canvas, muHadMassVsSoftMuPTDRSoftMuTauLt05_);
 
   //set custom options
   softMuIsoCandMultiplicity_->GetXaxis()->SetTitleSize(0.05);
@@ -741,6 +765,8 @@ void TauAnalyzer::endJob()
   tauHadIsoCanvas.Write();
   softMuIsoCandMultiplicityCanvas.Write();
   cleanedJetPTVsCleanedTauPTCanvas.Write();
+  muHadMassVsDRSoftMuTauCanvas.Write();
+  muHadMassVsSoftMuPTDRSoftMuTauLt05Canvas.Write();
   out_->Write();
   out_->Close();
 }
@@ -897,6 +923,10 @@ void TauAnalyzer::reset(const bool doDelete)
   softMuIsoCandMultiplicity_ = NULL;
   if (doDelete && (cleanedJetPTVsCleanedTauPT_ != NULL)) delete cleanedJetPTVsCleanedTauPT_;
   cleanedJetPTVsCleanedTauPT_ = NULL;
+  if (doDelete && (muHadMassVsDRSoftMuTau_ != NULL)) delete muHadMassVsDRSoftMuTau_;
+  muHadMassVsDRSoftMuTau_ = NULL;
+  if (doDelete && (muHadMassVsSoftMuPTDRSoftMuTauLt05_ != NULL)) delete muHadMassVsSoftMuPTDRSoftMuTauLt05_;
+  muHadMassVsSoftMuPTDRSoftMuTauLt05_ = NULL;
 }
 
 //define this as a plug-in
