@@ -158,19 +158,22 @@ process.genTauMuSelector = cms.EDFilter(
     makeAllCollections = cms.bool(False)
     )
 
-#produce muons
-process.recoMuonSelector = cms.EDFilter('MuonRefSelector',
-                                        src = cms.InputTag('muons'),
-                                        cut = cms.string('pt >= 0.0'),
-                                        filter = cms.bool(True)
-                                        )
+#produce muons in |eta| < 2.4
+process.recoMuonEtaSelector = cms.EDFilter('MuonRefSelector',
+                                           src = cms.InputTag('muons'),
+                                           cut = cms.string('abs(eta) < 2.4')
+                                           )
 
-#produce gen-tau-mu-matched muons
-process.genTauMuMatchedRecoMuonSelector = cms.EDFilter(
+#produce muons with pT > 5 GeV
+process.recoMuonPTSelector = process.recoMuonEtaSelector.clone()
+process.recoMuonPTSelector.cut = cms.string('pt > 5.0')
+
+#produce gen-tau-mu-matched muons in |eta| < 2.4
+process.genTauMuMatchedRecoMuonEtaSelector = cms.EDFilter(
     'GenMatchedMuonProducer',
     genParticleTag = cms.InputTag('genParticles'),
     selectedGenParticleTag = cms.InputTag('genTauMuSelector'),
-    recoObjTag = cms.InputTag('recoMuonSelector'),
+    recoObjTag = cms.InputTag('recoMuonEtaSelector'),
     baseRecoObjTag = cms.InputTag('muons'),
     genTauDecayIDPSet = commonGenTauDecayIDPSet,
     applyPTCuts = cms.bool(False),
@@ -180,16 +183,31 @@ process.genTauMuMatchedRecoMuonSelector = cms.EDFilter(
     useGenObjPTRank = cms.bool(True),
     nOutputColls = cms.uint32(1),
     dR = cms.double(0.3),
-    minNumGenObjectsToPassFilter = cms.uint32(1)
+    minNumGenObjectsToPassFilter = cms.uint32(0)
     )
 
-#produce gen-tau-mu-matched muons passing soft ID
+#produce gen-tau-mu-matched muons with pT > 5 GeV
+process.genTauMuMatchedRecoMuonPTSelector = process.genTauMuMatchedRecoMuonEtaSelector.clone()
+process.genTauMuMatchedRecoMuonPTSelector.recoObjTag = cms.InputTag('recoMuonPTSelector')
+
+#produce muons in |eta| < 2.4 passing pT cut
+process.recoMuonPTEtaSelector = cms.EDFilter(
+    'MuonRefSelector',
+    src = cms.InputTag('muons'),
+    cut = cms.string('(pt > 5.0) && (abs(eta) < 2.4)'),
+    )
+
+#produce gen-tau-mu-matched muons passing pT and eta cut
+process.genTauMuMatchedRecoMuonPTEtaSelector = process.genTauMuMatchedRecoMuonEtaSelector.clone()
+process.genTauMuMatchedRecoMuonPTEtaSelector.recoObjTag = cms.InputTag('recoMuonPTEtaSelector')
+
+#produce gen-tau-mu-matched muons passing pT cut, soft ID, and eta cut
 process.genTauMuMatchedRecoSoftMuonSelector = cms.EDFilter(
     'CustomMuonSelector',
     baseMuonTag = cms.InputTag('muons'),
-    muonTag = cms.InputTag('genTauMuMatchedRecoMuonSelector'),
+    muonTag = cms.InputTag('genTauMuMatchedRecoMuonPTEtaSelector'),
     vtxTag = cms.InputTag('offlinePrimaryVertices'),
-    vetoMuonTag = cms.InputTag('WIsoMuonSelector'),
+##     vetoMuonTag = cms.InputTag('WIsoMuonSelector'),
     muonID = cms.string('soft'),
     PFIsoMax = cms.double(0.2),
     detectorIsoMax = cms.double(-1.0),
@@ -197,15 +215,41 @@ process.genTauMuMatchedRecoSoftMuonSelector = cms.EDFilter(
     usePFIso = cms.bool(True),
     passIso = cms.bool(True),
     etaMax = cms.double(-1.0),
-    minNumObjsToPassFilter = cms.uint32(1)
+    minNumObjsToPassFilter = cms.uint32(0)
     )
 
-#clean the jets of soft muons, then rebuild the taus
-process.CleanJets.muonSrc = cms.InputTag('genTauMuMatchedRecoSoftMuonSelector')
+#compute pT efficiency of soft ID for gen-tau-mu-matched muons
+process.softMuPTEffAnalyzer = cms.EDAnalyzer(
+    'MuonEfficiencyAnalyzer',
+    outFileName = cms.string('/data1/yohay/Wh1_Medium/softMuPTEff_v2.root'),
+    denominatorTag = cms.InputTag('genTauMuMatchedRecoMuonEtaSelector'),
+    numeratorTag = cms.InputTag('genTauMuMatchedRecoSoftMuonSelector'),
+    pTRankColors = cms.vuint32(1, 2, 4, 6),
+    pTRankStyles = cms.vuint32(20, 21, 22, 23),
+    pTRankEntries = cms.vstring('Highest p_{T}', 'Second highest p_{T}', 'Third highest p_{T}',
+                                'Lowest p_{T}'),
+    decayModeColors = cms.vuint32(1, 2, 4, 6, 8),
+    decayModeStyles = cms.vuint32(20, 21, 22, 23, 24),
+    decayModeEntries = cms.vstring('#tau_{#mu}', '#tau_{had}, 1 prong',
+                                   '#tau_{had}, 1 prong + 1 #pi^{0}',
+                                   '#tau_{had}, 1 prong + 2 #pi^{0}', '#tau_{had}, 3 prong')
+    )
+
+#compute eta efficiency of soft ID for gen-tau-mu-matched muons
+process.softMuEtaEffAnalyzer = process.softMuPTEffAnalyzer.clone()
+process.softMuEtaEffAnalyzer.outFileName = cms.string(
+    '/data1/yohay/Wh1_Medium/softMuEtaEff_v2.root'
+    )
+process.softMuEtaEffAnalyzer.denominatorTag = cms.InputTag('genTauMuMatchedRecoMuonPTSelector')
+
+#clean the jets of soft muons passing pT and eta cut, then rebuild the taus
+process.CleanJets.muonSrc = cms.InputTag('genTauMuMatchedRecoSoftMuonSelectorForPTEff')
+process.CleanJets.PFCandSrc = cms.InputTag('particleFlow')
 process.CleanJets.cutOnGenMatches = cms.bool(False)
 process.CleanJets.outFileName = cms.string('NMSSMSignal_MuProperties.root')
 process.recoTauAK5PFJets08Region.src = cms.InputTag("CleanJets", "ak5PFJetsNoMu", "EFFANALYSIS")
 process.ak5PFJetsRecoTauPiZeros.jetSrc = cms.InputTag("CleanJets", "ak5PFJetsNoMu", "EFFANALYSIS")
+process.recoTauAK5PFJets08Region.jetMuonMapTag = cms.InputTag("CleanJets", "", "EFFANALYSIS")
 process.combinatoricRecoTaus.jetSrc = cms.InputTag("CleanJets", "ak5PFJetsNoMu", "EFFANALYSIS")
 process.ak5PFJetTracksAssociatorAtVertex.jets = cms.InputTag("CleanJets", "ak5PFJetsNoMu",
                                                              "EFFANALYSIS")
@@ -223,90 +267,80 @@ process.PFTau = cms.Sequence(process.recoTauCommonSequence*process.recoTauClassi
 #will get an output map between new jet and removed muon refs
 #see how often the input soft muons are in the output map
 
-#compute efficiency of soft ID for gen-tau-mu-matched muons
-process.softMuEffAnalyzer = cms.EDAnalyzer(
-    'MuonEfficiencyAnalyzer',
-    outFileName = cms.string('/data1/yohay/Wh1_Medium/softMuEff_v1.root'),
-    denominatorTag = cms.InputTag('genTauMuMatchedRecoMuonSelector'),
-    numeratorTag = cms.InputTag('genTauMuMatchedRecoSoftMuonSelector'),
-    pTRankColors = cms.vuint32(1, 2, 4, 6),
-    pTRankStyles = cms.vuint32(20, 21, 22, 23),
-    pTRankEntries = cms.vstring('Highest p_{T}', 'Second highest p_{T}', 'Third highest p_{T}',
-                                'Lowest p_{T}'),
-    decayModeColors = cms.vuint32(1, 2, 4, 6, 8),
-    decayModeStyles = cms.vuint32(20, 21, 22, 23, 24),
-    decayModeEntries = cms.vstring('#tau_{#mu}', '#tau_{had}, 1 prong',
-                                   '#tau_{had}, 1 prong + 1 #pi^{0}',
-                                   '#tau_{had}, 1 prong + 2 #pi^{0}', '#tau_{had}, 3 prong')
-    )
-
-#produce HPS taus in |eta| < 2.4
-process.recoTauSelector = cms.EDFilter(
+#produce gen-tau-mu-matched HPS taus passing decay mode finding and eta cut
+process.genTauMuMatchedRecoTauEtaSelector = cms.EDFilter(
     'CustomTauSelector',
-    baseTauTag = cms.InputTag('hpsPFTauProducer', '', 'ANALYSIS'),
+    baseTauTag = cms.InputTag('hpsPFTauProducer', '', 'SKIM'),
     tauDiscriminatorTags = cms.VInputTag(
-    cms.InputTag('hpsPFTauDiscriminationByDecayModeFinding', '', 'ANALYSIS')
+    cms.InputTag('hpsPFTauDiscriminationByDecayModeFinding', '', 'SKIM'), 
     ),
-    jetTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'ANALYSIS'),
+    jetTag = cms.InputTag('CleanJets', 'ak5PFJetsNoMu', 'SKIM'),
     muonRemovalDecisionTag = cms.InputTag('CleanJets'),
     muonTag = cms.InputTag('WIsoMuonSelector'),
     passDiscriminator = cms.bool(True),
+    pTMin = cms.double(-1.0),
     etaMax = cms.double(2.4),
     dR = cms.double(0.5),
-    minNumObjsToPassFilter = cms.uint32(1)
+    minNumObjsToPassFilter = cms.uint32(0)
     )
 
-#produce gen-tau-mu-matched HPS taus in |eta| < 2.4
-process.genTauMuMatchedRecoTauSelector = cms.EDFilter(
-    'GenMatchedTauProducer',
-    genParticleTag = cms.InputTag('genParticles'),
-    selectedGenParticleTag = cms.InputTag('genTauSelector'),
-    recoObjTag = cms.InputTag('recoTauSelector'),
-    baseRecoObjTag = cms.InputTag('hpsPFTauProducer', '', 'ANALYSIS'),
-    genTauDecayIDPSet = commonGenTauDecayIDPSet,
-    applyPTCuts = cms.bool(False),
-    countKShort = cms.bool(True),
-    pTRank = cms.int32(ANY_PT_RANK),
-    makeAllCollections = cms.bool(False),
-    useGenObjPTRank = cms.bool(True),
-    nOutputColls = cms.uint32(1),
-    dR = cms.double(0.3),
-    minNumGenObjectsToPassFilter = cms.uint32(0)
+#produce gen-tau-mu-matched HPS taus passing decay mode finding and pT > 10 GeV
+process.genTauMuMatchedRecoTauPTSelector = process.genTauMuMatchedRecoTauEtaSelector.clone()
+process.genTauMuMatchedRecoTauPTSelector.pTMin = cms.double(10.0)
+process.genTauMuMatchedRecoTauPTSelector.etaMax = cms.double(-1.0)
+
+#produce gen-tau-mu-matched HPS taus passing pT, eta, decay mode finding, and medium isolation
+process.genTauMuMatchedMediumIsoTauSelector = process.genTauMuMatchedRecoTauEtaSelector.clone()
+process.genTauMuMatchedMediumIsoTauSelector.tauDiscriminatorTags = cms.VInputTag(
+    cms.InputTag('hpsPFTauDiscriminationByDecayModeFinding', '', 'SKIM'), 
+    cms.InputTag('hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr', '', 'SKIM')
+    )
+process.genTauMuMatchedMediumIsoTauSelector.pTMin = cms.double(10.0)
+process.genTauMuMatchedMediumIsoTauSelector.etaMax = cms.double(2.4)
+
+#compute pT efficiency of medium isolation for gen-tau-mu-matched taus
+process.tauMediumIsoPTEffAnalyzer = process.softMuPTEffAnalyzer.clone()
+process.tauMediumIsoPTEffAnalyzer.outFileName = cms.string(
+    '/data1/yohay/Wh1_Medium/tauMediumIsoPTEff_v2.root'
+    )
+process.tauMediumIsoPTEffAnalyzer.denominatorTag = cms.InputTag(
+    'process.genTauMuMatchedRecoTauEtaSelector'
+    )
+process.tauMediumIsoPTEffAnalyzer.numeratorTag = cms.InputTag(
+    'genTauMuMatchedMediumIsoTauSelector'
     )
 
-#produce gen-matched HPS taus in |eta| < 2.4 passing MediumCombinedIsolationDBSumPtCorr
-process.genMatchedIsoRecoTauSelector = process.recoTauSelector.clone()
-process.genMatchedIsoRecoTauSelector.tauTag = cms.InputTag('genMatchedRecoTauSelector')
-process.genMatchedIsoRecoTauSelector.tauDiscriminatorTags = cms.VInputTag(
-    cms.InputTag('hpsPFTauDiscriminationByMediumCombinedIsolationDBSumPtCorr', '', 'ANALYSIS')
+#compute eta efficiency of medium isolation for gen-tau-mu-matched taus
+process.tauMediumIsoEtaEffAnalyzer = process.softMuPTEffAnalyzer.clone()
+process.tauMediumIsoEtaEffAnalyzer.outFileName = cms.string(
+    '/data1/yohay/Wh1_Medium/tauMediumIsoEtaEff_v2.root'
     )
-
-#compute efficiency of MediumCombinedIsolationDBSumPtCorr for gen-matched HPS taus in |eta| < 2.4
-process.isoEffGenMatchedRecoTauAnalyzer = cms.EDAnalyzer(
-    'ANALYZER',
-    outFileName = cms.string(
-    '/data1/yohay/SAMPLE_MCTruthMuonRemoval_MediumCombinedIsolationDBSumPtCorr.root'
-    ),
-    TAG1 = cms.InputTag('genMatchedRecoTauSelector'),
-    TAG2 = cms.InputTag('genMatchedIsoRecoTauSelector'),
-    pTRankColors = cms.vuint32(1, 2, 4, 6),
-    pTRankStyles = cms.vuint32(20, 21, 22, 23),
-    pTRankEntries = cms.vstring('Highest p_{T}', 'Second highest p_{T}', 'Third highest p_{T}',
-                                'Lowest p_{T}'),
-    decayModeColors = cms.vuint32(1, 2, 4, 6, 8),
-    decayModeStyles = cms.vuint32(20, 21, 22, 23, 24),
-    decayModeEntries = cms.vstring('#tau_{#mu}', '#tau_{had}, 1 prong',
-                                   '#tau_{had}, 1 prong + 1 #pi^{0}',
-                                   '#tau_{had}, 1 prong + 2 #pi^{0}', '#tau_{had}, 3 prong')
+process.tauMediumIsoEtaEffAnalyzer.denominatorTag = cms.InputTag(
+    'process.genTauMuMatchedRecoTauPTSelector'
     )
 
 #sequences
-process.softMuEffSeq = cms.Sequence(process.genWMuNuSelector*process.IsoMu24eta2p1Selector*
-                                    process.WMuonPTSelector*process.WIsoMuonSelector*
-                                    process.genTauMuSelector*process.recoMuonSelector*
-                                    process.genTauMuMatchedRecoMuonSelector*
-                                    process.genTauMuMatchedRecoSoftMuonSelector*## process.PFTau*
-                                    process.softMuEffAnalyzer)
+process.baseSelectionSeq = cms.Sequence(process.genWMuNuSelector*process.IsoMu24eta2p1Selector*
+                                        process.WMuonPTSelector*process.WIsoMuonSelector*
+                                        process.genTauMuSelector)
+process.softMuEffCommonSeq = cms.Sequence(process.recoMuonPTEtaSelector*
+                                          process.genTauMuMatchedRecoMuonPTEtaSelector*
+                                          process.genTauMuMatchedRecoSoftMuonSelector)
+process.softMuPTEffSeq = cms.Sequence(process.recoMuonEtaSelector*
+                                      process.genTauMuMatchedRecoMuonEtaSelector*
+                                      process.softMuPTEffAnalyzer)
+process.softMuEtaEffSeq = cms.Sequence(process.recoMuonPTSelector*
+                                       process.genTauMuMatchedRecoMuonPTSelector*
+                                       process.softMuEtaEffAnalyzer)
+process.tauMediumIsoEffCommonSeq = cms.Sequence(## process.PFTau*
+                                                process.genTauMuMatchedMediumIsoTauSelector)
+process.tauMediumIsoPTEffSeq = cms.Sequence(process.genTauMuMatchedRecoTauEtaSelector*
+                                            process.tauMediumIsoPTEffAnalyzer)
+process.tauMediumIsoEtaEffSeq = cms.Sequence(process.genTauMuMatchedRecoTauPTSelector*
+                                             process.tauMediumIsoEtaEffAnalyzer)
 
 #path
-process.p = cms.Path(process.softMuEffSeq)
+## process.p = cms.Path(process.baseSelectionSeq*process.softMuEffCommonSeq*process.softMuPTEffSeq*
+##                      process.softMuEtaEffSeq)
+process.p = cms.Path(process.baseSelectionSeq*process.tauMediumIsoEffCommonSeq*
+                     process.tauMediumIsoPTEffSeq*process.tauMediumIsoEtaEffSeq)
