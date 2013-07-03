@@ -194,7 +194,7 @@ process.genWMuNuSelector = cms.EDFilter(
 process.IsoMu24eta2p1Selector = process.hltHighLevel.clone()
 process.IsoMu24eta2p1Selector.HLTPaths = cms.vstring('HLT_IsoMu24_eta2p1_v13')
 
-#search for a muon with pT > 20 GeV as in WHbb CMS AN-2012/349 and proceed if one can be found
+#search for a muon with pT > 25 GeV as in WHbb CMS AN-2012/349 and proceed if one can be found
 #this will produce a ref to the original muon collection
 process.WMuonPTSelector = cms.EDFilter('MuonRefSelector',
                                        src = cms.InputTag('muons'),
@@ -202,7 +202,7 @@ process.WMuonPTSelector = cms.EDFilter('MuonRefSelector',
                                        filter = cms.bool(True)
                                        )
 
-#search for a loose PF isolated tight muon in |eta| < 2.4 with pT > 20 GeV
+#search for a loose PF isolated tight muon in |eta| < 2.1 with pT > 25 GeV
 #(see https://twiki.cern.ch/twiki/bin/view/CMSPublic/SWGuideMuonId#Muon_Isolation_AN1 for
 #isolation definition;CMS AN-2012/349 uses loose isolation working point for WHbb muon selection)
 #this will produce a ref to the original muon collection
@@ -216,7 +216,7 @@ process.WIsoMuonSelector = cms.EDFilter('CustomMuonSelector',
                                         PUSubtractionCoeff = cms.double(0.5),
                                         usePFIso = cms.bool(True),
                                         passIso = cms.bool(True),
-                                        etaMax = cms.double(2.4),
+                                        etaMax = cms.double(2.1),
                                         minNumObjsToPassFilter = cms.uint32(1)
                                         )
 
