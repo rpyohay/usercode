@@ -111,8 +111,8 @@ process.generator = cms.EDFilter(
 	'MSEL        = 0    !User defined processes',
 ## 	'MSUB(24)=1 !qqbar-->Z(h/H1(h/H2))',
 ## 	'MSUB(171)=1 !qqbar-->Z(H/H1(H/H2))',
-## 	'MSUB(172)=1 !qqbar-->W+(H/H1(H/H2))',
- 	'MSUB(152)=1 !gg-->H/H1(H/H2)',
+	'MSUB(172)=1 !qqbar-->W+(H/H1(H/H2))',
+##  	'MSUB(152)=1 !gg-->H/H1(H/H2)',
 	'MSTP(4)=1 !modify h/H1 (h/H2) couplings',
 ## 	'IMSS(13)=1 !recognize NMSSM particles', #for reading in from an SLHA file
 
@@ -179,12 +179,13 @@ process.generator = cms.EDFilter(
 	#tan beta (PARU(141))?
 
 	#only allow leptonic W decays (this should affect the LO cross section reported by Pythia)
-## 	'24:ALLOFF',
+	'24:ALLOFF',
 ## 	'24:ONIFANY 11 13 15',
+	'24:ONIFANY 13',
 
 	#only allow leptonic Z decays (this should affect the LO cross section reported by Pythia)
-	'23:ALLOFF !turn on all Z decays',
-	'23:ONIFANY 11 13 15 !only turn on Z-->ll decays',
+## 	'23:ALLOFF !turn on all Z decays',
+## 	'23:ONIFANY 11 13 15 !only turn on Z-->ll decays',
 
 	#default stuff that has to do with fragmentation
 	'!MSTJ(11)=3 !something to do with fragmentation',
