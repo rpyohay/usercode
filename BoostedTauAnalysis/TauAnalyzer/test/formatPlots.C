@@ -2,7 +2,7 @@
   //load
   gROOT->Reset();
   gROOT->ProcessLine("#include <utility>");
-  string macroPath("/afs/cern.ch/user/y/yohay/CMSSW_5_3_2_patch4/src/BoostedTauAnalysis/");
+  string macroPath("/afs/cern.ch/user/y/yohay/CMSSW_5_3_3/src/BoostedTauAnalysis/");
   macroPath+="TauAnalyzer/test/";
   gSystem->Load((macroPath + "STLDictionary.so").c_str());
   gROOT->LoadMacro((macroPath + "Plot.C++").c_str());
@@ -81,48 +81,98 @@
 //   canvasMap[make_pair(string("muHadGen3ProngRecoDecayMode"), noUnit)] = ;
 
   //set up canvas and graph names
-  vector<string> canvasNames;
-  canvasNames.push_back("hadTauAssociatedMuMultiplicityCanvas");
-  canvasNames.push_back("muHadMassCanvas");
-  canvasNames.push_back("muHadChargeCanvas");
-  canvasNames.push_back("METCanvas");
-  canvasNames.push_back("WMuMTCanvas");
-  canvasNames.push_back("tauMuMTCanvas");
-  canvasNames.push_back("dPhiWMuMETCanvas");
-  canvasNames.push_back("dPhiTauMuMETCanvas");
-  canvasNames.push_back("tauMuTauHadJetHTCanvas");
-  canvasNames.push_back("diJetHTCanvas");
-  canvasNames.push_back("jetTauJetHTCanvas");
-  canvasNames.push_back("tauMuTauHadJetWMuHTCanvas");
-  canvasNames.push_back("diJetWMuHTCanvas");
-  canvasNames.push_back("jetTauJetWMuHTCanvas");
-  canvasNames.push_back("tauMuPTCanvas");
-  canvasNames.push_back("tauHadPTCanvas");
-  canvasNames.push_back("tauHadIsoCanvas");
-  canvasNames.push_back("softMuIsoCandMultiplicityCanvas");
-  vector<string> graphNames;
-  graphNames.push_back("hadTauAssociatedMuMultiplicity");
-  graphNames.push_back("muHadMass");
-  graphNames.push_back("muHadCharge");
-  graphNames.push_back("MET");
-  graphNames.push_back("WMuMT");
-  graphNames.push_back("tauMuMT");
-  graphNames.push_back("dPhiWMuMET");
-  graphNames.push_back("dPhiTauMuMET");
-  graphNames.push_back("tauMuTauHadJetHT");
-  graphNames.push_back("diJetHT");
-  graphNames.push_back("jetTauJetHT");
-  graphNames.push_back("tauMuTauHadJetWMuHT");
-  graphNames.push_back("diJetWMuHT");
-  graphNames.push_back("jetTauJetWMuHT");
-  graphNames.push_back("tauMuPT");
-  graphNames.push_back("tauHadPT");
-  graphNames.push_back("tauHadIso");
-  graphNames.push_back("softMuIsoCandMultiplicity");
+  vector<string> canvasNames1D;
+  canvasNames1D.push_back("hadTauAssociatedMuMultiplicityCanvas");
+  canvasNames1D.push_back("muHadMassCanvas");
+  canvasNames1D.push_back("muHadChargeCanvas");
+  canvasNames1D.push_back("METCanvas");
+  canvasNames1D.push_back("WMuMTCanvas");
+  canvasNames1D.push_back("tauMuMTCanvas");
+  canvasNames1D.push_back("dPhiWMuMETCanvas");
+  canvasNames1D.push_back("dPhiTauMuMETCanvas");
+  canvasNames1D.push_back("tauMuTauHadJetHTCanvas");
+  canvasNames1D.push_back("diJetHTCanvas");
+  canvasNames1D.push_back("jetTauJetHTCanvas");
+  canvasNames1D.push_back("tauMuTauHadJetWMuHTCanvas");
+  canvasNames1D.push_back("diJetWMuHTCanvas");
+  canvasNames1D.push_back("jetTauJetWMuHTCanvas");
+  canvasNames1D.push_back("tauMuPTCanvas");
+  canvasNames1D.push_back("tauHadPTCanvas");
+  canvasNames1D.push_back("tauHadIsoCanvas");
+  canvasNames1D.push_back("softMuIsoCandMultiplicityCanvas");
+  canvasNames1D.push_back("tauHadEtaCanvas");
+  canvasNames1D.push_back("softMuPTOverMuHadMassCanvas");
+  canvasNames1D.push_back("muHadPTOverMuHadMassCanvas");
+  canvasNames1D.push_back("dRSoftMuNearestGenMuHistCanvas");
+  canvasNames1D.push_back("muHadPTCanvas");
+  canvasNames1D.push_back("muHadMultiplicityCanvas");
+  vector<string> canvasNames2D;
+  canvasNames2D.push_back("muHadMassVsDRSoftMuTauCanvas");
+  canvasNames2D.push_back("tauHadIsoVsSoftMuPTCanvas");
+  canvasNames2D.push_back("cleanedJetPTVsCleanedTauPTCanvas");
+  canvasNames2D.push_back("uncleanedJetPTVsCleanedTauPTCanvas");
+  canvasNames2D.push_back("muHadMassVsSoftMuPTCanvas");
+  canvasNames2D.push_back("genMuExistsVsSoftMuNearestMuPropertiesCanvas");
+  canvasNames2D.push_back("muHadMassVsTauHadEtaCanvas");
+  canvasNames2D.push_back("muHadMassVsSoftMuEtaCanvas");
+  canvasNames2D.push_back("muHadMassVsTauHadIsoCanvas");
+  canvasNames2D.push_back("muHadMassVsTauHadPTCanvas");
+  canvasNames2D.push_back("tauHadIsoVsEtaCanvas");
+  canvasNames2D.push_back("tauHadEtaVsSoftMuEtaCanvas");
+  canvasNames2D.push_back("dEtaTauHadSoftMuVsDPhiTauHadSoftMuCanvas");
+  canvasNames2D.push_back("tauHadPTOverMuHadMassVsTauHadIsoCanvas");
+  canvasNames2D.push_back("softMuPTOverMuHadMassVsTauHadIsoCanvas");
+  canvasNames2D.push_back("avgTauHadSoftMuPTOverMuHadMassVsTauHadIsoCanvas");
+  canvasNames2D.push_back("muHadPTOverMuHadMassVsTauHadIsoCanvas");
+  canvasNames2D.push_back("softMuPTVsTauHadPTCanvas");
+  vector<string> graphNames1D;
+  graphNames1D.push_back("hadTauAssociatedMuMultiplicity");
+  graphNames1D.push_back("muHadMass");
+  graphNames1D.push_back("muHadCharge");
+  graphNames1D.push_back("MET");
+  graphNames1D.push_back("WMuMT");
+  graphNames1D.push_back("tauMuMT");
+  graphNames1D.push_back("dPhiWMuMET");
+  graphNames1D.push_back("dPhiTauMuMET");
+  graphNames1D.push_back("tauMuTauHadJetHT");
+  graphNames1D.push_back("diJetHT");
+  graphNames1D.push_back("jetTauJetHT");
+  graphNames1D.push_back("tauMuTauHadJetWMuHT");
+  graphNames1D.push_back("diJetWMuHT");
+  graphNames1D.push_back("jetTauJetWMuHT");
+  graphNames1D.push_back("tauMuPT");
+  graphNames1D.push_back("tauHadPT");
+  graphNames1D.push_back("tauHadIso");
+  graphNames1D.push_back("softMuIsoCandMultiplicity");
+  graphNames1D.push_back("tauHadEta");
+  graphNames1D.push_back("softMuPTOverMuHadMass");
+  graphNames1D.push_back("muHadPTOverMuHadMass");
+  graphNames1D.push_back("dRSoftMuNearestGenMuHist");
+  graphNames1D.push_back("muHadPT");
+  graphNames1D.push_back("muHadMultiplicity");
+  vector<string> graphNames2D;
+  graphNames2D.push_back("muHadMassVsDRSoftMuTau");
+  graphNames2D.push_back("tauHadIsoVsSoftMuPT");
+  graphNames2D.push_back("cleanedJetPTVsCleanedTauPT");
+  graphNames2D.push_back("uncleanedJetPTVsCleanedTauPT");
+  graphNames2D.push_back("muHadMassVsSoftMuPT");
+  graphNames2D.push_back("genMuExistsVsSoftMuNearestMuProperties");
+  graphNames2D.push_back("muHadMassVsTauHadEta");
+  graphNames2D.push_back("muHadMassVsSoftMuEta");
+  graphNames2D.push_back("muHadMassVsTauHadIso");
+  graphNames2D.push_back("muHadMassVsTauHadPT");
+  graphNames2D.push_back("tauHadIsoVsEta");
+  graphNames2D.push_back("tauHadEtaVsSoftMuEta");
+  graphNames2D.push_back("dEtaTauHadSoftMuVsDPhiTauHadSoftMu");
+  graphNames2D.push_back("tauHadPTOverMuHadMassVsTauHadIso");
+  graphNames2D.push_back("softMuPTOverMuHadMassVsTauHadIso");
+  graphNames2D.push_back("avgTauHadSoftMuPTOverMuHadMassVsTauHadIso");
+  graphNames2D.push_back("muHadPTOverMuHadMassVsTauHadIso");
+  graphNames2D.push_back("softMuPTVsTauHadPT");
 
   //set up plot style options
-  vector<string> legendHeaders20InvFb(canvasNames.size(), "Normalized to 20 fb^{-1}");
-  vector<string> legendHeaders1(canvasNames.size(), "Normalized to 1");
+  vector<string> legendHeaders20InvFb(canvasNames1D.size(), "Normalized to 20 fb^{-1}");
+  vector<string> legendHeaders1(canvasNames1D.size(), "Normalized to 1");
   vector<Color_t> colors;
   colors.push_back(kBlack);
   colors.push_back(kRed);
@@ -178,16 +228,19 @@
   const string fileExt(".root");
   const string tag20InvFb("_20fb-1");
   const string tag1("_normalizedTo1");
-  const string vTag("_v3");
+  const string vTag("_v25");
 
   //hadd
   string isoPrefix(analysisFilePath + "WNJetsToLNu/analysis/muHadIsoAnalysis_W");
   string nonIsoPrefix(analysisFilePath + "WNJetsToLNu/analysis/muHadNonIsoAnalysis_W");
-  string suffix("JetsToLNu_v3" + fileExt);
+  string allTauPrefix(analysisFilePath + "WNJetsToLNu/analysis/muHadAnalysis_W");
+  string suffix("JetsToLNu_v25" + fileExt);
   string isoHaddOutputFile(isoPrefix + "N" + suffix);
   string nonIsoHaddOutputFile(nonIsoPrefix + "N" + suffix);
+  string allTauHaddOutputFile(allTauPrefix + "N" + suffix);
   vector<string> isoHaddInputFiles;
   vector<string> nonIsoHaddInputFiles;
+  vector<string> allTauHaddInputFiles;
   for (unsigned int iNJets = 1; iNJets <= 4; ++iNJets) {
     stringstream isoName;
     isoName << isoPrefix << iNJets << suffix;
@@ -195,11 +248,16 @@
     stringstream nonIsoName;
     nonIsoName << nonIsoPrefix << iNJets << suffix;
     nonIsoHaddInputFiles.push_back(nonIsoName.str());
+    stringstream allTauName;
+    allTauName << allTauPrefix << iNJets << suffix;
+    allTauHaddInputFiles.push_back(allTauName.str());
   }
-  haddCanvases(isoHaddOutputFile, isoHaddInputFiles, WNJetsToLNuRelXSecWeights, canvasNames, 
-	       graphNames);
-  haddCanvases(nonIsoHaddOutputFile, nonIsoHaddInputFiles, WNJetsToLNuRelXSecWeights, canvasNames, 
-	       graphNames);
+  haddCanvases(isoHaddOutputFile, isoHaddInputFiles, WNJetsToLNuRelXSecWeights, canvasNames1D, 
+	       graphNames1D, canvasNames2D, graphNames2D);
+  haddCanvases(nonIsoHaddOutputFile, nonIsoHaddInputFiles, WNJetsToLNuRelXSecWeights, 
+	       canvasNames1D, graphNames1D, canvasNames2D, graphNames2D);
+//   haddCanvases(allTauHaddOutputFile, allTauHaddInputFiles, WNJetsToLNuRelXSecWeights, 
+// 	       canvasNames1D, graphNames1D, canvasNames2D, graphNames2D);
 
   //compare signal to background
   string sigVsBkgOutputFile20InvFb(analysisFilePath + "Wh1VsWNJets_muHadIsoAnalysis" + 
@@ -207,25 +265,26 @@
   string sigVsBkgOutputFile1(analysisFilePath + "Wh1VsWNJets_muHadIsoAnalysis" + tag1 + vTag + 
 			     fileExt);
   vector<string> sigVsBkgInputFiles;
+//   sigVsBkgInputFiles.push_back(analysisFilePath + "Wh1_Medium/muHadIsoAnalysis_Wh1_v25" + fileExt);
+//   sigVsBkgInputFiles.push_back(isoHaddOutputFile);
   sigVsBkgInputFiles.push_back(isoHaddOutputFile);
-  sigVsBkgInputFiles.push_back(analysisFilePath + 
-			       "Wh1_Medium/muHadAnalysisV20_passMediumIso_tauHadPTGt0" + fileExt);
-//   colors[1] = kBlack;
-//   colors[0] = kRed;
-//   styles[1] = 20;
-//   styles[0] = 21;
-//   legendEntriesWNJetsToLNu[1] = "Wh_{1}";
-//   legendEntriesWNJetsToLNu[0] = "W + jets";
-//   weightsWNJetsToLNu[1] = Wh1Weight;
-//   weightsWNJetsToLNu[0] = 6524.691358;
-//   drawMultipleEfficiencyGraphsOn1Canvas(sigVsBkgOutputFile20InvFb, sigVsBkgInputFiles, 
-// 					canvasNames, graphNames, legendHeaders20InvFb, colors, 
-// 					styles, legendEntriesWNJetsToLNu, weightsWNJetsToLNu, 
-// 					setLogY, drawStack);
-//   drawMultipleEfficiencyGraphsOn1Canvas(sigVsBkgOutputFile1, sigVsBkgInputFiles, 
-// 					canvasNames, graphNames, legendHeaders1, colors, 
-// 					styles, legendEntriesWNJetsToLNu, weights1, setLinY, 
-// 					drawSame);
+  sigVsBkgInputFiles.push_back(analysisFilePath + "Wh1_Medium/muHadIsoAnalysis_Wh1_v25" + fileExt);
+  colors[1] = kBlack;
+  colors[0] = kRed;
+  styles[1] = 20;
+  styles[0] = 21;
+  legendEntriesWNJetsToLNu[1] = "Wh_{1}";
+  legendEntriesWNJetsToLNu[0] = "W + jets";
+  weightsWNJetsToLNu[1] = Wh1Weight;
+  weightsWNJetsToLNu[0] = 6524.691358;
+  drawMultipleEfficiencyGraphsOn1Canvas(sigVsBkgOutputFile20InvFb, sigVsBkgInputFiles, 
+					canvasNames1D, graphNames1D, legendHeaders20InvFb, colors, 
+					styles, legendEntriesWNJetsToLNu, weightsWNJetsToLNu, 
+					setLogY, drawStack);
+  drawMultipleEfficiencyGraphsOn1Canvas(sigVsBkgOutputFile1, sigVsBkgInputFiles, 
+					canvasNames1D, graphNames1D, legendHeaders1, colors, 
+					styles, legendEntriesWNJetsToLNu, weights1, setLinY, 
+					drawSame);
 
   //compare search sample to control sample
   string searchVsControlOutputFile(analysisFilePath + "WNJetsToLNu/analysis/isoVsNonIsoTaus" + 
@@ -234,8 +293,9 @@
   searchVsControlInputFiles.push_back(isoHaddOutputFile);
   searchVsControlInputFiles.push_back(nonIsoHaddOutputFile);
   drawMultipleEfficiencyGraphsOn1Canvas(searchVsControlOutputFile, searchVsControlInputFiles, 
-					canvasNames, graphNames, legendHeaders1, colors, styles, 
-					legendEntriesSearchVsControl, weights1, setLinY, drawSame);
+					canvasNames1D, graphNames1D, legendHeaders1, colors, 
+					styles, legendEntriesSearchVsControl, weights1, setLinY, 
+					drawSame);
 
 //   //compare dR(W muon, soft muon) for events with mu+had mass > 0 and > 2
 //   mergePlotsIn1File("/data1/yohay/Wh1_Medium/muHadAnalysisV8.root", 
