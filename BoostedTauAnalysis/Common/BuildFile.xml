@@ -4,6 +4,7 @@
 <use name="DataFormats/HepMCCandidate"/>
 <use name="DataFormats/VertexReco"/>
 <use name="DataFormats/MuonReco"/>
+<use name="DataFormats/TauReco"/>
 <export>
   <lib   name="1"/>
 </export>

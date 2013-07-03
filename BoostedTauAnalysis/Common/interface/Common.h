@@ -39,6 +39,26 @@ class minDR {
 
 };
 
+class maxM {
+
+ public:
+
+  void setMuonJetMap(const edm::Handle<edm::ValueMap<reco::MuonRefVector> >*);
+
+  void deleteMuonJetMap();
+
+  edm::Handle<edm::ValueMap<reco::MuonRefVector> >* getMuonJetMap() const;
+
+  reco::MuonRef highestPTMu(const reco::PFTauRef& tau) const;
+
+  bool operator()(const reco::PFTauRef&, const reco::PFTauRef&) const;
+
+ private:
+
+  edm::Handle<edm::ValueMap<reco::MuonRefVector> >* pMuonJetMap_;
+
+};
+
 class Common {
 
  public:
@@ -89,8 +109,17 @@ class Common {
       return nearestObj;
     }
 
+  static void sortByMass(const edm::Handle<edm::ValueMap<reco::MuonRefVector> >&, 
+			 std::vector<reco::PFTauRef>&);
+
+  //return true if the vertex passes the standard selection
+  static bool isGoodVertex(const reco::Vertex*);
+
   //identify the first good vertex (the "primary" (?))
   static reco::Vertex* getPrimaryVertex(edm::Handle<reco::VertexCollection>&);
+
+  //get the number of vertices passing the standard selection
+  static unsigned int numGoodVertices(edm::Handle<reco::VertexCollection>&);
 
   //get muon combined particle isolation with adjustable PU subtraction
   static float getMuonCombPFIso(const reco::Muon&, const double);

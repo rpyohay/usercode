@@ -13,6 +13,45 @@ void minDR::deleteCandidate() { cand_ = NULL; }
 
 reco::Candidate* minDR::getCandidate() const { return cand_; }
 
+void maxM::setMuonJetMap(const edm::Handle<edm::ValueMap<reco::MuonRefVector> >* pMuonJetMap)
+{
+  pMuonJetMap_ = const_cast<edm::Handle<edm::ValueMap<reco::MuonRefVector> >*>(pMuonJetMap);
+}
+
+void maxM::deleteMuonJetMap() { pMuonJetMap_ = NULL; }
+
+edm::Handle<edm::ValueMap<reco::MuonRefVector> >* maxM::getMuonJetMap() const
+{
+  return pMuonJetMap_;
+}
+
+reco::MuonRef maxM::highestPTMu(const reco::PFTauRef& tau) const
+{
+  const reco::PFJetRef& tauJetRef = tau->jetRef();
+  const reco::MuonRefVector& removedMuons = (**pMuonJetMap_)[tauJetRef];
+  std::vector<reco::MuonRef> removedMuonRefs;
+  for (reco::MuonRefVector::const_iterator iMuon = removedMuons.begin(); 
+       iMuon != removedMuons.end(); ++iMuon) { removedMuonRefs.push_back(*iMuon); }
+  Common::sortByPT(removedMuonRefs);
+  std::reverse(removedMuonRefs.begin(), removedMuonRefs.end());
+  if (removedMuonRefs.size() > 0) return removedMuonRefs[0];
+  else return reco::MuonRef();
+}
+
+bool maxM::operator()(const reco::PFTauRef& tau1, const reco::PFTauRef& tau2) const
+{
+  reco::MuonRef highestPTMu1 = highestPTMu(tau1);
+  reco::MuonRef highestPTMu2 = highestPTMu(tau2);
+  bool retVal = false;
+  if (highestPTMu1.isNull() && highestPTMu2.isNonnull()) retVal = false;
+  if (highestPTMu2.isNull() && highestPTMu1.isNonnull()) retVal = true;
+  if (highestPTMu1.isNull() && highestPTMu2.isNull()) retVal = true;
+  if (highestPTMu1.isNonnull() && highestPTMu2.isNonnull()) {
+    retVal = ((highestPTMu1->p4() + tau1->p4()).M() > (highestPTMu2->p4() + tau2->p4()).M());
+  }
+  return retVal;
+}
+
 void Common::sortByPT(std::vector<reco::Candidate*>& objects)
 {
   std::sort(objects.begin(), objects.end(), compareCandidatePT);
@@ -51,6 +90,15 @@ void Common::sortByPT(std::vector<reco::PFJetRef>& objects)
 void Common::sortByPT(std::vector<reco::PFTauRef>& objects)
 {
   std::sort(objects.begin(), objects.end(), comparePFTauRefPT);
+}
+
+void Common::sortByMass(const edm::Handle<edm::ValueMap<reco::MuonRefVector> >& muonJetMap, 
+			std::vector<reco::PFTauRef>& taus)
+{
+  maxM comp;
+  comp.setMuonJetMap(&muonJetMap);
+  sort(taus.begin(), taus.end(), comp);
+  comp.deleteMuonJetMap();
 }
 
 bool Common::compareCandidatePT(reco::Candidate* object1, reco::Candidate* object2)
@@ -93,18 +141,35 @@ bool Common::comparePFTauRefPT(reco::PFTauRef object1, reco::PFTauRef object2)
   return (object1->pt() < object2->pt());
 }
 
+bool Common::isGoodVertex(const reco::Vertex* pVtx)
+{
+  bool retVal = false;
+  if (!pVtx->isFake() && 
+      (pVtx->ndof() > 4) && 
+      (fabs(pVtx->x()) <= 24.0/*cm*/) && 
+      (fabs(pVtx->position().Rho()) <= 2.0/*cm*/)) retVal = true;
+  return retVal;
+}
+
 reco::Vertex* Common::getPrimaryVertex(edm::Handle<reco::VertexCollection>& pVertices)
 {
   reco::VertexCollection::const_iterator iVtx = pVertices->begin();
   reco::Vertex* pPV = NULL;
   while ((iVtx != pVertices->end()) && (pPV == NULL)) {
-    if (!iVtx->isFake() && 
-	(iVtx->ndof() > 4) && 
-	(fabs(iVtx->x()) <= 24.0/*cm*/) && 
-	(fabs(iVtx->position().Rho()) <= 2.0/*cm*/)) pPV = const_cast<reco::Vertex*>(&*iVtx);
+    if (isGoodVertex(&*iVtx)) pPV = const_cast<reco::Vertex*>(&*iVtx);
     ++iVtx;
   }
   return pPV;
+}
+
+unsigned int Common::numGoodVertices(edm::Handle<reco::VertexCollection>& pVertices)
+{
+  unsigned int nGoodVtx = 0;
+  for (reco::VertexCollection::const_iterator iVtx = pVertices->begin(); 
+       iVtx != pVertices->end(); ++iVtx) {
+    if (isGoodVertex(&*iVtx)) ++nGoodVtx;
+  }
+  return nGoodVtx;
 }
 
 float Common::getMuonCombPFIso(const reco::Muon& muon, const double PUSubtractionCoeff)
