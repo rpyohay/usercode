@@ -638,6 +638,14 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
       (inputFiles.size() > legendEntries.size()) || (inputFiles.size() > weights.size()) || 
       (canvasNames.size() > graphNames.size()) || (canvasNames.size() > legendHeaders.size())) {
     cerr << "Error: vector size mismatch.\n";
+    cerr << inputFiles.size() << endl;
+    cerr << colors.size() << endl;
+    cerr << styles.size() << endl;
+    cerr << legendEntries.size() << endl;
+    for (vector<string>::const_iterator i = legendEntries.begin(); i != legendEntries.end(); ++i) {
+      cerr << *i << endl;
+    }
+    cerr << weights.size() << endl;
     return;
   }
   TFile outStream(outputFileName.c_str(), "RECREATE");
@@ -673,14 +681,16 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
 			    pHist->GetYaxis()->GetTitle());
 	if (setLogY) pHist->GetYaxis()->SetRangeUser(0.1, 10000.0);
 	if (drawStack) {
-// 	  pHist->SetFillStyle(1001);
-	  pHist->SetFillStyle(0);
-	  pHist->SetFillColor(0);
+// 	  pHist->SetFillStyle(0);
+// 	  pHist->SetFillColor(0);
+	  pHist->SetFillStyle(1001);
+	  pHist->SetFillColor(colors[fileIndex]);
 	}
 	hists[canvasIndex][fileIndex] = pHist;
 	legends[canvasIndex]->AddEntry(pHist, legendEntries[fileIndex].c_str(), "l");
-	if (fileIndex == (inputFiles.size() - 1)) stacks[canvasIndex]->Add(pHist, "HIST");
-	else stacks[canvasIndex]->Add(pHist, "HISTE");
+// 	if (fileIndex == (inputFiles.size() - 1)) stacks[canvasIndex]->Add(pHist, "HIST");
+// 	else stacks[canvasIndex]->Add(pHist, "HISTE");
+	if (fileIndex != 0) stacks[canvasIndex]->Add(pHist, "HIST");
       }
       outStream.cd();
       outputCanvases[canvasIndex]->cd();
@@ -719,6 +729,7 @@ void drawMultipleEfficiencyGraphsOn1Canvas(const string& outputFileName,
       TH1F* hist = (TH1F*)stacks[canvasIndex]->GetHists()->First();
       stacks[canvasIndex]->GetXaxis()->SetTitle(hist->GetXaxis()->GetTitle());
       stacks[canvasIndex]->GetYaxis()->SetTitle(hist->GetYaxis()->GetTitle());
+      hists[canvasIndex][0]->Draw("SAME");
     }
     legends[canvasIndex]->Draw();
   }
