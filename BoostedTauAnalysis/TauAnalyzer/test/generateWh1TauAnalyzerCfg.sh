@@ -3,8 +3,8 @@
 ####STUFF TO CONFIGURE####
 
 #version
-version="v28"
-infoTag="" #i.e. "_myInfo"
+version="v35"
+infoTag=""
 dir=$version
 
 #number of samples
@@ -13,7 +13,7 @@ iBeg=0
 iEnd=`expr $nSamples - 1`
 
 #input file prefix
-inputFilePrefix="file:/data1/yohay/"
+inputFilePrefix="file:/data1/yohay/Wh1_Medium/EDM_files/"
 
 #CleanJets output file prefix
 cleanJetsOutputFilePrefix="`pwd`/${dir}/"
@@ -24,12 +24,12 @@ tauAnalyzerOutputFilePrefix="/data1/yohay/Wh1_Medium/"
 #tauAnalyzerOutputFilePrefix=""
 
 #EDM output file prefix
-EDMOutputFilePrefix="/data1/yohay/Wh1_Medium/"
+EDMOutputFilePrefix="/data1/yohay/Wh1_Medium/EDM_files/"
 
 ####VECTORS OF QUANTITIES FOR EACH SAMPLE####
 
 #vector of input file blocks for each sample
-inputFileBlocks=( "readFiles.extend([\n    '${inputFilePrefix}NMSSMHiggs_WH_files1-250_24Sep12.root',\n    '${inputFilePrefix}NMSSMHiggs_WH_files251-500_24Sep12.root',\n    '${inputFilePrefix}NMSSMHiggs_WH_files501-750_24Sep12.root',\n    '${inputFilePrefix}NMSSMHiggs_WH_files751-1000_24Sep12.root'\n    ])" )
+inputFileBlocks=( "readFiles.extend([\n    '${inputFilePrefix}data_no_selection.root'\n    ])" )
 
 #CleanJets output file
 cleanJetsOutFiles=( "${cleanJetsOutputFilePrefix}NMSSMSignal_MuProperties_Wh1.root" )
