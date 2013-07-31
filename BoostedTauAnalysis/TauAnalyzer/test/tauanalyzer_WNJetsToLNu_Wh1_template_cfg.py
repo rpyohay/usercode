@@ -282,6 +282,7 @@ process.muHadIsoTauAnalyzer = cms.EDAnalyzer(
     uncorrJetPTMin = cms.double(0.0), #GeV
     tauArbitrationMethod = cms.string("m"),
     PUScenario = cms.string("PUSCENARIO"),
+    MC = cms.bool(True),
     pTRankColors = cms.vuint32(1, 2, 4, 6),
     pTRankStyles = cms.vuint32(20, 21, 22, 23),
     pTRankEntries = cms.vstring('Highest p_{T}', 'Second highest p_{T}', 'Third highest p_{T}',
