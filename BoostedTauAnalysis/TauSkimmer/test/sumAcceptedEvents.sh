@@ -1,6 +1,7 @@
 #!/bin/bash
 
-list=`grep -e "TrigReport Events" Summer12_DYToTauTau_skim/res/*.stdout | sed -e "s%.*passed = \([0-9]*\).*%\1%g"`
+list=`grep -e "TrigReport Events" crab_0_130303_103235/res/*.stdout | sed -e "s%.*passed = \([0-9]*\).*%\1%g"`
+
 sum=0
 for line in $list
   do
